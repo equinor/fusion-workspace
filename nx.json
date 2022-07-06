@@ -1,34 +1,34 @@
 {
-  "extends": "nx/presets/npm.json",
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "workspace",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/nx-cloud",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "N2E4MzkxNmQtMzg1My00ZGMwLTg2OTgtODdjMWQ0ODIwMmJjfHJlYWQtd3JpdGU="
-      }
-    }
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "styled-components",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "styled-components"
-      },
-      "library": {
-        "style": "styled-components",
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "test-app"
+    "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "npmScope": "workspace",
+    "affected": {
+        "defaultBase": "master"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/nx-cloud",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "accessToken": "N2E4MzkxNmQtMzg1My00ZGMwLTg2OTgtODdjMWQ0ODIwMmJjfHJlYWQtd3JpdGU="
+            }
+        }
+    },
+    "generators": {
+        "@nrwl/react": {
+            "application": {
+                "style": "styled-components",
+                "linter": "eslint",
+                "babel": true
+            },
+            "component": {
+                "style": "styled-components"
+            },
+            "library": {
+                "style": "styled-components",
+                "linter": "eslint"
+            }
+        }
+    },
+    "defaultProject": "test-app"
 }

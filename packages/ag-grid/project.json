@@ -1,0 +1,23 @@
+{
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/ag-grid/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/ag-grid/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/ag-grid"],
+            "options": {
+                "jestConfig": "packages/ag-grid/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
+}

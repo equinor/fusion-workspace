@@ -1,32 +1,34 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "rootDir": ".",
-    "strict": true,
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es6",
-    "module": "esnext",
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@workspace/garden": ["packages/garden/src/index.ts"],
-      "@workspace/power-bi": ["packages/power-bi/src/index.ts"],
-      "@workspace/table": ["packages/table/src/index.ts"],
-      "@workspace/workspace": ["packages/workspace/src/index.ts"]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "rootDir": ".",
+        "strict": true,
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es6",
+        "module": "esnext",
+        "lib": ["es2017", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@workspace/ag-grid": ["packages/ag-grid/src/index.ts"],
+            "@workspace/basecontroller": ["packages/basecontroller/src/index.ts"],
+            "@workspace/garden": ["packages/garden/src/index.ts"],
+            "@workspace/power-bi": ["packages/power-bi/src/index.ts"],
+            "@workspace/table": ["packages/table/src/index.ts"],
+            "@workspace/workspace": ["packages/workspace/src/index.ts"]
+        },
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true
     },
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
-  },
-  "exclude": ["node_modules", "tmp"]
+    "exclude": ["node_modules", "tmp"]
 }
