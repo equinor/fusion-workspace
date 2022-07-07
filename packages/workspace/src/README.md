@@ -1,7 +1,7 @@
 Workspace controller
 
 The workspace controller is a common hub for all controllers.
-Every controller registered on the workspace controller is supposed to be 100% decoupled from eachother and only bind through binder functions.
+The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework.
 
 Controllers:
 Controllers are the acuators of the workspace, nothing happens without a controller. The goal is to create many small and specific controllers that does one thing well.
