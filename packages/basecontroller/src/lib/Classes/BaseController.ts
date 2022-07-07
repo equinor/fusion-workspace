@@ -26,6 +26,9 @@ export class BaseController {
         this.listeners = this.listeners.filter((s) => s.id !== uniqueId);
     }
 
+    /**
+     * Notifies listeners that something significant has happened
+     */
     notifyListeners() {
         this.listeners.forEach((s) => s.callback());
     }
