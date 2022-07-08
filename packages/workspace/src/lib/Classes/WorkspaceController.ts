@@ -1,26 +1,38 @@
 import React from 'react';
-import { BaseController } from '@workspace/basecontroller';
+
+interface OnCallbackSet<T> {
+    id: string;
+    unsub: () => void;
+    controller: WorkspaceController<T>;
+}
+
+interface Callback<T> {
+    id: string;
+    callback: T;
+}
 
 export type ViewComponent<Controller> = React.FC<{ controller: Controller }>;
 
-export type FindTabFunction = (tabs: Tab<unknown>[]) => string;
+export type FindTabFunction<WorkspaceController> = (
+    tabs: Tab<unknown, WorkspaceController>[]
+) => string;
 
-export interface Tab<Controller> {
+export interface Tab<Controller, WorkspaceController> {
     name: string;
     ViewComponent: ViewComponent<Controller>;
     controller: Controller;
-    binder?: BinderFunction<Controller, unknown>;
+    binder?: BinderFunction<Controller, WorkspaceController>;
 }
 
-interface HeadlessController<Controller> {
+interface Controller<ControllerType, WorkspaceController> {
     name: string;
-    controller: Controller;
-    binder?: BinderFunction<Controller, unknown>;
+    controller: ControllerType;
+    binder?: BinderFunction<ControllerType, WorkspaceController>;
 }
 
-type BinderFunction<Controller, WorkspaceType> = (
+type BinderFunction<Controller, WorkspaceController> = (
     controller: Controller,
-    workspaceController: WorkspaceController<WorkspaceType>
+    workspaceController: WorkspaceController
 ) => void;
 
 export type RegisterPluginCallback<T> = (controller: WorkspaceController<T>) => void;
@@ -32,9 +44,14 @@ type OnTabChangedCallback<T> = (
 ) => void;
 type ErrorCallback<TData, TError> = (error: TError, controller: WorkspaceController<TData>) => void;
 
-export class WorkspaceController<TData, TError = any, TContext = any> extends BaseController {
+type OnClickCallback<WorkspaceType, TOnClick> = (
+    ev: TOnClick,
+    controller: WorkspaceController<WorkspaceType>
+) => void;
+
+export class WorkspaceController<TData, TOnClick = any, TError = any, TContext = any> {
     /**List of tabs registered on this workspace */
-    tabs: Tab<unknown>[] = [];
+    tabs: Tab<unknown, WorkspaceController<TData, TOnClick, TError, TContext>>[] = [];
     /** String name of active tab */
     activeTab?: string;
     /** Data supplied to the workspace */
@@ -42,70 +59,153 @@ export class WorkspaceController<TData, TError = any, TContext = any> extends Ba
     /** Data that passed the active filters */
     filteredData: TData[] = [];
     /** Controllers registered */
-    headlessControllers: HeadlessController<unknown>[] = [];
+    controllers: Controller<unknown, WorkspaceController<TData, TOnClick, TError, TContext>>[] = [];
+    /** Placeholder for user to add its custom data */
     context: TContext | null = null;
-    errorCallbacks: ErrorCallback<TData, TError>[] = [];
-    private onFilteredDataChangedCallbacks: OnDataChangedCallback<TData>[] = [];
-    private onOriginalDataChangedCallbacks: OnDataChangedCallback<TData>[] = [];
-    private onTabChangedCallbacks: OnTabChangedCallback<TData>[] = [];
 
-    addTab = <Controller>(tab: Tab<Controller>) => {
-        this.tabs.push(tab as Tab<unknown>);
-        tab.binder && tab.binder(tab.controller, this as any);
-        this.notifyListeners();
+    /** Callbacks to be fired when an onclick event happens */
+    onClickCallbacks: Callback<OnClickCallback<TData, TOnClick>>[] = [];
+
+    errorCallbacks: ErrorCallback<TData, TError>[] = [];
+    private onFilteredDataChangedCallbacks: Callback<OnDataChangedCallback<TData>>[] = [];
+    private onOriginalDataChangedCallbacks: Callback<OnDataChangedCallback<TData>>[] = [];
+    private onTabChangedCallbacks: Callback<OnTabChangedCallback<TData>>[] = [];
+
+    addTab = <Controller>(
+        tab: Tab<Controller, WorkspaceController<TData, TOnClick, TError, TContext>>
+    ) => {
+        this.tabs.push(tab as Tab<unknown, WorkspaceController<TData, TOnClick, TError, TContext>>);
+        tab.binder && tab.binder(tab.controller, this);
     };
 
-    setActiveTabIndex = (tabIndex: string | FindTabFunction) => {
+    setActiveTabIndex = (
+        tabIndex: string | FindTabFunction<WorkspaceController<TData, TOnClick, TError, TContext>>,
+        preventCallbacks?: boolean
+    ) => {
         const fromTab = this.activeTab;
         // Validate tabIndex
         this.activeTab = typeof tabIndex === 'function' ? tabIndex(this.tabs) : tabIndex;
-        this.onTabChangedCallbacks.forEach((s) => s(this.activeTab, fromTab, this));
-        this.notifyListeners();
+        if (!preventCallbacks) {
+            this.onTabChangedCallbacks.forEach(({ callback }) =>
+                callback(this.activeTab, fromTab, this)
+            );
+        }
     };
 
-    onTabChanged = (cb: OnTabChangedCallback<TData>) => {
-        this.onTabChangedCallbacks.push(cb);
+    onTabChanged = (cb: OnTabChangedCallback<TData>): OnCallbackSet<TData> => {
+        const id = generateUniqueId();
+        this.onTabChangedCallbacks.push({ callback: cb, id });
+        return {
+            id,
+            unsub: () => {
+                this.onTabChangedCallbacks = this.onTabChangedCallbacks.filter((s) => s.id !== id);
+            },
+            controller: this,
+        };
     };
 
     /**
      * Register callback to be fired when original data changes
      */
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    onOriginalDataChanged = (cb: OnDataChangedCallback<TData>) => {
-        this.onOriginalDataChangedCallbacks.push(cb);
+    onOriginalDataChanged = (callback: OnDataChangedCallback<TData>): OnCallbackSet<TData> => {
+        const id = generateUniqueId();
+        this.onOriginalDataChangedCallbacks.push({
+            callback: callback,
+            id,
+        });
+        return {
+            id: id,
+            unsub: () => {
+                this.onOriginalDataChangedCallbacks = this.onOriginalDataChangedCallbacks.filter(
+                    (s) => s.id !== id
+                );
+            },
+            controller: this,
+        };
     };
 
     /**
      * Setter for original data
      * @param newData
      */
-    setOriginalData = (newData: TData[]) => {
+    setOriginalData = (newData: TData[], preventCallbacks?: boolean) => {
         this.originalData = newData;
-        this.onOriginalDataChangedCallbacks.forEach((s) => s(newData, this));
-        this.notifyListeners();
+        if (!preventCallbacks) {
+            this.onOriginalDataChangedCallbacks.forEach(({ callback }) => callback(newData, this));
+        }
     };
 
     /**
      * Register callback to be fired when filtered data changes
      */
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    onFilteredDataChanged = (cb: OnDataChangedCallback<TData>) => {
-        this.onFilteredDataChangedCallbacks.push(cb);
+    onFilteredDataChanged = (cb: OnDataChangedCallback<TData>): OnCallbackSet<TData> => {
+        const id = generateUniqueId();
+        this.onFilteredDataChangedCallbacks.push({ callback: cb, id });
+        return {
+            id,
+            unsub: () => {
+                this.onFilteredDataChangedCallbacks = this.onFilteredDataChangedCallbacks.filter(
+                    (s) => s.id !== id
+                );
+            },
+            controller: this,
+        };
     };
 
-    setFilteredData = (filteredData: TData[]) => {
+    setFilteredData = (filteredData: TData[], preventCallbacks?: boolean) => {
         this.filteredData = filteredData;
-        this.notifyListeners();
+        if (!preventCallbacks) {
+            this.onFilteredDataChangedCallbacks.forEach(({ callback }) =>
+                callback(filteredData, this)
+            );
+        }
+    };
+
+    /**
+     * Fires all the onClick callbacks to let them know something was clicked
+     */
+    notifyOnClick = (ev: TOnClick) => {
+        this.onClickCallbacks.forEach((s) => s.callback(ev, this));
+    };
+
+    /**
+     * Register onClick callback
+     */
+    onClickCallback = (cb: OnClickCallback<TData, TOnClick>): OnCallbackSet<TData> => {
+        const id = generateUniqueId();
+        this.onClickCallbacks.push({
+            callback: cb,
+            id,
+        });
+
+        return {
+            id,
+            unsub: () => {
+                this.onClickCallbacks = this.onClickCallbacks.filter((s) => s.id !== id);
+            },
+            controller: this,
+        };
     };
 
     /**
      * Adds a headless controller to the workspace controller
      * @param headlessController
      */
-    addHeadlessController = <Controller>(headlessController: HeadlessController<Controller>) => {
-        this.headlessControllers.push(headlessController as any);
-        headlessController.binder &&
-            headlessController.binder(headlessController.controller, this as any);
+    addController = <ControllerType>(
+        headlessController: Controller<
+            ControllerType,
+            WorkspaceController<TData, TOnClick, TError, TContext>
+        >
+    ) => {
+        this.controllers.push(
+            headlessController as Controller<
+                unknown,
+                WorkspaceController<TData, TOnClick, TError, TContext>
+            >
+        );
+        headlessController.binder && headlessController.binder(headlessController.controller, this);
     };
 
     onError = (cb: ErrorCallback<TData, TError>) => {
@@ -117,4 +217,8 @@ export class WorkspaceController<TData, TError = any, TContext = any> extends Ba
     };
 
     registerPlugin = (callback: RegisterPluginCallback<TData>) => callback(this);
+}
+
+function generateUniqueId(): string {
+    return (Math.random() * 16).toString();
 }

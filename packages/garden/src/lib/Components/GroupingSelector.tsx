@@ -48,8 +48,6 @@ export function FilterSelector<T>(): JSX.Element | null {
         [data, fieldSettings, filterGroupKey, allOptions]
     );
 
-    console.log(groupingOptions);
-
     const handleExistingSelectionChange = useCallback(
         (newValue: string | null | undefined, index: number) => {
             const newGroupByKeys = verticalGroupingKeys;

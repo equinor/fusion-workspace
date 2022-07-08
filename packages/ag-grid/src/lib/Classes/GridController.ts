@@ -1,11 +1,16 @@
 import { BaseController } from '@workspace/basecontroller';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 
 export class GridController<T> extends BaseController {
     rowData: T[] = [];
     columnDefs: ColDef[] = [];
+    gridOptions: GridOptions | undefined = undefined;
 
     constructor() {
         super();
     }
+
+    setGridOptions = (gridOptions: GridOptions) => {
+        this.gridOptions = gridOptions;
+    };
 }

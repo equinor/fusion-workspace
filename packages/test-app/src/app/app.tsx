@@ -1,12 +1,8 @@
 import styled from 'styled-components';
 
 import { Route, Routes, Link } from 'react-router-dom';
-import { Garden, GardenController } from '@workspace/garden';
 import { tokens } from '@equinor/eds-tokens';
-import { useRef } from 'react';
-import { Button } from '@equinor/eds-core-react';
 import { TestWorkspaceApp } from './TestWorkspaceApp';
-import { DefaultInterface, mockData } from './makeMockData';
 
 const StyledApp = styled.div`
     background-color: ${tokens.colors.ui.background__default.hex};
@@ -33,60 +29,18 @@ const StyledLink = styled(Link)`
 function Navbar() {
     return (
         <StyledNavbar>
-            <StyledLink to="/">Home</StyledLink>
-            <StyledLink to="/garden">Garden</StyledLink>
-            <StyledLink to="/table">Table</StyledLink>
-            <StyledLink to="/workspace">Workspace</StyledLink>
-            <StyledLink to="/TestNewWorkspace">Test new app</StyledLink>
+            <StyledLink to="/">Workspace</StyledLink>
         </StyledNavbar>
     );
 }
 
 export function App() {
-    const api = useRef<GardenController<DefaultInterface>>(
-        new GardenController(
-            {
-                data: mockData(),
-                initialGrouping: { horizontalGroupingAccessor: 'title', verticalGroupingKeys: [] },
-                nodeLabelCallback: (s) => s.sequenceNumber.toString(),
-                objectIdentifier: 'id',
-            },
-            { name: 'abc' }
-        )
-    );
-
     return (
         <StyledApp>
             <Navbar />
-            <Button onClick={() => api.current.setVerticalGroupingKeys(['1', '2', '3'])}>
-                Set keys
-            </Button>
-            <Button onClick={() => api.current.setHorizontalGroupingAccessor('state')}>
-                Change garden key
-            </Button>
-            <Button onClick={() => api.current.setVerticalGroupingKeys([])}>Clear keys</Button>
-            <Button onClick={() => console.log(api.current)}>Log api</Button>
-            <Button onClick={() => api.current.groupData()}>Group data based on keys</Button>
-            <Routes>
-                <Route path="/" element={<div></div>} />
-                <Route
-                    path="/garden"
-                    element={
-                        <div>
-                            <Garden controller={api.current} />
-                        </div>
-                    }
-                />
 
-                <Route
-                    path="/workspace"
-                    element={
-                        <div>
-                            <TestElement api={api.current} />
-                        </div>
-                    }
-                />
-                <Route path="/TestNewWorkspace" element={<TestWorkspaceApp />} />
+            <Routes>
+                <Route path="/" element={<TestWorkspaceApp />} />
             </Routes>
             {/* END: routes */}
         </StyledApp>
@@ -94,14 +48,3 @@ export function App() {
 }
 
 export default App;
-
-interface TestElementProps<T> {
-    api: GardenController<T>;
-}
-const TestElement = <T,>({ api }: TestElementProps<T>) => {
-    return (
-        <div style={{ height: '100vh', width: '100%', border: '1px solid red' }}>
-            <Garden controller={api as any} />
-        </div>
-    );
-};

@@ -70,7 +70,7 @@ interface FilterOperations {
     init: VoidFunction;
 }
 
-interface FilterSearchActive<T> {
+export interface FilterSearchActive<T> {
     searchValue: string;
     valueFormatters: ValueFormatterFilter<T>[];
     searchIn: SearchDataSet;

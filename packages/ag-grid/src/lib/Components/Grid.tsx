@@ -11,7 +11,11 @@ interface GridProps<T> {
 export function Grid<T>({ controller }: GridProps<T>) {
     return (
         <div className="ag-theme-alpine" style={{ height: 1000, width: 1200 }}>
-            <AgGridReact columnDefs={controller.columnDefs} rowData={controller.rowData} />
+            <AgGridReact
+                gridOptions={controller.gridOptions}
+                columnDefs={controller.columnDefs}
+                rowData={controller.rowData}
+            />
         </div>
     );
 }

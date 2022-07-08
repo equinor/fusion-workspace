@@ -30,7 +30,6 @@ export function Garden<T>({ controller }: GardenProps<T>): JSX.Element | null {
 
     return (
         <div>
-            Garden data length{context.api.data.length}
             <ParkViewProvider controller={context.api}>
                 <VirtualContainer />
             </ParkViewProvider>

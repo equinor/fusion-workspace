@@ -155,7 +155,6 @@ export class GardenController<T> extends BaseController {
 
     setData = (newData: T[]) => {
         this.data = newData;
-        console.log('Garden data changed', newData.length);
         this.groupData();
         this.notifyListeners();
     };
