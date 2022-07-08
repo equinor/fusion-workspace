@@ -1,6 +1,6 @@
 {
     "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-    "sourceRoot": "packages/basecontroller/src",
+    "sourceRoot": "packages/workspace-core/src",
     "projectType": "library",
     "tags": [],
     "targets": {
@@ -8,14 +8,14 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/basecontroller/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["packages/workspace-core/**/*.{ts,tsx,js,jsx}"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/basecontroller"],
+            "outputs": ["coverage/packages/workspace-core"],
             "options": {
-                "jestConfig": "packages/basecontroller/jest.config.ts",
+                "jestConfig": "packages/workspace-core/jest.config.ts",
                 "passWithNoTests": true
             }
         }

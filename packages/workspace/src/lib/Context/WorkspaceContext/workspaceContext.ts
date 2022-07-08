@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { WorkspaceController } from '../../Classes';
+import { FusionWorkspaceController } from '../../Models';
 
-export const WorkspaceContext = createContext<WorkspaceController<unknown>>(
-    {} as WorkspaceController<unknown>
+export const WorkspaceContext = createContext<FusionWorkspaceController<unknown>>(
+    {} as FusionWorkspaceController<unknown>
 );

@@ -8,6 +8,8 @@ export function StatusBar() {
     const originalData = useOriginalData();
     const filteredData = useFilteredData();
 
+    console.log(filteredData);
+
     return (
         <div>
             <div>Data length: {originalData.length}</div>

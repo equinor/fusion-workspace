@@ -4,16 +4,16 @@ import { WorkspaceTab } from '../';
 import { StyledWorkspaceBody } from './workspaceBody.styles';
 
 export function WorkspaceBody() {
-    const controller = useWorkspaceController();
+    const { sidesheet } = useWorkspaceController();
+
+    if (!sidesheet) {
+        throw 'No sidesheet controller registered';
+    }
 
     return (
         <StyledWorkspaceBody>
             <WorkspaceTab />
-            <Sidesheet
-                controller={
-                    controller.controllers.find((s) => s.name === 'Sidesheet')?.controller as any
-                }
-            />
+            <Sidesheet controller={sidesheet} />
         </StyledWorkspaceBody>
     );
 }

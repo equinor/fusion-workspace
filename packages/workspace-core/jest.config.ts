@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-    displayName: 'basecontroller',
+    displayName: 'workspace-core',
     preset: '../../jest.preset.js',
     transform: {
         '^.+\\.[tj]sx?$': 'babel-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../coverage/packages/basecontroller',
+    coverageDirectory: '../../coverage/packages/workspace-core',
 };

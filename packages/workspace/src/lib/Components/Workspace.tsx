@@ -1,8 +1,8 @@
 import { WorkspaceBody, WorkspaceDataLoader, WorkspaceHeader, WorkspaceProviderLayer } from '.';
-import { WorkspaceController } from '../Classes';
+import { FusionWorkspaceController } from '..';
 
 export interface WorkspaceProps<T> {
-    controller: WorkspaceController<T>;
+    controller: FusionWorkspaceController<T>;
 }
 
 export function Workspace<T>({ controller }: WorkspaceProps<T>) {

@@ -1,5 +1,5 @@
 import { Garden, GardenController } from '@workspace/garden';
-import { DataSourceController, Workspace, WorkspaceController } from '@workspace/workspace';
+import { FusionWorkspaceController, Workspace } from '@workspace/workspace';
 import { FilterController } from '@workspace/filter';
 import { useRef } from 'react';
 import { DefaultInterface, mockData } from './makeMockData';
@@ -9,7 +9,9 @@ import { Grid, GridController } from '@workspace/ag-grid';
 import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
 import { SidesheetController } from '@workspace/sidesheet';
+import { DataSourceController } from '@workspace/datasource';
 import { debugPlugin } from './debugger';
+import { WorkspaceController } from '@workspace/workspace-core';
 
 type Test = GardenController<DefaultInterface>;
 
@@ -64,9 +66,31 @@ export function TestWorkspaceApp() {
                 </Button>
             </DebugRow>
 
-            <Workspace controller={controller.current} />
+            <Workspace controller={makeFusionController<unknown>(controller.current)} />
         </div>
     );
+}
+
+function makeFusionController<T, TOnClick = any, TError = any, TContext = any>(
+    workspaceController: WorkspaceController<T, TOnClick, TError, TContext>
+): FusionWorkspaceController<T, TOnClick, TError, TContext> {
+    const { controllers, tabs } = workspaceController;
+    const controller = {
+        dataSource:
+            (workspaceController.controllers.find((s) => s.name === 'DataSource')
+                ?.controller as DataSourceController<T>) ?? null,
+        filter:
+            (workspaceController.controllers.find((s) => s.name === 'Filter')
+                ?.controller as FilterController<T>) ?? null,
+        garden: (tabs.find((s) => s.name === 'Garden')?.controller as GardenController<T>) ?? null,
+        grid: (tabs.find((s) => s.name === 'Grid')?.controller as GridController<T>) ?? null,
+        sidesheet:
+            (controllers.find((s) => s.name === 'Sidesheet')
+                ?.controller as SidesheetController<T>) ?? null,
+        ...workspaceController,
+    };
+
+    return controller as FusionWorkspaceController<T, TOnClick, TError, TContext>;
 }
 
 const DebugRow = styled.div`
@@ -174,7 +198,7 @@ function InitThisSpecificWorkspace() {
 }
 
 function dataSourceBinder<T = unknown>(dc: DataSourceController<T>, wc: WorkspaceController<T>) {
-    dc.registerListener('Workspace data', () => wc.setOriginalData(dc.data));
+    dc.onDataChanged((data) => wc.setOriginalData(data));
 }
 
 function gardenBinder(gc: Test, wc: WorkspaceController<unknown>) {

@@ -7,6 +7,8 @@ import { useWorkspaceController } from '../useWorkspaceController';
  */
 export function useFilteredData() {
     const { filteredData, onFilteredDataChanged } = useWorkspaceController();
+
+    //TODO: fix data is updated before notifier is added but default data to usestate doesnt seem to work??
     const [data, setData] = useState(filteredData);
 
     useEffect(() => {

@@ -3,7 +3,6 @@ import { GardenGroup, GardenGroups } from '../Models/data';
 import { FieldSetting } from '../Models/fieldSettings';
 import { CustomVirtualView, Options, StatusView } from '../Models/gardenOptions';
 import { createGarden } from '../Services';
-import { BaseController } from '@workspace/basecontroller';
 
 interface HighlightedNode {
     node: string | null;
@@ -107,7 +106,11 @@ function defaultItemColor() {
  * - Custom state
  */
 
-export class GardenController<T> extends BaseController {
+/**
+ * Add onchange handlers to everything
+ */
+
+export class GardenController<T> {
     highlightedNode: HighlightedNode = { node: null, setHighlighted: NullFunc };
     data: T[] = [];
     groups: GardenGroups<T> = [];
@@ -139,7 +142,6 @@ export class GardenController<T> extends BaseController {
         }: MandatoryConfig<T>,
         context?: Context<unknown>
     ) {
-        super();
         this.objectIdentifier = objectIdentifier;
         this.nodeLabelCallback = nodeLabelCallback;
         this.data = data;
@@ -156,7 +158,6 @@ export class GardenController<T> extends BaseController {
     setData = (newData: T[]) => {
         this.data = newData;
         this.groupData();
-        this.notifyListeners();
     };
 
     /**
@@ -166,7 +167,6 @@ export class GardenController<T> extends BaseController {
     setVerticalGroupingKeys = (keys: SetVerticalGroupingKeysArgs) => {
         this.grouping.verticalGroupingKeys = keys;
         this.groupData();
-        this.notifyListeners();
     };
 
     /**
@@ -175,7 +175,6 @@ export class GardenController<T> extends BaseController {
     setHorizontalGroupingAccessor = (key: HorizontalGroupingAccessor<T>) => {
         this.grouping.horizontalGroupingAccessor = key;
         this.groupData();
-        this.notifyListeners();
     };
 
     /**
@@ -183,7 +182,6 @@ export class GardenController<T> extends BaseController {
      */
     groupData = () => {
         this.groups = createGarden(this);
-        this.notifyListeners();
     };
 
     /**
@@ -192,7 +190,6 @@ export class GardenController<T> extends BaseController {
     setHighlighted = (nodeIdOrCallback: (string | null) | findNodeCallback) => {
         this.highlightedNode.node =
             typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data) : nodeIdOrCallback;
-        this.notifyListeners();
     };
 
     /**
@@ -200,7 +197,6 @@ export class GardenController<T> extends BaseController {
      */
     setCustomState = (state: CustomState) => {
         this.customState = state;
-        this.notifyListeners();
     };
 }
 

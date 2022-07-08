@@ -1,9 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useWorkspaceController } from '../useWorkspaceController';
 
 /**
  * Returns the current active tab.
- * Wrapped in useMemo
  * @returns
  */
 export function useActiveTab() {
@@ -15,8 +14,5 @@ export function useActiveTab() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return useMemo(() => {
-        return tabs.find((s) => s.name === activeTab);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTab, value]);
+    return tabs.find((s) => s.name === value);
 }

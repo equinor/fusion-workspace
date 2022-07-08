@@ -1,4 +1,3 @@
-import { BaseController } from '@workspace/basecontroller';
 import {
     doesItemPassCriteria,
     doesItemPassFilter,
@@ -14,9 +13,10 @@ import {
     ValueFormatterFunction,
 } from '../Hooks';
 import { FilterValueType } from '../Types';
-import { filterGroupExists, shouldFilter } from '../Utils';
+import { filterGroupExists } from '../Utils';
 
-export class FilterController<T> extends BaseController {
+//TODO: Add change handlers to everything
+export class FilterController<T> {
     data: T[] = [];
     filteredData: T[] = [];
     filterState: FilterGroup[] = [];
@@ -110,8 +110,7 @@ export class FilterController<T> extends BaseController {
      * @param preventReRender
      * @returns
      */
-    handleShouldReRender = (preventReRender?: boolean) =>
-        !preventReRender && this.notifyListeners();
+    handleShouldReRender = (preventReRender?: boolean) => !preventReRender && void 0;
 
     createFilterValues = (preventReRender?: boolean) => {
         this.allFilterValues = generateFilterValues(this.valueFormatters, this.data);
@@ -224,24 +223,4 @@ export class FilterController<T> extends BaseController {
 
         this.filter(preventReRender);
     };
-}
-
-/**
- * Handles empty values
- * @param val
- * @returns
- */
-function handleEmpty(
-    val: FilterValueType | FilterValueType[]
-): FilterValueType | FilterValueType[] {
-    if (val === undefined) {
-        return null;
-    }
-    if (Array.isArray(val)) {
-        return val.length === 0 ? null : val;
-    }
-    if (typeof val === 'string') {
-        return val.length === 0 ? null : val;
-    }
-    return val;
 }

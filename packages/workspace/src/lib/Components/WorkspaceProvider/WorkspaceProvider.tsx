@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { WorkspaceController } from '../../Classes';
 import { WorkspaceContext } from '../../Context';
+import { FusionWorkspaceController } from '../../Models';
 
 interface WorkspaceProviderLayerProps<T> {
-    controller: WorkspaceController<T>;
+    controller: FusionWorkspaceController<T>;
     children: React.ReactNode;
 }
 
