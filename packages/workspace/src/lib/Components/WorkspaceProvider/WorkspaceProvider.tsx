@@ -9,6 +9,9 @@ interface WorkspaceProviderLayerProps<T> {
 
 const queryClient = new QueryClient();
 
+/**
+ * Wraps the workspace in all the context providers that it needs
+ */
 export function WorkspaceProviderLayer<T>({
     controller,
     children,

@@ -1,6 +1,10 @@
 import { useFilteredData, useOriginalData } from '../../Hooks';
 
-export function KPI() {
+/**
+ * Status bar header component
+ * @returns
+ */
+export function StatusBar() {
     const originalData = useOriginalData();
     const filteredData = useFilteredData();
 

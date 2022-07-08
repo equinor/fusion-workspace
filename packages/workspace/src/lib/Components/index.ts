@@ -1,5 +1,5 @@
 export * from './Workspace';
-export * from './Kpi';
+export * from './StatusBar';
 export * from './TabNavigation';
 export * from './WorkspaceHeader';
 export * from './WorkspaceProvider';
