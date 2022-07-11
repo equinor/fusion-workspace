@@ -1,4 +1,4 @@
-# Workspace Specification
+# Workspace Project Feature List
 
 Initial feature list for `Fusion workspace` project. Work item identifications will be added when a feature us official and added to the work board.
 
