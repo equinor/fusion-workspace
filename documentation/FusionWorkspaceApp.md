@@ -6,15 +6,12 @@
 
 ... Some text here.
 
-```Mermaid
-
-sequenceDiagram
-    
+```mermaid
+sequenceDiagram   
     participant User
     participant Portal
     participant Workspace
 
- 
     User->>Portal: User Opens web Portal.
     Note over Portal: Setup Fusion Framework Modules
     Portal ->> User: Asks user for username and password
@@ -32,12 +29,6 @@ sequenceDiagram
     Portal ->> Workspace: Portal provides context to Workspace
     Note over Workspace: Start Workspace setup
     Note over Workspace: Mounts Workspace Component
-    
-
-
-
-  
-
 
 ```
 
