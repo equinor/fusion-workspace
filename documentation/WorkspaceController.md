@@ -18,7 +18,7 @@ The workspace controller is a common hub for all controllers. The idea is for th
 
 Here is an example of use se figure1:
 
-```Mermaid
+```mermaid
 flowchart LR 
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:center;
     classDef controller fill:#006699,stroke:none,text-align:left;
