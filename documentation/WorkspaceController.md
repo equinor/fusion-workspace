@@ -26,9 +26,9 @@ flowchart LR
     classDef viewConfig fill:#448800,stroke:none
     classDef middleware fill:#996666,stroke:none
 
-    wc[<h>Workspace Controller</h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
-    wsDataSource[<h2>Data Source</h2> <p> Controller]:::controller
-    wsFilter[Data Filter Controller]:::controller
+    wc[<h2>Workspace Controller</h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
+    wsDataSource[<b>Data Source</b> Controller]:::controller
+    wsFilter[<b>Data Filter</b> Controller]:::controller
     wsBookmarks[Bookmarks Controller]:::controller
 
     wsFilterConfig[Data Source - Config]:::config
