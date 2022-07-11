@@ -20,7 +20,7 @@ Here is an example of use se figure1:
 
 ```mermaid
 flowchart LR 
-    classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:center;
+    classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:center,color:#fff;
     classDef controller fill:#006699,stroke:none,text-align:left;
     classDef config fill:#008899,stroke:none
     classDef viewConfig fill:#448800,stroke:none
