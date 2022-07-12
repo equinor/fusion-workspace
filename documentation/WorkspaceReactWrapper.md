@@ -43,5 +43,3 @@ This library includes:
 ### Types
 
 - WorkspaceController
-
-## How it works

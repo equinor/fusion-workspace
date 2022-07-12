@@ -147,8 +147,6 @@ Controllers and middleware usually bind through workspace controller events. Alt
 
 ## How it works
 
-text here....
-
 ```mermaid
 sequenceDiagram   
     participant Workspace Controller

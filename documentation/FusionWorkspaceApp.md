@@ -1,39 +1,14 @@
 # Fusion Workspace App
 
 [<< BACK](../Readme.md)
-## App mounding Loading sequence
 
-... Some text here.
-
-```mermaid
-sequenceDiagram   
-    participant User
-    participant Portal
-    participant Workspace
-
-    User->>Portal: User Opens web Portal.
-    Note over Portal: Setup Fusion Framework Modules
-    Portal ->> User: Asks user for username and password
-    User->> Portal: Login
-    Note over Portal: User Logged inn waiting for user input
-   
-    User ->> Portal:  Click on app link
-    Portal ->> Workspace: Request Workspace App Files
-    Note over Workspace: Setup App Modules and <br> combines Framework Modules
-    Workspace ->> Portal: Mounts Workspace application
-    Note over Workspace: No Context is selected
-    Workspace->> User: Asks user to select context
-    Note over User: User selects a context <br> in det context picker
-    User->> Portal: Selects context
-    Portal ->> Workspace: Portal provides context to Workspace
-    Note over Workspace: Start Workspace setup
-    Note over Workspace: Mounts Workspace Component
-
-```
+> A Fusion Workspace app is created fairly easy. This is not a tutorial or incept
+explanation on how to create a fusion Workspace but a document explaining the concept of the Workspace app
+some mocked code examples wil provided.
 
 ## How it works
 
-todo add text here
+A workspace app is created using the `@equinor/fusion-workspace` and `@equinor/fusion-workspace-react` packages, and will provide all needed.
 
 ## Create Workspace App
 
@@ -111,4 +86,34 @@ export const App = () => {
 };
 
 export default App;
+```
+
+## App mounding Loading sequence
+
+Diagram showing the lodging sequents of a workspace app, built on the Fusion App loading sequence.
+
+```mermaid
+sequenceDiagram   
+    participant User
+    participant Portal
+    participant Workspace
+
+    User->>Portal: User Opens web Portal.
+    Note over Portal: Setup Fusion Framework Modules
+    Portal ->> User: Asks user for username and password
+    User->> Portal: Login
+    Note over Portal: User Logged inn waiting for user input
+   
+    User ->> Portal:  Click on app link
+    Portal ->> Workspace: Request Workspace App Files
+    Note over Workspace: Setup App Modules and <br> combines Framework Modules
+    Workspace ->> Portal: Mounts Workspace application
+    Note over Workspace: No Context is selected
+    Workspace->> User: Asks user to select context
+    Note over User: User selects a context <br> in det context picker
+    User->> Portal: Selects context
+    Portal ->> Workspace: Portal provides context to Workspace
+    Note over Workspace: Start Workspace setup
+    Note over Workspace: Mounts Workspace Component
+
 ```
