@@ -1,6 +1,6 @@
 # Workspace React Wrapper
 
-[<< BACK](../Readme.md)
+[<< BACK](/README.md)
 
 A simple React wrapper for the workspace providing hooks, context, utils, Types and Visual components for the workspace.
 The `useWorkspaceController` hook is the main component in this library.Is is a wrapper for the workspace controller.
