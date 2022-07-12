@@ -1,7 +1,7 @@
 # Fusion Workspace v1.0.0
 
 
-<p style="text-align: left;"><img src="./images/logo.png" width="450"></p>
+<p style="text-align: left;"><img src="./images/logo-large.png" width="450"></p>
 
 ( Fusion Workspace v1.0.0 - CC workspace v2.0 )
 
