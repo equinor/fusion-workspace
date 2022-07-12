@@ -1,6 +1,6 @@
 # Workspace Project Feature List
 
-[<< BACK](./Readme.md)
+[<< BACK](../Readme.md)
 
 Initial feature list for `Fusion workspace` project. Work item identifications will be added when a feature us official and added to the work board.
 

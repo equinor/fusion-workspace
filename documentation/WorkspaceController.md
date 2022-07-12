@@ -1,6 +1,6 @@
 # Workspace Controller
 
-[<< BACK](./Readme.md)
+[<< BACK](../Readme.md)
 
 The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
 
@@ -144,3 +144,32 @@ Core Functions:
 - AddMiddleware
 
 Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
+
+## How it works
+
+text here....
+
+```mermaid
+sequenceDiagram   
+    participant Workspace Controller
+    participant Garden Controller
+    participant DataSource
+    participant Filter
+
+    Garden Controller ->> Workspace Controller: Add controller and config to Workspace Controller.
+
+    Note over Workspace Controller: Workspace Mounted.
+
+    Workspace Controller ->> DataSource: Fires of request for data source 
+    Note over DataSource: If needed maps data to required Type
+    DataSource ->>Workspace Controller: Returns Data
+
+    Note over Workspace Controller: Fires onDataChange Event with data.
+    Workspace Controller ->> Filter: Send Data
+    Note over Filter: Filters incoming data with provided filter
+    Filter ->> Workspace Controller: Return filteredData
+    Note over Workspace Controller: Fires onFilteredDataChange Event with filtered data.
+
+    Workspace Controller ->> Garden Controller : Add data to garden.
+    Note over Garden Controller: Render Garden
+```

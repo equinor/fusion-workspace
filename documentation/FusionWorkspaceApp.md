@@ -1,7 +1,6 @@
 # Fusion Workspace App
 
-[<< BACK](./Readme.md)
-
+[<< BACK](../Readme.md)
 ## App mounding Loading sequence
 
 ... Some text here.
@@ -31,6 +30,10 @@ sequenceDiagram
     Note over Workspace: Mounts Workspace Component
 
 ```
+
+## How it works
+
+todo add text here
 
 ## Create Workspace App
 

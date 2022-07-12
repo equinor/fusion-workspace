@@ -1,6 +1,6 @@
 # Fusion Workspace Framework
 
-[<< BACK](./Readme.md)
+[<< BACK](../Readme.md)
 
 Fusion workspace framework, speeding up the development of workspace apps. Allowing the developer to concentrate on business values and rules, not worrying about the underlying functionality orchestration. Its core functions are all provided by the workspace controller, The frameworks purpose id to create a simple way of orchestrating one data-source through a filter and providing the possibility to view. As for now these views are Table and Garden  and power-bi views. These and more views are described at a later point.
 
@@ -36,6 +36,8 @@ function workspaceSetup (ws: FusionWorkspaceFramework) {
 ```TS
    const Workspace = useMemo(() => createFusionWorkspaceApp<IData>(workspaceSetup, workspaceOptions, fusion),[framework.context.contextId]);
 ```
+
+## How it works
 
 ```mermaid
 flowchart LR 
@@ -113,29 +115,3 @@ flowchart LR
     
 ```
 
-## Data Sequence
-
-```mermaid
-sequenceDiagram   
-    participant Workspace Controller
-    participant Garden Controller
-    participant DataSource
-    participant Filter
-
-    Garden Controller ->> Workspace Controller: Add controller and config to Workspace Controller.
-
-    Note over Workspace Controller: Workspace Mounted.
-
-    Workspace Controller ->> DataSource: Fires of request for data source 
-    Note over DataSource: If needed maps data to required Type
-    DataSource ->>Workspace Controller: Returns Data
-
-    Note over Workspace Controller: Fires onDataChange Event with data.
-    Workspace Controller ->> Filter: Send Data
-    Note over Filter: Filters incoming data with provided filter
-    Filter ->> Workspace Controller: Return filteredData
-    Note over Workspace Controller: Fires onFilteredDataChange Event with filtered data.
-
-    Workspace Controller ->> Garden Controller : Add data to garden.
-    Note over Garden Controller: Render Garden
-```

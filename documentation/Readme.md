@@ -1,10 +1,9 @@
-![Equinor Logo](./images/logo.png)
-
 # Fusion Workspace v1.0.0
 
-(CC workspace v2.0)
 
-> Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
+<p style="text-align: left;"><img src="./images/logo.png" width="450"></p>
+
+( Fusion Workspace v1.0.0 - CC workspace v2.0 )
 
 ## Pre work and speck
 
@@ -13,7 +12,7 @@
 - [x] Workspace Workshop
 - [ ] Apps conversion and scale strategy.
 
-> This is a speck document for the `Fusion Project Portal 1.0.0v` based on proof-of-concept `Johan Castberg Portal`. This is just an assumption of a hi level scope for the project to come, only to verify the initial thoughts. 
+> This is a speck document for the `Fusion Project Portal 1.0.0v` based on proof-of-concept `Johan Castberg Portal`. This is just an assumption of a hi level scope for the project to come, only to verify the initial thoughts.
 
 The work required to scale can be split into three parts. Work related to the workspace and the components it relies on, the Project Portal, and the conversion of `Castberg` apps to be fusion powered and ready for scale.  
 
