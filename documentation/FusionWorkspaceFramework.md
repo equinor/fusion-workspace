@@ -54,6 +54,13 @@ flowchart LR
     classDef middleware fill:#996666,stroke:none
 
 
+
+
+        fusionViewConfig[Fuison View Config]:::viewConfig
+        customViewConfig[Custom View Config]:::viewConfig
+        filterConfig[Custom View Config]:::viewConfig
+        dataConfig[Custom View Config]:::viewConfig
+
     subgraph Workspace  
         direction LR
 
@@ -76,6 +83,13 @@ flowchart LR
             workspaceSetup --> customViewConfig
             workspaceSetup --> filterConfig
             workspaceSetup --> dataConfig
+
+            
+        fusionViewConfig[Fuison View Config]:::viewConfig
+        customViewConfig[Custom View Config]:::viewConfig
+        filterConfig[Custom View Config]:::viewConfig
+        dataConfig[Custom View Config]:::viewConfig
+   
               
         end
 
