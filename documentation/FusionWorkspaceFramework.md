@@ -34,7 +34,8 @@ function workspaceSetup (ws: FusionWorkspaceFramework) {
 ```
 
 ```TS
-   const Workspace = useMemo(() => createFusionWorkspaceApp<IData>(workspaceSetup, workspaceOptions, fusion),[framework.context.contextId]);
+   const workspaceConfig = createFusionWorkspaceApp<IData>(workspaceSetup, workspaceOptions, fusion);
+   return (<Workspace {...workspaceConfig} />) 
 ```
 
 ## How it works
