@@ -6,23 +6,17 @@ Initial feature list for `Fusion workspace` project. Work item identifications w
 
 Features for Current functionality in `Johan Castberg` project portal:
 
-- WorkspaceController
-- React Bootstrap for workspace
-- Fusion Workspace
-- Fusion Workspace React View
-- Fusion Framework and Fusion Workspace
-- Garden React View
-- Garden Controller
-- Grid React View
-- Table React View
-- Table Controller
-- Power-Bi React View
-- Power-Bi Controller
-- Fusion Workspace UX/UI
-- Filter View
-- Filter Controller
-- Bookmark View
-- Bookmark Controller
+- [x] [#30404](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30404) WS - WorkspaceController
+- [ ] [#30405](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30405) WS - Workspace React (React Bootstrap for the workspace)
+- [ ] [#30406](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30407) WS - Fusion Workspace
+- [ ] WS - Garden and Garden Controller
+- [ ] WS - AG Grid React View and Controller
+- [ ] WS - Table React View and Controller
+- [ ] WS  - Power-Bi React View and Controller
+- [ ] WS - Fusion Workspace UX/UI
+- [ ] WS - Filter View
+- [ ] WS - Filter Controller
+- [ ] WS - Bookmark View
 
 Features for the future:
 
