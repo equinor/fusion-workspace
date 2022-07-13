@@ -2,7 +2,7 @@
 
 [<< BACK](/README.md)
 
-Fusion workspace framework, speeding up the development of workspace apps. Allowing the developer to concentrate on business values and rules, not worrying about the underlying functionality orchestration. Its core functions are all provided by the workspace controller, The frameworks purpose id to create a simple way of orchestrating one data-source through a filter and providing the possibility to view. As for now these views are Table and Garden  and power-bi views. These and more views are described at a later point.
+Fusion workspace framework, speeding up the development of workspace apps. Allowing the developer to concentrate on business values and rules, not worrying about the underlying functionality orchestration. Its core functions are all provided by the workspace controller, The framework's purpose is to create a simple way of orchestrating one data source through a filter and providing the possibility to view. As for now, these views are Table and Garden and power-bi views. These and more views are described at a later point.
 
 Views will include
 
