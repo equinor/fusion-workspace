@@ -10,7 +10,7 @@
 [Intro](./documentation/Readme.md) | Fusion Workspace v1.0.0 - CC workspace v2.0
 [Workspace Controller](./documentation/WorkspaceController.md) | Core component in a workspace, a pure JS library.
 [Workspace React Wrapper](./documentation/WorkspaceReactWrapper.md) | Wrapper for the Workspace Controller
-[Fusion Workspace Framework](./documentation/FusionWorkspaceFramework.md) | A simplified way to create a workspace Bootstrapped with view components utilizing the Workspace React Wrapper.
+[Fusion Workspace](./documentation/FusionWorkspaceFramework.md) | A simplified way to create a workspace Bootstrapped with view components utilizing the Workspace React Wrapper.
 [Fusion Workspace App](./documentation/FusionWorkspaceApp.md) | How a app is created.
 |**Other Pages**|
 [Workspace Specification / Feature List](./documentation/WorkspaceProjectFeatureList.md)
