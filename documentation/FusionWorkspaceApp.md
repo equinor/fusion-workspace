@@ -2,9 +2,7 @@
 
 [<< BACK](/README.md)
 
-> A Fusion Workspace app is created fairly easy. This is not a tutorial or incept
-explanation on how to create a fusion Workspace but a document explaining the concept of the Workspace app
-some mocked code examples wil provided.
+> A Fusion Workspace app is created easy. This is not a tutorial or incept explanation on how to create a fusion Workspace but a document explaining the concept of the Workspace apps. Mocked code examples will supply clarity.
 
 ## How it works
 
