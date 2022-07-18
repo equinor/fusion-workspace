@@ -1,6 +1,6 @@
 {
     "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-    "sourceRoot": "packages/garden/src",
+    "sourceRoot": "packages/workspace-react/src",
     "projectType": "library",
     "tags": [],
     "targets": {
@@ -8,14 +8,14 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["packages/garden/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": ["packages/workspace-react/**/*.{ts,tsx,js,jsx}"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/garden"],
+            "outputs": ["coverage/packages/workspace-react"],
             "options": {
-                "jestConfig": "packages/garden/jest.config.ts",
+                "jestConfig": "packages/workspace-react/jest.config.ts",
                 "passWithNoTests": true
             }
         }

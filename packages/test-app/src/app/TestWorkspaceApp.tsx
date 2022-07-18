@@ -1,5 +1,5 @@
 import { Garden, GardenController } from '@workspace/garden';
-import { FusionWorkspaceController, Workspace } from '@workspace/workspace';
+import { FusionWorkspaceController, Workspace } from '@workspace/workspace-react';
 import { FilterController } from '@workspace/filter';
 import { useRef } from 'react';
 import { DefaultInterface, mockData } from './makeMockData';
