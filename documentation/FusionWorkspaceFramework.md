@@ -50,14 +50,10 @@ flowchart LR
     classDef appConfig fill:#999900,stroke:none,text-align:left;
     classDef setup fill:#444466,stroke:none,text-align:left;
 
-
     classDef controller fill:#006699,stroke:none,text-align:left;
     classDef config fill:#008899,stroke:none
     classDef viewConfig fill:#448800,stroke:none
     classDef middleware fill:#996666,stroke:none
-
-
-
 
         fusionViewConfig[Fuison View Config]:::viewConfig
         customViewConfig[Custom View Config]:::viewConfig
@@ -68,15 +64,10 @@ flowchart LR
         direction LR
 
         portal[<h2>Portal</h2>]:::portal
-
         workspaceAppConfig[<h2>Workspace AppConfig </h2><span><br> - dataSource <br> - tableOptions <br> - gardenOptions <br> - statusItems<br>- filterOptions </span>]:::appConfig
-    
         workspaceSetup[<h2>Workspace Setup</h2><span><br> - addDataSource <br> - addTableOptions <br> - Config <br> - Context<br>- Workspace Events </span>]:::setup
-    
         createFusionWorkspace[<h2>Crete Fusion Workspace </h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
-    
         workspaceReactWrapper[<h2>Workspace React Wrapper</h2><span><br> - Hooks <br> - Context <br> - Utils <br> - Types<br></span>]:::controller
-
         wc[<h2>Workspace Controller</h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
 
         subgraph appConfig
@@ -86,14 +77,12 @@ flowchart LR
             workspaceSetup --> customViewConfig
             workspaceSetup --> filterConfig
             workspaceSetup --> dataConfig
-
-            
+  
         fusionViewConfig[Fuison View Config]:::viewConfig
         customViewConfig[Custom View Config]:::viewConfig
         filterConfig[Custom View Config]:::viewConfig
         dataConfig[Custom View Config]:::viewConfig
-   
-              
+       
         end
 
         subgraph workspaceApp
