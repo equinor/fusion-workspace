@@ -3,7 +3,7 @@ import { DataSourceController } from '@workspace/datasource';
 import { FilterController } from '@workspace/filter';
 import { GardenController } from '@workspace/garden';
 import { SidesheetController } from '@workspace/sidesheet';
-import { WorkspaceController } from '@workspace/workspace-core';
+import { WorkspaceController } from '@workspace/workspace-core-old';
 
 export interface FusionWorkspaceController<TData, TOnClick = any, TError = any, TContext = any>
     extends WorkspaceController<TData, TOnClick, TError, TContext> {

@@ -1,4 +1,4 @@
-import { WorkspaceController } from '@workspace/workspace-core';
+import { WorkspaceController } from '@workspace/workspace-core-old';
 
 export function debugPlugin(wc: WorkspaceController<unknown>) {
     console.log(`###### WORKSPACE DEBUG MODULE REGISTERED ######`);

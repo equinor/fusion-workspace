@@ -1,7 +1,7 @@
 import { defaultResponseParser } from '../Functions';
 
-type FetchResponseAsync = (signal?: AbortSignal) => Promise<Response>;
-type ResponseParserAsync<T> = (Response: Response) => Promise<T[]>;
+export type FetchResponseAsync = (signal?: AbortSignal) => Promise<Response>;
+export type ResponseParserAsync<T> = (Response: Response) => Promise<T[]>;
 
 type OnDataChangedCallback<T> = (data: T[], controller: DataSourceController<T>) => void;
 

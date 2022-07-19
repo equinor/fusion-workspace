@@ -1,17 +1,16 @@
-import { Garden, GardenController } from '@workspace/garden';
-import { FusionWorkspaceController, Workspace } from '@workspace/workspace-react';
+import { Button } from '@equinor/eds-core-react';
+import { GridController } from '@workspace/ag-grid';
+import { DataSourceController } from '@workspace/datasource';
 import { FilterController } from '@workspace/filter';
-import { useRef } from 'react';
-import { DefaultInterface, mockData } from './makeMockData';
+import { GardenController } from '@workspace/garden';
+import { SidesheetController } from '@workspace/sidesheet';
+import { WorkspaceController } from '@workspace/workspace-core-old';
+import { FusionWorkspaceController, Workspace } from '@workspace/workspace-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import { Grid, GridController } from '@workspace/ag-grid';
+import { useRef } from 'react';
 import styled from 'styled-components';
-import { Button } from '@equinor/eds-core-react';
-import { SidesheetController } from '@workspace/sidesheet';
-import { DataSourceController } from '@workspace/datasource';
-import { debugPlugin } from './debugger';
-import { WorkspaceController } from '@workspace/workspace-core';
+import { DefaultInterface, mockData } from './makeMockData';
 
 type Test = GardenController<DefaultInterface>;
 
@@ -44,7 +43,7 @@ function makeGridController() {
 }
 
 export function TestWorkspaceApp() {
-    const controller = useRef<WorkspaceController<unknown>>(InitThisSpecificWorkspace());
+    const controller = useRef<WorkspaceController<unknown, any>>(InitThisSpecificWorkspace());
 
     const getFilterController = () =>
         controller.current.controllers.find((s) => s.name === 'Filter')?.controller;
@@ -72,21 +71,15 @@ export function TestWorkspaceApp() {
 }
 
 function makeFusionController<T, TOnClick = any, TError = any, TContext = any>(
-    workspaceController: WorkspaceController<T, TOnClick, TError, TContext>
+    workspaceController: WorkspaceController<T, any, TOnClick, TError, TContext>
 ): FusionWorkspaceController<T, TOnClick, TError, TContext> {
-    const { controllers, tabs } = workspaceController;
+    const { controllers } = workspaceController;
     const controller = {
-        dataSource:
-            (workspaceController.controllers.find((s) => s.name === 'DataSource')
-                ?.controller as DataSourceController<T>) ?? null,
-        filter:
-            (workspaceController.controllers.find((s) => s.name === 'Filter')
-                ?.controller as FilterController<T>) ?? null,
-        garden: (tabs.find((s) => s.name === 'Garden')?.controller as GardenController<T>) ?? null,
-        grid: (tabs.find((s) => s.name === 'Grid')?.controller as GridController<T>) ?? null,
-        sidesheet:
-            (controllers.find((s) => s.name === 'Sidesheet')
-                ?.controller as SidesheetController<T>) ?? null,
+        dataSource: controllers['DataSource'] as DataSourceController<T>,
+        filter: controllers['Filter'] as FilterController<T>,
+        garden: controllers['Garden'] as GardenController<T>,
+        grid: controllers['Grid'] as GridController<T>,
+        sidesheet: controllers['Sidesheet'] as SidesheetController<T>,
         ...workspaceController,
     };
 
@@ -127,11 +120,12 @@ function InitThisSpecificWorkspace() {
     //Base workspace controller
     const controller = new WorkspaceController<
         unknown,
+        any,
         ClickEvent<unknown>,
         any,
         { persist: () => void }
     >();
-    debugPlugin(controller);
+    // debugPlugin(controller);
 
     /**
      * Add datasource controller to workspace controller
@@ -139,14 +133,14 @@ function InitThisSpecificWorkspace() {
     controller.addController({
         name: 'DataSource',
         controller: new DataSourceController(defaultFetch),
-        binder: dataSourceBinder,
+        config: dataSourceBinder,
     });
 
     controller.addController({
         controller: new SidesheetController(),
         name: 'Sidesheet',
-        binder: (sc, wc) => {
-            wc.onClickCallback((ev) => {
+        config: (sc, wc) => {
+            wc.onClick((ev) => {
                 sc.setItem(ev.item);
                 sc.setSidesheetState(true);
             });
@@ -161,7 +155,7 @@ function InitThisSpecificWorkspace() {
     controller.addController({
         name: 'Filter',
         controller: filterController,
-        binder: (fc, wc) => {
+        config: (fc, wc) => {
             const old = fc.setFilteredData;
             fc.setFilteredData = (newData) => {
                 old(newData);
@@ -183,25 +177,27 @@ function InitThisSpecificWorkspace() {
     controller.addTab<Test>({
         controller: makeGardenController(),
         name: 'Garden',
-        ViewComponent: Garden,
-        binder: gardenBinder,
+        config: gardenBinder,
     });
-    controller.setActiveTabIndex('Garden');
+    controller.setActiveTab('Garden');
     controller.addTab({
         controller: makeGridController(),
         name: 'Grid',
-        ViewComponent: Grid,
-        binder: gridBinder,
+
+        config: gridBinder,
     });
 
     return controller;
 }
 
-function dataSourceBinder<T = unknown>(dc: DataSourceController<T>, wc: WorkspaceController<T>) {
+function dataSourceBinder<T = unknown>(
+    dc: DataSourceController<T>,
+    wc: WorkspaceController<T, any>
+) {
     dc.onDataChanged((data) => wc.setOriginalData(data));
 }
 
-function gardenBinder(gc: Test, wc: WorkspaceController<unknown>) {
+function gardenBinder(gc: Test, wc: WorkspaceController<unknown, any>) {
     wc.onFilteredDataChanged((data) => gc.setData(data as any));
     const old = gc.clickEvents.onClickItem;
 
@@ -211,7 +207,7 @@ function gardenBinder(gc: Test, wc: WorkspaceController<unknown>) {
     };
 }
 
-function gridBinder<T = unknown>(gc: GridController<T>, wc: WorkspaceController<T>) {
+function gridBinder<T = unknown>(gc: GridController<T>, wc: WorkspaceController<T, any>) {
     wc.onFilteredDataChanged((data) => {
         gc.rowData = data;
     });
