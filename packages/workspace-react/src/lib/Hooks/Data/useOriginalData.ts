@@ -6,7 +6,7 @@ import { useWorkspaceController } from '../useWorkspaceController';
  * @returns Original data as a state
  */
 export function useOriginalData() {
-    const { originalData, onOriginalDataChanged } = useWorkspaceController();
+    const { data: originalData, onDataChanged: onOriginalDataChanged } = useWorkspaceController();
     const [data, setData] = useState(originalData);
 
     useEffect(() => {

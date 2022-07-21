@@ -1,6 +1,5 @@
 import { Controller } from './types';
 import { createWorkspaceController } from './workspace-controller';
-// const mocFunction = jest.fn();
 
 interface IMockController {
     id: string;
@@ -73,8 +72,8 @@ workspaceController.addController(controller);
 describe('workspaceController', () => {
     it('should have set mocData to originalData', () => {
         workspaceController.notifyOnClick();
-        workspaceController.onOriginalDataChanged((data) => {
-            expect(workspaceController.originalData).toEqual(
+        workspaceController.onDataChanged((data) => {
+            expect(workspaceController.data).toEqual(
                 workspaceController.controllers.mockController?.getData()
             );
             expect(data).toEqual(workspaceController.controllers.mockController?.getData());
@@ -90,5 +89,16 @@ describe('workspaceController', () => {
         };
         expect(setup).toThrow(Error);
         expect(setup).toThrow('Controller already exist!');
+    });
+    it('should set context', () => {
+        expect(workspaceController.context).toBe(undefined);
+        workspaceController.onClick(() => {
+            workspaceController.context = { id: 'mockId', title: 'mockTitle' };
+        });
+        workspaceController.notifyOnClick();
+
+        expect(workspaceController.context?.id).toBe('mockId');
+        expect(workspaceController.context?.title).toBe('mockTitle');
+        expect(workspaceController.context).not.toBe(undefined);
     });
 });

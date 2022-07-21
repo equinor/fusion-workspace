@@ -9,7 +9,7 @@ export function dataSourceConfig<TData, TControllers, TContext>(
     wc: FusionWorkspaceController<TData, TControllers, TContext>
 ) {
     dc.onDataChanged((data: TData[]) => {
-        wc.setOriginalData(data);
+        wc.setData(data);
     });
 }
 
@@ -38,7 +38,7 @@ export function filterConfiguration<TData, TControllers, TContext>(
         wc.setFilteredData(newData);
     };
 
-    wc.onOriginalDataChanged((data) => {
+    wc.onDataChanged((data) => {
         fc.setData(data);
         fc.createFilterValues();
         fc.filter();

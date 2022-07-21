@@ -1,13 +1,12 @@
 export interface WorkspaceController<TData, TControllers, TOnClick, TError, TContext> {
     /** Data supplied to the workspace */
-    originalData: TData[];
+    data: TData[];
     /** Data that passed the active filters */
     filteredData: TData[];
     /** Controllers registered */
     controllers: TControllers;
     /** Placeholder for user to add its custom data */
     context?: TContext;
-
     /**
      * Adds a controller to the workspace controllers
      * @param controller
@@ -19,7 +18,7 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      * Setter for original data
      * @param data
      */
-    setOriginalData(newData: TData[], preventCallbacks?: boolean): void;
+    setData(newData: TData[], preventCallbacks?: boolean): void;
     /**
      * Function for setting the filtered data sett and calling the on filter callback with the updated data sett.
      * @param {TData[]} filteredData Filtered data
@@ -32,7 +31,7 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      * @param {OnDataChangedCallback<TData>} callback
      * @memberof WorkspaceController
      */
-    onOriginalDataChanged(
+    onDataChanged(
         callback: OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
     ): OnCallbackSet;
     /**
@@ -81,7 +80,7 @@ export interface WorkspaceControllerInternal<TData, TControllers, TOnClick, TErr
         OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
     >[];
     /** Callbacks to be fired when original data changes */
-    onOriginalDataChangedCallbacks: Callback<
+    onDataChangedCallbacks: Callback<
         OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
     >[];
     /** Callbacks to be fired when an onclick event happens */

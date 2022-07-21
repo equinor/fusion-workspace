@@ -1,3 +1,9 @@
+import { addController } from './Function/addController';
+import { setFilteredData, setOriginalData } from './Function/data';
+import { throwError } from './Function/error';
+import { onClick, onDataChanged, onError, onFiletedDataChanges } from './Function/events';
+import { notifyOnClick } from './Function/notifyOnClick';
+
 import {
     Controller,
     OnCallbackSet,
@@ -5,9 +11,21 @@ import {
     OnDataChangedCallback,
     WorkspaceController,
     WorkspaceControllerInternal,
-    WorkspaceErrorCallback,
+    WorkspaceErrorCallback
 } from './types';
 
+/**
+ * ### Workspace Controller
+ * The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
+ *
+ * @export
+ * @template TData Data type of the created workspace
+ * @template TControllers Type of Controllers added to workspace
+ * @template TOnClick Type of click Events added to workspace
+ * @template TError Error type.
+ * @template TContext Custom Context.
+ * @return {*}  { WorkspaceController<TData, TControllers, TOnClick, TError, TContext> }
+ */
 export function createWorkspaceController<
     TData,
     TControllers extends Record<string, any>,
@@ -15,14 +33,6 @@ export function createWorkspaceController<
     TError = any,
     TContext = any
 >(): WorkspaceController<TData, TControllers, TOnClick, TError, TContext> {
-    /**
-     * Internal Function for creating unique id
-     * @memberof createWorkspaceController
-     */
-    const generateUniqueId = (): string => {
-        return (Math.random() * 16).toString();
-    };
-
     const workspaceController: WorkspaceControllerInternal<
         TData,
         TControllers,
@@ -31,123 +41,76 @@ export function createWorkspaceController<
         TContext
     > = {
         controllers: {} as TControllers,
-        originalData: [],
+        data: [],
         filteredData: [],
         context: undefined,
         onFilteredDataChangedCallbacks: [],
-        onOriginalDataChangedCallbacks: [],
+        onDataChangedCallbacks: [],
         onClickCallbacks: [],
         onErrorCallbacks: [],
         addController<TController, WSController>(
             controller: Controller<TController, WSController>
         ) {
-            if (workspaceController.controllers[controller.name]) {
-                throw new Error('Controller already exist!');
-            }
-
-            workspaceController.controllers = {
-                ...workspaceController.controllers,
-                [controller.name]: controller.controller as TController,
-            };
-
-            controller.config &&
-                controller.config(
-                    controller.controller,
-                    workspaceController as unknown as WSController
-                );
+            addController<
+                TData,
+                TController,
+                WSController,
+                TControllers,
+                TOnClick,
+                TError,
+                TContext
+            >(workspaceController, controller);
         },
-        setOriginalData(data: TData[], preventCallbacks?: boolean) {
-            this.originalData = data;
-            if (!preventCallbacks) {
-                workspaceController.onOriginalDataChangedCallbacks.forEach(({ callback }) =>
-                    callback(data, workspaceController as any)
-                );
-            }
+        setData(data: TData[], preventCallbacks?: boolean) {
+            setOriginalData<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                data,
+                preventCallbacks
+            );
         },
-        onOriginalDataChanged(
+        onDataChanged(
             callback: OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
         ): OnCallbackSet {
-            const id = generateUniqueId();
-            workspaceController.onOriginalDataChangedCallbacks.push({
-                callback,
-                id,
-            });
-            return {
-                id,
-                unSubscribe: () => {
-                    workspaceController.onOriginalDataChangedCallbacks =
-                        workspaceController.onOriginalDataChangedCallbacks.filter(
-                            (s) => s.id !== id
-                        );
-                },
-            };
+            return onDataChanged<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                callback
+            );
         },
         onFilteredDataChanged(
             callback: OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
         ): OnCallbackSet {
-            const id = generateUniqueId();
-            workspaceController.onFilteredDataChangedCallbacks.push({ callback, id });
-            return {
-                id,
-                unSubscribe: () => {
-                    workspaceController.onFilteredDataChangedCallbacks =
-                        workspaceController.onFilteredDataChangedCallbacks.filter(
-                            (s) => s.id !== id
-                        );
-                },
-            };
+            return onFiletedDataChanges<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                callback
+            );
         },
-
         setFilteredData(data: TData[], preventCallbacks?: boolean) {
-            workspaceController.filteredData = data;
-            if (!preventCallbacks) {
-                workspaceController.onFilteredDataChangedCallbacks.forEach(({ callback }) =>
-                    callback(workspaceController.filteredData, workspaceController as any)
-                );
-            }
+            setFilteredData<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                data,
+                preventCallbacks
+            );
         },
         notifyOnClick(ev: TOnClick) {
-            workspaceController.onClickCallbacks.forEach((s) =>
-                s.callback(ev, workspaceController as any)
-            );
+            notifyOnClick<TData, TControllers, TOnClick, TError, TContext>(workspaceController, ev);
         },
         onClick(
             callback: OnClickCallback<TData, TControllers, TOnClick, TError, TContext>
         ): OnCallbackSet {
-            const id = generateUniqueId();
-            workspaceController.onClickCallbacks.push({
-                callback,
-                id,
-            });
-
-            return {
-                id,
-                unSubscribe: () => {
-                    workspaceController.onClickCallbacks =
-                        workspaceController.onClickCallbacks.filter((s) => s.id !== id);
-                },
-            };
+            return onClick<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                callback
+            );
         },
         onError(callback: WorkspaceErrorCallback<TData, TControllers, TOnClick, TError, TContext>) {
-            const id = generateUniqueId();
-            workspaceController.onErrorCallbacks.push({
-                callback,
-                id,
-            });
-
-            return {
-                id,
-                unSubscribe: () => {
-                    workspaceController.onClickCallbacks =
-                        workspaceController.onClickCallbacks.filter((s) => s.id !== id);
-                },
-            };
+            return onError<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                callback
+            );
         },
 
         throwError(error: TError) {
-            workspaceController.onErrorCallbacks.forEach((s) =>
-                s.callback(error, workspaceController as any)
-            );
+            throwError<TData, TControllers, TOnClick, TError, TContext>(workspaceController, error);
         },
     };
     return workspaceController;
