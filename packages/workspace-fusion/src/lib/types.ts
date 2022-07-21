@@ -1,9 +1,9 @@
 import { GridController } from '@equinor/ag-grid';
 import { DataSourceController, FetchResponseAsync, ResponseParserAsync } from '@equinor/datasource';
-import { FilterController } from '@equinor/filter';
-import { GardenController } from '@equinor/garden';
+import { FilterConfiguration, FilterController } from '@equinor/filter';
+import { GardenConfig, GardenController } from '@equinor/garden';
 import { SidesheetController } from '@equinor/sidesheet';
-import { WorkspaceController } from '@equinor/workspace-core';
+import { ReactWorkspaceController } from '@equinor/workspace-react';
 
 export interface GardenClickEvent<T> {
     type: 'garden';
@@ -29,7 +29,7 @@ export interface FusionWorkspaceControllers<TData> {
 
 export interface FusionWorkspaceError {}
 
-export type FusionWorkspaceBase<TData, TControllers, TContext> = WorkspaceController<
+export type FusionWorkspaceBase<TData, TControllers, TContext> = ReactWorkspaceController<
     TData,
     TControllers,
     ClickEvent<TData>,
@@ -40,6 +40,14 @@ export type FusionWorkspaceBase<TData, TControllers, TContext> = WorkspaceContro
 export type DataSourceConfigurator<TData, TControllers, TContext> = (
     workspace: FusionWorkspaceBase<TData, TControllers, TContext>
 ) => DataSourceConfig<TData>;
+
+export type GardenConfigurator<TData, TControllers, TContext> = (
+    workspace: FusionWorkspaceBase<TData, TControllers, TContext>
+) => GardenConfig<TData>;
+
+export type FilterConfigurator<TData, TControllers, TContext> = (
+    workspace: FusionWorkspaceBase<TData, TControllers, TContext>
+) => FilterConfiguration<TData>;
 
 export interface DataSourceConfig<TData> {
     dataSource: FetchResponseAsync;
@@ -59,7 +67,7 @@ export interface FusionWorkspaceController<TData, TControllers, TContext>
         configurator: DataSourceConfigurator<TData, TControllers, TContext>
     ) => FusionWorkspaceController<TData, TControllers, TContext>;
     addFilter: (
-        configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
+        configurator?: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
     ) => FusionWorkspaceController<TData, TControllers, TContext>;
     addSideSheet: (
         configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void

@@ -1,9 +1,5 @@
 import { Button } from '@equinor/eds-core-react';
-import {
-    createFusionWorkspace,
-    FusionWorkspaceController,
-    FusionWorkspaceControllers
-} from '@equinor/workspace-fusion';
+import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -70,12 +66,13 @@ const dataSource = () => ({
 });
 
 export function TestWorkspaceApp() {
-    const ws = createFusionWorkspace<any, FusionWorkspaceControllers<any>, any>(
-        (workspace: FusionWorkspaceController<any, FusionWorkspaceControllers<any>, any>) => {
+    const ws = createFusionWorkspace(
+        (workspace) => {
             workspace.addDataSource(dataSource);
+            workspace.addFilter();
             return workspace;
         },
-        {}
+        { test: 'string' }
     );
 
     return (

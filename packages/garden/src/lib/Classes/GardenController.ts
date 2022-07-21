@@ -67,7 +67,7 @@ type FieldSettings<T> = Partial<Record<string | keyof T, FieldSetting<T>>>;
 type CustomGroupByKeys = Record<string, unknown>;
 type CustomState = Record<string, unknown>;
 
-interface MandatoryConfig<T> {
+export interface MandatoryConfig<T> {
     data: T[];
     objectIdentifier: Key<T>;
     nodeLabelCallback: NodeLabelCallback<T>;
@@ -76,6 +76,8 @@ interface MandatoryConfig<T> {
     customGroupByKeys?: CustomGroupByKeys;
     clickEvents?: OnClickEvents<T>;
 }
+
+export type GardenConfig<T> = MandatoryConfig<T>;
 
 type NodeLabelCallback<T> = (item: T, controller: GardenController<T>) => string;
 

@@ -40,7 +40,7 @@ export function reactWorkspaceController<
         TContext
     > = merge(createWorkspaceController<TData, TControllers, TOnClick, TError, TContext>(), {
         tabs: [],
-        activeTab: undefined,
+        activeTab: 'garden',
         onTabChangedCallbacks: [],
         addTab: <TController, WSController>(tab: Tab<TController, WSController>) => {
             reactWorkspaceController.tabs.push(tab as Tab<unknown, unknown>);
