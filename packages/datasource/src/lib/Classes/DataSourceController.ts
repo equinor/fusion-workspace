@@ -1,4 +1,4 @@
-import { Callback, OnCallbackSet } from '@equinor/ws-core-old';
+import { Callback, OnCallbackSet } from '@equinor/workspace-core';
 import { defaultResponseParser } from '../Functions';
 
 export type FetchResponseAsync = (signal?: AbortSignal) => Promise<Response>;

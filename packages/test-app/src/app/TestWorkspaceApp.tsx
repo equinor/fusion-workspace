@@ -1,6 +1,6 @@
 import { Button } from '@equinor/eds-core-react';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { Workspace } from '@equinor/workspace-react-old';
+import { Workspace } from '@equinor/workspace-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import styled from 'styled-components';

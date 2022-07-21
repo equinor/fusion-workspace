@@ -1,6 +1,6 @@
-import { DataSourceController } from '@equinor/datasource';
-import { FilterController } from '@equinor/filter-old';
 import { SidesheetController } from '@equinor/sidesheet';
+import { DataSourceController } from '@equinor/workspace-data-source';
+import { FilterController } from '@equinor/workspace-filter';
 
 import { createContext } from 'react';
 import { ReactWorkspaceController } from '../../Types/types';
