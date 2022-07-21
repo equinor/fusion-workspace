@@ -4,6 +4,26 @@
     "projectType": "library",
     "tags": [],
     "targets": {
+        "build": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/garden",
+                "tsConfig": "packages/garden/tsconfig.lib.json",
+                "project": "packages/garden/package.json",
+                "entryFile": "packages/garden/src/index.ts",
+                "external": ["react/jsx-runtime"],
+                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+                "compiler": "babel",
+                "assets": [
+                    {
+                        "glob": "packages/garden/README.md",
+                        "input": ".",
+                        "output": "."
+                    }
+                ]
+            }
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
