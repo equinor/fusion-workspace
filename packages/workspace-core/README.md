@@ -1,31 +1,85 @@
-# workspace-core
+# Workspace Core
 
-This library was generated with [Nx](https://nx.dev).
+[![Version](https://img.shields.io/npm/v/@equinor/workspace-core.svg)](https://npmjs.org/package/@equinor/workspace-core)
+[![Downloads/week](https://img.shields.io/npm/dw/@equinor/workspace-core.svg)](https://npmjs.org/package/@equinor/workspace-core)
+[![License](https://img.shields.io/npm/l/@equinor/workspace-core.svg)](https://github.com/equinor/fusion-workspace/blob/master/package.json)
+[![Sisze](https://img.shields.io/bundlephobia/min/@equinor/workspace-core)](https://npmjs.org/package/@equinor/workspace-core)
 
-## Building
 
-Run `nx build workspace-core` to build the library.
+- [Workspace Core](#workspace-core)
+  - [Install from NPM](#install-from-npm)
+  - [Workspace Controller](#workspace-controller)
+    - [Controllers](#controllers)
+    - [Middleware/Binders](#middlewarebinders)
+    - [Context](#context)
+    - [Workspace Events and functions](#workspace-events-and-functions)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
 
-## Running unit tests
+## Install from NPM
 
-Run `nx test workspace-core` to execute the unit tests via [Jest](https://jestjs.io).
-
+```sh-session
+npm install @equinor/workspace-core --save
+```
 
 ## Workspace Controller
 
+```TS
+import { createWorkspaceController } from "@equinor/workspace-core"
+
+const workspaceController = createWorkspaceController();
+```
+
 The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
 
-- Controllers
-  - Controller
-  - Config
-  - Name
-- Middleware/Binders
-  - Config
-- Context (Not to be confused with fusion context)
-- Workspace Events
-- Source Data
-- Filtered Data
-- Persist
+### Controllers
+
+A collection of building blocks allows the creation of a workspace. And the building blocks themselves are interchangeable and will be customized toward the workspaces needs. `Controllers` are the actuators of the workspace; nothing happens without a controller. The goal is to create many small and specific controllers that do one thing well. `Middleware` will enable binding them together and unlocking endless possibilities.
+
+```TS
+
+const controller = {
+    name: 'dataSource',
+    controller: dataSourceController,
+    config: (dc, ws) => {
+        dc.onDataChanged(data) => {
+          wc.setData(data);
+        });
+    },
+};
+
+const workspaceController = createWorkspaceController();
+
+workspaceController.addController(controller)
+
+```
+
+### Middleware/Binders
+
+Controllers are supposed to be 100% decoupled from each other. Binders/middleware is the translator that connects one or multiple controllers. This ensures that all controllers can be used standalone and ensures high flexibility with low complexity.
+
+### Context
+
+Reserved slot for the developer(you) to define and utilize. Most common use for it is to share data from one controller to another. Through context and middleware/binders.
+
+### Workspace Events and functions
+
+The workspace controller consists of the "Core" events that most controllers will depend on in some form. Core Workspace events are the following.
+
+- onError
+- onDataChange
+- onFilterDataChange
+- onClick
+
+Core Functions:
+
+- setData
+- setFilteredData
+- throwError
+- addController
+- addMiddleware
+
+Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
 
 Here is an example of use se figure1:
 
@@ -71,36 +125,14 @@ flowchart LR
     
 ```
 
-> Figure 1. Workspace Controller connections for Fusion Workspace Framework 
+> Figure 1. Workspace Controller connections for Fusion Workspace Framework
 
-### Controllers
+This library was generated with [Nx](https://nx.dev).
 
-A collection of building blocks allows the creation of a workspace. And the building blocks themselves are interchangeable and will be customized toward the workspaces needs. `Controllers` are the actuators of the workspace; nothing happens without a controller. The goal is to create many small and specific controllers that do one thing well. `Middleware` will enable binding them together and unlocking endless possibilities.
+## Building
 
-### Middleware/Binders
+Run `nx build workspace-core` to build the library.
 
-Controllers are supposed to be 100% decoupled from each other. Binders/middleware is the translator that connects one or multiple controllers. This ensures that all controllers can be used standalone and ensures high flexibility with low complexity.
+## Running unit tests
 
-### Context
-
-Reserved slot for the developer(you) to define and utilize. Most common use for it is to share data from one controller to another. Through context and middleware/binders.
-
-### Workspace Events and functions
-
-The workspace controller consists of the "Core" events that most controllers will depend on in some form. Core Workspace events are the following.
-
-- onError
-- onDataChange
-- onFilterDataChange
-- onClick
-
-Core Functions:
-
-- setData
-- setFilteredData
-- throwError
-- addController
-- addMiddleware
-
-Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
-
+Run `nx test workspace-core` to execute the unit tests via [Jest](https://jestjs.io).
