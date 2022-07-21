@@ -1,6 +1,8 @@
-import { DataSourceController } from '@equinor/datasource';
-import { FilterController } from '@equinor/filter';
-import { GardenController } from '@equinor/garden';
+// import { DataSourceController } from '@equinor/datasource';
+// import { FilterController } from '@equinor/filter';
+// import { GardenController } from '@equinor/garden';
+import { FilterController } from '@equinor/filter-old';
+import { DataSourceController } from '@equinor/workspace-data-source';
 import { dataSourceConfig, filterConfiguration, gardenConfig } from './config';
 import { DataSourceConfigurator, FusionWorkspaceController, GardenConfigurator } from './types';
 

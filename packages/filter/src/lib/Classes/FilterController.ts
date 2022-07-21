@@ -3,14 +3,14 @@ import {
     doesItemPassFilter,
     generateFilterValues,
     searchForIncludes,
-    searchForStartsWith
+    searchForStartsWith,
 } from '../Functions';
 import {
     FilterGroup,
     FilterItemCount,
     FilterSearchActive,
     ValueFormatterFilter,
-    ValueFormatterFunction
+    ValueFormatterFunction,
 } from '../Hooks';
 import { FilterValueType } from '../Types';
 import { filterGroupExists } from '../Utils';

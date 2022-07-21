@@ -1,6 +1,7 @@
-import { DataSourceController } from '@equinor/datasource';
-import { FilterController } from '@equinor/filter';
 import { GardenController } from '@equinor/garden';
+
+import { DataSourceController } from '@equinor/workspace-data-source';
+import { FilterController } from '@equinor/workspace-filter';
 import { FusionWorkspaceController } from './types';
 
 export function dataSourceConfig<TData, TControllers, TContext>(

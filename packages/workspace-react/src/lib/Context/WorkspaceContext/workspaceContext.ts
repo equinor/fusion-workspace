@@ -1,5 +1,5 @@
 import { DataSourceController } from '@equinor/datasource';
-import { FilterController } from '@equinor/filter';
+import { FilterController } from '@equinor/filter-old';
 import { SidesheetController } from '@equinor/sidesheet';
 
 import { createContext } from 'react';

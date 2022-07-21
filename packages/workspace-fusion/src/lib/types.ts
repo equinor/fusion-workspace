@@ -1,9 +1,14 @@
 import { GridController } from '@equinor/ag-grid';
-import { DataSourceController, FetchResponseAsync, ResponseParserAsync } from '@equinor/datasource';
-import { FilterConfiguration, FilterController } from '@equinor/filter';
+
 import { GardenConfig, GardenController } from '@equinor/garden';
 import { SidesheetController } from '@equinor/sidesheet';
-import { ReactWorkspaceController } from '@equinor/workspace-react-old';
+import {
+    DataSourceController,
+    FetchResponseAsync,
+    ResponseParserAsync
+} from '@equinor/workspace-data-source';
+import { FilterConfiguration, FilterController } from '@equinor/workspace-filter';
+import { ReactWorkspaceController } from '@equinor/workspace-react';
 
 export interface GardenClickEvent<T> {
     type: 'garden';
