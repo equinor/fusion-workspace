@@ -1,62 +1,90 @@
 import { Button } from '@equinor/eds-core-react';
-import { GridController } from '@workspace/ag-grid';
-import { DataSourceController } from '@workspace/datasource';
-import { FilterController } from '@workspace/filter';
-import { GardenController } from '@workspace/garden';
-import { SidesheetController } from '@workspace/sidesheet';
-import { WorkspaceController } from '@workspace/workspace-core-old';
-import { FusionWorkspaceController, Workspace } from '@workspace/workspace-react';
+import {
+    createFusionWorkspace,
+    FusionWorkspaceController,
+    FusionWorkspaceControllers
+} from '@equinor/workspace-fusion';
+import { Workspace } from '@equinor/workspace-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import { useRef } from 'react';
 import styled from 'styled-components';
-import { DefaultInterface, mockData } from './makeMockData';
 
-type Test = GardenController<DefaultInterface>;
+// type Test = GardenController<DefaultInterface>;
 
-function makeGardenController() {
-    const controller = new GardenController({
-        data: mockData(),
-        initialGrouping: {
-            horizontalGroupingAccessor: 'state',
-            verticalGroupingKeys: [],
-        },
-        nodeLabelCallback: (s) => s.sequenceNumber,
-        objectIdentifier: 'id',
-    });
-    return controller;
-}
+// function makeGardenController() {
+//     const controller = new GardenController({
+//         data: mockData(),
+//         initialGrouping: {
+//             horizontalGroupingAccessor: 'state',
+//             verticalGroupingKeys: [],
+//         },
+//         nodeLabelCallback: (s) => s.sequenceNumber,
+//         objectIdentifier: 'id',
+//     });
+//     return controller;
+// }
 
-function makeGridController() {
-    const controller = new GridController();
-    controller.columnDefs = [
-        { field: 'id' },
-        { field: 'title' },
-        { field: 'description' },
-        { field: 'sequenceNumber' },
-        { field: 'serialNumber' },
-    ];
-    controller.gridOptions = {
-        rowHeight: 50,
-    };
-    return controller;
-}
+// function makeGridController() {
+//     const controller = new GridController();
+//     controller.columnDefs = [
+//         { field: 'id' },
+//         { field: 'title' },
+//         { field: 'description' },
+//         { field: 'sequenceNumber' },
+//         { field: 'serialNumber' },
+//     ];
+//     controller.gridOptions = {
+//         rowHeight: 50,
+//     };
+//     return controller;
+// }
+
+const dataSource = () => ({
+    dataSource: async () => {
+        return {
+            ok: true,
+            json: () => [
+                {
+                    id: 1,
+                    title: 'title1',
+                    description: 'this is a description',
+                },
+                {
+                    id: 2,
+                    title: 'title2',
+                    description: 'this is a description',
+                },
+                {
+                    id: 3,
+                    title: 'title3',
+                    description: 'this is a description',
+                },
+                {
+                    id: 4,
+                    title: 'title4',
+                    description: 'this is a description',
+                },
+            ],
+        } as unknown as Response;
+    },
+});
 
 export function TestWorkspaceApp() {
-    const controller = useRef<WorkspaceController<unknown, any>>(InitThisSpecificWorkspace());
-
-    const getFilterController = () =>
-        controller.current.controllers.find((s) => s.name === 'Filter')?.controller;
+    const ws = createFusionWorkspace<any, FusionWorkspaceControllers<any>, any>(
+        (workspace: FusionWorkspaceController<any, FusionWorkspaceControllers<any>, any>) => {
+            workspace.addDataSource(dataSource);
+            return workspace;
+        },
+        {}
+    );
 
     return (
         <div>
             <DebugRow>
-                <Button onClick={() => console.log(controller)}>Log workspace api</Button>
+                <Button onClick={() => console.log(ws)}>Log workspace api</Button>
                 <Button
                     onClick={() => {
-                        const controller =
-                            getFilterController() as unknown as FilterController<unknown>;
-                        controller.setFilterState([
+                        ws?.controllers.filter.setFilterState([
                             { name: 'TEst', values: [883, 898, 895, 123, 124, 125, 126, 127] },
                         ]);
                     }}
@@ -65,25 +93,9 @@ export function TestWorkspaceApp() {
                 </Button>
             </DebugRow>
 
-            <Workspace controller={makeFusionController<unknown>(controller.current)} />
+            <Workspace controller={ws} />
         </div>
     );
-}
-
-function makeFusionController<T, TOnClick = any, TError = any, TContext = any>(
-    workspaceController: WorkspaceController<T, any, TOnClick, TError, TContext>
-): FusionWorkspaceController<T, TOnClick, TError, TContext> {
-    const { controllers } = workspaceController;
-    const controller = {
-        dataSource: controllers['DataSource'] as DataSourceController<T>,
-        filter: controllers['Filter'] as FilterController<T>,
-        garden: controllers['Garden'] as GardenController<T>,
-        grid: controllers['Grid'] as GridController<T>,
-        sidesheet: controllers['Sidesheet'] as SidesheetController<T>,
-        ...workspaceController,
-    };
-
-    return controller as FusionWorkspaceController<T, TOnClick, TError, TContext>;
 }
 
 const DebugRow = styled.div`
@@ -91,131 +103,90 @@ const DebugRow = styled.div`
     gap: 0.2em;
 `;
 
-const defaultFetch = async () => {
-    return await fetch(
-        'https://app-ppo-scope-change-control-api-dev.azurewebsites.net/api/scope-change-requests',
-        {
-            headers: {
-                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJhcGk6Ly9kZjcxZjViNS1mMDM0LTQ4MzMtOTczZi1hMzZjMmQ1ZjllMzEiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8zYWE0YTIzNS1iNmUyLTQ4ZDUtOTE5NS03ZmNmMDViNDU5YjAvIiwiaWF0IjoxNjU3Mjg0MzI3LCJuYmYiOjE2NTcyODQzMjcsImV4cCI6MTY1NzI4OTI0MiwiYWNyIjoiMSIsImFpbyI6IkFWUUFxLzhUQUFBQUJ4OU5LN0pQd1Q4SFczVHlUeXZIeUdxeUcvMVp2dFR5TlBQY1VCNGJmTk1vNjQ3Q3dPV0xJZ0ZlUEhVeUFjMGN0a1BLTkxadEN5a2R1Unp2NFM4WTl2Wm9TUjljc2RxU3VzRFhKM0M2VXdzPSIsImFtciI6WyJwd2QiLCJyc2EiLCJtZmEiXSwiYXBwaWQiOiJkZmMzYTU4ZC00NzFlLTQ0OGQtYWRkOS1hMDIwMTJmYjFhOGQiLCJhcHBpZGFjciI6IjAiLCJkZXZpY2VpZCI6IjM0NDllOWM1LWFjMGQtNDRmMi05ODNlLWIzMzQ1OWMxNTBmYSIsImZhbWlseV9uYW1lIjoiRWlrYWFzIiwiZ2l2ZW5fbmFtZSI6Ikd1c3RhdiIsImlwYWRkciI6Ijg0LjIxMC4xOTcuODgiLCJuYW1lIjoiR3VzdGF2IEVpa2FhcyIsIm9pZCI6ImRmZWFhOGRlLTkyZDItNGVlNC1iMTcxLTZjYWJhMGMxNjNiZiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMjA1MjMzODgtMTA4NTAzMTIxNC03MjUzNDU1NDMtMjYxNjgxMyIsInJoIjoiMC5BUXNBTmFLa091SzIxVWlSbFhfUEJiUlpzTFgxY2Q4MDhETklsei1qYkMxZm5qRUNBTlUuIiwic2NwIjoiRmlsZXMucmVhZHdyaXRlIiwic3ViIjoiaU9fMzhPakFfUGFnQjcyaVZiOEVMN3ZBMG9xZURlaU5ibm9Hc3NLZlJ6ayIsInRpZCI6IjNhYTRhMjM1LWI2ZTItNDhkNS05MTk1LTdmY2YwNWI0NTliMCIsInVuaXF1ZV9uYW1lIjoiR1VFSUBlcXVpbm9yLmNvbSIsInVwbiI6IkdVRUlAZXF1aW5vci5jb20iLCJ1dGkiOiJzNzhvSmRVb0owV2JLQl9VOFBVTUFBIiwidmVyIjoiMS4wIn0.pM8MlZXyCgCXAtJ3bpK1sMhokHnLhee_PrMZhEvWYsFyCzZZDHWvWxid703TY5ptbJjlue3559EDFG4DX1LWHfktkuNHxPU1hZChQB9ShZaWctbEVFjk2QyYYyNn5kr20wZCRzWbuNXx6P-1JvpH9QR-BlZkq48yva-PW0g9xoM2DkLsjxkkCenFliDDZdtUCLhHx8La4KWWRbni7yKN77pHysOhT9fW8rckVY2SVCR3MrDz4HV8jolb6PbxcetsKi1O_RJTR7QODedvPx7Qf6Zpotsa66yYREA8I_T8-WRr-VuNk3pIj_kniRPobMyNAZGotMhRR1hzQGEK39mtkw`, // This is the important part, the auth header
-            },
-        }
-    );
-};
+// function InitThisSpecificWorkspace() {
+//     //Base workspace controller
+//     const controller = new WorkspaceController<
+//         unknown,
+//         any,
+//         ClickEvent<unknown>,
+//         any,
+//         { persist: () => void }
+//     >();
+//     // debugPlugin(controller);
 
-type ClickEvent<T> = GardenClickEvent<T> | GridClickEvent<T>;
+//     controller.addController({
+//         controller: new SidesheetController(),
+//         name: 'Sidesheet',
+//         config: (sc, wc) => {
+//             wc.onClick((ev) => {
+//                 sc.setItem(ev.item);
+//                 sc.setSidesheetState(true);
+//             });
+//         },
+//     });
 
-interface GardenClickEvent<T> {
-    type: 'Garden';
-    item: T;
-    controller: GardenController<T>;
-}
+//     const filterController = new FilterController();
+//     filterController.addValueFormatters([
+//         { name: 'TEst', valueFormatter: (s) => (s as any)?.['sequenceNumber'] },
+//     ]);
 
-interface GridClickEvent<T> {
-    type: 'Grid';
-    item: T;
-    controller: GridController<T>;
-}
+//     controller.addController({
+//         name: 'Filter',
+//         controller: filterController,
+//         config: (fc, wc) => {
+//             const old = fc.setFilteredData;
+//             fc.setFilteredData = (newData) => {
+//                 old(newData);
+//                 wc.setFilteredData(newData);
+//             };
 
-function InitThisSpecificWorkspace() {
-    //Base workspace controller
-    const controller = new WorkspaceController<
-        unknown,
-        any,
-        ClickEvent<unknown>,
-        any,
-        { persist: () => void }
-    >();
-    // debugPlugin(controller);
+//             wc.onOriginalDataChanged(() => {
+//                 fc.data = wc.originalData;
+//                 fc.createFilterValues();
+//                 fc.filter();
+//             });
+//         },
+//     });
 
-    /**
-     * Add datasource controller to workspace controller
-     */
-    controller.addController({
-        name: 'DataSource',
-        controller: new DataSourceController(defaultFetch),
-        config: dataSourceBinder,
-    });
+//     /**
+//      * Add tabs
+//      */
 
-    controller.addController({
-        controller: new SidesheetController(),
-        name: 'Sidesheet',
-        config: (sc, wc) => {
-            wc.onClick((ev) => {
-                sc.setItem(ev.item);
-                sc.setSidesheetState(true);
-            });
-        },
-    });
+//     controller.addTab<Test>({
+//         controller: makeGardenController(),
+//         name: 'Garden',
+//         config: gardenBinder,
+//     });
+//     controller.setActiveTab('Garden');
+//     controller.addTab({
+//         controller: makeGridController(),
+//         name: 'Grid',
 
-    const filterController = new FilterController();
-    filterController.addValueFormatters([
-        { name: 'TEst', valueFormatter: (s) => (s as any)?.['sequenceNumber'] },
-    ]);
+//         config: gridBinder,
+//     });
 
-    controller.addController({
-        name: 'Filter',
-        controller: filterController,
-        config: (fc, wc) => {
-            const old = fc.setFilteredData;
-            fc.setFilteredData = (newData) => {
-                old(newData);
-                wc.setFilteredData(newData);
-            };
+//     return controller;
+// }
 
-            wc.onOriginalDataChanged(() => {
-                fc.data = wc.originalData;
-                fc.createFilterValues();
-                fc.filter();
-            });
-        },
-    });
+// function gardenBinder(gc: Test, wc: WorkspaceController<unknown, any>) {
+//     wc.onFilteredDataChanged((data) => gc.setData(data as any));
+//     const old = gc.clickEvents.onClickItem;
 
-    /**
-     * Add tabs
-     */
+//     gc.clickEvents.onClickItem = (arg1, arg2) => {
+//         old && old(arg1, arg2);
+//         wc.notifyOnClick({ item: arg1, controller: arg2 });
+//     };
+// }
 
-    controller.addTab<Test>({
-        controller: makeGardenController(),
-        name: 'Garden',
-        config: gardenBinder,
-    });
-    controller.setActiveTab('Garden');
-    controller.addTab({
-        controller: makeGridController(),
-        name: 'Grid',
+// function gridBinder<T = unknown>(gc: GridController<T>, wc: WorkspaceController<T, any>) {
+//     wc.onFilteredDataChanged((data) => {
+//         gc.rowData = data;
+//     });
 
-        config: gridBinder,
-    });
-
-    return controller;
-}
-
-function dataSourceBinder<T = unknown>(
-    dc: DataSourceController<T>,
-    wc: WorkspaceController<T, any>
-) {
-    dc.onDataChanged((data) => wc.setOriginalData(data));
-}
-
-function gardenBinder(gc: Test, wc: WorkspaceController<unknown, any>) {
-    wc.onFilteredDataChanged((data) => gc.setData(data as any));
-    const old = gc.clickEvents.onClickItem;
-
-    gc.clickEvents.onClickItem = (arg1, arg2) => {
-        old && old(arg1, arg2);
-        wc.notifyOnClick({ item: arg1, controller: arg2 });
-    };
-}
-
-function gridBinder<T = unknown>(gc: GridController<T>, wc: WorkspaceController<T, any>) {
-    wc.onFilteredDataChanged((data) => {
-        gc.rowData = data;
-    });
-
-    gc.columnDefs.forEach(
-        (s) =>
-            (s.onCellClicked = (ev) => {
-                wc.notifyOnClick({ type: 'Grid', item: ev.data, controller: gc });
-            })
-    );
-}
+//     gc.columnDefs.forEach(
+//         (s) =>
+//             (s.onCellClicked = (ev) => {
+//                 wc.notifyOnClick({ type: 'Grid', item: ev.data, controller: gc });
+//             })
+//     );
+// }ws

@@ -5,12 +5,12 @@
  */
 export async function defaultResponseParser<T>(res: Response): Promise<T[]> {
     if (!res.ok) {
-        throw 'Failed to get data';
+        throw new Error('Failed to get data');
     }
     const data = await res.json();
 
     if (!Array.isArray(data)) {
-        throw 'Data is not in array format';
+        throw new TypeError('Data is not in array format');
     }
 
     return data as T[];

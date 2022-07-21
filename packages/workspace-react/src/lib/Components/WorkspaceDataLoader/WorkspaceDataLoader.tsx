@@ -13,14 +13,14 @@ interface WorkspaceDataLayerProps {
  * @returns
  */
 
-export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
-    const { dataSource } = useWorkspaceController();
+export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps): JSX.Element {
+    const { controllers } = useWorkspaceController();
 
     /**
      * TODO: Extend the data source controller to have fields from react query like, isloading, error etc etct. Make a hook to mirror state
      * This will allow workspace controller to set isLoading and force loading spinner
      */
-    const { isLoading } = useQuery(['Workspace data'], () => dataSource.fetchData(), {
+    const { isLoading } = useQuery(['Workspace data'], () => controllers.dataSource.fetchData(), {
         refetchOnWindowFocus: false,
     });
 
@@ -28,5 +28,6 @@ export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
         return <WorkspaceLoadingSpinner />;
     }
 
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>;
 }

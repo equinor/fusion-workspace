@@ -1,119 +1,103 @@
-import { GridController } from '@workspace/ag-grid';
+import { DataSourceController } from '@equinor/datasource';
+import { createReactWorkspaceController, ReactWorkspaceController } from '@equinor/workspace-react';
+import { dataSourceConfig } from './config';
 import {
-    DataSourceController,
-    FetchResponseAsync,
-    ResponseParserAsync,
-} from '@workspace/datasource';
-import { GardenController } from '@workspace/garden';
-import { SidesheetController } from '@workspace/sidesheet';
-import { createWorkspaceController, WorkspaceController } from '@workspace/workspace-core-old';
+    ClickEvent,
+    DataSourceConfigurator,
+    FusionWorkspaceController,
+    FusionWorkspaceControllers,
+    FusionWorkspaceError
+} from './types';
 
-interface GardenClickEvent<T> {
-    type: 'garden';
-    item: T;
-    controller: GardenController<T>;
-}
+// export function createFusionWorkspace<
+//     TData,
+//     TControllers extends FusionWorkspaceControllers<TData>,
+//     TContext
+// >(
+//     // setup: (workspaceController: FusionWorkspaceController<TData, TControllers, TContext>) => void,
+//     context: TContext = {} as TContext
+// ): FusionWorkspaceController<TData, TControllers, TContext> {
+//     const ws = createFusionWorkspaceController<TData, TControllers, TContext>(context);
+//     // setup(ws);
+//     return ws;
+// }
 
-interface GridClickEvent<T> {
-    type: 'grid';
-    item: T;
-    controller: GridController<T>;
-}
+// interface Config<TData> {
+//     dataSource?: DataSourceConfig<TData>;
+// }
 
-type ClickEvent<T> = GardenClickEvent<T> | GridClickEvent<T>;
-
-export interface FusionWorkspaceControllers<TData> {
-    dataSource: DataSourceController<TData>;
-    garden: GardenController<TData>;
-    grid: GridController<TData>;
-    sideSheet: SidesheetController<TData>;
-}
-
-export interface FusionWorkspaceError {}
-
-type FusionWorkspaceBase<TData, TControllers, TContext = any> = WorkspaceController<
+export function createFusionWorkspace<
+    TData,
+    TControllers extends FusionWorkspaceControllers<TData>,
+    TContext
+>(
+    setup: (workspaceController: FusionWorkspaceController<TData, TControllers, TContext>) => void,
+    context: TContext = {} as TContext
+): ReactWorkspaceController<
     TData,
     TControllers,
     ClickEvent<TData>,
     FusionWorkspaceError,
     TContext
->;
-
-export interface FusionWorkspace<TData, TControllers, TContext> {
-    workspace: FusionWorkspaceBase<TData, TControllers, TContext>;
-    addGarden: () => FusionWorkspace<TData, TControllers, TContext>;
-    addGrid: () => FusionWorkspace<TData, TControllers, TContext>;
-    addDataSource: (
-        configurator: () => {
-            dataSource: FetchResponseAsync;
-            dataMapper?: ResponseParserAsync<TData>;
+> {
+    /*
+     * Merge properties of two objects
+     */
+    function merge(obj1: any, obj2: any) {
+        for (const p in obj2) {
+            obj1[p] = obj2[p];
         }
-    ) => FusionWorkspace<TData, TControllers, TContext>;
-    addFilter: () => FusionWorkspace<TData, TControllers, TContext>;
-    addSideSheet: () => FusionWorkspace<TData, TControllers, TContext>;
-}
+        return obj1;
+    }
 
-function dataSourceConfig<TData, TControllers, TContext>(
-    dc: DataSourceController<TData>,
-    wc: FusionWorkspaceBase<TData, TControllers, TContext>
-) {
-    dc.onDataChanged((data: TData[]) => wc.setOriginalData(data));
-}
+    const workspaceController: FusionWorkspaceController<TData, TControllers, TContext> = merge(
+        createReactWorkspaceController<
+            TData,
+            TControllers,
+            ClickEvent<TData>,
+            FusionWorkspaceError,
+            TContext
+        >(),
+        {
+            context,
 
-export function createFusionWorkspace<
-    TData,
-    TControllers extends FusionWorkspaceControllers<TData> = any,
-    TContext = any
->(setup: (workspaceController: FusionWorkspace<TData, TControllers, TContext>) => void) {
-    const baseController = createWorkspaceController<
+            addGarden: () => {
+                return workspaceController;
+            },
+            addGrid: () => {
+                return workspaceController;
+            },
+            addDataSource: (
+                configurator: DataSourceConfigurator<TData, TControllers, TContext>
+            ) => {
+                workspaceController.addController<
+                    DataSourceController<TData>,
+                    FusionWorkspaceController<TData, TControllers, TContext>
+                >({
+                    name: 'dataSource',
+                    controller: new DataSourceController(
+                        configurator(workspaceController).dataSource
+                    ),
+                    config: dataSourceConfig,
+                });
+                return workspaceController;
+            },
+            addFilter: () => {
+                return workspaceController;
+            },
+            addSideSheet: () => {
+                return workspaceController;
+            },
+        }
+    );
+
+    setup(workspaceController);
+
+    return workspaceController as unknown as ReactWorkspaceController<
         TData,
         TControllers,
         ClickEvent<TData>,
         FusionWorkspaceError,
         TContext
-    >();
-
-    const controller: FusionWorkspace<TData, TControllers, TContext> = {
-        workspace: baseController,
-        addGarden: () => {
-            return controller;
-        },
-        addGrid: () => {
-            return controller;
-        },
-        addDataSource: (
-            configurator: (workspaceController: FusionWorkspace<TData, TControllers, TContext>) => {
-                dataSource: FetchResponseAsync;
-                dataMapper?: ResponseParserAsync<TData>;
-            }
-        ) => {
-            controller.workspace.addController({
-                name: 'DataSource',
-                controller: new DataSourceController<TData>(configurator(controller).dataSource),
-                config: dataSourceConfig,
-            });
-            return controller;
-        },
-        addFilter: () => {
-            return controller;
-        },
-        addSideSheet: () => {
-            return controller;
-        },
-    };
-
-    setup(controller);
-
-    if (!controller.workspace.controllers.dataSource) {
-        throw Error('No dataSource added');
-    }
-    return controller;
+    >;
 }
-
-createFusionWorkspace<{ test: string }>((ws) => {
-    ws.addDataSource(() => ({
-        dataSource: async (signal) => {
-            return await fetch('api/test', { signal });
-        },
-    }));
-});

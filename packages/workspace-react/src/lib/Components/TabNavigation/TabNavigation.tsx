@@ -6,12 +6,12 @@ import { useWorkspaceController } from '../../Hooks';
  * Allows for switching of tabs
  */
 export function TabNavigation() {
-    const { setActiveTabIndex, tabs } = useWorkspaceController();
+    const { tabs, setActiveTab } = useWorkspaceController();
 
     return (
         <div>
             {tabs.map(({ name }) => (
-                <Button variant="ghost_icon" onClick={() => setActiveTabIndex(name)} key={name}>
+                <Button variant="ghost_icon" onClick={() => setActiveTab(name)} key={name}>
                     {name}
                 </Button>
             ))}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkspaceController } from '../useWorkspaceController';
 
 /**
@@ -12,12 +12,12 @@ export function useFilteredData() {
     const [data, setData] = useState(filteredData);
 
     useEffect(() => {
-        const unsub = onFilteredDataChanged((data) => {
+        const unSubscribe = onFilteredDataChanged((data) => {
             setData(data);
-        }).unsub;
+        }).unSubscribe;
 
         return () => {
-            unsub();
+            unSubscribe();
         };
     }, []);
 

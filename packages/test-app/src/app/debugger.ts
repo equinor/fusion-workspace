@@ -1,8 +1,9 @@
-import { WorkspaceController } from '@workspace/workspace-core-old';
-
-export function debugPlugin(wc: WorkspaceController<unknown>) {
+import { ReactWorkspaceController } from '@equinor/workspace-react';
+export function debugPlugin<TData, TControllers, TOnClick, TError, TContext>(
+    wc: ReactWorkspaceController<TData, TControllers, TOnClick, TError, TContext>
+) {
     console.log(`###### WORKSPACE DEBUG MODULE REGISTERED ######`);
-    wc.onClickCallback((ev) => {
+    wc.onClick((ev) => {
         workspaceLogger('OnClick', ev);
     });
     wc.onError((err) => {

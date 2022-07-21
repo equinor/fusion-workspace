@@ -1,19 +1,15 @@
-import { Sidesheet } from '@workspace/sidesheet';
-import { useWorkspaceController } from '../../Hooks';
+import { Sidesheet } from '@equinor/sidesheet';
 import { WorkspaceTab } from '../';
+import { useWorkspaceController } from '../../Hooks';
 import { StyledWorkspaceBody } from './workspaceBody.styles';
 
 export function WorkspaceBody() {
-    const { sidesheet } = useWorkspaceController();
-
-    if (!sidesheet) {
-        throw 'No sidesheet controller registered';
-    }
+    const { controllers } = useWorkspaceController();
 
     return (
         <StyledWorkspaceBody>
             <WorkspaceTab />
-            <Sidesheet controller={sidesheet} />
+            {controllers.sidesheet && <Sidesheet controller={controllers.sidesheet} />}
         </StyledWorkspaceBody>
     );
 }

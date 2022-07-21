@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkspaceController } from '../useWorkspaceController';
 
 /**
@@ -11,8 +11,7 @@ export function useActiveTab() {
 
     useEffect(() => {
         onTabChanged(setValue);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [onTabChanged]);
 
     return tabs.find((s) => s.name === value);
 }
