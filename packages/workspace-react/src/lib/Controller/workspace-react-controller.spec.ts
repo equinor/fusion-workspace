@@ -1,4 +1,4 @@
-import { Controller } from '@equinor/ws-core-old';
+import { Controller } from '@equinor/workspace-core';
 import { ReactWorkspaceController } from '../Types';
 import { reactWorkspaceController } from './workspace-tab-controller';
 

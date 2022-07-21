@@ -8,12 +8,12 @@ export interface WorkspaceProps<TData, TControllers, TOnClick, TError, TContext>
     controller: ReactWorkspaceController<TData, TControllers, TOnClick, TError, TContext>;
 }
 
-export function Workspace<TData, TControllers, TOnClick, TError, TContext>({
-    controller,
-}: WorkspaceProps<TData, TControllers, TOnClick, TError, TContext>) {
+export function Workspace<TData, TControllers, TOnClick, TError, TContext>(
+    props: WorkspaceProps<TData, TControllers, TOnClick, TError, TContext>
+) {
     return (
         <div>
-            <WorkspaceProviderLayer controller={controller}>
+            <WorkspaceProviderLayer controller={props.controller}>
                 <WorkspaceDataLoader>
                     <WorkspaceHeader />
                     <WorkspaceBody />
