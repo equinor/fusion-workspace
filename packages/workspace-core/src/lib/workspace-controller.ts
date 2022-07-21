@@ -5,7 +5,7 @@ import {
     OnDataChangedCallback,
     WorkspaceController,
     WorkspaceControllerInternal,
-    WorkspaceErrorCallback
+    WorkspaceErrorCallback,
 } from './types';
 
 export function createWorkspaceController<

@@ -1,4 +1,4 @@
-import { ReactWorkspaceController } from '@equinor/workspace-react';
+import { ReactWorkspaceController } from '@equinor/workspace-react-old';
 export function debugPlugin<TData, TControllers, TOnClick, TError, TContext>(
     wc: ReactWorkspaceController<TData, TControllers, TOnClick, TError, TContext>
 ) {

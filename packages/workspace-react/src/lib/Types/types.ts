@@ -1,4 +1,4 @@
-import { Callback, Controller, OnCallbackSet, WorkspaceController } from '@equinor/workspace-core';
+import { Callback, Controller, OnCallbackSet, WorkspaceController } from '@equinor/ws-core-old';
 
 export type OnTabChangedCallback<TData, TControllers, TOnClick, TError, TContext> = (
     to: string | undefined,

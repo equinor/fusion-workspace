@@ -1,4 +1,4 @@
-import { WorkspaceController } from '@equinor/workspace-core';
+import { WorkspaceController } from '@equinor/ws-core-old';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { WorkspaceContext } from '../../Context';
 

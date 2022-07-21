@@ -3,7 +3,7 @@ import { DataSourceController, FetchResponseAsync, ResponseParserAsync } from '@
 import { FilterConfiguration, FilterController } from '@equinor/filter';
 import { GardenConfig, GardenController } from '@equinor/garden';
 import { SidesheetController } from '@equinor/sidesheet';
-import { ReactWorkspaceController } from '@equinor/workspace-react';
+import { ReactWorkspaceController } from '@equinor/workspace-react-old';
 
 export interface GardenClickEvent<T> {
     type: 'garden';

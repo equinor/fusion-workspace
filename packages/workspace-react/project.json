@@ -4,6 +4,26 @@
     "projectType": "library",
     "tags": [],
     "targets": {
+        "build": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/workspace-react",
+                "tsConfig": "packages/workspace-react/tsconfig.lib.json",
+                "project": "packages/workspace-react/package.json",
+                "entryFile": "packages/workspace-react/src/index.ts",
+                "external": ["react/jsx-runtime"],
+                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+                "compiler": "babel",
+                "assets": [
+                    {
+                        "glob": "packages/workspace-react/README.md",
+                        "input": ".",
+                        "output": "."
+                    }
+                ]
+            }
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],

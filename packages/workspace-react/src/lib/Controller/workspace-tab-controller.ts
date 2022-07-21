@@ -4,7 +4,7 @@ import {
     InternalReactWorkspaceController,
     OnTabChangedCallback,
     ReactWorkspaceController,
-    Tab
+    Tab,
 } from '../Types/types';
 
 export function reactWorkspaceController<
