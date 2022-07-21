@@ -1,4 +1,4 @@
-import { WorkspaceControllerInternal } from '../types';
+import { WorkspaceControllerInternal } from '../Types';
 
 export function notifyOnClick<
     TData,

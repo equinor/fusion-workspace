@@ -1,6 +1,5 @@
-import { Controller } from '@equinor/workspace-core';
-import { ReactWorkspaceController } from '../Types';
-import { reactWorkspaceController } from './workspace-tab-controller';
+import { Controller } from '../Types';
+import { createWorkspaceController } from './workspace-controller';
 
 interface IMockController {
     id: string;
@@ -8,7 +7,7 @@ interface IMockController {
 }
 
 interface IMockControllers {
-    mockController: IMockController;
+    mockController?: IMockController;
 }
 
 interface IMockData {
@@ -17,7 +16,7 @@ interface IMockData {
 }
 
 export interface IMockOnClick<T> {
-    type: 'IMockOnClick';
+    type: 'grid';
     item: T;
     controller: IMockController;
 }
@@ -52,16 +51,7 @@ const mockController: IMockController = {
 const controller: Controller<IMockController, any> = {
     name: 'mockController',
     controller: mockController,
-    config: (
-        mockController,
-        ws: ReactWorkspaceController<
-            IMockData,
-            IMockControllers,
-            IMockOnClick<IMockData>,
-            IMockError,
-            IMockContext
-        >
-    ) => {
+    config: (mockController, ws) => {
         ws.onClick(() => {
             ws.setOriginalData(mockController.getData());
             ws.setFilteredData(mockController.getData());
@@ -69,7 +59,7 @@ const controller: Controller<IMockController, any> = {
     },
 };
 
-const workspaceController = reactWorkspaceController<
+const workspaceController = createWorkspaceController<
     IMockData,
     IMockControllers,
     IMockOnClick<IMockData>,
@@ -77,12 +67,20 @@ const workspaceController = reactWorkspaceController<
     IMockContext
 >();
 
+workspaceController.addController(controller);
+
 describe('workspaceController', () => {
     it('should have set mocData to originalData', () => {
-        workspaceController.addController(controller);
         workspaceController.notifyOnClick();
-        expect(workspaceController.originalData).toEqual(
-            workspaceController.controllers.mockController.getData()
+        workspaceController.onDataChanged((data) => {
+            expect(workspaceController.data).toEqual(
+                workspaceController.controllers.mockController?.getData()
+            );
+            expect(data).toEqual(workspaceController.controllers.mockController?.getData());
+        });
+
+        expect(workspaceController.filteredData).toEqual(
+            workspaceController.controllers.mockController?.getData()
         );
     });
     it('should not allow two controller with the same name / id', () => {
@@ -91,5 +89,16 @@ describe('workspaceController', () => {
         };
         expect(setup).toThrow(Error);
         expect(setup).toThrow('Controller already exist!');
+    });
+    it('should set context', () => {
+        expect(workspaceController.context).toBe(undefined);
+        workspaceController.onClick(() => {
+            workspaceController.context = { id: 'mockId', title: 'mockTitle' };
+        });
+        workspaceController.notifyOnClick();
+
+        expect(workspaceController.context?.id).toBe('mockId');
+        expect(workspaceController.context?.title).toBe('mockTitle');
+        expect(workspaceController.context).not.toBe(undefined);
     });
 });

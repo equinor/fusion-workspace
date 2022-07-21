@@ -3,7 +3,7 @@ import {
     OnDataChangedCallback,
     WorkspaceControllerInternal,
     WorkspaceErrorCallback
-} from '../types';
+} from '../Types';
 import { generateUniqueId } from './generateUniqueId';
 
 export function onDataChanged<

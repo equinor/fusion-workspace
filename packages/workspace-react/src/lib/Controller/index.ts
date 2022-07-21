@@ -1,2 +1,3 @@
-export * from './workspace-react-controller';
-export * from './workspace-tab-controller';
+export * from './createReactWorkspaceController';
+export * from './reactWorkspaceController';
+

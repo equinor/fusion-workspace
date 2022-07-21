@@ -1,5 +1,5 @@
-import { WorkspaceControllerInternal } from '../types';
-import { createWorkspaceController } from '../workspace-controller';
+import { createWorkspaceController } from '../Controller';
+import { WorkspaceControllerInternal } from '../Types';
 import { onClick, onDataChanged, onError, onFiletedDataChanges } from './events';
 
 const workspaceController = createWorkspaceController() as WorkspaceControllerInternal<

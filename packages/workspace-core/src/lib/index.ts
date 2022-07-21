@@ -1,2 +1,3 @@
-export * from './types';
-export * from './workspace-controller';
+export * from './Controller';
+export * from './Types';
+

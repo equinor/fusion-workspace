@@ -1,5 +1,5 @@
-import { Controller, WorkspaceControllerInternal } from '../types';
-import { createWorkspaceController } from '../workspace-controller';
+import { createWorkspaceController } from '../Controller';
+import { Controller, WorkspaceControllerInternal } from '../Types';
 import { addController } from './addController';
 
 const mocFunction = jest.fn();

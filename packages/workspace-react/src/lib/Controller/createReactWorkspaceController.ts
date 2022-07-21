@@ -1,4 +1,4 @@
-import { reactWorkspaceController } from './workspace-tab-controller';
+import { reactWorkspaceController } from './reactWorkspaceController';
 
 export function createReactWorkspaceController<
     TData,

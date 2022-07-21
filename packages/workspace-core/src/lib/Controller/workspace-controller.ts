@@ -1,8 +1,14 @@
-import { addController } from './Function/addController';
-import { setFilteredData, setOriginalData } from './Function/data';
-import { throwError } from './Function/error';
-import { onClick, onDataChanged, onError, onFiletedDataChanges } from './Function/events';
-import { notifyOnClick } from './Function/notifyOnClick';
+import {
+    addController,
+    notifyOnClick,
+    onClick,
+    onDataChanged,
+    onError,
+    onFiletedDataChanges,
+    setFilteredData,
+    setOriginalData,
+    throwError
+} from '../Function';
 
 import {
     Controller,
@@ -12,7 +18,7 @@ import {
     WorkspaceController,
     WorkspaceControllerInternal,
     WorkspaceErrorCallback
-} from './types';
+} from '../Types';
 
 /**
  * ### Workspace Controller
