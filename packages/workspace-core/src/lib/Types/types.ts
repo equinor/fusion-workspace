@@ -23,8 +23,32 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      * Adds a controller to the workspace controllers
      * @param controller
      */
-    addController<ControllerType, WSController>(
-        controller: Controller<ControllerType, WSController>
+    addController<
+        ControllerType,
+        TWController extends WorkspaceController<
+            TData,
+            TControllers,
+            TOnClick,
+            TError,
+            TContext
+        > = WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
+    >(
+        controller: Controller<ControllerType, TWController>
+    ): void;
+    /**
+     * Adds a controller to the workspace controllers
+     * @param controller
+     */
+    addMiddleware<
+        TWController extends WorkspaceController<
+            TData,
+            TControllers,
+            TOnClick,
+            TError,
+            TContext
+        > = WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
+    >(
+        config: MiddlewareConfigFunction<TWController>
     ): void;
     /**
      * Setter for original data
@@ -107,6 +131,8 @@ export type ConfigFunction<TController, WSController> = (
     controller: TController,
     workspaceController: WSController
 ) => void;
+
+export type MiddlewareConfigFunction<WSController> = (controller: WSController) => void;
 
 export interface Controller<TControllerType, WSController> {
     name: string;

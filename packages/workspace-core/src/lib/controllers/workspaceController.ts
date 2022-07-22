@@ -12,6 +12,7 @@ import {
 
 import {
     Controller,
+    MiddlewareConfigFunction,
     OnCallbackSet,
     OnClickCallback,
     OnDataChangedCallback,
@@ -66,6 +67,9 @@ export function createWorkspaceController<
                 TError,
                 TContext
             >(workspaceController, controller);
+        },
+        addMiddleware<WSController>(middleware: MiddlewareConfigFunction<WSController>) {
+            middleware(workspaceController as unknown as WSController);
         },
         setData(data: TData[], preventCallbacks?: boolean) {
             setOriginalData<TData, TControllers, TOnClick, TError, TContext>(

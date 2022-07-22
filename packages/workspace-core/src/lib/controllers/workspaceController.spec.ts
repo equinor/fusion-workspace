@@ -1,4 +1,4 @@
-import { Controller } from '../types';
+import { Controller, WorkspaceController } from '../types';
 import { createWorkspaceController } from './workspaceController';
 
 interface IMockController {
@@ -48,24 +48,34 @@ const mockController: IMockController = {
     ],
 };
 
-const controller: Controller<IMockController, any> = {
+const controller: Controller<
+    IMockController,
+    WorkspaceController<
+        IMockData,
+        IMockControllers,
+        IMockOnClick<IMockData>,
+        IMockError,
+        IMockContext
+    >
+> = {
     name: 'mockController',
     controller: mockController,
     config: (mockController, ws) => {
         ws.onClick(() => {
-            ws.setOriginalData(mockController.getData());
+            ws.setData(mockController.getData());
             ws.setFilteredData(mockController.getData());
         });
     },
 };
 
-const workspaceController = createWorkspaceController<
+type MockWorkspaceController = WorkspaceController<
     IMockData,
     IMockControllers,
     IMockOnClick<IMockData>,
     IMockError,
     IMockContext
->();
+>;
+const workspaceController: MockWorkspaceController = createWorkspaceController();
 
 workspaceController.addController(controller);
 
@@ -100,5 +110,19 @@ describe('workspaceController', () => {
         expect(workspaceController.context?.id).toBe('mockId');
         expect(workspaceController.context?.title).toBe('mockTitle');
         expect(workspaceController.context).not.toBe(undefined);
+    });
+
+    it('should add middleware  set context', () => {
+        const log = jest.fn();
+        workspaceController.addMiddleware<MockWorkspaceController>((ws) => {
+            log(ws.context?.id);
+            ws.onClick(() => {
+                log(ws.context?.id);
+            });
+        });
+        workspaceController.notifyOnClick();
+        expect(log).toBeCalled();
+        expect(workspaceController.context?.title).toBeCalledTimes(2);
+        expect(workspaceController.context).toBeCalledWith('mockTitle');
     });
 });
