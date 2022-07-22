@@ -1,0 +1,43 @@
+{
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/workspace-data-source/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nrwl/web:rollup",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/workspace-data-source",
+                "tsConfig": "packages/workspace-data-source/tsconfig.lib.json",
+                "project": "packages/workspace-data-source/package.json",
+                "entryFile": "packages/workspace-data-source/src/index.ts",
+                "external": ["react/jsx-runtime"],
+                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+                "compiler": "babel",
+                "assets": [
+                    {
+                        "glob": "packages/workspace-data-source/README.md",
+                        "input": ".",
+                        "output": "."
+                    }
+                ]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/workspace-data-source/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/workspace-data-source"],
+            "options": {
+                "jestConfig": "packages/workspace-data-source/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
+}
