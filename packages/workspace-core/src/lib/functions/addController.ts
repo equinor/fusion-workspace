@@ -1,4 +1,4 @@
-import { Controller, WorkspaceControllerInternal } from '../Types';
+import { Controller, WorkspaceControllerInternal } from '../types';
 
 export function addController<
     TData,

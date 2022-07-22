@@ -1,5 +1,5 @@
-import { Controller } from '../Types';
-import { createWorkspaceController } from './workspace-controller';
+import { Controller } from '../types';
+import { createWorkspaceController } from './workspaceController';
 
 interface IMockController {
     id: string;

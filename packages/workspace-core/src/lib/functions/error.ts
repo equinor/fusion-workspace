@@ -1,6 +1,6 @@
-import { WorkspaceControllerInternal } from '../Types';
+import { WorkspaceControllerInternal } from '../types';
 
-export function notifyOnClick<
+export function throwError<
     TData,
     TControllers extends Record<string, any>,
     TOnClick = any,
@@ -14,7 +14,9 @@ export function notifyOnClick<
         TError,
         TContext
     >,
-    ev: TOnClick
+    error: TError
 ) {
-    workspaceController.onClickCallbacks.forEach((s) => s.callback(ev, workspaceController as any));
+    workspaceController.onErrorCallbacks.forEach((s) =>
+        s.callback(error, workspaceController as any)
+    );
 }

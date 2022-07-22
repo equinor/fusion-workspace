@@ -1,4 +1,4 @@
-import { WorkspaceControllerInternal } from '../Types';
+import { WorkspaceControllerInternal } from '../types';
 
 export function setFilteredData<
     TData,

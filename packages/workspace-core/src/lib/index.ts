@@ -1,3 +1,3 @@
-export * from './Controller';
-export * from './Types';
+export * from './controllers';
+export * from './types';
 

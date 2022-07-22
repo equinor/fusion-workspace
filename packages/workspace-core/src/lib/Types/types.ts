@@ -1,3 +1,15 @@
+/**
+ * ### Workspace Controller
+ * The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
+ *
+ * @export
+ * @template TData Data type of the created workspace
+ * @template TControllers Type of Controllers added to workspace
+ * @template TOnClick Type of click Events added to workspace
+ * @template TError Error type.
+ * @template TContext Custom Context.
+ * @return {*}  { WorkspaceController<TData, TControllers, TOnClick, TError, TContext> }
+ */
 export interface WorkspaceController<TData, TControllers, TOnClick, TError, TContext> {
     /** Data supplied to the workspace */
     data: TData[];

@@ -8,7 +8,7 @@ import {
     setFilteredData,
     setOriginalData,
     throwError
-} from '../Function';
+} from '../functions';
 
 import {
     Controller,
@@ -18,7 +18,7 @@ import {
     WorkspaceController,
     WorkspaceControllerInternal,
     WorkspaceErrorCallback
-} from '../Types';
+} from '../types';
 
 /**
  * ### Workspace Controller
