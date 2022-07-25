@@ -13,54 +13,79 @@ const workspaceController = createWorkspaceController() as WorkspaceControllerIn
 describe('events', () => {
     it('should add onOriginalDataChanged event', () => {
         const mocFunction = jest.fn();
-        onDataChanged(workspaceController, () => {
+
+        const s1 = onDataChanged(workspaceController, () => {
             mocFunction();
         });
-        onDataChanged(workspaceController, () => {
+        const s2 = onDataChanged(workspaceController, () => {
             mocFunction();
         });
         workspaceController.setData([]);
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onDataChangedCallbacks.length).toBe(2);
+
+        s1.unSubscribe();
+        s2.unSubscribe();
+
+        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
     });
     it('should add onFiletedDataChanges event', () => {
         const mocFunction = jest.fn();
-        onFiletedDataChanges(workspaceController, () => {
+
+        const s1 = onFiletedDataChanges(workspaceController, () => {
             mocFunction();
         });
-        onFiletedDataChanges(workspaceController, () => {
+        const s2 = onFiletedDataChanges(workspaceController, () => {
             mocFunction();
         });
         workspaceController.setFilteredData([]);
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(2);
+
+        s1.unSubscribe();
+        s2.unSubscribe();
+
+        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
     });
     it('should add onError event', () => {
         const mocFunction = jest.fn();
-        onError(workspaceController, () => {
+
+        const s1 = onError(workspaceController, () => {
             mocFunction();
         });
-        onError(workspaceController, () => {
+        const s2 = onError(workspaceController, () => {
             mocFunction();
         });
         workspaceController.throwError('test');
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onErrorCallbacks.length).toBe(2);
+
+        s1.unSubscribe();
+        s2.unSubscribe();
+
+        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
     });
     it('should add onClick event', () => {
         const mocFunction = jest.fn();
-        onClick(workspaceController, () => {
+
+        const s1 = onClick(workspaceController, () => {
             mocFunction();
         });
-        onClick(workspaceController, () => {
+        const s2 = onClick(workspaceController, () => {
             mocFunction();
         });
+
         workspaceController.notifyOnClick();
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onClickCallbacks.length).toBe(2);
+
+        s1.unSubscribe();
+        s2.unSubscribe();
+
+        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
     });
 });

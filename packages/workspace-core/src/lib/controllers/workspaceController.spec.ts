@@ -112,7 +112,7 @@ describe('workspaceController', () => {
         expect(workspaceController.context).not.toBe(undefined);
     });
 
-    it('should add middleware  set context', () => {
+    it('should add middleware', () => {
         const log = jest.fn();
         workspaceController.addMiddleware<MockWorkspaceController>((ws) => {
             log(ws.context?.id);
@@ -122,7 +122,7 @@ describe('workspaceController', () => {
         });
         workspaceController.notifyOnClick();
         expect(log).toBeCalled();
-        expect(workspaceController.context?.title).toBeCalledTimes(2);
-        expect(workspaceController.context).toBeCalledWith('mockTitle');
+        expect(log).toBeCalledTimes(2);
+        expect(log).toBeCalledWith('mockId');
     });
 });

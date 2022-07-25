@@ -5,8 +5,8 @@ describe('generateUniqueId', () => {
     it('should generate string', () => {
         expect(typeof string).toBe('string');
     });
-    it('should be length 17', () => {
+    it('should be less length 20', () => {
         const string = generateUniqueId();
-        expect(string.length).toBe(17);
+        expect(string.length).toBeLessThan(20);
     });
 });
