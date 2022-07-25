@@ -78,7 +78,7 @@ describe('events', () => {
             mocFunction();
         });
 
-        workspaceController.notifyOnClick();
+        workspaceController.click();
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onClickCallbacks.length).toBe(2);

@@ -54,7 +54,12 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      * Setter for original data
      * @param data
      */
-    setData(newData: TData[], preventCallbacks?: boolean): void;
+    setData(context: TData[], preventCallbacks?: boolean): void;
+    /**
+     * Setter for original context
+     * @param data
+     */
+    setContext(newData: ContextFunction<TContext>): void;
     /**
      * Function for setting the filtered data sett and calling the on filter callback with the updated data sett.
      * @param {TData[]} filteredData Filtered data
@@ -83,7 +88,7 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      * @param {TOnClick} ev
      * @memberof WorkspaceController
      */
-    notifyOnClick(ev?: TOnClick): void;
+    click(ev?: TOnClick): void;
     /**
      * Register onClick callback
      * @param {OnClickCallback<TData, TOnClick>} callback
@@ -108,6 +113,8 @@ export interface WorkspaceController<TData, TControllers, TOnClick, TError, TCon
      */
     throwError(error: TError): void;
 }
+
+export type ContextFunction<TContext> = (context: TContext) => TContext;
 
 export interface WorkspaceControllerInternal<TData, TControllers, TOnClick, TError, TContext>
     extends WorkspaceController<TData, TControllers, TOnClick, TError, TContext> {

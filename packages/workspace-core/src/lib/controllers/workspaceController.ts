@@ -1,6 +1,6 @@
 import {
     addController,
-    notifyOnClick,
+    click,
     onClick,
     onDataChanged,
     onError,
@@ -9,8 +9,10 @@ import {
     setOriginalData,
     throwError
 } from '../functions';
+import { setContext } from '../functions/context';
 
 import {
+    ContextFunction,
     Controller,
     MiddlewareConfigFunction,
     OnCallbackSet,
@@ -78,6 +80,12 @@ export function createWorkspaceController<
                 preventCallbacks
             );
         },
+        setContext(context: ContextFunction<TContext>) {
+            setContext<TData, TControllers, TOnClick, TError, TContext>(
+                workspaceController,
+                context
+            );
+        },
         onDataChanged(
             callback: OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext>
         ): OnCallbackSet {
@@ -101,8 +109,8 @@ export function createWorkspaceController<
                 preventCallbacks
             );
         },
-        notifyOnClick(ev: TOnClick) {
-            notifyOnClick<TData, TControllers, TOnClick, TError, TContext>(workspaceController, ev);
+        click(ev: TOnClick) {
+            click<TData, TControllers, TOnClick, TError, TContext>(workspaceController, ev);
         },
         onClick(
             callback: OnClickCallback<TData, TControllers, TOnClick, TError, TContext>

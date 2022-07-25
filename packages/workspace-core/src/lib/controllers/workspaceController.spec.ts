@@ -81,7 +81,7 @@ workspaceController.addController(controller);
 
 describe('workspaceController', () => {
     it('should have set mocData to originalData', () => {
-        workspaceController.notifyOnClick();
+        workspaceController.click();
         workspaceController.onDataChanged((data) => {
             expect(workspaceController.data).toEqual(
                 workspaceController.controllers.mockController?.getData()
@@ -105,7 +105,7 @@ describe('workspaceController', () => {
         workspaceController.onClick(() => {
             workspaceController.context = { id: 'mockId', title: 'mockTitle' };
         });
-        workspaceController.notifyOnClick();
+        workspaceController.click();
 
         expect(workspaceController.context?.id).toBe('mockId');
         expect(workspaceController.context?.title).toBe('mockTitle');
@@ -120,7 +120,7 @@ describe('workspaceController', () => {
                 log(ws.context?.id);
             });
         });
-        workspaceController.notifyOnClick();
+        workspaceController.click();
         expect(log).toBeCalled();
         expect(log).toBeCalledTimes(2);
         expect(log).toBeCalledWith('mockId');

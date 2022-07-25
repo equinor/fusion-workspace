@@ -1,6 +1,6 @@
-import { WorkspaceControllerInternal } from '../types';
+import { ContextFunction, WorkspaceControllerInternal } from '../types';
 
-export function notifyOnClick<
+export function setContext<
     TData,
     TControllers extends Record<string, any>,
     TOnClick = any,
@@ -14,7 +14,7 @@ export function notifyOnClick<
         TError,
         TContext
     >,
-    ev: TOnClick
+    context: ContextFunction<TContext>
 ) {
-    workspaceController.onClickCallbacks.forEach((s) => s.callback(ev, workspaceController as any));
+    workspaceController.context = context(workspaceController.context || ({} as TContext));
 }
