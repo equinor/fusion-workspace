@@ -16,6 +16,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@equinor/power-bi": ["packages/power-bi/src/index.ts"],
+            "@equinor/table": ["packages/table/src/index.ts"],
             "@equinor/garden": ["packages/garden/src/index.ts"],
             "@equinor/filter": ["packages/filter/src/index.ts"],
             "@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
