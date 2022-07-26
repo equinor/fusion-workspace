@@ -16,12 +16,6 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@equinor/ag-grid": ["packages/ag-grid/src/index.ts"],
-            "@equinor/datasource": ["packages/datasource/src/index.ts"],
-            "@equinor/garden": ["packages/garden/src/index.ts"],
-            "@equinor/power-bi": ["packages/power-bi/src/index.ts"],
-            "@equinor/sidesheet": ["packages/sidesheet/src/index.ts"],
-            "@equinor/table": ["packages/table/src/index.ts"],
             "@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
             "@equinor/workspace-data-source": ["packages/workspace-data-source/src/index.ts"],
             "@equinor/workspace-filter": ["packages/filter/src/index.ts"],
