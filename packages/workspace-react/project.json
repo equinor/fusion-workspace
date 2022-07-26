@@ -6,13 +6,17 @@
     "targets": {
         "build": {
             "executor": "@nrwl/web:rollup",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/packages/workspace-react",
                 "tsConfig": "packages/workspace-react/tsconfig.lib.json",
                 "project": "packages/workspace-react/package.json",
                 "entryFile": "packages/workspace-react/src/index.ts",
-                "external": ["react/jsx-runtime"],
+                "external": [
+                    "react/jsx-runtime"
+                ],
                 "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
                 "compiler": "babel",
                 "assets": [
@@ -24,16 +28,34 @@
                 ]
             }
         },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs workspace-react {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
-                "lintFilePatterns": ["packages/workspace-react/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": [
+                    "packages/workspace-react/**/*.{ts,tsx,js,jsx}"
+                ]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/workspace-react"],
+            "outputs": [
+                "coverage/packages/workspace-react"
+            ],
             "options": {
                 "jestConfig": "packages/workspace-react/jest.config.ts",
                 "passWithNoTests": true
