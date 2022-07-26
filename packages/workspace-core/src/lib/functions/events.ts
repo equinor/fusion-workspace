@@ -4,6 +4,7 @@ import {
     WorkspaceControllerInternal,
     WorkspaceErrorCallback
 } from '../types';
+
 import { generateUniqueId } from './generateUniqueId';
 
 export function onDataChanged<
