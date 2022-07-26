@@ -16,6 +16,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@equinor/garden": ["packages/garden/src/index.ts"],
+            "@equinor/filter": ["packages/filter/src/index.ts"],
             "@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
             "@equinor/workspace-data-source": ["packages/workspace-data-source/src/index.ts"],
             "@equinor/workspace-filter": ["packages/filter/src/index.ts"],
@@ -27,7 +29,7 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true
+        "noEmit": false
     },
     "exclude": ["node_modules", "tmp"]
 }

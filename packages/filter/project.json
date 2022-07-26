@@ -1,0 +1,50 @@
+{
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/filter/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+   
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/packages/filter",
+                "main": "packages/filter/src/index.ts",
+                "tsConfig": "packages/filter/tsconfig.lib.json",
+                "assets": [
+                    "packages/filter/*.md"
+                ]
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs filter {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/filter/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/filter"],
+            "options": {
+                "jestConfig": "packages/filter/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
+}
