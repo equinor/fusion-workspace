@@ -1,3 +1,3 @@
-export * from './types';
-export * from './workspace-fusion';
+export * from './controllers/workspaceFusion';
+export * from './types/types';
 

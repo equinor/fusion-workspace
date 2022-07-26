@@ -194,6 +194,13 @@ export class FilterController<T> {
     setFilteredData = (newData: T[]) => {
         this.filteredData = newData;
     };
+    /**
+     * @internal
+     * Set filter data
+     */
+    setData = (newData: T[]) => {
+        this.filteredData = newData;
+    };
 
     /** Clears the search and filters the data using the current filterstate */
     clearSearch = (): void => {

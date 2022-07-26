@@ -1,5 +1,5 @@
-import { FusionWorkspaceControllers } from './types';
-import { createFusionWorkspace } from './workspace-fusion';
+import { FusionWorkspaceControllers } from '../types/types';
+import { createFusionWorkspace } from './workspaceFusion';
 interface Data {
     test: string;
 }
@@ -19,7 +19,7 @@ const dataSource = () => ({
 
 describe('workspaceFusion', () => {
     it('should work', () => {
-        const fusionWorkspace = createFusionWorkspace<Data, MyControllers<Data>, Fusion>(
+        const fusionWorkspace = createFusionWorkspace<Data, Fusion, MyControllers<Data>>(
             (workspace) => {
                 workspace.addDataSource(dataSource);
                 return workspace;
@@ -27,6 +27,6 @@ describe('workspaceFusion', () => {
             { httpClient: () => 'workspace-fusion' }
         );
 
-        expect(fusionWorkspace.context.httpClient()).toEqual('workspace-fusion');
+        expect(fusionWorkspace.context?.httpClient()).toEqual('workspace-fusion');
     });
 });

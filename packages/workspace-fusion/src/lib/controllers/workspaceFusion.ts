@@ -1,13 +1,15 @@
 import { createReactWorkspaceController, ReactWorkspaceController } from '@equinor/workspace-react';
-import { addDataFilterController, addDataSourceController, addGardenTab } from './api';
+import { addDataSourceController } from '../api/dataSource';
+import { addDataFilterController } from '../api/filter';
+import { addGardenTab } from '../api/garden';
 import {
     ClickEvent,
     DataSourceConfigurator,
     FusionWorkspaceController,
     FusionWorkspaceControllers,
     FusionWorkspaceError,
-    GardenConfigurator
-} from './types';
+    GardenConfigurator,
+} from '../types/types';
 
 export function createFusionWorkspace<
     TData,

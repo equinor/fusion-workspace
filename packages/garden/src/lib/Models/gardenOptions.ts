@@ -1,13 +1,10 @@
 import React, { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenController } from '../Classes';
 import { GardenGroup, GardenGroups, Status } from './data';
-import { FieldSettings } from './fieldSettings';
-
 
 export interface Options<T> {
     groupDescriptionFunc?: (data: T, groupingKey: string) => string;
 }
-
 
 export interface StatusView<T> {
     statusItemFunc: (data: T) => Status;
@@ -68,4 +65,3 @@ export type PostGroupBySorting<T = unknown> = (
     data: GardenGroups<T>,
     keys: (keyof T)[]
 ) => GardenGroups<T>;
-

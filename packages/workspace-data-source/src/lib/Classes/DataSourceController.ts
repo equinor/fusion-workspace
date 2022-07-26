@@ -5,10 +5,12 @@ export type FetchResponseAsync = (signal?: AbortSignal) => Promise<Response>;
 export type ResponseParserAsync<T> = (Response: Response) => Promise<T[]>;
 
 type OnDataChangedCallback<T> = (data: T[], controller: DataSourceController<T>) => void;
-
+export interface DataSourceConfig<TData> {
+    dataSource: FetchResponseAsync;
+    dataMapper?: ResponseParserAsync<TData>;
+}
 export interface DataSource<T> {
     responseAsync: (signal?: AbortSignal) => Promise<Response>;
-
     responseParser?: (Response: Response) => Promise<T[]>;
 }
 
