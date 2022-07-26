@@ -34,7 +34,7 @@ describe('context', () => {
         expect(workspaceController.context).toBe(mocContext);
     });
     it('should update mocContext with name Ron', () => {
-        setContext<any, any, any, any, MocContext>(workspaceController, (c) => ({
+        workspaceController.setContext((c) => ({
             ...c,
             name: 'Ron',
         }));

@@ -28,7 +28,7 @@ describe('events', () => {
         s1.unSubscribe();
         s2.unSubscribe();
 
-        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
+        expect(workspaceController.onDataChangedCallbacks.length).toBe(0);
     });
     it('should add onFiletedDataChanges event', () => {
         const mocFunction = jest.fn();
@@ -66,7 +66,7 @@ describe('events', () => {
         s1.unSubscribe();
         s2.unSubscribe();
 
-        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
+        expect(workspaceController.onErrorCallbacks.length).toBe(0);
     });
     it('should add onClick event', () => {
         const mocFunction = jest.fn();
@@ -74,7 +74,7 @@ describe('events', () => {
         const s1 = onClick(workspaceController, () => {
             mocFunction();
         });
-        const s2 = onClick(workspaceController, () => {
+        onClick(workspaceController, () => {
             mocFunction();
         });
 
@@ -82,10 +82,10 @@ describe('events', () => {
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(workspaceController.onClickCallbacks.length).toBe(2);
-
+        const event = s1.id;
         s1.unSubscribe();
-        s2.unSubscribe();
 
-        expect(workspaceController.onFilteredDataChangedCallbacks.length).toBe(0);
+        expect(workspaceController.onClickCallbacks.length).toBe(1);
+        expect(workspaceController.onClickCallbacks).not.toContain(event);
     });
 });
