@@ -1,10 +1,10 @@
 import { DataSourceController } from '@equinor/workspace-data-source';
 import { DataSourceConfigurator } from '../types/configurator';
-import { FusionWorkspaceController } from '../types/types';
+import { FusionWorkspaceControllerInternal } from '../types/types';
 
 export function dataSourceConfig<TData, TControllers, TContext>(
     dc: DataSourceController<TData>,
-    wc: FusionWorkspaceController<TData, TControllers, TContext>
+    wc: FusionWorkspaceControllerInternal<TData, TControllers, TContext>
 ) {
     dc.onDataChanged((data: TData[]) => {
         wc.setData(data);
@@ -12,12 +12,12 @@ export function dataSourceConfig<TData, TControllers, TContext>(
 }
 
 export const addDataSourceController = <TData, TControllers, TContext>(
-    controller: FusionWorkspaceController<TData, TControllers, TContext>,
+    controller: FusionWorkspaceControllerInternal<TData, TControllers, TContext>,
     configurator: DataSourceConfigurator<TData, TControllers, TContext>
 ) => {
     controller.addController<
         DataSourceController<TData>,
-        FusionWorkspaceController<TData, TControllers, TContext>
+        FusionWorkspaceControllerInternal<TData, TControllers, TContext>
     >({
         name: 'dataSource',
         controller: new DataSourceController(configurator(controller).dataSource),

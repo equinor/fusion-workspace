@@ -1,6 +1,6 @@
 import { FilterController } from '@equinor/filter';
 import { FilterConfigurator } from '../types/configurator';
-import { FusionWorkspaceController } from '../types/types';
+import { FusionWorkspaceController, FusionWorkspaceControllerInternal } from '../types/types';
 
 export function filterConfiguration<TData, TControllers, TContext>(
     fc: FilterController<TData>,
@@ -23,7 +23,7 @@ export function filterConfiguration<TData, TControllers, TContext>(
 }
 
 export function addDataFilterController<TData, TControllers, TContext>(
-    controller: FusionWorkspaceController<TData, TControllers, TContext>,
+    controller: FusionWorkspaceControllerInternal<TData, TControllers, TContext>,
     configurator: FilterConfigurator<TData, TControllers, TContext>
 ) {
     const filterController = new FilterController<TData>();
@@ -31,7 +31,7 @@ export function addDataFilterController<TData, TControllers, TContext>(
 
     controller.addController<
         FilterController<TData>,
-        FusionWorkspaceController<TData, TControllers, TContext>
+        FusionWorkspaceControllerInternal<TData, TControllers, TContext>
     >({
         name: 'filter',
         controller: filterController,

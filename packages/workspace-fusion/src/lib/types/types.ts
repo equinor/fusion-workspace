@@ -1,8 +1,8 @@
 import { GardenController } from '@equinor/garden';
 import { Controller, MiddlewareConfigFunction } from '@equinor/workspace-core';
 
+import { FilterController } from '@equinor/filter';
 import { DataSourceController } from '@equinor/workspace-data-source';
-import { FilterController } from '@equinor/workspace-filter';
 import { ReactWorkspaceController, Tab } from '@equinor/workspace-react';
 import { ClickEvent } from './click';
 import { DataSourceConfigurator, FilterConfigurator, GardenConfigurator } from './configurator';
