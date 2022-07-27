@@ -1,7 +1,7 @@
 import { ValueFormatterFilter, ValueFormatterFunction } from '../Hooks/useFilterController';
 
 /**
- * Finds valueformatter for a given group
+ * Finds value formatter for a given group
  * Should never return undefined
  * @param name
  * @param valueFormatters

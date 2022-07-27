@@ -6,12 +6,12 @@ import { useWorkspaceController } from '../useWorkspaceController';
  * @returns
  */
 export function useActiveTab() {
-    const { tabs, activeTab, onTabChanged } = useWorkspaceController();
+    const { tabs, activeTab, onTabChange } = useWorkspaceController();
     const [value, setValue] = useState(activeTab);
 
     useEffect(() => {
-        onTabChanged(setValue);
-    }, [onTabChanged]);
+        onTabChange(setValue);
+    }, [onTabChange]);
 
     return tabs.find((s) => s.name === value);
 }

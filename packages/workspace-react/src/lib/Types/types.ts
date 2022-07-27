@@ -42,7 +42,7 @@ export interface ReactWorkspaceController<TData, TControllers, TOnClick, TError,
      * @param {OnTabChangedCallback<TData>} callback
      * @memberof WorkspaceController
      */
-    onTabChanged(callback: any): OnCallbackSet;
+    onTabChange(callback: any): OnCallbackSet;
 }
 
 export interface InternalReactWorkspaceController<TData, TControllers, TOnClick, TError, TContext>

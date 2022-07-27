@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { doesItemPassFilter, doesItemPassCriteria } from '../Functions';
-import { generateFilterValues } from '../Functions';
-import { searchForIncludes, searchForStartsWith } from '../Functions';
+import {
+    doesItemPassCriteria,
+    doesItemPassFilter,
+    generateFilterValues,
+    searchForIncludes,
+    searchForStartsWith
+} from '../Functions';
 import { FilterOptions, FilterValueType } from '../Types/filter';
 import { filterGroupExists } from '../Utils/filterGroupExists';
 import { shouldFilter } from '../Utils/shouldFilter';
@@ -325,6 +329,7 @@ export function useFilterApi<T>({
      * Set filter data
      */
     function setFilteredData(newData: T[]) {
+        console.log("setFilteredData",newData);
         filteredData.current = newData;
     }
 

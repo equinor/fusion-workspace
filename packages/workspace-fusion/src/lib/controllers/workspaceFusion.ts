@@ -1,15 +1,23 @@
-import { createReactWorkspaceController, ReactWorkspaceController } from '@equinor/workspace-react';
+import {
+    createReactWorkspaceController,
+    ReactWorkspaceController,
+    Tab
+} from '@equinor/workspace-react';
 import { addDataSourceController } from '../api/dataSource';
 import { addDataFilterController } from '../api/filter';
 import { addGardenTab } from '../api/garden';
 import {
-    ClickEvent,
     DataSourceConfigurator,
+    FilterConfigurator,
+    GardenConfigurator
+} from '../types/configurator';
+import {
+    ClickEvent,
     FusionWorkspaceController,
     FusionWorkspaceControllers,
-    FusionWorkspaceError,
-    GardenConfigurator,
+    FusionWorkspaceError
 } from '../types/types';
+import { controllerMerge } from '../utils/merge';
 
 export function createFusionWorkspace<
     TData,
@@ -25,17 +33,6 @@ export function createFusionWorkspace<
     FusionWorkspaceError,
     TContext
 > {
-    /*
-     * Merge createReactWorkspaceController with fusionWorkspaceController features
-     * Merge properties of two objects
-     */
-    function controllerMerge(obj1: any, obj2: any) {
-        for (const p in obj2) {
-            obj1[p] = obj2[p];
-        }
-        return obj1;
-    }
-
     const controller: FusionWorkspaceController<TData, TControllers, TContext> = controllerMerge(
         createReactWorkspaceController<
             TData,
@@ -46,10 +43,8 @@ export function createFusionWorkspace<
         >(),
         {
             context,
-            addGarden: (configurator: GardenConfigurator<TData, TControllers, TContext>) => {
-                return addGardenTab(controller, configurator);
-            },
-            addGrid: () => {
+            config: (workspaceConfig) => {
+                controller.activeTab = workspaceConfig.activeTab;
                 return controller;
             },
             addDataSource: (
@@ -57,22 +52,25 @@ export function createFusionWorkspace<
             ) => {
                 return addDataSourceController(controller, configurator);
             },
-            addFilter: () => {
-                return addDataFilterController(controller);
+            addFilter: (configurator: FilterConfigurator<TData, TControllers, TContext>) => {
+                return addDataFilterController(controller, configurator);
+            },
+            addGarden: (configurator: GardenConfigurator<TData, TControllers, TContext>) => {
+                return addGardenTab(controller, configurator);
+            },
+            addGrid: () => {
+                return controller;
             },
             addSideSheet: () => {
                 return controller;
             },
+            addCustomTab: <TController, WSController>(tab: Tab<TController, WSController>) => {
+                controller.addTab<TController, WSController>(tab);
+                return controller;
+            },
         }
     );
-
     setup(controller);
 
-    return controller as unknown as ReactWorkspaceController<
-        TData,
-        TControllers,
-        ClickEvent<TData>,
-        FusionWorkspaceError,
-        TContext
-    >;
+    return controller;
 }

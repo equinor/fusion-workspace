@@ -1,5 +1,6 @@
 import { GardenController } from '@equinor/garden';
-import { FusionWorkspaceController, GardenConfigurator } from '../types/types';
+import { GardenConfigurator } from '../types/configurator';
+import { FusionWorkspaceController } from '../types/types';
 
 export function gardenConfig<TData, TControllers, TContext>(
     gc: GardenController<TData>,
@@ -11,7 +12,7 @@ export function gardenConfig<TData, TControllers, TContext>(
 export const addGardenTab = <TData, TControllers, TContext>(
     controller: FusionWorkspaceController<TData, TControllers, TContext>,
     configurator: GardenConfigurator<TData, TControllers, TContext>
-) => {
+): FusionWorkspaceController<TData, TControllers, TContext> => {
     controller.addTab<
         GardenController<TData>,
         FusionWorkspaceController<TData, TControllers, TContext>

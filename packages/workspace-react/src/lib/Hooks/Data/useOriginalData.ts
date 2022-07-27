@@ -19,5 +19,9 @@ export function useOriginalData() {
         };
     }, []);
 
+    useEffect(() => {
+        setData(originalData);
+    }, [originalData]);
+
     return data;
 }

@@ -1,4 +1,5 @@
-import { ReactWorkspaceController } from '@equinor/workspace-react-old';
+import { ReactWorkspaceController } from '@equinor/workspace-react';
+
 export function debugPlugin<TData, TControllers, TOnClick, TError, TContext>(
     wc: ReactWorkspaceController<TData, TControllers, TOnClick, TError, TContext>
 ) {
@@ -12,10 +13,10 @@ export function debugPlugin<TData, TControllers, TOnClick, TError, TContext>(
     wc.onFilteredDataChanged((da) => {
         workspaceLogger('FData changed', da);
     });
-    wc.onOriginalDataChanged((da) => {
+    wc.onDataChanged((da) => {
         workspaceLogger('OData changed', da);
     });
-    wc.onTabChanged((to, from) => {
+    wc.onTabChange((to, from) => {
         workspaceLogger(`Tab change ${from} -> ${to}`, { to, from });
     });
 }

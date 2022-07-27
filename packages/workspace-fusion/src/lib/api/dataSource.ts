@@ -1,5 +1,6 @@
 import { DataSourceController } from '@equinor/workspace-data-source';
-import { DataSourceConfigurator, FusionWorkspaceController } from '../types/types';
+import { DataSourceConfigurator } from '../types/configurator';
+import { FusionWorkspaceController } from '../types/types';
 
 export function dataSourceConfig<TData, TControllers, TContext>(
     dc: DataSourceController<TData>,

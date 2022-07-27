@@ -1,9 +1,8 @@
-import { WorkspaceController } from '@equinor/ws-core-old';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { WorkspaceContext } from '../../Context';
+import { WorkspaceContext, WorkspaceControllerContext } from '../../Context';
 
 interface WorkspaceProviderLayerProps<TData, TControllers, TOnClick, TError, TContext> {
-    controller: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>;
+    controller: WorkspaceControllerContext<TData, TControllers, TOnClick, TError, TContext>;
     children: React.ReactNode;
 }
 

@@ -1,6 +1,10 @@
 import { Button } from '@equinor/eds-core-react';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { Workspace } from '@equinor/workspace-react';
+import {
+    createFusionWorkspace,
+    FusionWorkspaceController,
+    FusionWorkspaceControllers,
+} from '@equinor/workspace-fusion';
+import { useFilteredData, Workspace } from '@equinor/workspace-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import styled from 'styled-components';
@@ -42,52 +46,113 @@ const dataSource = () => ({
             json: () => [
                 {
                     id: 1,
-                    title: 'title1',
-                    description: 'this is a description',
+                    title: 'Tom Jones',
+                    description: 'Music with Tom',
                 },
                 {
                     id: 2,
-                    title: 'title2',
-                    description: 'this is a description',
+                    title: 'Ron Jonsens Life',
+                    description: 'A life not worth living',
                 },
                 {
                     id: 3,
-                    title: 'title3',
-                    description: 'this is a description',
+                    title: 'Hello Johnny',
+                    description: 'wooo hoo party people',
                 },
                 {
                     id: 4,
-                    title: 'title4',
-                    description: 'this is a description',
+                    title: 'Ohh No!',
+                    description: 'this is a dumb description',
                 },
             ],
         } as unknown as Response;
     },
 });
 
-export function TestWorkspaceApp() {
-    const ws = createFusionWorkspace(
-        (workspace) => {
-            workspace.addDataSource(dataSource);
-            workspace.addFilter();
-            return workspace;
-        },
-        { test: 'string' }
-    );
+interface MyData {
+    id: string;
+    title: string;
+    description: string;
+}
+interface MyController {
+    data: MyData[];
+}
 
+interface MyControllers extends FusionWorkspaceControllers<MyData> {
+    test: MyController;
+}
+
+const myController: MyController = {
+    data: [],
+};
+
+export function TestWorkspaceApp() {
+    const ws = createFusionWorkspace<
+        {
+            id: string;
+            title: string;
+            description: string;
+        },
+        any
+    >((workspace) => {
+        workspace
+            .config({
+                activeTab: 'test',
+            })
+            .addCustomTab<MyController, FusionWorkspaceController<MyData, any, MyControllers>>({
+                controller: myController,
+                ViewComponent: () => {
+                    const data = useFilteredData();
+                    return (
+                        <>
+                            <h1>Test tab1</h1>
+                            <div>
+                                {data.map((i) => (
+                                    <p key={i.id}>
+                                        {i.title} - {i.description}
+                                    </p>
+                                ))}
+                            </div>
+                        </>
+                    );
+                },
+                name: 'test',
+            })
+            .addCustomTab<MyController, FusionWorkspaceController<MyData, any, MyControllers>>({
+                controller: myController,
+                ViewComponent: () => {
+                    const data = useFilteredData();
+                    return (
+                        <>
+                            <h1>Test tab2</h1>
+                            <div>
+                                {data.map((i) => (
+                                    <p key={i.id}>
+                                        2 -{i.title} - {i.description}
+                                    </p>
+                                ))}
+                            </div>
+                        </>
+                    );
+                },
+                name: 'test2',
+            })
+            .addDataSource(dataSource)
+            .addFilter(() => [
+                {
+                    name: 'Title',
+                    valueFormatter: (item) => item.title,
+                },
+                {
+                    name: 'Description',
+                    valueFormatter: (item) => item.description,
+                },
+            ]);
+    });
     return (
         <div>
             <DebugRow>
                 <Button onClick={() => console.log(ws)}>Log workspace api</Button>
-                <Button
-                    onClick={() => {
-                        ws?.controllers.filter.setFilterState([
-                            { name: 'TEst', values: [883, 898, 895, 123, 124, 125, 126, 127] },
-                        ]);
-                    }}
-                >
-                    Set filterstate
-                </Button>
             </DebugRow>
 
             <Workspace controller={ws} />

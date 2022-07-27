@@ -3,14 +3,14 @@ import {
     doesItemPassFilter,
     generateFilterValues,
     searchForIncludes,
-    searchForStartsWith,
+    searchForStartsWith
 } from '../Functions';
 import {
     FilterGroup,
     FilterItemCount,
     FilterSearchActive,
     ValueFormatterFilter,
-    ValueFormatterFunction,
+    ValueFormatterFunction
 } from '../Hooks';
 import { FilterValueType } from '../Types';
 import { filterGroupExists } from '../Utils';
@@ -199,7 +199,7 @@ export class FilterController<T> {
      * Set filter data
      */
     setData = (newData: T[]) => {
-        this.filteredData = newData;
+        this.data = newData;
     };
 
     /** Clears the search and filters the data using the current filterstate */

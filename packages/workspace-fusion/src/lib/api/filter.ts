@@ -1,4 +1,5 @@
 import { FilterController } from '@equinor/filter';
+import { FilterConfigurator } from '../types/configurator';
 import { FusionWorkspaceController } from '../types/types';
 
 export function filterConfiguration<TData, TControllers, TContext>(
@@ -10,6 +11,7 @@ export function filterConfiguration<TData, TControllers, TContext>(
     // Todo Gustav make onFilterDataChange on the filter controller, then one need for the old method here?
     fc.setFilteredData = (newData) => {
         old(newData);
+
         wc.setFilteredData(newData);
     };
 
@@ -21,14 +23,18 @@ export function filterConfiguration<TData, TControllers, TContext>(
 }
 
 export function addDataFilterController<TData, TControllers, TContext>(
-    controller: FusionWorkspaceController<TData, TControllers, TContext>
+    controller: FusionWorkspaceController<TData, TControllers, TContext>,
+    configurator: FilterConfigurator<TData, TControllers, TContext>
 ) {
+    const filterController = new FilterController<TData>();
+    filterController.addValueFormatters(configurator(controller));
+
     controller.addController<
         FilterController<TData>,
         FusionWorkspaceController<TData, TControllers, TContext>
     >({
         name: 'filter',
-        controller: new FilterController<TData>(),
+        controller: filterController,
         config: filterConfiguration,
     });
     return controller;

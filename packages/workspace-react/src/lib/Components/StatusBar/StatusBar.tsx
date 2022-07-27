@@ -5,14 +5,12 @@ import { useFilteredData, useOriginalData } from '../../Hooks';
  * @returns
  */
 export function StatusBar() {
-    const originalData = useOriginalData();
+    const data = useOriginalData();
     const filteredData = useFilteredData();
-
-    console.log(filteredData);
 
     return (
         <div>
-            <div>Data length: {originalData.length}</div>
+            <div>Data length: {data.length}</div>
             <div>Filtered data length: {filteredData.length}</div>
         </div>
     );

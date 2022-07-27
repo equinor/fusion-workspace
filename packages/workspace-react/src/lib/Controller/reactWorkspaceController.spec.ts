@@ -80,7 +80,7 @@ const workspaceController = reactWorkspaceController<
 describe('reactWorkspaceController integration', () => {
     it('workspace controller integration should work', () => {
         workspaceController.addController(controller);
-        workspaceController.notifyOnClick();
+        workspaceController.click();
         expect(workspaceController.data).toEqual(
             workspaceController.controllers.mockController.getData()
         );

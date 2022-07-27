@@ -31,7 +31,7 @@
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": false
+        "noEmit": true
     },
     "exclude": ["node_modules", "tmp"]
 }
