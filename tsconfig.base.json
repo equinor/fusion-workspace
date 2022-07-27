@@ -22,7 +22,6 @@
             "@equinor/filter": ["packages/filter/src/index.ts"],
             "@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
             "@equinor/workspace-data-source": ["packages/workspace-data-source/src/index.ts"],
-            "@equinor/workspace-filter": ["packages/filter/src/index.ts"],
             "@equinor/workspace-fusion": ["packages/workspace-fusion/src/index.ts"],
             "@equinor/workspace-react": ["packages/workspace-react/src/index.ts"]
         },
