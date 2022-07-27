@@ -7,7 +7,7 @@ import {
     onFiletedDataChanges,
     setFilteredData,
     setOriginalData,
-    throwError
+    throwError,
 } from '../functions';
 import { setContext } from '../functions/context';
 
@@ -20,7 +20,7 @@ import {
     OnDataChangedCallback,
     WorkspaceController,
     WorkspaceControllerInternal,
-    WorkspaceErrorCallback
+    WorkspaceErrorCallback,
 } from '../types';
 
 /**
