@@ -5,15 +5,15 @@ import {
 } from '../types/types';
 
 /*
- * Merge createReactWorkspaceController with fusionWorkspaceController features
- * Merge properties of two objects
+ * Merge fusionWorkspaceBase with fusionWorkspaceExtensions features
+ * This function will merge properties of two objects
  */
 export function controllerMerge<TData, TControllers, TContext>(
-    obj1: FusionWorkspaceBase<TData, TControllers, TContext>,
-    obj2: FusionWorkspaceExtensions<TData, TControllers, TContext>
+    fusionWorkspaceBase: FusionWorkspaceBase<TData, TControllers, TContext>,
+    fusionWorkspaceExtensions: FusionWorkspaceExtensions<TData, TControllers, TContext>
 ) {
-    for (const p in obj2) {
-        obj1[p] = obj2[p];
+    for (const property in fusionWorkspaceExtensions) {
+        fusionWorkspaceBase[property] = fusionWorkspaceExtensions[property];
     }
-    return obj1 as FusionWorkspaceControllerInternal<TData, TControllers, TContext>;
+    return fusionWorkspaceBase as FusionWorkspaceControllerInternal<TData, TControllers, TContext>;
 }
