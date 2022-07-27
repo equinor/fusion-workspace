@@ -1,5 +1,5 @@
+import { FilterController } from '@equinor/filter';
 import { DataSourceController } from '@equinor/workspace-data-source';
-import { FilterController } from '@equinor/workspace-filter';
 
 import { createContext } from 'react';
 import { ReactWorkspaceController } from '../../Types/types';

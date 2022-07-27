@@ -9,7 +9,12 @@
         "default": {
             "runner": "@nrwl/nx-cloud",
             "options": {
-                "cacheableOperations": ["build", "lint", "test", "e2e"],
+                "cacheableOperations": [
+                    "build",
+                    "lint",
+                    "test",
+                    "e2e"
+                ],
                 "accessToken": "N2E4MzkxNmQtMzg1My00ZGMwLTg2OTgtODdjMWQ0ODIwMmJjfHJlYWQtd3JpdGU="
             }
         }
@@ -28,6 +33,12 @@
                 "style": "styled-components",
                 "linter": "eslint"
             }
+        }
+    },
+    "pluginsConfig": {
+        "@nrwl/js": {
+            "analyzeSourceFiles": true,
+            "targetDefaults ": true
         }
     },
     "defaultProject": "test-app"

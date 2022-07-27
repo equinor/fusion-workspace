@@ -4,18 +4,27 @@
     "projectType": "library",
     "tags": [],
     "targets": {
-   
         "build": {
-            "executor": "@nrwl/js:tsc",
+            "executor": "@nrwl/web:rollup",
             "outputs": [
                 "{options.outputPath}"
             ],
             "options": {
                 "outputPath": "dist/packages/filter",
-                "main": "packages/filter/src/index.ts",
                 "tsConfig": "packages/filter/tsconfig.lib.json",
+                "project": "packages/filter/package.json",
+                "entryFile": "packages/filter/src/index.ts",
+                "external": [
+                    "react/jsx-runtime"
+                ],
+                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+                "compiler": "babel",
                 "assets": [
-                    "packages/filter/*.md"
+                    {
+                        "glob": "packages/filter/README.md",
+                        "input": ".",
+                        "output": "."
+                    }
                 ]
             }
         },
@@ -33,14 +42,20 @@
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
-                "lintFilePatterns": ["packages/filter/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": [
+                    "packages/filter/**/*.{ts,tsx,js,jsx}"
+                ]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/filter"],
+            "outputs": [
+                "coverage/packages/filter"
+            ],
             "options": {
                 "jestConfig": "packages/filter/jest.config.ts",
                 "passWithNoTests": true

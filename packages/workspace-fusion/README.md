@@ -1,18 +1,18 @@
 # Workspace Fusion
 
-
 [![Version](https://img.shields.io/npm/v/@equinor/workspace-fusion.svg)](https://npmjs.org/package/@equinor/workspace-core)
 [![Downloads/week](https://img.shields.io/npm/dw/@equinor/workspace-fusion.svg)](https://npmjs.org/package/@equinor/workspace-core)
 [![License](https://img.shields.io/npm/l/@equinor/workspace-fusion.svg)](https://github.com/equinor/fusion-workspace/blob/master/package.json)
 [![Sisze](https://img.shields.io/bundlephobia/min/@equinor/workspace-fusion)](https://npmjs.org/package/@equinor/workspace-core)
 
-
 - [Workspace Fusion](#workspace-fusion)
+  - [About](#about)
   - [Install from NPM](#install-from-npm)
   - [Extend Workspace](#extend-workspace)
   - [Building](#building)
   - [Running unit tests](#running-unit-tests)
 
+## About
 
 ## Install from NPM
 
@@ -32,7 +32,7 @@ It is possible to extend the workspace with any controller or middleware.
         id: string;
         title: string;
     }
-    
+
     interface CustomWorkspaceControllers<T> extends FusionWorkspaceControllers<T> {
         test: CustomController<T>;
     }
@@ -47,16 +47,12 @@ It is possible to extend the workspace with any controller or middleware.
             controller: {
                 log: (data) => console.log(data),
             },
-        });
-
-        ws.addMiddleware(() => {
+        }).addMiddleware(() => {
             ws.onDataChanged((data) => ws.controllers.dataLogger.log(data));
         });
     });
 
 ```
-
-
 
 This library was generated with [Nx](https://nx.dev).
 

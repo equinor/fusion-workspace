@@ -5,35 +5,47 @@
     "tags": [],
     "targets": {
         "build": {
-            "executor": "@nrwl/web:rollup",
-            "outputs": ["{options.outputPath}"],
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
             "options": {
                 "outputPath": "dist/packages/workspace-data-source",
+                "main": "packages/workspace-data-source/src/index.ts",
                 "tsConfig": "packages/workspace-data-source/tsconfig.lib.json",
-                "project": "packages/workspace-data-source/package.json",
-                "entryFile": "packages/workspace-data-source/src/index.ts",
-                "external": ["react/jsx-runtime"],
-                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-                "compiler": "babel",
                 "assets": [
-                    {
-                        "glob": "packages/workspace-data-source/README.md",
-                        "input": ".",
-                        "output": "."
-                    }
+                    "packages/workspace-data-source/*.md"
                 ]
             }
         },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs workspace-data-source {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
         "lint": {
             "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
+            "outputs": [
+                "{options.outputFile}"
+            ],
             "options": {
-                "lintFilePatterns": ["packages/workspace-data-source/**/*.{ts,tsx,js,jsx}"]
+                "lintFilePatterns": [
+                    "packages/workspace-data-source/**/*.{ts,tsx,js,jsx}"
+                ]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/workspace-data-source"],
+            "outputs": [
+                "coverage/packages/workspace-data-source"
+            ],
             "options": {
                 "jestConfig": "packages/workspace-data-source/jest.config.ts",
                 "passWithNoTests": true
