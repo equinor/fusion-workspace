@@ -1,17 +1,11 @@
 import { GardenController } from '@equinor/garden';
+import { Controller, MiddlewareConfigFunction } from '@equinor/workspace-core';
 
 import { DataSourceController } from '@equinor/workspace-data-source';
 import { FilterController } from '@equinor/workspace-filter';
 import { ReactWorkspaceController, Tab } from '@equinor/workspace-react';
+import { ClickEvent } from './click';
 import { DataSourceConfigurator, FilterConfigurator, GardenConfigurator } from './configurator';
-
-export interface GardenClickEvent<T> {
-    type: 'garden';
-    item: T;
-    controller: GardenController<T>;
-}
-
-export type ClickEvent<T> = GardenClickEvent<T>;
 
 export interface FusionWorkspaceControllers<TData> {
     dataSource: DataSourceController<TData>;
@@ -29,18 +23,34 @@ export type FusionWorkspaceBase<
     TError extends FusionWorkspaceError = FusionWorkspaceError
 > = ReactWorkspaceController<TData, TControllers, TClickEvent, TError, TContext>;
 
-export interface FusionWorkspaceApi<TData, TControllers, TContext> {
+export type FusionWorkspaceController<TData, TControllers, TContext> = FusionWorkspaceExtensions<
+    TData,
+    TControllers,
+    TContext
+> &
+    Omit<
+        FusionWorkspaceBase<TData, TControllers, TContext>,
+        'addTab' | 'addMiddleware' | 'addController'
+    >;
+
+export type FusionWorkspaceControllerInternal<TData, TControllers, TContext> = FusionWorkspaceBase<
+    TData,
+    TControllers,
+    TContext
+> &
+    FusionWorkspaceExtensions<TData, TControllers, TContext>;
+
+export type FusionWorkspace<TData, TContext = any> = FusionWorkspaceController<
+    TData,
+    FusionWorkspaceControllers<TData>,
+    TContext
+>;
+export interface FusionWorkspaceExtensions<TData, TControllers, TContext> {
     context: TContext;
     config: (config: any) => FusionWorkspaceController<TData, TControllers, TContext>;
     addGarden: (
         configurator: GardenConfigurator<TData, TControllers, TContext>
     ) => FusionWorkspaceController<TData, TControllers, TContext>;
-    // addTable: (
-    //     configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
-    // ) => FusionWorkspaceController<TData, TControllers, TContext>;
-    // addPowerBi: (
-    //     configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
-    // ) => FusionWorkspaceController<TData, TControllers, TContext>;
     addGrid: (
         configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
     ) => FusionWorkspaceController<TData, TControllers, TContext>;
@@ -56,20 +66,23 @@ export interface FusionWorkspaceApi<TData, TControllers, TContext> {
     addCustomTab: <TController, WSController>(
         tab: Tab<TController, WSController>
     ) => FusionWorkspaceController<TData, TControllers, TContext>;
-    // addWidget: (
-    //     configurator: (workspace: FusionWorkspaceBase<TData, TControllers, TContext>) => void
-    // ) => FusionWorkspaceController<TData, TControllers, TContext>;
+    addCustomController: <
+        ControllerType,
+        TWController extends FusionWorkspaceControllerInternal<
+            TData,
+            TControllers,
+            TContext
+        > = FusionWorkspaceControllerInternal<TData, TControllers, TContext>
+    >(
+        controller: Controller<ControllerType, TWController>
+    ) => FusionWorkspaceController<TData, TControllers, TContext>;
+    addCustomMiddleware: <
+        TWController extends FusionWorkspaceControllerInternal<
+            TData,
+            TControllers,
+            TContext
+        > = FusionWorkspaceControllerInternal<TData, TControllers, TContext>
+    >(
+        config: MiddlewareConfigFunction<TWController>
+    ) => FusionWorkspaceController<TData, TControllers, TContext>;
 }
-
-export type FusionWorkspaceController<TData, TControllers, TContext> = FusionWorkspaceBase<
-    TData,
-    TControllers,
-    TContext
-> &
-    FusionWorkspaceApi<TData, TControllers, TContext>;
-
-export type FusionWorkspace<TData, TContext = any> = FusionWorkspaceController<
-    TData,
-    FusionWorkspaceControllers<TData>,
-    TContext
->;
