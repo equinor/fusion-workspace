@@ -21,7 +21,7 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: '**/node_modules'
-                  key: ${{ runner.os }}-modules-${{ hashFiles('**/package.lock') }}
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
             - name: Install Node Dependencies
               run: npm ci
