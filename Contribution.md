@@ -20,7 +20,7 @@ If a topic is not covered in this document, please follow the established practi
 - Strive for **clean code** (and what to look for in code reviews/PRs)
   - Use well defined function/variable names. (A well defined name is much better than comments, which often quickly get outdated/obsolete)
   - Function names should tell what a function does. Bad: OnClick()/HandleOnClick() **Good: OpenTag()**
-  - Avoid negative names. **Good: IsActive IsEnabled**. Bad IsInActive/IsDeactivated IsDisabled. If(IsEnabled) is eaier to read than if(!isDisabled) <- (double not)
+  - Avoid negative names. **Good: IsActive IsEnabled**. Bad IsInActive/IsDeactivated IsDisabled. If(IsEnabled) is easier to read than if(!isDisabled) <- (double not)
   - Single Responsibility - A Function/Class should only do one thing. Split into sub functions.
   - Use **PURE** functions to Avoid hidden side effects. It also makes it a lot easier to add Unit Tests
   - **Avoid Code smells** like: Code duplication, Long method, Long class, Long parameter list. etc
@@ -31,7 +31,7 @@ If a topic is not covered in this document, please follow the established practi
   - Prefer **immutable** objects/interfaces
   - Avoid premature optimization - benchmark first.
 - **Fix** all **eslint warnings and errors** in your files.
-- Always checkin the code in better shape than you found it, fix/cleanup smaller things as you edit a file.
+- Always checking the code in better shape than you found it, fix/cleanup smaller things as you edit a file.
 
 ## Testing
 

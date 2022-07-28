@@ -6,4 +6,4 @@
 - [ ] Skrive doc for workspace react controller.
 - [ ] Skrive use stories / oppgaver for workspace react.
 - [x] Doc for workspace-fusion
-- [ ] Create fusion app Example
+- [x] Create fusion app Example
