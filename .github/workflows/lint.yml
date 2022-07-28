@@ -21,16 +21,16 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: '**/node_modules'
-                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/package.lock') }}
 
             - name: Install Node Dependencies
-              run: yarn install --frozen-lockfile
+              run: npm ci
 
             - name: Build project
-              run: yarn nx affected:build
+              run: nx affected:build
 
             - name: Save Code Linting Report JSON
-              run: yarn lint:report
+              run: nx lint:report
               continue-on-error: true
 
             - name: Annotate Code Linting Results
