@@ -121,7 +121,7 @@ export function onError<
     return {
         id,
         unSubscribe: () => {
-            workspaceController.onClickCallbacks = workspaceController.onClickCallbacks.filter(
+            workspaceController.onErrorCallbacks = workspaceController.onErrorCallbacks.filter(
                 (s) => s.id !== id
             );
         },
