@@ -1,0 +1,46 @@
+name: Lint project files
+
+on:
+    pull_request:
+        paths:
+            - '**.ts'
+            - '**.tsx'
+
+jobs:
+    eslint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup node
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16'
+
+            - uses: actions/cache@v2
+              with:
+                  path: '**/node_modules'
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+            - name: Install Node Dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Build project
+              run: yarn nx affected:build
+
+            - name: Save Code Linting Report JSON
+              run: yarn lint:report
+              continue-on-error: true
+
+            - name: Annotate Code Linting Results
+              uses: ataylorme/eslint-annotate-action@1.1.2
+              with:
+                  repo-token: '${{ github.token }}'
+                  report-json: 'eslint-report.log.json'
+
+            - name: Upload ESLint report
+              uses: actions/upload-artifact@v2
+              with:
+                  name: eslint-report.log.json
+                  path: eslint-report.log.json
