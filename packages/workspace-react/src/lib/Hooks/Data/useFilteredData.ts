@@ -5,7 +5,7 @@ import { useWorkspaceController } from '../useWorkspaceController';
  * Hook that lets you use filtered data from the controller as a state
  * @returns Filtered data as a state
  */
-export function useFilteredData() {
+export function useFilteredData<T>() {
     const { filteredData, onFilteredDataChanged } = useWorkspaceController();
 
     //TODO: fix data is updated before notifier is added but default data to usestate doesnt seem to work??
@@ -21,5 +21,5 @@ export function useFilteredData() {
         };
     }, []);
 
-    return data;
+    return data as T[];
 }

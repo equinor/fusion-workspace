@@ -26,6 +26,9 @@
   },
   "devDependencies": {
     "@equinor/eslint-config-fusion": "^0.1.2",
+    "@equinor/fusion-framework-module-msal": "^0.1.21",
+    "@equinor/fusion-framework-react": "^0.2.9",
+    "@equinor/fusion-framework-react-app": "^0.2.26",
     "@nrwl/cli": "14.3.6",
     "@nrwl/cypress": "14.3.6",
     "@nrwl/eslint-plugin-nx": "14.3.6",

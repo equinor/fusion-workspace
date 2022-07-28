@@ -4,28 +4,14 @@
     "projectType": "library",
     "tags": [],
     "targets": {
-        "build": {
-            "executor": "@nrwl/web:rollup",
-            "outputs": [
-                "{options.outputPath}"
-            ],
+         "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/workspace-react",
+                "main": "packages/workspace-react/src/index.ts",
                 "tsConfig": "packages/workspace-react/tsconfig.lib.json",
-                "project": "packages/workspace-react/package.json",
-                "entryFile": "packages/workspace-react/src/index.ts",
-                "external": [
-                    "react/jsx-runtime"
-                ],
-                "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-                "compiler": "babel",
-                "assets": [
-                    {
-                        "glob": "packages/workspace-react/README.md",
-                        "input": ".",
-                        "output": "."
-                    }
-                ]
+                "assets": ["packages/workspace-react/*.md"]
             }
         },
         "publish": {
