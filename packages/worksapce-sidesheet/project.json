@@ -1,0 +1,58 @@
+{
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/workspace-sidesheet/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "dependsOn": [
+                "^build"
+            ],
+            "options": {
+                "outputPath": "dist/packages/workspace-sidesheet",
+                "main": "packages/workspace-sidesheet/src/index.ts",
+                "tsConfig": "packages/workspace-sidesheet/tsconfig.lib.json",
+                "assets": [
+                    "packages/workspace-sidesheet/*.md"
+                ]
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs workspace-sidesheet {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/workspace-sidesheet/**/*.{ts,tsx,js,jsx}"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "coverage/packages/workspace-sidesheet"
+            ],
+            "options": {
+                "jestConfig": "packages/workspace-sidesheet/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
+}

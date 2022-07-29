@@ -16,6 +16,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@equinor/workspace-ag-grid": ["packages/ag-grid/src/index.ts"],
+            "@equinor/workspace-sidesheet": ["packages/workspace-sidesheet/src/index.ts"],
             "@equinor/power-bi": ["packages/power-bi/src/index.ts"],
             "@equinor/table": ["packages/table/src/index.ts"],
             "@equinor/garden": ["packages/garden/src/index.ts"],
