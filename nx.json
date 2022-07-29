@@ -3,7 +3,7 @@
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "npmScope": "equinor",
     "affected": {
-        "defaultBase": "master"
+        "defaultBase": "main"
     },
     "tasksRunnerOptions": {
         "default": {
