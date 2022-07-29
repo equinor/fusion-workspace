@@ -7,39 +7,48 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": [
-          "{options.outputPath}"
+        "{options.outputPath}"
+      ],
+      "dependsOn": [
+        "^build"
       ],
       "options": {
-          "outputPath": "dist/packages/table",
-          "main": "packages/table/src/index.ts",
-          "tsConfig": "packages/table/tsconfig.lib.json",
-          "assets": [
-              "packages/table/*.md"
-          ]
+        "outputPath": "dist/packages/table",
+        "main": "packages/table/src/index.ts",
+        "tsConfig": "packages/table/tsconfig.lib.json",
+        "assets": [
+          "packages/table/*.md"
+        ]
       }
     },
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-          "command": "node tools/scripts/publish.mjs table {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs table {args.ver} {args.tag}"
       },
       "dependsOn": [
-          {
-              "projects": "self",
-              "target": "build"
-          }
+        {
+          "projects": "self",
+          "target": "build"
+        }
       ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/table/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "packages/table/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/table"],
+      "outputs": [
+        "coverage/packages/table"
+      ],
       "options": {
         "jestConfig": "packages/table/jest.config.ts",
         "passWithNoTests": true

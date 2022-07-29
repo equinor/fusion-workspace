@@ -4,14 +4,21 @@
     "projectType": "library",
     "tags": [],
     "targets": {
-         "build": {
+        "build": {
             "executor": "@nrwl/js:tsc",
-            "outputs": ["{options.outputPath}"],
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "dependsOn": [
+                "^build"
+            ],
             "options": {
                 "outputPath": "dist/packages/workspace-react",
                 "main": "packages/workspace-react/src/index.ts",
                 "tsConfig": "packages/workspace-react/tsconfig.lib.json",
-                "assets": ["packages/workspace-react/*.md"]
+                "assets": [
+                    "packages/workspace-react/*.md"
+                ]
             }
         },
         "publish": {
@@ -22,7 +29,7 @@
             "dependsOn": [
                 {
                     "projects": "self",
-                    "target": "build"
+                    "target": "^build"
                 }
             ]
         },

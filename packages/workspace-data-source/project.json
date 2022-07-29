@@ -9,6 +9,9 @@
             "outputs": [
                 "{options.outputPath}"
             ],
+            "dependsOn": [
+                "^build"
+            ],
             "options": {
                 "outputPath": "dist/packages/workspace-data-source",
                 "main": "packages/workspace-data-source/src/index.ts",

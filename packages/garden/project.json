@@ -9,6 +9,9 @@
       "outputs": [
         "{options.outputPath}"
       ],
+      "dependsOn": [
+        "^build"
+      ],
       "options": {
         "outputPath": "dist/packages/garden",
         "tsConfig": "packages/garden/tsconfig.lib.json",

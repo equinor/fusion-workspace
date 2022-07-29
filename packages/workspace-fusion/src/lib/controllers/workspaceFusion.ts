@@ -53,7 +53,10 @@ export function createFusionWorkspace<
                 addDataSource: (
                     configurator: DataSourceConfigurator<TData, TControllers, TContext>
                 ) => {
-                    return addDataSourceController(controller, configurator);
+                    return addDataSourceController<TData, TControllers, TContext>(
+                        controller,
+                        configurator
+                    );
                 },
                 addFilter: (configurator: FilterConfigurator<TData, TControllers, TContext>) => {
                     return addDataFilterController(controller, configurator);
@@ -68,7 +71,7 @@ export function createFusionWorkspace<
                     return controller;
                 },
                 addCustomTab: <TController, WSController>(tab: Tab<TController, WSController>) => {
-                    controller.addTab<TController, WSController>(tab);
+                    controller.addTab(tab);
                     return controller;
                 },
                 addCustomController: <
