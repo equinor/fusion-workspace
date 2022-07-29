@@ -16,15 +16,15 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@equinor/workspace-ag-grid": ["packages/ag-grid/src/index.ts"],
-            "@equinor/workspace-sidesheet": ["packages/workspace-sidesheet/src/index.ts"],
             "@equinor/power-bi": ["packages/power-bi/src/index.ts"],
             "@equinor/table": ["packages/table/src/index.ts"],
             "@equinor/garden": ["packages/garden/src/index.ts"],
             "@equinor/filter": ["packages/filter/src/index.ts"],
+            "@equinor/workspace-ag-grid": ["packages/ag-grid/src/index.ts"],
             "@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
             "@equinor/workspace-data-source": ["packages/workspace-data-source/src/index.ts"],
             "@equinor/workspace-fusion": ["packages/workspace-fusion/src/index.ts"],
+            "@equinor/workspace-sidesheet": ["packages/workspace-sidesheet/src/index.ts"],
             "@equinor/workspace-react": ["packages/workspace-react/src/index.ts"]
         },
         "noImplicitAny": false,
