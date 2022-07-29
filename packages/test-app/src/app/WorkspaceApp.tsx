@@ -41,6 +41,18 @@ export function TestWorkspaceApp() {
                     .config({
                         activeTab: 'List',
                     })
+                    .addSideSheet(() => {
+                        //dfg
+                    })
+                    .addGarden(() => ({
+                        data: [],
+                        initialGrouping: {
+                            horizontalGroupingAccessor: 'state',
+                            verticalGroupingKeys: [],
+                        },
+                        nodeLabelCallback: (s) => s.sequenceNumber,
+                        objectIdentifier: 'id',
+                    }))
                     .addCustomTab<
                         MyController,
                         FusionWorkspaceController<DefaultInterface, any, MyControllers>

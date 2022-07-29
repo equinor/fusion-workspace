@@ -7,6 +7,7 @@ import {
 import { addDataSourceController } from '../api/dataSource';
 import { addDataFilterController } from '../api/filter';
 import { addGardenTab } from '../api/garden';
+import { addSidesheet } from '../api/sidesheet';
 import { ClickEvent } from '../types/click';
 import {
     DataSourceConfigurator,
@@ -68,7 +69,7 @@ export function createFusionWorkspace<
                     return controller;
                 },
                 addSideSheet: () => {
-                    return controller;
+                    return addSidesheet(controller);
                 },
                 addCustomTab: <TController, WSController>(tab: Tab<TController, WSController>) => {
                     controller.addTab(tab);

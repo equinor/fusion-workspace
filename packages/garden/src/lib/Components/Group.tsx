@@ -1,13 +1,13 @@
-import { Count } from '../Styles/common';
-import { Pack, SubGroup } from '../Styles/group';
-import { ChevronUp, ChevronDown } from '../Icons/Chevron';
-import { GardenGroup } from '../Models/data';
-import { Items } from './Items';
+import { useMemo } from 'react';
 import { useParkViewContext } from '../Context/ParkViewProvider';
 import { useRefresh } from '../hooks/useRefresh';
+import { ChevronDown, ChevronUp } from '../Icons/Chevron';
+import { GardenGroup } from '../Models/data';
 import { FieldSettings } from '../Models/fieldSettings';
+import { Count } from '../Styles/common';
+import { Pack, SubGroup } from '../Styles/group';
 import { defaultSortFunction } from '../Utils/utilities';
-import { useMemo } from 'react';
+import { Items } from './Items';
 
 interface GroupProps<T> {
     group: GardenGroup<T>;

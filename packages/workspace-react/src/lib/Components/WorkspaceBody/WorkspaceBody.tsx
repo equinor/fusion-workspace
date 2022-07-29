@@ -5,7 +5,6 @@ import { StyledWorkspaceBody } from './workspaceBody.styles';
 
 export function WorkspaceBody() {
     const { controllers } = useWorkspaceController();
-
     return (
         <StyledWorkspaceBody>
             <WorkspaceTab />

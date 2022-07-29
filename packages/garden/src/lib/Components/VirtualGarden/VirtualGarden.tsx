@@ -27,11 +27,10 @@ export const VirtualGarden = <T extends unknown>({
     const parentRef = useRef<HTMLDivElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-
-    const controller = useParkViewContext<T>()
+    const controller = useParkViewContext<T>();
 
     const {
-        grouping: {horizontalGroupingAccessor, verticalGroupingKeys = []},
+        grouping: { horizontalGroupingAccessor, verticalGroupingKeys = [] },
         fieldSettings,
         visuals,
         customGroupByKeys,
@@ -47,7 +46,10 @@ export const VirtualGarden = <T extends unknown>({
     const sortedColumns = useMemo(
         () =>
             garden.sort((a, b) =>
-                (fieldSettings?.[horizontalGroupingAccessor]?.getColumnSort ?? defaultSortFunction)(a.value, b.value)
+                (fieldSettings?.[horizontalGroupingAccessor]?.getColumnSort ?? defaultSortFunction)(
+                    a.value,
+                    b.value
+                )
             ),
         [garden, fieldSettings, horizontalGroupingAccessor]
     );
@@ -74,9 +76,11 @@ export const VirtualGarden = <T extends unknown>({
         overscan: 3,
     });
     const headerChild =
-        (visuals?.customView?.customHeaderView as CustomVirtualView<T>['customHeaderView']) ?? undefined;
+        (visuals?.customView?.customHeaderView as CustomVirtualView<T>['customHeaderView']) ??
+        undefined;
     const packageChild =
-        (visuals?.customView?.customItemView as CustomVirtualView<T>['customItemView']) ?? undefined;
+        (visuals?.customView?.customItemView as CustomVirtualView<T>['customItemView']) ??
+        undefined;
 
     const handleExpand = useCallback(
         <T extends unknown>(subGroup: GardenGroup<T>): void => {
@@ -88,7 +92,12 @@ export const VirtualGarden = <T extends unknown>({
     );
     const highlightedColumn = useMemo(
         () =>
-            visuals?.highlightHorizontalColumn ? visuals?.highlightHorizontalColumn(horizontalGroupingAccessor.toString(), customGroupByKeys) : undefined,
+            visuals?.highlightHorizontalColumn
+                ? visuals?.highlightHorizontalColumn(
+                      horizontalGroupingAccessor.toString(),
+                      customGroupByKeys
+                  )
+                : undefined,
         [visuals?.highlightHorizontalColumn, horizontalGroupingAccessor, customGroupByKeys]
     );
     useLayoutEffect(() => {
@@ -114,10 +123,10 @@ export const VirtualGarden = <T extends unknown>({
                 headerChild={headerChild}
                 highlightColumn={highlightedColumn}
                 customDescription={(item) => {
-                    if(visuals?.getCustomDescription){
-                        return visuals.getCustomDescription(item, controller);  
+                    if (visuals?.getCustomDescription) {
+                        return visuals.getCustomDescription(item, controller);
                     }
-                    return "";
+                    return '';
                 }}
                 groupByKey={horizontalGroupingAccessor.toString()}
             />
@@ -131,15 +140,18 @@ export const VirtualGarden = <T extends unknown>({
                             rowVirtualizer={rowVirtualizer}
                             garden={sortedColumns}
                             virtualColumn={virtualColumn}
-                            sortData={s => s}
+                            sortData={(s) => s}
                             packageChild={packageChild}
                             handleExpand={handleExpand}
                             items={columnItems}
                             itemWidth={width}
                             customSubGroup={
-                                visuals?.customView?.customGroupView as CustomVirtualView<T>['customGroupView']
+                                visuals?.customView
+                                    ?.customGroupView as CustomVirtualView<T>['customGroupView']
                             }
-                            groupByKeys={[horizontalGroupingAccessor, ...verticalGroupingKeys] as any}
+                            groupByKeys={
+                                [horizontalGroupingAccessor, ...verticalGroupingKeys] as any
+                            }
                             selectedItem={selectedItem}
                             handleOnClick={handleOnItemClick}
                             parentRef={containerRef}

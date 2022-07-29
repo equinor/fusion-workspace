@@ -4,6 +4,7 @@ import { Controller, MiddlewareConfigFunction } from '@equinor/workspace-core';
 import { FilterController } from '@equinor/filter';
 import { DataSourceController } from '@equinor/workspace-data-source';
 import { ReactWorkspaceController, Tab } from '@equinor/workspace-react';
+import { SidesheetController } from '@equinor/workspace-sidesheet';
 import { ClickEvent } from './click';
 import { DataSourceConfigurator, FilterConfigurator, GardenConfigurator } from './configurator';
 
@@ -11,6 +12,7 @@ export interface FusionWorkspaceControllers<TData> {
     dataSource: DataSourceController<TData>;
     garden: GardenController<TData>;
     filter: FilterController<TData>;
+    sidesheet: SidesheetController<TData>;
 }
 
 export interface FusionWorkspaceError {}
