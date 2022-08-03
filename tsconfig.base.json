@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@workspace/filter": ["packages/filter/src/index.ts"],
       "@workspace/garden": ["packages/garden/src/index.ts"],
       "@workspace/power-bi": ["packages/power-bi/src/index.ts"],
       "@workspace/table": ["packages/table/src/index.ts"],
