@@ -23,8 +23,6 @@ This library includes:
 - WorkspaceTab
 - WorkspaceError
 - WorkspaceInfoPage
-- WorkspaceContextSelectPage
-- WorkspaceContextSelector
 - Workspace
 
 ### Context
