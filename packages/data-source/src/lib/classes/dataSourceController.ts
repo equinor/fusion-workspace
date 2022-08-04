@@ -1,16 +1,16 @@
 
 import { defaultResponseParser, generateUniqueId } from '../functions';
-import { FetchResponseAsync, OnDataChangedCallback, ResponseParserAsync } from '../types';
+import { FetchResponseAsync, OnDataChangedCallback, OnErrorCallback, ResponseParserAsync } from '../types';
 import { Callback, OnCallbackSet } from '../types/callback';
 
-export class DataSourceController<TData, TError> {
+export class DataSourceController<TData, TError = unknown> {
     /** Function that returns the api call promise */
     fetchResponseAsync: FetchResponseAsync;
     /** Function that parses the response to correct format, defaults to just parsing the raw response */
     responseParserAsync: ResponseParserAsync<TData> = defaultResponseParser;
     data: TData[] = [];
-    error: TError | null = null;
-    onDataChangedCallbacks: Callback<OnDataChangedCallback<TData>>[] = [];
+    private onDataChangedCallbacks: Callback<OnDataChangedCallback<TData, TError>>[] = [];
+    private onErrorCallbacks: Callback<OnErrorCallback<TData, TError>>[] = []
 
     constructor(fetch: FetchResponseAsync) {
         this.fetchResponseAsync = fetch;
@@ -30,33 +30,47 @@ export class DataSourceController<TData, TError> {
             const data = await this.responseParserAsync(res);
             this.data = data;
             if (!preventCallbacks) {
-                this.onDataChangedCallbacks.forEach(({ callback }) => callback(data, this));
+                this.notifyDataChanged();
             }
             return data;
 
         }catch(e: unknown){
-            this.error = e as TError;
+            this.throwError(e as TError)
         }
 
         return [];
     };
 
+    /**
+     * Function for setting error and notifying subscribers
+     * @param error
+     */
+    private throwError(error: TError){
+        this.onErrorCallbacks.forEach(({callback}) => callback(error, this))
+
+    }
+
+    /**
+     * Calls the callbacks to let the subscribers know data has changed
+     */
+    private notifyDataChanged(){
+        this.onDataChangedCallbacks.forEach(({callback}) => callback(this.data, this))
+    }
 
     /**
      * Removes the data
      */
     remove = (): void => {
         this.data = [];
-        this.onDataChangedCallbacks.forEach(({callback}) => callback([], this))
+        this.notifyDataChanged();
     }
-
 
     /**
      * Register a callback to be called whenever data changes
      * @param cb 
      * @returns 
      */
-    onDataChanged = (cb: OnDataChangedCallback<TData>): OnCallbackSet => {
+    onDataChanged = (cb: OnDataChangedCallback<TData, TError>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onDataChangedCallbacks.push({ id, callback: cb });
         return {
