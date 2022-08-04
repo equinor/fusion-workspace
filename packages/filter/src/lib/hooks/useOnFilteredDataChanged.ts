@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { OnCallbackSet, OnFilterDataChangeCallback } from '../classes';
+import { OnCallbackSet, OnFilterDataChangeCallback } from '../types';
 
 export function useOnFilteredDataChanged<T>(
     onFilterDataChange: (cb: OnFilterDataChangeCallback<T>) => OnCallbackSet,

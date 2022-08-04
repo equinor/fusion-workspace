@@ -8,34 +8,21 @@ import {
 import { registerCallback } from '../functions/registerCallback';
 
 import {
+    Callback,
     FilterGroup,
     FilterItemCount,
     FilterSearchActive,
     FilterValueType,
+    OnCallbackSet,
+    OnFilterDataChangeCallback,
+    OnFilterStateChangedCallback,
     ValueFormatterFilter,
     ValueFormatterFunction,
 } from '../types';
 import { filterGroupExists } from '../utils';
 
-export type OnFilterDataChangeCallback<TData> = (
-    data: TData[],
-    controller: FilterController<TData>
-) => void;
 
-export type OnFilterStateChangedCallback<T> = (
-    newFilterState: FilterGroup[],
-    controller: FilterController<T>
-) => void;
 
-export interface Callback<TCallback> {
-    id: string;
-    callback: TCallback;
-}
-
-export interface OnCallbackSet {
-    id: string;
-    unSubscribe: () => void;
-}
 
 //TODO: Add change handlers to everything
 export class FilterController<TData> {
@@ -86,12 +73,20 @@ export class FilterController<TData> {
         this.valueFormatters = [...this.valueFormatters, ...valueFormatters];
     };
 
+    /**
+     * Check if a value is currently being filtered out from the dataset
+     */
     checkValueIsInactive = (groupName: string, value: FilterValueType) =>
         Boolean(this.filterState.find(({ name }) => name === groupName)?.values.includes(value));
 
     getGroupValues = (groupName: string) =>
         this.allFilterValues.find(({ name }) => name === groupName)?.values ?? [];
 
+    /**
+    * Get all the values that are currently being filtered out from a specific group
+    * @param groupName 
+    * @returns 
+    */
     getInactiveGroupValues = (groupName: string) =>
         this.filterState.find(({ name }) => name === groupName)?.values ?? [];
 

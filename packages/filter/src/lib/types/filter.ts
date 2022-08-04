@@ -36,10 +36,7 @@ export interface FilterConfiguration<T> {
  * Primitive types allowed as filter types.
  */
 export type FilterValueType = string | number | null;
-/**
- * Defines which valueformatters to use for searching
- */
-export type SearchMode = 'id/desc' | 'all';
+
 /**
  * Function for formatting an object to a filter value
  */
@@ -55,26 +52,6 @@ export interface FilterGroup {
     name: string;
     values: FilterValueType[];
 }
-
-/**
- * Object to store for an active search, allows for searching after filtering has been done.
- */
-export interface FilterSearchActive<T> {
-    searchValue: string;
-    valueFormatters: ValueFormatterFilter<T>[];
-    searchIn: SearchDataSet;
-    type: SearchType;
-}
-
-/**
- * Defines which data to search in
- */
-export type SearchDataSet = 'Data' | 'FilteredData';
-
-/**
- * Different types for searching
- */
-export type SearchType = 'startsWith' | 'includes';
 
 export interface FilterItemCount {
     /** Item name */
