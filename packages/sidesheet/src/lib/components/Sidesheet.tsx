@@ -5,8 +5,6 @@ import styled from 'styled-components';
 
 import { SidesheetController } from '../classes/sidesheetController';
 
-/* eslint-disable-next-line */
-
 export interface SidesheetProps<T> {
     controller: SidesheetController<T>;
 }
