@@ -49,7 +49,7 @@ export function Sidesheet<T>({ controller }: SidesheetProps<T>): JSX.Element | n
                 }}
             />
             <Button onClick={() => controller.setItem(undefined)}>Remove item</Button>
-            <div>{controller.isSidesheetOpen ? 'Sidesheet is open' : 'Sidesheet is closed'}</div>
+            <div>{controller.isSidesheetOpen() ? 'Sidesheet is open' : 'Sidesheet is closed'}</div>
             <div>
                 {controller.item ? 'Sidesheet has an item' : 'Sidesheet does not have an item'}
             </div>
