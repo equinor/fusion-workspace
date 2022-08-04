@@ -20,7 +20,7 @@ export class SidesheetController<T> {
         this.setItem(undefined);
     };
 
-    onSidesheetOpen = (cb: SidesheetChangedCallback<T>): OnCallbackSet => {
+    onSidesheetStateChanged = (cb: SidesheetChangedCallback<T>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onSidesheetStateChangedCallbacks.push({ id, callback: cb });
         return {
