@@ -3,13 +3,14 @@ import { defaultResponseParser, generateUniqueId } from '../functions';
 import { FetchResponseAsync, OnDataChangedCallback, ResponseParserAsync } from '../types';
 import { Callback, OnCallbackSet } from '../types/callback';
 
-export class DataSourceController<T> {
+export class DataSourceController<TData, TError> {
     /** Function that returns the api call promise */
     fetchResponseAsync: FetchResponseAsync;
     /** Function that parses the response to correct format, defaults to just parsing the raw response */
-    responseParserAsync: ResponseParserAsync<T> = defaultResponseParser;
-    data: T[] = [];
-    onDataChangedCallbacks: Callback<OnDataChangedCallback<T>>[] = [];
+    responseParserAsync: ResponseParserAsync<TData> = defaultResponseParser;
+    data: TData[] = [];
+    error: TError | null = null;
+    onDataChangedCallbacks: Callback<OnDataChangedCallback<TData>>[] = [];
 
     constructor(fetch: FetchResponseAsync) {
         this.fetchResponseAsync = fetch;
@@ -20,16 +21,24 @@ export class DataSourceController<T> {
      * @param preventCallbacks
      * @returns 
      */
-    fetchData = async (preventCallbacks?: boolean): Promise<T[]> => {
-        const res = await this.fetchResponseAsync();
-        const data = await this.responseParserAsync(res);
+    fetchData = async (preventCallbacks?: boolean): Promise<TData[]> => {
+        /**
+         * Add try catch and error slot
+         */
+        try{
+            const res = await this.fetchResponseAsync();
+            const data = await this.responseParserAsync(res);
+            this.data = data;
+            if (!preventCallbacks) {
+                this.onDataChangedCallbacks.forEach(({ callback }) => callback(data, this));
+            }
+            return data;
 
-        this.data = data;
-
-        if (!preventCallbacks) {
-            this.onDataChangedCallbacks.forEach(({ callback }) => callback(data, this));
+        }catch(e: unknown){
+            this.error = e as TError;
         }
-        return data;
+
+        return [];
     };
 
 
@@ -47,7 +56,7 @@ export class DataSourceController<T> {
      * @param cb 
      * @returns 
      */
-    onDataChanged = (cb: OnDataChangedCallback<T>): OnCallbackSet => {
+    onDataChanged = (cb: OnDataChangedCallback<TData>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onDataChangedCallbacks.push({ id, callback: cb });
         return {
