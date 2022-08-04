@@ -15,9 +15,9 @@ import { Callback, OnCallbackSet, OnClickCallback, OnDataChangedCallback, Worksp
 export interface WorkspaceController<
     TData,
     TControllers,
-    TOnClick = any,
-    TError = any,
-    TContext = any
+    TOnClick = unknown,
+    TError = unknown,
+    TContext = unknown
 > {
     /** Data supplied to the workspace */
     data: TData[];
