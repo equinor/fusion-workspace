@@ -82,6 +82,18 @@ export class DataSourceController<TData, TError = unknown> {
             },
         };
     };
+    
+
+    onErrorThrown = (cb: OnErrorCallback<TData,TError>): OnCallbackSet => {
+        const id = generateUniqueId();
+        this.onErrorCallbacks.push({callback: cb, id});
+        return {
+            id,
+            unSubscribe: () => {
+                this.onErrorCallbacks = this.onErrorCallbacks.filter((s) => s.id !== id)
+            }
+        }
+    }
 
 
 }
