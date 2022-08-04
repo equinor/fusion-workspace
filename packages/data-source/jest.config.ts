@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-    displayName: 'workspace-data-source',
+    displayName: 'data-source',
     preset: '../../jest.preset.js',
     transform: {
         '^.+\\.[tj]sx?$': 'babel-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../coverage/packages/workspace-data-source',
+    coverageDirectory: '../../coverage/packages/data-source',
 };

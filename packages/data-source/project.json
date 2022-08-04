@@ -1,6 +1,6 @@
 {
     "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-    "sourceRoot": "packages/workspace-data-source/src",
+    "sourceRoot": "packages/data-source/src",
     "projectType": "library",
     "tags": [],
     "targets": {
@@ -13,18 +13,18 @@
                 "^build"
             ],
             "options": {
-                "outputPath": "dist/packages/workspace-data-source",
-                "main": "packages/workspace-data-source/src/index.ts",
-                "tsConfig": "packages/workspace-data-source/tsconfig.lib.json",
+                "outputPath": "dist/packages/data-source",
+                "main": "packages/data-source/src/index.ts",
+                "tsConfig": "packages/data-source/tsconfig.lib.json",
                 "assets": [
-                    "packages/workspace-data-source/*.md"
+                    "packages/data-source/*.md"
                 ]
             }
         },
         "publish": {
             "executor": "@nrwl/workspace:run-commands",
             "options": {
-                "command": "node tools/scripts/publish.mjs workspace-data-source {args.ver} {args.tag}"
+                "command": "node tools/scripts/publish.mjs data-source {args.ver} {args.tag}"
             },
             "dependsOn": [
                 {
@@ -40,17 +40,17 @@
             ],
             "options": {
                 "lintFilePatterns": [
-                    "packages/workspace-data-source/**/*.{ts,tsx,js,jsx}"
+                    "packages/data-source/**/*.{ts,tsx,js,jsx}"
                 ]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": [
-                "coverage/packages/workspace-data-source"
+                "coverage/packages/data-source"
             ],
             "options": {
-                "jestConfig": "packages/workspace-data-source/jest.config.ts",
+                "jestConfig": "packages/data-source/jest.config.ts",
                 "passWithNoTests": true
             }
         }
