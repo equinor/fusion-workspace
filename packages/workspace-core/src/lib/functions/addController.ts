@@ -3,7 +3,6 @@ import { Controller, WorkspaceControllerInternal } from '../types';
 export function addController<
     TData,
     TController,
-    WSController,
     TControllers extends Record<string, any>,
     TOnClick,
     TError,
@@ -16,7 +15,13 @@ export function addController<
         TError,
         TContext
     >,
-    controller: Controller<TController, WSController>
+    controller: Controller<TController, WorkspaceControllerInternal<
+    TData,
+    TControllers,
+    TOnClick,
+    TError,
+    TContext
+>>
 ): void {
     if (workspaceController.controllers[controller.name]) {
         throw new Error('A controller with this name already exists!');
@@ -28,5 +33,5 @@ export function addController<
     };
 
     controller.config &&
-        controller.config(controller.controller, workspaceController as unknown as WSController);
+        controller.config(controller.controller, workspaceController);
 }

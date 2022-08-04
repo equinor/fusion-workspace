@@ -42,6 +42,17 @@ export function createWorkspaceController<
     TError = any,
     TContext = any
 >(): WorkspaceController<TData, TControllers, TOnClick, TError, TContext> {
+
+    /**
+     * Made so its easier to reference the controller with all the generic parameters
+     */
+    type thisController = WorkspaceControllerInternal<
+    TData,
+    TControllers,
+    TOnClick,
+    TError,
+    TContext>
+
     const workspaceController: WorkspaceControllerInternal<
         TData,
         TControllers,
@@ -57,21 +68,13 @@ export function createWorkspaceController<
         onDataChangedCallbacks: [],
         onClickCallbacks: [],
         onErrorCallbacks: [],
-        addController<TController, WSController>(
-            controller: Controller<TController, WSController>
+        addController<TController>(
+            controller: Controller<TController, thisController>
         ) {
-            addController<
-                TData,
-                TController,
-                WSController,
-                TControllers,
-                TOnClick,
-                TError,
-                TContext
-            >(workspaceController, controller);
+            addController(workspaceController, controller);
         },
-        addMiddleware<WSController>(middleware: MiddlewareConfigFunction<WSController>) {
-            middleware(workspaceController as unknown as WSController);
+        addMiddleware(middleware: MiddlewareConfigFunction<thisController>) {
+            middleware(workspaceController);
         },
         setData(data: TData[], preventCallbacks?: boolean) {
             setOriginalData<TData, TControllers, TOnClick, TError, TContext>(

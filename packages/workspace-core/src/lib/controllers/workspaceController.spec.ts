@@ -114,7 +114,7 @@ describe('workspaceController', () => {
 
     it('should add middleware', () => {
         const log = jest.fn();
-        workspaceController.addMiddleware<MockWorkspaceController>((ws) => {
+        workspaceController.addMiddleware((ws) => {
             log(ws.context?.id);
             ws.onClick(() => {
                 log(ws.context?.id);
