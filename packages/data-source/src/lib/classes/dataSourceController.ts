@@ -1,19 +1,7 @@
 
-import { defaultResponseParser } from '../functions';
-import { Callback, OnCallbackSet } from '../types/dataSource';
-
-export type FetchResponseAsync = (signal?: AbortSignal) => Promise<Response>;
-export type ResponseParserAsync<T> = (Response: Response) => Promise<T[]>;
-
-type OnDataChangedCallback<T> = (data: T[], controller: DataSourceController<T>) => void;
-export interface DataSourceConfig<TData> {
-    dataSource: FetchResponseAsync;
-    dataMapper?: ResponseParserAsync<TData>;
-}
-export interface DataSource<T> {
-    responseAsync: (signal?: AbortSignal) => Promise<Response>;
-    responseParser?: (Response: Response) => Promise<T[]>;
-}
+import { defaultResponseParser, generateUniqueId } from '../functions';
+import { FetchResponseAsync, OnDataChangedCallback, ResponseParserAsync } from '../types';
+import { Callback, OnCallbackSet } from '../types/callback';
 
 export class DataSourceController<T> {
     /** Function that returns the api call promise */
@@ -40,7 +28,7 @@ export class DataSourceController<T> {
     };
 
     onDataChanged = (cb: OnDataChangedCallback<T>): OnCallbackSet => {
-        const id = this.generateUniqueId();
+        const id = generateUniqueId();
         this.onDataChangedCallbacks.push({ id, callback: cb });
         return {
             id,
@@ -52,7 +40,5 @@ export class DataSourceController<T> {
         };
     };
 
-    private generateUniqueId(): string {
-        return (Math.random() * 16).toString();
-    }
+
 }
