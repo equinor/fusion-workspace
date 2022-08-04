@@ -22,10 +22,20 @@ describe("OnDataChangedTesting", () => {
         expect(mocFunction).toBeCalledTimes(1)
         unSubscribe();
     });
-    it("Should not run onDataChanged when preventCallbacks is set to true", () => {
-        controller.onDataChanged(() => {
+    it("Should not run onDataChanged when preventCallbacks is set to true", async () => {
+        const {unSubscribe} = controller.onDataChanged(() => {
             throw "Function should not have been called, fetchData is ignoring the preventCallbacks flag"
         })
-        controller.fetchData(true);
+        await controller.fetchData(true);
+        unSubscribe();
     })
+
+
+
+    it("Should remove the data", () => {
+        expect(controller.data.length).toBeTruthy();
+        controller.remove();
+        expect(controller.data.length).toBeFalsy();
+    })
+
 })

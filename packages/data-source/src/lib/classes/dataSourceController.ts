@@ -15,6 +15,11 @@ export class DataSourceController<T> {
         this.fetchResponseAsync = fetch;
     }
 
+    /**
+     * Fetches data asynchronously and adds it to the data attribute on the controller
+     * @param preventCallbacks
+     * @returns 
+     */
     fetchData = async (preventCallbacks?: boolean): Promise<T[]> => {
         const res = await this.fetchResponseAsync();
         const data = await this.responseParserAsync(res);
@@ -27,6 +32,21 @@ export class DataSourceController<T> {
         return data;
     };
 
+
+    /**
+     * Removes the data
+     */
+    remove = (): void => {
+        this.data = [];
+        this.onDataChangedCallbacks.forEach(({callback}) => callback([], this))
+    }
+
+
+    /**
+     * Register a callback to be called whenever data changes
+     * @param cb 
+     * @returns 
+     */
     onDataChanged = (cb: OnDataChangedCallback<T>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onDataChangedCallbacks.push({ id, callback: cb });
