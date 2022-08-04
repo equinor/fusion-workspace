@@ -1,3 +1,5 @@
+import { Callback, OnCallbackSet, OnClickCallback, OnDataChangedCallback, WorkspaceErrorCallback } from ".";
+
 /**
  * ### Workspace Controller
  * The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
@@ -30,31 +32,15 @@ export interface WorkspaceController<
      * @param controller
      */
     addController<
-        ControllerType,
-        TWController extends WorkspaceController<
-            TData,
-            TControllers,
-            TOnClick,
-            TError,
-            TContext
-        > = WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
-    >(
-        controller: Controller<ControllerType, TWController>
+        ControllerType>(
+        controller: Controller<ControllerType, this>
     ): void;
     /**
      * Adds a controller to the workspace controllers
      * @param controller
      */
-    addMiddleware<
-        TWController extends WorkspaceController<
-            TData,
-            TControllers,
-            TOnClick,
-            TError,
-            TContext
-        > = WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
-    >(
-        config: MiddlewareConfigFunction<TWController>
+    addMiddleware(
+        config: MiddlewareConfigFunction<this>
     ): void;
     /**
      * Setter for original data
@@ -153,27 +139,3 @@ export interface Controller<TControllerType, WSController> {
     config?: ConfigFunction<TControllerType, WSController>;
 }
 
-export interface Callback<TCallback> {
-    id: string;
-    callback: TCallback;
-}
-
-export interface OnCallbackSet {
-    id: string;
-    unSubscribe: () => void;
-}
-
-export type OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext> = (
-    data: TData[],
-    controller: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
-) => void;
-
-export type OnClickCallback<TData, TControllers, TOnClick, TError, TContext> = (
-    ev: TOnClick,
-    controller: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
-) => void;
-
-export type WorkspaceErrorCallback<TData, TControllers, TOnClick, TError, TContext> = (
-    error: TError,
-    controller: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
-) => void;
