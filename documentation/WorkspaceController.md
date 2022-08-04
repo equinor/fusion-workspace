@@ -19,7 +19,7 @@ The workspace controller is a common hub for all controllers. The idea is for th
 Here is an example of use se figure1:
 
 ```mermaid
-flowchart LR 
+flowchart LR
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:center,color:#fff;
     classDef controller fill:#006699,stroke:none,text-align:left;
     classDef config fill:#008899,stroke:none
@@ -47,10 +47,10 @@ flowchart LR
     wc --> wcLoggerMiddleware
     wsDataSource --> wcLoggerMiddleware
     wsFilter --> wcLoggerMiddleware
- 
 
-    wc --> wcErrorConfig --> wcError 
-    
+
+    wc --> wcErrorConfig --> wcError
+
 
     subgraph Core Controllers
         direction BT
@@ -60,7 +60,7 @@ flowchart LR
 
 
     subgraph Other Controllers
-        wsBookmarks --> wsBookmarksConfig 
+        wsBookmarks --> wsBookmarksConfig
     end
 
     wsBookmarksConfig <--> wc
@@ -88,14 +88,14 @@ flowchart LR
     ganttViewConfig[Gantt View Config]:::viewConfig
     pbiViewConfig[PowerBi View Config]:::viewConfig
     customViewConfig[Custom View Config]:::viewConfig
-    
+
     subgraph Views
-        gardenViewConfig --> gardenController <--> gardenConfig 
-        gridViewConfig --> gridController <--> gridConfig 
-        tableViewConfig --> tableController <--> tableConfig 
-        ganttViewConfig --> ganttController <--> ganttConfig 
-        pbiViewConfig --> pbiController <--> pbiConfig 
-        customViewConfig --> customController <--> customConfig 
+        gardenViewConfig --> gardenController <--> gardenConfig
+        gridViewConfig --> gridController <--> gridConfig
+        tableViewConfig --> tableController <--> tableConfig
+        ganttViewConfig --> ganttController <--> ganttConfig
+        pbiViewConfig --> pbiController <--> pbiConfig
+        customViewConfig --> customController <--> customConfig
     end
 
     gardenConfig <--> wc
@@ -104,15 +104,15 @@ flowchart LR
     ganttConfig <--> wc
     pbiConfig <--> wc
     customConfig <--> wc
-      
-    
+
+
 ```
 
 Figure 1. Workspace Controller connections for Fusion Workspace Framework
 
 ## Controllers
 
-A collection of building blocks allows the creation of a workspace. And the building blocks themselves are interchangeable and will be customized toward the workspaces needs. `Controllers` are the actuators of the workspace; nothing happens without a controller. The goal is to create many small and specific controllers that do one thing well. `Middleware` will enable binding them together and unlocking endless possibilities.
+A collection of building blocks allows the creation of a workspace. The building blocks themselves are interchangeable and will be customized toward the workspaces needs. `Controllers` are the actuators of the workspace; nothing happens without a controller. The goal is to create many small and specific controllers that do one thing well. `Middleware` will enable binding them together, unlocking endless possibilities.
 
 ## Middleware/Binders
 
@@ -148,7 +148,7 @@ Controllers and middleware usually bind through workspace controller events. Alt
 ## How it works
 
 ```mermaid
-sequenceDiagram   
+sequenceDiagram
     participant Workspace Controller
     participant Garden Controller
     participant DataSource
@@ -158,7 +158,7 @@ sequenceDiagram
 
     Note over Workspace Controller: Workspace Mounted.
 
-    Workspace Controller ->> DataSource: Fires of request for data source 
+    Workspace Controller ->> DataSource: Fires of request for data source
     Note over DataSource: If needed maps data to required Type
     DataSource ->>Workspace Controller: Returns Data
 
