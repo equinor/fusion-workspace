@@ -40,7 +40,7 @@ export class WorkspaceController<TData, TControllers extends Record<string, any>
     getFilteredData = () => this.filteredData;
     getData = () => this.data;
     getContext = () => this.context;
-    addController = <TController>(controller: Controller<TController,WorkspaceController<TData, TControllers, TOnClick, TError, TContext>>) => addController(controller, this)
+    addController = <TController>(controller: Controller<TController,WorkspaceController<TData, TControllers, TOnClick, TError, TContext>, TControllers>) => addController(controller, this)
     addMiddleware = (middleware: MiddlewareConfigFunction<this>) => middleware(this);
     setContext = (context: ContextCallbackSetter<TContext | undefined>) => (this.context = context(this.context));
     setData = (data: TData[], preventCallbacks?: boolean) => (this.data = data) && !preventCallbacks && this.notifyOnDataChangedCallbacks();

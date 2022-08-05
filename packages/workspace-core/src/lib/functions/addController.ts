@@ -15,7 +15,7 @@ export function addController<
     TOnClick,
     TError,
     TContext
->>,
+>, TControllers>,
     workspaceController: WorkspaceController<
         TData,
         TControllers,
