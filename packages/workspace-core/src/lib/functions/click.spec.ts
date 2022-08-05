@@ -1,23 +1,20 @@
-import { createWorkspaceController } from '../controllers';
-import { WorkspaceControllerInternal } from '../types';
-import { click } from './click';
+import { WorkspaceController } from '../controllers';
 
 const mocFunction = jest.fn();
 
-const workspaceController = createWorkspaceController() as WorkspaceControllerInternal<
-    any,
-    any,
-    any,
-    any,
-    any
->;
+interface Event{
+    type: string
+}
+
+
+const workspaceController = new WorkspaceController<unknown,Record<string,any>,Event,unknown,unknown>();
 
 describe('notifyOnClick', () => {
     it('should notify the onClick event with event', () => {
         workspaceController.onClick((event) => {
             expect(event.type).toBe('mockEvent');
         });
-        click(workspaceController, { type: 'mockEvent' });
+        workspaceController.click({ type: 'mockEvent' });
     });
     it('should notify all the onClicks event with event', () => {
         workspaceController.onClick((event) => {
@@ -26,7 +23,7 @@ describe('notifyOnClick', () => {
         workspaceController.onClick((event) => {
             mocFunction(event.type);
         });
-        click(workspaceController, { type: 'mockEvent' });
+        workspaceController.click({ type: 'mockEvent' });
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(2);
         expect(mocFunction).toBeCalledWith('mockEvent');

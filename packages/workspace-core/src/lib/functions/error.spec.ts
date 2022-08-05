@@ -1,32 +1,35 @@
-import { createWorkspaceController } from '../controllers';
-import { WorkspaceControllerInternal } from '../types';
-import { throwError } from './error';
+import { WorkspaceController } from "../controllers";
 
 const mocFunction = jest.fn();
 
-const workspaceController = createWorkspaceController() as WorkspaceControllerInternal<
-    any,
-    any,
-    any,
-    any,
-    any
->;
+const workspaceController = new WorkspaceController<unknown, Record<string, any>, unknown, WorkspaceError, unknown>();
+
+interface WorkspaceError{
+    error: string;
+    detail: string;
+}
+
+const errorObject: WorkspaceError = {
+    error: "Something went wrong",
+    detail: "Unknown reference"
+}
+
 
 describe('error', () => {
     it('should call error callback with error', () => {
-        workspaceController.onError((error: Error) => {
-            expect(error.message).toEqual('mockControllerError');
+        workspaceController.onError((error: WorkspaceError) => {
+            expect(error.detail).toEqual(errorObject.detail);
         });
-        throwError(workspaceController, new Error('mockControllerError'));
+        workspaceController.throwError(errorObject);
     });
     it('should call all error callbacks with error', () => {
-        workspaceController.onError((error: Error) => {
-            mocFunction(error.message);
+        workspaceController.onError((error: WorkspaceError) => {
+            mocFunction(error.detail);
         });
-        throwError(workspaceController, new Error('mockControllerError'));
+        workspaceController.throwError(errorObject)
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(1);
         expect(mocFunction).not.toBeCalledTimes(2);
-        expect(mocFunction).toBeCalledWith('mockControllerError');
+        expect(mocFunction).toBeCalledWith(errorObject);
     });
 });

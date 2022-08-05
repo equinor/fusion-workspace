@@ -1,4 +1,5 @@
-import { WorkspaceController } from "./types";
+import { WorkspaceController } from "../controllers";
+
 
 export type OnDataChangedCallback<TData, TControllers, TOnClick, TError, TContext> = (
     data: TData[],

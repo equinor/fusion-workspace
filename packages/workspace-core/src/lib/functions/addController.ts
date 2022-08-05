@@ -1,4 +1,5 @@
-import { Controller, WorkspaceControllerInternal } from '../types';
+import { WorkspaceController } from '../controllers';
+import { Controller } from '../types';
 
 export function addController<
     TData,
@@ -8,20 +9,20 @@ export function addController<
     TError,
     TContext
 >(
-    workspaceController: WorkspaceControllerInternal<
-        TData,
-        TControllers,
-        TOnClick,
-        TError,
-        TContext
-    >,
-    controller: Controller<TController, WorkspaceControllerInternal<
+    controller: Controller<TController, WorkspaceController<
     TData,
     TControllers,
     TOnClick,
     TError,
     TContext
->>
+>>,
+    workspaceController: WorkspaceController<
+        TData,
+        TControllers,
+        TOnClick,
+        TError,
+        TContext
+    >
 ): void {
     if (workspaceController.controllers[controller.name]) {
         throw new Error('A controller with this name already exists!');

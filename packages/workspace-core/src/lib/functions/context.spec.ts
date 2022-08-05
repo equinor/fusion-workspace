@@ -1,6 +1,4 @@
-import { createWorkspaceController } from '../controllers';
-import { WorkspaceControllerInternal } from '../types';
-import { setContext } from './context';
+import { WorkspaceController } from "../controllers";
 
 interface MocContext {
     name: string;
@@ -13,36 +11,26 @@ const mocContext: MocContext = {
     lastName: 'Jones',
     age: 82,
 };
-const workspaceController = createWorkspaceController() as WorkspaceControllerInternal<
-    any,
-    any,
-    any,
-    any,
-    MocContext
->;
+const workspaceController = new WorkspaceController<any, any, any, any, MocContext>();
 
-describe('context', () => {
-    it('should be undefined', () => {
-        expect(workspaceController.context).toBe(undefined);
+describe('Workspace controller context', () => {
+    it('Set context should successfully update the context. ', () => {
+        workspaceController.setContext(() => (mocContext))
+        expect(workspaceController.getContext()).toEqual(mocContext);
     });
-    it('should handle undefined context in context setter. ', () => {
-        setContext<any, any, any, any, MocContext>(workspaceController, (c) => ({ ...c }));
-        expect(JSON.stringify(workspaceController.context)).toBe(JSON.stringify({}));
-    });
-    it('should set mocContext to workspaceController context', () => {
-        setContext<any, any, any, any, MocContext>(workspaceController, () => mocContext);
-        expect(workspaceController.context).toBe(mocContext);
-    });
-    it('should update mocContext with name Ron', () => {
-        workspaceController.setContext((c) => ({
-            ...c,
-            name: 'Ron',
-        }));
+    it('Set context should handle partial updates, with spread operator', () => {
+        workspaceController.setContext((c) => {
+            if(!c) return;
 
-        expect(JSON.stringify(workspaceController.context)).toBe(
-            JSON.stringify({ ...mocContext, name: 'Ron' })
+            return {
+                ...c,
+                name: "Ron"
+            }
+        })
+        expect(workspaceController.getContext()).toEqual(
+            {...mocContext, name: "Ron"}
         );
-        expect(workspaceController.context?.name).toBe('Ron');
-        expect(workspaceController.context?.lastName).toBe('Jones');
+        expect(workspaceController.getContext()?.name).toBe('Ron');
+        expect(workspaceController.getContext()?.lastName).toBe('Jones');
     });
 });

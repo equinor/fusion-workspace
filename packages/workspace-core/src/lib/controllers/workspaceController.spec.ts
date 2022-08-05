@@ -1,5 +1,6 @@
-import { Controller, WorkspaceController } from '../types';
-import { createWorkspaceController } from './workspaceController';
+import { writeSync } from 'fs';
+import { Controller } from '../types';
+import { WorkspaceController } from './workspaceController';
 
 interface IMockController {
     id: string;
@@ -75,21 +76,21 @@ type MockWorkspaceController = WorkspaceController<
     IMockError,
     IMockContext
 >;
-const workspaceController: MockWorkspaceController = createWorkspaceController();
+const workspaceController: MockWorkspaceController = new WorkspaceController();
 
 workspaceController.addController(controller);
 
 describe('workspaceController', () => {
     it('should have set mocData to originalData', () => {
-        workspaceController.click();
+    
         workspaceController.onDataChanged((data) => {
-            expect(workspaceController.data).toEqual(
+            expect(workspaceController.getData()).toEqual(
                 workspaceController.controllers.mockController?.getData()
             );
             expect(data).toEqual(workspaceController.controllers.mockController?.getData());
         });
-
-        expect(workspaceController.filteredData).toEqual(
+        workspaceController.click({} as any)
+        expect(workspaceController.getFilteredData()).toEqual(
             workspaceController.controllers.mockController?.getData()
         );
     });
@@ -98,31 +99,25 @@ describe('workspaceController', () => {
             workspaceController.addController(controller);
         };
         expect(setup).toThrow(Error);
-        expect(setup).toThrow('Controller already exist!');
     });
     it('should set context', () => {
-        expect(workspaceController.context).toBe(undefined);
-        workspaceController.onClick(() => {
-            workspaceController.context = { id: 'mockId', title: 'mockTitle' };
-        });
-        workspaceController.click();
-
-        expect(workspaceController.context?.id).toBe('mockId');
-        expect(workspaceController.context?.title).toBe('mockTitle');
-        expect(workspaceController.context).not.toBe(undefined);
+        expect(workspaceController.getContext()).toBe(undefined);
+        workspaceController.setContext(() => ({id: "mockId", title: "mockTitle"}));
+        expect(workspaceController.getContext()?.id).toBe('mockId');
+        expect(workspaceController.getContext()?.title).toBe('mockTitle');
     });
 
     it('should add middleware', () => {
-        const log = jest.fn();
+        const mockFunction = jest.fn();
         workspaceController.addMiddleware((ws) => {
-            log(ws.context?.id);
+            mockFunction(ws.getContext()?.id);
             ws.onClick(() => {
-                log(ws.context?.id);
+                mockFunction(ws.getContext()?.id);
             });
         });
-        workspaceController.click();
-        expect(log).toBeCalled();
-        expect(log).toBeCalledTimes(2);
-        expect(log).toBeCalledWith('mockId');
+        workspaceController.click({} as any)
+        expect(mockFunction).toBeCalled();
+        expect(mockFunction).toBeCalledTimes(2);
+        expect(mockFunction).toBeCalledWith('mockId');
     });
 });

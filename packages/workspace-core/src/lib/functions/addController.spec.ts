@@ -1,5 +1,5 @@
-import { createWorkspaceController } from '../controllers';
-import { Controller, WorkspaceControllerInternal } from '../types';
+import { WorkspaceController } from '../controllers';
+import { Controller } from '../types';
 import { addController } from './addController';
 
 const mockFunction = jest.fn();
@@ -24,17 +24,11 @@ const controller: Controller<IMockController, any> = {
     },
 };
 
-const workspaceController = createWorkspaceController() as WorkspaceControllerInternal<
-    any,
-    IMockControllers,
-    any,
-    any,
-    any
->;
+const workspaceController = new WorkspaceController<any, IMockControllers, any, any, any>()
 
 describe('addController', () => {
     it('should be able to add controller with config and read id ', () => {
-        addController(workspaceController, controller);
+        addController(controller, workspaceController);
         expect(mockFunction).toBeCalled();
         expect(mockFunction).toBeCalledTimes(1);
         expect(mockFunction).not.toBeCalledTimes(2);
@@ -43,9 +37,8 @@ describe('addController', () => {
     });
     it('should not allow two controller with the same name / id', () => {
         const setup = () => {
-            addController(workspaceController, controller);
+            addController(controller, workspaceController);
         };
         expect(setup).toThrow(Error);
-        expect(setup).toThrow('Controller already exist!');
     });
 });
