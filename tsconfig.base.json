@@ -19,7 +19,8 @@
       "@workspace/garden": ["packages/garden/src/index.ts"],
       "@workspace/power-bi": ["packages/power-bi/src/index.ts"],
       "@workspace/table": ["packages/table/src/index.ts"],
-      "@workspace/workspace": ["packages/workspace/src/index.ts"]
+      "@workspace/workspace": ["packages/workspace/src/index.ts"],
+      "@workspace/workspace-core": ["packages/workspace-core/src/index.ts"]
     },
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
