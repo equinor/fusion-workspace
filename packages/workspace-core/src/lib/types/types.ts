@@ -1,9 +1,6 @@
 
 export type ContextCallbackSetter<TContext> = (context: TContext) => TContext;
 
-export type ContextUpdater<TContext> = TContext | ContextCallbackSetter<TContext>;
-
-
 export type ConfigFunction<TController, WSController> = (
     controller: TController,
     workspaceController: WSController

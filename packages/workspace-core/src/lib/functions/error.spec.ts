@@ -30,6 +30,6 @@ describe('error', () => {
         expect(mocFunction).toBeCalled();
         expect(mocFunction).toBeCalledTimes(1);
         expect(mocFunction).not.toBeCalledTimes(2);
-        expect(mocFunction).toBeCalledWith(errorObject);
+        expect(mocFunction).toBeCalledWith(errorObject.detail);
     });
 });
