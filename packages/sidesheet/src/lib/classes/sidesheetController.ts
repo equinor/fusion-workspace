@@ -7,16 +7,22 @@ import {
     SidesheetState,
 } from '../types';
 
-export class SidesheetController<T> {
+export class SidesheetController<TData, TContext> {
     /** The item currently being held by the controller */
-    item: T | undefined;
+    item: TData | undefined;
     /** Current visual state of the sidesheet */
     sidesheetState: SidesheetState = 'Closed';
     /** Function that returns the sidesheet state as a boolean */
     isSidesheetOpen = () => this.sidesheetState === 'Open';
 
-    private onSidesheetStateChangedCallbacks: Callback<SidesheetChangedCallback<T>>[] = [];
-    private onItemChangedCallbacks: Callback<ItemChangedCallback<T>>[] = [];
+    context?: TContext;
+
+    setContext = (newContext: TContext) => {
+        this.context = newContext;
+    }
+
+    private onSidesheetStateChangedCallbacks: Callback<SidesheetChangedCallback<TData>>[] = [];
+    private onItemChangedCallbacks: Callback<ItemChangedCallback<TData>>[] = [];
 
     /** Function that both closes the sidesheet and removes the item */
     closeAndRemoveItem = () => {
@@ -29,7 +35,7 @@ export class SidesheetController<T> {
      * @param cb 
      * @returns 
      */
-    onSidesheetStateChanged = (cb: SidesheetChangedCallback<T>): OnCallbackSet => {
+    onSidesheetStateChanged = (cb: SidesheetChangedCallback<TData>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onSidesheetStateChangedCallbacks.push({ id, callback: cb });
         return {
@@ -61,7 +67,7 @@ export class SidesheetController<T> {
          * @param item 
          * @param preventCallbacks If true, prevents the callbacks from being notified of this change. Dont use unless absolutely necessary
          */
-    setItem = (item: T | undefined, preventCallbacks?: boolean) => {
+    setItem = (item: TData | undefined, preventCallbacks?: boolean) => {
         this.item = item;
         if (!preventCallbacks) {
             this.onItemChangedCallbacks.forEach(({ callback }) => callback(item, this));
@@ -74,7 +80,7 @@ export class SidesheetController<T> {
      * @param cb function to call whenever the item changes
      * @returns 
      */
-    onItemChanges = (cb: ItemChangedCallback<T>): OnCallbackSet => {
+    onItemChanges = (cb: ItemChangedCallback<TData>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onItemChangedCallbacks.push({
             callback: cb,
