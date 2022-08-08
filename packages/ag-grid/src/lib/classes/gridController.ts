@@ -1,11 +1,12 @@
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { registerCallback } from '../functions/registerCallback';
+import { registerCallback } from '../functions';
 import {
     Callback,
     OnCallbackSet,
     OnGridOptionsChangedCallback,
     OnRowDataChangedCallback,
 } from '../types';
+
 
 export class GridController<T> {
     rowData: T[] = [];
@@ -15,13 +16,23 @@ export class GridController<T> {
     /**
      * Callbacks
      */
-    onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<T>>[] = [];
-    onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<T>>[] = [];
+    private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<T>>[] = [];
+    private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<T>>[] = [];
 
+    /**
+     * Updates the grid options
+     * @param gridOptions 
+     */
     setGridOptions = (gridOptions: GridOptions) => {
         this.gridOptions = gridOptions;
         this.onGridOptionsChangedCallbacks.forEach(({callback}) => callback(gridOptions, this))
     };
+
+    /**
+     * Registers a function to be called upon when grid options changes
+     * @param cb 
+     * @returns 
+     */
     onGridOptionsChanged = (cb: OnGridOptionsChangedCallback<T>) =>
         registerCallback(cb, this.onGridOptionsChangedCallbacks, this.unsubOnGridOptionsChanged);
 
@@ -31,11 +42,20 @@ export class GridController<T> {
         );
     };
 
+    /**
+     * Sets new row data and triggers all the onRowDataChanged callback's.
+     * @param newData 
+     */
     setRowData = (newData: T[]) => {
         this.rowData = newData;
         this.onRowDataChangedCallbacks.forEach(({ callback }) => callback(newData, this));
     };
 
+    /**
+     * Registers a function to be called upon when row data changes
+     * @param callback 
+     * @returns 
+     */
     onRowDataChanged = (callback: OnRowDataChangedCallback<T>): OnCallbackSet =>
         registerCallback(callback, this.onRowDataChangedCallbacks, this.unsubOnRowDataChanged);
 
