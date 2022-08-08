@@ -49,14 +49,6 @@ interface Controllers<T>{
 }
 
 
-const CustomCellRender = (props: unknown) => {
-  return (
-    <div>
-      hello
-    </div>
-  )
-}
-
 
 
 function createGridController(){
