@@ -8,8 +8,8 @@ export type ConfigFunction<TController, WSController> = (
 
 export type MiddlewareConfigFunction<WSController> = (controller: WSController) => void;
 
-export interface Controller<TControllerType, WSController> {
-    name: string;
+export interface Controller<TControllerType, WSController, TControllers> {
+    name: keyof TControllers;
     controller: TControllerType;
     config?: ConfigFunction<TControllerType, WSController>;
 }
