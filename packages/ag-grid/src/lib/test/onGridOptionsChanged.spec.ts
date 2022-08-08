@@ -7,7 +7,7 @@ const gridController = new GridController();
 /**
  * Test to make sure the onGridOptionsChanged callbacks are called and passing the correct data
  */
-describe('onGridOptionsChanged', () => {
+describe('Tests for validating that onGridOptionsChanged works', () => {
     it('Should call the onGridOptionsChanged', () => {
       
         gridController.onGridOptionsChanged((s) => {
