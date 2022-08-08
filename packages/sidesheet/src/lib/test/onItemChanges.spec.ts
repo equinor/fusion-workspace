@@ -8,7 +8,7 @@ describe('Item in sidesheet changes', () => {
     const controller = new SidesheetController();
     it('Should fire callback when item changes', () => {
         controller.onItemChanges((s) => {
-            expect(assertName).toBe(assertName);
+            expect(s).toBe(assertName);
             mockFunction();
         });
 
