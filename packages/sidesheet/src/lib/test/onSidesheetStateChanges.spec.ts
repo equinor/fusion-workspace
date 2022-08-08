@@ -7,7 +7,7 @@ describe("Sidesheet state changes Closed/Open", () => {
 
         const controller = new SidesheetController();
         expect(controller.isSidesheetOpen()).toBeFalsy();
-        controller.onSidesheetOpen((s) => {
+        controller.onSidesheetStateChanged((s) => {
             expect(s === "Open").toBeTruthy();
             mockFunction();
         })
