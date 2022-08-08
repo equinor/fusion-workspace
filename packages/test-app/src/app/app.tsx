@@ -6,6 +6,7 @@ import { tokens } from '@equinor/eds-tokens';
 import { useState } from 'react';
 import { WorkspaceController } from '@workspace/workspace-core';
 import { Button } from '@equinor/eds-core-react';
+import { ICellRendererParams } from 'ag-grid-community';
 const StyledApp = styled.div`
  background-color: ${tokens.colors.ui.background__default.hex};
  height: 100%;
@@ -48,9 +49,21 @@ interface Controllers<T>{
 }
 
 
+const CustomCellRender = (props: unknown) => {
+  return (
+    <div>
+      hello
+    </div>
+  )
+}
+
+
+
 function createGridController(){
   const gridController = new GridController();
-  gridController.columnDefs = [{field: "id", resizable: true, sortable: true},{field: "title", resizable: true, sortable: true},{field: "sequenceNumber", resizable: true, sortable: true},{field: "description", resizable: true, sortable: true} ]
+  gridController.columnDefs = [{field: "id", resizable: true, sortable: true, cellRenderer: (cell: ICellRendererParams) => {
+      return `SCR-${cell.value}`
+  }},{field: "title", resizable: true, sortable: true},{field: "sequenceNumber", resizable: true, sortable: true},{field: "description", resizable: true, sortable: true} ]
 
   return gridController;
 }
