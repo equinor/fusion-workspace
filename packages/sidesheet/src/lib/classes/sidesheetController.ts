@@ -14,7 +14,10 @@ export class SidesheetController<TData, TContext> {
     sidesheetState: SidesheetState = 'Closed';
     /** Function that returns the sidesheet state as a boolean */
     isSidesheetOpen = () => this.sidesheetState === 'Open';
-
+    /** 
+     * Allows for sharing contextual information through the sidesheet controller
+     * This context will be accessible in all callbacks supported on the sidesheet controller
+     */
     context?: TContext;
 
     setContext = (newContext: TContext) => {
