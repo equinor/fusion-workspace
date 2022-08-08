@@ -9,7 +9,7 @@ export function registerCallback<TCallback>(
     list.push({ callback: cb, id });
     return {
         id,
-        unSubscribe: () => unsub(id),
+        unsubscribe: () => unsub(id),
     };
 }
 

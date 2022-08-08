@@ -5,7 +5,7 @@ export function useRowData<TData>(controller: GridController<TData>){
     const [rowData, setRowData] = useState(controller.rowData);
 
     useEffect(() => {
-        const {unSubscribe} = controller.onRowDataChanged(setRowData);
+        const {unsubscribe: unSubscribe} = controller.onRowDataChanged(setRowData);
         return unSubscribe
     },[controller])
 
