@@ -43,7 +43,7 @@ export class SidesheetController<TData, TContext> {
         this.onSidesheetStateChangedCallbacks.push({ id, callback: cb });
         return {
             id,
-            unSubscribe: () => {
+            unsubscribe: () => {
                 this.onSidesheetStateChangedCallbacks =
                     this.onSidesheetStateChangedCallbacks.filter((s) => s.id !== id);
             },
@@ -91,7 +91,7 @@ export class SidesheetController<TData, TContext> {
         });
         return {
             id,
-            unSubscribe: () => {
+            unsubscribe: () => {
                 this.onItemChangedCallbacks = this.onItemChangedCallbacks.filter(
                     (s) => s.id !== id
                 );
