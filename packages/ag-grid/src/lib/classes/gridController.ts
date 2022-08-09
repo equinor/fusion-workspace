@@ -9,8 +9,11 @@ import {
 
 
 export class GridController<T> {
+    /** The data to be used in the grid */
     rowData: T[] = [];
+    /** The column definitions for the grid */
     columnDefs: ColDef[] = [];
+    /** The grid options to be used in the grid */
     gridOptions: GridOptions | undefined = undefined;
 
     /**
@@ -21,7 +24,7 @@ export class GridController<T> {
 
     /**
      * Updates the grid options
-     * @param gridOptions 
+     * @param gridOptions new grid options
      */
     setGridOptions = (gridOptions: GridOptions) => {
         this.gridOptions = gridOptions;
@@ -30,8 +33,8 @@ export class GridController<T> {
 
     /**
      * Registers a function to be called upon when grid options changes
-     * @param cb 
-     * @returns 
+     * @param cb The callback to be called on whenever grid options changes
+     * @returns The given id for the callback, and a function for unsubscribing.
      */
     onGridOptionsChanged = (cb: OnGridOptionsChangedCallback<T>) =>
         registerCallback(cb, this.onGridOptionsChangedCallbacks, this.unsubOnGridOptionsChanged);
@@ -44,7 +47,7 @@ export class GridController<T> {
 
     /**
      * Sets new row data and triggers all the onRowDataChanged callback's.
-     * @param newData 
+     * @param newData the new data to be set
      */
     setRowData = (newData: T[]) => {
         this.rowData = newData;
@@ -53,8 +56,8 @@ export class GridController<T> {
 
     /**
      * Registers a function to be called upon when row data changes
-     * @param callback 
-     * @returns 
+     * @param callback The callback to be called on whenever row data changes
+     * @returns The given id for the callback, and a function for unsubscribing.
      */
     onRowDataChanged = (callback: OnRowDataChangedCallback<T>): OnCallbackSet =>
         registerCallback(callback, this.onRowDataChangedCallbacks, this.unsubOnRowDataChanged);
