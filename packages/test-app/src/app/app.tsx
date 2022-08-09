@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
 import { Route, Routes, Link } from 'react-router-dom';
-import {Garden, GardenOptions} from '@workspace/garden'
+import { Grid, GridController } from '@workspace/grid'
 import { tokens } from '@equinor/eds-tokens';
+import { useState } from 'react';
+import { WorkspaceController } from '@workspace/workspace-core';
+import { Button } from '@equinor/eds-core-react';
+import { ICellRendererParams } from 'ag-grid-community';
 const StyledApp = styled.div`
  background-color: ${tokens.colors.ui.background__default.hex};
  height: 100%;
@@ -34,20 +38,52 @@ function Navbar(){
     <StyledNavbar>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/garden">Garden</StyledLink>
-      <StyledLink to="/table">Table</StyledLink>
+      <StyledLink to="/grid">Grid</StyledLink>
       <StyledLink to="/workspace">Workspace</StyledLink>
     </StyledNavbar>
   )
 }
 
+interface Controllers<T>{
+  grid: GridController<T>
+}
 
 
+
+
+function createGridController(){
+  const gridController = new GridController();
+  gridController.columnDefs = [{field: "id", resizable: true, sortable: true, cellRenderer: (cell: ICellRendererParams) => {
+      return `SCR-${cell.value}`
+  }},{field: "title", resizable: true, sortable: true},{field: "sequenceNumber", resizable: true, sortable: true},{field: "description", resizable: true, sortable: true} ]
+
+  return gridController;
+}
+
+
+function createWorkspaceController(){
+  const wc = new WorkspaceController<DefaultInterface, Controllers<DefaultInterface>, unknown, unknown, unknown>();
+  wc.setData(mockData);
+  wc.setFilteredData(mockData);
+  wc.addController({controller: createGridController(), name: "grid", config: (gc, wc) => {
+    gc.setRowData(wc.getFilteredData())
+    wc.onFilteredDataChanged((data) => gc.setRowData(data))
+  }})
+
+  return wc;
+}
 
 export function App() {
+
+
+  const [workspaceController] = useState(createWorkspaceController())
+
+
   return (
     <StyledApp>
    
      <Navbar />
+     <Button onClick={() => workspaceController.setFilteredData([{id: "1213", title: "String", sequenceNumber: 1212, description: "Some desc"} as any])}>Change filtered data</Button>
       <Routes>
         <Route
           path="/"
@@ -57,10 +93,10 @@ export function App() {
           }
         />
         <Route
-          path="/garden"
+          path="/grid"
           element={
             <div>
-              <Garden data={mockData} gardenOptions={defaultGardenOptions} />
+              <Grid controller={workspaceController.controllers.grid} />
             </div>
           }
         />
@@ -95,17 +131,6 @@ interface Scope{
 }
 
 
-const defaultGardenOptions: GardenOptions<DefaultInterface> = {
-  gardenKey: "id",
-  itemKey: "title",
-  objectIdentifier: "id",
-  fieldSettings: {
-    Title: {
-      key: "title",
-      label: "Title"
-      }
-  }
-}
 
 
 const mockData = [
