@@ -20,6 +20,10 @@ export class SidesheetController<TData, TContext> {
      */
     context?: TContext;
 
+    /**
+     * Sets a new value for the context.
+     * @param newContext New context to be set
+     */
     setContext = (newContext: TContext) => {
         this.context = newContext;
     }
@@ -35,8 +39,8 @@ export class SidesheetController<TData, TContext> {
 
     /**
      * Register a callback to be called upon when the sidesheet state changes
-     * @param cb 
-     * @returns 
+     * @param cb A function to be called upon whenever the sidesheet state changes
+     * @returns the callbacks given id and an unsubscribe method to be called upon when you want to remove the callback
      */
     onSidesheetStateChanged = (cb: SidesheetChangedCallback<TData>): OnCallbackSet => {
         const id = generateUniqueId();
@@ -52,8 +56,8 @@ export class SidesheetController<TData, TContext> {
 
     /**
      * Function for opening or closing the sidesheet
-     * @param state 
-     * @param preventCallbacks 
+     * @param state "Open" or "Closed"
+     * @param preventCallbacks If true, prevents the callbacks from being notified of this change. Dont use unless absolutely necessary
      */
     setSidesheetState = (state: SidesheetState, preventCallbacks?: boolean) => {
         /** Wont bother the callbacks if the state didnt actually change */
@@ -67,7 +71,7 @@ export class SidesheetController<TData, TContext> {
 
         /**
          * Function for setting a new item for the sidesheet controller to hold
-         * @param item 
+         * @param item The new item to be set
          * @param preventCallbacks If true, prevents the callbacks from being notified of this change. Dont use unless absolutely necessary
          */
     setItem = (item: TData | undefined, preventCallbacks?: boolean) => {
@@ -81,7 +85,7 @@ export class SidesheetController<TData, TContext> {
     /**
      * Callback to be called on whenever the item changes
      * @param cb function to call whenever the item changes
-     * @returns 
+     * @returns the callbacks given id and an unsubscribe method to be called upon when you want to remove the callback
      */
     onItemChanges = (cb: ItemChangedCallback<TData>): OnCallbackSet => {
         const id = generateUniqueId();
