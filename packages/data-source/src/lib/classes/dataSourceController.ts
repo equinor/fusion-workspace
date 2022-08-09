@@ -75,7 +75,7 @@ export class DataSourceController<TData, TError = unknown> {
         this.onDataChangedCallbacks.push({ id, callback: cb });
         return {
             id,
-            unSubscribe: () => {
+            unsubscribe: () => {
                 this.onDataChangedCallbacks = this.onDataChangedCallbacks.filter(
                     (callback) => callback.id !== id
                 );
@@ -89,7 +89,7 @@ export class DataSourceController<TData, TError = unknown> {
         this.onErrorCallbacks.push({callback: cb, id});
         return {
             id,
-            unSubscribe: () => {
+            unsubscribe: () => {
                 this.onErrorCallbacks = this.onErrorCallbacks.filter((s) => s.id !== id)
             }
         }
