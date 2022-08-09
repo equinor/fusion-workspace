@@ -22,6 +22,7 @@
       "@workspace/sidesheet": ["packages/sidesheet/src/index.ts"],
       "@workspace/table": ["packages/table/src/index.ts"],
       "@workspace/workspace": ["packages/workspace/src/index.ts"],
+      "@workspace/grid": ["packages/ag-grid/src/index.ts"],
       "@workspace/workspace-core": ["packages/workspace-core/src/index.ts"]
     },
     "noImplicitAny": false,
