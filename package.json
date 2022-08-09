@@ -7,6 +7,8 @@
   "dependencies": {
     "@equinor/eds-core-react": "^0.20.4",
     "@equinor/eds-tokens": "^0.7.1",
+    "ag-grid-community": "^28.1.0",
+    "ag-grid-react": "^28.1.0",
     "core-js": "^3.6.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
