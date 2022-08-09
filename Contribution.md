@@ -48,7 +48,30 @@ Keep the use of non-Equinor packages to an absolute minimum.
 Keep your components small. If your .tsx-file is  
 
 ## Folder structure
-
+```bash
+📦packages                                    # All monorepos for fusion-workspace
+ ┣ 📂[package name]                           # Monorepo name
+ ┃ ┣ 📂src                                    # Container folder for all relevant folders/files
+ ┃ ┃ ┣ 📂lib                                  # All typescript code for monorepo
+ ┃ ┃ ┃ ┣ 📂classes                            # Classes/Controllers
+ ┃ ┃ ┃ ┃ ┣ 📜index.ts                         # Export classes from index.ts
+ ┃ ┃ ┃ ┃ ┗ 📜[class name].ts
+ ┃ ┃ ┃ ┣ 📂utils/                             # Utilty functions
+ ┃ ┃ ┃ ┣ 📂hooks/                             # Hooks
+ ┃ ┃ ┃ ┣ 📂test/                              # Unit tests
+ ┃ ┃ ┃ ┃ ┣ 📜[test name].spec.ts
+ ┃ ┃ ┃ ┣ 📂types/                             # Typescript types
+ ┃ ┃ ┃ ┗ 📜index.ts                           # Export files from src
+ ┃ ┃ ┗ 📜index.ts                             # Export files from lib
+ ┃ ┣ 📜.babelrc
+ ┃ ┣ 📜.eslintrc.json
+ ┃ ┣ 📜README.md
+ ┃ ┣ 📜jest.config.ts                         # Jest unit/component test config
+ ┃ ┣ 📜project.json
+ ┃ ┣ 📜tsconfig.json                          # Typescript config
+ ┃ ┣ 📜tsconfig.lib.json
+ ┃ ┗ 📜tsconfig.spec.json
+```
 File/folder naming conventions:
 
 ## Linting
