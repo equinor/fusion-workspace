@@ -4,7 +4,7 @@ const errorMessage = "Some error";
 
 
 async function defaultFetch(): Promise<Response>{
-    throw "Some error"
+    throw errorMessage
 }
 
 
