@@ -1,19 +1,16 @@
 
-import { defaultResponseParser, generateUniqueId } from '../functions';
-import { FetchResponseAsync, OnDataChangedCallback, OnErrorCallback, ResponseParserAsync } from '../types';
+import {  generateUniqueId } from '../utils';
+import { FetchDataAsync,  OnDataChangedCallback, OnErrorCallback } from '../types';
 import { Callback, OnCallbackSet } from '../types/callback';
 
 export class DataSourceController<TData, TError = unknown> {
-    /** Function that returns the api call promise */
-    fetchResponseAsync: FetchResponseAsync;
-    /** Function that parses the response to correct format, defaults to just parsing the raw response */
-    responseParserAsync: ResponseParserAsync<TData> = defaultResponseParser;
+    private fetchData: FetchDataAsync<TData>;
     data: TData[] = [];
     private onDataChangedCallbacks: Callback<OnDataChangedCallback<TData, TError>>[] = [];
     private onErrorCallbacks: Callback<OnErrorCallback<TData, TError>>[] = []
 
-    constructor(fetch: FetchResponseAsync) {
-        this.fetchResponseAsync = fetch;
+    constructor(fetch: FetchDataAsync<TData>) {
+        this.fetchData = fetch;
     }
 
     /**
@@ -21,13 +18,12 @@ export class DataSourceController<TData, TError = unknown> {
      * @param preventCallbacks
      * @returns 
      */
-    fetchData = async (preventCallbacks?: boolean): Promise<TData[]> => {
+    fetch = async (preventCallbacks?: boolean): Promise<TData[]> => {
         /**
          * Add try catch and error slot
          */
         try{
-            const res = await this.fetchResponseAsync();
-            const data = await this.responseParserAsync(res);
+            const data = await this.fetchData();
             this.data = data;
             if (!preventCallbacks) {
                 this.notifyDataChanged();
@@ -38,7 +34,7 @@ export class DataSourceController<TData, TError = unknown> {
             this.throwError(e as TError)
         }
 
-        return [];
+        return this.data;
     };
 
     /**
