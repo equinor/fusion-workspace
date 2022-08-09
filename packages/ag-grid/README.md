@@ -1,6 +1,6 @@
 # ag-grid
 
-This library was generated with [Nx](https://nx.dev).
+The purpose of this ag grid wrapper is to persist viewstate in the controller while the view is unmounted, currently not supported natively by AG-Grid.
 
 ## Running unit tests
 
