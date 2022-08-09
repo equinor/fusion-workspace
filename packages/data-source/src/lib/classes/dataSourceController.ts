@@ -1,7 +1,6 @@
 
 import {  generateUniqueId } from '../utils';
-import { FetchDataAsync,  OnDataChangedCallback, OnErrorCallback } from '../types';
-import { Callback, OnCallbackSet } from '../types/callback';
+import { FetchDataAsync,  OnDataChangedCallback, OnErrorCallback, OnCallbackSet, Callback } from '../types';
 
 export class DataSourceController<TData, TError = unknown> {
     private fetchData: FetchDataAsync<TData>;
@@ -15,7 +14,7 @@ export class DataSourceController<TData, TError = unknown> {
 
     /**
      * Fetches data asynchronously and adds it to the data attribute on the controller
-     * @param preventCallbacks
+     * @param preventCallbacks If set to true will not notify subscribers that data changed, should not be used
      * @returns 
      */
     fetch = async (preventCallbacks?: boolean): Promise<TData[]> => {
@@ -37,10 +36,6 @@ export class DataSourceController<TData, TError = unknown> {
         return this.data;
     };
 
-    /**
-     * Function for setting error and notifying subscribers
-     * @param error
-     */
     private throwError(error: TError){
         this.onErrorCallbacks.forEach(({callback}) => callback(error, this))
 
@@ -63,8 +58,8 @@ export class DataSourceController<TData, TError = unknown> {
 
     /**
      * Register a callback to be called whenever data changes
-     * @param cb 
-     * @returns 
+     * @param cb The function to be called upon whenever data changes
+     * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
      */
     onDataChanged = (cb: OnDataChangedCallback<TData, TError>): OnCallbackSet => {
         const id = generateUniqueId();
@@ -79,7 +74,11 @@ export class DataSourceController<TData, TError = unknown> {
         };
     };
     
-
+    /**
+     * Register a callback to be called whenever an error is thrown
+     * @param cb The function to be called upon whenever an error is thrown
+     * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
+     */
     onErrorThrown = (cb: OnErrorCallback<TData,TError>): OnCallbackSet => {
         const id = generateUniqueId();
         this.onErrorCallbacks.push({callback: cb, id});
