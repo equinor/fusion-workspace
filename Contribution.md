@@ -61,6 +61,7 @@ Keep your components small. If your .tsx-file is
  ┃ ┃ ┃ ┣ 📂test/                              # Unit tests
  ┃ ┃ ┃ ┃ ┣ 📜[test name].spec.ts
  ┃ ┃ ┃ ┣ 📂types/                             # Typescript types
+ ┃ ┃ ┃ ┣ 📂components/                        # React components
  ┃ ┃ ┃ ┗ 📜index.ts                           # Export files from src
  ┃ ┃ ┗ 📜index.ts                             # Export files from lib
  ┃ ┣ 📜.babelrc
