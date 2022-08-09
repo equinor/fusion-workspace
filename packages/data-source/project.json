@@ -1,0 +1,58 @@
+{
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/data-source/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "dependsOn": [
+                "^build"
+            ],
+            "options": {
+                "outputPath": "dist/packages/data-source",
+                "main": "packages/data-source/src/index.ts",
+                "tsConfig": "packages/data-source/tsconfig.lib.json",
+                "assets": [
+                    "packages/data-source/*.md"
+                ]
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs data-source {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": [
+                "{options.outputFile}"
+            ],
+            "options": {
+                "lintFilePatterns": [
+                    "packages/data-source/**/*.{ts,tsx,js,jsx}"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": [
+                "coverage/packages/data-source"
+            ],
+            "options": {
+                "jestConfig": "packages/data-source/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
+}
