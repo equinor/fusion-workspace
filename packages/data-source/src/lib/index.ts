@@ -1,3 +1,2 @@
-export * from './classes'
-export * from './functions'
+export { DataSourceController } from './classes'
 export * from './types'
