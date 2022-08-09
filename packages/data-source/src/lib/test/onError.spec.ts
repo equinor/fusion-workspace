@@ -8,7 +8,7 @@ async function defaultFetch(): Promise<Response>{
 }
 
 
-describe("OnDataChangedTesting", () => {
+describe("Validates that the onError event fires correctly", () => {
     const mockFunction = jest.fn();
 
     const controller =  new DataSourceController<unknown,string>(defaultFetch);
