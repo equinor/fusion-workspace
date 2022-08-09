@@ -3,7 +3,7 @@ import { DataSourceController } from "../classes";
 const errorMessage = "Some error";
 
 
-async function defaultFetch(): Promise<Response>{
+async function defaultFetch(): Promise<any[]>{
     throw errorMessage
 }
 
@@ -18,7 +18,7 @@ describe("Validates that the onError event fires correctly", () => {
             expect(s).toBe(errorMessage)
             mockFunction();
         })
-        await controller.fetchData();
+        await controller.fetch();
         expect(mockFunction).toBeCalled();
     })
 
