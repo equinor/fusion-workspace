@@ -3,33 +3,29 @@ import { WorkspaceViewController } from '../classes';
 describe('Callback should fire properly when sidesheet opens or closes', () => {
   it('Should call callback when sidesheet opens or closes', () => {
     const {
-      isSidesheetOpen,
-      setIsSidesheetOpen,
-      onSidesheetOpenOrClosedChanged,
+      sidesheet: {isOpen, setIsOpen, onOpenOrClosedChanged: onSidesheetOpenOrClosedChanged},
     } = new WorkspaceViewController([], '');
     const mockFunction = jest.fn();
 
-    expect(isSidesheetOpen).toBeFalsy();
+    expect(isOpen).toBeFalsy();
     onSidesheetOpenOrClosedChanged((isLoading) => {
       expect(isLoading).toBeTruthy();
       mockFunction();
     });
-    setIsSidesheetOpen(true);
+    setIsOpen(true);
     expect(mockFunction).toBeCalledTimes(1);
   });
 
   it('Should not fire callbacks if the value didnt change', () => {
     const {
-      isSidesheetOpen,
-      setIsSidesheetOpen,
-      onSidesheetOpenOrClosedChanged,
+      sidesheet: {isOpen, setIsOpen, onOpenOrClosedChanged: onSidesheetOpenOrClosedChanged},
     } = new WorkspaceViewController([], '');
     const mockFunction = jest.fn();
-    expect(isSidesheetOpen).toBeFalsy();
+    expect(isOpen).toBeFalsy();
     onSidesheetOpenOrClosedChanged(() => {
       mockFunction();
     });
-    setIsSidesheetOpen(false);
+    setIsOpen(false);
     expect(mockFunction).not.toBeCalled();
   });
 });
