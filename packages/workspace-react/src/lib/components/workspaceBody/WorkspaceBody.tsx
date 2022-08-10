@@ -1,4 +1,5 @@
 
+import { ResizableSidesheet } from '../resizableSidesheet';
 import { WorkspaceProps } from '../Workspace';
 import { WorkspaceDataLoader } from '../workspaceDataLoader';
 import { WorkspaceTab } from '../workspaceTab';
@@ -10,6 +11,7 @@ export function WorkspaceBody<TabNames extends string, TError>({controller}: Wor
             <WorkspaceDataLoader controller={controller}>
             <WorkspaceTab controller={controller} />
             </WorkspaceDataLoader>
+            <ResizableSidesheet controller={controller} />
         </StyledWorkspaceBody>
     );
 }

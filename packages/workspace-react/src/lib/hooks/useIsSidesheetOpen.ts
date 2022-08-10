@@ -5,12 +5,12 @@ export function useIsSidesheetOpen(
   controller: WorkspaceViewController<any, any>
 ) {
   const [isSidesheetOpen, setIsSidesheetOpen] = useState(
-    controller.isSidesheetOpen
+    controller.sidesheet.isOpen
   );
 
   useEffect(() => {
     const { unsubscribe } =
-      controller.onSidesheetOpenOrClosedChanged(setIsSidesheetOpen);
+      controller.sidesheet.onOpenOrClosedChanged(setIsSidesheetOpen);
     return unsubscribe;
   }, []);
 
