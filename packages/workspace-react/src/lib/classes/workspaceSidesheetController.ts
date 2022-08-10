@@ -1,4 +1,4 @@
-import { Callback,  OnSidesheetOpenOrClosedCallback, OnWidthChange  } from "../types";
+import { Callback,  OnSidesheetOpenOrClosedCallback, OnWidthChange } from "../types";
 import { registerCallback } from "../utils/registerCallback";
 
 
@@ -29,6 +29,7 @@ export class WorkspaceSidesheetController{
      * @returns Id of the callback(debug purposes), and an unsubscribe function
      */
     onWidthChange = (cb: OnWidthChange) => registerCallback(this.onSidesheetWidthChangedCallbacks, cb, this.removeOnSidesheetWidthChangedCallback)
+
     private onSidesheetOpenOrClosedCallbacks: Callback<OnSidesheetOpenOrClosedCallback<this>>[] = [];
     private onSidesheetWidthChangedCallbacks: Callback<OnWidthChange>[] = [];
     private removeOnSidesheetOpenOrClosedCallback = (id: string) => (this.onSidesheetOpenOrClosedCallbacks = this.onSidesheetOpenOrClosedCallbacks.filter((s) => s.id !== id));
