@@ -6,8 +6,8 @@ import { useIsSidesheetOpen } from './useIsSidesheetOpen';
  * Hook for returning sidesheet width
  * Will return 0 if the sidesheet is closed
  */
-export function useSidesheetWidth(
-  controller: WorkspaceViewController<any, any>
+export function useSidesheetWidth<TabNames extends string, TError>(
+  controller: WorkspaceViewController<TabNames, TError>
 ) {
   const isOpen = useIsSidesheetOpen(controller);
 
