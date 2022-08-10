@@ -7,3 +7,5 @@ export type OnSidesheetOpenOrClosedCallback<TController> = (isOpen: boolean, con
 export type OnFilterOpenOrClosedCallback<TController> = (isOpen: boolean, controller: TController) => void;
 /** Function signature for when isLoading changes */
 export type OnIsLoadingChangedCallback<TController> = (isLoading: boolean, controller: TController) => void;
+/** Function signature for when sidesheet width changes */
+export type OnWidthChange = (newWidth: number) => void; 
