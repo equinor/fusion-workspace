@@ -5,7 +5,6 @@ import {
   OnActiveTabChangedCallback,
   OnIsLoadingChangedCallback,
   OnFilterOpenOrClosedCallback,
-  OnCallbackSet,
 } from '../types';
 import { registerCallback } from '../utils/registerCallback';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
@@ -25,10 +24,8 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
   /** The filter component to render in the header */
   FilterComponent?: () => JSX.Element;
-
   /** Component for handling errors */
   ErrorComponent?: (error: TError) => JSX.Element;
-
   /** The current active tab name */
   activeTab: TTabNames;
   /** true when data is loading */
@@ -62,8 +59,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
       callback(isOpen, this)
     );
   };
-
-
 
   /**
    * Sets the isLoading state
@@ -104,4 +99,3 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   private removeOnIsLoadingCallback = (id: string) => (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter((s) => s.id !== id));
   private removeOnFilterOpenOrClosedCallback = (id: string) => (this.onFilterOpenOrClosedCallbacks = this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
 }
-
