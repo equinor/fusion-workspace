@@ -1,4 +1,5 @@
 import { StatusItem } from '../../types';
+import { StatusBarItem } from './StatusBarItem';
 
 interface StatusBarProps {
   items: StatusItem[];
@@ -11,12 +12,7 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
 
   return (
     <div style={{ display: 'flex', gap: '2em' }}>
-      {items?.map((s) => (
-        <div title={s.description} key={s.title}>
-          <div>{s.title}</div>
-          <div>{s.value}</div>
-        </div>
-      ))}
+      {items?.map((item) => <StatusBarItem key={item.title} item={item} />)}
     </div>
   );
 }
