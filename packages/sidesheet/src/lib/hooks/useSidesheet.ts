@@ -7,4 +7,4 @@ interface Sidesheet<TItem>{
     item: TItem | undefined
 }
 
-export const useSidesheet = <T>(controller: SidesheetController<T>): Sidesheet<T> => ({isOpen: useSidesheetState(controller), item: useSidesheetItem(controller)})
+export const useSidesheet = <T>(controller: SidesheetController<T, unknown>): Sidesheet<T> => ({isOpen: useSidesheetState(controller), item: useSidesheetItem(controller)})

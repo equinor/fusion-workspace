@@ -1,34 +1,40 @@
-githubActions:
-    - .github/**
-    
+github-actions:
+  - .github/**
+
 docs:
-    - documentation/**
+  - documentation/**
 
 filter:
-    - packages/filter/**
+  - packages/filter/**
 
 sidesheet:
-    - packages/sidesheet/**
+  - packages/sidesheet/**
 
 garden:
-    - packages/garden/**
+  - packages/garden/**
 
 ag-grid:
-    - packages/ag-grid/**
+  - packages/ag-grid/**
 
 data-source:
-    - packages/data-source/**
+  - packages/data-source/**
 
 power-bi:
-    - packages/power-bi/**
-    
+  - packages/power-bi/**
+
+workspace-react:
+  - packages/workspace-react/**
+
+workspace-core:
+  - packages/workspace-core/**
+
 deps:
-    - package.json
-    - package-lock.json
-    
+  - package.json
+  - package-lock.json
+
 nx-config:
-    - nx.json
-    
+  - nx.json
+
 jest:
   - jest.config.ts
   - jest.preset.js
