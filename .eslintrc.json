@@ -3,8 +3,8 @@
   "ignorePatterns": ["**/*"],
   "plugins": ["@nrwl/nx"],
   "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+     {
+      "files": ["*.ts", "*.tsx"],
       "extends": [
         "plugin:@nrwl/nx/typescript",
         "eslint:recommended",
@@ -17,22 +17,12 @@
       ],
       "rules": {
         "prettier/prettier": [
-            "warn",
-            {
-                "endOfLine": "crlf"
-            }
-        ],
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
+          "warn",
           {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
+            "endOfLine": "crlf",
+            "trailingComma": "es5",
+            "tabWidth": 4,
+            "useTabs": true
           }
         ],
         "@typescript-eslint/explicit-function-return-type": "warn",
@@ -49,10 +39,9 @@
         "no-unreachable": "error",
         "@typescript-eslint/no-empty-interface": "off",
         "constructor-super": "error",
-        "max-lines": ["error", {"max": 500, "skipBlankLines": true, "skipComments": true}],
-        
-    }
-    },
+        "max-lines": ["error", {"max": 500, "skipBlankLines": true, "skipComments": true}]
+      }
+     },     
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
