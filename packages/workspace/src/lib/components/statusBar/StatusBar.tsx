@@ -4,11 +4,6 @@ interface StatusBarProps{
     items: StatusItem[];
 }
 
-
-/**
- * Status bar header component
- * @returns
- */
 export function StatusBar({items}: StatusBarProps): JSX.Element | null {
     
    
