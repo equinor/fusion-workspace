@@ -20,7 +20,7 @@ export function ResizableSidesheet<TabNames extends string, TError>({controller}
         <StyledResizable  
         size={{ width: width, height: '100%' }}
         maxWidth={'100vw'}
-        onResizeStop={(ev, direction, ref, d) => {
+        onResizeStop={(_ev, _direction, _ref, d) => {
             if (width + d.width < minWidth) {
                     setWidth(minWidth);
                 } else {
@@ -31,4 +31,3 @@ export function ResizableSidesheet<TabNames extends string, TError>({controller}
         </StyledResizable>
     )
 }
-

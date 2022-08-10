@@ -3,7 +3,6 @@ import {
   StatusItem,
   Tab,
   OnActiveTabChangedCallback,
-  OnSidesheetOpenOrClosedCallback,
   OnIsLoadingChangedCallback,
   OnFilterOpenOrClosedCallback,
   OnCallbackSet,
@@ -22,10 +21,11 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];
   /** The tabs for your workspace */
   tabs: Tab<TTabNames>[];
+  
+  sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
   /** The filter component to render in the header */
   FilterComponent?: () => JSX.Element;
 
-  sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
   /** Component for handling errors */
   ErrorComponent?: (error: TError) => JSX.Element;
 
@@ -92,7 +92,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   onFilterOpenOrClosedChanged = (cb: OnFilterOpenOrClosedCallback<this>) =>
     registerCallback(this.onFilterOpenOrClosedCallbacks, cb, this.removeOnFilterOpenOrClosedCallback);
 
-
   /**
    * Register a callback to be called whenever the tab changes
    * @param cb Callback to be called when tab changes
@@ -104,6 +103,5 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   private removeOnActiveTabChangedCallback = (id: string) => (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter((s) => s.id !== id ));
   private removeOnIsLoadingCallback = (id: string) => (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter((s) => s.id !== id));
   private removeOnFilterOpenOrClosedCallback = (id: string) => (this.onFilterOpenOrClosedCallbacks = this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
-
 }
 
