@@ -1,9 +1,7 @@
-import { tokens } from "@equinor/eds-tokens";
-import { Resizable } from "re-resizable";
-import styled from "styled-components";
 import { WorkspaceViewController } from "../../classes";
 import { useIsSidesheetOpen } from "../../hooks/useIsSidesheetOpen";
 import { useSidesheetWidth } from "../../hooks/useSidesheetWidth";
+import { StyledResizable } from "./resizableSidesheet.styles";
 
 interface ResizableSidesheetProps<TabNames extends string, TError>{
     controller: WorkspaceViewController<TabNames, TError>
@@ -34,8 +32,3 @@ export function ResizableSidesheet<TabNames extends string, TError>({controller}
     )
 }
 
-
-const StyledResizable = styled(Resizable)`
-    border-left: 2px solid ${tokens.colors.ui.background__medium.hex};
-
-`
