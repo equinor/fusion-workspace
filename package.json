@@ -23,6 +23,7 @@
     "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {
+    "eslint-plugin-prettier": "^4.2.1",
     "@nrwl/cli": "14.3.6",
     "@nrwl/cypress": "14.3.6",
     "@nrwl/eslint-plugin-nx": "14.3.6",

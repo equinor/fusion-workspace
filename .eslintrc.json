@@ -3,24 +3,51 @@
   "ignorePatterns": ["**/*"],
   "plugins": ["@nrwl/nx"],
   "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+     {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@nrwl/nx/typescript",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier",
+        "plugin:react/jsx-runtime"
+      ],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
+        "prettier/prettier": [
+          "warn",
           {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
+            "endOfLine": "crlf",
+            "trailingComma": "es5",
+            "tabWidth": 4,
+            "useTabs": true,
+            "max_line_length": 200,
+            "semi": false,
+            "printWidth": 150
           }
-        ]
+        ],
+        "prefer-destructuring": "warn",
+        "prefer-default-export": "off",
+        "lines-between-class-members": "error",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-use-before-define": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-unused-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/no-multi-comp": 0,
+        "react/no-array-index-key": 0,
+        "react/function-component-definition": 0,
+        "no-undef": "warn",
+        "no-console": "warn",
+        "no-unreachable": "error",
+        "@typescript-eslint/no-empty-interface": "off",
+        "constructor-super": "error",
+        "max-lines": ["error", {"max": 500, "skipBlankLines": true, "skipComments": true}]
       }
-    },
+     },     
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
