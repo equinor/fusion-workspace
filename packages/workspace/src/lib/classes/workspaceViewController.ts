@@ -20,9 +20,23 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   private onFilterOpenOrClosedCallbacks: Callback<OnFilterOpenOrClosedCallback<this>>[] = [];
   private onSidesheetOpenOrClosedCallbacks: Callback<OnSidesheetOpenOrClosedCallback<this>>[] = [];
   private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];
+  /** The tabs for your workspace */
   tabs: Tab<TTabNames>[];
+  /** The filter component to render in the header */
   FilterComponent?: () => JSX.Element;
-
+  /** The current active tab name */
+  activeTab: TTabNames;
+  /** true when data is loading */
+  isLoading = false;
+  /** Component for handling errors */
+  ErrroComponent?: (error: TError) => JSX.Element;
+  isFilterActive = false;
+  isSidesheetOpen = false;
+  /** Function for refetching data */
+  refetchData?: () => Promise<void> | null;
+  /** Items to be shown on the status bar */
+  statusBarItems?: StatusItem[];
+  
   /**
    * Sets a new active tab
    * @param tabName Name of the tab to set as active
@@ -46,7 +60,10 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
       callback(isOpen, this)
     );
   };
-  /** Sets the state of the sidesheet */
+
+  /** Sets the state of the sidesheet
+   * @param isOpen if set to true, the sidesheet will open
+   */
   setIsSidesheetOpen = (isOpen: boolean) => {
     if (this.isSidesheetOpen === isOpen) return;
     this.isSidesheetOpen = isOpen;
@@ -55,6 +72,10 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
     );
   };
 
+  /**
+   * Sets the isLoading state
+   * @param isLoading If set to true, tabs will unmount and a loading spinner will occur
+   */
   setIsLoading = (isLoading: boolean) => {
     if (this.isLoading === isLoading) return;
     this.isLoading = isLoading;
@@ -95,23 +116,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
   onActiveTabChanged = (cb: OnActiveTabChangedCallback<TTabNames, this>) =>
-    registerCallback(
-      this.onActiveTabChangedCallbacks,
-      cb,
-      this.removeOnActiveTabChangedCallback
-    );
-  /** The current active tab name */
-  activeTab: TTabNames;
-  /** true when data is loading */
-  isLoading = false;
-  /** Component for handling errors */
-  ErrroComponent?: (error: TError) => JSX.Element;
-  isFilterActive = false;
-  isSidesheetOpen = false;
-  /** Function for refetching data */
-  refetchData?: () => Promise<void> | null;
-  /** Items to be shown on the status bar */
-  statusBarItems?: StatusItem[];
+    registerCallback(this.onActiveTabChangedCallbacks, cb, this.removeOnActiveTabChangedCallback);
 
   private removeOnActiveTabChangedCallback = (id: string) => (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter((s) => s.id !== id ));
   private removeOnIsLoadingCallback = (id: string) => (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter((s) => s.id !== id));
