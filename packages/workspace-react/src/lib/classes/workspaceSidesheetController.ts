@@ -35,7 +35,3 @@ export class WorkspaceSidesheetController{
     private removeOnSidesheetOpenOrClosedCallback = (id: string) => (this.onSidesheetOpenOrClosedCallbacks = this.onSidesheetOpenOrClosedCallbacks.filter((s) => s.id !== id));
     private removeOnSidesheetWidthChangedCallback = (id: string) => (this.onSidesheetWidthChangedCallbacks = this.onSidesheetWidthChangedCallbacks.filter((s) => s.id !== id));
 }
-
-
-
-
