@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Callback,
   StatusItem,
@@ -29,7 +28,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   /** true when data is loading */
   isLoading = false;
   /** Component for handling errors */
-  ErrroComponent?: (error: TError) => JSX.Element;
+  ErrorComponent?: (error: TError) => JSX.Element;
   isFilterActive = false;
   isSidesheetOpen = false;
   /** Function for refetching data */
