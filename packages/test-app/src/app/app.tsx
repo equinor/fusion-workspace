@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 import { Route, Routes, Link } from 'react-router-dom';
-import { Grid, GridController } from '@workspace/grid'
 import { tokens } from '@equinor/eds-tokens';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { WorkspaceController } from '@workspace/workspace-core';
-import { Button } from '@equinor/eds-core-react';
-import { ICellRendererParams } from 'ag-grid-community';
+import { Workspace, WorkspaceViewController } from '@equinor/workspace-react';
+import { Grid, GridController } from '@workspace/grid';
 const StyledApp = styled.div`
  background-color: ${tokens.colors.ui.background__default.hex};
  height: 100%;
@@ -44,69 +43,62 @@ function Navbar(){
   )
 }
 
-interface Controllers<T>{
-  grid: GridController<T>
-}
 
 
 
 
-function createGridController(){
-  const gridController = new GridController();
-  gridController.columnDefs = [{field: "id", resizable: true, sortable: true, cellRenderer: (cell: ICellRendererParams) => {
-      return `SCR-${cell.value}`
-  }},{field: "title", resizable: true, sortable: true},{field: "sequenceNumber", resizable: true, sortable: true},{field: "description", resizable: true, sortable: true} ]
 
-  return gridController;
-}
-
-
-function createWorkspaceController(){
-  const wc = new WorkspaceController<DefaultInterface, Controllers<DefaultInterface>, unknown, unknown, unknown>();
-  wc.setData(mockData);
-  wc.setFilteredData(mockData);
-  wc.addController({controller: createGridController(), name: "grid", config: (gc, wc) => {
-    gc.setRowData(wc.getFilteredData())
-    wc.onFilteredDataChanged((data) => gc.setRowData(data))
-  }})
-
-  return wc;
-}
 
 export function App() {
 
 
-  const [workspaceController] = useState(createWorkspaceController())
 
 
   return (
     <StyledApp>
    
      <Navbar />
-     <Button onClick={() => workspaceController.setFilteredData([{id: "1213", title: "String", sequenceNumber: 1212, description: "Some desc"} as any])}>Change filtered data</Button>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-            </div>
-          }
-        />
-        <Route
-          path="/grid"
-          element={
-            <div>
-              <Grid controller={workspaceController.controllers.grid} />
-            </div>
-          }
-        />
-      </Routes>
+    
+      <TestWorkspace />
       {/* END: routes */}
     </StyledApp>
   );
 }
 
-export default App;
+type Tabs = "Grid" | "Garden";
+
+interface ControllerInterface{
+  view: WorkspaceViewController<Tabs,unknown>
+
+}
+function createWorkspaceController(){
+  const master = new WorkspaceController<unknown, ControllerInterface, unknown, unknown, unknown>();
+
+  master.setData(mockData);
+  master.setFilteredData(mockData);
+
+  const gridController = new GridController();
+  gridController.columnDefs = [{field: "id"}, {field: "title"}, {field: "description"}];
+  gridController.rowData = mockData;
+
+  const viewController = new WorkspaceViewController<Tabs, unknown>([{Component: () => <Grid controller={gridController} />, name: "Grid"}, {Component: () => <div>am garden</div>, name: "Garden"}], "Grid");
+    viewController.sidesheet.Component = () => <div style={{height: "100%", width: "100%", backgroundColor: "white"}}>Look ma, im a sidesheet</div>
+  viewController.statusBarItems = [{title: "Count", value: mockData.length}, {title: "filtered req", value: 500}, {title: "Idk", value: 10}]
+
+  master.addController({controller: viewController, name: "view", config: s => void 0})
+  return master;
+}
+
+
+const TestWorkspace = () => {
+  const controller = useRef(createWorkspaceController());
+
+
+return (<Workspace controller={controller.current.controllers.view}  />)
+
+}
+
+
 
 
 interface DefaultInterface{
