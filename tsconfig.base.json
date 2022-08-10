@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@equinor/filter": ["packages/filter/src/index.ts"],
       "@equinor/workspace-react": ["packages/workspace-react/src/index.ts"],
       "@workspace/data-source": ["packages/data-source/src/index.ts"],
       "@workspace/garden": ["packages/garden/src/index.ts"],
