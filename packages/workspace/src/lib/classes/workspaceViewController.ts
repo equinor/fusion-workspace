@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Callback,
   StatusItem,
@@ -15,19 +16,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
     this.activeTab = initialTab;
   }
 
-  private onActiveTabChangedCallbacks: Callback<
-    OnActiveTabChangedCallback<TTabNames, this>
-  >[] = [];
-  private onFilterOpenOrClosedCallbacks: Callback<
-    OnFilterOpenOrClosedCallback<this>
-  >[] = [];
-  private onSidesheetOpenOrClosedCallbacks: Callback<
-    OnSidesheetOpenOrClosedCallback<this>
-  >[] = [];
-  private onIsLoadingChangedCallbacks: Callback<
-    OnIsLoadingChangedCallback<this>
-  >[] = [];
+  private onActiveTabChangedCallbacks: Callback<OnActiveTabChangedCallback<TTabNames, this>>[] = [];
+  private onFilterOpenOrClosedCallbacks: Callback<OnFilterOpenOrClosedCallback<this>>[] = [];
+  private onSidesheetOpenOrClosedCallbacks: Callback<OnSidesheetOpenOrClosedCallback<this>>[] = [];
+  private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];
   tabs: Tab<TTabNames>[];
+  FilterComponent?: () => JSX.Element;
 
   /**
    * Sets a new active tab
@@ -86,24 +80,14 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
   onFilterOpenOrClosedChanged = (cb: OnFilterOpenOrClosedCallback<this>) =>
-    registerCallback(
-      this.onFilterOpenOrClosedCallbacks,
-      cb,
-      this.removeOnFilterOpenOrClosedCallback
-    );
+    registerCallback(this.onFilterOpenOrClosedCallbacks, cb, this.removeOnFilterOpenOrClosedCallback);
   /**
    * Register a callback to be called whenever the sidesheet opens or closes
    * @param cb Callback to be called when the sidesheet opens or closes
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
-  onSidesheetOpenOrClosedChanged = (
-    cb: OnSidesheetOpenOrClosedCallback<this>
-  ) =>
-    registerCallback(
-      this.onSidesheetOpenOrClosedCallbacks,
-      cb,
-      this.removeOnSidesheetOpenOrClosedCallback
-    );
+  onSidesheetOpenOrClosedChanged = (cb: OnSidesheetOpenOrClosedCallback<this> ) => 
+    registerCallback(this.onSidesheetOpenOrClosedCallbacks, cb, this.removeOnSidesheetOpenOrClosedCallback);
 
   /**
    * Register a callback to be called whenever the tab changes
@@ -129,18 +113,8 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   /** Items to be shown on the status bar */
   statusBarItems?: StatusItem[];
 
-  private removeOnActiveTabChangedCallback = (id: string) =>
-    (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter(
-      (s) => s.id !== id
-    ));
-  private removeOnIsLoadingCallback = (id: string) =>
-    (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter(
-      (s) => s.id !== id
-    ));
-  private removeOnFilterOpenOrClosedCallback = (id: string) =>
-    (this.onFilterOpenOrClosedCallbacks =
-      this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
-  private removeOnSidesheetOpenOrClosedCallback = (id: string) =>
-    (this.onSidesheetOpenOrClosedCallbacks =
-      this.onSidesheetOpenOrClosedCallbacks.filter((s) => s.id !== id));
+  private removeOnActiveTabChangedCallback = (id: string) => (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter((s) => s.id !== id ));
+  private removeOnIsLoadingCallback = (id: string) => (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter((s) => s.id !== id));
+  private removeOnFilterOpenOrClosedCallback = (id: string) => (this.onFilterOpenOrClosedCallbacks = this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
+  private removeOnSidesheetOpenOrClosedCallback = (id: string) => (this.onSidesheetOpenOrClosedCallbacks = this.onSidesheetOpenOrClosedCallbacks.filter((s) => s.id !== id));
 }

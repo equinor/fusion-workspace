@@ -12,8 +12,6 @@ interface TabNavigationProps<TabNames extends string>{
  * Allows for switching of tabs
  */
 export function TabNavigation<TabNames extends string>({tabs, setActiveTab}: TabNavigationProps<TabNames>) {
-
-    console.log(tabs)
   
     return (
         <div>
