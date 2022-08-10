@@ -1,5 +1,6 @@
 
 import { WorkspaceViewController } from '../../classes';
+import { useIsLoading } from '../../hooks/useIsLoading';
 import { WorkspaceLoadingSpinner } from '../workspaceLoadingSpinner';
 
 interface WorkspaceDataLayerProps<TabNames extends string, TError> {
@@ -14,8 +15,8 @@ interface WorkspaceDataLayerProps<TabNames extends string, TError> {
  */
 
 export function WorkspaceDataLoader<TabNames extends string, TError>({ children, controller }: WorkspaceDataLayerProps<TabNames, TError>) {
-
-    if (controller.isLoading) {
+    
+    if (useIsLoading(controller)) {
         return <WorkspaceLoadingSpinner />;
     }
 
