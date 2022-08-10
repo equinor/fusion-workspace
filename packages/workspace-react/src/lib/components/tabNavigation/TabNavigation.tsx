@@ -1,25 +1,29 @@
-import { Button } from '@equinor/eds-core-react';
-import { Tab } from '../../types';
+import { WorkspaceViewController } from '../../classes';
+import { useActiveTab } from '../../hooks/useActiveTab';
+import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 
-interface TabNavigationProps<TabNames extends string>{
-    tabs: Tab<TabNames>[];
-    setActiveTab: (tabName: TabNames) => void;
+interface TabNavigationProps<TabNames extends string, TError>{
+    controller: WorkspaceViewController<TabNames, TError>
 }
 
 /**
  * Navigation bar in the workspace header.
  * Allows for switching of tabs
  */
-export function TabNavigation<TabNames extends string>({tabs, setActiveTab}: TabNavigationProps<TabNames>) {
-  
+export function TabNavigation<TabNames extends string, TError>({controller}: TabNavigationProps<TabNames, TError>) {
+    const {setActiveTab, tabs} = controller;
+    const activeTab = useActiveTab(controller);
+
+
     return (
-        <div>
+        <TabButtonList>
             {tabs.map(({ name }) => (
-                <Button variant="ghost_icon" onClick={() => setActiveTab(name)} key={name}>
+                <TabButton isActive={name === activeTab?.name}  onClick={() => setActiveTab(name)} key={name}>
                     {name}
-                </Button>
+                </TabButton>
             ))}
-        </div>
+        </TabButtonList>
     );
 }
+
