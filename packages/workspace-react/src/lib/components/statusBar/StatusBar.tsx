@@ -6,10 +6,9 @@ interface StatusBarProps {
 	items: StatusItem[];
 }
 
-export function StatusBar({ items }: StatusBarProps): JSX.Element {
+export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
 	if (!items.length) {
-		//Returns div for styling purposes
-		return <div></div>;
+		return null;
 	}
 
 	return (

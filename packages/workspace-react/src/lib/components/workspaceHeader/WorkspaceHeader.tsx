@@ -10,7 +10,9 @@ import { StyledWorkspaceHeader } from './workspaceHeader.styles';
 export function WorkspaceHeader<TTabnames extends string, TError>({ controller }: WorkspaceProps<TTabnames, TError>) {
 	return (
 		<StyledWorkspaceHeader>
-			<StatusBar items={controller.statusBarItems ?? []} />
+			<div>
+				<StatusBar items={controller.statusBarItems ?? []} />
+			</div>
 			<TabNavigation controller={controller} />
 			{controller.FilterComponent && <controller.FilterComponent />}
 		</StyledWorkspaceHeader>
