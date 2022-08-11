@@ -1,4 +1,3 @@
-import { writeSync } from 'fs';
 import { Controller } from '../types';
 import { WorkspaceController } from './workspaceController';
 
@@ -51,7 +50,8 @@ const mockController: IMockController = {
 
 const controller: Controller<
     IMockController,
-    WorkspaceController<IMockData, IMockControllers, IMockOnClick<IMockData>, IMockError, IMockContext>
+    WorkspaceController<IMockData, IMockControllers, IMockOnClick<IMockData>, IMockError, IMockContext>,
+    IMockControllers
 > = {
     name: 'mockController',
     controller: mockController,
