@@ -4,5 +4,5 @@ A workspace on its own will not have functionality for handling errors. An Error
 
 Workspace Controller error functionality.
 
-- ThrowError
-- onError
+-   ThrowError
+-   onError
