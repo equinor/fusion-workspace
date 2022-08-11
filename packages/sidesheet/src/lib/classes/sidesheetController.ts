@@ -22,8 +22,8 @@ export class SidesheetController<TData, TContext> {
 		this.context = newContext;
 	};
 
-	private onSidesheetStateChangedCallbacks: Callback<SidesheetChangedCallback<TData>>[] = [];
-	private onItemChangedCallbacks: Callback<ItemChangedCallback<TData>>[] = [];
+	private onSidesheetStateChangedCallbacks: Callback<SidesheetChangedCallback<TData, TContext>>[] = [];
+	private onItemChangedCallbacks: Callback<ItemChangedCallback<TData, TContext>>[] = [];
 
 	/** Function that both closes the sidesheet and removes the item */
 	closeAndRemoveItem = () => {
@@ -36,7 +36,7 @@ export class SidesheetController<TData, TContext> {
 	 * @param cb A function to be called upon whenever the sidesheet state changes
 	 * @returns the callbacks given id and an unsubscribe method to be called upon when you want to remove the callback
 	 */
-	onSidesheetStateChanged = (cb: SidesheetChangedCallback<TData>): OnCallbackSet => {
+	onSidesheetStateChanged = (cb: SidesheetChangedCallback<TData, TContext>): OnCallbackSet => {
 		const id = generateUniqueId();
 		this.onSidesheetStateChangedCallbacks.push({ id, callback: cb });
 		return {
@@ -81,7 +81,7 @@ export class SidesheetController<TData, TContext> {
 	 * @param cb function to call whenever the item changes
 	 * @returns the callbacks given id and an unsubscribe method to be called upon when you want to remove the callback
 	 */
-	onItemChanges = (cb: ItemChangedCallback<TData>): OnCallbackSet => {
+	onItemChanges = (cb: ItemChangedCallback<TData, TContext>): OnCallbackSet => {
 		const id = generateUniqueId();
 		this.onItemChangedCallbacks.push({
 			callback: cb,

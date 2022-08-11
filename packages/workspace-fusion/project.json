@@ -1,0 +1,43 @@
+{
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "packages/workspace-fusion/src",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nrwl/web:rollup",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/workspace-fusion",
+				"tsConfig": "packages/workspace-fusion/tsconfig.lib.json",
+				"project": "packages/workspace-fusion/package.json",
+				"entryFile": "packages/workspace-fusion/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/workspace-fusion/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/workspace-fusion/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/workspace-fusion"],
+			"options": {
+				"jestConfig": "packages/workspace-fusion/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	}
+}

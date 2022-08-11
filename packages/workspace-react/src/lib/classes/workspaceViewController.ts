@@ -13,6 +13,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	constructor(tabs: Tab<TTabNames>[], initialTab: TTabNames) {
 		this.tabs = tabs;
 		this.activeTab = initialTab;
+		this.sidesheet = new WorkspaceSidesheetController();
 	}
 
 	private onActiveTabChangedCallbacks: Callback<OnActiveTabChangedCallback<TTabNames, this>>[] = [];
@@ -21,7 +22,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	/** The tabs for your workspace */
 	tabs: Tab<TTabNames>[];
 
-	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
+	sidesheet: WorkspaceSidesheetController;
 	/** The filter component to render in the header */
 	FilterComponent?: () => JSX.Element;
 	/** Component for handling errors */
