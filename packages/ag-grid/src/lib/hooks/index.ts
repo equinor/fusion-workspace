@@ -1,1 +1,1 @@
-export * from './useRowData'
+export * from './useRowData';

@@ -35,13 +35,13 @@ function workspaceSetup (ws: FusionWorkspaceFramework) {
 
 ```TS
    const workspaceConfig = createFusionWorkspaceApp<IData>(workspaceSetup, workspaceOptions, fusion);
-   return (<Workspace {...workspaceConfig} />) 
+   return (<Workspace {...workspaceConfig} />)
 ```
 
 ## How it works
 
 ```mermaid
-flowchart LR 
+flowchart LR
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:left,color:#fff;
 
     classDef framework fill:#006699,stroke:none,text-align:left;
@@ -60,7 +60,7 @@ flowchart LR
         filterConfig[Custom View Config]:::viewConfig
         dataConfig[Custom View Config]:::viewConfig
 
-    subgraph Workspace  
+    subgraph Workspace
         direction LR
 
         portal[<h2>Portal</h2>]:::portal
@@ -72,17 +72,17 @@ flowchart LR
 
         subgraph appConfig
             direction LR
-            workspaceAppConfig --> workspaceSetup 
+            workspaceAppConfig --> workspaceSetup
             workspaceSetup --> fusionViewConfig
             workspaceSetup --> customViewConfig
             workspaceSetup --> filterConfig
             workspaceSetup --> dataConfig
-  
+
         fusionViewConfig[Fuison View Config]:::viewConfig
         customViewConfig[Custom View Config]:::viewConfig
         filterConfig[Custom View Config]:::viewConfig
         dataConfig[Custom View Config]:::viewConfig
-       
+
         end
 
         subgraph workspaceApp
@@ -93,15 +93,14 @@ flowchart LR
         createFusionWorkspace --> workspaceApp
 
         wc --> workspaceReactWrapper <---> createFusionWorkspace
-       
+
         fusionViewConfig -.-> createFusionWorkspace
         filterConfig -.-> createFusionWorkspace
-        dataConfig -.-> createFusionWorkspace 
-        customViewConfig -.-> createFusionWorkspace 
-    
-        workspaceApp --> portal
-      
-    end
-    
-```
+        dataConfig -.-> createFusionWorkspace
+        customViewConfig -.-> createFusionWorkspace
 
+        workspaceApp --> portal
+
+    end
+
+```

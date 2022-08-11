@@ -11,7 +11,9 @@ export function useSidesheetWidth<TabNames extends string, TError>(
 ) {
   const isOpen = useIsSidesheetOpen(controller);
 
-  const [sidesheetWidth, setSidesheetWidth] = useState<number>(controller.sidesheet.width);
+  const [sidesheetWidth, setSidesheetWidth] = useState<number>(
+    controller.sidesheet.width
+  );
 
   useEffect(() => {
     const { unsubscribe } =
