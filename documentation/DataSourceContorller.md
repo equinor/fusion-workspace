@@ -9,7 +9,7 @@ A data source controller handles the first load of the data for the workspace. A
     }
 ```
 
-A data source controller implements `fetchData` and  `onDataChange` event that is called every time data is parsed successfully and all controllers subscribed to this controller will update accordingly. The simplest way of data source controller should look something like this:
+A data source controller implements `fetchData` and `onDataChange` event that is called every time data is parsed successfully and all controllers subscribed to this controller will update accordingly. The simplest way of data source controller should look something like this:
 
 ```TS
     export class DataSourceController<T> {
