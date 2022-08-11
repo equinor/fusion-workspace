@@ -3,17 +3,17 @@ Parkview consists of both Tree view and Garden view
 A garden is just a horizontal row of multiple trees. Garden groups its first row on garden key which is a horizontal grouping, rest is vertical grouping.
 
 Group Description Function:
-Pass in a function that returns a description for the group. Useful in cases where the name of the group is not descriptive enough. 
+Pass in a function that returns a description for the group. Useful in cases where the name of the group is not descriptive enough.
 API calls are not recommended
 Example:
 
 function groupDescriptionFunc(data: Loop, groupingKey: string): string {
-    switch (groupingKey) {
-        case 'description':
-            return data['commPk'];
-        default:
-            return '+';
-    }
+switch (groupingKey) {
+case 'description':
+return data['commPk'];
+default:
+return '+';
+}
 }
 
 Custom Item View:
@@ -33,9 +33,9 @@ A function that takes in data and returns a JSX.Element to be shown next to the 
 
 example:
 function statusItemFunc<T>(data: T): Status {
-    switch (data['status']) {
-        case 'OK':
-            return { rating: 4, status: 'Good', statusElement: <StatusDot color={'green'} /> };
+switch (data['status']) {
+case 'OK':
+return { rating: 4, status: 'Good', statusElement: <StatusDot color={'green'} /> };
 
         case 'OS':
             return { rating: 3, status: 'Medium', statusElement: <StatusDot color={'blue'} /> };
@@ -53,4 +53,5 @@ function statusItemFunc<T>(data: T): Status {
                 statusElement: <StatusDot color={'black'} />,
             };
     }
+
 }

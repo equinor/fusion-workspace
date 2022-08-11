@@ -5,7 +5,6 @@ List any external dependencies that are required for this change.
 
 Completes: AB#FILL_IN_YOUR_ISSUE_ID
 
-
 ## Type of change
 
 Remove options that are not relevant.
@@ -15,11 +14,9 @@ Remove options that are not relevant.
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] This change requires a documentation update
 
-
 ## How Has This Been Tested?
 
 Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
-
 
 ## Checklist
 
@@ -29,4 +26,3 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 - [ ] My code is easy to read.
 - [ ] Documentation and comments is added where needed.
 - [ ] My code is covered by tests.
-

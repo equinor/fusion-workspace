@@ -74,7 +74,7 @@ This will do the same as when you registered the controller but middleware allow
 
 ### Data
 
-A workspace i driven by data has a `data` and `filteredData` field. to sett these use the corresponding `setData`and  `setFilteredData` functions. When data is has changed all callback registered ont the `onDataChanged` event is triggered. Same thing goes for `onFilteredDataChanged`.
+A workspace i driven by data has a `data` and `filteredData` field. to sett these use the corresponding `setData`and `setFilteredData` functions. When data is has changed all callback registered ont the `onDataChanged` event is triggered. Same thing goes for `onFilteredDataChanged`.
 
 ### Context
 
@@ -137,10 +137,10 @@ Core Functions:
 
 Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
 
-Here is an  diagram of use se figure1:
+Here is an diagram of use se figure1:
 
 ```mermaid
-flowchart LR 
+flowchart LR
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:center,color:#fff;
     classDef controller fill:#006699,stroke:none,text-align:left;
     classDef config fill:#008899,stroke:none
@@ -165,10 +165,10 @@ flowchart LR
     wc --> wcLoggerMiddleware
     wsDataSource --> wcLoggerMiddleware
     wsFilter --> wcLoggerMiddleware
- 
 
-    wc --> wcErrorConfig --> wcError 
-    
+
+    wc --> wcErrorConfig --> wcError
+
 
     subgraph Controllers
         direction BT
@@ -177,8 +177,8 @@ flowchart LR
     end
 
     wsDataSourceConfig <--> wc
-    wsFilterConfig <--> wc     
-    
+    wsFilterConfig <--> wc
+
 ```
 
 > Figure 1. Workspace Controller connections for Fusion Workspace Framework

@@ -66,7 +66,7 @@ import iModule, { IModule } from '@equinor/fusion-IModule';
 import createWorkspaceApp { AppConfigurator } from '@equinor/fusion-workspace';
 import { WorkspaceAppComponent } from "./WorkspaceAppComponent"
 
-const configCallback: AppConfigurator<[IModule]> = async (appModuleConfig, frameworkApi) => { 
+const configCallback: AppConfigurator<[IModule]> = async (appModuleConfig, frameworkApi) => {
     await frameworkApi.modules.serviceDiscovery.configureClient('fam', appModuleConfig);
 };
 
@@ -91,7 +91,7 @@ export default App;
 Diagram showing the lodging sequents of a workspace app, built on the Fusion App loading sequence.
 
 ```mermaid
-sequenceDiagram   
+sequenceDiagram
     participant User
     participant Portal
     participant Workspace
@@ -101,7 +101,7 @@ sequenceDiagram
     Portal ->> User: Asks user for username and password
     User->> Portal: Login
     Note over Portal: User Logged inn waiting for user input
-   
+
     User ->> Portal:  Click on app link
     Portal ->> Workspace: Request Workspace App Files
     Note over Workspace: Setup App Modules and <br> combines Framework Modules

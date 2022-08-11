@@ -7,17 +7,17 @@ import { useRowData } from '../hooks/useRowData';
 import { StyledGridWrapper } from './grid.styles';
 
 interface GridProps<T> {
-    controller: GridController<T>;
+  controller: GridController<T>;
 }
 
 export function Grid<T>({ controller }: GridProps<T>) {
-    return (
-        <StyledGridWrapper className="ag-theme-alpine" >
-            <AgGridReact
-                gridOptions={controller.gridOptions}
-                columnDefs={controller.columnDefs}
-                rowData={useRowData(controller)}
-            />
-        </StyledGridWrapper>
-    );
+  return (
+    <StyledGridWrapper className="ag-theme-alpine">
+      <AgGridReact
+        gridOptions={controller.gridOptions}
+        columnDefs={controller.columnDefs}
+        rowData={useRowData(controller)}
+      />
+    </StyledGridWrapper>
+  );
 }

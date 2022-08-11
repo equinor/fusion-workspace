@@ -1,6 +1,4 @@
-export interface Tab<TabName extends string>{
-    name: TabName;
-    Component: React.FC;
+export interface Tab<TabName extends string> {
+  name: TabName;
+  Component: React.FC;
 }
-
-
