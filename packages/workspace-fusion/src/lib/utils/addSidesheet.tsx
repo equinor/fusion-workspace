@@ -11,24 +11,21 @@ export function addSidesheet<TData, TError, TContext>(
 	config: SidesheetConfig<TData>,
 	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
 ) {
-	const sc = new SidesheetController();
-
+	controller.controllers.view.sidesheet.Component = () => (
+		<SidesheetWrapper Component={config.Component} controller={controller} />
+	);
 	controller.addController({
 		controller: new SidesheetController(),
 		name: 'sidesheet',
 		config: (sidesheetController, workspaceController) => {
+			sidesheetController.onSidesheetStateChanged((state) => {
+				workspaceController.controllers.view.sidesheet.setIsOpen(state === 'Open');
+			});
 			workspaceController.onClick((ev) => {
 				sidesheetController.setItem(ev.item);
 				sidesheetController.setSidesheetState('Open');
 			});
 		},
-	});
-
-	controller.controllers.view.sidesheet.Component = () => (
-		<SidesheetWrapper Component={config.Component} controller={controller} />
-	);
-	sc.onSidesheetStateChanged((state) => {
-		controller.controllers.view.sidesheet.setIsOpen(state === 'Open');
 	});
 }
 
