@@ -65,5 +65,5 @@ export class WorkspaceSidesheetController {
   private removeOnSidesheetWidthChangedCallback = (id: string) =>
     (this.onSidesheetWidthChangedCallbacks =
       this.onSidesheetWidthChangedCallbacks.filter((s) => s.id !== id));
-      
+
 }
