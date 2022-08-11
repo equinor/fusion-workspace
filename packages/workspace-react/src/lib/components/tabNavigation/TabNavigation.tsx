@@ -16,9 +16,9 @@ export function TabNavigation<TabNames extends string, TError>({ controller }: T
 
     return (
         <TabButtonList>
-            {tabs.map(({ name }) => (
+            {tabs.map(({ name, HeaderComponent }) => (
                 <TabButton isActive={name === activeTab?.name} onClick={() => setActiveTab(name)} key={name}>
-                    {name}
+                    <HeaderComponent />
                 </TabButton>
             ))}
         </TabButtonList>

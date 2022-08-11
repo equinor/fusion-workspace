@@ -1,53 +1,12 @@
-import styled from 'styled-components';
-
-import { Link } from 'react-router-dom';
-import { tokens } from '@equinor/eds-tokens';
 import { useRef } from 'react';
 import { WorkspaceController } from '@workspace/workspace-core';
 import { Workspace, WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
-const StyledApp = styled.div`
-    background-color: ${tokens.colors.ui.background__default.hex};
-    height: 100%;
-    width: 100%;
-`;
-
-const StyledNavbar = styled.div`
-    height: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 1.5em;
-    background-color: ${tokens.colors.ui.background__medium.hex};
-    padding: 0px 20px;
-`;
-
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: ${tokens.colors.text.static_icons__default.hex};
-    font-size: 22px;
-`;
-
-function Navbar() {
-    return (
-        <StyledNavbar>
-            <StyledLink to="/">Home</StyledLink>
-            <StyledLink to="/garden">Garden</StyledLink>
-            <StyledLink to="/grid">Grid</StyledLink>
-            <StyledLink to="/workspace">Workspace</StyledLink>
-        </StyledNavbar>
-    );
-}
+import { GardenIcon } from './icons/GardenIcon';
+import { TableIcon } from './icons/TableIcon';
 
 export function App() {
-    return (
-        <StyledApp>
-            <Navbar />
-
-            <TestWorkspace />
-            {/* END: routes */}
-        </StyledApp>
-    );
+    return <TestWorkspace />;
 }
 
 type Tabs = 'Grid' | 'Garden';
@@ -67,8 +26,12 @@ function createWorkspaceController() {
 
     const viewController = new WorkspaceViewController<Tabs, unknown>(
         [
-            { Component: () => <Grid controller={gridController} />, name: 'Grid' },
-            { Component: () => <div>am garden</div>, name: 'Garden' },
+            {
+                Component: () => <Grid controller={gridController} />,
+                name: 'Grid',
+                HeaderComponent: TableIcon,
+            },
+            { Component: () => <div>am garden</div>, name: 'Garden', HeaderComponent: GardenIcon },
         ],
         'Grid'
     );
@@ -116,7 +79,7 @@ interface Scope {
     name: string;
 }
 
-const mockData = [
+const mockData: DefaultInterface[] = [
     {
         id: '30dfd9a8-6ac2-4ef5-0a66-08da58f76728',
         sequenceNumber: 895,
