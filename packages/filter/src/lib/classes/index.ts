@@ -1,1 +1,1 @@
-export { FilterController } from './filterController'
+export { FilterController } from './filterController';

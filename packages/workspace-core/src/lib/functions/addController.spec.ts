@@ -17,11 +17,11 @@ const mockController: IMockController = {
 };
 
 const controller: Controller<IMockController, any, any> = {
-    name: 'mockController',
-    controller: mockController,
-    config: (mockController) => {
-        mockFunction(mockController.id);
-    },
+  name: 'mockController',
+  controller: mockController,
+  config: (mockController) => {
+    mockFunction(mockController.id);
+  },
 };
 
 const workspaceController = new WorkspaceController<
