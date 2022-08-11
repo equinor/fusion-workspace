@@ -1,4 +1,4 @@
-import { StatusBar, StatusItem } from '@equinor/status-bar';
+import { StatusItem } from '@equinor/status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
 
