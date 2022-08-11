@@ -16,7 +16,7 @@ const mockController: IMockController = {
 	id: 'mockController',
 };
 
-const controller: Controller<IMockController, any> = {
+const controller: Controller<IMockController, any, IMockControllers> = {
 	name: 'mockController',
 	controller: mockController,
 	config: (mockController) => {
