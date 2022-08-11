@@ -8,8 +8,8 @@ export function useActiveTab<TabNames extends string, TError>(controller: Worksp
 	);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.onActiveTabChanged((to) => {
-			const newTab = controller.tabs.find((s) => s.name === to);
+		const { unsubscribe } = controller.onActiveTabChanged((tabName) => {
+			const newTab = controller.tabs.find(({ name }) => name === tabName);
 			if (!newTab) {
 				setTab(undefined);
 			} else {
