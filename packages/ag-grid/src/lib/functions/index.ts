@@ -1,1 +1,1 @@
-export * from './registerCallback'
+export * from './registerCallback';

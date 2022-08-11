@@ -15,12 +15,18 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
     this.activeTab = initialTab;
   }
 
-  private onActiveTabChangedCallbacks: Callback<OnActiveTabChangedCallback<TTabNames, this>>[] = [];
-  private onFilterOpenOrClosedCallbacks: Callback<OnFilterOpenOrClosedCallback<this>>[] = [];
-  private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];
+  private onActiveTabChangedCallbacks: Callback<
+    OnActiveTabChangedCallback<TTabNames, this>
+  >[] = [];
+  private onFilterOpenOrClosedCallbacks: Callback<
+    OnFilterOpenOrClosedCallback<this>
+  >[] = [];
+  private onIsLoadingChangedCallbacks: Callback<
+    OnIsLoadingChangedCallback<this>
+  >[] = [];
   /** The tabs for your workspace */
   tabs: Tab<TTabNames>[];
-  
+
   sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
   /** The filter component to render in the header */
   FilterComponent?: () => JSX.Element;
@@ -35,7 +41,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
   refetchData?: () => Promise<void> | null;
   /** Items to be shown on the status bar */
   statusBarItems?: StatusItem[];
-  
+
   /**
    * Sets a new active tab
    * @param tabName Name of the tab to set as active
@@ -89,7 +95,11 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
   onFilterOpenOrClosedChanged = (cb: OnFilterOpenOrClosedCallback<this>) =>
-    registerCallback(this.onFilterOpenOrClosedCallbacks, cb, this.removeOnFilterOpenOrClosedCallback);
+    registerCallback(
+      this.onFilterOpenOrClosedCallbacks,
+      cb,
+      this.removeOnFilterOpenOrClosedCallback
+    );
 
   /**
    * Register a callback to be called whenever the tab changes
@@ -97,9 +107,21 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
   onActiveTabChanged = (cb: OnActiveTabChangedCallback<TTabNames, this>) =>
-    registerCallback(this.onActiveTabChangedCallbacks, cb, this.removeOnActiveTabChangedCallback);
+    registerCallback(
+      this.onActiveTabChangedCallbacks,
+      cb,
+      this.removeOnActiveTabChangedCallback
+    );
 
-  private removeOnActiveTabChangedCallback = (id: string) => (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter((s) => s.id !== id ));
-  private removeOnIsLoadingCallback = (id: string) => (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter((s) => s.id !== id));
-  private removeOnFilterOpenOrClosedCallback = (id: string) => (this.onFilterOpenOrClosedCallbacks = this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
+  private removeOnActiveTabChangedCallback = (id: string) =>
+    (this.onActiveTabChangedCallbacks = this.onActiveTabChangedCallbacks.filter(
+      (s) => s.id !== id
+    ));
+  private removeOnIsLoadingCallback = (id: string) =>
+    (this.onIsLoadingChangedCallbacks = this.onIsLoadingChangedCallbacks.filter(
+      (s) => s.id !== id
+    ));
+  private removeOnFilterOpenOrClosedCallback = (id: string) =>
+    (this.onFilterOpenOrClosedCallbacks =
+      this.onFilterOpenOrClosedCallbacks.filter((s) => s.id !== id));
 }
