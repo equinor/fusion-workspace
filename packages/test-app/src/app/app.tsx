@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { tokens } from '@equinor/eds-tokens';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { WorkspaceController } from '@workspace/workspace-core';
 import { Workspace, WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';

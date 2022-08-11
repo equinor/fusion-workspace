@@ -1,43 +1,43 @@
 {
-  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "packages/workspace-react/src",
-  "projectType": "library",
-  "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/workspace-react",
-        "tsConfig": "packages/workspace-react/tsconfig.lib.json",
-        "project": "packages/workspace-react/package.json",
-        "entryFile": "packages/workspace-react/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "packages/workspace-react/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/workspace-react/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/workspace-react"],
-      "options": {
-        "jestConfig": "packages/workspace-react/jest.config.ts",
-        "passWithNoTests": true
-      }
-    }
-  }
+	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+	"sourceRoot": "packages/workspace-react/src",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nrwl/web:rollup",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/workspace-react",
+				"tsConfig": "packages/workspace-react/tsconfig.lib.json",
+				"project": "packages/workspace-react/package.json",
+				"entryFile": "packages/workspace-react/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/workspace-react/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/workspace-react/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/workspace-react"],
+			"options": {
+				"jestConfig": "packages/workspace-react/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	}
 }
