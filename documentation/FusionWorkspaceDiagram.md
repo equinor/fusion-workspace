@@ -1,7 +1,7 @@
 [<< BACK](/README.md)
 
 ```mermaid
-flowchart LR 
+flowchart LR
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:left,color:#fff;
 
     classDef framework fill:#006699,stroke:none,text-align:left;
@@ -17,15 +17,15 @@ flowchart LR
     classDef middleware fill:#996666,stroke:none
 
 
-    subgraph Workspace  
+    subgraph Workspace
         direction LR
 
         portal[<h2>Portal</h2>]:::portal
 
         workspaceAppConfig[<h2>Workspace AppConfig </h2><span><br> - dataSource <br> - tableOptions <br> - gardenOptions <br> - statusItems<br>- filterOptions </span>]:::appConfig
-    
+
         workspaceSetup[<h2>Workspace Setup</h2><span><br> - addDataSource <br> - addTableOptions <br> - Config <br> - Context<br>- Workspace Events </span>]:::setup
-    
+
         createFusionWorkspace[<h2>Crete Fusion Workspace </h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
 
         wc[<h2>Workspace Controller</h2><span><br> - Controllers <br> - Middleware/Binders <br> - Config <br> - Context<br>- Workspace Events </span>]:::controller
@@ -38,7 +38,7 @@ flowchart LR
         wcDataSourceConfig[Data Filter - Config]:::config
         wcBookmarksConfig[Bookmarks - Config]:::config
 
-        
+
         gardenController[Garden Controller]:::controller
         gridController[Grid Controller]:::controller
         tableController[Table Controller]:::controller
@@ -53,36 +53,36 @@ flowchart LR
         pbiConfig[PowerBi - Config]:::config
         customConfig[Custom - Config]:::config
 
-     
+
         fusionViewConfig[Fuison View Config]:::viewConfig
         customViewConfig[Custom View Config]:::viewConfig
         filterConfig[Custom View Config]:::viewConfig
         dataConfig[Custom View Config]:::viewConfig
-   
+
         wcErrorConfig[Error Config]:::config
         wcError[Error Controller]:::controller
 
-       
 
-        subgraph controllers 
+
+        subgraph controllers
             direction TB
 
-    
-         
+
+
             subgraph viewControllers
                 direction LR
-                gardenController <--> gardenConfig 
-                gridController <--> gridConfig 
-                tableController <--> tableConfig 
-                ganttController <--> ganttConfig 
-                pbiController <--> pbiConfig 
-                customController <--> customConfig 
+                gardenController <--> gardenConfig
+                gridController <--> gridConfig
+                tableController <--> tableConfig
+                ganttController <--> ganttConfig
+                pbiController <--> pbiConfig
+                customController <--> customConfig
             end
 
-            subgraph workspaceController 
+            subgraph workspaceController
                 direction LR
             wc
- 
+
             end
 
             subgraph coreControllers
@@ -93,8 +93,8 @@ flowchart LR
 
             subgraph otherControllers
                 direction LR
-                wcBookmarks --> wcBookmarksConfig 
-                wcError-->wcErrorConfig  
+                wcBookmarks --> wcBookmarksConfig
+                wcError-->wcErrorConfig
             end
 
                 viewControllers --> wc
@@ -104,12 +104,12 @@ flowchart LR
 
         subgraph appConfig
             direction LR
-            workspaceAppConfig --> workspaceSetup 
+            workspaceAppConfig --> workspaceSetup
             workspaceSetup --> fusionViewConfig
             workspaceSetup --> customViewConfig
             workspaceSetup --> filterConfig
             workspaceSetup --> dataConfig
-              
+
         end
 
         subgraph workspaceApp
@@ -121,23 +121,23 @@ flowchart LR
 
         wc <----> createFusionWorkspace
 
-     
-     
+
+
         subgraph middleware
             wcLoggerMiddleware[Development Logger]:::middleware
         end
 
         middleware --> wc
 
-       
-       
+
+
         fusionViewConfig -.-> createFusionWorkspace
         filterConfig -.-> createFusionWorkspace
-        dataConfig -.-> createFusionWorkspace 
-        customViewConfig -.-> createFusionWorkspace 
-    
+        dataConfig -.-> createFusionWorkspace
+        customViewConfig -.-> createFusionWorkspace
+
         workspaceApp --> portal
-      
+
     end
-    
+
 ```

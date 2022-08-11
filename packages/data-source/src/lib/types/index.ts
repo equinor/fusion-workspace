@@ -1,3 +1,3 @@
-export * from './callback'
-export * from './fetch'
-export * from './events'
+export * from './callback';
+export * from './fetch';
+export * from './events';
