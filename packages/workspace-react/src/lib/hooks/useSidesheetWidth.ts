@@ -6,20 +6,17 @@ import { useIsSidesheetOpen } from './useIsSidesheetOpen';
  * Hook for returning sidesheet width
  * Will return 0 if the sidesheet is closed
  */
-export function useSidesheetWidth(
-  controller: WorkspaceViewController<any, any>
+export function useSidesheetWidth<TabNames extends string, TError>(
+	controller: WorkspaceViewController<TabNames, TError>
 ) {
-  const isOpen = useIsSidesheetOpen(controller);
+	const isOpen = useIsSidesheetOpen(controller);
 
-  const [sidesheetWidth, setSidesheetWidth] = useState<number>(
-    controller.sidesheet.width
-  );
+	const [sidesheetWidth, setSidesheetWidth] = useState<number>(controller.sidesheet.width);
 
-  useEffect(() => {
-    const { unsubscribe } =
-      controller.sidesheet.onWidthChange(setSidesheetWidth);
-    return unsubscribe;
-  }, []);
+	useEffect(() => {
+		const { unsubscribe } = controller.sidesheet.onWidthChange(setSidesheetWidth);
+		return unsubscribe;
+	}, []);
 
-  return isOpen ? sidesheetWidth : 0;
+	return isOpen ? sidesheetWidth : 0;
 }

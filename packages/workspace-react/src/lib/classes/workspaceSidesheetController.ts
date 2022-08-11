@@ -1,8 +1,4 @@
-import {
-  Callback,
-  OnSidesheetOpenOrClosedCallback,
-  OnWidthChange,
-} from '../types';
+import { Callback, OnSidesheetOpenOrClosedCallback, OnWidthChange } from '../types';
 import { registerCallback } from '../utils/registerCallback';
 
 export class WorkspaceSidesheetController {
@@ -29,28 +25,20 @@ export class WorkspaceSidesheetController {
     );
   };
 
-  /**
-   * Register a callback to be called whenever the sidesheet opens or closes
-   * @param cb Callback to be called when the sidesheet opens or closes
-   * @returns Id of the callback(debug purposes), and an unsubscribe function
-   */
-  onOpenOrClosedChanged = (cb: OnSidesheetOpenOrClosedCallback<this>) =>
-    registerCallback(
-      this.onSidesheetOpenOrClosedCallbacks,
-      cb,
-      this.removeOnSidesheetOpenOrClosedCallback
-    );
-  /**
-   * Register a callback to be called whenever the sidesheet width changes
-   * @param cb Callback to be called when the sidesheet width changes
-   * @returns Id of the callback(debug purposes), and an unsubscribe function
-   */
-  onWidthChange = (cb: OnWidthChange) =>
-    registerCallback(
-      this.onSidesheetWidthChangedCallbacks,
-      cb,
-      this.removeOnSidesheetWidthChangedCallback
-    );
+	/**
+	 * Register a callback to be called whenever the sidesheet opens or closes
+	 * @param cb Callback to be called when the sidesheet opens or closes
+	 * @returns Id of the callback(debug purposes), and an unsubscribe function
+	 */
+	onOpenOrClosedChanged = (cb: OnSidesheetOpenOrClosedCallback<this>) =>
+		registerCallback(this.onSidesheetOpenOrClosedCallbacks, cb, this.removeOnSidesheetOpenOrClosedCallback);
+	/**
+	 * Register a callback to be called whenever the sidesheet width changes
+	 * @param cb Callback to be called when the sidesheet width changes
+	 * @returns Id of the callback(debug purposes), and an unsubscribe function
+	 */
+	onWidthChange = (cb: OnWidthChange) =>
+		registerCallback(this.onSidesheetWidthChangedCallbacks, cb, this.removeOnSidesheetWidthChangedCallback);
 
   private onSidesheetOpenOrClosedCallbacks: Callback<
     OnSidesheetOpenOrClosedCallback<this>
