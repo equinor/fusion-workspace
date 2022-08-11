@@ -15,7 +15,7 @@ Features for Current functionality in `Johan Castberg` project portal:
 - [ ] [#30410](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30410) WS - AG Grid React View and Controller
 - [ ] [#30411](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30411) WS - Table React View and Controller
 - [ ] [#30412](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30412) WS - Power-Bi React View and Controller
-- [ ] [#30413](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30413) WS - Fusion Workspace UX/UI (Design Templates and guides) 
+- [ ] [#30413](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30413) WS - Fusion Workspace UX/UI (Design Templates and guides)
 - [ ] [#30414](https://statoil-proview.visualstudio.com/Fusion/_backlogs/backlog/Johan%20Castberg%20inn%20i%20Fusion/Epics/?workitem=30414) WS - Bookmark View and Controller
 
 Features for the future:

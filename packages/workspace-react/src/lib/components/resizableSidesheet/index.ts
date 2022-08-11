@@ -1,1 +1,1 @@
-export { ResizableSidesheet } from './ResizableSidesheet'
+export { ResizableSidesheet } from './ResizableSidesheet';

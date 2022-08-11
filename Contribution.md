@@ -41,13 +41,14 @@ Tests shall be implemented for helper functions/util functions.
 
 ## External dependencies
 
-Keep the use of non-Equinor packages to an absolute minimum.  
+Keep the use of non-Equinor packages to an absolute minimum.
 
-## Component size  
+## Component size
 
-Keep your components small. If your .tsx-file is  
+Keep your components small. If your .tsx-file is
 
 ## Folder structure
+
 ```bash
 📦packages                                    # All monorepos for fusion-workspace
  ┣ 📂[package name]                           # Monorepo name
@@ -73,6 +74,7 @@ Keep your components small. If your .tsx-file is
  ┃ ┣ 📜tsconfig.lib.json
  ┃ ┗ 📜tsconfig.spec.json
 ```
+
 File/folder naming conventions:
 
 ## Linting
