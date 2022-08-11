@@ -1,9 +1,9 @@
-import { StatusItem } from '@equinor/status-bar';
+import { StatusBar, StatusItem } from '@equinor/status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
 
 export interface GridConfig<T> {
-	columnDefinitions: ColDef<T>[];
+	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
 	gridOptions?: GridOptions<T>;
 }
 
@@ -19,4 +19,4 @@ interface StatusBar<TData> {
 	getValue: GetStatusItem<TData>;
 }
 
-export type StatusBarConfig<TData> = StatusBar<TData>[];
+export type StatusBarConfig<TData> = [StatusBar<TData>, ...StatusBar<TData>[]];
