@@ -14,7 +14,7 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element {
 
 	return (
 		<StyledStatusBar>
-			{items?.map((item) => (
+			{items.map((item) => (
 				<StatusBarItem key={item.title} item={item} />
 			))}
 		</StyledStatusBar>
