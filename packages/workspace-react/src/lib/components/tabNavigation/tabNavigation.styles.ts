@@ -7,6 +7,9 @@ export const TabButton = styled.div<{ isActive: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
+    & path {
+        fill: ${({ isActive }) => isActive && `${tokens.colors.interactive.primary__resting.hex}`};
+    }
     ::after {
         content: '';
         position: absolute;
