@@ -1,7 +1,6 @@
 import { SidesheetController } from '@equinor/sidesheet';
 import { WorkspaceController } from '@workspace/workspace-core';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { SidesheetWrapper } from '../components';
 import { SidesheetConfig } from '../types/configuration';
 import { WorkspaceControllers } from '../types/controllers';
 import { WorkspaceOnClick } from '../types/onClick';
@@ -27,32 +26,4 @@ export function addSidesheet<TData, TError, TContext>(
 			});
 		},
 	});
-}
-
-interface SidesheetWrapperProps<TData, TError, TContext> {
-	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
-	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>;
-}
-
-function SidesheetWrapper<TData, TError, TContext>({
-	Component,
-	controller,
-}: SidesheetWrapperProps<TData, TError, TContext>) {
-	const [item, setItem] = useState<TData | null>(null);
-
-	useEffect(() => {
-		const { unSubscribe } = controller.onClick((ev) => setItem(ev.item));
-
-		return unSubscribe;
-	}, []);
-
-	/**
-	 * Add fusion sidesheet header here with color etc here..
-	 */
-
-	if (!item) {
-		return null;
-	}
-
-	return <Component item={item} />;
 }

@@ -1,6 +1,5 @@
 import {
 	Callback,
-	StatusItem,
 	Tab,
 	OnActiveTabChangedCallback,
 	OnIsLoadingChangedCallback,
@@ -26,6 +25,8 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	FilterComponent?: () => JSX.Element;
 	/** Component for handling errors */
 	ErrorComponent?: (error: TError) => JSX.Element;
+	/** Status bar component to be shown in left side of header */
+	StatusBarComponent?: () => JSX.Element;
 	/** The current active tab name */
 	activeTab: TTabNames;
 	/** true when data is loading */
@@ -33,8 +34,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	isFilterActive = false;
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
-	/** Items to be shown on the status bar */
-	statusBarItems?: StatusItem[];
 
 	/**
 	 * Sets a new active tab

@@ -1,4 +1,5 @@
 import { WorkspaceController } from '@workspace/workspace-core';
+import { StatusBar, StatusItem } from '@equinor/status-bar';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -6,8 +7,11 @@ import {
 	WorkspaceOnClick,
 	WorkspaceControllers,
 	WorkspaceTabNames,
+	StatusBarConfig,
 } from '../types';
-import { addDataSource, addGrid, addSidesheet, addViewController } from '../utils';
+import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
+import { useEffect, useState } from 'react';
+import { StatusBarWrapper } from '../components';
 
 export class FusionWorkspaceBuilder<TData, TError, TContext> {
 	name: string;
@@ -45,6 +49,11 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 
 	addSidesheet = (config: SidesheetConfig<TData>) => {
 		addSidesheet(config, this.controller);
+		return this;
+	};
+
+	addStatusBarItems = (config: StatusBarConfig<TData>) => {
+		addStatusBar(config, this.controller);
 		return this;
 	};
 

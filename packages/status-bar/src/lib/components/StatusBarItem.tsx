@@ -1,4 +1,4 @@
-import { StatusItem } from '../../types';
+import { StatusItem } from '../types';
 import { StatusCard, Title, ValueWrapper, Value } from './statusBarItem.styles';
 
 interface StatusBarItemProps {

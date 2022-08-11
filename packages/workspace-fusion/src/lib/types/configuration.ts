@@ -1,3 +1,4 @@
+import { StatusItem } from '@equinor/status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
 
@@ -11,3 +12,11 @@ export interface SidesheetConfig<TData> {
 }
 
 export type DataFetchAsync<TData> = () => Promise<TData[]>;
+
+export type GetStatusItem<TData> = (item: TData[]) => StatusItem;
+
+interface StatusBar<TData> {
+	getValue: GetStatusItem<TData>;
+}
+
+export type StatusBarConfig<TData> = StatusBar<TData>[];
