@@ -1,6 +1,7 @@
 import { Grid, GridController } from '@workspace/grid';
 import { WorkspaceController } from '@workspace/workspace-core';
 import { ColDef } from 'ag-grid-community';
+import { GridIcon as HeaderComponent } from '../icons/GridIcon';
 import { GridConfig, WorkspaceControllers, WorkspaceOnClick } from '../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
@@ -18,6 +19,7 @@ export function addGrid<TData, TError, TContext>(
 	controller.controllers.view.tabs.push({
 		Component: () => <Grid controller={controller.controllers.grid} />,
 		name: 'grid',
+		HeaderComponent,
 	});
 }
 
