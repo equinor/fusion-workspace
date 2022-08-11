@@ -11,5 +11,6 @@ export const useSidesheet = <T>(
   controller: SidesheetController<T, unknown>
 ): Sidesheet<T> => ({
   isOpen: useSidesheetState(controller),
+
   item: useSidesheetItem(controller),
 });
