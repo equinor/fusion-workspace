@@ -1,32 +1,32 @@
 {
-	"extends": "nx/presets/npm.json",
-	"affected": {
-		"defaultBase": "main"
-	},
-	"tasksRunnerOptions": {
-		"default": {
-			"runner": "nx/tasks-runners/default",
-			"options": {
-				"cacheableOperations": []
-			}
-		}
-	},
-	"generators": {
-		"@nrwl/react": {
-			"application": {
-				"style": "styled-components",
-				"linter": "eslint",
-				"babel": true
-			},
-			"component": {
-				"style": "styled-components"
-			},
-			"library": {
-				"style": "styled-components",
-				"linter": "eslint"
-			}
-		},
-		"targetDefaults": {}
-	},
-	"defaultProject": "test-app"
+    "extends": "nx/presets/npm.json",
+    "affected": {
+        "defaultBase": "main"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": []
+            }
+        }
+    },
+    "generators": {
+        "@nrwl/react": {
+            "application": {
+                "style": "styled-components",
+                "linter": "eslint",
+                "babel": true
+            },
+            "component": {
+                "style": "styled-components"
+            },
+            "library": {
+                "style": "styled-components",
+                "linter": "eslint"
+            }
+        },
+        "targetDefaults": {}
+    },
+    "defaultProject": "test-app"
 }

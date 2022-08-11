@@ -1,8 +1,8 @@
 /** Function signature for when active tab changes */
 export type OnActiveTabChangedCallback<TabName, TController> = (
-	to: TabName,
-	from: TabName,
-	controller: TController
+    to: TabName,
+    from: TabName,
+    controller: TController
 ) => void;
 /** Function signature for when sidesheet opens or closes */
 export type OnSidesheetOpenOrClosedCallback<TController> = (isOpen: boolean, controller: TController) => void;

@@ -40,107 +40,107 @@ Optional. Decide the order of columns displayed. The array has to contain id str
 
 ```ts
 commPkg.registerTableOptions({
-	objectIdentifierKey: 'tagNo',
-	onCellClick: (a, b) => {
-		b.stopPropagation();
-		alert('ho');
-	},
-	enableSelectRows: false,
-	hiddenColumns: ['functionTags', 'signedAt', 'commPk'],
-	columnOrder: ['formType', 'createdAt'],
-	headers: [
-		{ key: 'formType', title: 'Form' },
-		{ key: 'createdAt', title: 'Created Date' },
-	],
-	customCellView: [
-		{
-			key: 'createdAt',
-			type: 'Date',
-		},
-		{
-			key: 'description',
-			type: 'Description',
-		},
+    objectIdentifierKey: 'tagNo',
+    onCellClick: (a, b) => {
+        b.stopPropagation();
+        alert('ho');
+    },
+    enableSelectRows: false,
+    hiddenColumns: ['functionTags', 'signedAt', 'commPk'],
+    columnOrder: ['formType', 'createdAt'],
+    headers: [
+        { key: 'formType', title: 'Form' },
+        { key: 'createdAt', title: 'Created Date' },
+    ],
+    customCellView: [
+        {
+            key: 'createdAt',
+            type: 'Date',
+        },
+        {
+            key: 'description',
+            type: 'Description',
+        },
 
-		{
-			key: 'status',
-			type: 'Status',
-			cellAttributeFn: (content) => {
-				let bgcolor = '';
+        {
+            key: 'status',
+            type: 'Status',
+            cellAttributeFn: (content) => {
+                let bgcolor = '';
 
-				if (content.status === 'OK') {
-					bgcolor = 'green';
-				} else if (content.status === 'OS') {
-					bgcolor = 'blue';
-				} else if (content.status === 'PA') {
-					bgcolor = 'red';
-				} else {
-					bgcolor = 'yellow';
-				}
+                if (content.status === 'OK') {
+                    bgcolor = 'green';
+                } else if (content.status === 'OS') {
+                    bgcolor = 'blue';
+                } else if (content.status === 'PA') {
+                    bgcolor = 'red';
+                } else {
+                    bgcolor = 'yellow';
+                }
 
-				return {
-					style: {
-						backgroundColor: bgcolor,
-						color: bgcolor === 'blue' ? 'white' : 'black',
-					},
-				};
-			},
-		},
-		{
-			key: 'formType',
-			type: {
-				Cell: ({ cell }) => {
-					return <div style={{ fontWeight: 500 }}>{cell.row.original.formType as string}</div>;
-				},
-			},
-		},
-	],
-	customColumns: [
-		{
-			Header: 'Foo',
-			accessor: (row) => {
-				return row['contentChecklists'].length + 1;
-			},
-			Cell: () => {
-				return <div>im a cell</div>;
-			},
-			aggregate: 'count',
-			Aggregated: (cell) => {
-				return <div>{cell.value}</div>;
-			},
-		},
-	],
+                return {
+                    style: {
+                        backgroundColor: bgcolor,
+                        color: bgcolor === 'blue' ? 'white' : 'black',
+                    },
+                };
+            },
+        },
+        {
+            key: 'formType',
+            type: {
+                Cell: ({ cell }) => {
+                    return <div style={{ fontWeight: 500 }}>{cell.row.original.formType as string}</div>;
+                },
+            },
+        },
+    ],
+    customColumns: [
+        {
+            Header: 'Foo',
+            accessor: (row) => {
+                return row['contentChecklists'].length + 1;
+            },
+            Cell: () => {
+                return <div>im a cell</div>;
+            },
+            aggregate: 'count',
+            Aggregated: (cell) => {
+                return <div>{cell.value}</div>;
+            },
+        },
+    ],
 });
 ```
 
 ```tsx
 export const ListTab = () => {
-	const { data } = useFilteredData<TableData>();
-	const { tableOptions, setSelected } = useDataContext();
-	const columns = useColumns(data[0], {
-		customCellView: tableOptions?.customCellView,
-		headers: tableOptions?.headers,
-		customColumns: tableOptions?.customColumns,
-	});
-	const hiddenCols = tableOptions?.hiddenColumns === undefined ? [] : tableOptions.hiddenColumns;
-	return (
-		<Wrapper>
-			<Table<TableData>
-				options={{
-					data,
-					columns,
-					enableSelectRow: tableOptions?.enableSelectRows,
-					onCellClick: tableOptions?.onCellClick,
-					initialState: {
-						hiddenColumns: hiddenCols,
-					},
-					setSelected,
-					groupByFn: defaultGroupByFn,
-					columnOrder: talbeOptions?.columnOrder,
-				}}
-				FilterComponent={PopupFilter}
-			/>
-		</Wrapper>
-	);
+    const { data } = useFilteredData<TableData>();
+    const { tableOptions, setSelected } = useDataContext();
+    const columns = useColumns(data[0], {
+        customCellView: tableOptions?.customCellView,
+        headers: tableOptions?.headers,
+        customColumns: tableOptions?.customColumns,
+    });
+    const hiddenCols = tableOptions?.hiddenColumns === undefined ? [] : tableOptions.hiddenColumns;
+    return (
+        <Wrapper>
+            <Table<TableData>
+                options={{
+                    data,
+                    columns,
+                    enableSelectRow: tableOptions?.enableSelectRows,
+                    onCellClick: tableOptions?.onCellClick,
+                    initialState: {
+                        hiddenColumns: hiddenCols,
+                    },
+                    setSelected,
+                    groupByFn: defaultGroupByFn,
+                    columnOrder: talbeOptions?.columnOrder,
+                }}
+                FilterComponent={PopupFilter}
+            />
+        </Wrapper>
+    );
 };
 ```

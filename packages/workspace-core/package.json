@@ -1,5 +1,5 @@
 {
-	"name": "@equinor/workspace-core",
-	"version": "0.0.1",
-	"type": "commonjs"
+    "name": "@equinor/workspace-core",
+    "version": "0.0.1",
+    "type": "commonjs"
 }

@@ -1,23 +1,23 @@
 {
-	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-	"sourceRoot": "packages/power-bi/src",
-	"projectType": "library",
-	"tags": [],
-	"targets": {
-		"lint": {
-			"executor": "@nrwl/linter:eslint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
-				"lintFilePatterns": ["packages/power-bi/**/*.{ts,tsx,js,jsx}"]
-			}
-		},
-		"test": {
-			"executor": "@nrwl/jest:jest",
-			"outputs": ["coverage/packages/power-bi"],
-			"options": {
-				"jestConfig": "packages/power-bi/jest.config.ts",
-				"passWithNoTests": true
-			}
-		}
-	}
+    "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+    "sourceRoot": "packages/power-bi/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/power-bi/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/power-bi"],
+            "options": {
+                "jestConfig": "packages/power-bi/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    }
 }

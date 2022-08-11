@@ -3,11 +3,11 @@ import { useSidesheetItem } from './useSidesheetItem';
 import { useSidesheetState } from './useSidesheetState';
 
 interface Sidesheet<TItem> {
-	isOpen: boolean;
-	item: TItem | undefined;
+    isOpen: boolean;
+    item: TItem | undefined;
 }
 
 export const useSidesheet = <T>(controller: SidesheetController<T, unknown>): Sidesheet<T> => ({
-	isOpen: useSidesheetState(controller),
-	item: useSidesheetItem(controller),
+    isOpen: useSidesheetState(controller),
+    item: useSidesheetItem(controller),
 });
