@@ -22,10 +22,10 @@ export function addGrid<TData, TError, TContext>(
 }
 
 export function gridControllerBinder<TData, TControllers, TOnClick, TError, TContext>(
-	gc: GridController<TData>,
-	wc: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
+	gridController: GridController<TData>,
+	workspaceController: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
 ) {
-	wc.onFilteredDataChanged(gc.setRowData);
+	workspaceController.onFilteredDataChanged(gridController.setRowData);
 }
 
 /**

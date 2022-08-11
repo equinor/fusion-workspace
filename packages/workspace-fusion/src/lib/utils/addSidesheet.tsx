@@ -12,10 +12,18 @@ export function addSidesheet<TData, TError, TContext>(
 	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
 ) {
 	const sc = new SidesheetController();
-	controller.onClick((ev) => {
-		sc.setItem(ev.item);
-		sc.setSidesheetState('Open');
+
+	controller.addController({
+		controller: new SidesheetController(),
+		name: 'sidesheet',
+		config: (sidesheetController, workspaceController) => {
+			workspaceController.onClick((ev) => {
+				sidesheetController.setItem(ev.item);
+				sidesheetController.setSidesheetState('Open');
+			});
+		},
 	});
+
 	controller.controllers.view.sidesheet.Component = () => (
 		<SidesheetWrapper Component={config.Component} controller={controller} />
 	);
@@ -40,6 +48,10 @@ function SidesheetWrapper<TData, TError, TContext>({
 
 		return unSubscribe;
 	}, []);
+
+	/**
+	 * Add fusion sidesheet header here with color etc here..
+	 */
 
 	if (!item) {
 		return null;

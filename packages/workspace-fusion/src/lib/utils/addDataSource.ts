@@ -6,13 +6,12 @@ export function addDataSource<TData, TError, TContext>(
 	dataFetch: DataFetchAsync<TData>,
 	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
 ) {
-	const dc = new DataSourceController(dataFetch);
 	controller.addController({
-		controller: dc,
+		controller: new DataSourceController(dataFetch),
 		name: 'dataSource',
-		config: (dc, wc) => {
-			dc.onDataChanged((data) => {
-				wc.setFilteredData(data);
+		config: (dataSourceController, WorkspaceController) => {
+			dataSourceController.onDataChanged((data) => {
+				WorkspaceController.setFilteredData(data);
 			});
 		},
 	});
