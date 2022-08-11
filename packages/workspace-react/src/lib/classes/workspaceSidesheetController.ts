@@ -7,15 +7,20 @@ import { registerCallback } from '../utils/registerCallback';
 
 export class WorkspaceSidesheetController {
   Component?: () => JSX.Element;
+
   isOpen = false;
+  
   width = 1000;
+  
   minWidth = 200;
+  
   setWidth = (newWidth: number) => {
     this.width = newWidth;
     this.onSidesheetWidthChangedCallbacks.forEach(({ callback }) =>
       callback(newWidth)
     );
   };
+  
   setIsOpen = (isOpen: boolean) => {
     if (this.isOpen === isOpen) return;
     this.isOpen = isOpen;
@@ -50,11 +55,15 @@ export class WorkspaceSidesheetController {
   private onSidesheetOpenOrClosedCallbacks: Callback<
     OnSidesheetOpenOrClosedCallback<this>
   >[] = [];
+
   private onSidesheetWidthChangedCallbacks: Callback<OnWidthChange>[] = [];
+
   private removeOnSidesheetOpenOrClosedCallback = (id: string) =>
     (this.onSidesheetOpenOrClosedCallbacks =
       this.onSidesheetOpenOrClosedCallbacks.filter((s) => s.id !== id));
+
   private removeOnSidesheetWidthChangedCallback = (id: string) =>
     (this.onSidesheetWidthChangedCallbacks =
       this.onSidesheetWidthChangedCallbacks.filter((s) => s.id !== id));
+      
 }
