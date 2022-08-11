@@ -1,11 +1,9 @@
-import { WorkspaceController } from '@workspace/workspace-core';
-
-import { WorkspaceOnClick, WorkspaceControllers } from '../types';
+import { WorkspaceOnClick, FusionWorkspaceController } from '../types';
 import { useOnClick } from '../hooks/useOnClick';
 
 interface SidesheetWrapperProps<TData, TError, TContext> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
-	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>;
+	controller: FusionWorkspaceController<TData, TError, TContext>;
 }
 
 export function SidesheetWrapper<TData, TError, TContext>({

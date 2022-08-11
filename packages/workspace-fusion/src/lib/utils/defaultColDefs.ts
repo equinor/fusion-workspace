@@ -1,7 +1,6 @@
-import { WorkspaceController } from '@workspace/workspace-core';
 import { ColDef } from 'ag-grid-community';
 
-import { WorkspaceControllers, WorkspaceOnClick } from '../types';
+import { FusionWorkspaceController } from '../types';
 
 /**
  * Applies a set of default column definition parameters.
@@ -18,7 +17,7 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
  */
 export function applyWorkspaceClickToCells<TData, TError, TContext>(
 	colDefs: ColDef<TData>[],
-	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError, TContext>
 ) {
 	return colDefs.map((colDef) => ({ onCellClicked: (ev) => controller.click({ item: ev.data }), ...colDef }));
 }

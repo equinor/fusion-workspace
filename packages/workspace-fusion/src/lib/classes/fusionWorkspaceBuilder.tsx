@@ -1,27 +1,17 @@
 import { WorkspaceController } from '@workspace/workspace-core';
-import { StatusBar, StatusItem } from '@equinor/status-bar';
 import {
 	DataFetchAsync,
 	GridConfig,
 	SidesheetConfig,
-	WorkspaceOnClick,
-	WorkspaceControllers,
 	WorkspaceTabNames,
 	StatusBarConfig,
+	FusionWorkspaceController,
 } from '../types';
 import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
-import { useEffect, useState } from 'react';
-import { StatusBarWrapper } from '../components';
 
 export class FusionWorkspaceBuilder<TData, TError, TContext> {
 	name: string;
-	private controller: WorkspaceController<
-		TData,
-		WorkspaceControllers<TData>,
-		WorkspaceOnClick<TData>,
-		TError,
-		TContext
-	>;
+	private controller: FusionWorkspaceController<TData, TError, TContext>;
 	constructor(name: string, defaultTab?: WorkspaceTabNames) {
 		this.name = name;
 		/**
@@ -57,7 +47,7 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 		return this;
 	};
 
-	create = (): WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext> => {
+	create = (): FusionWorkspaceController<TData, TError, TContext> => {
 		this.controller.controllers.dataSource.fetch();
 		return this.controller;
 	};
