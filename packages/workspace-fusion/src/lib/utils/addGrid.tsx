@@ -30,9 +30,9 @@ export function gridControllerBinder<TData, TControllers, TOnClick, TError, TCon
 
 /**
  * Applies some default settings to the column definitions.
- * @param columnDefs
- * @param controller
- * @returns
+ * @param columnDefs column definitions to alter
+ * @param controller Workspace controller
+ * @returns Altered column definitions
  */
 function prepareColumnDefintions<TData, TError, TContext>(
 	columnDefs: ColDef<TData>[],
