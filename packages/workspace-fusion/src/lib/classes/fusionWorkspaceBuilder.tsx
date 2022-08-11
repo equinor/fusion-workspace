@@ -3,21 +3,15 @@ import {
 	DataFetchAsync,
 	GridConfig,
 	SidesheetConfig,
-	WorkspaceOnClick,
-	WorkspaceControllers,
 	WorkspaceTabNames,
+	StatusBarConfig,
+	FusionWorkspaceController,
 } from '../types';
-import { addDataSource, addGrid, addSidesheet, addViewController } from '../utils';
+import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
 export class FusionWorkspaceBuilder<TData, TError, TContext> {
 	name: string;
-	private controller: WorkspaceController<
-		TData,
-		WorkspaceControllers<TData>,
-		WorkspaceOnClick<TData>,
-		TError,
-		TContext
-	>;
+	private controller: FusionWorkspaceController<TData, TError, TContext>;
 	constructor(name: string, defaultTab?: WorkspaceTabNames) {
 		this.name = name;
 		/**
@@ -48,7 +42,12 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 		return this;
 	};
 
-	create = (): WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext> => {
+	addStatusBarItems = (config: StatusBarConfig<TData>) => {
+		addStatusBar(config, this.controller);
+		return this;
+	};
+
+	create = (): FusionWorkspaceController<TData, TError, TContext> => {
 		this.controller.controllers.dataSource.fetch();
 		return this.controller;
 	};

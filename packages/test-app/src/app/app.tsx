@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { FusionWorkspaceBuilder, WorkspaceOnClick } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
+import { Button } from '@equinor/eds-core-react';
 
 function createFusionWorkspace<TError, TContext>() {
-	return new FusionWorkspaceBuilder<DefaultInterface, TError, TContext>('Scope change')
+	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError, TContext>('Scope change')
 		.addGrid({
 			columnDefinitions: [
 				{ field: 'id' },
@@ -14,7 +15,19 @@ function createFusionWorkspace<TError, TContext>() {
 		})
 		.addSidesheet({ Component: SidesheetComponent })
 		.addDataSource(async () => mockData)
+		.addStatusBarItems([
+			{ getValue: (data) => ({ title: 'Count', value: data.length }) },
+			{
+				getValue: (data) => ({
+					title: 'Sum sequence numbers',
+					value: data.reduce((prev, curr) => (prev = prev + curr.sequenceNumber), 0),
+					description: 'Sums all the sequence numbers',
+				}),
+			},
+		])
 		.create();
+
+	return controller;
 }
 
 function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
@@ -27,10 +40,14 @@ function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
 }
 
 export function App() {
-	// const [workspaceController] = useState(createWorkspaceController());
 	const [workspaceController] = useState(createFusionWorkspace());
 
-	return <Workspace controller={workspaceController.controllers.view} />;
+	return (
+		<div>
+			<Button onClick={() => workspaceController.setFilteredData(mockData.splice(0, 2))}>Change data</Button>
+			<Workspace controller={workspaceController.controllers.view} />
+		</div>
+	);
 }
 
 export default App;

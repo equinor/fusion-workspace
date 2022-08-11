@@ -1,12 +1,12 @@
 import { Grid, GridController } from '@workspace/grid';
-import { WorkspaceController } from '@workspace/workspace-core';
 import { ColDef } from 'ag-grid-community';
-import { GridConfig, WorkspaceControllers, WorkspaceOnClick } from '../types';
+import { GridIcon as HeaderComponent } from '../icons/GridIcon';
+import { FusionWorkspaceController, GridConfig } from '../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function addGrid<TData, TError, TContext>(
 	gridConfig: GridConfig<TData>,
-	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError, TContext>
 ) {
 	const gridController = new GridController<TData>();
 
@@ -18,12 +18,13 @@ export function addGrid<TData, TError, TContext>(
 	controller.controllers.view.tabs.push({
 		Component: () => <Grid controller={controller.controllers.grid} />,
 		name: 'grid',
+		HeaderComponent,
 	});
 }
 
-export function gridControllerBinder<TData, TControllers, TOnClick, TError, TContext>(
+export function gridControllerBinder<TData, TError, TContext>(
 	gridController: GridController<TData>,
-	workspaceController: WorkspaceController<TData, TControllers, TOnClick, TError, TContext>
+	workspaceController: FusionWorkspaceController<TData, TError, TContext>
 ) {
 	workspaceController.onFilteredDataChanged(gridController.setRowData);
 }
@@ -36,7 +37,7 @@ export function gridControllerBinder<TData, TControllers, TOnClick, TError, TCon
  */
 function prepareColumnDefintions<TData, TError, TContext>(
 	columnDefs: ColDef<TData>[],
-	controller: WorkspaceController<TData, WorkspaceControllers<TData>, WorkspaceOnClick<TData>, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError, TContext>
 ) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, controller));
 }
