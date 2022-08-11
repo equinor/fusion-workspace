@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FusionWorkspaceBuilder, WorkspaceOnClick } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 
 function createFusionWorkspace<TError, TContext>() {
-	return new FusionWorkspaceBuilder<DefaultInterface, TError, TContext>('Scope change')
+	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError, TContext>('Scope change')
 		.addGrid({
 			columnDefinitions: [
 				{ field: 'id' },
@@ -15,6 +15,15 @@ function createFusionWorkspace<TError, TContext>() {
 		.addSidesheet({ Component: SidesheetComponent })
 		.addDataSource(async () => mockData)
 		.create();
+
+	//TODO:  Will not reflect data changes
+	//Possible solution workspace-react takes in a status bar item component to mount, will be wrapped around a data listener
+	controller.controllers.view.statusBarItems = [
+		{ title: 'Requests', value: 2 },
+		{ title: 'Something else', value: 5 },
+	];
+
+	return controller;
 }
 
 function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
@@ -27,7 +36,6 @@ function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
 }
 
 export function App() {
-	// const [workspaceController] = useState(createWorkspaceController());
 	const [workspaceController] = useState(createFusionWorkspace());
 
 	return <Workspace controller={workspaceController.controllers.view} />;
