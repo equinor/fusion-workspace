@@ -1,4 +1,5 @@
 import { StatusItem } from '../../types';
+import { StyledStatusBar } from './statusBar.styles';
 import { StatusBarItem } from './StatusBarItem';
 
 interface StatusBarProps {
@@ -12,10 +13,10 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element {
 	}
 
 	return (
-		<div style={{ display: 'flex', gap: '2em', margin: '0px 32px' }}>
+		<StyledStatusBar>
 			{items?.map((item) => (
 				<StatusBarItem key={item.title} item={item} />
 			))}
-		</div>
+		</StyledStatusBar>
 	);
 }
