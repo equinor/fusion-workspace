@@ -6,11 +6,11 @@
 
 ## Pre work and speck
 
-- [x] Workspace Workshop (Done)
-- [x] Workspace Controller - v0.1
-- [x] WorkspaceProjectFeatureList - v0.1
-- [x] WorkspaceReactWrapper - v0.1
-- [x] FusionWorkspaceApp - v0.1
+-   [x] Workspace Workshop (Done)
+-   [x] Workspace Controller - v0.1
+-   [x] WorkspaceProjectFeatureList - v0.1
+-   [x] WorkspaceReactWrapper - v0.1
+-   [x] FusionWorkspaceApp - v0.1
 
 > This is a speck document for the `Fusion Project Portal 1.0.0v` based on proof-of-concept `Johan Castberg Portal`. This is just an assumption of a hi level scope for the project to come, only to verify the initial thoughts.
 

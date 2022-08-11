@@ -5,17 +5,17 @@
 [![License](https://img.shields.io/npm/l/@equinor/workspace-core.svg)](https://github.com/equinor/fusion-workspace/blob/master/package.json)
 [![Sisze](https://img.shields.io/bundlephobia/min/@equinor/workspace-core)](https://npmjs.org/package/@equinor/workspace-core)
 
-- [Workspace Core](#workspace-core)
-  - [Install from NPM](#install-from-npm)
-  - [Workspace Controller](#workspace-controller)
-    - [Controllers](#controllers)
-    - [Middleware](#middleware)
-    - [Data](#data)
-    - [Context](#context)
-    - [Click and onClick](#click-and-onclick)
-    - [Error](#error)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
+-   [Workspace Core](#workspace-core)
+    -   [Install from NPM](#install-from-npm)
+    -   [Workspace Controller](#workspace-controller)
+        -   [Controllers](#controllers)
+        -   [Middleware](#middleware)
+        -   [Data](#data)
+        -   [Context](#context)
+        -   [Click and onClick](#click-and-onclick)
+        -   [Error](#error)
+    -   [Building](#building)
+    -   [Running unit tests](#running-unit-tests)
 
 [<< Project Readme](/README.md)
 
@@ -129,11 +129,11 @@ workspaceController.click({
 
 The workspace controller consists of the "Core" events that most controllers will depend on in some form. Core Workspace events are the following.
 
-- onError
+-   onError
 
 Core Functions:
 
-- throwError
+-   throwError
 
 Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
 

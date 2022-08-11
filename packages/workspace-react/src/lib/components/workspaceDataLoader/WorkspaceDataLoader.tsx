@@ -4,8 +4,8 @@ import { useIsLoading } from '../../hooks/useIsLoading';
 import { WorkspaceLoadingSpinner } from '../workspaceLoadingSpinner';
 
 interface WorkspaceDataLayerProps<TabNames extends string, TError> {
-  children: ReactNode;
-  controller: WorkspaceViewController<TabNames, TError>;
+	children: ReactNode;
+	controller: WorkspaceViewController<TabNames, TError>;
 }
 
 /**
@@ -14,13 +14,13 @@ interface WorkspaceDataLayerProps<TabNames extends string, TError> {
  */
 
 export function WorkspaceDataLoader<TabNames extends string, TError>({
-  children,
-  controller,
+	children,
+	controller,
 }: WorkspaceDataLayerProps<TabNames, TError>) {
-  if (useIsLoading(controller)) {
-    return <WorkspaceLoadingSpinner />;
-  }
+	if (useIsLoading(controller)) {
+		return <WorkspaceLoadingSpinner />;
+	}
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{children}</>;
+	// eslint-disable-next-line react/jsx-no-useless-fragment
+	return <>{children}</>;
 }
