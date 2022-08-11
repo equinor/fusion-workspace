@@ -84,7 +84,11 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
    * @returns Id of the callback(debug purposes), and an unsubscribe function
    */
   onIsLoadingChanged = (cb: OnIsLoadingChangedCallback<this>) =>
-    registerCallback(this.onIsLoadingChangedCallbacks, cb, this.removeOnIsLoadingCallback);
+    registerCallback(
+      this.onIsLoadingChangedCallbacks,
+      cb,
+      this.removeOnIsLoadingCallback
+    );
   /**
    * Register a callback to be called whenever the filter opens or closes
    * @param cb Callback to be called when the filter opens or closes

@@ -39,65 +39,75 @@ function Navbar() {
   );
 }
 
-
-
-
-
-
-
 export function App() {
-
-
-
-
   return (
     <StyledApp>
-   
-     <Navbar />
-    
+      <Navbar />
+
       <TestWorkspace />
       {/* END: routes */}
     </StyledApp>
   );
 }
 
-type Tabs = "Grid" | "Garden";
+type Tabs = 'Grid' | 'Garden';
 
-interface ControllerInterface{
-  view: WorkspaceViewController<Tabs,unknown>
-
+interface ControllerInterface {
+  view: WorkspaceViewController<Tabs, unknown>;
 }
-function createWorkspaceController(){
-  const master = new WorkspaceController<unknown, ControllerInterface, unknown, unknown, unknown>();
+function createWorkspaceController() {
+  const master = new WorkspaceController<
+    unknown,
+    ControllerInterface,
+    unknown,
+    unknown,
+    unknown
+  >();
 
   master.setData(mockData);
   master.setFilteredData(mockData);
 
   const gridController = new GridController();
-  gridController.columnDefs = [{field: "id"}, {field: "title"}, {field: "description"}];
+  gridController.columnDefs = [
+    { field: 'id' },
+    { field: 'title' },
+    { field: 'description' },
+  ];
   gridController.rowData = mockData;
 
-  const viewController = new WorkspaceViewController<Tabs, unknown>([{Component: () => <Grid controller={gridController} />, name: "Grid"}, {Component: () => <div>am garden</div>, name: "Garden"}], "Grid");
-    viewController.sidesheet.Component = () => <div style={{height: "100%", width: "100%", backgroundColor: "white"}}>Look ma, im a sidesheet</div>
-  viewController.statusBarItems = [{title: "Count", value: mockData.length}, {title: "filtered req", value: 500}, {title: "Idk", value: 10}]
+  const viewController = new WorkspaceViewController<Tabs, unknown>(
+    [
+      { Component: () => <Grid controller={gridController} />, name: 'Grid' },
+      { Component: () => <div>am garden</div>, name: 'Garden' },
+    ],
+    'Grid'
+  );
+  viewController.sidesheet.Component = () => (
+    <div style={{ height: '100%', width: '100%', backgroundColor: 'white' }}>
+      Look ma, im a sidesheet
+    </div>
+  );
+  viewController.statusBarItems = [
+    { title: 'Count', value: mockData.length },
+    { title: 'filtered req', value: 500 },
+    { title: 'Idk', value: 10 },
+  ];
 
-  master.addController({controller: viewController, name: "view", config: s => void 0})
+  master.addController({
+    controller: viewController,
+    name: 'view',
+    config: (s) => void 0,
+  });
   return master;
 }
-
 
 const TestWorkspace = () => {
   const controller = useRef(createWorkspaceController());
 
+  return <Workspace controller={controller.current.controllers.view} />;
+};
 
-return (<Workspace controller={controller.current.controllers.view}  />)
-
-}
-
-
-
-
-interface DefaultInterface{
+interface DefaultInterface {
   id: string;
   sequenceNumber: number;
   title: string;

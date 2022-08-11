@@ -12,7 +12,9 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
 
   return (
     <div style={{ display: 'flex', gap: '2em' }}>
-      {items?.map((item) => <StatusBarItem key={item.title} item={item} />)}
+      {items?.map((item) => (
+        <StatusBarItem key={item.title} item={item} />
+      ))}
     </div>
   );
 }
