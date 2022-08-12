@@ -1,22 +1,25 @@
+import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
 import { ColDef } from 'ag-grid-community';
 import { GridIcon as HeaderComponent } from '../icons/GridIcon';
-import { FusionWorkspaceController, GridConfig } from '../types';
+import { FusionWorkspaceController, GridConfig, WorkspaceTabNames } from '../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
-	controller: FusionWorkspaceController<TData, TError>
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
 	const gridController = new GridController<TData>();
 
-	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, controller);
+	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
 
-	controller.addController({ controller: gridController, name: 'grid', config: gridControllerBinder });
+	gridControllerBinder(gridController, mediator);
+
 	/** TODO: prevent duplicates */
-	controller.controllers.view.tabs.push({
-		Component: () => <Grid controller={controller.controllers.grid} />,
+	viewController.tabs.push({
+		Component: () => <Grid controller={gridController} />,
 		name: 'grid',
 		HeaderComponent,
 	});
@@ -24,9 +27,9 @@ export function addGrid<TData, TError>(
 
 export function gridControllerBinder<TData, TError>(
 	gridController: GridController<TData>,
-	workspaceController: FusionWorkspaceController<TData, TError>
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	workspaceController.onFilteredDataChanged(gridController.setRowData);
+	mediator.filteredData.onchange(gridController.setRowData);
 }
 
 /**

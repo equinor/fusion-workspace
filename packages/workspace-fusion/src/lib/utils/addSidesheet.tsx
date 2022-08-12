@@ -1,27 +1,29 @@
 import { SidesheetController } from '@equinor/sidesheet';
+import { WorkspaceViewController } from '@equinor/workspace-react';
 import { SidesheetWrapper } from '../components';
-import { FusionWorkspaceController } from '../types';
+import { FusionWorkspaceController, WorkspaceTabNames } from '../types';
 import { SidesheetConfig } from '../types/configuration';
 
 /** TODO: Review this and either expand context or expand baseclass. Sidesheet state is shared directly between two controllers! */
 export function addSidesheet<TData, TError>(
 	config: SidesheetConfig<TData>,
-	controller: FusionWorkspaceController<TData, TError>
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	controller.controllers.view.sidesheet.Component = () => (
-		<SidesheetWrapper Component={config.Component} controller={controller} />
-	);
-	controller.addController({
-		controller: new SidesheetController(),
-		name: 'sidesheet',
-		config: (sidesheetController, workspaceController) => {
-			sidesheetController.onSidesheetStateChanged((state) => {
-				workspaceController.controllers.view.sidesheet.setIsOpen(state === 'Open');
-			});
-			workspaceController.onClick((ev) => {
-				sidesheetController.setItem(ev.item);
-				sidesheetController.setSidesheetState('Open');
-			});
-		},
+	viewController.sidesheet.Component = () => <SidesheetWrapper Component={config.Component} mediator={mediator} />;
+
+	mediator.isSidesheetOpen.onchange(viewController.sidesheet.setIsOpen);
+
+	sidesheetConfig<TData, TError>(new SidesheetController(), mediator);
+}
+
+function sidesheetConfig<TData, TError>(
+	sc: SidesheetController<TData, unknown>,
+	mediator: FusionWorkspaceController<TData, TError>
+) {
+	mediator.isSidesheetOpen.onchange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
+	mediator.onclick.onchange((ev) => {
+		sc.setItem(ev.item);
+		mediator.isSidesheetOpen.setValue(true);
 	});
 }

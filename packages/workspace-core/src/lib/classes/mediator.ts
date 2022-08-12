@@ -1,4 +1,4 @@
-import { ObjectType } from '../types/objectType';
+import { ObjectType } from '../types';
 import { Observable } from './observable';
 
 /**
@@ -7,16 +7,15 @@ import { Observable } from './observable';
  */
 export class Mediator<
 	TData,
-	TControllers extends ObjectType<TControllers> = ObjectType<unknown>,
-	TEvent extends ObjectType<TEvent> = ObjectType<unknown>,
-	TContext extends ObjectType<TContext> = ObjectType<unknown>,
-	TError extends ObjectType<TError> = ObjectType<unknown>
+	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
+	TError extends ObjectType<TError> = ObjectType<unknown>,
+	TContext extends ObjectType<TContext> = ObjectType<unknown>
 > {
 	data = new Observable<TData[]>();
 	filteredData = new Observable<TData[]>();
 	isSidesheetOpen = new Observable(false);
 	isFilterOpen = new Observable(false);
-	onclick = new Observable<TEvent>();
+	onclick = new Observable<TOnClick>();
 	context = new Observable<TContext>();
 	error = new Observable<TError>();
 }

@@ -7,12 +7,12 @@ import { tokens } from '@equinor/eds-tokens';
 
 interface SidesheetWrapperProps<TData, TError> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
-	controller: FusionWorkspaceController<TData, TError>;
+	mediator: FusionWorkspaceController<TData, TError>;
 }
 
 Icon.add({ chevron_right, close, chevron_left });
-export function SidesheetWrapper<TData, TError>({ Component, controller }: SidesheetWrapperProps<TData, TError>) {
-	const clickEvent = useOnClick(controller);
+export function SidesheetWrapper<TData, TError>({ Component, mediator }: SidesheetWrapperProps<TData, TError>) {
+	const clickEvent = useOnClick(mediator);
 
 	/**
 	 * Add fusion sidesheet header here with color etc here..
@@ -25,9 +25,9 @@ export function SidesheetWrapper<TData, TError>({ Component, controller }: Sides
 	return (
 		<div>
 			<SidesheetHeader
-				color={controller.getContext()?.ui.color ?? tokens.colors.ui.background__default.hex}
-				title={controller.getContext()?.ui.appKey ?? ''}
-				close={controller.controllers.sidesheet.closeAndRemoveItem}
+				color={mediator.context.value?.ui.color ?? tokens.colors.ui.background__default.hex}
+				title={mediator.context.value?.ui.appKey ?? ''}
+				close={() => mediator.isSidesheetOpen.setValue(false)}
 			/>
 			<Component item={clickEvent.item} />
 		</div>
