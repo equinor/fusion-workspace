@@ -8,3 +8,4 @@ export * from './callbacks';
 export * from './events';
 export * from './visuals';
 export * from './config';
+export * from './customGeneric';

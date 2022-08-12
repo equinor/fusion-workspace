@@ -9,6 +9,7 @@ import {
 	OnClickEvents,
 	Visuals,
 	GardenConfig,
+	BaseRecordObject,
 } from '../types';
 import { createGarden, defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
@@ -17,8 +18,8 @@ const NullFunc = () => void 0;
 
 export class GardenController<
 	TData,
-	TCustomGroupByKeys extends Record<string, string> = Record<string, string>,
-	TCustomState extends Record<string, any> = Record<string, any>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
 > {
 	/** The node that is currently being highlighted */
@@ -35,7 +36,7 @@ export class GardenController<
 	/** Primary(unique) identifier for the data type */
 	objectIdentifier: keyof TData;
 	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, TContext> = {
+	clickEvents: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
@@ -74,7 +75,7 @@ export class GardenController<
 			customGroupByKeys,
 			fieldSettings,
 			getCustomState,
-		}: GardenConfig<TData, TCustomState, TCustomGroupByKeys, TContext>,
+		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 		context?: TContext
 	) {
 		this.objectIdentifier = objectIdentifier;

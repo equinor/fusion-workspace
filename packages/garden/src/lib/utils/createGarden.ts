@@ -1,10 +1,12 @@
 import { GardenController } from '../classes';
-import { GardenGroups } from '../types';
+import { BaseRecordObject, GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
-export function createGarden<TData, TCustomGroupByKeys extends Record<string, string>, TContext>(
-	props: GardenController<TData, TCustomGroupByKeys, TContext>
-): GardenGroups<TData> {
+export function createGarden<
+	TData,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TContext = unknown
+>(props: GardenController<TData, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const {
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },

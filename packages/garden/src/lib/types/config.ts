@@ -1,9 +1,9 @@
-import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback } from './';
+import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, BaseRecordObject } from './';
 
 export interface GardenConfig<
 	TData,
-	TCustomState extends Record<string, any> = Record<string, any>,
-	TCustomGroupByKeys extends Record<string, string> = Record<string, string>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
 > {
 	/** Data to be used for the garden */
@@ -21,7 +21,7 @@ export interface GardenConfig<
 	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
-	clickEvents?: OnClickEvents<TData, TContext>;
+	clickEvents?: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>;
 
 	getCustomState?: (data: TData[]) => TCustomState;
 }

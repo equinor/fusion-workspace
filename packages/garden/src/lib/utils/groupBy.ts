@@ -1,7 +1,10 @@
-import { FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
+import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-interface GroupByArgs<TData, TCustomGroupByKeys extends Record<string, string>> {
+interface GroupByArgs<
+	TData,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+> {
 	arr: TData[];
 	keys: string[];
 	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
@@ -16,7 +19,10 @@ const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> 
 	return acc.find((x) => x.value === valueKey);
 };
 
-export function groupBy<TData, TCustomGroupByKeys extends Record<string, string>>({
+export function groupBy<
+	TData,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+>({
 	arr,
 	keys,
 	customGroupByKeys,
@@ -103,7 +109,10 @@ export function groupBy<TData, TCustomGroupByKeys extends Record<string, string>
 	return gardengroups;
 }
 
-interface GroupByArrayArgs<TData, TCustomGroupByKeys extends Record<string, string>> {
+interface GroupByArrayArgs<
+	TData,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+> {
 	arr: TData[];
 	key: keyof TData | string;
 	preGroupFiltering: (arr: TData[], groupByKey: string) => TData[];
@@ -111,7 +120,10 @@ interface GroupByArrayArgs<TData, TCustomGroupByKeys extends Record<string, stri
 	isExpanded?: boolean;
 }
 
-function groupByArray<TData, TCustomGroupByKeys extends Record<string, string>>({
+function groupByArray<
+	TData,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+>({
 	arr,
 	key,
 	preGroupFiltering,

@@ -7,12 +7,16 @@ describe('Custom state should update whenever data changes', () => {
 			count: number;
 		}
 
+		interface CustomKeys {
+			type: string;
+		}
+
 		function getCustomState(data: MockInterface[]): CustomStateInterface {
 			return {
 				count: data.length,
 			};
 		}
-		const gc = new GardenController<MockInterface, any, CustomStateInterface, unknown>({
+		const gc = new GardenController<MockInterface, CustomKeys, CustomStateInterface, unknown>({
 			...defaultGardenConfig,
 			getCustomState,
 		});
