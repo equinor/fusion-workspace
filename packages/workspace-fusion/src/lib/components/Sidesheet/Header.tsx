@@ -1,6 +1,6 @@
 import { Icon, Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
-import { StyledColourTab, StyledHeader, StyledLeftHeader, StyledRightHeader, StyledTitle } from './styledHeader';
+import { StyledColourTab, StyledHeader, StyledLeftHeader, StyledRightHeader, StyledTitle } from './header.styles';
 
 interface SidesheetHeaderProps {
 	color: string;
