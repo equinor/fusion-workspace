@@ -13,15 +13,14 @@ export function createGarden<TData, TContext>({
 }: GardenController<TData, TContext>): GardenGroups<TData> {
 	const allGroupingKeys: (keyof TData | string)[] = [horizontalGroupingAccessor];
 	if (verticalGroupingKeys) {
-		verticalGroupingKeys.map((x) => {
-			allGroupingKeys.push(x);
+		verticalGroupingKeys.forEach((key) => {
+			allGroupingKeys.push(key);
 		});
 	}
 
 	const groupedData = groupBy({
 		arr: data,
 		keys: allGroupingKeys as any,
-		status: visuals?.status,
 		groupDescriptionFunc: visuals?.getGroupDescriptionFunc,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,

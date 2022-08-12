@@ -1,15 +1,9 @@
 import React, { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenController } from '../classes';
-import { GardenGroup, GardenGroups, Status } from '.';
+import { GardenGroup, GardenGroups } from '.';
 
 export interface Options<T> {
 	groupDescriptionFunc?: (data: T, groupingKey: string) => string;
-}
-
-export interface StatusView<T> {
-	statusItemFunc: (data: T) => Status;
-	statusGroupFunc?: (group: GardenGroup<T>) => Status;
-	shouldAggregate: boolean;
 }
 
 export interface CustomItemView<T> {

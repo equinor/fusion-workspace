@@ -1,10 +1,9 @@
-import { FieldSettings, GardenGroup, GardenGroups, Status, GroupDescriptionFunc } from '../types';
-import { PreGroupByFiltering, StatusView } from '../types';
+import { FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
+import { PreGroupByFiltering } from '../types';
 
-interface GroupByArgs<T, K extends keyof T> {
+interface GroupByArgs<T> {
 	arr: T[];
-	keys: K[];
-	status?: StatusView<T>;
+	keys: string[];
 	groupDescriptionFunc?: GroupDescriptionFunc<T>;
 	fieldSettings?: FieldSettings<T, string>;
 	isExpanded?: boolean;
@@ -17,7 +16,7 @@ const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> 
 	return acc.find((x) => x.value === valueKey);
 };
 
-export function groupBy<T, K extends keyof T>({
+export function groupBy<T>({
 	arr,
 	keys,
 	customGroupByKeys,
@@ -25,9 +24,8 @@ export function groupBy<T, K extends keyof T>({
 	groupDescriptionFunc = () => '',
 	isExpanded,
 	preGroupFiltering,
-	status,
 	depth,
-}: GroupByArgs<T, K>): GardenGroups<T> {
+}: GroupByArgs<T>): GardenGroups<T> {
 	const key = (keys[0] && keys[0].toString()) || undefined;
 	if (!key) return [];
 	if (!arr || arr.length === 0) return [];
@@ -84,26 +82,9 @@ export function groupBy<T, K extends keyof T>({
 	const nextKeys = keys.slice(1);
 
 	gardengroups.forEach((_, index) => {
-		if (status) {
-			if (status.statusGroupFunc) {
-				gardengroups[index].status = status.statusGroupFunc(gardengroups[index]);
-			} else if (status.shouldAggregate) {
-				let worstStatus: Status = status.statusItemFunc(gardengroups[index].items[0]);
-
-				gardengroups[index].items.map((x) => {
-					const itemStatus = status.statusItemFunc(x);
-					if (itemStatus.rating < worstStatus.rating) {
-						worstStatus = itemStatus;
-					}
-				});
-				gardengroups[index].status = worstStatus;
-			}
-		}
-
 		gardengroups[index].subGroups = groupBy({
 			arr: gardengroups[index].items,
 			keys: nextKeys,
-			status: status,
 			groupDescriptionFunc: groupDescriptionFunc,
 			fieldSettings: fieldSettings,
 			isExpanded: isExpanded,

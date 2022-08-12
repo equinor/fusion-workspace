@@ -1,9 +1,3 @@
-export interface Status {
-	rating: number;
-	statusElement?: JSX.Element;
-	status?: string;
-}
-
 export type GardenGroup<T> = {
 	groupKey: keyof T;
 	value: string;
@@ -12,7 +6,6 @@ export type GardenGroup<T> = {
 	isExpanded: boolean;
 	count: number;
 	subGroupCount: number;
-	status?: Status;
 	description?: string | undefined;
 	depth: number;
 };

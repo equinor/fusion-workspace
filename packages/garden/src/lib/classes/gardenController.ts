@@ -1,3 +1,4 @@
+import { defaultGardenConfig } from '../test/mockGarden';
 import {
 	CustomGroupByKeys,
 	CustomVirtualView,
