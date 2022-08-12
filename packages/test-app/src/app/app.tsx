@@ -13,6 +13,11 @@ function createFusionWorkspace<TError, TContext>() {
 				{ field: 'sequenceNumber' },
 			],
 		})
+		.addCustomTab({
+			Component: ({ data }) => <div>{data.length}</div>,
+			HeaderComponent: () => <div>Hello</div>,
+			name: 'Lines',
+		})
 		.addSidesheet({ Component: SidesheetComponent })
 		.addDataSource(async () => mockData)
 		.addStatusBarItems([

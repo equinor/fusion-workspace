@@ -6,8 +6,9 @@ import {
 	WorkspaceTabNames,
 	StatusBarConfig,
 	FusionWorkspaceController,
+	CustomTab,
 } from '../types';
-import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
 export class FusionWorkspaceBuilder<TData, TError, TContext> {
 	name: string;
@@ -25,6 +26,11 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
 		addDataSource(dataFetch, this.controller);
+		return this;
+	};
+
+	addCustomTab = (tab: CustomTab<TData>) => {
+		addCustomTab(tab, this.controller);
 		return this;
 	};
 
