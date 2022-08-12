@@ -7,7 +7,6 @@ import {
 	HorizontalGroupingAccessor,
 	NodeLabelCallback,
 	OnClickEvents,
-	SetVerticalGroupingKeysArgs,
 	Visuals,
 	GardenConfig,
 } from '../types';
