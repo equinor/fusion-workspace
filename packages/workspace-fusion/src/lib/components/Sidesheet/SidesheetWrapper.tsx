@@ -3,6 +3,7 @@ import { useOnClick } from '../../hooks/useOnClick';
 import { SidesheetHeader } from './Header';
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
+import { tokens } from '@equinor/eds-tokens';
 
 interface SidesheetWrapperProps<TData, TError> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
@@ -24,7 +25,7 @@ export function SidesheetWrapper<TData, TError>({ Component, controller }: Sides
 	return (
 		<div>
 			<SidesheetHeader
-				color={controller.getContext()?.ui.color ?? 'white'}
+				color={controller.getContext()?.ui.color ?? tokens.colors.ui.background__default.hex}
 				title={controller.getContext()?.ui.appKey ?? ''}
 				close={controller.controllers.sidesheet.closeAndRemoveItem}
 			/>

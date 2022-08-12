@@ -13,13 +13,12 @@ export function SidesheetHeader({ close, color, title }: SidesheetHeaderProps) {
 		<StyledHeader>
 			<StyledLeftHeader>
 				<StyledColourTab appColor={color}>
-					<Icon name="chevron_right" size={24} color={'white'} />
+					<Icon name="chevron_right" size={24} color={tokens.colors.ui.background__default.hex} />
 				</StyledColourTab>
 				<StyledTitle>{title}</StyledTitle>
 			</StyledLeftHeader>
 
 			<StyledRightHeader>
-				{/* {menuItems.length > 0 && <IconMenu placement="bottom" items={menuItems} />} */}
 				<Button variant="ghost_icon" onClick={close}>
 					<Icon name="close" size={24} color={tokens.colors.interactive.primary__resting.hex} />
 				</Button>
