@@ -25,7 +25,7 @@ export function SidesheetWrapper<TData, TError>({ Component, controller }: Sides
 		<div>
 			<SidesheetHeader
 				color={controller.getContext()?.ui.color ?? 'white'}
-				title={controller.getContext()?.ui.name ?? ''}
+				title={controller.getContext()?.ui.appKey ?? ''}
 				close={controller.controllers.sidesheet.closeAndRemoveItem}
 			/>
 			<Component item={clickEvent.item} />

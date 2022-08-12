@@ -10,7 +10,7 @@ import {
 import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
 interface FusionUI {
-	name: string;
+	appKey: string;
 	color: string;
 }
 
@@ -20,14 +20,14 @@ export interface FusionContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
-	name: string;
+	appKey: string;
 	private controller: FusionWorkspaceController<TData, TError>;
-	constructor(name: string, color: string, defaultTab?: WorkspaceTabNames) {
-		this.name = name;
+	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
+		this.appKey = appKey;
 		this.controller = new WorkspaceController();
 		addViewController(this.controller);
 		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
-		this.controller.setContext((s) => ({ ...s, ui: { color, name } }));
+		this.controller.setContext((s) => ({ ...s, ui: { color, appKey: appKey } }));
 	}
 
 	/**
