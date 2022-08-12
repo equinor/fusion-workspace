@@ -2,15 +2,18 @@ import { GardenController } from '../classes';
 import { GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
-export function createGarden<TData, TCustomGroupByKeys, TContext>({
-	customGroupByKeys,
-	data: { value: data },
-	fieldSettings,
-	grouping: {
-		value: { horizontalGroupingAccessor, verticalGroupingKeys },
-	},
-	visuals,
-}: GardenController<TData, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
+export function createGarden<TData, TCustomGroupByKeys, TContext>(
+	props: GardenController<TData, TCustomGroupByKeys, TContext>
+): GardenGroups<TData> {
+	const {
+		grouping: {
+			value: { horizontalGroupingAccessor, verticalGroupingKeys },
+		},
+		data: { value: data },
+		visuals,
+		fieldSettings,
+		customGroupByKeys,
+	} = props;
 	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string];
 	if (verticalGroupingKeys) {
 		verticalGroupingKeys.forEach((key) => {
