@@ -3,7 +3,7 @@ import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback } from '.
 export interface GardenConfig<
 	TData,
 	TCustomState extends Record<string, any> = Record<string, any>,
-	TCustomGroupByKeys extends Record<string, any> = Record<string, any>,
+	TCustomGroupByKeys extends Record<string, string> = Record<string, string>,
 	TContext = unknown
 > {
 	/** Data to be used for the garden */

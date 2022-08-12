@@ -1,11 +1,11 @@
 export type GetSortFunction = (a: string, b: string) => number;
-export type GetKeyFunction<TData, TCustomGroupByKeys extends Record<string, any>> = (
+export type GetKeyFunction<TData, TCustomGroupByKeys extends Record<string, string>> = (
 	item: TData,
 	itemKey: keyof TData | string,
 	customGroupByKeys?: TCustomGroupByKeys
 ) => string[] | string;
 
-export type FieldSetting<ItemType, TCustomGroupByKeys> = {
+export type FieldSetting<ItemType, TCustomGroupByKeys extends Record<string, string>> = {
 	key?: keyof ItemType | string;
 	label?: string;
 	getKey?: GetKeyFunction<ItemType, TCustomGroupByKeys>;
@@ -23,6 +23,6 @@ export type FieldSetting<ItemType, TCustomGroupByKeys> = {
  */
 export type FieldSettings<
 	ItemType,
-	TCustomGroupByKeys extends Record<string, any>,
+	TCustomGroupByKeys extends Record<string, string>,
 	ExtendedFields extends string = never
 > = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, TCustomGroupByKeys>>>;

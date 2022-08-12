@@ -2,7 +2,7 @@ import { GardenController } from '../classes';
 import { GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
-export function createGarden<TData, TCustomGroupByKeys, TContext>(
+export function createGarden<TData, TCustomGroupByKeys extends Record<string, string>, TContext>(
 	props: GardenController<TData, TCustomGroupByKeys, TContext>
 ): GardenGroups<TData> {
 	const {

@@ -5,12 +5,12 @@ import { GardenGroups, GardenItem } from '.';
  * Function for calculating the longest width of a garden column
  * @returns the number of px in width for the largest item in the column
  */
-export type ItemWidthCalculation<TData, TCustomGroupByKeys extends Record<string, any> = Record<string, any>> = (
+export type ItemWidthCalculation<TData, TCustomGroupByKeys extends Record<string, string> = Record<string, any>> = (
 	garden: GardenGroups<TData>,
 	key: string,
 	customGroupByKeys?: TCustomGroupByKeys
 ) => number;
-export type HighlightHorizontalColumn<TCustomGroupByKeys extends Record<string, any> = Record<string, any>> = (
+export type HighlightHorizontalColumn<TCustomGroupByKeys extends Record<string, string> = Record<string, any>> = (
 	groupBy: string,
 	customGroupByKeys: TCustomGroupByKeys
 ) => string | undefined;
