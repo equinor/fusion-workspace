@@ -1,6 +1,6 @@
 import { Key, GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, CustomGroupByKeys } from './';
 
-export interface MandatoryConfig<TData, TContext> {
+export interface GardenConfig<TData, TContext> {
 	/** Data to be used for the garden */
 	data: TData[];
 	/** Primary(Unique) identifier for the data */

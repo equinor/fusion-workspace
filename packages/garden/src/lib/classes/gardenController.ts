@@ -12,7 +12,7 @@ import {
 	OnClickEvents,
 	SetVerticalGroupingKeysArgs,
 	Visuals,
-	MandatoryConfig,
+	GardenConfig,
 } from '../types';
 import { createGarden, defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
@@ -58,7 +58,7 @@ export class GardenController<TData, TContext = unknown> {
 			clickEvents,
 			customGroupByKeys,
 			fieldSettings,
-		}: MandatoryConfig<TData, TContext>,
+		}: GardenConfig<TData, TContext>,
 		context?: TContext
 	) {
 		this.objectIdentifier = objectIdentifier;

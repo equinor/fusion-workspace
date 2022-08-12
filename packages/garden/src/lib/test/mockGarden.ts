@@ -1,11 +1,11 @@
-import { MandatoryConfig } from '../types';
+import { GardenConfig } from '../types';
 
 export interface MockInterface {
 	id: string;
 	name: string;
 }
 
-export const defaultGardenConfig: MandatoryConfig<MockInterface, unknown> = {
+export const defaultGardenConfig: GardenConfig<MockInterface, unknown> = {
 	data: [],
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 	nodeLabelCallback: (s) => s.name,
