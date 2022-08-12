@@ -4,9 +4,9 @@ import { GridIcon as HeaderComponent } from '../icons/GridIcon';
 import { FusionWorkspaceController, GridConfig } from '../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function addGrid<TData, TError, TContext>(
+export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
-	controller: FusionWorkspaceController<TData, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError>
 ) {
 	const gridController = new GridController<TData>();
 
@@ -22,9 +22,9 @@ export function addGrid<TData, TError, TContext>(
 	});
 }
 
-export function gridControllerBinder<TData, TError, TContext>(
+export function gridControllerBinder<TData, TError>(
 	gridController: GridController<TData>,
-	workspaceController: FusionWorkspaceController<TData, TError, TContext>
+	workspaceController: FusionWorkspaceController<TData, TError>
 ) {
 	workspaceController.onFilteredDataChanged(gridController.setRowData);
 }
@@ -35,9 +35,9 @@ export function gridControllerBinder<TData, TError, TContext>(
  * @param controller Workspace controller
  * @returns Altered column definitions
  */
-function prepareColumnDefintions<TData, TError, TContext>(
+function prepareColumnDefintions<TData, TError>(
 	columnDefs: ColDef<TData>[],
-	controller: FusionWorkspaceController<TData, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError>
 ) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, controller));
 }

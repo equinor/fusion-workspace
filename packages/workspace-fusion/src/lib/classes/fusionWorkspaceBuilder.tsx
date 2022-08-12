@@ -9,10 +9,19 @@ import {
 } from '../types';
 import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
-export class FusionWorkspaceBuilder<TData, TError, TContext> {
+interface FusionUI {
 	name: string;
-	private controller: FusionWorkspaceController<TData, TError, TContext>;
-	constructor(name: string, defaultTab?: WorkspaceTabNames) {
+	color: string;
+}
+
+export interface FusionContext {
+	ui: FusionUI;
+}
+
+export class FusionWorkspaceBuilder<TData, TError> {
+	name: string;
+	private controller: FusionWorkspaceController<TData, TError>;
+	constructor(name: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.name = name;
 		/**
 		 * TODO: Extract
@@ -21,6 +30,7 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 		this.controller = new WorkspaceController();
 		addViewController(this.controller);
 		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
+		this.controller.setContext((s) => ({ ...s, ui: { color, name } }));
 	}
 
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
@@ -47,7 +57,7 @@ export class FusionWorkspaceBuilder<TData, TError, TContext> {
 		return this;
 	};
 
-	create = (): FusionWorkspaceController<TData, TError, TContext> => {
+	create = (): FusionWorkspaceController<TData, TError> => {
 		this.controller.controllers.dataSource.fetch();
 		return this.controller;
 	};

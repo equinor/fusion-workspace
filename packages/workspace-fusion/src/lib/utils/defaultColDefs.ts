@@ -15,9 +15,9 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
 /**
  * Applies onclick to all cells by default
  */
-export function applyWorkspaceClickToCells<TData, TError, TContext>(
+export function applyWorkspaceClickToCells<TData, TError>(
 	colDefs: ColDef<TData>[],
-	controller: FusionWorkspaceController<TData, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError>
 ) {
 	return colDefs.map((colDef) => ({ onCellClicked: (ev) => controller.click({ item: ev.data }), ...colDef }));
 }
