@@ -4,9 +4,9 @@ import { FusionWorkspaceController } from '../types';
 import { SidesheetConfig } from '../types/configuration';
 
 /** TODO: Review this and either expand context or expand baseclass. Sidesheet state is shared directly between two controllers! */
-export function addSidesheet<TData, TError, TContext>(
+export function addSidesheet<TData, TError>(
 	config: SidesheetConfig<TData>,
-	controller: FusionWorkspaceController<TData, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError>
 ) {
 	controller.controllers.view.sidesheet.Component = () => (
 		<SidesheetWrapper Component={config.Component} controller={controller} />

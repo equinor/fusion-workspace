@@ -1,9 +1,9 @@
 import { DataSourceController } from '@workspace/data-source';
 import { DataFetchAsync, FusionWorkspaceController } from '../types';
 
-export function addDataSource<TData, TError, TContext>(
+export function addDataSource<TData, TError>(
 	dataFetch: DataFetchAsync<TData>,
-	controller: FusionWorkspaceController<TData, TError, TContext>
+	controller: FusionWorkspaceController<TData, TError>
 ) {
 	controller.addController({
 		controller: new DataSourceController(dataFetch),
