@@ -3,8 +3,8 @@ import { FusionWorkspaceBuilder, WorkspaceOnClick } from '@equinor/workspace-fus
 import { Workspace } from '@equinor/workspace-react';
 import { Button } from '@equinor/eds-core-react';
 
-function createFusionWorkspace<TError, TContext>() {
-	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError, TContext>('Scope change')
+function createFusionWorkspace<TError>() {
+	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError>('Scope change', 'purple')
 		.addGrid({
 			columnDefinitions: [
 				{ field: 'id' },
