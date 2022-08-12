@@ -19,9 +19,9 @@ import { ReactiveValue } from './reactiveValue';
 const NullFunc = () => void 0;
 
 export class GardenController<TData, TContext = unknown> {
-	/** The node that was pressed and is currently being highlighted */
+	/** The node that is currently being highlighted */
 	highlightedNode = new ReactiveValue<string | null>(null);
-	/** The data used for garden groups */
+	/** The data used for creating garden groups */
 	data = new ReactiveValue<TData[]>([]);
 	/** The garden groups */
 	groups = new ReactiveValue<GardenGroups<TData>>([]);
@@ -61,11 +61,6 @@ export class GardenController<TData, TContext = unknown> {
 		this.nodeLabelCallback = nodeLabelCallback;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
-		/**
-		 * In arg
-		 * Partial<Record<string | keyof T, FieldSetting<T>>> | undefined
-		 * Partial<Record<keyof T, FieldSetting<T>>> | undefined
-		 */
 		this.clickEvents = clickEvents ?? {};
 		this.customGroupByKeys = customGroupByKeys ?? {};
 		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
