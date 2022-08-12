@@ -20,3 +20,16 @@ interface StatusBar<TData> {
 }
 
 export type StatusBarConfig<TData> = [StatusBar<TData>, ...StatusBar<TData>[]];
+
+export interface CustomTabProps<TData> {
+	data: TData[];
+	onClick: (ev: WorkspaceOnClick<TData>) => void;
+}
+
+export type CustomTabComponent<TData> = (props: CustomTabProps<TData>) => JSX.Element;
+
+export interface CustomTab<TData> {
+	name: string;
+	HeaderComponent: () => JSX.Element;
+	Component: CustomTabComponent<TData>;
+}

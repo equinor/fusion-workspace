@@ -6,8 +6,9 @@ import {
 	WorkspaceTabNames,
 	StatusBarConfig,
 	FusionWorkspaceController,
+	CustomTab,
 } from '../types';
-import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
 interface UIContext {
 	appKey: string;
@@ -37,6 +38,16 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 */
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
 		addDataSource(dataFetch, this.controller);
+		return this;
+	};
+
+	/**
+	 * Adds a custom tab to your workspace
+	 * Use the props to access data, onclick etc..
+	 * @returns an instance of the workspace builder (for method chaining)
+	 */
+	addCustomTab = (tab: CustomTab<TData>) => {
+		addCustomTab(tab, this.controller);
 		return this;
 	};
 

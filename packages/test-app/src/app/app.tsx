@@ -13,6 +13,11 @@ function createFusionWorkspace<TError>() {
 				{ field: 'sequenceNumber' },
 			],
 		})
+		.addCustomTab({
+			Component: ({ data, onClick }) => <div onClick={() => onClick({ item: data[0] })}>{data.length}</div>,
+			HeaderComponent: () => <div>Hello</div>,
+			name: 'Lines',
+		})
 		.addSidesheet({ Component: SidesheetComponent })
 		.addDataSource(async () => mockData)
 		.addStatusBarItems([
