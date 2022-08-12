@@ -2,7 +2,8 @@ import { GardenController } from '../classes';
 import { CustomGroupByKeys, GardenGroups, GardenItem } from '.';
 
 /**
- * Visuals
+ * Function for calculating the longest width of a garden column
+ * @returns the number of px in width for the largest item in the column
  */
 export type ItemWidthCalculation<T> = (
 	garden: GardenGroups<T>,
