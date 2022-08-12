@@ -32,17 +32,20 @@ export class GardenController<TData, TContext = unknown> {
 	nodeLabelCallback: NodeLabelCallback<TData>;
 	/** Primary(unique) identifier for the data type */
 	objectIdentifier: Key<TData>;
-
+	/** The click events that exists in garden */
 	clickEvents: OnClickEvents<TData, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
+	/** Override visuals and components for garden */
 	visuals: Visuals<TData> = {
 		getCustomItemColor: () => defaultItemColor,
 	};
 	/** Custom user context */
 	context?: TContext;
+	/** Custom group by keys */
 	customGroupByKeys: CustomGroupByKeys = {};
+	/** Override default view */
 	customView: CustomVirtualView<TData> = {};
 
 	constructor(
