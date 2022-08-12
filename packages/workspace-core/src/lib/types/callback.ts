@@ -1,9 +1,6 @@
-export interface Callback<TCallback> {
-	id: string;
-	callback: TCallback;
-}
+export type OnchangeCallback<TValue> = (newValue: TValue, oldValue?: TValue) => void;
 
-export interface OnCallbackSet {
-	id: string;
-	unSubscribe: () => void;
+export interface Callback<TValue> {
+	id: number;
+	callback: OnchangeCallback<TValue>;
 }
