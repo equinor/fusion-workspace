@@ -2,7 +2,7 @@ import { GardenController } from '../classes';
 import { GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
-export function createGarden<TData, TContext>({
+export function createGarden<TData, TCustomGroupByKeys, TContext>({
 	customGroupByKeys,
 	data: { value: data },
 	fieldSettings,
@@ -10,7 +10,7 @@ export function createGarden<TData, TContext>({
 		value: { horizontalGroupingAccessor, verticalGroupingKeys },
 	},
 	visuals,
-}: GardenController<TData, TContext>): GardenGroups<TData> {
+}: GardenController<TData, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string];
 	if (verticalGroupingKeys) {
 		verticalGroupingKeys.forEach((key) => {
@@ -24,7 +24,7 @@ export function createGarden<TData, TContext>({
 		groupDescriptionFunc: visuals?.getGroupDescriptionFunc,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,
-		customGroupByKeys: customGroupByKeys,
+		customGroupByKeys: customGroupByKeys?.value,
 		preGroupFiltering: (s) => s,
 		depth: 0,
 	});

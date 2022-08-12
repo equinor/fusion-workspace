@@ -1,14 +1,14 @@
 import { FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-interface GroupByArgs<T> {
-	arr: T[];
+interface GroupByArgs<TData, TCustomGroupByKeys> {
+	arr: TData[];
 	keys: string[];
-	groupDescriptionFunc?: GroupDescriptionFunc<T>;
-	fieldSettings?: FieldSettings<T, string>;
+	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
+	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
 	isExpanded?: boolean;
-	preGroupFiltering: PreGroupByFiltering<T>;
-	customGroupByKeys?: Record<string, unknown>;
+	preGroupFiltering: PreGroupByFiltering<TData>;
+	customGroupByKeys?: TCustomGroupByKeys;
 	depth: number;
 }
 
@@ -16,7 +16,7 @@ const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> 
 	return acc.find((x) => x.value === valueKey);
 };
 
-export function groupBy<T>({
+export function groupBy<TData, TCustomGroupByKeys>({
 	arr,
 	keys,
 	customGroupByKeys,
@@ -25,14 +25,14 @@ export function groupBy<T>({
 	isExpanded,
 	preGroupFiltering,
 	depth,
-}: GroupByArgs<T>): GardenGroups<T> {
+}: GroupByArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
 	const key = (keys[0] && keys[0].toString()) || undefined;
 	if (!key) return [];
 	if (!arr || arr.length === 0) return [];
 
 	const fieldSetting = fieldSettings?.[key];
 
-	let gardengroups: GardenGroups<T> = [];
+	let gardengroups: GardenGroups<TData> = [];
 
 	//Inverse grouping of array
 	if (Array.isArray(arr[0][key])) {
@@ -60,7 +60,7 @@ export function groupBy<T>({
 					group.count++;
 				} else {
 					acc.push({
-						groupKey: key as keyof T,
+						groupKey: key as keyof TData,
 						value: valueKey,
 						count: 1,
 						isExpanded: Boolean(depth === 0 ? true : isExpanded),
@@ -74,7 +74,7 @@ export function groupBy<T>({
 			});
 
 			return acc;
-		}, [] as GardenGroups<T>);
+		}, [] as GardenGroups<TData>);
 	}
 
 	if (keys.length === 0) return gardengroups;
@@ -103,21 +103,21 @@ export function groupBy<T>({
 	return gardengroups;
 }
 
-interface GroupByArrayArgs<T> {
-	arr: T[];
-	key: keyof T | string;
-	preGroupFiltering: (arr: T[], groupByKey: string) => T[];
-	fieldSettings?: FieldSettings<T, string>;
+interface GroupByArrayArgs<TData, TCustomGroupByKeys> {
+	arr: TData[];
+	key: keyof TData | string;
+	preGroupFiltering: (arr: TData[], groupByKey: string) => TData[];
+	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
 	isExpanded?: boolean;
 }
 
-function groupByArray<T>({
+function groupByArray<TData, TCustomGroupByKeys>({
 	arr,
 	key,
 	preGroupFiltering,
 	fieldSettings,
 	isExpanded,
-}: GroupByArrayArgs<T>): GardenGroups<T> {
+}: GroupByArrayArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
 	const fieldSetting = fieldSettings?.[key];
 	const childKey = fieldSetting?.key;
 
@@ -134,7 +134,7 @@ function groupByArray<T>({
 		return [...prev, ...childArray.filter((identifier) => !prev.includes(identifier))];
 	}, [] as (string | number)[]);
 
-	const groups: GardenGroups<T> = groupNames.map((groupName): GardenGroup<T> => {
+	const groups: GardenGroups<TData> = groupNames.map((groupName): GardenGroup<TData> => {
 		const parentsContainingChildren = arr.filter((item) =>
 			getChildArray(item, key as string)
 				.map((y) => (typeof y === 'object' ? y[childKey as string] : y))
@@ -142,7 +142,7 @@ function groupByArray<T>({
 		);
 
 		return {
-			groupKey: key as keyof T,
+			groupKey: key as keyof TData,
 			isExpanded: Boolean(isExpanded),
 			subGroups: [],
 			value: groupName as string,
@@ -158,7 +158,7 @@ function groupByArray<T>({
 
 	if (blanks.length > 0) {
 		groups.push({
-			groupKey: key as keyof T,
+			groupKey: key as keyof TData,
 			isExpanded: Boolean(isExpanded),
 			subGroups: [],
 			count: 0,

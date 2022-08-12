@@ -5,7 +5,7 @@ export interface MockInterface {
 	name: string;
 }
 
-export const defaultGardenConfig: GardenConfig<MockInterface, unknown> = {
+export const defaultGardenConfig: GardenConfig<MockInterface, any, any, unknown> = {
 	data: [],
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 	nodeLabelCallback: (s) => s.name,

@@ -1,14 +1,14 @@
 export type GetSortFunction = (a: string, b: string) => number;
-export type GetKeyFunction<T> = (
-	item: T,
-	itemKey: keyof T | string,
-	customGroupByKeys?: Record<string, unknown>
+export type GetKeyFunction<TData, TCustomGroupByKeys extends Record<string, any>> = (
+	item: TData,
+	itemKey: keyof TData | string,
+	customGroupByKeys?: TCustomGroupByKeys
 ) => string[] | string;
 
-export type FieldSetting<ItemType> = {
+export type FieldSetting<ItemType, TCustomGroupByKeys> = {
 	key?: keyof ItemType | string;
 	label?: string;
-	getKey?: GetKeyFunction<ItemType>;
+	getKey?: GetKeyFunction<ItemType, TCustomGroupByKeys>;
 	getColumnSort?: GetSortFunction;
 };
 
@@ -21,6 +21,8 @@ export type FieldSetting<ItemType> = {
  * @template ItemType  Base model for item/package used. Is the type that is passed to functions.
  * @template ExtendedFields (optional) string literal that defines fields that does not exist on the base model.
  */
-export type FieldSettings<ItemType, ExtendedFields extends string = never> = Partial<
-	Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType>>
->;
+export type FieldSettings<
+	ItemType,
+	TCustomGroupByKeys extends Record<string, any>,
+	ExtendedFields extends string = never
+> = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, TCustomGroupByKeys>>>;

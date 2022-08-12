@@ -1,6 +1,11 @@
-import { Key, GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, CustomGroupByKeys } from './';
+import { Key, GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback } from './';
 
-export interface GardenConfig<TData, TContext> {
+export interface GardenConfig<
+	TData,
+	TCustomState extends Record<string, any> = Record<string, any>,
+	TCustomGroupByKeys extends Record<string, any> = Record<string, any>,
+	TContext = unknown
+> {
 	/** Data to be used for the garden */
 	data: TData[];
 	/** Primary(Unique) identifier for the data */
@@ -13,8 +18,10 @@ export interface GardenConfig<TData, TContext> {
 	/** The keys used for grouping when the garden loads initially */
 	initialGrouping: GroupingKeys<TData>;
 	/** The available keys to be used for grouping */
-	fieldSettings?: FieldSettings<TData, string>;
-	customGroupByKeys?: CustomGroupByKeys;
+	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
+	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
 	clickEvents?: OnClickEvents<TData, TContext>;
+
+	getCustomState?: (data: TData[]) => TCustomState;
 }

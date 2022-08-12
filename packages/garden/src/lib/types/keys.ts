@@ -8,5 +8,3 @@ export interface GroupingKeys<T> {
 	horizontalGroupingAccessor: HorizontalGroupingAccessor<T>;
 	verticalGroupingKeys: string[];
 }
-
-export type CustomGroupByKeys = Record<string, unknown>;

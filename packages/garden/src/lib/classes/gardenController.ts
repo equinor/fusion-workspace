@@ -1,6 +1,4 @@
-import { defaultGardenConfig } from '../test/mockGarden';
 import {
-	CustomGroupByKeys,
 	CustomVirtualViews,
 	FieldSettings,
 	findNodeCallback,
@@ -19,7 +17,12 @@ import { ReactiveValue } from './reactiveValue';
 
 const NullFunc = () => void 0;
 
-export class GardenController<TData, TContext = unknown> {
+export class GardenController<
+	TData,
+	TCustomGroupByKeys extends Record<string, any> = Record<string, any>,
+	TCustomState extends Record<string, any> = Record<string, any>,
+	TContext = unknown
+> {
 	/** The node that is currently being highlighted */
 	highlightedNode = new ReactiveValue<string | null>(null);
 	/** The data used for creating garden groups */
@@ -28,7 +31,7 @@ export class GardenController<TData, TContext = unknown> {
 	groups = new ReactiveValue<GardenGroups<TData>>([]);
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
-	fieldSettings: FieldSettings<TData, string> = {};
+	fieldSettings: FieldSettings<TData, TCustomGroupByKeys, string> = {};
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	nodeLabelCallback: NodeLabelCallback<TData>;
 	/** Primary(unique) identifier for the data type */
@@ -45,9 +48,23 @@ export class GardenController<TData, TContext = unknown> {
 	/** Custom user context */
 	context?: TContext;
 	/** Custom group by keys */
-	customGroupByKeys: CustomGroupByKeys = {};
+	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 	/** Override default view */
 	customViews: CustomVirtualViews<TData> = {};
+
+	/**
+	 * Property for holding calculated information based on data, this property will update every time data is updated
+	 */
+	customState?: TCustomState;
+
+	getCustomState?: (data: TData[]) => TCustomState;
+
+	/** Updates the custom state if data changes */
+	private updateCustomState = (data: TData[]) => {
+		if (this.getCustomState) {
+			this.customState = this.getCustomState(data);
+		}
+	};
 
 	constructor(
 		{
@@ -58,7 +75,8 @@ export class GardenController<TData, TContext = unknown> {
 			clickEvents,
 			customGroupByKeys,
 			fieldSettings,
-		}: GardenConfig<TData, TContext>,
+			getCustomState,
+		}: GardenConfig<TData, TCustomState, TCustomGroupByKeys, TContext>,
 		context?: TContext
 	) {
 		this.objectIdentifier = objectIdentifier;
@@ -66,7 +84,16 @@ export class GardenController<TData, TContext = unknown> {
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};
-		this.customGroupByKeys = customGroupByKeys ?? {};
+
+		this.customGroupByKeys = new ReactiveValue<TCustomGroupByKeys>(customGroupByKeys ?? ({} as TCustomGroupByKeys));
+
+		if (getCustomState) {
+			this.getCustomState = getCustomState;
+			//init
+			this.updateCustomState(data);
+			this.data.onChange(this.updateCustomState);
+		}
+
 		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
 		this.context = context;
