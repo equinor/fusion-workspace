@@ -14,7 +14,7 @@ export function CustomTabWrapper<TData, TError, TContext>({
 
 	return (
 		<div>
-			<Component data={data} />
+			<Component data={data} onClick={(ev) => controller.click(ev)} />
 		</div>
 	);
 }

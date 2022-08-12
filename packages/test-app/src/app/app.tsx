@@ -14,7 +14,7 @@ function createFusionWorkspace<TError, TContext>() {
 			],
 		})
 		.addCustomTab({
-			Component: ({ data }) => <div>{data.length}</div>,
+			Component: ({ data, onClick }) => <div onClick={() => onClick({ item: data[0] })}>{data.length}</div>,
 			HeaderComponent: () => <div>Hello</div>,
 			name: 'Lines',
 		})
