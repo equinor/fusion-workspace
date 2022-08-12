@@ -1,14 +1,16 @@
-/**
- * Class for using js object as react state
- */
+/** Class for listening to changes on a value */
 export class ReactiveValue<TData> {
 	constructor(initValue: TData) {
 		this.value = initValue;
 	}
-	changedAt = 0;
+	/** Millisecond timestamp for when value last changed */
+	changedAt = new Date().getTime();
+	/** The value to be stored */
 	value: TData;
-	onChangeCallbacks: Callback<TData>[] = [];
 
+	private onChangeCallbacks: Callback<TData>[] = [];
+
+	/** Function for setting a new value */
 	setValue = (newValue: TData) => {
 		const oldValue = this.value;
 		this.value = newValue;
@@ -16,6 +18,7 @@ export class ReactiveValue<TData> {
 		this.onChangeCallbacks.forEach(({ callback }) => callback(newValue, oldValue));
 	};
 
+	/** Register a function to be called when value changes */
 	onChange = (callback: OnValueChangeCallback<TData>) => {
 		const id = (Math.random() * 16).toString();
 		this.onChangeCallbacks.push({ callback, id });
