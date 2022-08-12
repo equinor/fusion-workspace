@@ -8,7 +8,7 @@ describe('Custom state should update whenever data changes', () => {
 		}
 
 		interface CustomKeys {
-			type: string;
+			type: 'Daily' | 'Weekly';
 		}
 
 		function getCustomState(data: MockInterface[]): CustomStateInterface {
