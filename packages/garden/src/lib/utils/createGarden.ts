@@ -11,7 +11,7 @@ export function createGarden<TData, TContext>({
 	},
 	visuals,
 }: GardenController<TData, TContext>): GardenGroups<TData> {
-	const allGroupingKeys: (keyof TData | string)[] = [horizontalGroupingAccessor];
+	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string];
 	if (verticalGroupingKeys) {
 		verticalGroupingKeys.forEach((key) => {
 			allGroupingKeys.push(key);
@@ -20,7 +20,7 @@ export function createGarden<TData, TContext>({
 
 	const groupedData = groupBy({
 		arr: data,
-		keys: allGroupingKeys as any,
+		keys: allGroupingKeys,
 		groupDescriptionFunc: visuals?.getGroupDescriptionFunc,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,
