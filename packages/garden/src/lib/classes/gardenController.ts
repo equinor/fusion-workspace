@@ -5,7 +5,6 @@ import {
 	findNodeCallback,
 	GardenGroups,
 	GroupingKeys,
-	HighlightedNode,
 	HorizontalGroupingAccessor,
 	Key,
 	NodeLabelCallback,
@@ -21,7 +20,7 @@ const NullFunc = () => void 0;
 
 export class GardenController<TData, TContext = unknown> {
 	/** The node that was pressed and is currently being highlighted */
-	highlightedNode: HighlightedNode = { node: new ReactiveValue<string | null>(null), setHighlighted: NullFunc };
+	highlightedNode = new ReactiveValue<string | null>(null);
 	/** The data used for garden groups */
 	data = new ReactiveValue<TData[]>([]);
 	/** The garden groups */
@@ -70,7 +69,6 @@ export class GardenController<TData, TContext = unknown> {
 		this.clickEvents = clickEvents ?? {};
 		this.customGroupByKeys = customGroupByKeys ?? {};
 		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
-		this.highlightedNode.setHighlighted = this.setHighlighted;
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
 		this.context = context;
 		this.groupData();
@@ -109,8 +107,8 @@ export class GardenController<TData, TContext = unknown> {
 	/**
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
-	setHighlighted = (nodeIdOrCallback: (string | null) | findNodeCallback) => {
-		this.highlightedNode.node.setValue(
+	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
+		this.highlightedNode.setValue(
 			typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback
 		);
 	};
