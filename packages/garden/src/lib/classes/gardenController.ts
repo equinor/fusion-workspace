@@ -1,7 +1,7 @@
 import { defaultGardenConfig } from '../test/mockGarden';
 import {
 	CustomGroupByKeys,
-	CustomVirtualView,
+	CustomVirtualViews,
 	FieldSettings,
 	findNodeCallback,
 	GardenGroups,
@@ -47,7 +47,7 @@ export class GardenController<TData, TContext = unknown> {
 	/** Custom group by keys */
 	customGroupByKeys: CustomGroupByKeys = {};
 	/** Override default view */
-	customView: CustomVirtualView<TData> = {};
+	customViews: CustomVirtualViews<TData> = {};
 
 	constructor(
 		{

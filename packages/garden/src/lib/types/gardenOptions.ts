@@ -35,14 +35,14 @@ export interface CustomHeaderView<T> {
 	groupByKey?: string;
 }
 
-export interface CustomVirtualView<T> {
+export interface CustomVirtualViews<T> {
 	customItemView?: MemoExoticComponent<(args: CustomItemView<T>) => JSX.Element>;
 	customGroupView?: MemoExoticComponent<(args: CustomGroupView<T>) => JSX.Element>;
 	customHeaderView?: MemoExoticComponent<(args: CustomHeaderView<T>) => JSX.Element>;
 	customGroupByView?: React.FC;
 }
 
-export interface GardenOptions<T, D = T> {
+export interface GardenOptions<T> {
 	gardenKey: keyof T;
 	itemKey: keyof T;
 	objectIdentifier: keyof T;
