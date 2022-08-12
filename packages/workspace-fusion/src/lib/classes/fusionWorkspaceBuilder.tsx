@@ -9,13 +9,13 @@ import {
 } from '../types';
 import { addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
 
-interface FusionUI {
+interface UIContext {
 	appKey: string;
 	color: string;
 }
 
-export interface FusionContext {
-	ui: FusionUI;
+export interface WorkspaceContext {
+	ui: UIContext;
 }
 
 export class FusionWorkspaceBuilder<TData, TError> {
@@ -27,7 +27,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.controller = new WorkspaceController();
 		addViewController(this.controller);
 		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
-		this.controller.setContext((s) => ({ ...s, ui: { color, appKey: appKey } }));
+		this.controller.setContext((old) => ({ ...old, ui: { color, appKey: appKey } }));
 	}
 
 	/**

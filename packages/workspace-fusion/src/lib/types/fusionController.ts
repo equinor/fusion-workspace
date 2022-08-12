@@ -1,5 +1,5 @@
 import { WorkspaceController } from '@workspace/workspace-core';
-import { FusionContext } from '../classes/fusionWorkspaceBuilder';
+import { WorkspaceContext } from '../classes/fusionWorkspaceBuilder';
 import { WorkspaceControllers } from './controllers';
 import { WorkspaceOnClick } from './onClick';
 
@@ -11,5 +11,5 @@ export type FusionWorkspaceController<TData, TError> = WorkspaceController<
 	WorkspaceControllers<TData>,
 	WorkspaceOnClick<TData>,
 	TError,
-	FusionContext
+	WorkspaceContext
 >;
