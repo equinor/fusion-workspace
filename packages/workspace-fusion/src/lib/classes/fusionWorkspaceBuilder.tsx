@@ -26,9 +26,9 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
 		this.controller = new WorkspaceController();
-		addViewController(this.controller);
-		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
 		this.controller.setContext((old) => ({ ...old, ui: { color, appKey: appKey } }));
+		addViewController(appKey, this.controller);
+		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
 	}
 
 	/**
