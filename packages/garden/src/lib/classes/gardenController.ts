@@ -5,7 +5,6 @@ import {
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
-	Key,
 	NodeLabelCallback,
 	OnClickEvents,
 	SetVerticalGroupingKeysArgs,
@@ -35,7 +34,7 @@ export class GardenController<
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	nodeLabelCallback: NodeLabelCallback<TData>;
 	/** Primary(unique) identifier for the data type */
-	objectIdentifier: Key<TData>;
+	objectIdentifier: keyof TData;
 	/** The click events that exists in garden */
 	clickEvents: OnClickEvents<TData, TContext> = {
 		onClickGroup: NullFunc,
@@ -104,7 +103,7 @@ export class GardenController<
 	 * Array of vertical grouping keys.
 	 * Grouped in the order of the array.
 	 */
-	setVerticalGroupingKeys = (keys: SetVerticalGroupingKeysArgs) => {
+	setVerticalGroupingKeys = (keys: string[]) => {
 		this.grouping.setValue({
 			horizontalGroupingAccessor: this.grouping.value.horizontalGroupingAccessor,
 			verticalGroupingKeys: keys,
