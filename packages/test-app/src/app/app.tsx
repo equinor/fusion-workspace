@@ -4,7 +4,7 @@ import { Workspace } from '@equinor/workspace-react';
 import { Button } from '@equinor/eds-core-react';
 
 function createFusionWorkspace<TError>() {
-	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError>('Scope change', 'purple')
+	const controller = new FusionWorkspaceBuilder<DefaultInterface, TError>('Scope change request', 'purple')
 		.addGrid({
 			columnDefinitions: [
 				{ field: 'id' },
@@ -15,7 +15,7 @@ function createFusionWorkspace<TError>() {
 		})
 		.addCustomTab({
 			Component: ({ data, onClick }) => <div onClick={() => onClick({ item: data[0] })}>{data.length}</div>,
-			HeaderComponent: () => <div>Hello</div>,
+			HeaderComponent: () => <div>Custom tab</div>,
 			name: 'Lines',
 		})
 		.addSidesheet({ Component: SidesheetComponent })

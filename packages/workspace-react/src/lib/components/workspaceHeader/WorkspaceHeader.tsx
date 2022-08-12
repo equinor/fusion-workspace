@@ -1,6 +1,6 @@
-import { TabNavigation } from '../tabNavigation';
+import { ActionBar } from '../ActionBar';
+import { AppNameHeader } from '../AppNameHeader';
 import { WorkspaceProps } from '../Workspace';
-import { StyledWorkspaceHeader } from './workspaceHeader.styles';
 
 /**
  * Workspace header component.
@@ -8,10 +8,10 @@ import { StyledWorkspaceHeader } from './workspaceHeader.styles';
  */
 export function WorkspaceHeader<TTabnames extends string, TError>({ controller }: WorkspaceProps<TTabnames, TError>) {
 	return (
-		<StyledWorkspaceHeader>
-			<div>{controller.StatusBarComponent && <controller.StatusBarComponent />}</div>
-			<TabNavigation controller={controller} />
+		<div>
+			<AppNameHeader controller={controller}></AppNameHeader>
+			<ActionBar controller={controller} />
 			{controller.FilterComponent && <controller.FilterComponent />}
-		</StyledWorkspaceHeader>
+		</div>
 	);
 }
