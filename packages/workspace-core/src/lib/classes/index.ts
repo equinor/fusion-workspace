@@ -1,2 +1,2 @@
-export * from './mediator';
+export * from './workspaceMediator';
 export * from './observable';
