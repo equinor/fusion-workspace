@@ -1,14 +1,14 @@
-import { WorkspaceViewController } from '../../classes';
+import { WorkspaceController } from '../../classes';
 import { useIsSidesheetOpen } from '../../hooks/useIsSidesheetOpen';
 import { useSidesheetWidth } from '../../hooks/useSidesheetWidth';
 import { StyledResizable } from './resizableSidesheet.styles';
 
-interface ResizableSidesheetProps<TabNames extends string, TError> {
-	controller: WorkspaceViewController<TabNames, TError>;
+interface ResizableSidesheetProps<TabNames extends string, TData, TOnClick, TContext, TError> {
+	controller: WorkspaceController<TabNames, TData, TOnClick, TContext, TError>;
 }
-export function ResizableSidesheet<TabNames extends string, TError>({
+export function ResizableSidesheet<TabNames extends string, TData, TOnClick, TContext, TError>({
 	controller,
-}: ResizableSidesheetProps<TabNames, TError>): JSX.Element | null {
+}: ResizableSidesheetProps<TabNames, TData, TOnClick, TContext, TError>): JSX.Element | null {
 	const isOpen = useIsSidesheetOpen(controller);
 	const width = useSidesheetWidth(controller);
 
@@ -16,7 +16,11 @@ export function ResizableSidesheet<TabNames extends string, TError>({
 	if (!isOpen || !Component) {
 		return null;
 	}
-	const { minWidth, setWidth } = controller.sidesheet;
+	const {
+		width: { setValue: setWidth },
+	} = controller.sidesheet;
+
+	const minWidth = controller.sidesheet.minWidth.value ?? 0;
 
 	return (
 		<StyledResizable

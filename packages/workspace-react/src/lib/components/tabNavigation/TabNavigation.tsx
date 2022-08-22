@@ -1,17 +1,22 @@
-import { WorkspaceViewController } from '../../classes';
+import { WorkspaceController } from '../../classes';
 import { useActiveTab } from '../../hooks';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
-interface TabNavigationProps<TabNames extends string, TError> {
-	controller: WorkspaceViewController<TabNames, TError>;
+interface TabNavigationProps<TabNames extends string, TData, TOnClick, TContext, TError> {
+	controller: WorkspaceController<TabNames, TData, TOnClick, TContext, TError>;
 }
 
 /**
  * Navigation bar in the workspace header.
  * Allows for switching of tabs
  */
-export function TabNavigation<TabNames extends string, TError>({ controller }: TabNavigationProps<TabNames, TError>) {
-	const { setActiveTab, tabs } = controller;
+export function TabNavigation<TabNames extends string, TData, TOnClick, TContext, TError>({
+	controller,
+}: TabNavigationProps<TabNames, TData, TOnClick, TContext, TError>) {
+	const {
+		activeTab: { setValue: setActiveTab },
+		tabs,
+	} = controller;
 	const activeTab = useActiveTab(controller);
 
 	return (

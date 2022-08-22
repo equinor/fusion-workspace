@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { WorkspaceController } from '../classes';
 
-export function useIsSidesheetOpen(controller: WorkspaceViewController<any, any>) {
-	const [isSidesheetOpen, setIsSidesheetOpen] = useState(controller.sidesheet.isOpen);
+export function useIsSidesheetOpen<TabNames extends string, TData, TOnClick, TContext, TError>(
+	controller: WorkspaceController<TabNames, TData, TOnClick, TContext, TError>
+) {
+	const [isSidesheetOpen, setIsSidesheetOpen] = useState(controller.sidesheet.isOpen.value);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.sidesheet.onOpenOrClosedChanged(setIsSidesheetOpen);
+		const unsubscribe = controller.sidesheet.isOpen.onchange(setIsSidesheetOpen);
 		return unsubscribe;
 	}, []);
 

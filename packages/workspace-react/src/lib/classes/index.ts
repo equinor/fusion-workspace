@@ -1,1 +1,1 @@
-export { WorkspaceViewController } from './workspaceViewController';
+export { WorkspaceController } from './workspaceController';

@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { WorkspaceViewController } from '../../classes';
+import { WorkspaceController } from '../../classes';
 import { useIsLoading } from '../../hooks/useIsLoading';
 import { WorkspaceLoadingSpinner } from '../workspaceLoadingSpinner';
 
-interface WorkspaceDataLayerProps<TabNames extends string, TError> {
+interface WorkspaceDataLayerProps<TabNames extends string, TData, TOnClick, TContext, TError> {
 	children: ReactNode;
-	controller: WorkspaceViewController<TabNames, TError>;
+	controller: WorkspaceController<TabNames, TData, TOnClick, TContext, TError>;
 }
 
 /**
@@ -13,10 +13,10 @@ interface WorkspaceDataLayerProps<TabNames extends string, TError> {
  * @param children Children to render when data is done loading
  */
 
-export function WorkspaceDataLoader<TabNames extends string, TError>({
+export function WorkspaceDataLoader<TabNames extends string, TData, TOnClick, TContext, TError>({
 	children,
 	controller,
-}: WorkspaceDataLayerProps<TabNames, TError>) {
+}: WorkspaceDataLayerProps<TabNames, TData, TOnClick, TContext, TError>) {
 	if (useIsLoading(controller)) {
 		return <WorkspaceLoadingSpinner />;
 	}
