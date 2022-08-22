@@ -2,13 +2,12 @@ import { Observable, WorkspaceMediator } from '@workspace/workspace-core';
 import { Tab } from '../types';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
 
-export class WorkspaceViewController<
-	TTabNames extends string,
+export class WorkspaceController<TTabNames extends string, TData, TOnClick, TContext, TError> extends WorkspaceMediator<
 	TData,
 	TOnClick,
-	TContext,
-	TError
-> extends WorkspaceMediator<TData, TOnClick, TError, TContext> {
+	TError,
+	TContext
+> {
 	constructor(appKey: string, tabs: Tab<TTabNames>[], initialTab: TTabNames) {
 		super();
 		this.appKey = appKey;
