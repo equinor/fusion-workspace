@@ -1,2 +1,1 @@
-export * from './lib/controllers';
-export * from './lib/types';
+export * from './lib';

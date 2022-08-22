@@ -1,4 +1,5 @@
-import { WorkspaceController } from '@workspace/workspace-core';
+import { WorkspaceViewController } from '@equinor/workspace-react';
+import { Mediator } from '@workspace/workspace-core';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -8,7 +9,7 @@ import {
 	FusionWorkspaceController,
 	CustomTab,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addViewController } from '../utils';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
 
 interface UIContext {
 	appKey: string;
@@ -22,13 +23,13 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	appKey: string;
-	private controller: FusionWorkspaceController<TData, TError>;
+	private mediator: FusionWorkspaceController<TData, TError>;
+	private viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
-		this.controller = new WorkspaceController();
-		this.controller.setContext((old) => ({ ...old, ui: { color, appKey: appKey } }));
-		addViewController(appKey, this.controller);
-		this.controller.controllers.view.activeTab = defaultTab ?? 'grid';
+		this.mediator = new Mediator();
+		this.mediator.context.setValue({ ...this.mediator.context.value, ui: { color, appKey } });
+		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid');
 	}
 
 	/**
@@ -37,7 +38,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
-		addDataSource(dataFetch, this.controller);
+		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
 
@@ -47,7 +48,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addCustomTab = (tab: CustomTab<TData>) => {
-		addCustomTab(tab, this.controller);
+		addCustomTab(tab, this.viewController, this.mediator);
 		return this;
 	};
 
@@ -65,7 +66,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.controller);
+		addGrid(gridConfig, this.viewController, this.mediator);
 		return this;
 	};
 	/**
@@ -74,7 +75,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addSidesheet = (config: SidesheetConfig<TData>) => {
-		addSidesheet(config, this.controller);
+		addSidesheet(config, this.viewController, this.mediator);
 		return this;
 	};
 	/**
@@ -83,15 +84,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addStatusBarItems = (config: StatusBarConfig<TData>) => {
-		addStatusBar(config, this.controller);
+		addStatusBar(config, this.viewController, this.mediator);
 		return this;
 	};
 	/**
 	 * Call this function when you're finished to recieve a fully configured workspace
 	 * @returns a configured workspace controller
 	 */
-	create = (): FusionWorkspaceController<TData, TError> => {
-		this.controller.controllers.dataSource.fetch();
-		return this.controller;
-	};
+	create = (): WorkspaceViewController<WorkspaceTabNames, TError> => this.viewController;
 }

@@ -1,11 +1,13 @@
 import { generateUniqueId } from '../utils';
-import { FetchDataAsync, OnDataChangedCallback, OnErrorCallback, OnCallbackSet, Callback } from '../types';
+import { FetchDataAsync, OnErrorCallback, OnCallbackSet, Callback } from '../types';
+import { Observable } from '@workspace/workspace-core';
 
 export class DataSourceController<TData, TError = unknown> {
 	private fetchData: FetchDataAsync<TData>;
-	data: TData[] = [];
-	private onDataChangedCallbacks: Callback<OnDataChangedCallback<TData, TError>>[] = [];
+	data = new Observable<TData[]>([]);
 	private onErrorCallbacks: Callback<OnErrorCallback<TData, TError>>[] = [];
+
+	isLoading = new Observable(false);
 
 	constructor(fetch: FetchDataAsync<TData>) {
 		this.fetchData = fetch;
@@ -16,22 +18,22 @@ export class DataSourceController<TData, TError = unknown> {
 	 * @param preventCallbacks If set to true will not notify subscribers that data changed, should not be used
 	 * @returns
 	 */
-	fetch = async (preventCallbacks?: boolean): Promise<TData[]> => {
+	fetch = async (): Promise<TData[]> => {
+		if (this.isLoading.value) return [];
+
+		this.isLoading.setValue(true);
 		/**
 		 * Add try catch and error slot
 		 */
 		try {
 			const data = await this.fetchData();
-			this.data = data;
-			if (!preventCallbacks) {
-				this.notifyDataChanged();
-			}
-			return data;
+			this.data.setValue(data);
 		} catch (e: unknown) {
+			this.isLoading.setValue(false);
 			this.throwError(e as TError);
 		}
-
-		return this.data;
+		this.isLoading.setValue(false);
+		return this.data.value ?? [];
 	};
 
 	private throwError(error: TError) {
@@ -39,34 +41,10 @@ export class DataSourceController<TData, TError = unknown> {
 	}
 
 	/**
-	 * Calls the callbacks to let the subscribers know data has changed
-	 */
-	private notifyDataChanged() {
-		this.onDataChangedCallbacks.forEach(({ callback }) => callback(this.data, this));
-	}
-
-	/**
 	 * Removes the data
 	 */
 	remove = (): void => {
-		this.data = [];
-		this.notifyDataChanged();
-	};
-
-	/**
-	 * Register a callback to be called whenever data changes
-	 * @param cb The function to be called upon whenever data changes
-	 * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
-	 */
-	onDataChanged = (cb: OnDataChangedCallback<TData, TError>): OnCallbackSet => {
-		const id = generateUniqueId();
-		this.onDataChangedCallbacks.push({ id, callback: cb });
-		return {
-			id,
-			unsubscribe: () => {
-				this.onDataChangedCallbacks = this.onDataChangedCallbacks.filter((callback) => callback.id !== id);
-			},
-		};
+		this.data.setValue([]);
 	};
 
 	/**

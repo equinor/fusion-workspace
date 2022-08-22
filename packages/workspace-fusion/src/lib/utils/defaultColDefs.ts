@@ -17,7 +17,10 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
  */
 export function applyWorkspaceClickToCells<TData, TError>(
 	colDefs: ColDef<TData>[],
-	controller: FusionWorkspaceController<TData, TError>
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	return colDefs.map((colDef) => ({ onCellClicked: (ev) => controller.click({ item: ev.data }), ...colDef }));
+	return colDefs.map((colDef) => ({
+		onCellClicked: (ev) => mediator.onclick.setValue({ item: ev.data }),
+		...colDef,
+	}));
 }
