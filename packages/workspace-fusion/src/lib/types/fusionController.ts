@@ -1,12 +1,11 @@
-import { Mediator } from '@workspace/workspace-core';
+import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { WorkspaceContext } from '../classes/fusionWorkspaceBuilder';
-import { WorkspaceControllers } from './controllers';
 import { WorkspaceOnClick } from './onClick';
 
 /**
  * Workspace controller for fusion with some predefined types
  */
-export type FusionWorkspaceController<TData, TError> = Mediator<
+export type FusionWorkspaceController<TData, TError> = WorkspaceReactMediator<
 	TData,
 	WorkspaceOnClick<TData>,
 	TError,

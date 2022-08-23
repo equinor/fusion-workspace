@@ -12,7 +12,7 @@ export function addSidesheet<TData, TError>(
 ) {
 	viewController.sidesheet.Component = () => <SidesheetWrapper Component={config.Component} mediator={mediator} />;
 
-	mediator.isSidesheetOpen.onchange(viewController.sidesheet.setIsOpen);
+	mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
 
 	sidesheetConfig<TData, TError>(new SidesheetController(), mediator);
 }
@@ -21,9 +21,10 @@ function sidesheetConfig<TData, TError>(
 	sc: SidesheetController<TData, unknown>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	mediator.isSidesheetOpen.onchange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
-	mediator.onclick.onchange((ev) => {
+	mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
+
+	mediator.onClick((ev) => {
 		sc.setItem(ev.item);
-		mediator.isSidesheetOpen.setValue(true);
+		mediator.setIsSidesheetOpen(true);
 	});
 }

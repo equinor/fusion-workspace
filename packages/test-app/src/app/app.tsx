@@ -9,7 +9,6 @@ function Workspace() {
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
 			.addStatusBarItems(statusBarConfig)
-			.create()
 	);
 
 	return <Component />;

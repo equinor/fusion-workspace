@@ -1,3 +1,4 @@
+import { Observable } from '@workspace/workspace-core';
 import {
 	Callback,
 	Tab,
@@ -32,9 +33,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	activeTab: TTabNames;
 	/** true when data is loading */
 	isLoading = false;
+	/** Is filter active */
 	isFilterActive = false;
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
+
+	isMounted = new Observable();
 
 	/**
 	 * Sets a new active tab

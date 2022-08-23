@@ -1,5 +1,4 @@
-import { WorkspaceViewController } from '@equinor/workspace-react';
-import { Mediator } from '@workspace/workspace-core';
+import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -24,11 +23,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	appKey: string;
 	private mediator: FusionWorkspaceController<TData, TError>;
-	private viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
-		this.mediator = new Mediator();
-		this.mediator.context.setValue({ ...this.mediator.context.value, ui: { color, appKey } });
+		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid');
 	}
 
@@ -40,6 +38,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
+	};
+
+	addMiddleware = (cb: (mediator: FusionWorkspaceController<TData, TError>) => void) => {
+		cb(this.mediator);
 	};
 
 	/**
@@ -87,9 +89,4 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addStatusBar(config, this.viewController, this.mediator);
 		return this;
 	};
-	/**
-	 * Call this function when you're finished to recieve a fully configured workspace
-	 * @returns a configured workspace controller
-	 */
-	create = (): WorkspaceViewController<WorkspaceTabNames, TError> => this.viewController;
 }

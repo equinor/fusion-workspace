@@ -6,10 +6,10 @@ export function addDataSource<TData, TError>(
 	controller: FusionWorkspaceController<TData, TError>
 ) {
 	const dataSourceController = new DataSourceController(dataFetch);
-	dataSourceController.onDataChanged((data) => {
-		controller.data.setValue(data);
+	dataSourceController.data.onchange((data) => {
+		controller.setData(data);
 		//TEMP: Will be removed once filter is done
-		controller.filteredData.setValue(data);
+		controller.setFilteredData(data);
 	});
 	dataSourceController.fetch();
 }

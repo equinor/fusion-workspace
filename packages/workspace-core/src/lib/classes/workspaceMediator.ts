@@ -1,4 +1,4 @@
-import { ObjectType } from '../types';
+import { ObjectType, OnchangeCallback } from '../types';
 import { Observable } from './observable';
 
 /**
@@ -11,17 +11,51 @@ export class WorkspaceMediator<
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>
 > {
-	data = new Observable<TData[]>();
+	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
+	data: TData[] | undefined;
+	setData: (value: TData[]) => void;
 
-	filteredData = new Observable<TData[]>();
+	onFilterDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
+	filteredData: TData[] | undefined;
+	setFilteredData: (value: TData[]) => void;
 
-	onclick = new Observable<TOnClick>();
+	lastClick;
+	click: (clickEv: TOnClick) => void;
+	onClick: (callback: OnchangeCallback<TOnClick>) => () => void;
 
-	context = new Observable<TContext>();
+	throwError: (error: TError) => void;
+	onError: (cb: (error: TError) => void) => void;
 
-	error = new Observable<TError>();
+	context?: TContext;
 	/** Fetches data */
 	fetch?: () => void;
+
+	constructor() {
+		const data = new Observable<TData[]>();
+		this.onDataChange = data.onchange;
+		data.onchange((val) => {
+			this.data = val;
+		});
+		this.setData = data.setValue;
+
+		const filterData = new Observable<TData[]>();
+		this.onFilterDataChange = filterData.onchange;
+		filterData.onchange((val) => {
+			this.filteredData = val;
+		});
+		this.setFilteredData = filterData.setValue;
+
+		const click = new Observable<TOnClick>();
+		click.onchange((val) => {
+			this.lastClick = val;
+		});
+		this.click = click.setValue;
+		this.onClick = click.onchange;
+
+		const error = new Observable<TError>();
+		this.throwError = error.setValue;
+		this.onError = error.onchange;
+	}
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {

@@ -11,7 +11,7 @@ export function CustomTabWrapper<TData, TError>({ Component, mediator }: CustomT
 
 	return (
 		<div>
-			<Component data={data} onClick={(ev) => mediator.onclick.setValue(ev)} />
+			<Component data={data} onClick={(ev) => mediator.click(ev)} />
 		</div>
 	);
 }

@@ -25,9 +25,9 @@ export function SidesheetWrapper<TData, TError>({ Component, mediator }: Sideshe
 	return (
 		<div>
 			<SidesheetHeader
-				color={mediator.context.value?.ui.color ?? tokens.colors.ui.background__default.hex}
-				title={mediator.context.value?.ui.appKey ?? ''}
-				close={() => mediator.isSidesheetOpen.setValue(false)}
+				color={tokens.colors.ui.background__default.hex}
+				title={''}
+				close={() => mediator.setIsSidesheetOpen(false)}
 			/>
 			<Component item={clickEvent.item} />
 		</div>
