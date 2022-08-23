@@ -8,8 +8,12 @@ function Workspace() {
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
+			.addMiddleware((mediator) => {
+				mediator.onClick((click) => {
+					console.log('Clickevent happened', click);
+				});
+			})
 			.addStatusBarItems(statusBarConfig)
-			.create()
 	);
 
 	return <Component />;

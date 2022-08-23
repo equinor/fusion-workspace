@@ -29,7 +29,7 @@ export function gridControllerBinder<TData, TError>(
 	gridController: GridController<TData>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	mediator.filteredData.onchange(gridController.setRowData);
+	mediator.onFilterDataChange(gridController.setRowData);
 }
 
 /**

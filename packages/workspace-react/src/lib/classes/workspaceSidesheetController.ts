@@ -1,3 +1,4 @@
+import { Observable } from '@workspace/workspace-core';
 import { Callback, OnSidesheetOpenOrClosedCallback, OnWidthChange } from '../types';
 import { registerCallback } from '../utils/registerCallback';
 
@@ -15,6 +16,7 @@ export class WorkspaceSidesheetController {
 		this.isOpen = isOpen;
 		this.onSidesheetOpenOrClosedCallbacks.forEach(({ callback }) => callback(isOpen, this));
 	};
+	title = new Observable<string>();
 
 	/**
 	 * Register a callback to be called whenever the sidesheet opens or closes

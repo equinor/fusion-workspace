@@ -20,7 +20,7 @@ export function applyWorkspaceClickToCells<TData, TError>(
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
 	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => mediator.onclick.setValue({ item: ev.data }),
+		onCellClicked: (ev) => mediator.click({ item: ev.data }),
 		...colDef,
 	}));
 }

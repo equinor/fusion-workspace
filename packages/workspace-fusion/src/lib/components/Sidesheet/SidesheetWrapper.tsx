@@ -1,9 +1,7 @@
 import { WorkspaceOnClick, FusionWorkspaceController } from '../../types';
 import { useOnClick } from '../../hooks/useOnClick';
-import { SidesheetHeader } from './Header';
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
-import { tokens } from '@equinor/eds-tokens';
 
 interface SidesheetWrapperProps<TData, TError> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
@@ -24,11 +22,6 @@ export function SidesheetWrapper<TData, TError>({ Component, mediator }: Sideshe
 
 	return (
 		<div>
-			<SidesheetHeader
-				color={mediator.context.value?.ui.color ?? tokens.colors.ui.background__default.hex}
-				title={mediator.context.value?.ui.appKey ?? ''}
-				close={() => mediator.isSidesheetOpen.setValue(false)}
-			/>
 			<Component item={clickEvent.item} />
 		</div>
 	);
