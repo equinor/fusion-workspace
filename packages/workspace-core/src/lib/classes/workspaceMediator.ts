@@ -8,25 +8,32 @@ import { Observable } from './observable';
 export class WorkspaceMediator<
 	TData,
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
-	TError extends ObjectType<TError> = ObjectType<unknown>,
-	TContext extends ObjectType<TContext> = ObjectType<unknown>
+	TError extends ObjectType<TError> = ObjectType<unknown>
 > {
+	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
+	/** The data used for the workspace */
 	data: TData[] | undefined;
+	/** Sets the data */
 	setData: (value: TData[]) => void;
 
+	/** Register a callback to be called when filtered data changes*/
 	onFilterDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
+	/** The filtered data used for the workspace */
 	filteredData: TData[] | undefined;
+	/** Sets the filtered data */
 	setFilteredData: (value: TData[]) => void;
 
-	lastClick;
+	/** Value of the last click event */
+	lastClick?: TOnClick;
+	/** Triggers a clickevent */
 	click: (clickEv: TOnClick) => void;
+	/** Register a callback to be called when click is triggered */
 	onClick: (callback: OnchangeCallback<TOnClick>) => () => void;
-
+	/** Triggers an error event */
 	throwError: (error: TError) => void;
+	/** Register a callback to be called when an error occurs */
 	onError: (cb: (error: TError) => void) => void;
-
-	context?: TContext;
 
 	constructor() {
 		const data = new Observable<TData[]>();
