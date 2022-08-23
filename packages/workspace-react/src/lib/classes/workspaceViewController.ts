@@ -10,19 +10,13 @@ import { registerCallback } from '../utils/registerCallback';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
 
 export class WorkspaceViewController<TTabNames extends string, TError> {
-	constructor(appKey: string, tabs: Tab<TTabNames>[], initialTab: TTabNames, appColor?: string) {
-		this.appKey = appKey;
-		this.tabs = tabs;
-		this.activeTab = initialTab;
-		appColor && (this.appColor = appColor);
-	}
-	appKey: string;
+	appKey?: string;
 	appColor?: string;
 	private onActiveTabChangedCallbacks: Callback<OnActiveTabChangedCallback<TTabNames, this>>[] = [];
 	private onFilterOpenOrClosedCallbacks: Callback<OnFilterOpenOrClosedCallback<this>>[] = [];
 	private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];
 	/** The tabs for your workspace */
-	tabs: Tab<TTabNames>[];
+	tabs: Tab<TTabNames>[] = [];
 
 	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
 	/** The filter component to render in the header */
@@ -32,7 +26,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	/** Status bar component to be shown in left side of header */
 	StatusBarComponent?: () => JSX.Element;
 	/** The current active tab name */
-	activeTab: TTabNames;
+	activeTab?: TTabNames;
 	/** true when data is loading */
 	isLoading = false;
 	/** Is filter active */

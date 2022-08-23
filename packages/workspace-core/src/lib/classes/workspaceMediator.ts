@@ -10,6 +10,14 @@ export class WorkspaceMediator<
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>
 > {
+	/**
+	 * Callback that returns an instance of itself
+	 * Helpful when chaining
+	 */
+	addMiddleware = (cb: (mediator: this) => void) => {
+		cb(this);
+		return this;
+	};
 	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
 	/** The data used for the workspace */

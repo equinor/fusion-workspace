@@ -1,4 +1,4 @@
-import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+import { WorkspaceReactBuilder, WorkspaceReactMediator } from '@equinor/workspace-react';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -23,11 +23,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	appKey: string;
 	private mediator: FusionWorkspaceController<TData, TError>;
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+	viewController = new WorkspaceReactBuilder<WorkspaceTabNames>();
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
 		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
 	}
 
 	/**

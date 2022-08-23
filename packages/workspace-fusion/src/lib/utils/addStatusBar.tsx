@@ -1,11 +1,11 @@
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { WorkspaceReactBuilder } from '@equinor/workspace-react';
 import { StatusBarWrapper } from '../components';
 import { FusionWorkspaceController, StatusBarConfig, WorkspaceTabNames } from '../types';
 
 export function addStatusBar<TData, TError>(
 	config: StatusBarConfig<TData>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
+	builder: WorkspaceReactBuilder<WorkspaceTabNames>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	viewController.StatusBarComponent = () => <StatusBarWrapper config={config} controller={mediator} />;
+	builder.addStatusBarComponent = () => <StatusBarWrapper config={config} controller={mediator} />;
 }

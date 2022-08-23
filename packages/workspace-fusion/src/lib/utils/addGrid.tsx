@@ -1,4 +1,4 @@
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { WorkspaceReactBuilder } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
 import { ColDef } from 'ag-grid-community';
 import { GridIcon as HeaderComponent } from '../icons/GridIcon';
@@ -7,7 +7,7 @@ import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './def
 
 export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
+	viewController: WorkspaceReactBuilder<WorkspaceTabNames>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
 	const gridController = new GridController<TData>();
@@ -17,12 +17,7 @@ export function addGrid<TData, TError>(
 
 	gridControllerBinder(gridController, mediator);
 
-	/** TODO: prevent duplicates */
-	viewController.tabs.push({
-		Component: () => <Grid controller={gridController} />,
-		name: 'grid',
-		HeaderComponent,
-	});
+	viewController.addTab({ Component: () => <Grid controller={gridController} />, name: 'grid', HeaderComponent });
 }
 
 export function gridControllerBinder<TData, TError>(
