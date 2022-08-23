@@ -27,8 +27,6 @@ export class WorkspaceMediator<
 	onError: (cb: (error: TError) => void) => void;
 
 	context?: TContext;
-	/** Fetches data */
-	fetch?: () => void;
 
 	constructor() {
 		const data = new Observable<TData[]>();
