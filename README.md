@@ -4,11 +4,11 @@
 
 Fusion Workspace is composed of mulitiple libraries that combined allows for development of fusion workspace apps. Core functionality is one data set displayed in different user perspectives. This is achieved by data handling, tab navigation, and allowing you to react around page change / config change and data changes.
 
-| Libraries| Description |
-|-|-|
-[Workspace Core](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-core) | Core part in a workspace, a pure JS library.
-[Workspace React](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-react) | Wrapper for workspace core adding react functionality and supplying Workspace hooks.
-[Workspace Fusion](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-fusion) | A simplified way to create a workspace Bootstrapped with view components from fusion.
+| Libraries                                                                                           | Description                                                                           |
+| --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [Workspace Core](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-core)     | Core part in a workspace, a pure JS library.                                          |
+| [Workspace React](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-react)   | Wrapper for workspace core adding react functionality and supplying Workspace hooks.  |
+| [Workspace Fusion](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-fusion) | A simplified way to create a workspace Bootstrapped with view components from fusion. |
 
 ## Coding Patters
 
@@ -29,11 +29,11 @@ flowchart TB
     fc <--> wm
 ```
 
->fig 1. Mediator pattern
+> fig 1. Mediator pattern
 
 ## User Perspective
 
-Fusion Workspace goal is to give the user a unified look and feel in workspace applications. And the ability to view filtered data from different perspectives.  
+Fusion Workspace goal is to give the user a unified look and feel in workspace applications. And the ability to view filtered data from different perspectives.
 
 ## Repo Content
 
@@ -70,18 +70,18 @@ These capabilities include generating applications, libraries, etc as well as th
 
 Below are our core plugins:
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+-   [React](https://reactjs.org)
+    -   `npm install --save-dev @nrwl/react`
+-   Web (no framework frontends)
+    -   `npm install --save-dev @nrwl/web`
+-   [Angular](https://angular.io)
+    -   `npm install --save-dev @nrwl/angular`
+-   [Nest](https://nestjs.com)
+    -   `npm install --save-dev @nrwl/nest`
+-   [Express](https://expressjs.com)
+    -   `npm install --save-dev @nrwl/express`
+-   [Node](https://nodejs.org)
+    -   `npm install --save-dev @nrwl/node`
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 

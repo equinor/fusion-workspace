@@ -5,17 +5,17 @@
 [![License](https://img.shields.io/npm/l/@equinor/workspace-core.svg)](https://github.com/equinor/fusion-workspace/blob/master/package.json)
 [![Sisze](https://img.shields.io/bundlephobia/min/@equinor/workspace-core)](https://npmjs.org/package/@equinor/workspace-core)
 
-- [Workspace Core](#workspace-core)
-  - [Install from NPM](#install-from-npm)
-  - [Workspace Mediator](#workspace-mediator)
-  - [Core Component](#core-component)
-    - [Data](#data)
-    - [Middleware](#middleware)
-    - [Context](#context)
-    - [Click and onClick](#click-and-onclick)
-    - [Error](#error)
-  - [Building](#building)
-  - [Running unit tests](#running-unit-tests)
+-   [Workspace Core](#workspace-core)
+    -   [Install from NPM](#install-from-npm)
+    -   [Workspace Mediator](#workspace-mediator)
+    -   [Core Component](#core-component)
+        -   [Data](#data)
+        -   [Middleware](#middleware)
+        -   [Context](#context)
+        -   [Click and onClick](#click-and-onclick)
+        -   [Error](#error)
+    -   [Building](#building)
+    -   [Running unit tests](#running-unit-tests)
 
 [<< Project Readme](/README.md)
 
@@ -121,7 +121,7 @@ export function addDataSource<TData>(
     controller.data.onchange((data) => {
         mediator.setData(data);
     });
-  
+
     controller.fetch();
 }
 
@@ -129,7 +129,7 @@ export function addDataSource<TData>(
 
 ### Middleware
 
- By having the whole workspace mediator at your disposal, middleware allows you to hook on to the mediators events and add custom actions.
+By having the whole workspace mediator at your disposal, middleware allows you to hook on to the mediators events and add custom actions.
 
 ```TS
 function logger(wm) => {
@@ -168,9 +168,9 @@ event on the workspace mediator.
 
 ### Error
 
-- onError
-- throwError
-  
+-   onError
+-   throwError
+
 This library was generated with [Nx](https://nx.dev).
 
 ## Building
