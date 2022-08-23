@@ -2,7 +2,44 @@
 
 <p style="text-align: left;"><img src="./documentation/images/logo.png" width="350"></p>
 
-> Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
+Fusion Workspace is composed of mulitiple libraries that combined allows for development of fusion workspace apps. Core functionality is one data set displayed in different user perspectives. This is achieved by data handling, tab navigation, and allowing you to react around page change / config change and data changes.
+
+| Libraries| Description |
+|-|-|
+[Workspace Core](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-core) | Core part in a workspace, a pure JS library.
+[Workspace React](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-react) | Wrapper for workspace core adding react functionality and supplying Workspace hooks.
+[Workspace Fusion](https://github.com/equinor/fusion-workspace/tree/main/packages/workspace-fusion) | A simplified way to create a workspace Bootstrapped with view components from fusion.
+
+## Coding Patters
+
+Fusion workspace is built upon common coding patterns. `Workspace Core` is built around the `mediator` pattern see fig 1. All views and Workspace react is using the controller pattern, and Workspace Fusion is using a builder / factory pattern for workspace configuration.
+
+```mermaid
+flowchart TB
+    ds[Data Source Controller]
+    grid[Grid Controller]
+    garden[Garden Controller]
+    fc[Filter Controller]
+
+    wm[Workspace Mediator]
+
+    ds <--> wm
+    grid <--> wm
+    garden <--> wm
+    fc <--> wm
+```
+
+>fig 1. Mediator pattern
+
+## User Perspective
+
+Fusion Workspace goal is to give the user a unified look and feel in workspace applications. And the ability to view filtered data from different perspectives.  
+
+## Repo Content
+
+---
+
+## Early Concept
 
 | Core Pages                                                          | Description                                                                                                     |
 | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -15,9 +52,13 @@
 
 [Workspace Specification / Feature List](./documentation/WorkspaceProjectFeatureList.md)
 
+---
+
+## Development
+
 This project was generated using [Nx](https://nx.dev).
 
-<p style="text-align: left;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="200"></p>
+<p style="text-align: left;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="150"></p>
 
 🔎 **Smart, Fast and Extensible Build System**
 
@@ -29,18 +70,18 @@ These capabilities include generating applications, libraries, etc as well as th
 
 Below are our core plugins:
 
--   [React](https://reactjs.org)
-    -   `npm install --save-dev @nrwl/react`
--   Web (no framework frontends)
-    -   `npm install --save-dev @nrwl/web`
--   [Angular](https://angular.io)
-    -   `npm install --save-dev @nrwl/angular`
--   [Nest](https://nestjs.com)
-    -   `npm install --save-dev @nrwl/nest`
--   [Express](https://expressjs.com)
-    -   `npm install --save-dev @nrwl/express`
--   [Node](https://nodejs.org)
-    -   `npm install --save-dev @nrwl/node`
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 
