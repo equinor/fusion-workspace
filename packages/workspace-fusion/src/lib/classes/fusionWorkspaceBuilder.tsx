@@ -42,6 +42,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 	addMiddleware = (cb: (mediator: FusionWorkspaceController<TData, TError>) => void) => {
 		cb(this.mediator);
+		return this;
 	};
 
 	/**
