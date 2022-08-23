@@ -10,12 +10,14 @@ import { registerCallback } from '../utils/registerCallback';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
 
 export class WorkspaceViewController<TTabNames extends string, TError> {
-	constructor(appKey: string, tabs: Tab<TTabNames>[], initialTab: TTabNames) {
+	constructor(appKey: string, tabs: Tab<TTabNames>[], initialTab: TTabNames, appColor?: string) {
 		this.appKey = appKey;
 		this.tabs = tabs;
 		this.activeTab = initialTab;
+		appColor && (this.appColor = appColor);
 	}
 	appKey: string;
+	appColor?: string;
 	private onActiveTabChangedCallbacks: Callback<OnActiveTabChangedCallback<TTabNames, this>>[] = [];
 	private onFilterOpenOrClosedCallbacks: Callback<OnFilterOpenOrClosedCallback<this>>[] = [];
 	private onIsLoadingChangedCallbacks: Callback<OnIsLoadingChangedCallback<this>>[] = [];

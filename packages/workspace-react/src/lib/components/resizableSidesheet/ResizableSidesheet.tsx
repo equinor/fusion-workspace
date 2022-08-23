@@ -1,7 +1,9 @@
 import { WorkspaceViewController } from '../../classes';
+import { useSidesheetTitle } from '../../hooks';
 import { useIsSidesheetOpen } from '../../hooks/useIsSidesheetOpen';
 import { useSidesheetWidth } from '../../hooks/useSidesheetWidth';
 import { StyledResizable } from './resizableSidesheet.styles';
+import { SidesheetHeader } from './SidesheetHeader';
 
 interface ResizableSidesheetProps<TabNames extends string, TError> {
 	controller: WorkspaceViewController<TabNames, TError>;
@@ -10,6 +12,7 @@ export function ResizableSidesheet<TabNames extends string, TError>({
 	controller,
 }: ResizableSidesheetProps<TabNames, TError>): JSX.Element | null {
 	const isOpen = useIsSidesheetOpen(controller);
+	const title = useSidesheetTitle(controller);
 	const width = useSidesheetWidth(controller);
 
 	const Component = controller.sidesheet.Component;
@@ -30,7 +33,14 @@ export function ResizableSidesheet<TabNames extends string, TError>({
 				}
 			}}
 		>
-			<Component />
+			<div>
+				<SidesheetHeader
+					color={controller.appColor ?? 'white'}
+					title={title ?? ''}
+					close={() => controller.sidesheet.setIsOpen(false)}
+				/>
+				<Component />
+			</div>
 		</StyledResizable>
 	);
 }

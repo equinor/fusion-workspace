@@ -9,6 +9,7 @@ export interface GridConfig<T> {
 
 export interface SidesheetConfig<TData> {
 	Component: (props: WorkspaceOnClick<TData>) => JSX.Element;
+	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
 }
 
 export type DataFetchAsync<TData> = () => Promise<TData[]>;

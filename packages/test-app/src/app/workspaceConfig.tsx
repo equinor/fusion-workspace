@@ -14,6 +14,9 @@ export const customTab = {
 
 export const sidesheetOptions: SidesheetConfig<DefaultInterface> = {
 	Component: SidesheetComponent,
+	getTitle: (ev) => {
+		return ev.item.title;
+	},
 };
 
 export const dataSourceOptions = async () => mockData;

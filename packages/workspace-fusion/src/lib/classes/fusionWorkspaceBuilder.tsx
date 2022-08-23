@@ -27,7 +27,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
 		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid');
+		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
 	}
 
 	/**

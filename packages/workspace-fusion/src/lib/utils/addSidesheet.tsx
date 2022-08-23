@@ -14,6 +14,9 @@ export function addSidesheet<TData, TError>(
 
 	mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
 
+	mediator.onClick((ev) => {
+		viewController.sidesheet.title.setValue(config.getTitle(ev));
+	});
 	sidesheetConfig<TData, TError>(new SidesheetController(), mediator);
 }
 
