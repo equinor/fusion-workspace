@@ -1,4 +1,4 @@
 import { useContext } from 'react';
-import { controllerContext } from '../context/controllerContext';
+import { ControllerContext } from '../context/controllerContext';
 
-export const useControllerContext = () => useContext(controllerContext);
+export const useControllerContext = () => useContext(ControllerContext);
