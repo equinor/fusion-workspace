@@ -12,32 +12,32 @@ This library includes:
 
 ### Components
 
-- WorkspaceNavigation
-- WorkspaceStatusBar
-- WorkspaceBody
-- WorkspaceDataLoader
-- WorkspaceHeader
-- WorkspaceLoadingSpinner
-- WorkspaceProvider
-- WorkspaceFilter
-- WorkspaceTab
-- WorkspaceError
-- WorkspaceInfoPage
-- WorkspaceContextSelectPage
-- WorkspaceContextSelector
-- Workspace
+-   WorkspaceNavigation
+-   WorkspaceStatusBar
+-   WorkspaceBody
+-   WorkspaceDataLoader
+-   WorkspaceHeader
+-   WorkspaceLoadingSpinner
+-   WorkspaceProvider
+-   WorkspaceFilter
+-   WorkspaceTab
+-   WorkspaceError
+-   WorkspaceInfoPage
+-   WorkspaceContextSelectPage
+-   WorkspaceContextSelector
+-   Workspace
 
 ### Context
 
-- WorkspaceContext
+-   WorkspaceContext
 
 ### Hooks
 
-- useWorkspaceController
-- useFilteredData
-- useOriginalData
-- useActiveTab
+-   useWorkspaceController
+-   useFilteredData
+-   useOriginalData
+-   useActiveTab
 
 ### Types
 
-- WorkspaceController
+-   WorkspaceController

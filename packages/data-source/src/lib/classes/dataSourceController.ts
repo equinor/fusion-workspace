@@ -1,101 +1,65 @@
 import { generateUniqueId } from '../utils';
-import {
-  FetchDataAsync,
-  OnDataChangedCallback,
-  OnErrorCallback,
-  OnCallbackSet,
-  Callback,
-} from '../types';
+import { FetchDataAsync, OnErrorCallback, OnCallbackSet, Callback } from '../types';
+import { Observable } from '@workspace/workspace-core';
 
 export class DataSourceController<TData, TError = unknown> {
-  private fetchData: FetchDataAsync<TData>;
-  data: TData[] = [];
-  private onDataChangedCallbacks: Callback<
-    OnDataChangedCallback<TData, TError>
-  >[] = [];
-  private onErrorCallbacks: Callback<OnErrorCallback<TData, TError>>[] = [];
+	private fetchData: FetchDataAsync<TData>;
+	data = new Observable<TData[]>([]);
+	private onErrorCallbacks: Callback<OnErrorCallback<TData, TError>>[] = [];
 
-  constructor(fetch: FetchDataAsync<TData>) {
-    this.fetchData = fetch;
-  }
+	isLoading = new Observable(false);
 
-  /**
-   * Fetches data asynchronously and adds it to the data attribute on the controller
-   * @param preventCallbacks If set to true will not notify subscribers that data changed, should not be used
-   * @returns
-   */
-  fetch = async (preventCallbacks?: boolean): Promise<TData[]> => {
-    /**
-     * Add try catch and error slot
-     */
-    try {
-      const data = await this.fetchData();
-      this.data = data;
-      if (!preventCallbacks) {
-        this.notifyDataChanged();
-      }
-      return data;
-    } catch (e: unknown) {
-      this.throwError(e as TError);
-    }
+	constructor(fetch: FetchDataAsync<TData>) {
+		this.fetchData = fetch;
+	}
 
-    return this.data;
-  };
+	/**
+	 * Fetches data asynchronously and adds it to the data attribute on the controller
+	 * @param preventCallbacks If set to true will not notify subscribers that data changed, should not be used
+	 * @returns
+	 */
+	fetch = async (): Promise<TData[]> => {
+		if (this.isLoading.value) return [];
 
-  private throwError(error: TError) {
-    this.onErrorCallbacks.forEach(({ callback }) => callback(error, this));
-  }
+		this.isLoading.setValue(true);
+		/**
+		 * Add try catch and error slot
+		 */
+		try {
+			const data = await this.fetchData();
+			this.data.setValue(data);
+		} catch (e: unknown) {
+			this.isLoading.setValue(false);
+			this.throwError(e as TError);
+		}
+		this.isLoading.setValue(false);
+		return this.data.value ?? [];
+	};
 
-  /**
-   * Calls the callbacks to let the subscribers know data has changed
-   */
-  private notifyDataChanged() {
-    this.onDataChangedCallbacks.forEach(({ callback }) =>
-      callback(this.data, this)
-    );
-  }
+	private throwError(error: TError) {
+		this.onErrorCallbacks.forEach(({ callback }) => callback(error, this));
+	}
 
-  /**
-   * Removes the data
-   */
-  remove = (): void => {
-    this.data = [];
-    this.notifyDataChanged();
-  };
+	/**
+	 * Removes the data
+	 */
+	remove = (): void => {
+		this.data.setValue([]);
+	};
 
-  /**
-   * Register a callback to be called whenever data changes
-   * @param cb The function to be called upon whenever data changes
-   * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
-   */
-  onDataChanged = (cb: OnDataChangedCallback<TData, TError>): OnCallbackSet => {
-    const id = generateUniqueId();
-    this.onDataChangedCallbacks.push({ id, callback: cb });
-    return {
-      id,
-      unsubscribe: () => {
-        this.onDataChangedCallbacks = this.onDataChangedCallbacks.filter(
-          (callback) => callback.id !== id
-        );
-      },
-    };
-  };
-
-  /**
-   * Register a callback to be called whenever an error is thrown
-   * @param cb The function to be called upon whenever an error is thrown
-   * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
-   */
-  onErrorThrown = (cb: OnErrorCallback<TData, TError>): OnCallbackSet => {
-    const id = generateUniqueId();
-    this.onErrorCallbacks.push({ callback: cb, id });
-    return {
-      id,
-      unsubscribe: () => {
-        this.onErrorCallbacks = this.onErrorCallbacks.filter(
-          (s) => s.id !== id
-        );
-      },
-    };
-  };
+	/**
+	 * Register a callback to be called whenever an error is thrown
+	 * @param cb The function to be called upon whenever an error is thrown
+	 * @returns The id assigned to the callback(debug purposes), and a function to unsubscribe
+	 */
+	onErrorThrown = (cb: OnErrorCallback<TData, TError>): OnCallbackSet => {
+		const id = generateUniqueId();
+		this.onErrorCallbacks.push({ callback: cb, id });
+		return {
+			id,
+			unsubscribe: () => {
+				this.onErrorCallbacks = this.onErrorCallbacks.filter((s) => s.id !== id);
+			},
+		};
+	};
 }

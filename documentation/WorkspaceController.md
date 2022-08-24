@@ -4,17 +4,17 @@
 
 The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
 
-- Controllers
-  - Controller
-  - Config
-  - Name
-- Middleware/Binders
-  - Config
-- Context (Not to be confused with fusion context)
-- Workspace Events
-- Source Data
-- Filtered Data
-- Persist
+-   Controllers
+    -   Controller
+    -   Config
+    -   Name
+-   Middleware/Binders
+    -   Config
+-   Context (Not to be confused with fusion context)
+-   Workspace Events
+-   Source Data
+-   Filtered Data
+-   Persist
 
 Here is an example of use se figure1:
 
@@ -126,22 +126,22 @@ Reserved slot for the developer(you) to define and utilize. Most common use for 
 
 The workspace controller consists of the "Core" events that most controllers will depend on in some form. Core Workspace events are the following.
 
-- OnError
-- OnDataChange
-- OnFilterDataChange
-- OnRender
-- OnTabChanges
-- OnClick
+-   OnError
+-   OnDataChange
+-   OnFilterDataChange
+-   OnRender
+-   OnTabChanges
+-   OnClick
 
 Core Functions:
 
-- ChangeData
-- ChangeFilteredData
-- Render
-- ThrowError
-- SetActiveTab
-- AddController
-- AddMiddleware
+-   ChangeData
+-   ChangeFilteredData
+-   Render
+-   ThrowError
+-   SetActiveTab
+-   AddController
+-   AddMiddleware
 
 Controllers and middleware usually bind through workspace controller events. Alternatively, you can extend the workspace controller with common data fields through the controller's context property.
 

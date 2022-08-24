@@ -1,23 +1,33 @@
 {
-  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "packages/sidesheet/src",
-  "projectType": "library",
-  "tags": [],
-  "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/sidesheet/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/sidesheet"],
-      "options": {
-        "jestConfig": "packages/sidesheet/jest.config.ts",
-        "passWithNoTests": true
-      }
-    }
-  }
+	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+	"sourceRoot": "packages/sidesheet/src",
+	"projectType": "library",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/js:tsc",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/sidesheet",
+				"main": "packages/sidesheet/src/index.ts",
+				"tsConfig": "packages/sidesheet/tsconfig.lib.json",
+				"assets": ["packages/sidesheet/*.md"]
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/sidesheet/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/sidesheet"],
+			"options": {
+				"jestConfig": "packages/sidesheet/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
 }

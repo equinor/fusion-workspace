@@ -1,9 +1,9 @@
 export interface OnCallbackSet {
-  id: string;
-  unsubscribe: () => void;
+	id: string;
+	unsubscribe: () => void;
 }
 
 export interface Callback<T> {
-  id: string;
-  callback: T;
+	id: string;
+	callback: T;
 }
