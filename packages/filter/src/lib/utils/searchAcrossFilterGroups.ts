@@ -8,25 +8,25 @@ import { ValueFormatterFilter } from '../types';
  * @returns
  */
 export function searchForStartsWith<T = unknown>(
-  valueFormatters: ValueFormatterFilter<T>[],
-  data: T[],
-  searchValue: string
+	valueFormatters: ValueFormatterFilter<T>[],
+	data: T[],
+	searchValue: string
 ): T[] {
-  return data.filter((value) =>
-    valueFormatters.some(({ valueFormatter }) =>
-      valueFormatter(value)?.toString().toLowerCase().startsWith(searchValue)
-    )
-  );
+	return data.filter((value) =>
+		valueFormatters.some(({ valueFormatter }) =>
+			valueFormatter(value)?.toString().toLowerCase().startsWith(searchValue)
+		)
+	);
 }
 
 export function searchForIncludes<T = unknown>(
-  valueFormatters: ValueFormatterFilter<T>[],
-  data: T[],
-  searchValue: string
+	valueFormatters: ValueFormatterFilter<T>[],
+	data: T[],
+	searchValue: string
 ): T[] {
-  return data.filter((value) =>
-    valueFormatters.some(({ valueFormatter }) =>
-      valueFormatter(value)?.toString().toLowerCase().includes(searchValue)
-    )
-  );
+	return data.filter((value) =>
+		valueFormatters.some(({ valueFormatter }) =>
+			valueFormatter(value)?.toString().toLowerCase().includes(searchValue)
+		)
+	);
 }

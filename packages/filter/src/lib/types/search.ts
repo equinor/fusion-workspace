@@ -19,8 +19,8 @@ export type SearchMode = 'id/desc' | 'all';
  * Object to store for an active search, allows for searching after filtering has been done.
  */
 export interface FilterSearchActive<T> {
-  searchValue: string;
-  valueFormatters: ValueFormatterFilter<T>[];
-  searchIn: SearchDataSet;
-  type: SearchType;
+	searchValue: string;
+	valueFormatters: ValueFormatterFilter<T>[];
+	searchIn: SearchDataSet;
+	type: SearchType;
 }
