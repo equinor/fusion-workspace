@@ -22,12 +22,10 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
-	appKey: string;
+
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 	private mediator: FusionMediator<TData, TError>;
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
-		this.appKey = appKey;
-
 		const { controller, mediator } = new WorkspaceReactBuilder<
 			WorkspaceTabNames,
 			TData,
@@ -37,6 +35,9 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		>();
 
 		this.viewController = controller;
+		this.viewController.appColor = color;
+		this.viewController.appKey = appKey;
+		this.viewController.tabs.activeTab = defaultTab;
 		this.mediator = mediator;
 	}
 
