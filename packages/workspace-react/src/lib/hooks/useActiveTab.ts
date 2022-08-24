@@ -3,15 +3,15 @@ import { Tab } from '../types';
 import { useControllerContext } from './useControllerContext';
 
 export function useActiveTab() {
-	const controller = useControllerContext();
+	const {
+		tabs: { tabs, onActiveTabChanged, activeTab },
+	} = useControllerContext();
 
-	const [tab, setTab] = useState<Tab<string> | undefined>(
-		controller.tabs.find((s) => s.name === controller.activeTab)
-	);
+	const [tab, setTab] = useState<Tab<string> | undefined>(tabs.find((s) => s.name === activeTab));
 
 	useEffect(() => {
-		const { unsubscribe } = controller.onActiveTabChanged((tabName) => {
-			const newTab = controller.tabs.find(({ name }) => name === tabName);
+		const unsubscribe = onActiveTabChanged((tabName) => {
+			const newTab = tabs.find(({ name }) => name === tabName);
 			if (!newTab) {
 				setTab(undefined);
 			} else {

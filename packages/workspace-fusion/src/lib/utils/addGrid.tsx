@@ -17,7 +17,11 @@ export function addGrid<TData, TError>(
 
 	gridControllerBinder(gridController, mediator);
 
-	viewController.addTab({ Component: () => <Grid controller={gridController} />, name: 'grid', HeaderComponent });
+	viewController.controller.tabs.addTab({
+		Component: () => <Grid controller={gridController} />,
+		name: 'grid',
+		HeaderComponent,
+	});
 }
 
 export function gridControllerBinder<TData, TError>(

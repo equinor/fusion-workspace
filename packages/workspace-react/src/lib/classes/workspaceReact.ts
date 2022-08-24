@@ -5,15 +5,10 @@ import { WorkspaceViewController } from './workspaceViewController';
 
 type Component = () => JSX.Element;
 
-export class WorkspaceReactBuilder<TabNames extends string> {
+export class WorkspaceReact<TabNames extends string> {
 	controller = new WorkspaceViewController();
 	mediator = new WorkspaceReactMediator();
 	/** Adds a tab to the workspace */
-	addTab(tab: Tab<TabNames>) {
-		this.controller.tabs.push(tab);
-		this.controller.activeTab = this.controller.tabs[0].name;
-		return this;
-	}
 
 	addStatusBarComponent = (comp: Component) => {
 		this.controller.StatusBarComponent = comp;
@@ -28,13 +23,11 @@ export class WorkspaceReactBuilder<TabNames extends string> {
 	}
 }
 
-type BuilderFunc<TabNames extends string> = (
-	builder: WorkspaceReactBuilder<TabNames>
-) => WorkspaceReactBuilder<TabNames>;
+type BuilderFunc<TabNames extends string> = (builder: WorkspaceReact<TabNames>) => WorkspaceReact<TabNames>;
 
 /** Creates a new react workspace controller */
 export function createReactWorkspaceController<TabNames extends string>(builder: BuilderFunc<TabNames>) {
-	return builder(new WorkspaceReactBuilder()).controller;
+	return builder(new WorkspaceReact()).controller;
 }
 
 function mediatorSetup(

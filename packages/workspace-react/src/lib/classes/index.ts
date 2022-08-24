@@ -1,3 +1,3 @@
 export { WorkspaceViewController } from './workspaceViewController';
 export { WorkspaceReactMediator } from './workspaceReactMediator';
-export { WorkspaceReactBuilder } from './workspaceReactBuilder';
+export { WorkspaceReact as WorkspaceReactBuilder } from './workspaceReact';

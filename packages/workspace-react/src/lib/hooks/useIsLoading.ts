@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useControllerContext } from './useControllerContext';
 
 export function useIsLoading() {
-	const controller = useControllerContext();
+	const { viewState } = useControllerContext();
 
-	const [isLoading, setIsLoading] = useState(controller.isLoading);
+	const [isLoading, setIsLoading] = useState(viewState.isLoading);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.onIsLoadingChanged(setIsLoading);
+		const unsubscribe = viewState.onIsLoadingChanged(setIsLoading);
 		return unsubscribe;
 	}, []);
 

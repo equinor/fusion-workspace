@@ -6,7 +6,9 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  * Allows for switching of tabs
  */
 export function TabNavigation() {
-	const { setActiveTab, tabs } = useControllerContext();
+	const {
+		tabs: { tabs, setActiveTab },
+	} = useControllerContext();
 	const activeTab = useActiveTab();
 
 	return (
