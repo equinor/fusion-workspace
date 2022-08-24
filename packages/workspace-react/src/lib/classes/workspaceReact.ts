@@ -26,6 +26,8 @@ function mediatorSetup<TabNames extends string, TData, TOnClick, TError, TContex
 	controller: WorkspaceViewController<TabNames, TError>,
 	mediator: WorkspaceReactMediator<TData, TOnClick, TError, TContext>
 ) {
+	mediator.onIsLoadingChange(controller.viewState.setIsLoading);
+
 	controller.isMounted.onchange((mounted) => {
 		if (mounted) {
 			mediator.setMount();

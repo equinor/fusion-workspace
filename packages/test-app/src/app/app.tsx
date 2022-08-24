@@ -9,6 +9,10 @@ function Workspace() {
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
 			.addMiddleware((mediator) => {
+				mediator.onIsLoadingChange((isLoading) => {
+					console.log(`isloading ${isLoading}`);
+				});
+
 				mediator.onMount(() => {
 					console.log(`Component mounted`);
 				});

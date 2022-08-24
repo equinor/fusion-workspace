@@ -19,7 +19,10 @@ export const sidesheetOptions: SidesheetConfig<DefaultInterface> = {
 	},
 };
 
-export const dataSourceOptions = async () => mockData;
+export const dataSourceOptions = async (): Promise<DefaultInterface[]> =>
+	new Promise((resolve) => {
+		setTimeout(() => resolve(mockData), 2000);
+	});
 
 export const statusBarConfig: StatusBarConfig<DefaultInterface> = [
 	{ getValue: (data) => ({ title: 'Count', value: data.length }) },

@@ -11,5 +11,8 @@ export function addDataSource<TData, TError>(
 		//TEMP: Will be removed once filter is done
 		controller.setFilteredData(data);
 	});
+	dataSourceController.isLoading.onchange((isLoading) => {
+		controller.setIsLoading(isLoading);
+	});
 	dataSourceController.fetch();
 }
