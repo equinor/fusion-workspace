@@ -1,9 +1,18 @@
 import { GridConfig, SidesheetConfig, StatusBarConfig, WorkspaceOnClick } from '@equinor/workspace-fusion';
-import { DefaultInterface } from './types';
+import { Handover } from './types';
 import { mockData } from './mockData';
 
-export const gridOptions: GridConfig<DefaultInterface> = {
-	columnDefinitions: [{ field: 'id' }, { field: 'description' }, { field: 'title' }, { field: 'sequenceNumber' }],
+export const gridOptions: GridConfig<Handover> = {
+	columnDefinitions: [
+		{ field: 'commPkgNo', valueGetter: (s) => s.data?.commpkgNo },
+		{ field: 'Description', valueGetter: (s) => s.data?.description },
+		{ field: 'Disciplines', valueGetter: (s) => s.data?.mcDisciplineCodes },
+		{ field: 'Comm pkg status', valueGetter: (s) => s.data?.commpkgStatus },
+		{ field: 'MC status', valueGetter: (s) => s.data?.mcStatus },
+		{ field: 'Responsible', valueGetter: (s) => s.data?.responsible },
+		{ field: 'Area', valueGetter: (s) => s.data?.area },
+		{ field: 'System', valueGetter: (s) => s.data?.system },
+	],
 };
 
 export const customTab = {
@@ -12,39 +21,31 @@ export const customTab = {
 	name: 'Lines',
 };
 
-export const sidesheetOptions: SidesheetConfig<DefaultInterface> = {
+export const sidesheetOptions: SidesheetConfig<Handover> = {
 	Component: SidesheetComponent,
 	getTitle: (ev) => {
-		return ev.item.title;
+		return ev.item.commpkgNo;
 	},
 };
 
-export const dataSourceOptions = async (): Promise<DefaultInterface[]> =>
+export const dataSourceOptions = async (): Promise<Handover[]> =>
 	new Promise((resolve) => {
-		setTimeout(() => resolve(mockData), 2000);
+		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
 	});
 
-export const statusBarConfig: StatusBarConfig<DefaultInterface> = [
+export const statusBarConfig: StatusBarConfig<Handover> = [
 	{ getValue: (data) => ({ title: 'Count', value: data.length }) },
-	{
-		getValue: (data) => ({
-			title: 'Sum sequence numbers',
-			value: data.reduce((prev, curr) => (prev = prev + curr.sequenceNumber), 0),
-			description: 'Sums all the sequence numbers',
-		}),
-	},
 ];
 
-export function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
+export function SidesheetComponent(ev: WorkspaceOnClick<Handover>) {
 	return (
 		<div style={{ height: '100%', width: '100%', margin: '5px 32px' }}>
-			<h2>{ev.item.title}</h2>
+			<h2>{ev.item.commpkgNo}</h2>
 
 			<div style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
 				<Detail title="Description" value={ev.item.description} />
-				<Detail title="Change category" value={ev.item.changeCategory.name} />
-				<Detail title="Phase" value={ev.item.phase} />
-				<Detail title="Scope" value={ev.item.scope.name} />
+				<Detail title="Comm pkg status" value={ev.item.commpkgStatus} />
+				<Detail title="MC status" value={ev.item.mcStatus} />
 			</div>
 		</div>
 	);

@@ -1,10 +1,12 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { DefaultInterface } from './types';
+import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
 function Workspace() {
-	const Component = createFusionWorkspace<DefaultInterface, unknown>('Scope change', 'purple', ({ addDataSource }) =>
-		addDataSource(dataSourceOptions)
+	const Component = createFusionWorkspace<Handover, unknown>((builder) =>
+		builder
+			.addConfig('Scope change', 'purple', 'grid')
+			.addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
@@ -12,7 +14,6 @@ function Workspace() {
 				mediator.onIsLoadingChange((isLoading) => {
 					console.log(`isloading ${isLoading}`);
 				});
-
 				mediator.onMount(() => {
 					console.log(`Component mounted`);
 				});

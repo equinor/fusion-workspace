@@ -25,7 +25,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 	private mediator: FusionMediator<TData, TError>;
-	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
+	constructor() {
 		const { controller, mediator } = new WorkspaceReactBuilder<
 			WorkspaceTabNames,
 			TData,
@@ -35,11 +35,15 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		>();
 
 		this.viewController = controller;
+		this.mediator = mediator;
+	}
+
+	addConfig = (appKey: string, color: string, defaultTab: WorkspaceTabNames) => {
 		this.viewController.appColor = color;
 		this.viewController.appKey = appKey;
 		this.viewController.tabs.activeTab = defaultTab;
-		this.mediator = mediator;
-	}
+		return this;
+	};
 
 	/**
 	 * Add a function for providing data to the workspace
