@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { useControllerContext } from './useControllerContext';
 
-export function useIsLoading(controller: WorkspaceViewController<any, any>) {
+export function useIsLoading() {
+	const controller = useControllerContext();
+
 	const [isLoading, setIsLoading] = useState(controller.isLoading);
 
 	useEffect(() => {

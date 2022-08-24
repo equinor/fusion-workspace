@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { WorkspaceViewController } from '../classes';
 import { Tab } from '../types';
+import { useControllerContext } from './useControllerContext';
 
-export function useActiveTab<TabNames extends string, TError>(controller: WorkspaceViewController<TabNames, TError>) {
+export function useActiveTab() {
+	const controller = useControllerContext();
+
 	const [tab, setTab] = useState<Tab<string> | undefined>(
 		controller.tabs.find((s) => s.name === controller.activeTab)
 	);

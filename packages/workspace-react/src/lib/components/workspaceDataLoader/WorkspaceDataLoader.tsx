@@ -1,11 +1,9 @@
 import { ReactNode } from 'react';
-import { WorkspaceViewController } from '../../classes';
 import { useIsLoading } from '../../hooks/useIsLoading';
 import { WorkspaceLoadingSpinner } from '../workspaceLoadingSpinner';
 
-interface WorkspaceDataLayerProps<TabNames extends string, TError> {
+interface WorkspaceDataLayerProps {
 	children: ReactNode;
-	controller: WorkspaceViewController<TabNames, TError>;
 }
 
 /**
@@ -13,11 +11,8 @@ interface WorkspaceDataLayerProps<TabNames extends string, TError> {
  * @param children Children to render when data is done loading
  */
 
-export function WorkspaceDataLoader<TabNames extends string, TError>({
-	children,
-	controller,
-}: WorkspaceDataLayerProps<TabNames, TError>) {
-	if (useIsLoading(controller)) {
+export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
+	if (useIsLoading()) {
 		return <WorkspaceLoadingSpinner />;
 	}
 

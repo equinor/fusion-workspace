@@ -1,19 +1,14 @@
-import { WorkspaceViewController } from '../../classes';
-import { useSidesheetTitle } from '../../hooks';
+import { useControllerContext, useSidesheetTitle } from '../../hooks';
 import { useIsSidesheetOpen } from '../../hooks/useIsSidesheetOpen';
 import { useSidesheetWidth } from '../../hooks/useSidesheetWidth';
 import { StyledResizable } from './resizableSidesheet.styles';
 import { SidesheetHeader } from './SidesheetHeader';
 
-interface ResizableSidesheetProps<TabNames extends string, TError> {
-	controller: WorkspaceViewController<TabNames, TError>;
-}
-export function ResizableSidesheet<TabNames extends string, TError>({
-	controller,
-}: ResizableSidesheetProps<TabNames, TError>): JSX.Element | null {
-	const isOpen = useIsSidesheetOpen(controller);
-	const title = useSidesheetTitle(controller);
-	const width = useSidesheetWidth(controller);
+export function ResizableSidesheet(): JSX.Element | null {
+	const controller = useControllerContext();
+	const isOpen = useIsSidesheetOpen();
+	const title = useSidesheetTitle();
+	const width = useSidesheetWidth();
 
 	const Component = controller.sidesheet.Component;
 	if (!isOpen || !Component) {
