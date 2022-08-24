@@ -1,11 +1,11 @@
 import { StatusBar } from '@equinor/status-bar';
 
-import { FusionWorkspaceController, StatusBarConfig } from '../types';
+import { FusionMediator, StatusBarConfig } from '../types';
 import { useFilteredData } from '../hooks/useFilteredData';
 
 interface StatusBarWrapperProps<TData, TError> {
 	config: StatusBarConfig<TData>;
-	controller: FusionWorkspaceController<TData, TError>;
+	controller: FusionMediator<TData, TError>;
 }
 export function StatusBarWrapper<TData, TError>({ config, controller }: StatusBarWrapperProps<TData, TError>) {
 	const data = useFilteredData(controller);

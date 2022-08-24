@@ -5,7 +5,7 @@ import {
 	SidesheetConfig,
 	WorkspaceTabNames,
 	StatusBarConfig,
-	FusionWorkspaceController,
+	FusionMediator,
 	CustomTab,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
@@ -22,8 +22,8 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	appKey: string;
-	private mediator: FusionWorkspaceController<TData, TError>;
 	viewController = new WorkspaceReactBuilder<WorkspaceTabNames>();
+	private mediator: FusionMediator<TData, TError>;
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
 		this.mediator = new WorkspaceReactMediator();
@@ -39,7 +39,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
-	addMiddleware = (cb: (mediator: FusionWorkspaceController<TData, TError>) => void) => {
+	addMiddleware = (cb: (mediator: FusionMediator<TData, TError>) => void) => {
 		cb(this.mediator);
 		return this;
 	};

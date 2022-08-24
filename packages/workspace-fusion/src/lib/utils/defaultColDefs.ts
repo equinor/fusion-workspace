@@ -1,6 +1,6 @@
 import { ColDef } from 'ag-grid-community';
 
-import { FusionWorkspaceController } from '../types';
+import { FusionMediator } from '../types';
 
 /**
  * Applies a set of default column definition parameters.
@@ -17,7 +17,7 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
  */
 export function applyWorkspaceClickToCells<TData, TError>(
 	colDefs: ColDef<TData>[],
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionMediator<TData, TError>
 ) {
 	return colDefs.map((colDef) => ({
 		onCellClicked: (ev) => mediator.click({ item: ev.data }),

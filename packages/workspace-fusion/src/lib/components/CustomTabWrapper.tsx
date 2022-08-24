@@ -1,8 +1,8 @@
 import { useFilteredData } from '../hooks';
-import { CustomTabComponent, FusionWorkspaceController } from '../types';
+import { CustomTabComponent, FusionMediator } from '../types';
 
 interface CustomTabWrapperProps<TData, TError> {
-	mediator: FusionWorkspaceController<TData, TError>;
+	mediator: FusionMediator<TData, TError>;
 	Component: CustomTabComponent<TData>;
 }
 

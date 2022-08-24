@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FusionWorkspaceController } from '../types';
+import { FusionMediator } from '../types';
 
-export function useError<TData, TError>(mediator: FusionWorkspaceController<TData, TError>) {
+export function useError<TData, TError>(mediator: FusionMediator<TData, TError>) {
 	const [error, setError] = useState<TError | undefined>(mediator.error.value);
 
 	useEffect(() => {

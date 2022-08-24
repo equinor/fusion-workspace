@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FusionWorkspaceController } from '../types/fusionController';
+import { FusionMediator } from '../types/fusionController';
 
-export function useFilteredData<TData, TError>(mediator: FusionWorkspaceController<TData, TError>) {
+export function useFilteredData<TData, TError>(mediator: FusionMediator<TData, TError>) {
 	const [data, setData] = useState<TData[]>(mediator.filteredData ?? []);
 
 	useEffect(() => {
