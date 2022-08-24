@@ -5,7 +5,12 @@ import styled from 'styled-components';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
-		{ field: 'commPkgNo', valueGetter: (s) => s.data?.commpkgNo },
+		{
+			field: 'commPkgNo',
+			valueGetter: (s) => s.data?.commpkgNo,
+			onCellClicked: undefined,
+			cellRenderer: (props) => <a href="gooogle.com">{props.valueFormatted ?? props.value}</a>,
+		},
 		{ field: 'Description', valueGetter: (s) => s.data?.description },
 		{ field: 'Disciplines', valueGetter: (s) => s.data?.mcDisciplineCodes },
 		{

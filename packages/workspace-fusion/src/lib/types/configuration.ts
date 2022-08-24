@@ -34,3 +34,9 @@ export interface CustomTab<TData> {
 	HeaderComponent: () => JSX.Element;
 	Component: CustomTabComponent<TData>;
 }
+
+export interface AppConfig<TabNames extends string> {
+	appKey: string;
+	appColor: string;
+	defaultTab: TabNames;
+}

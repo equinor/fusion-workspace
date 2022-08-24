@@ -8,6 +8,7 @@ import {
 	FusionMediator,
 	CustomTab,
 	WorkspaceOnClick,
+	AppConfig,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
 
@@ -38,8 +39,8 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.mediator = mediator;
 	}
 
-	addConfig = (appKey: string, color: string, defaultTab: WorkspaceTabNames) => {
-		this.viewController.appColor = color;
+	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
+		this.viewController.appColor = appColor;
 		this.viewController.appKey = appKey;
 		this.viewController.tabs.activeTab = defaultTab;
 		return this;

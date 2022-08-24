@@ -5,7 +5,7 @@ import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarC
 function Workspace() {
 	const Component = createFusionWorkspace<Handover, unknown>((builder) =>
 		builder
-			.addConfig('Scope change', 'purple', 'grid')
+			.addConfig({ appColor: 'Purple', appKey: 'Handover', defaultTab: 'garden' })
 			.addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
