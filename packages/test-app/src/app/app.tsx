@@ -9,6 +9,12 @@ function Workspace() {
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
 			.addMiddleware((mediator) => {
+				mediator.onMount(() => {
+					console.log(`Component mounted`);
+				});
+				mediator.onUnMount(() => {
+					console.log('Component is unmounting');
+				});
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);
 				});

@@ -7,13 +7,13 @@ import { AppNameHeader } from '../AppNameHeader';
  * Contains tab navigation and status bar
  */
 export function WorkspaceHeader() {
-	const { filter } = useControllerContext();
+	const controller = useControllerContext();
 
 	return (
 		<div>
 			<AppNameHeader />
 			<ActionBar />
-			{filter.FilterComponent && <filter.FilterComponent />}
+			{controller.filter.FilterComponent && <controller.filter.FilterComponent />}
 		</div>
 	);
 }

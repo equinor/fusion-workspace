@@ -1,38 +1,30 @@
-import { ObjectType } from '@workspace/workspace-core';
-import { Tab } from '../types';
 import { WorkspaceReactMediator } from './workspaceReactMediator';
 import { WorkspaceViewController } from './workspaceViewController';
 
-type Component = () => JSX.Element;
-
-export class WorkspaceReact<TabNames extends string> {
-	controller = new WorkspaceViewController();
-	mediator = new WorkspaceReactMediator();
+export class WorkspaceReact<TabNames extends string, TData, TOnClick, TError, TContext> {
+	controller = new WorkspaceViewController<TabNames, TError>();
+	mediator = new WorkspaceReactMediator<TData, TOnClick, TError, TContext>();
 	/** Adds a tab to the workspace */
-
-	addStatusBarComponent = (comp: Component) => {
-		this.controller.StatusBarComponent = comp;
-	};
-
-	addSidesheetComponent = (comp: Component) => {
-		this.controller.sidesheet.Component = comp;
-	};
 
 	constructor() {
 		mediatorSetup(this.controller, this.mediator);
 	}
 }
 
-type BuilderFunc<TabNames extends string> = (builder: WorkspaceReact<TabNames>) => WorkspaceReact<TabNames>;
+type BuilderFunc<TabNames extends string, TData, TOnClick, TError, TContext> = (
+	builder: WorkspaceReact<TabNames, TData, TOnClick, TError, TContext>
+) => WorkspaceReact<TabNames, TData, TOnClick, TError, TContext>;
 
 /** Creates a new react workspace controller */
-export function createReactWorkspaceController<TabNames extends string>(builder: BuilderFunc<TabNames>) {
+export function createReactWorkspaceController<TabNames extends string, TData, TOnClick, TError, TContext>(
+	builder: BuilderFunc<TabNames, TData, TOnClick, TError, TContext>
+) {
 	return builder(new WorkspaceReact()).controller;
 }
 
-function mediatorSetup(
-	controller: WorkspaceViewController<string, unknown>,
-	mediator: WorkspaceReactMediator<unknown, ObjectType<unknown>, ObjectType<unknown>, ObjectType<unknown>>
+function mediatorSetup<TabNames extends string, TData, TOnClick, TError, TContext>(
+	controller: WorkspaceViewController<TabNames, TError>,
+	mediator: WorkspaceReactMediator<TData, TOnClick, TError, TContext>
 ) {
 	controller.isMounted.onchange((mounted) => {
 		if (mounted) {

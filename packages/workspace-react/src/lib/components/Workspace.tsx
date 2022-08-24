@@ -9,7 +9,6 @@ export interface WorkspaceProps<TTabName extends string, TError> {
 
 export function Workspace<TTabNames extends string, TError>({ controller }: WorkspaceProps<TTabNames, TError>) {
 	useMounted(controller);
-
 	return (
 		<div>
 			<ContextProvider controller={controller}>

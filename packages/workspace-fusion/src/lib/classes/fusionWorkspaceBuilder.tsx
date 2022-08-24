@@ -1,4 +1,4 @@
-import { WorkspaceReactBuilder, WorkspaceReactMediator } from '@equinor/workspace-react';
+import { WorkspaceReactBuilder, WorkspaceViewController } from '@equinor/workspace-react';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -7,6 +7,7 @@ import {
 	StatusBarConfig,
 	FusionMediator,
 	CustomTab,
+	WorkspaceOnClick,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
 
@@ -22,11 +23,21 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	appKey: string;
-	viewController = new WorkspaceReactBuilder<WorkspaceTabNames>();
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 	private mediator: FusionMediator<TData, TError>;
 	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
-		this.mediator = new WorkspaceReactMediator();
+
+		const { controller, mediator } = new WorkspaceReactBuilder<
+			WorkspaceTabNames,
+			TData,
+			WorkspaceOnClick<TData>,
+			TError,
+			WorkspaceContext
+		>();
+
+		this.viewController = controller;
+		this.mediator = mediator;
 	}
 
 	/**

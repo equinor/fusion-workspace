@@ -10,7 +10,7 @@ export function createFusionWorkspace<TData, TError>(
 	color: string,
 	builderFunc: UserConfig<TData, TError>
 ) {
-	const builder = builderFunc(new FusionWorkspaceBuilder(appKey, color));
+	const builder = builderFunc(new FusionWorkspaceBuilder<TData, TError>(appKey, color));
 
-	return () => <Workspace controller={builder.viewController.controller} />;
+	return () => <Workspace controller={builder.viewController} />;
 }

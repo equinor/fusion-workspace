@@ -23,9 +23,9 @@ export class WorkspaceReactMediator<
 	setIsLoading: (value: boolean) => void;
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
-	onMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onMount: (callback: () => void) => () => void;
 
-	onUnMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onUnMount: (callback: () => void) => () => void;
 
 	setMount: () => void;
 
