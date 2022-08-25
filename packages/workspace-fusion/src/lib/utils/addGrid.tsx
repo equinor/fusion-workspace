@@ -12,7 +12,7 @@ export function addGrid<TData, TError>(
 	objectIdentifier: keyof TData
 ) {
 	const gridController = new GridController<TData>(objectIdentifier);
-	mediator.highlightedItem.onchange(gridController.highlightedItem.setValue);
+	configureHighlightSelection(gridController, mediator);
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
 
@@ -44,4 +44,11 @@ function prepareColumnDefintions<TData, TError>(
 	controller: FusionWorkspaceController<TData, TError>
 ) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, controller));
+}
+
+export function configureHighlightSelection<TData, TError>(
+	gridController: GridController<TData>,
+	mediator: FusionWorkspaceController<TData, TError>
+) {
+	mediator.highlightedItem.onchange(gridController.highlightedItem.setValue);
 }
