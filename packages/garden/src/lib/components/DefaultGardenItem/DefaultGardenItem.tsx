@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useGardenContext } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
@@ -14,11 +15,18 @@ export const DefaultGardenItem = ({ columnExpanded, isSelected, item, depth }: D
 		visuals: { getCustomItemColor, getCustomDescription },
 	} = controller;
 
-	const label = controller.nodeLabelCallback(item, controller);
+	const { color, description, label } = useMemo(() => {
+		const label = controller.nodeLabelCallback(item, controller);
+		const color = (getCustomItemColor && getCustomItemColor(item, controller)) ?? 'grey';
 
-	const color = (getCustomItemColor && getCustomItemColor(item, controller)) ?? 'grey';
+		const description = getCustomDescription && getCustomDescription(item, controller);
 
-	const description = getCustomDescription && getCustomDescription(item, controller);
+		return {
+			label,
+			color,
+			description,
+		};
+	}, [controller, getCustomDescription, getCustomItemColor, item]);
 
 	return (
 		<StyledDefaultPackage
