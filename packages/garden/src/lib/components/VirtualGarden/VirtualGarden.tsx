@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useVirtual } from 'react-virtual';
-import { useGardenGroups } from '../../hooks';
+import { useGardenContext, useGardenGroups } from '../../hooks';
 
 import { useExpand } from '../../hooks/useExpand';
 import { useRefresh } from '../../hooks/useRefresh';
@@ -8,7 +8,6 @@ import { useVirtualScrolling } from '../../hooks/useVirtualScrolling';
 import { CustomVirtualViews, GardenGroup } from '../../types';
 import { getGardenItems } from '../../utils/getGardenItems';
 import { getRowCount } from '../../utils/getRowCount';
-import { useGardenContext } from '../Garden';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
@@ -28,7 +27,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 			value: { horizontalGroupingAccessor: gardenKey },
 		},
 		visuals: { rowHeight, highlightHorizontalColumn },
-		customViews: { customGroupView, customHeaderView, customItemView },
+		customViews: { customGroupView, customItemView },
 		customGroupByKeys,
 	} = useGardenContext();
 

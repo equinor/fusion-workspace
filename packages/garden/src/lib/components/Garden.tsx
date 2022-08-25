@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 import { GardenController } from '../classes';
 import { BaseRecordObject } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
@@ -26,7 +26,16 @@ export function Garden<
 	//TODO:Handle no data better in garden
 
 	return (
-		<GardenContext.Provider value={controller as any}>
+		<GardenContext.Provider
+			value={
+				controller as unknown as GardenController<
+					unknown,
+					BaseRecordObject<unknown>,
+					BaseRecordObject<unknown>,
+					unknown
+				>
+			}
+		>
 			<VirtualContainer />
 		</GardenContext.Provider>
 	);
@@ -35,5 +44,3 @@ export function Garden<
 export const GardenContext = createContext<
 	GardenController<unknown, BaseRecordObject<unknown>, BaseRecordObject<unknown>, unknown>
 >({} as any);
-
-export const useGardenContext = () => useContext(GardenContext);

@@ -101,10 +101,6 @@ export class GardenController<
 		this.groupData();
 
 		this.data.onChange(this.groupData);
-
-		this.grouping.onChange((newG) => {
-			console.log('Grouping changed', newG);
-		});
 	}
 
 	/**

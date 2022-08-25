@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
-import { GardenGroups } from '../../types';
-import { useGardenContext } from '../Garden';
+import { useMemo } from 'react';
+
+import { useGardenContext, useGardenGroups, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
-import { VirtualGarden } from '../VirtualGarden/VirtualGarden';
+import { FilterSelector } from '../FilterSelector';
+import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
-import { FilterSelector } from '../FilterSelector/FilterSelector';
-import { defaultSortFunction } from '../../utils/defaultSortFunction';
-import { useItemWidths } from '../../hooks/useItemWidths';
-import { useGardenGroups } from '../../hooks/useGardenGroups';
 
 export const VirtualContainer = (): JSX.Element | null => {
 	const garden = useGardenGroups();

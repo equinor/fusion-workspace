@@ -1,8 +1,8 @@
 import { SingleSelect } from '@equinor/eds-core-react';
 import { Fragment, useCallback, useMemo } from 'react';
+import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
-import { useGardenContext } from '../Garden';
 import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
 const getFieldSettingsKeyFromLabel = <T,>(label: string, fieldSettings: FieldSettings<T, string>) =>

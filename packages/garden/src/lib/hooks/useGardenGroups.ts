@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useGardenContext } from '../components';
 import { GardenGroups } from '../types';
 import { defaultSortFunction } from '../utils/defaultSortFunction';
+import { useGardenContext } from './useGardenContext';
 
 export function useGardenGroups() {
 	const controller = useGardenContext();

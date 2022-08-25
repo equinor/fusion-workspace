@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useGardenContext } from '../components';
+import { useGardenContext } from './useGardenContext';
 import { useGardenGroups } from './useGardenGroups';
 
 export function useItemWidths() {

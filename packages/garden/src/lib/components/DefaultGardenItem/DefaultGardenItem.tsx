@@ -1,4 +1,4 @@
-import { useGardenContext } from '../Garden';
+import { useGardenContext } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
 	columnExpanded: boolean;

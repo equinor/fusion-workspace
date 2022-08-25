@@ -4,6 +4,7 @@ const getSubGroupCounts = <T>(subGroup: GardenGroup<T>): number => {
 	let count = subGroup.subGroups.length;
 	/** If subgroup is not expanded - we only want the number of group headers. Don't care about items. */
 	if (!subGroup?.isExpanded) {
+		// eslint-disable-next-line no-self-assign
 		count = count;
 	} else if (subGroup?.subGroupCount === 0) {
 		/** If subgroup is expanded, but it's the last subgroup - we want to count all the items  */

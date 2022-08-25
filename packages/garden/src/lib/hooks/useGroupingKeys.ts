@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGardenContext } from '../components';
+import { useGardenContext } from './useGardenContext';
 
 export function useGroupingKeys() {
 	const {

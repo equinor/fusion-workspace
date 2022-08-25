@@ -1,8 +1,7 @@
 import { MutableRefObject } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
-import { useGardenContext } from '../Garden';
 
-import { useExpand, useGardenGroups } from '../../hooks';
+import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledCount, StyledPackageRoot } from './gardenItemContainer.styles';
 import { DefaultGardenItem } from '../DefaultGardenItem/DefaultGardenItem';
@@ -36,6 +35,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 		items,
 	} = props;
 
+	const controller = useGardenContext();
 	const {
 		highlightedNode: { value: highlighted },
 		clickEvents: { onClickGroup, onClickItem },
@@ -43,11 +43,9 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
 		objectIdentifier,
-	} = useGardenContext();
+	} = controller;
 
 	const groups = useGardenGroups();
-
-	const controller = useGardenContext();
 
 	const expand = useExpand();
 
