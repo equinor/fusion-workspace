@@ -1,13 +1,13 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../types';
 
-const TabSortOrder = new Map<WorkspaceTabNames, number>();
-TabSortOrder.set('garden', 0);
-TabSortOrder.set('grid', 1);
+const tabSortOrder = new Map<WorkspaceTabNames, number>();
+tabSortOrder.set('garden', 0);
+tabSortOrder.set('grid', 1);
 
 export function sortFusionTabs<TError>(viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
 	viewController.tabs.sort((a, b) => {
-		return (TabSortOrder.get(a.name) ?? Infinity) - (TabSortOrder.get(b.name) ?? Infinity);
+		return (tabSortOrder.get(a.name) ?? Infinity) - (tabSortOrder.get(b.name) ?? Infinity);
 	});
 	return viewController;
 }
