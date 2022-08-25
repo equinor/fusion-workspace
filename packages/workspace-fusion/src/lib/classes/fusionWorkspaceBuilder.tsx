@@ -34,7 +34,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
-			this.mediator.highlightedItem.setValue(id);
+			this.mediator.selection.setSelection([{ id }]);
 		});
 	}
 
@@ -70,7 +70,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator);
+		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 

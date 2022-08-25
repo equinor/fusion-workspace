@@ -27,11 +27,20 @@ function Workspace() {
 						sequenceNumber: {
 							getKey: (s) => s.sequenceNumber as unknown as string,
 						},
+						description: {
+							getKey: (s) => s.description,
+						},
+						phase: {
+							getKey: (s) => s.phase,
+						},
 					},
 				})
 				.addMiddleware((mediator) => {
 					mediator.onClick((click) => {
 						console.log('Clickevent happened', click);
+					});
+					mediator.selection.onSelectionChanged((s) => {
+						console.log(`Selection changed ${s.map((s) => s.id)}`);
 					});
 				})
 				.addStatusBarItems(statusBarConfig)

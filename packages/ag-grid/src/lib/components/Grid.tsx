@@ -5,7 +5,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../classes/gridController';
 import { useRowData } from '../hooks/useRowData';
 import { StyledGridWrapper } from './grid.styles';
-import { selectRowNode, useHighlightService } from '../hooks/useHighlightedItem';
+import { selectRowNode, useSelectionService } from '../hooks/useHighlightedItem';
 import { useState } from 'react';
 import { GridApi } from 'ag-grid-community';
 
@@ -17,18 +17,19 @@ export function Grid<T>({ controller }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const rowData = useRowData(controller);
 
-	useHighlightService(controller, gridApi);
+	useSelectionService(controller, gridApi);
 
 	return (
 		<StyledGridWrapper className="ag-theme-alpine">
 			<AgGridReact
 				onGridReady={(api) => {
 					setGridApi(api.api);
-					selectRowNode(controller.highlightedItem.value, controller.objectIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes.value ?? [], controller.objectIdentifier, api.api, rowData);
 				}}
 				gridOptions={controller.gridOptions}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}
+				rowSelection="multiple"
 			/>
 		</StyledGridWrapper>
 	);

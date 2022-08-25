@@ -50,5 +50,5 @@ export function configureHighlightSelection<TData, TError>(
 	gridController: GridController<TData>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
-	mediator.highlightedItem.onchange(gridController.highlightedItem.setValue);
+	mediator.selection.onSelectionChanged((val) => gridController.selectedNodes.setValue(val.map(({ id }) => id)));
 }

@@ -19,7 +19,7 @@ export const mockData = [
 	{
 		id: '071296e8-1f21-4e96-842a-752500e4daea',
 		sequenceNumber: 894,
-		title: 'xxx',
+		title: 'xxs',
 		description: 'dsa',
 		phase: 'IC',
 		originSource: 'NotApplicable',
@@ -36,7 +36,7 @@ export const mockData = [
 	{
 		id: '54b54078-6682-4a8f-964c-a0a552e82a53',
 		sequenceNumber: 893,
-		title: 'xxx',
+		title: 'xxs',
 		description: 'dsa',
 		phase: 'IC',
 		originSource: 'NotApplicable',

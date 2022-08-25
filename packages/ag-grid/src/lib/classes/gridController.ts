@@ -10,7 +10,7 @@ export class GridController<TData> {
 		this.objectIdentifier = objectIdentifier;
 	}
 
-	highlightedItem = new Observable<string | null>(null);
+	selectedNodes: Observable<string[]> = new Observable<string[]>([]);
 
 	/** The data to be used in the grid */
 	rowData: TData[] = [];
