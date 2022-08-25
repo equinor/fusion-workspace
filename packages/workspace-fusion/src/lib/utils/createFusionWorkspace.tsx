@@ -1,7 +1,8 @@
 import { tokens } from '@equinor/eds-tokens';
-import { Workspace } from '@equinor/workspace-react';
+import { Workspace, WorkspaceViewController } from '@equinor/workspace-react';
 import styled from 'styled-components';
 import { FusionWorkspaceBuilder } from '../classes';
+import { WorkspaceTabNames } from '../types';
 
 type UserConfig<TData, TError> = (
 	builder: FusionWorkspaceBuilder<TData, TError>
@@ -16,9 +17,20 @@ export function createFusionWorkspace<TData, TError>(
 
 	return () => (
 		<StyledFusionWorkspace>
-			<Workspace controller={builder.viewController} />
+			<Workspace controller={sortFusionTabs(builder.viewController)} />
 		</StyledFusionWorkspace>
 	);
+}
+
+const TabSortOrder = new Map<WorkspaceTabNames, number>();
+TabSortOrder.set('garden', 0);
+TabSortOrder.set('grid', 1);
+
+function sortFusionTabs<TError>(viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
+	viewController.tabs.sort((a, b) => {
+		return (TabSortOrder.get(a.name) ?? Infinity) - (TabSortOrder.get(b.name) ?? Infinity);
+	});
+	return viewController;
 }
 
 /**
