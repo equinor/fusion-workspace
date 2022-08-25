@@ -142,5 +142,6 @@ export class GardenController<
 		);
 	};
 
+	/** Function for sorting groups after they have been grouped */
 	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
 }
