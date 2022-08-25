@@ -1,13 +1,12 @@
+import { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { GridApi } from 'ag-grid-community';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import { GridController } from '../classes/gridController';
-import { useRowData } from '../hooks/useRowData';
+import { GridController } from '../classes';
+import { useRowData, selectRowNode, useSelectionService } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
-import { selectRowNode, useSelectionService } from '../hooks/useHighlightedItem';
-import { useState } from 'react';
-import { GridApi } from 'ag-grid-community';
 
 interface GridProps<T> {
 	controller: GridController<T>;
