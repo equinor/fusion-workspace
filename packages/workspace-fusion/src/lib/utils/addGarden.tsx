@@ -22,7 +22,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	});
 }
 
-function configureHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
+export function configureHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
