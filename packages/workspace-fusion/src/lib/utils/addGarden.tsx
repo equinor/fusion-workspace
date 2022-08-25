@@ -35,7 +35,6 @@ function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, T
 	objectIdentifier: keyof TData
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
-		mediator.highlightedItem.setValue(item[objectIdentifier] as unknown as string);
 		mediator.click({ item: item });
 	};
 }
