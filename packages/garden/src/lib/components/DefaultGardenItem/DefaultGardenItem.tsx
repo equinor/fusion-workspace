@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { useGardenContext } from '../../hooks';
-import { useIsSelected } from '../../hooks/useIsSelected';
+import { useGardenContext, useIsSelected } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
 	columnExpanded: boolean;
