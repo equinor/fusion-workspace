@@ -134,7 +134,7 @@ export class GardenController<
 	 * Function for grouping data.
 	 */
 	groupData = () => {
-		this.groups.setValue(createGarden(this));
+		this.groups.setValue(this.postGroupSorting(createGarden(this)));
 	};
 
 	/**
@@ -145,4 +145,6 @@ export class GardenController<
 			typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback
 		);
 	};
+
+	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
 }

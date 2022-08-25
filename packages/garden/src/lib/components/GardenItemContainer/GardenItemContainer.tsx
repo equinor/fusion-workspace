@@ -2,7 +2,7 @@ import { MutableRefObject } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 import { useGardenContext } from '../Garden';
 
-import { useExpand } from '../../hooks';
+import { useExpand, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledCount, StyledPackageRoot } from './gardenItemContainer.styles';
 import { DefaultGardenItem } from '../DefaultGardenItem/DefaultGardenItem';
@@ -11,7 +11,6 @@ import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles'
 import { tokens } from '@equinor/eds-tokens';
 import { Icon } from '@equinor/eds-core-react';
 import { GardenController } from '../../classes';
-import { useGardenGroups } from '../VirtualContainer/VirtualContainer';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<T> = {

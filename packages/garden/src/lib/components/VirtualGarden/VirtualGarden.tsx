@@ -1,18 +1,17 @@
 import { Fragment, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useVirtual } from 'react-virtual';
+import { useGardenGroups } from '../../hooks';
 
 import { useExpand } from '../../hooks/useExpand';
 import { useRefresh } from '../../hooks/useRefresh';
 import { useVirtualScrolling } from '../../hooks/useVirtualScrolling';
 import { CustomVirtualViews, GardenGroup } from '../../types';
-import { defaultSortFunction } from '../../utils/defaultSortFunction';
 import { getGardenItems } from '../../utils/getGardenItems';
 import { getRowCount } from '../../utils/getRowCount';
 import { useGardenContext } from '../Garden';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
-import { useGardenGroups } from '../VirtualContainer/VirtualContainer';
 
 type VirtualGardenProps<T> = {
 	width?: number;
@@ -25,8 +24,6 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 
 	const garden = useGardenGroups();
 	const {
-		fieldSettings,
-
 		grouping: {
 			value: { horizontalGroupingAccessor: gardenKey },
 		},
@@ -42,12 +39,6 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 
 	const columnCount = useMemo(() => garden.length, [garden]);
 	const rowCount = useMemo(() => getRowCount(garden), [garden]);
-
-	const sortedColumns = useMemo(
-		() =>
-			garden.sort((a, b) => (fieldSettings?.[gardenKey]?.getColumnSort ?? defaultSortFunction)(a.value, b.value)),
-		[garden, fieldSettings, gardenKey]
-	);
 
 	const rowVirtualizer = useVirtual({
 		size: rowCount,
@@ -70,7 +61,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 		useObserver: useCallback(() => ({ height: 0, width: window.innerWidth }), []),
 		overscan: 3,
 	});
-	const headerChild = customHeaderView ?? undefined;
+
 	const packageChild = customItemView ?? undefined;
 
 	const handleExpand = useCallback(
@@ -90,10 +81,10 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 	);
 	useLayoutEffect(() => {
 		if (highlightedColumn) {
-			const scrollIndex = sortedColumns.findIndex((column) => column.value === highlightedColumn);
+			const scrollIndex = garden.findIndex((column) => column.value === highlightedColumn);
 			scrollIndex !== -1 && columnVirtualizer.scrollToIndex(scrollIndex, { align: 'center' });
 		}
-	}, [sortedColumns, columnVirtualizer.scrollToIndex, highlightedColumn]);
+	}, [garden, columnVirtualizer.scrollToIndex, highlightedColumn]);
 
 	return (
 		<Layout
@@ -105,7 +96,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 		>
 			<HeaderContainer columnVirtualizer={columnVirtualizer} />
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
-				const currentColumn = sortedColumns[virtualColumn.index];
+				const currentColumn = garden[virtualColumn.index];
 				const columnItems = getGardenItems<T>(currentColumn as GardenGroup<T>, true);
 
 				return (

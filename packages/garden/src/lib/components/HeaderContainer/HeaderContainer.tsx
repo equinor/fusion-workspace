@@ -6,9 +6,9 @@ import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
 import { getGardenItems } from '../../utils/getGardenItems';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
-import { useGardenGroups } from '../VirtualContainer/VirtualContainer';
 import { useGardenContext } from '../Garden';
 import { GardenGroup } from '../../types';
+import { useGardenGroups } from '../../hooks';
 
 type HeaderContainerProps = {
 	columnVirtualizer: { virtualItems: VirtualItem[] };

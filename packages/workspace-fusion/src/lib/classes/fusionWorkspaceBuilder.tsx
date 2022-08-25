@@ -1,5 +1,6 @@
 import { Garden, GardenConfig, GardenController } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+import { GardenIcon } from '../icons/GardenIcon';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -65,14 +66,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	) => {
 		const gardenController = new GardenController(config);
 
+		gardenController.clickEvents.onClickItem = (item) => this.mediator.click({ item: item });
+
 		this.viewController.tabs.push({
 			Component: () => <Garden controller={gardenController} />,
 			name: 'garden',
-			HeaderComponent: () => <div>Garden</div>,
-		});
-
-		gardenController.groups.onChange((ev) => {
-			console.log('groups changed', ev);
+			HeaderComponent: GardenIcon,
 		});
 
 		this.mediator.onFilterDataChange(gardenController.data.setValue);

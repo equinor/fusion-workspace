@@ -1,1 +1,1 @@
-export const defaultSortFunction = (a: string, b: string): number => a.localeCompare(b);
+export const defaultSortFunction = (a: string, b: string): number => a.toString().localeCompare(b);
