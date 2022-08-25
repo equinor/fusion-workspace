@@ -16,6 +16,12 @@ import { ReactiveValue } from './reactiveValue';
 
 const NullFunc = () => void 0;
 
+/**
+ * @typeParam TData type of your data
+ * @typeParam Object interface of custom group by keys
+ * @typeParam Object interface for custom state
+ * @typeParam Custom user context, store anything here
+ */
 export class GardenController<
 	TData,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
