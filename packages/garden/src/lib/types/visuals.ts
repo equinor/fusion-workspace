@@ -8,7 +8,7 @@ import {
 
 export interface Visuals<TData> {
 	/**Function for calculating the longest width of a garden column */
-	calculateItemWidth?: ItemWidthCalculation<TData>;
+	calculateItemWidth: ItemWidthCalculation<TData>;
 	/**
 	 * Height of a single garden item
 	 * Necessary for virtualization to work.

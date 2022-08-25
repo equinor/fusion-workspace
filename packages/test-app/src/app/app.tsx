@@ -8,6 +8,23 @@ function Workspace() {
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
+			.addGarden({
+				data: [],
+				nodeLabelCallback: (s) => s.sequenceNumber.toString(),
+				objectIdentifier: 'id',
+				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+				fieldSettings: {
+					title: {
+						getKey: (s) => s.title,
+						getColumnSort: (a, b) => {
+							return a.localeCompare(b) === 1 ? -1 : 1;
+						},
+					},
+					sequenceNumber: {
+						getKey: (s) => s.sequenceNumber as unknown as string,
+					},
+				},
+			})
 			.addMiddleware((mediator) => {
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);
