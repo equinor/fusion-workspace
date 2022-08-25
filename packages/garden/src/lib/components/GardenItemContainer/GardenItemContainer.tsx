@@ -110,7 +110,6 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 						) : (
 							<DefaultGardenItem
 								depth={item.itemDepth}
-								isSelected={item.item[objectIdentifier] === highlighted}
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}

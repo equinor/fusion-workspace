@@ -35,7 +35,6 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
-
 			this.mediator.highlightedItem.setValue(id);
 		});
 		this.mediator.highlightedItem.onchange((id) => {
@@ -77,7 +76,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	) => {
 		const gardenController = new GardenController(config);
 
-		gardenController.clickEvents.onClickItem = (item) => this.mediator.click({ item: item });
+		gardenController.clickEvents.onClickItem = (item) => {
+			gardenController.setHighlightedNode(item[this.objectIdentifier] as unknown as string);
+			this.mediator.click({ item: item });
+		};
 
 		this.viewController.tabs.push({
 			Component: () => <Garden controller={gardenController} />,
