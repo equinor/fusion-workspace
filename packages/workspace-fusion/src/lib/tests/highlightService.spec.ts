@@ -30,9 +30,9 @@ describe('Highlight service should highlight remove highlight in all its integra
 		});
 		configureGardenHighlightSelection(controller, mediator);
 
-		expect(controller.highlightedNode.value).toBeNull();
-		mediator.highlightedItem.setValue(HIGHLIGHTEDMOCKID);
-		expect(controller.highlightedNode.value).toStrictEqual(HIGHLIGHTEDMOCKID);
+		expect(controller.selectedNodes.value.length).toStrictEqual(0);
+		mediator.selection.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
+		expect(controller.selectedNodes.value[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 
 	it('Setting highlighted on the mediator should also set it on the grid', () => {
@@ -46,8 +46,8 @@ describe('Highlight service should highlight remove highlight in all its integra
 		const gridController = new GridController<MockData>('id');
 
 		configureGridHighlight(gridController, mediator);
-		expect(gridController.highlightedItem.value).toBeNull();
-		mediator.highlightedItem.setValue(HIGHLIGHTEDMOCKID);
-		expect(gridController.highlightedItem.value).toStrictEqual(HIGHLIGHTEDMOCKID);
+		expect(gridController.selectedNodes.value?.length).toStrictEqual(0);
+		mediator.selection.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
+		expect(gridController.selectedNodes.value?.[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 });
