@@ -11,6 +11,7 @@ import {
 	CustomTab,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
+import { addGarden } from '../utils/addGarden';
 
 interface UIContext {
 	appKey: string;
@@ -71,22 +72,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		const gardenController = new GardenController(config);
-
-		gardenController.clickEvents.onClickItem = (item) => {
-			this.mediator.highlightedItem.setValue(item[this.objectIdentifier] as unknown as string);
-			this.mediator.click({ item: item });
-		};
-
-		this.mediator.highlightedItem.onchange(gardenController.setHighlightedNode);
-
-		this.viewController.tabs.push({
-			Component: () => <Garden controller={gardenController} />,
-			name: 'garden',
-			HeaderComponent: GardenIcon,
-		});
-
-		this.mediator.onFilterDataChange(gardenController.data.setValue);
+		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 
