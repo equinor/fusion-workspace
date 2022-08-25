@@ -8,10 +8,14 @@ import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './def
 export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionWorkspaceController<TData, TError>,
+	objectIdentifier: keyof TData
 ) {
-	const gridController = new GridController<TData>();
-
+	const gridController = new GridController<TData>(objectIdentifier);
+	mediator.highlightedItem.onchange(gridController.highlightedItem.setValue);
+	gridController.highlightedItem.onchange((id) => {
+		console.log(`Grid controller changed highlighted item ${id}`);
+	});
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
 

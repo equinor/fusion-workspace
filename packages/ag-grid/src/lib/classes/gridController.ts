@@ -1,10 +1,19 @@
+import { Observable } from '@workspace/workspace-core';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { registerCallback } from '../functions';
 import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChangedCallback } from '../types';
 
-export class GridController<T> {
+export class GridController<TData> {
+	objectIdentifier: keyof TData;
+
+	constructor(objectIdentifier: keyof TData) {
+		this.objectIdentifier = objectIdentifier;
+	}
+
+	highlightedItem = new Observable<string | null>(null);
+
 	/** The data to be used in the grid */
-	rowData: T[] = [];
+	rowData: TData[] = [];
 	/** The column definitions for the grid */
 	columnDefs: ColDef[] = [];
 	/** The grid options to be used in the grid */
@@ -13,8 +22,8 @@ export class GridController<T> {
 	/**
 	 * Callbacks
 	 */
-	private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<T>>[] = [];
-	private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<T>>[] = [];
+	private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<TData>>[] = [];
+	private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<TData>>[] = [];
 
 	/**
 	 * Updates the grid options
@@ -30,7 +39,7 @@ export class GridController<T> {
 	 * @param cb The callback to be called on whenever grid options changes
 	 * @returns The given id for the callback, and a function for unsubscribing.
 	 */
-	onGridOptionsChanged = (cb: OnGridOptionsChangedCallback<T>) =>
+	onGridOptionsChanged = (cb: OnGridOptionsChangedCallback<TData>) =>
 		registerCallback(cb, this.onGridOptionsChangedCallbacks, this.unsubOnGridOptionsChanged);
 
 	private unsubOnGridOptionsChanged = (id: string) => {
@@ -41,7 +50,7 @@ export class GridController<T> {
 	 * Sets new row data and triggers all the onRowDataChanged callback's.
 	 * @param newData the new data to be set
 	 */
-	setRowData = (newData: T[]) => {
+	setRowData = (newData: TData[]) => {
 		this.rowData = newData;
 		this.onRowDataChangedCallbacks.forEach(({ callback }) => callback(newData, this));
 	};
@@ -51,7 +60,7 @@ export class GridController<T> {
 	 * @param callback The callback to be called on whenever row data changes
 	 * @returns The given id for the callback, and a function for unsubscribing.
 	 */
-	onRowDataChanged = (callback: OnRowDataChangedCallback<T>): OnCallbackSet =>
+	onRowDataChanged = (callback: OnRowDataChangedCallback<TData>): OnCallbackSet =>
 		registerCallback(callback, this.onRowDataChangedCallbacks, this.unsubOnRowDataChanged);
 
 	private unsubOnRowDataChanged = (id: string) => {

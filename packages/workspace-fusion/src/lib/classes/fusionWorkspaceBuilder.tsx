@@ -21,13 +21,24 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
+	objectIdentifier: keyof TData;
 	appKey: string;
 	private mediator: FusionWorkspaceController<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
+	constructor(appKey: string, color: string, objectIdentifier: keyof TData, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
+		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
+
+		this.mediator.onClick(({ item }) => {
+			const id = item[this.objectIdentifier] as unknown as string;
+
+			this.mediator.highlightedItem.setValue(id);
+		});
+		this.mediator.highlightedItem.onchange((id) => {
+			console.log(`Highlighted item with id of ${id}`);
+		});
 	}
 
 	/**
@@ -69,7 +80,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator);
+		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 	/**

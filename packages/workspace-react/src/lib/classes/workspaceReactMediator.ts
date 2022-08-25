@@ -6,6 +6,8 @@ export class WorkspaceReactMediator<
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>
 > extends WorkspaceMediator<TData, TOnClick, TError> {
+	highlightedItem = new Observable<string | null>(null);
+
 	isSidesheetOpen = false;
 	setIsSidesheetOpen: (value: boolean) => void;
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
