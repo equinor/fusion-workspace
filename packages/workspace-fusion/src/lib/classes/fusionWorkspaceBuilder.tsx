@@ -1,6 +1,5 @@
-import { Garden, GardenConfig, GardenController } from '@equinor/garden';
+import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import { GardenIcon } from '../icons/GardenIcon';
 import {
 	DataFetchAsync,
 	GridConfig,
