@@ -1,3 +1,4 @@
+import { Garden, GardenConfig, GardenController } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
 	DataFetchAsync,
@@ -59,7 +60,22 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * Adds a garden tab to your workspace
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addGarden = () => {
+	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
+		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
+	) => {
+		const gardenController = new GardenController(config);
+
+		this.viewController.tabs.push({
+			Component: () => <Garden controller={gardenController} />,
+			name: 'garden',
+			HeaderComponent: () => <div>Garden</div>,
+		});
+
+		gardenController.groups.onChange((ev) => {
+			console.log('groups changed', ev);
+		});
+
+		this.mediator.onFilterDataChange(gardenController.data.setValue);
 		return this;
 	};
 

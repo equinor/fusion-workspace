@@ -8,6 +8,13 @@ function Workspace() {
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
 			.addSidesheet(sidesheetOptions)
+			.addGarden({
+				data: [],
+				nodeLabelCallback: (s) => s.sequenceNumber.toString(),
+				objectIdentifier: 'id',
+				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+				fieldSettings: {},
+			})
 			.addMiddleware((mediator) => {
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);

@@ -43,6 +43,8 @@ export class GardenController<
 	/** Override visuals and components for garden */
 	visuals: Visuals<TData> = {
 		getCustomItemColor: () => defaultItemColor,
+		calculateItemWidth: () => 300,
+		getCustomDescription: () => '',
 	};
 	/** Custom user context */
 	context?: TContext;
@@ -97,6 +99,12 @@ export class GardenController<
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
 		this.context = context;
 		this.groupData();
+
+		this.data.onChange(this.groupData);
+
+		this.grouping.onChange((newG) => {
+			console.log('Grouping changed', newG);
+		});
 	}
 
 	/**
