@@ -3,7 +3,7 @@ import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { GridController } from '@workspace/grid';
 import { ObjectType } from '@workspace/workspace-core';
 import { WorkspaceOnClick } from '../types';
-import { configureHighlightSelection } from '../utils/addGarden';
+import { configureGardenHighlightSelection } from '../utils/addGarden';
 import { configureHighlightSelection as configureGridHighlight } from '../utils/addGrid';
 
 const HIGHLIGHTEDMOCKID = '123';
@@ -28,7 +28,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 			objectIdentifier: 'id',
 			clickEvents: {},
 		});
-		configureHighlightSelection(controller, mediator);
+		configureGardenHighlightSelection(controller, mediator);
 
 		expect(controller.highlightedNode.value).toBeNull();
 		mediator.highlightedItem.setValue(HIGHLIGHTEDMOCKID);

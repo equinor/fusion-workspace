@@ -9,8 +9,7 @@ import {
 	FusionWorkspaceController,
 	CustomTab,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
-import { addGarden } from '../utils/addGarden';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
 
 interface UIContext {
 	appKey: string;
@@ -71,7 +70,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
+		addGarden(config, this.viewController, this.mediator);
 		return this;
 	};
 

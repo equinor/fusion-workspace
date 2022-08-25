@@ -6,14 +6,13 @@ import { FusionWorkspaceController, WorkspaceTabNames } from '../types';
 export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TError>(
 	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionWorkspaceController<TData, TError>,
-	objectIdentifier: keyof TData
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
 	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>(gardenConfig);
 
 	configureDataChange(gardenController, mediator);
-	configureClickEvents(gardenController, mediator, objectIdentifier);
-	configureHighlightSelection(gardenController, mediator);
+	configureClickEvents(gardenController, mediator);
+	configureGardenHighlightSelection(gardenController, mediator);
 
 	viewController.tabs.push({
 		Component: () => <Garden controller={gardenController} />,
@@ -22,7 +21,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	});
 }
 
-export function configureHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
+export function configureGardenHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {
@@ -31,8 +30,7 @@ export function configureHighlightSelection<TData, TError, TCustomGroupByKeys, T
 
 function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionWorkspaceController<TData, TError>,
-	objectIdentifier: keyof TData
+	mediator: FusionWorkspaceController<TData, TError>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
 		mediator.click({ item: item });
