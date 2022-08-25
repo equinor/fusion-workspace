@@ -13,7 +13,7 @@ interface MockData {
 }
 
 describe('Highlight service should highlight remove highlight in all its integrated components', () => {
-	it('Should higlight in garden', () => {
+	it('Setting highlighted on the mediator should also set it on the garden', () => {
 		const mediator = new WorkspaceReactMediator<
 			MockData,
 			WorkspaceOnClick<MockData>,
@@ -35,7 +35,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 		expect(controller.highlightedNode.value).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 
-	it('Should highlight in grid', () => {
+	it('Setting highlighted on the mediator should also set it on the grid', () => {
 		const mediator = new WorkspaceReactMediator<
 			MockData,
 			WorkspaceOnClick<MockData>,
