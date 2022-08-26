@@ -2,6 +2,7 @@ import { WorkspaceOnClick, FusionMediator } from '../../types';
 import { useOnClick } from '../../hooks/useOnClick';
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
+import { MediatorProvider } from '../provider';
 
 interface SidesheetWrapperProps<TData, TError> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
@@ -22,7 +23,9 @@ export function SidesheetWrapper<TData, TError>({ Component, mediator }: Sideshe
 
 	return (
 		<div>
-			<Component item={clickEvent.item} />
+			<MediatorProvider mediator={mediator}>
+				<Component item={clickEvent.item} />
+			</MediatorProvider>
 		</div>
 	);
 }

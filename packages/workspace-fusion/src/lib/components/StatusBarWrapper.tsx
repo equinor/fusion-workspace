@@ -7,8 +7,8 @@ interface StatusBarWrapperProps<TData, TError> {
 	config: StatusBarConfig<TData>;
 	controller: FusionMediator<TData, TError>;
 }
-export function StatusBarWrapper<TData, TError>({ config, controller }: StatusBarWrapperProps<TData, TError>) {
-	const data = useFilteredData(controller);
+export function StatusBarWrapper<TData, TError>({ config, mediator }: StatusBarWrapperProps<TData, TError>) {
+	const data = useFilteredData(mediator);
 
 	return <StatusBar items={config.map(({ getValue }) => getValue(data))} />;
 }

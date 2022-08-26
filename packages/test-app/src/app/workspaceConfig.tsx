@@ -47,7 +47,7 @@ const StyledCircle = styled.div<{ color: string }>`
 `;
 
 export const customTab = {
-	Component: ({ data, onClick }) => <div onClick={() => onClick({ item: data[0] })}>{data.length}</div>,
+	Component: CustomTab,
 	HeaderComponent: () => <div>Custom tab</div>,
 	name: 'Lines',
 };
@@ -85,6 +85,22 @@ export function SidesheetComponent(ev: WorkspaceOnClick<Handover>) {
 				<Detail title="MC status" value={ev.item.mcStatus} />
 			</div>
 		</div>
+	);
+};
+=======
+export function CustomTab() {
+	const { click, data, filteredData, isLoading, setFilteredData } = useWorkspace();
+
+	return (
+		<StyledCustomTab>
+			<ul>
+				<li>Data length: {data?.length}</li>
+				<li>Filtered data length: {filteredData?.length}</li>
+				<li>isLoading: {isLoading}</li>
+			</ul>
+			<Button onClick={() => click({ item: data?.[0] })}>Open sidesheet</Button>
+			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
+		</StyledCustomTab>
 	);
 }
 

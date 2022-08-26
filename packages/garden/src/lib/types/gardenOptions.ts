@@ -21,7 +21,7 @@ export interface CustomGroupView<T> {
 	onSelect?: (item: T) => void;
 	onGroupeSelect?: (item: any) => void;
 	columnExpanded: boolean;
-	groupByKeys: (keyof T)[];
+	groupByKeys: (keyof T | string)[];
 }
 
 export interface CustomHeaderView<T> {

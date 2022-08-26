@@ -27,12 +27,12 @@ export interface CustomTabProps<TData> {
 	onClick: (ev: WorkspaceOnClick<TData>) => void;
 }
 
-export type CustomTabComponent<TData> = (props: CustomTabProps<TData>) => JSX.Element;
+export type CustomTabComponent = () => JSX.Element;
 
-export interface CustomTab<TData> {
+export interface CustomTab {
 	name: string;
 	HeaderComponent: () => JSX.Element;
-	Component: CustomTabComponent<TData>;
+	Component: CustomTabComponent;
 }
 
 export interface AppConfig<TabNames extends string> {
