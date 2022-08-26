@@ -8,6 +8,11 @@ function FusionWorkspace() {
 		addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
+			.addConfig({
+				appColor: 'purple',
+				appKey: 'Handover',
+				defaultTab: 'grid',
+			})
 			.addSidesheet(sidesheetOptions)
 			.addGarden({
 				data: [],
