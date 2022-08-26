@@ -1,9 +1,10 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { Workspace } from '@equinor/workspace-react';
 import { DefaultInterface } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
-function Workspace() {
-	const Component = createFusionWorkspace<DefaultInterface, unknown>('Scope change', 'purple', ({ addDataSource }) =>
+function FusionWorkspace() {
+	const controller = createFusionWorkspace<DefaultInterface, unknown>('Scope change', 'purple', ({ addDataSource }) =>
 		addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
@@ -33,11 +34,11 @@ function Workspace() {
 			.addStatusBarItems(statusBarConfig)
 	);
 
-	return <Component />;
+	return <Workspace controller={controller} />;
 }
 
 export function App() {
-	return <Workspace />;
+	return <FusionWorkspace />;
 }
 
 export default App;
