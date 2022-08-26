@@ -6,8 +6,9 @@ import {
 	SidesheetConfig,
 	WorkspaceTabNames,
 	StatusBarConfig,
-	FusionWorkspaceController,
+	FusionMediator,
 	CustomTab,
+	AppConfig,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
 
@@ -23,20 +24,27 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	objectIdentifier: keyof TData;
-	appKey: string;
-	private mediator: FusionWorkspaceController<TData, TError>;
+	appKey?: string;
+	private mediator: FusionMediator<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(appKey: string, color: string, objectIdentifier: keyof TData, defaultTab?: WorkspaceTabNames) {
-		this.appKey = appKey;
+	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
+		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
 		});
 	}
+
+	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
+		this.appKey = appKey;
+		this.viewController.appColor = appColor;
+		this.viewController.appKey = appKey;
+		this.viewController.tabs.activeTab = defaultTab;
+		return this;
+	};
 
 	/**
 	 * Add a function for providing data to the workspace
@@ -48,7 +56,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
-	addMiddleware = (cb: (mediator: FusionWorkspaceController<TData, TError>) => void) => {
+	addMiddleware = (cb: (mediator: FusionMediator<TData, TError>) => void) => {
 		cb(this.mediator);
 		return this;
 	};
