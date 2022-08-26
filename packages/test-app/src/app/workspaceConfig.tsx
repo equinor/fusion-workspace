@@ -2,8 +2,8 @@ import {
 	GridConfig,
 	SidesheetConfig,
 	StatusBarConfig,
-	useMediatorContext,
 	WorkspaceOnClick,
+	useWorkspace,
 } from '@equinor/workspace-fusion';
 import { DefaultInterface } from './types';
 import { mockData } from './mockData';
@@ -43,7 +43,7 @@ export const statusBarConfig: StatusBarConfig<DefaultInterface> = [
 ];
 
 export function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
-	const { filteredData } = useMediatorContext();
+	const { filteredData } = useWorkspace();
 
 	return (
 		<div style={{ height: '100%', width: '100%', backgroundColor: 'green' }}>
@@ -55,7 +55,7 @@ export function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
 }
 
 export function CustomTab() {
-	const { click, data, filteredData, isLoading, setFilteredData } = useMediatorContext();
+	const { click, data, filteredData, isLoading, setFilteredData } = useWorkspace();
 
 	return (
 		<StyledCustomTab>

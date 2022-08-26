@@ -1,4 +1,4 @@
 import { useContext } from 'react';
 import { MediatorContext } from '../components/provider/MediatorProvider';
 
-export const useMediatorContext = () => useContext(MediatorContext);
+export const useWorkspace = () => useContext(MediatorContext);
