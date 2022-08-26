@@ -3,7 +3,7 @@ import { CustomTabWrapper } from '../components';
 import { CustomTab, FusionWorkspaceController, WorkspaceTabNames } from '../types';
 
 export function addCustomTab<TData, TError>(
-	{ Component, HeaderComponent, name }: CustomTab<TData>,
+	{ Component, HeaderComponent, name }: CustomTab,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionWorkspaceController<TData, TError>
 ) {

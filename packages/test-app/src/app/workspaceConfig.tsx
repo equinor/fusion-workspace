@@ -1,13 +1,23 @@
-import { GridConfig, SidesheetConfig, StatusBarConfig, WorkspaceOnClick } from '@equinor/workspace-fusion';
+import {
+	GridConfig,
+	SidesheetConfig,
+	StatusBarConfig,
+	useMediatorContext,
+	WorkspaceOnClick,
+} from '@equinor/workspace-fusion';
 import { DefaultInterface } from './types';
 import { mockData } from './mockData';
+
+import styled from 'styled-components';
+import { tokens } from '@equinor/eds-tokens';
+import { Button } from '@equinor/eds-core-react';
 
 export const gridOptions: GridConfig<DefaultInterface> = {
 	columnDefinitions: [{ field: 'id' }, { field: 'description' }, { field: 'title' }, { field: 'sequenceNumber' }],
 };
 
 export const customTab = {
-	Component: ({ data, onClick }) => <div onClick={() => onClick({ item: data[0] })}>{data.length}</div>,
+	Component: CustomTab,
 	HeaderComponent: () => <div>Custom tab</div>,
 	name: 'Lines',
 };
@@ -33,10 +43,35 @@ export const statusBarConfig: StatusBarConfig<DefaultInterface> = [
 ];
 
 export function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
+	const { filteredData } = useMediatorContext();
+
 	return (
 		<div style={{ height: '100%', width: '100%', backgroundColor: 'green' }}>
 			{ev.item.title}
 			{ev.item.description}
+			{filteredData?.length}
 		</div>
 	);
 }
+
+export function CustomTab() {
+	const { click, data, filteredData, isLoading, setFilteredData } = useMediatorContext();
+
+	return (
+		<StyledCustomTab>
+			<ul>
+				<li>Data length: {data?.length}</li>
+				<li>Filtered data length: {filteredData?.length}</li>
+				<li>isLoading: {isLoading}</li>
+			</ul>
+			<Button onClick={() => click({ item: data?.[0] })}>Open sidesheet</Button>
+			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
+		</StyledCustomTab>
+	);
+}
+
+const StyledCustomTab = styled.div`
+	height: 100%;
+	width: 100%;
+	background-color: ${tokens.colors.ui.background__medium.hex};
+`;
