@@ -8,7 +8,6 @@ import {
 	StatusBarConfig,
 	FusionMediator,
 	CustomTab,
-	WorkspaceOnClick,
 	AppConfig,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
@@ -25,14 +24,13 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	objectIdentifier: keyof TData;
-	appKey: string;
-	private mediator: FusionWorkspaceController<TData, TError>;
+	appKey?: string;
+	private mediator: FusionMediator<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(appKey: string, color: string, objectIdentifier: keyof TData, defaultTab?: WorkspaceTabNames) {
-		this.appKey = appKey;
+	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
+		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
@@ -41,6 +39,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
+		this.appKey = appKey;
 		this.viewController.appColor = appColor;
 		this.viewController.appKey = appKey;
 		this.viewController.tabs.activeTab = defaultTab;

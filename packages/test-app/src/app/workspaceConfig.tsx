@@ -1,7 +1,8 @@
-import { GridConfig, SidesheetConfig, StatusBarConfig, WorkspaceOnClick } from '@equinor/workspace-fusion';
+import { GridConfig, SidesheetConfig, StatusBarConfig, useWorkspace } from '@equinor/workspace-fusion';
 import { Handover } from './types';
 import { mockData } from './mockData';
 import styled from 'styled-components';
+import { Button } from '@equinor/eds-core-react';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -74,20 +75,6 @@ export const statusBarConfig: StatusBarConfig<Handover> = [
 	},
 ];
 
-export function SidesheetComponent(ev: WorkspaceOnClick<Handover>) {
-	return (
-		<div style={{ height: '100%', width: '100%', margin: '5px 32px' }}>
-			<h2>{ev.item.commpkgNo}</h2>
-
-			<div style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
-				<Detail title="Description" value={ev.item.description} />
-				<Detail title="Comm pkg status" value={ev.item.commpkgStatus} />
-				<Detail title="MC status" value={ev.item.mcStatus} />
-			</div>
-		</div>
-	);
-};
-=======
 export function CustomTab() {
 	const { click, data, filteredData, isLoading, setFilteredData } = useWorkspace();
 
@@ -104,15 +91,12 @@ export function CustomTab() {
 	);
 }
 
-interface DetailProps {
-	title: string;
-	value: string;
+function SidesheetComponent() {
+	return <div>Hello</div>;
 }
-const Detail = ({ title, value }: DetailProps) => {
-	return (
-		<div style={{ display: 'flex', gap: '0.2em', flexDirection: 'column' }}>
-			<div style={{ fontSize: '14px' }}>{title}:</div>
-			<div style={{ fontSize: '16px' }}>{value}</div>
-		</div>
-	);
-};
+
+const StyledCustomTab = styled.div`
+	height: 100%;
+	width: 100%;
+	background-color: rebeccapurple;
+`;

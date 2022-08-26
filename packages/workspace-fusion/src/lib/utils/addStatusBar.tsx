@@ -7,5 +7,5 @@ export function addStatusBar<TData, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TError>
 ) {
-	viewController.addStatusBarComponent(() => <StatusBarWrapper config={config} controller={mediator} />);
+	viewController.addStatusBarComponent(() => <StatusBarWrapper config={config} mediator={mediator} />);
 }

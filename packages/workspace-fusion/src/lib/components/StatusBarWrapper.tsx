@@ -5,7 +5,7 @@ import { useFilteredData } from '../hooks/useFilteredData';
 
 interface StatusBarWrapperProps<TData, TError> {
 	config: StatusBarConfig<TData>;
-	controller: FusionMediator<TData, TError>;
+	mediator: FusionMediator<TData, TError>;
 }
 export function StatusBarWrapper<TData, TError>({ config, mediator }: StatusBarWrapperProps<TData, TError>) {
 	const data = useFilteredData(mediator);

@@ -1,8 +1,8 @@
-import { CustomTabComponent, FusionWorkspaceController } from '../types';
+import { CustomTabComponent, FusionMediator } from '../types';
 import { MediatorProvider } from './provider/MediatorProvider';
 
 interface CustomTabWrapperProps<TData, TError> {
-	mediator: FusionWorkspaceController<TData, TError>;
+	mediator: FusionMediator<TData, TError>;
 	Component: CustomTabComponent;
 }
 

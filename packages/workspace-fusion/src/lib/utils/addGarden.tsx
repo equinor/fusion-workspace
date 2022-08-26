@@ -1,12 +1,12 @@
 import { Garden, GardenConfig, GardenController, GardenGroup } from '@equinor/garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { GardenIcon } from '../icons/GardenIcon';
-import { FusionWorkspaceController, WorkspaceTabNames } from '../types';
+import { FusionMediator, WorkspaceTabNames } from '../types';
 
 export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TError>(
 	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionWorkspaceController<TData, TError>,
+	mediator: FusionMediator<TData, TError>,
 	objectIdentifier: keyof TData
 ) {
 	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>(gardenConfig);
@@ -15,7 +15,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	configureClickEvents(gardenController, mediator, objectIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
 
-	viewController.tabs.push({
+	viewController.tabs.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',
 		HeaderComponent: GardenIcon,
@@ -24,14 +24,14 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 
 export function configureGardenHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionMediator<TData, TError>
 ) {
 	mediator.selection.onSelectionChanged((val) => gardenController.selectedNodes.setValue(val.map(({ id }) => id)));
 }
 
 function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionWorkspaceController<TData, TError>,
+	mediator: FusionMediator<TData, TError>,
 	objectIdentifier: keyof TData
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
@@ -47,7 +47,7 @@ function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, T
 
 function configureDataChange<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionMediator<TData, TError>
 ) {
 	mediator.onFilterDataChange(gardenController.data.setValue);
 }

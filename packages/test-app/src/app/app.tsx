@@ -4,7 +4,7 @@ import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
 function FusionWorkspace() {
-	const controller = createFusionWorkspace<Handover, unknown>('Scope change', 'purple', 'id', ({ addDataSource }) =>
+	const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
 		addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
