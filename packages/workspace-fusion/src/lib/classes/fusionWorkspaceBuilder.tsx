@@ -58,7 +58,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * Use the props to access data, onclick etc..
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addCustomTab = (tab: CustomTab<TData>) => {
+	addCustomTab = (tab: CustomTab) => {
 		addCustomTab(tab, this.viewController, this.mediator);
 		return this;
 	};

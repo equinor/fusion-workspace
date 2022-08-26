@@ -1,4 +1,5 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { Workspace } from '@equinor/workspace-react';
 import { DefaultInterface } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
@@ -46,11 +47,11 @@ function Workspace() {
 				.addStatusBarItems(statusBarConfig)
 	);
 
-	return <Component />;
+	return <Workspace controller={controller} />;
 }
 
 export function App() {
-	return <Workspace />;
+	return <FusionWorkspace />;
 }
 
 export default App;
