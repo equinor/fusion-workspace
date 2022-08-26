@@ -17,6 +17,9 @@ function FusionWorkspace() {
 				fieldSettings: {},
 			})
 			.addMiddleware((mediator) => {
+				mediator.url.onUrlChange((val) => {
+					console.log('app url changed', val);
+				});
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);
 				});

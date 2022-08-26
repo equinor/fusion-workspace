@@ -11,6 +11,9 @@ import {
 	AppConfig,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
+import history from 'history/browser';
+import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { addConfig } from '../utils/addConfig';
 
 interface UIContext {
 	appKey: string;
@@ -27,22 +30,27 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	appKey?: string;
 	private mediator: FusionMediator<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+
 	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
-
+		this.viewController.isMounted.onchange((val) => (val ? this.mediator.setMount() : this.mediator.setUnmount()));
+		configureUrlWithHistory(this.mediator, history);
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
+			updateQueryParams([`item=${id}`], this.mediator, history);
+		});
+
+		this.viewController.tabs.onActiveTabChanged((tab) => {
+			updateQueryParams([`tab=${tab.toLowerCase()}`], this.mediator, history);
 		});
 	}
 
-	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
-		this.appKey = appKey;
-		this.viewController.appColor = appColor;
-		this.viewController.appKey = appKey;
-		this.viewController.tabs.activeTab = defaultTab;
+	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
+		addConfig(appConfig, this.viewController);
+		this.appKey = appConfig.appKey;
 		return this;
 	};
 

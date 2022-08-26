@@ -73,6 +73,18 @@ export const statusBarConfig: StatusBarConfig<Handover> = [
 			value: data.map((s) => s.rfocIsAccepted).reduce((prev, curr) => (prev = prev + (curr ? 1 : 0)), 0),
 		}),
 	},
+	{
+		getValue: (data) => ({
+			title: 'COMM OK',
+			value: data.reduce((count, curr) => (count = (curr.commpkgStatus === 'OK' ? 1 : 0) + count), 0),
+		}),
+	},
+	{
+		getValue: (data) => ({
+			title: 'MC OK',
+			value: data.reduce((count, curr) => (count = (curr.mcStatus === 'OK' ? 1 : 0) + count), 0),
+		}),
+	},
 ];
 
 export function CustomTab() {
