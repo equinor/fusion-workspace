@@ -11,21 +11,21 @@ import { useGardenContext, useGardenGroups } from '../../hooks';
 
 type HeaderContainerProps = {
 	columnVirtualizer: { virtualItems: VirtualItem[] };
+	highlightedColumn: string | undefined;
 };
-export const HeaderContainer = (props: HeaderContainerProps): JSX.Element => {
+export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: HeaderContainerProps): JSX.Element => {
 	const garden = useGardenGroups();
 
 	const controller = useGardenContext();
 	const {
 		visuals: { getCustomDescription = () => '' },
 		customViews: { customHeaderView: HeaderChild },
-		highlightedNode: { value: highlightColumn },
+
 		grouping: {
 			value: { horizontalGroupingAccessor: groupByKey },
 		},
 	} = controller;
 
-	const { columnVirtualizer } = props;
 	const expandColumn = useExpandDispatch();
 	const expanded = useExpand();
 
@@ -44,7 +44,7 @@ export const HeaderContainer = (props: HeaderContainerProps): JSX.Element => {
 	return (
 		<HeaderRoot>
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
-				const isHighlighted = highlightColumn === garden[virtualColumn.index].value;
+				const isHighlighted = highlightedColumn === garden[virtualColumn.index].value;
 				return (
 					<Header
 						onClick={() => handleHeaderClick(virtualColumn.index, garden[virtualColumn.index])}

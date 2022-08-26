@@ -28,8 +28,8 @@ export class GardenController<
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
 > {
-	/** The node that is currently being highlighted */
-	highlightedNode = new ReactiveValue<string | null>(null);
+	/** The nodes that is currently selected */
+	selectedNodes = new ReactiveValue<string[]>([]);
 	/** The data used for creating garden groups */
 	data = new ReactiveValue<TData[]>([]);
 	/** The garden groups */
@@ -143,9 +143,8 @@ export class GardenController<
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
 	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
-		this.highlightedNode.setValue(
-			typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback
-		);
+		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
+		this.selectedNodes.setValue(val ? [val] : []);
 	};
 
 	/** Function for sorting groups after they have been grouped */

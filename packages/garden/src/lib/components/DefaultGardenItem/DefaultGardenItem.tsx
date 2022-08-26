@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { useGardenContext } from '../../hooks';
+import { useGardenContext, useIsSelected } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
 	columnExpanded: boolean;
-	isSelected: boolean;
+
 	item: Record<string, string>;
 	depth: number;
 }
 
-export const DefaultGardenItem = ({ columnExpanded, isSelected, item, depth }: DefaultGardenItemProps): JSX.Element => {
+export const DefaultGardenItem = ({ columnExpanded, item, depth }: DefaultGardenItemProps): JSX.Element => {
 	const controller = useGardenContext();
 	const {
 		clickEvents: { onClickItem },
@@ -27,6 +27,8 @@ export const DefaultGardenItem = ({ columnExpanded, isSelected, item, depth }: D
 			description,
 		};
 	}, [controller, getCustomDescription, getCustomItemColor, item]);
+
+	const isSelected = useIsSelected(item[controller.objectIdentifier] as unknown as string);
 
 	return (
 		<StyledDefaultPackage

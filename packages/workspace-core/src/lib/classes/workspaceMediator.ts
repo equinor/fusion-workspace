@@ -1,5 +1,6 @@
 import { ObjectType, OnchangeCallback } from '../types';
 import { Observable } from './observable';
+import { SelectionService } from './selectionService';
 
 /**
  * Class to act as a mediator in the workspace
@@ -10,6 +11,8 @@ export class WorkspaceMediator<
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>
 > {
+	selection = new SelectionService();
+
 	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
 	/** The data used for the workspace */

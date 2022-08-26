@@ -93,7 +93,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 			containerRef={containerRef}
 			isScrolling={isScrolling}
 		>
-			<HeaderContainer columnVirtualizer={columnVirtualizer} />
+			<HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
 				const currentColumn = garden[virtualColumn.index];
 				const columnItems = getGardenItems<T>(currentColumn as GardenGroup<T>, true);

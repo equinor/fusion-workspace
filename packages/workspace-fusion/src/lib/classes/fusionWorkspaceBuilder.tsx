@@ -1,6 +1,5 @@
-import { Garden, GardenConfig, GardenController } from '@equinor/garden';
+import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import { GardenIcon } from '../icons/GardenIcon';
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -10,7 +9,7 @@ import {
 	FusionWorkspaceController,
 	CustomTab,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
 
 interface UIContext {
 	appKey: string;
@@ -23,13 +22,20 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
+	objectIdentifier: keyof TData;
 	appKey: string;
 	private mediator: FusionWorkspaceController<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
+	constructor(appKey: string, color: string, objectIdentifier: keyof TData, defaultTab?: WorkspaceTabNames) {
 		this.appKey = appKey;
+		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
+
+		this.mediator.onClick(({ item }) => {
+			const id = item[this.objectIdentifier] as unknown as string;
+			this.mediator.selection.setSelection([{ id }]);
+		});
 	}
 
 	/**
@@ -64,17 +70,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		const gardenController = new GardenController(config);
-
-		gardenController.clickEvents.onClickItem = (item) => this.mediator.click({ item: item });
-
-		this.viewController.tabs.push({
-			Component: () => <Garden controller={gardenController} />,
-			name: 'garden',
-			HeaderComponent: GardenIcon,
-		});
-
-		this.mediator.onFilterDataChange(gardenController.data.setValue);
+		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 
@@ -84,7 +80,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator);
+		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 	/**

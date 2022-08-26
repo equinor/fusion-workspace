@@ -8,10 +8,11 @@ import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './def
 export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionWorkspaceController<TData, TError>,
+	objectIdentifier: keyof TData
 ) {
-	const gridController = new GridController<TData>();
-
+	const gridController = new GridController<TData>(objectIdentifier);
+	configureHighlightSelection(gridController, mediator);
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
 
@@ -43,4 +44,11 @@ function prepareColumnDefintions<TData, TError>(
 	controller: FusionWorkspaceController<TData, TError>
 ) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, controller));
+}
+
+export function configureHighlightSelection<TData, TError>(
+	gridController: GridController<TData>,
+	mediator: FusionWorkspaceController<TData, TError>
+) {
+	mediator.selection.onSelectionChanged((val) => gridController.selectedNodes.setValue(val.map(({ id }) => id)));
 }

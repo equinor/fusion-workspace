@@ -37,7 +37,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 
 	const controller = useGardenContext();
 	const {
-		highlightedNode: { value: highlighted },
+		selectedNodes: { value: selectedNodes },
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
@@ -80,7 +80,13 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 							) : (
 								<StyledSubGroup onClick={() => handleExpand(item)} style={{ width: `${width}%` }}>
 									<StyledSubGroupText>
-										{item.value}
+										<div
+											onClick={() =>
+												onClickGroup && onClickGroup(item as GardenGroup<unknown>, controller)
+											}
+										>
+											{item.value}
+										</div>
 										{item.description && ' - ' + item.description}
 										<StyledCount>({item.count})</StyledCount>
 									</StyledSubGroupText>
@@ -102,7 +108,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 								}
 								depth={item?.itemDepth}
 								width={itemWidth}
-								isSelected={item.item[objectIdentifier] === highlighted}
+								isSelected={selectedNodes.includes(item.item[objectIdentifier])}
 								rowStart={virtualRow.start}
 								columnStart={virtualColumn.start}
 								parentRef={parentRef}
@@ -110,7 +116,6 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 						) : (
 							<DefaultGardenItem
 								depth={item.itemDepth}
-								isSelected={item.item[objectIdentifier] === highlighted}
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
