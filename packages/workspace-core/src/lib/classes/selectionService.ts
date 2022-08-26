@@ -1,4 +1,5 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable } from '.';
+import { OnchangeCallback } from '../types';
 
 interface Node {
 	id: string;

@@ -1,5 +1,4 @@
 import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
-import { SelectionService } from './selectionService';
 
 export class WorkspaceReactMediator<
 	TData,
@@ -7,8 +6,6 @@ export class WorkspaceReactMediator<
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>
 > extends WorkspaceMediator<TData, TOnClick, TError> {
-	selection = new SelectionService();
-
 	isSidesheetOpen = false;
 	setIsSidesheetOpen: (value: boolean) => void;
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;

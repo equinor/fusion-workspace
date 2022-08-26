@@ -3,8 +3,8 @@ import { Workspace } from '@equinor/workspace-react';
 import { DefaultInterface } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
-function Workspace() {
-	const Component = createFusionWorkspace<DefaultInterface, unknown>(
+function FusionWorkspace() {
+	const controller = createFusionWorkspace<DefaultInterface, unknown>(
 		'Scope change',
 		'purple',
 		'id',

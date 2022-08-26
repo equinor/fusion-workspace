@@ -1,7 +1,7 @@
-import { Observable } from '@workspace/workspace-core';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { registerCallback } from '../functions';
 import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChangedCallback } from '../types';
+import { Observable } from './observable';
 
 export class GridController<TData> {
 	objectIdentifier: keyof TData;
