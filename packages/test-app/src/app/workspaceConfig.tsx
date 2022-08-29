@@ -104,7 +104,9 @@ export function CustomTab() {
 }
 
 function SidesheetComponent() {
-	return <div>Hello</div>;
+	const { lastClick } = useWorkspace<Handover, unknown>();
+
+	return <div>{lastClick?.item.commpkgNo}</div>;
 }
 
 const StyledCustomTab = styled.div`

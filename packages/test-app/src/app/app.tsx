@@ -3,38 +3,38 @@ import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
-function FusionWorkspace() {
-	const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
-		addDataSource(dataSourceOptions)
-			.addGrid(gridOptions)
-			.addCustomTab(customTab)
-			.addConfig({
-				appColor: 'purple',
-				appKey: 'Handover',
-				defaultTab: 'grid',
-			})
-			.addSidesheet(sidesheetOptions)
-			.addGarden({
-				data: [],
-				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'id',
-				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				fieldSettings: {},
-			})
-			.addMiddleware((mediator) => {
-				mediator.url.onUrlChange((val) => {
-					console.log('app url changed', val);
-				});
-				mediator.onClick((click) => {
-					console.log('Clickevent happened', click);
-				});
-				mediator.selection.onSelectionChanged((s) => {
-					console.log(`Selection changed ${s.map((s) => s.id)}`);
-				});
-			})
-			.addStatusBarItems(statusBarConfig)
-	);
+const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
+	addDataSource(dataSourceOptions)
+		.addGrid(gridOptions)
+		.addCustomTab(customTab)
+		.addConfig({
+			appColor: 'purple',
+			appKey: 'Handover',
+			defaultTab: 'grid',
+		})
+		.addSidesheet(sidesheetOptions)
+		.addGarden({
+			data: [],
+			nodeLabelCallback: (s) => s.commpkgNo,
+			objectIdentifier: 'id',
+			initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+			fieldSettings: {},
+		})
+		.addMiddleware((mediator) => {
+			mediator.urlService.onUrlChange((val) => {
+				console.log('app url changed', val);
+			});
+			mediator.onClick((click) => {
+				console.log('Clickevent happened', click);
+			});
+			mediator.selection.onSelectionChanged((s) => {
+				console.log(`Selection changed ${s.map((s) => s.id)}`);
+			});
+		})
+		.addStatusBarItems(statusBarConfig)
+);
 
+function FusionWorkspace() {
 	return <Workspace controller={controller} />;
 }
 
