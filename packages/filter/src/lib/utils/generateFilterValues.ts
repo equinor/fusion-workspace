@@ -21,6 +21,14 @@ export function generateFilterValues<T>(valueFormatters: ValueFormatterFilter<T>
 		})
 	);
 
+	filterGroups.forEach((group) => {
+		if (group.values.length === data.length) {
+			console.warn(
+				`Filter group ${group.name} generated only unique values, consider using search to handle this type of filtering`
+			);
+		}
+	});
+
 	return sortFilterGroups(filterGroups, valueFormatters);
 }
 
