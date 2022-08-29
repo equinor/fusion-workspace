@@ -1,5 +1,8 @@
+import history from 'history/browser';
+import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -10,10 +13,8 @@ import {
 	CustomTab,
 	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
-import history from 'history/browser';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden, addConfig } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
-import { addConfig } from '../utils/addConfig';
 
 interface UIContext {
 	appKey: string;
@@ -36,7 +37,9 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 		this.viewController.isMounted.onchange((val) => (val ? this.mediator.setMount() : this.mediator.setUnmount()));
+
 		configureUrlWithHistory(this.mediator, history);
+
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
@@ -45,6 +48,13 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 		this.viewController.tabs.onActiveTabChanged((tab) => {
 			updateQueryParams([`tab=${tab.toLowerCase()}`], this.mediator, history);
+		});
+
+		history.listen(({ action }) => {
+			if (action === Action.Pop) {
+				//Navigation back or forward;
+				switchTabOnNavigation(this.mediator, this.viewController);
+			}
 		});
 	}
 
@@ -117,4 +127,16 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addStatusBar(config, this.viewController, this.mediator);
 		return this;
 	};
+}
+
+/** Switches tab when url changes due to navigation event */
+function switchTabOnNavigation<TData, TError>(
+	mediator: FusionMediator<TData, TError>,
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
+) {
+	const tab = mediator.urlService.url.queryParams.find((s) => s.includes('tab='));
+	if (!tab) return;
+	const newTab = tab.split('tab=')[1];
+	if (newTab === viewController.tabs.activeTab) return;
+	viewController.tabs.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
 }
