@@ -17,7 +17,7 @@ function FusionWorkspace() {
 			.addGarden({
 				data: [],
 				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'id',
+				objectIdentifier: 'commpkgNo',
 				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 				fieldSettings: {},
 			})
