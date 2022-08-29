@@ -21,13 +21,7 @@ export function generateFilterValues<T>(valueFormatters: ValueFormatterFilter<T>
 		})
 	);
 
-	filterGroups.forEach((group) => {
-		if (group.values.length === data.length) {
-			console.warn(
-				`Filter group ${group.name} generated only unique values, consider using search to handle this type of filtering`
-			);
-		}
-	});
+	validateFilterGroups(filterGroups, data);
 
 	return sortFilterGroups(filterGroups, valueFormatters);
 }
@@ -70,4 +64,14 @@ function defaultSortFunction(a: FilterValueType, b: FilterValueType): number {
 			return a.toLowerCase().localeCompare((b as string).toLowerCase());
 		}
 	}
+}
+
+function validateFilterGroups(filterGroups: FilterGroup[], data: unknown[]) {
+	filterGroups.forEach((group) => {
+		if (group.values.length === data.length) {
+			console.warn(
+				`Filter group ${group.name} generated only unique values, consider using search to handle this type of filtering`
+			);
+		}
+	});
 }
