@@ -10,7 +10,7 @@ const name2 = 'Jonas';
 
 describe('Does item pass filter', () => {
 	const controller = new FilterController<MockInterface>();
-	controller.valueFormatterController.addValueFormatters([{ name: filterGroupName, valueFormatter: (s) => s.name }]);
+	controller.addValueFormatters([{ name: filterGroupName, valueFormatter: (s) => s.name }]);
 	controller.setData([{ name: name1 }, { name: name2 }]);
 
 	it('Should pass', () => {
