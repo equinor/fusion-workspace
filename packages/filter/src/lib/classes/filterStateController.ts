@@ -18,12 +18,7 @@ export class FilterStateController<TData> {
 		this.filterState.find(({ name }) => name === groupName)?.values ?? [];
 
 	/** add or remove a filtevalue from the list of values currently being excluded from the filtered data */
-	changeFilterItem = (
-		action: 'MarkInactive' | 'MarkActive',
-		groupName: string,
-		newValue: FilterValueType,
-		preventFiltering?: boolean
-	) => {
+	changeFilterItem = (action: 'MarkInactive' | 'MarkActive', groupName: string, newValue: FilterValueType) => {
 		if (filterGroupExists(groupName, this.filterState)) {
 			/**
 			 * Group exists add or remove
