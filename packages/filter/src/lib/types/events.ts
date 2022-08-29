@@ -1,4 +1,5 @@
 import { FilterController } from '../classes';
+import { FilterStateController } from '../classes/filterStateController';
 import { FilterGroup } from './filter';
 
 /**
@@ -9,4 +10,7 @@ export type OnFilterDataChangeCallback<TData> = (data: TData[], controller: Filt
 /**
  * Callback to be fired when filter state changes
  */
-export type OnFilterStateChangedCallback<T> = (newFilterState: FilterGroup[], controller: FilterController<T>) => void;
+export type OnFilterStateChangedCallback<T> = (
+	newFilterState: FilterGroup[],
+	controller: FilterStateController<T>
+) => void;
