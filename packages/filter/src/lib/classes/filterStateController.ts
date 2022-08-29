@@ -13,13 +13,11 @@ export class FilterStateController<TData> {
 
 	/**
 	 * Get all the values that are currently being filtered out from a specific group
-	 * @param groupName
-	 * @returns
 	 */
 	getInactiveGroupValues = (groupName: string) =>
 		this.filterState.find(({ name }) => name === groupName)?.values ?? [];
 
-	/** Add or remove a filter value from the blacklist */
+	/** add or remove a filtevalue from the list of values currently being excluded from the filtered data */
 	changeFilterItem = (
 		action: 'MarkInactive' | 'MarkActive',
 		groupName: string,
