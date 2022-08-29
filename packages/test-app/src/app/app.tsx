@@ -14,16 +14,16 @@ function FusionWorkspace() {
 				appKey: 'Handover',
 				defaultTab: 'grid',
 			})
-			// .addFilter([
-			// 	{
-			// 		name: 'Commpkg',
-			// 		valueFormatter: (s) => s.commpkgNo,
-			// 	},
-			// 	{
-			// 		name: 'MC status',
-			// 		valueFormatter: (s) => s.mcStatus,
-			// 	},
-			// ])
+			.addFilter([
+				{
+					name: 'Commpkg',
+					valueFormatter: (s) => s.commpkgNo,
+				},
+				{
+					name: 'MC status',
+					valueFormatter: (s) => s.mcStatus,
+				},
+			])
 			.addSidesheet(sidesheetOptions)
 			.addGarden({
 				data: [],
