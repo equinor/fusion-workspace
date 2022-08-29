@@ -27,6 +27,13 @@ export const gridOptions: GridConfig<Handover> = {
 		{ field: 'Responsible', valueGetter: (s) => s.data?.responsible },
 		{ field: 'Area', valueGetter: (s) => s.data?.area },
 		{ field: 'System', valueGetter: (s) => s.data?.system },
+		{ field: 'Priority 1', valueGetter: (s) => s.data?.priority1 },
+		{ field: 'Priority 2', valueGetter: (s) => s.data?.priority2 },
+		{ field: 'Priority 3', valueGetter: (s) => s.data?.priority3 },
+		{ field: 'Planned start date', valueGetter: (s) => s.data?.plannedStartDate, headerName: 'Planned RFC' },
+		{ field: 'forecastStartDate', headerName: 'Forecast RFC' },
+		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO' },
+		{ field: 'rfocActualDate', headerName: 'Actual RFO' },
 	],
 };
 
