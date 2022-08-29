@@ -2,25 +2,17 @@ import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
+import { gardenConfig } from './gardenConfig/gardenConfig';
+import { appConfig } from './gardenConfig/appConfig';
 
 function FusionWorkspace() {
 	const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
 		addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
-			.addConfig({
-				appColor: 'purple',
-				appKey: 'Handover',
-				defaultTab: 'grid',
-			})
+			.addConfig(appConfig)
 			.addSidesheet(sidesheetOptions)
-			.addGarden({
-				data: [],
-				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'id',
-				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				fieldSettings: {},
-			})
+			.addGarden(gardenConfig)
 			.addMiddleware((mediator) => {
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);

@@ -20,6 +20,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 		name: 'garden',
 		HeaderComponent: GardenIcon,
 	});
+	gardenConfig.configFunction && gardenConfig.configFunction(gardenController);
 }
 
 export function configureGardenHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
