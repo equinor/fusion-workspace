@@ -3,6 +3,7 @@ import { Handover } from './types';
 import { mockData } from './mockData';
 import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
+import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -54,7 +55,7 @@ export const customTab = {
 };
 
 export const sidesheetOptions: SidesheetConfig<Handover> = {
-	Component: SidesheetComponent,
+	Component: HandoverSidesheet,
 	getTitle: (ev) => {
 		return ev.item.commpkgNo;
 	},
@@ -89,10 +90,6 @@ export function CustomTab() {
 			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
 		</StyledCustomTab>
 	);
-}
-
-function SidesheetComponent() {
-	return <div>Hello</div>;
 }
 
 const StyledCustomTab = styled.div`

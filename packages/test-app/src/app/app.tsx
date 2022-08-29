@@ -9,7 +9,7 @@ function FusionWorkspace() {
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
 			.addConfig({
-				appColor: 'purple',
+				appColor: '#0084C4',
 				appKey: 'Handover',
 				defaultTab: 'grid',
 			})
