@@ -35,6 +35,10 @@ export const gridOptions: GridConfig<Handover> = {
 		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO' },
 		{ field: 'rfocActualDate', headerName: 'Actual RFO' },
 	],
+	gridOptions: {
+		pagination: true,
+		paginationPageSize: 100,
+	},
 };
 
 /** Will render MC or Comm pkg status symbol */
