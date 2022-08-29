@@ -11,8 +11,7 @@ import {
 	CustomTab,
 	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
-import { addFilter } from '../utils/addFilter';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden, addFilter } from '../utils';
 
 interface UIContext {
 	appKey: string;

@@ -8,7 +8,7 @@ export function addFilter<TData, TError>(
 	mediator: FusionMediator<TData, TError>
 ) {
 	const filterController = new FilterController<TData>();
-	filterController.valueFormatterController.addValueFormatters(config);
+	filterController.addValueFormatters(config);
 	filterController.onFilteredDataChanged(mediator.setFilteredData);
 	viewController.filter.FilterComponent = () => <div></div>;
 	mediator.data && filterController.setData(mediator.data);
