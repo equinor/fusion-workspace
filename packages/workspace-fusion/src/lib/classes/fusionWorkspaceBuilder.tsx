@@ -1,4 +1,4 @@
-import { FilterConfiguration, FilterOptions } from '@equinor/filter';
+import { FilterOptions } from '@equinor/filter';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
