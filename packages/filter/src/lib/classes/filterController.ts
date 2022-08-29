@@ -30,6 +30,11 @@ export class FilterController<TData> {
 	allFilterValues: FilterGroup[] = [];
 	valueFormatters: ValueFormatterFilter<TData>[] = [];
 
+	init = () => {
+		this.createFilterValues();
+		this.filter();
+	};
+
 	/**
 	 * Callbacks
 	 */
