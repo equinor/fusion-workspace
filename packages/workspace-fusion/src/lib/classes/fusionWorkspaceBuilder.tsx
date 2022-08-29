@@ -1,3 +1,4 @@
+import { FilterConfiguration, FilterOptions } from '@equinor/filter';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
@@ -11,6 +12,7 @@ import {
 	AppConfig,
 } from '../types';
 import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
+import { addFilter } from '../utils/addFilter';
 
 interface UIContext {
 	appKey: string;
@@ -100,6 +102,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addSidesheet(config, this.viewController, this.mediator);
 		return this;
 	};
+
+	addFilter = (config: FilterOptions<TData>) => {
+		addFilter(config, this.viewController, this.mediator);
+		return this;
+	};
+
 	/**
 	 * Adds a status bar to the top of your workspace.
 	 * @param config Takes in data and returns one or multiple status objects

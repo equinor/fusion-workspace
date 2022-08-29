@@ -13,6 +13,16 @@ function FusionWorkspace() {
 				appKey: 'Handover',
 				defaultTab: 'grid',
 			})
+			.addFilter([
+				{
+					name: 'Commpkg',
+					valueFormatter: (s) => s.commpkgNo,
+				},
+				{
+					name: 'MC status',
+					valueFormatter: (s) => s.mcStatus,
+				},
+			])
 			.addSidesheet(sidesheetOptions)
 			.addGarden({
 				data: [],
@@ -21,6 +31,7 @@ function FusionWorkspace() {
 				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 				fieldSettings: {},
 			})
+
 			.addMiddleware((mediator) => {
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);
