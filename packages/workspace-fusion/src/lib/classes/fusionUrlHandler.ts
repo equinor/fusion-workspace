@@ -16,32 +16,34 @@ export function updateQueryParams<TData, TError>(
 	history: BrowserHistory
 ) {
 	/** Remove all topics from existing url that you want to replace */
-	const existingQueryParams = mediator.url.url.queryParams.filter(
-		(queryParam) => !val.map((s) => s.split('=')[0]).includes(queryParam.split('=')[0])
+	const existingQueryParams = mediator.urlService.url.queryParams.filter((queryParam) =>
+		patchQueryParams(queryParam, val)
 	);
 
 	const newQueryParams = [...existingQueryParams, ...val].sort();
 
-	history.push(
-		`?${newQueryParams
-			.map((s) => `${s}`)
-			.toString()
-			.replace(',', '&')}`
-	);
+	/** Dont update url if nothing changed */
+	if (arrayToQueryParam(mediator.urlService.url.queryParams) === arrayToQueryParam(newQueryParams)) return;
+
+	history.push(`?${arrayToQueryParam(newQueryParams)}`);
 }
 
 export function configureUrlWithHistory<TData, TError>(
 	mediator: FusionMediator<TData, TError>,
 	history: BrowserHistory
 ) {
-	history.listen((val) => {
-		console.log('Actual history object requested a change');
-		mediator.url.setUrl(`${val.location.pathname}${val.location.search}`);
+	history.listen(({ location }) => {
+		mediator.urlService.setUrl(`${window.location.href}${location.search}`);
 	});
+}
 
-	mediator.onMount(() => {
-		console.log('Wokrspace mounted');
-		const items = mediator.url.url.queryParams.filter((s) => s.includes('item'));
-		console.log(`FOund items in url while mounting ${items}`);
-	});
+function arrayToQueryParam(args: string[]) {
+	return args
+		.map((s) => `${s}`)
+		.toString()
+		.replace(',', '&');
+}
+
+function patchQueryParams(queryParam: string, newQueryParams: QueryParam[]) {
+	return !newQueryParams.map((s) => s.split('=')[0]).includes(queryParam.split('=')[0]);
 }
