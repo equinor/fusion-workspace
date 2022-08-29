@@ -10,6 +10,7 @@ export class SearchController<TData> {
 	/** Clears the search and filters the data using the current filterstate */
 	clearSearch: () => void;
 
+	/** Callback for when search object changes */
 	onSearchChanged: (callback: OnchangeCallback<FilterSearchActive<TData> | null>) => () => void;
 
 	constructor() {
@@ -21,6 +22,7 @@ export class SearchController<TData> {
 		};
 	}
 
+	/**Function for performing a search */
 	handleSearch = () => {
 		if (this.filterSearch === null) return;
 		const { searchIn, searchValue, type, valueFormatters } = this.filterSearch;
