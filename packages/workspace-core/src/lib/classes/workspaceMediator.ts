@@ -21,7 +21,7 @@ export class WorkspaceMediator<
 		return this;
 	};
 	selection = new SelectionService();
-	url = new URLService();
+	urlService = new URLService();
 
 	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
@@ -62,8 +62,8 @@ export class WorkspaceMediator<
 			this.filteredData = val;
 		});
 		this.setFilteredData = filterData.setValue;
-
 		const click = new Observable<TOnClick>();
+
 		click.onchange((val) => {
 			this.lastClick = val;
 		});
