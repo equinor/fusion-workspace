@@ -1,7 +1,6 @@
 import { doesItemPassCriteria, doesItemPassFilter, generateFilterValues } from '../utils';
 
-import { FilterGroup, FilterItemCount, FilterValueType, ValueFormatterFunction } from '../types';
-import { ValueFormatterController } from './valueFormatterController';
+import { FilterGroup, FilterItemCount, FilterValueType, ValueFormatterFilter, ValueFormatterFunction } from '../types';
 import { FilterStateController } from './filterStateController';
 import { SearchController } from './searchController';
 import { Observable, OnchangeCallback } from '@workspace/workspace-core';
@@ -10,7 +9,7 @@ import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 export class FilterController<TData> {
 	allFilterValues: FilterGroup[] = [];
 	createFilterValues = () => {
-		this.allFilterValues = generateFilterValues(this.valueFormatterController.valueFormatters, this.data);
+		this.allFilterValues = generateFilterValues(this.valueFormatters, this.data);
 	};
 
 	data: TData[] = [];
@@ -22,7 +21,11 @@ export class FilterController<TData> {
 	onFilteredDataChanged: (callback: OnchangeCallback<TData[]>) => () => void;
 
 	searchController = new SearchController<TData>();
-	valueFormatterController = new ValueFormatterController<TData>();
+	valueFormatters: ValueFormatterFilter<TData>[] = [];
+
+	addValueFormatters = (valueFormatters: ValueFormatterFilter<TData>[]) => {
+		this.valueFormatters = [...this.valueFormatters, ...valueFormatters];
+	};
 	filterStateController = new FilterStateController<TData>();
 
 	init = () => {
@@ -73,8 +76,7 @@ export class FilterController<TData> {
 		valueFormatterFunc?: ValueFormatterFunction<unknown>
 	) => {
 		const valueFormatter =
-			valueFormatterFunc ??
-			this.valueFormatterController.valueFormatters.find(({ name }) => name === filterGroup.name)?.valueFormatter;
+			valueFormatterFunc ?? this.valueFormatters.find(({ name }) => name === filterGroup.name)?.valueFormatter;
 		if (!valueFormatter) return -1;
 
 		const uncheckedValues = filterGroup.values.filter((value) => value !== filterItem);
@@ -88,11 +90,7 @@ export class FilterController<TData> {
 		if (!this.data || this.data.length === 0) return;
 		this.setFilteredData(
 			this.data.filter((item) =>
-				doesItemPassFilter(
-					item,
-					this.filterStateController.filterState,
-					this.valueFormatterController.valueFormatters
-				)
+				doesItemPassFilter(item, this.filterStateController.filterState, this.valueFormatters)
 			)
 		);
 		if (this.searchController.filterSearch !== null) {
