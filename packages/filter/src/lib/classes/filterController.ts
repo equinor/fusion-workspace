@@ -53,8 +53,6 @@ export class FilterController<TData> {
 
 	/**
 	 * Gets count for all the filter values in a filter group
-	 * @param groupName
-	 * @returns
 	 */
 	getFilterItemCountsForGroup = (groupName: string): FilterItemCount[] => {
 		const filterGroup = this.allFilterValues.find(({ name }) => name === groupName);
@@ -68,6 +66,7 @@ export class FilterController<TData> {
 		);
 	};
 
+	/**Returns the count for a specific filter value */
 	getCountForFilterValue = (
 		filterGroup: FilterGroup,
 		filterItem: FilterValueType,
@@ -112,9 +111,7 @@ export class FilterController<TData> {
 	};
 
 	/**
-	 * @internal
 	 * Set filter values
-	 * @param newFilterValues
 	 */
 	setFilterValues = (newFilterValues: FilterGroup[]) => {
 		this.allFilterValues = newFilterValues;
