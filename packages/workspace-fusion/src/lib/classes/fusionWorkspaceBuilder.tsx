@@ -36,7 +36,6 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
-		this.viewController.isMounted.onchange((val) => (val ? this.mediator.setMount() : this.mediator.setUnmount()));
 
 		configureUrlWithHistory(this.mediator, history);
 
@@ -46,9 +45,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 
-		this.viewController.tabs.onActiveTabChanged((tab) => {
-			updateQueryParams([`tab=${tab.toLowerCase()}`], this.mediator, history);
-		});
+		initWorkspaceViewController(this.viewController, this.mediator);
 
 		history.listen(({ action }) => {
 			if (action === Action.Pop) {
@@ -139,4 +136,14 @@ function switchTabOnNavigation<TData, TError>(
 	const newTab = tab.split('tab=')[1];
 	if (newTab === viewController.tabs.activeTab) return;
 	viewController.tabs.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
+}
+
+function initWorkspaceViewController<TData, TError>(
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
+	mediator: FusionMediator<TData, TError>
+) {
+	viewController.isMounted.onchange((val) => (val ? mediator.setMount() : mediator.setUnmount()));
+	viewController.tabs.onActiveTabChanged((tab) => {
+		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
+	});
 }
