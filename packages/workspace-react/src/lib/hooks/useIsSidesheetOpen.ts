@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { useControllerContext } from './useControllerContext';
 
-export function useIsSidesheetOpen(controller: WorkspaceViewController<any, any>) {
+export function useIsSidesheetOpen() {
+	const controller = useControllerContext();
+
 	const [isSidesheetOpen, setIsSidesheetOpen] = useState(controller.sidesheet.isOpen);
 
 	useEffect(() => {

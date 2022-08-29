@@ -1,26 +1,42 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { DefaultInterface } from './types';
+import { Workspace } from '@equinor/workspace-react';
+import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
 
-function Workspace() {
-	const Component = createFusionWorkspace<DefaultInterface, unknown>('Scope change', 'purple', ({ addDataSource }) =>
+function FusionWorkspace() {
+	const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
 		addDataSource(dataSourceOptions)
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
+			.addConfig({
+				appColor: '#0084C4',
+				appKey: 'Handover',
+				defaultTab: 'grid',
+			})
 			.addSidesheet(sidesheetOptions)
+			.addGarden({
+				data: [],
+				nodeLabelCallback: (s) => s.commpkgNo,
+				objectIdentifier: 'id',
+				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+				fieldSettings: {},
+			})
 			.addMiddleware((mediator) => {
 				mediator.onClick((click) => {
 					console.log('Clickevent happened', click);
+				});
+				mediator.selection.onSelectionChanged((s) => {
+					console.log(`Selection changed ${s.map((s) => s.id)}`);
 				});
 			})
 			.addStatusBarItems(statusBarConfig)
 	);
 
-	return <Component />;
+	return <Workspace controller={controller} />;
 }
 
 export function App() {
-	return <Workspace />;
+	return <FusionWorkspace />;
 }
 
 export default App;

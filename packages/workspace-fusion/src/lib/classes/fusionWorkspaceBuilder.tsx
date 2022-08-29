@@ -1,3 +1,4 @@
+import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
 	DataFetchAsync,
@@ -5,10 +6,11 @@ import {
 	SidesheetConfig,
 	WorkspaceTabNames,
 	StatusBarConfig,
-	FusionWorkspaceController,
+	FusionMediator,
 	CustomTab,
+	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar } from '../utils';
+import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
 
 interface UIContext {
 	appKey: string;
@@ -21,14 +23,28 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
-	appKey: string;
-	private mediator: FusionWorkspaceController<TData, TError>;
+	objectIdentifier: keyof TData;
+	appKey?: string;
+	private mediator: FusionMediator<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(appKey: string, color: string, defaultTab?: WorkspaceTabNames) {
-		this.appKey = appKey;
+	constructor(objectIdentifier: keyof TData) {
+		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>(appKey, [], 'grid', color);
+		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
+
+		this.mediator.onClick(({ item }) => {
+			const id = item[this.objectIdentifier] as unknown as string;
+			this.mediator.selection.setSelection([{ id }]);
+		});
 	}
+
+	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
+		this.appKey = appKey;
+		this.viewController.appColor = appColor;
+		this.viewController.appKey = appKey;
+		this.viewController.tabs.activeTab = defaultTab;
+		return this;
+	};
 
 	/**
 	 * Add a function for providing data to the workspace
@@ -40,7 +56,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
-	addMiddleware = (cb: (mediator: FusionWorkspaceController<TData, TError>) => void) => {
+	addMiddleware = (cb: (mediator: FusionMediator<TData, TError>) => void) => {
 		cb(this.mediator);
 		return this;
 	};
@@ -50,7 +66,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * Use the props to access data, onclick etc..
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addCustomTab = (tab: CustomTab<TData>) => {
+	addCustomTab = (tab: CustomTab) => {
 		addCustomTab(tab, this.viewController, this.mediator);
 		return this;
 	};
@@ -59,7 +75,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * Adds a garden tab to your workspace
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addGarden = () => {
+	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
+		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
+	) => {
+		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 
@@ -69,7 +88,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator);
+		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
 	/**

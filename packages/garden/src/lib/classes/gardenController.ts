@@ -16,14 +16,20 @@ import { ReactiveValue } from './reactiveValue';
 
 const NullFunc = () => void 0;
 
+/**
+ * @typeParam TData type of your data
+ * @typeParam Object interface of custom group by keys
+ * @typeParam Object interface for custom state
+ * @typeParam Custom user context, store anything here
+ */
 export class GardenController<
 	TData,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
 > {
-	/** The node that is currently being highlighted */
-	highlightedNode = new ReactiveValue<string | null>(null);
+	/** The nodes that is currently selected */
+	selectedNodes = new ReactiveValue<string[]>([]);
 	/** The data used for creating garden groups */
 	data = new ReactiveValue<TData[]>([]);
 	/** The garden groups */
@@ -43,6 +49,8 @@ export class GardenController<
 	/** Override visuals and components for garden */
 	visuals: Visuals<TData> = {
 		getCustomItemColor: () => defaultItemColor,
+		calculateItemWidth: () => 300,
+		getCustomDescription: () => '',
 	};
 	/** Custom user context */
 	context?: TContext;
@@ -97,6 +105,8 @@ export class GardenController<
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
 		this.context = context;
 		this.groupData();
+
+		this.data.onChange(this.groupData);
 	}
 
 	/**
@@ -126,15 +136,17 @@ export class GardenController<
 	 * Function for grouping data.
 	 */
 	groupData = () => {
-		this.groups.setValue(createGarden(this));
+		this.groups.setValue(this.postGroupSorting(createGarden(this)));
 	};
 
 	/**
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
 	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
-		this.highlightedNode.setValue(
-			typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback
-		);
+		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
+		this.selectedNodes.setValue(val ? [val] : []);
 	};
+
+	/** Function for sorting groups after they have been grouped */
+	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
 }

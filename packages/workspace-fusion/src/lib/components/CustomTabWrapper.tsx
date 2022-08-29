@@ -1,17 +1,17 @@
-import { useFilteredData } from '../hooks';
-import { CustomTabComponent, FusionWorkspaceController } from '../types';
+import { CustomTabComponent, FusionMediator } from '../types';
+import { MediatorProvider } from './provider/MediatorProvider';
 
 interface CustomTabWrapperProps<TData, TError> {
-	mediator: FusionWorkspaceController<TData, TError>;
-	Component: CustomTabComponent<TData>;
+	mediator: FusionMediator<TData, TError>;
+	Component: CustomTabComponent;
 }
 
 export function CustomTabWrapper<TData, TError>({ Component, mediator }: CustomTabWrapperProps<TData, TError>) {
-	const data = useFilteredData(mediator);
-
 	return (
 		<div>
-			<Component data={data} onClick={(ev) => mediator.click(ev)} />
+			<MediatorProvider mediator={mediator}>
+				<Component />
+			</MediatorProvider>
 		</div>
 	);
 }

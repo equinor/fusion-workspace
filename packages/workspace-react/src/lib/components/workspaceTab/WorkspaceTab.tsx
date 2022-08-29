@@ -1,11 +1,10 @@
 import { useActiveTab } from '../../hooks';
-import { WorkspaceProps } from '../Workspace';
 
 /**
  * Renders the current active workspace tab
  */
-export function WorkspaceTab<TabNames extends string, TError>({ controller }: WorkspaceProps<TabNames, TError>) {
-	const tab = useActiveTab(controller);
+export function WorkspaceTab() {
+	const tab = useActiveTab();
 	if (!tab) return null;
 	const { Component } = tab;
 	return <Component />;

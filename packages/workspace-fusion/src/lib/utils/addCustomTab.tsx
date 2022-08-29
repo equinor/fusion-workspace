@@ -1,13 +1,13 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { CustomTabWrapper } from '../components';
-import { CustomTab, FusionWorkspaceController, WorkspaceTabNames } from '../types';
+import { CustomTab, FusionMediator, WorkspaceTabNames } from '../types';
 
 export function addCustomTab<TData, TError>(
-	{ Component, HeaderComponent, name }: CustomTab<TData>,
+	{ Component, HeaderComponent, name }: CustomTab,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionWorkspaceController<TData, TError>
+	mediator: FusionMediator<TData, TError>
 ) {
-	viewController.tabs.push({
+	viewController.tabs.addTab({
 		Component: () => <CustomTabWrapper Component={Component} mediator={mediator} />,
 		HeaderComponent,
 		name: name as WorkspaceTabNames,

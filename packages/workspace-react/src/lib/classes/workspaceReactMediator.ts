@@ -6,6 +6,15 @@ export class WorkspaceReactMediator<
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>
 > extends WorkspaceMediator<TData, TOnClick, TError> {
+	/**
+	 * Callback that returns an instance of itself
+	 * Helpful when chaining
+	 */
+	override addMiddleware = (cb: (mediator: this) => void) => {
+		cb(this);
+		return this;
+	};
+
 	isSidesheetOpen = false;
 	setIsSidesheetOpen: (value: boolean) => void;
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
@@ -14,9 +23,9 @@ export class WorkspaceReactMediator<
 	setIsLoading: (value: boolean) => void;
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
-	onMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onMount: (callback: () => void) => () => void;
 
-	onUnMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onUnMount: (callback: () => void) => () => void;
 
 	setMount: () => void;
 
