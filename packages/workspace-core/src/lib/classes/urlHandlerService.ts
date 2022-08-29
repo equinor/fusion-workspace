@@ -12,7 +12,7 @@ export class URLService {
 	url: Location;
 
 	constructor() {
-		const { onchange, setValue } = new Observable<Location>(getUrl());
+		const { onchange, setValue } = new Observable<Location>(getUrl(), compareUrl);
 		this.onUrlChange = onchange;
 		this.setUrl = (url: string) => setValue(extractQueryParameters(url));
 		onchange((url) => {
@@ -31,6 +31,13 @@ function extractQueryParameters(url: string): Location {
 		url: baseUrl,
 	};
 }
-function getUrl(): Location {
-	return extractQueryParameters(window.location.href);
+
+const getUrl = (): Location => extractQueryParameters(window.location.href);
+
+/** Compare function for urls, only compares query params for now */
+function compareUrl(a?: Location, b?: Location) {
+	if (!a || !b) return false;
+	if (a.queryParams.length !== b.queryParams.length) return false;
+
+	return a.queryParams.every((param) => b.queryParams.includes(param));
 }
