@@ -27,7 +27,9 @@ export function configureGardenHighlightSelection<TData, TError, TCustomGroupByK
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionMediator<TData, TError>
 ) {
-	mediator.selection.onSelectionChanged((val) => gardenController.selectedNodes.setValue(val.map(({ id }) => id)));
+	mediator.selection.onSelectionChanged((val) => {
+		gardenController.selectedNodes.setValue(val.map(({ id }) => id));
+	});
 }
 
 function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
@@ -37,11 +39,11 @@ function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, T
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
 		mediator.click({ item: item });
+		mediator.selection.setSelection([{ id: item[objectIdentifier as unknown as string] }]);
 	};
 
 	gardenController.clickEvents.onClickGroup = (item) => {
 		const items = findItems(item);
-		console.log(items);
 		mediator.selection.setSelection(items.map((s) => ({ id: s[objectIdentifier] as unknown as string })));
 	};
 }

@@ -3,6 +3,7 @@ import { Handover } from './types';
 import { mockData } from './mockData';
 import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
+import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -27,7 +28,18 @@ export const gridOptions: GridConfig<Handover> = {
 		{ field: 'Responsible', valueGetter: (s) => s.data?.responsible },
 		{ field: 'Area', valueGetter: (s) => s.data?.area },
 		{ field: 'System', valueGetter: (s) => s.data?.system },
+		{ field: 'Priority 1', valueGetter: (s) => s.data?.priority1 },
+		{ field: 'Priority 2', valueGetter: (s) => s.data?.priority2 },
+		{ field: 'Priority 3', valueGetter: (s) => s.data?.priority3 },
+		{ field: 'Planned start date', valueGetter: (s) => s.data?.plannedStartDate, headerName: 'Planned RFC' },
+		{ field: 'forecastStartDate', headerName: 'Forecast RFC' },
+		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO' },
+		{ field: 'rfocActualDate', headerName: 'Actual RFO' },
 	],
+	gridOptions: {
+		pagination: true,
+		paginationPageSize: 100,
+	},
 };
 
 /** Will render MC or Comm pkg status symbol */
@@ -54,7 +66,7 @@ export const customTab = {
 };
 
 export const sidesheetOptions: SidesheetConfig<Handover> = {
-	Component: SidesheetComponent,
+	Component: HandoverSidesheet,
 	getTitle: (ev) => {
 		return ev.item.commpkgNo;
 	},
@@ -89,10 +101,6 @@ export function CustomTab() {
 			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
 		</StyledCustomTab>
 	);
-}
-
-function SidesheetComponent() {
-	return <div>Hello</div>;
 }
 
 const StyledCustomTab = styled.div`

@@ -36,6 +36,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
 		});
+		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {

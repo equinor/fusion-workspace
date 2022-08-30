@@ -7,7 +7,7 @@ import HandoverGardenItem from './Visuals/HandoverGardenItem';
 export const gardenConfig: GardenConfig<Handover, ExtendedGardenFields, object, unknown> = {
 	data: [],
 	nodeLabelCallback: (s) => s.commpkgNo,
-	objectIdentifier: 'id',
+	objectIdentifier: 'commpkgNo',
 	initialGrouping: { horizontalGroupingAccessor: 'area', verticalGroupingKeys: [] },
 	fieldSettings: handoverFieldSettings,
 	configFunction,
