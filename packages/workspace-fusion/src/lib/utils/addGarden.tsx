@@ -1,5 +1,7 @@
 import { Garden, GardenConfig, GardenController, GardenGroup } from '@equinor/garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 import { GardenIcon } from '../icons/GardenIcon';
 import { FusionMediator, WorkspaceTabNames } from '../types';
 
@@ -16,12 +18,31 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	configureGardenHighlightSelection(gardenController, mediator);
 
 	viewController.tabs.addTab({
-		Component: () => <Garden controller={gardenController} />,
+		Component: () => (
+			<GardenTabWrapper>
+				<Garden controller={gardenController} />
+			</GardenTabWrapper>
+		),
 		name: 'garden',
 		HeaderComponent: GardenIcon,
 	});
 	gardenConfig.configFunction && gardenConfig.configFunction(gardenController);
 }
+
+interface GardenTabWrapperProps {
+	children: ReactNode;
+}
+const GardenTabWrapper = ({ children }: GardenTabWrapperProps) => {
+	return <Wrapper>{children}</Wrapper>;
+};
+
+const Wrapper = styled.div`
+	display: grid;
+	grid-template-rows: auto 1fr;
+	gap: 8px;
+	height: 1000px;
+	width: 1000px;
+`;
 
 export function configureGardenHighlightSelection<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
