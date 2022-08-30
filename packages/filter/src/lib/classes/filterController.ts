@@ -3,7 +3,7 @@ import { doesItemPassCriteria, doesItemPassFilter, generateFilterValues } from '
 import { FilterGroup, FilterItemCount, FilterValueType, ValueFormatterFilter, ValueFormatterFunction } from '../types';
 import { FilterStateController } from './filterStateController';
 import { SearchController } from './searchController';
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from './observable';
 
 export class FilterController<TData> {
 	filterGroups: FilterGroup[] = [];

@@ -1,6 +1,6 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 import { FilterSearchActive } from '../types';
 import { searchForIncludes, searchForStartsWith } from '../utils';
+import { Observable, OnchangeCallback } from './observable';
 
 export class SearchController<TData> {
 	filterSearch: FilterSearchActive<TData> | null = null;

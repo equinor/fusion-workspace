@@ -1,6 +1,6 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 import { FilterGroup, FilterValueType } from '../types';
 import { filterGroupExists } from '../utils';
+import { Observable, OnchangeCallback } from './observable';
 
 export class FilterStateController {
 	filterState: FilterGroup[] = [];
