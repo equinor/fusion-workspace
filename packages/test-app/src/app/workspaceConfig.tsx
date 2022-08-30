@@ -77,14 +77,9 @@ export const dataSourceOptions = async (): Promise<Handover[]> =>
 		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
 	});
 
-export const statusBarConfig: StatusBarConfig<Handover> = [
-	{ getValue: (data) => ({ title: 'Total CP', value: data.length }) },
-	{
-		getValue: (data) => ({
-			title: 'RFO accepted',
-			value: data.map((s) => s.rfocIsAccepted).reduce((prev, curr) => (prev = prev + (curr ? 1 : 0)), 0),
-		}),
-	},
+export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
+	{ title: 'Total CP', value: data.reduce((prev) => (prev = prev + 1), 0) },
+	{ title: 'RFO Accepted', value: data.reduce((prev, curr) => (prev = prev + (curr.rfocIsAccepted ? 1 : 0)), 0) },
 ];
 
 export function CustomTab() {

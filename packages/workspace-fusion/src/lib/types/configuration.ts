@@ -14,13 +14,7 @@ export interface SidesheetConfig<TData> {
 
 export type DataFetchAsync<TData> = () => Promise<TData[]>;
 
-export type GetStatusItem<TData> = (item: TData[]) => StatusItem;
-
-interface StatusBar<TData> {
-	getValue: GetStatusItem<TData>;
-}
-
-export type StatusBarConfig<TData> = [StatusBar<TData>, ...StatusBar<TData>[]];
+export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 
 export interface CustomTabProps<TData> {
 	data: TData[];
