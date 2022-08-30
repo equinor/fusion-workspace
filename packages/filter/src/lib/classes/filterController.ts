@@ -5,12 +5,11 @@ import { FilterStateController } from './filterStateController';
 import { SearchController } from './searchController';
 import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 
-//TODO: Add change handlers to everything
 export class FilterController<TData> {
-	allFilterValues: FilterGroup[] = [];
-	createFilterValues = () => {
-		this.allFilterValues = generateFilterValues(this.valueFormatters, this.data);
-	};
+	filterGroups: FilterGroup[] = [];
+	filterStateController = new FilterStateController<TData>();
+	searchController = new SearchController<TData>();
+	valueFormatters: ValueFormatterFilter<TData>[] = [];
 
 	data: TData[] = [];
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
@@ -20,14 +19,12 @@ export class FilterController<TData> {
 	setFilteredData: (newData: TData[]) => void;
 	onFilteredDataChanged: (callback: OnchangeCallback<TData[]>) => () => void;
 
-	searchController = new SearchController<TData>();
-	valueFormatters: ValueFormatterFilter<TData>[] = [];
-
+	/**Function for adding a valueformatter */
 	addValueFormatters = (valueFormatters: ValueFormatterFilter<TData>[]) => {
 		this.valueFormatters = [...this.valueFormatters, ...valueFormatters];
 	};
-	filterStateController = new FilterStateController<TData>();
 
+	/** Initializes the filter */
 	init = () => {
 		this.createFilterValues();
 		this.filter();
@@ -49,16 +46,18 @@ export class FilterController<TData> {
 			this.searchController.data = newData;
 		});
 		/** Filters the data whenever the filter state changes */
-		this.filterStateController.onFilterStateChange(() => this.filter());
+		this.filterStateController.onFilterStateChange(this.filter);
 	}
 
-	getGroupValues = (groupName: string) => this.allFilterValues.find(({ name }) => name === groupName)?.values ?? [];
+	/** Returns all the filtervalues from a given group */
+	getGroupValues = (groupName: string) => this.filterGroups.find(({ name }) => name === groupName)?.values ?? [];
 
-	/**
-	 * Gets count for all the filter values in a filter group
-	 */
+	/** Generates filter values based on the given valueformatters from data */
+	createFilterValues = () => this.setFilterValues(generateFilterValues(this.valueFormatters, this.data));
+
+	/** Gets count for all the filter values in a filter group  */
 	getFilterItemCountsForGroup = (groupName: string): FilterItemCount[] => {
-		const filterGroup = this.allFilterValues.find(({ name }) => name === groupName);
+		const filterGroup = this.filterGroups.find(({ name }) => name === groupName);
 		if (!filterGroup) return [];
 
 		return filterGroup.values.map(
@@ -69,7 +68,7 @@ export class FilterController<TData> {
 		);
 	};
 
-	/**Returns the count for a specific filter value */
+	/** Returns the count for a specific filter value */
 	getCountForFilterValue = (
 		filterGroup: FilterGroup,
 		filterItem: FilterValueType,
@@ -98,9 +97,7 @@ export class FilterController<TData> {
 		}
 	};
 
-	/**
-	 * Destroys the filter
-	 */
+	/** Destroys the filter */
 	destroyFilter = () => {
 		this.setData([]);
 		this.setFilteredData([]);
@@ -108,10 +105,8 @@ export class FilterController<TData> {
 		this.setFilterValues([]);
 	};
 
-	/**
-	 * Set filter values
-	 */
+	/** Set filter values */
 	setFilterValues = (newFilterValues: FilterGroup[]) => {
-		this.allFilterValues = newFilterValues;
+		this.filterGroups = newFilterValues;
 	};
 }
