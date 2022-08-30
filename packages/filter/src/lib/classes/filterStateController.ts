@@ -1,9 +1,16 @@
-import { Callback, FilterGroup, FilterValueType, OnCallbackSet, OnFilterStateChangedCallback } from '../types';
-import { filterGroupExists, registerCallback } from '../utils';
+import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { FilterGroup, FilterValueType } from '../types';
+import { filterGroupExists } from '../utils';
 
-export class FilterStateController<TData> {
+export class FilterStateController {
 	filterState: FilterGroup[] = [];
-	onFilterStateChangedCallbacks: Callback<OnFilterStateChangedCallback<TData>>[] = [];
+
+	constructor() {
+		const { onchange, setValue } = new Observable<FilterGroup[]>([]);
+		this.setFilterState = setValue;
+		this.onFilterStateChange = onchange;
+		onchange((val) => (this.filterState = val));
+	}
 
 	/**
 	 * Check if a value is currently being filtered out from the dataset
@@ -34,18 +41,13 @@ export class FilterStateController<TData> {
 			/** only add */
 			this.filterState.push({ name: groupName, values: [newValue] });
 		}
-		this.onFilterStateChangedCallbacks.forEach(({ callback }) => callback(this.filterState, this));
+		this.setFilterState(this.filterState);
 	};
 
 	/**
 	 * Register callback to be called when filter state changes
 	 */
-	onFilterStateChange = (cb: OnFilterStateChangedCallback<TData>): OnCallbackSet =>
-		registerCallback(cb, this.onFilterStateChangedCallbacks, this.unsubOnFilterStateChange);
-
-	private unsubOnFilterStateChange = (id: string) => {
-		this.onFilterStateChangedCallbacks = this.onFilterStateChangedCallbacks.filter((s) => s.id !== id);
-	};
+	onFilterStateChange: (callback: OnchangeCallback<FilterGroup[]>) => () => void;
 
 	/**
 	 * Add or remove all values in a filter group
@@ -59,10 +61,7 @@ export class FilterStateController<TData> {
 	/**
 	 * Manually set the filter state
 	 */
-	setFilterState = (newFilterState: FilterGroup[]) => {
-		this.filterState = newFilterState;
-		this.onFilterStateChangedCallbacks.forEach(({ callback }) => callback(newFilterState, this));
-	};
+	setFilterState: (value: FilterGroup[]) => void;
 
 	/** Clears all active filters */
 	clearActiveFilters = () => {

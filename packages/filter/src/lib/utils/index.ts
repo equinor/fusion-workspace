@@ -1,4 +1,3 @@
-export * from './callback';
 export * from './doesItemPass';
 export * from './filterGroupExists';
 export * from './generateFilterValues';

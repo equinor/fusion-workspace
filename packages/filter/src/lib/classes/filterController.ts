@@ -7,7 +7,7 @@ import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 
 export class FilterController<TData> {
 	filterGroups: FilterGroup[] = [];
-	filterStateController = new FilterStateController<TData>();
+	filterStateController = new FilterStateController();
 	searchController = new SearchController<TData>();
 	valueFormatters: ValueFormatterFilter<TData>[] = [];
 
@@ -80,9 +80,10 @@ export class FilterController<TData> {
 
 		const uncheckedValues = filterGroup.values.filter((value) => value !== filterItem);
 
-		return this.filteredData.reduce((count, val) => {
-			return doesItemPassCriteria(uncheckedValues, valueFormatter(val)) ? count + 1 : count;
-		}, 0);
+		return this.filteredData.reduce(
+			(count, val) => (doesItemPassCriteria(uncheckedValues, valueFormatter(val)) ? count + 1 : count),
+			0
+		);
 	};
 
 	private filter = () => {
@@ -93,7 +94,7 @@ export class FilterController<TData> {
 			)
 		);
 		if (this.searchController.filterSearch !== null) {
-			this.searchController.handleSearch();
+			this.setFilteredData(this.searchController.handleSearch() ?? []);
 		}
 	};
 
