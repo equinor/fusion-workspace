@@ -74,8 +74,15 @@ export const sidesheetOptions: SidesheetConfig<Handover> = {
 
 export const dataSourceOptions = async (): Promise<Handover[]> =>
 	new Promise((resolve) => {
-		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
+		setTimeout(() => resolve(duplicate(mockData, 3)), Math.random() * (5000 - 500) + 500);
 	});
+
+function duplicate(data: unknown[], multiplier: number) {
+	if (multiplier > 1) {
+		return duplicate([...data, ...data], multiplier - 1);
+	}
+	return [...data, ...data];
+}
 
 export const statusBarConfig: StatusBarConfig<Handover> = [
 	{ getValue: (data) => ({ title: 'Total CP', value: data.length }) },
