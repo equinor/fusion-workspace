@@ -10,16 +10,18 @@ import { StyledGridWrapper } from './grid.styles';
 
 interface GridProps<T> {
 	controller: GridController<T>;
+	height: number;
+	width: number;
 }
 
-export function Grid<T>({ controller }: GridProps<T>) {
+export function Grid<T>({ controller, height, width }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const rowData = useRowData(controller);
 
 	useSelectionService(controller, gridApi);
 
 	return (
-		<StyledGridWrapper className="ag-theme-alpine">
+		<StyledGridWrapper height={height} width={width} className="ag-theme-alpine">
 			<AgGridReact
 				onGridReady={(api) => {
 					setGridApi(api.api);

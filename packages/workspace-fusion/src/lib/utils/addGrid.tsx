@@ -1,6 +1,7 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
 import { ColDef } from 'ag-grid-community';
+import { TabWrapper, useSizeContext } from '../components/TabWrapper';
 import { GridIcon as HeaderComponent } from '../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
@@ -19,10 +20,25 @@ export function addGrid<TData, TError>(
 	gridControllerBinder(gridController, mediator);
 
 	viewController.tabs.addTab({
-		Component: () => <Grid controller={gridController} />,
+		Component: () => (
+			<TabWrapper>
+				<FusionGrid controller={gridController} />
+			</TabWrapper>
+		),
 		name: 'grid',
 		HeaderComponent,
 	});
+}
+
+interface FusionGridProps<T> {
+	controller: GridController<T>;
+}
+export function FusionGrid<T>({ controller }: FusionGridProps<T>) {
+	const { height, width } = useSizeContext();
+
+	console.log(`Available height is: ${height}px`);
+
+	return <Grid height={height} width={width} controller={controller} />;
 }
 
 export function gridControllerBinder<TData, TError>(
