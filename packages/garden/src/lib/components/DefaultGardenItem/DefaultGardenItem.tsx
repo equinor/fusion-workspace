@@ -3,7 +3,6 @@ import { useGardenContext, useIsSelected } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
 	columnExpanded: boolean;
-
 	item: Record<string, string>;
 	depth: number;
 }

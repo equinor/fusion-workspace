@@ -9,7 +9,7 @@ import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../
 import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles';
 import { tokens } from '@equinor/eds-tokens';
 import { Icon } from '@equinor/eds-core-react';
-import { GardenController } from '../../classes';
+import { CustomItemViewWrapper } from '../CustomItemWrapper/CustomItemWrapper';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<T> = {
@@ -26,7 +26,6 @@ type PackageContainerProps<T> = {
 export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.Element => {
 	const {
 		rowVirtualizer,
-		handleOnClick,
 		virtualColumn,
 		handleExpand,
 		parentRef,
@@ -37,12 +36,10 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 
 	const controller = useGardenContext();
 	const {
-		selectedNodes: { value: selectedNodes },
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
-		objectIdentifier,
 	} = controller;
 
 	const groups = useGardenGroups();
@@ -97,18 +94,14 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 								</StyledSubGroup>
 							)
 						) : PackageChild ? (
-							<PackageChild
-								controller={controller as GardenController<T>}
-								data={item.item}
-								onClick={() => {
-									handleOnClick(item.item);
-								}}
+							<CustomItemViewWrapper
+								Component={PackageChild}
+								item={item.item}
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
 								depth={item?.itemDepth}
-								width={itemWidth}
-								isSelected={selectedNodes.includes(item.item[objectIdentifier])}
+								itemWidth={itemWidth}
 								rowStart={virtualRow.start}
 								columnStart={virtualColumn.start}
 								parentRef={parentRef}
