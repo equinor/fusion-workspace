@@ -10,5 +10,5 @@ interface StatusBarWrapperProps<TData, TError> {
 export function StatusBarWrapper<TData, TError>({ config, mediator }: StatusBarWrapperProps<TData, TError>) {
 	const data = useFilteredData(mediator);
 
-	return <StatusBar items={config.map(({ getValue }) => getValue(data))} />;
+	return <StatusBar items={config(data)} />;
 }
