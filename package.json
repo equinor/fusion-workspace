@@ -7,6 +7,10 @@
 	"dependencies": {
 		"@equinor/eds-core-react": "^0.20.4",
 		"@equinor/eds-tokens": "^0.7.1",
+		"@equinor/fusion-react-ag-grid-addons": "^0.3.2",
+		"@equinor/fusion-react-icon": "^0.2.14",
+		"@equinor/fusion-react-styles": "^0.5.4",
+		"@equinor/fusion-react-tooltip": "^1.1.4",
 		"ag-grid-community": "^28.1.0",
 		"ag-grid-react": "^28.1.0",
 		"core-js": "^3.6.5",

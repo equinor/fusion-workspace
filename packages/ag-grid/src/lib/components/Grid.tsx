@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridApi } from 'ag-grid-community';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 import { GridController } from '../classes';
 import { useRowData, selectRowNode, useSelectionService } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
+import { useAgGridStyles } from '@equinor/fusion-react-ag-grid-addons';
 
 interface GridProps<T> {
 	controller: GridController<T>;
@@ -17,6 +16,7 @@ export function Grid<T>({ controller }: GridProps<T>) {
 	const rowData = useRowData(controller);
 
 	useSelectionService(controller, gridApi);
+	useAgGridStyles();
 
 	return (
 		<StyledGridWrapper className="ag-theme-alpine">
