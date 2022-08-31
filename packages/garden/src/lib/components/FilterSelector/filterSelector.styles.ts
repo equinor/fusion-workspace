@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const StyledSelectRowWrapper = styled.div`
 	display: flex;
 	align-items: center;
+	overflow-x: auto;
+	overflow-y: hidden;
 `;
 
 export const StyledSeparator = styled.p`

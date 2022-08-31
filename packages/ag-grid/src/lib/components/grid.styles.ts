@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledGridWrapper = styled.div<{ height: number; width: number }>`
+export const StyledGridWrapper = styled.div<{ height: number }>`
 	height: ${({ height }) => `${height}px`};
-	width: ${({ width }) => `${width}px`};
+	width: 100%;
 `;

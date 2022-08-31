@@ -36,7 +36,11 @@ function FusionWorkspace() {
 }
 
 export function App() {
-	return <FusionWorkspace />;
+	return (
+		<div style={{ height: '100vh', position: 'relative', width: '100vw', display: 'flex' }}>
+			<FusionWorkspace />
+		</div>
+	);
 }
 
 export default App;

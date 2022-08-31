@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { WorkspaceViewController } from '../classes/workspaceViewController';
 import { useMounted } from '../hooks/useMounted';
 import { ContextProvider } from './ContextProvider';
@@ -10,11 +11,19 @@ export interface WorkspaceProps<TTabName extends string, TError> {
 export function Workspace<TTabNames extends string, TError>({ controller }: WorkspaceProps<TTabNames, TError>) {
 	useMounted(controller);
 	return (
-		<div>
+		<StyledWorkspace>
 			<ContextProvider controller={controller}>
 				<WorkspaceHeader />
+				<div>{controller.filter.FilterComponent && <controller.filter.FilterComponent />}</div>
 				<WorkspaceBody />
 			</ContextProvider>
-		</div>
+		</StyledWorkspace>
 	);
 }
+
+const StyledWorkspace = styled.div`
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto auto 1fr;
+`;

@@ -8,20 +8,19 @@ import { GridController } from '../classes';
 import { useRowData, selectRowNode, useSelectionService } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
 
-interface GridProps<T> {
+export interface GridProps<T> {
 	controller: GridController<T>;
 	height: number;
-	width: number;
 }
 
-export function Grid<T>({ controller, height, width }: GridProps<T>) {
+export function Grid<T>({ controller, height }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const rowData = useRowData(controller);
 
 	useSelectionService(controller, gridApi);
 
 	return (
-		<StyledGridWrapper height={height} width={width} className="ag-theme-alpine">
+		<StyledGridWrapper height={height} className="ag-theme-alpine">
 			<AgGridReact
 				onGridReady={(api) => {
 					setGridApi(api.api);
