@@ -1,10 +1,12 @@
 import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
+import { BookmarkService } from './bookmarkService/bookmarkService';
 
 export class WorkspaceReactMediator<
 	TData,
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
-	TContext extends ObjectType<TContext> = ObjectType<unknown>
+	TContext extends ObjectType<TContext> = ObjectType<unknown>,
+	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>
 > extends WorkspaceMediator<TData, TOnClick, TError> {
 	/**
 	 * Callback that returns an instance of itself
@@ -14,6 +16,8 @@ export class WorkspaceReactMediator<
 		cb(this);
 		return this;
 	};
+
+	bookmarkService = new BookmarkService<TBookmarkState>();
 
 	isSidesheetOpen = false;
 	setIsSidesheetOpen: (value: boolean) => void;

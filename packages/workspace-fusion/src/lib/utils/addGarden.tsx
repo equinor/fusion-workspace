@@ -15,6 +15,12 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	configureClickEvents(gardenController, mediator, objectIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
 
+	mediator.bookmarkService.registerCapture(() => ({ garden: { groupingKeys: gardenController.grouping.value } }));
+	mediator.bookmarkService.onApply((state) => {
+		if (state.garden?.groupingKeys) {
+			gardenController.grouping.setValue(state.garden.groupingKeys);
+		}
+	});
 	viewController.tabs.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',

@@ -28,6 +28,9 @@ function FusionWorkspace() {
 				mediator.selection.onSelectionChanged((s) => {
 					console.log(`Selection changed ${s.map((s) => s.id)}`);
 				});
+
+				mediator.bookmarkService.onCapture((s) => console.log(`Bookmark captured`, s));
+				console.log('I captured this bookmark', mediator.bookmarkService.capture());
 			})
 			.addStatusBarItems(statusBar)
 	);
