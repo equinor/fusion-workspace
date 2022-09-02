@@ -3,8 +3,8 @@ import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { GridController } from '@workspace/grid';
 import { ObjectType } from '@workspace/workspace-core';
 import { WorkspaceOnClick } from '../types';
-import { configureGardenHighlightSelection } from '../utils/addGarden';
-import { configureHighlightSelection as configureGridHighlight } from '../utils/addGrid';
+import { configureGardenHighlightSelection } from '../utils/garden';
+import { configureHighlightSelection as configureGridHighlight } from '../utils/grid';
 
 const HIGHLIGHTEDMOCKID = '123';
 

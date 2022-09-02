@@ -2,7 +2,6 @@ import { Garden, GardenConfig, GardenController } from '@equinor/garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { GardenIcon } from '../../icons/GardenIcon';
 import { FusionMediator, WorkspaceTabNames } from '../../types';
-import { GardenBookmark } from '../../types/fusionBookmark';
 import { configureBookmarkService } from './configureBookmarkService';
 import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';

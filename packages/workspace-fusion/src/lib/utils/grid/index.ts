@@ -1,1 +1,1 @@
-export { addGrid } from './addGrid';
+export { addGrid, configureHighlightSelection } from './addGrid';
