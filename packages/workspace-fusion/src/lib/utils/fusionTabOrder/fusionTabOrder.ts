@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { WorkspaceTabNames } from '../types';
+import { WorkspaceTabNames } from '../../types';
 
 const tabSortOrder = new Map<WorkspaceTabNames, number>();
 tabSortOrder.set('garden', 0);
