@@ -19,6 +19,7 @@ import {
 	addGarden,
 	addViewController,
 } from '../utils';
+import { FusionUserSettings } from './fusionUserSettings';
 
 export interface WorkspaceContext {
 	ui: unknown;
@@ -41,6 +42,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
 		});
+
+		const db = new FusionUserSettings<TData>();
+		this.mediator.bookmarkService.onCapture((res) => db.save(res));
+		this.viewController.tabs.onActiveTabChanged(this.mediator.bookmarkService.capture);
+		db.read().then(this.mediator.bookmarkService.apply);
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {

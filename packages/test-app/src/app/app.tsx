@@ -27,22 +27,6 @@ function FusionWorkspace() {
 				})
 				.addMiddleware((mediator) => {
 					wsMediator = mediator;
-					mediator.onClick((click) => {
-						console.log('Clickevent happened', click);
-					});
-					mediator.selection.onSelectionChanged((s) => {
-						console.log(`Selection changed ${s.map((s) => s.id)}`);
-					});
-
-					mediator.bookmarkService.onCapture((s) => console.log(`Bookmark captured`, s));
-					console.log('I captured this bookmark', mediator.bookmarkService.capture());
-
-					mediator.bookmarkService.apply({
-						garden: {
-							groupingKeys: { horizontalGroupingAccessor: 'area', verticalGroupingKeys: [] },
-							selectedNodes: ['1815-S09', '7003-L01'],
-						},
-					});
 				})
 				.addStatusBarItems(statusBar)
 		);

@@ -9,16 +9,17 @@ export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
 		{
 			field: 'commPkgNo',
-			valueGetter: (s) => s.data?.commpkgNo,
+			valueGetter: (valueGetter) => valueGetter.data?.commpkgNo,
 			onCellClicked: undefined,
 			cellRenderer: (props) => <a href="gooogle.com">{props.valueFormatted ?? props.value}</a>,
 		},
 		{ field: 'Description', valueGetter: (s) => s.data?.description },
-		{ field: 'Disciplines', valueGetter: (s) => s.data?.mcDisciplineCodes },
+		{ field: 'Disciplines', valueGetter: (s) => s.data?.mcDisciplineCodes, enableRowGroup: true },
 		{
 			field: 'Comm pkg status',
 			valueGetter: (s) => s.data?.commpkgStatus,
-			cellRenderer: (props) => RenderStatus(props.valueFormatted ?? props.value),
+			cellRenderer: (props) =>
+				(props.value || props.valueFormatted) && RenderStatus(props.valueFormatted ?? props.value),
 		},
 		{
 			field: 'MC status',
@@ -33,7 +34,7 @@ export const gridOptions: GridConfig<Handover> = {
 		{ field: 'Priority 3', valueGetter: (s) => s.data?.priority3 },
 		{ field: 'Planned start date', valueGetter: (s) => s.data?.plannedStartDate, headerName: 'Planned RFC' },
 		{ field: 'forecastStartDate', headerName: 'Forecast RFC' },
-		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO' },
+		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO', initialHide: true },
 		{ field: 'rfocActualDate', headerName: 'Actual RFO' },
 	],
 	gridOptions: {
