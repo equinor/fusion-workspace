@@ -10,15 +10,18 @@ import {
 	CustomTab,
 	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
-
-interface UIContext {
-	appKey: string;
-	color: string;
-}
+import {
+	addCustomTab,
+	addDataSource,
+	addGrid,
+	addSidesheet,
+	addStatusBar,
+	addGarden,
+	addViewController,
+} from '../utils';
 
 export interface WorkspaceContext {
-	ui: UIContext;
+	ui: unknown;
 }
 
 export class FusionWorkspaceBuilder<TData, TError> {
@@ -32,11 +35,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
+		addViewController(this.viewController, this.mediator);
+
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
 		});
-		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
