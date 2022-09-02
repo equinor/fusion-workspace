@@ -1,4 +1,5 @@
 import { ObjectType, OnchangeCallback } from '../types';
+import { BookmarkService } from './bookmarkService/bookmarkService';
 import { Observable } from './observable';
 import { SelectionService } from './selectionService';
 
@@ -9,7 +10,8 @@ import { SelectionService } from './selectionService';
 export class WorkspaceMediator<
 	TData,
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
-	TError extends ObjectType<TError> = ObjectType<unknown>
+	TError extends ObjectType<TError> = ObjectType<unknown>,
+	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>
 > {
 	/**
 	 * Callback that returns an instance of itself
@@ -19,6 +21,8 @@ export class WorkspaceMediator<
 		cb(this);
 		return this;
 	};
+
+	bookmarkService = new BookmarkService<TBookmarkState>();
 	selection = new SelectionService();
 
 	/** Register a callback to be called when filtered data changes*/
