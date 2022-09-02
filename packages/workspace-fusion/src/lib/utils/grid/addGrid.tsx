@@ -1,8 +1,9 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
 import { ColDef } from 'ag-grid-community';
-import { GridIcon as HeaderComponent } from '../icons/GridIcon';
-import { FusionMediator, GridConfig, WorkspaceTabNames } from '../types';
+import { GridIcon as HeaderComponent } from '../../icons/GridIcon';
+import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
+import { GridBookmark } from '../../types/fusionBookmark';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function addGrid<TData, TError>(
@@ -16,7 +17,8 @@ export function addGrid<TData, TError>(
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
 
-	gridControllerBinder(gridController, mediator);
+	onDataChange(gridController, mediator);
+	onBookmark(gridController, mediator);
 
 	viewController.tabs.addTab({
 		Component: () => <Grid controller={gridController} />,
@@ -25,7 +27,24 @@ export function addGrid<TData, TError>(
 	});
 }
 
-export function gridControllerBinder<TData, TError>(
+function onBookmark<TData, TError>(gridController: GridController<TData>, mediator: FusionMediator<TData, TError>) {
+	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
+	mediator.bookmarkService.onApply((state) => state.grid && applyGridBookmark(state.grid, gridController));
+}
+
+function applyGridBookmark<TData>(bookmark: GridBookmark, gridController: GridController<TData>) {
+	gridController.selectedNodes.setValue(bookmark.selectedNodes ?? []);
+	gridController.setColumnState(bookmark.columnState);
+}
+
+function snapshotGridState<TData>(gridController: GridController<TData>): GridBookmark {
+	return {
+		selectedNodes: gridController.selectedNodes.value,
+		columnState: gridController.columnState,
+	};
+}
+
+export function onDataChange<TData, TError>(
 	gridController: GridController<TData>,
 	mediator: FusionMediator<TData, TError>
 ) {

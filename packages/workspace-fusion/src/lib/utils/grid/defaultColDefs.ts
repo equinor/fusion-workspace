@@ -1,6 +1,5 @@
 import { ColDef } from 'ag-grid-community';
-
-import { FusionMediator } from '../types';
+import { FusionMediator } from '../../types';
 
 /**
  * Applies a set of default column definition parameters.
