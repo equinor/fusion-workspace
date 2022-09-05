@@ -30,6 +30,7 @@ export function addGrid<TData, TError>(
 function onBookmark<TData, TError>(gridController: GridController<TData>, mediator: FusionMediator<TData, TError>) {
 	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
 	mediator.bookmarkService.onApply((state) => state.grid && applyGridBookmark(state.grid, gridController));
+	gridController.onColumnStateChanged(mediator.bookmarkService.capture);
 }
 
 function applyGridBookmark<TData>(bookmark: GridBookmark, gridController: GridController<TData>) {
