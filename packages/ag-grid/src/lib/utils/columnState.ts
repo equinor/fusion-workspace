@@ -7,13 +7,13 @@ export function listenForColumnChanges<TData>(controller: GridController<TData>,
 	gridReady.api.addEventListener('columnMoved', catchColumnState);
 	gridReady.api.addEventListener('columnVisible', catchColumnState);
 	gridReady.api.addEventListener('columnPinned', catchColumnState);
-	gridReady.api.addEventListener('columnResized', catchColumnState);
+	listenForColumnResize(gridReady, catchColumnState);
 	gridReady.api.addEventListener('newColumnsLoaded', catchColumnState);
 }
 
 /** Updates the controllers column state */
 function updateColumnState<TData>(controller: GridController<TData>, columnApi: ColumnApi) {
-	controller.columnState = columnApi.getColumnState();
+	controller.setColumnState(columnApi.getColumnState());
 }
 
 /**
@@ -23,4 +23,23 @@ export function applyColumnStateFromGridController<TData>(controller: GridContro
 	if (controller.columnState) {
 		columnApi.applyColumnState({ applyOrder: true, state: controller.columnState });
 	}
+}
+
+/**
+ * Column resize fires constantly while dragging
+ * This function adds debounce to only capture on resize end
+ */
+function listenForColumnResize(gridReady: GridReadyEvent, catchColumnState: () => void) {
+	let timeoutId;
+	gridReady.api.addEventListener('columnResized', () => {
+		if (timeoutId) {
+			console.log('event queued, waiting');
+			return;
+		}
+		timeoutId = setTimeout(() => {
+			console.log('Capturing column state');
+			timeoutId = undefined;
+			catchColumnState();
+		}, 2000);
+	});
 }
