@@ -7,7 +7,7 @@ export function configureBookmarkService<TData, TError, TCustomGroupByKeys, TCus
 	mediator: FusionMediator<TData, TError>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
-	mediator.bookmarkService.onApply((state) => state.garden && applyFusionBookmark(state.garden, gardenController));
+	mediator.bookmarkService.onApply((state) => state?.garden && applyFusionBookmark(state.garden, gardenController));
 	gardenController.grouping.onChange(mediator.bookmarkService.capture);
 }
 

@@ -11,7 +11,7 @@ export function addViewController<TData, TError>(
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 
 	/** Bookmarks */
-	mediator.bookmarkService.onApply((state) => state.view && applyViewStateBookmark(state.view, viewController));
+	mediator.bookmarkService.onApply((state) => state?.view && applyViewStateBookmark(state.view, viewController));
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));
 }
 

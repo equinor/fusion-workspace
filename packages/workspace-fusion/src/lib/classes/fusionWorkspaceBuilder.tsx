@@ -46,7 +46,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		const db = new FusionUserSettings<TData>();
 		this.mediator.bookmarkService.onCapture((res) => db.save(res));
 		this.viewController.tabs.onActiveTabChanged(this.mediator.bookmarkService.capture);
-		db.read().then(this.mediator.bookmarkService.apply);
+		db.read().then((state) => state && this.mediator.bookmarkService.apply(state));
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
