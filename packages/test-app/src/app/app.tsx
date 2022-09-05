@@ -1,7 +1,7 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
-import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
+import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBar } from './workspaceConfig';
 
 function FusionWorkspace() {
 	const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', (builder) =>
@@ -28,7 +28,7 @@ function FusionWorkspace() {
 			.addGarden({
 				data: [],
 				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'id',
+				objectIdentifier: 'commpkgNo',
 				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 				fieldSettings: {},
 			})
@@ -40,7 +40,7 @@ function FusionWorkspace() {
 					console.log(`Selection changed ${s.map((s) => s.id)}`);
 				});
 			})
-			.addStatusBarItems(statusBarConfig)
+			.addStatusBarItems(statusBar)
 	);
 
 	return <Workspace controller={controller} />;

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { useGardenContext, useIsSelected } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 interface DefaultGardenItemProps {
@@ -8,7 +8,7 @@ interface DefaultGardenItemProps {
 	depth: number;
 }
 
-export const DefaultGardenItem = ({ columnExpanded, item, depth }: DefaultGardenItemProps): JSX.Element => {
+export const DefaultGardenItem = memo(({ columnExpanded, item, depth }: DefaultGardenItemProps): JSX.Element => {
 	const controller = useGardenContext();
 	const {
 		clickEvents: { onClickItem },
@@ -41,4 +41,4 @@ export const DefaultGardenItem = ({ columnExpanded, item, depth }: DefaultGarden
 			{columnExpanded && <div>{description}</div>}
 		</StyledDefaultPackage>
 	);
-};
+});
