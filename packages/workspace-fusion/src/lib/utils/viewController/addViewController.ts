@@ -10,6 +10,9 @@ export function addViewController<TData, TError>(
 	/** Sync loading state */
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 
+	/** Sync user settings when active tab changes */
+	viewController.tabs.onActiveTabChanged(mediator.bookmarkService.capture);
+
 	/** Bookmarks */
 	mediator.bookmarkService.onApply((state) => state?.view && applyViewStateBookmark(state.view, viewController));
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));

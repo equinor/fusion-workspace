@@ -7,3 +7,4 @@ export * from './statusBar';
 export * from './addCustomTab';
 export * from './createFusionWorkspace';
 export * from './viewController';
+export * from './indexedDb';

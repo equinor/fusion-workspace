@@ -18,8 +18,8 @@ import {
 	addStatusBar,
 	addGarden,
 	addViewController,
+	addIndexedDb,
 } from '../utils';
-import { FusionUserSettings } from './fusionUserSettings';
 
 export interface WorkspaceContext {
 	ui: unknown;
@@ -43,10 +43,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			this.mediator.selection.setSelection([{ id }]);
 		});
 
-		const db = new FusionUserSettings<TData>();
-		this.mediator.bookmarkService.onCapture((res) => db.save(res));
-		this.viewController.tabs.onActiveTabChanged(this.mediator.bookmarkService.capture);
-		db.read().then((state) => state && this.mediator.bookmarkService.apply(state));
+		addIndexedDb(this.mediator);
 	}
 
 	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
