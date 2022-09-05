@@ -8,7 +8,9 @@ export class GridController<TData> {
 
 	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
-		const { onchange, setValue } = new Observable<ColumnState[] | undefined>();
+		const columnStateObservable = new Observable<ColumnState[] | undefined>();
+		columnStateObservable.isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+		const { onchange, setValue } = columnStateObservable;
 		onchange((val) => (this.columnState = val));
 		this.setColumnState = setValue;
 		this.onColumnStateChanged = onchange;
