@@ -9,6 +9,7 @@ export function listenForColumnChanges<TData>(controller: GridController<TData>,
 	gridReady.api.addEventListener('columnPinned', catchColumnState);
 	listenForColumnResize(gridReady, catchColumnState);
 	gridReady.api.addEventListener('newColumnsLoaded', catchColumnState);
+	gridReady.api.addEventListener('sortChanged', catchColumnState);
 }
 
 /** Updates the controllers column state */
