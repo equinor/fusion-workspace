@@ -5,6 +5,16 @@ import { Observable, OnchangeCallback } from './observable';
 export class FilterStateController {
 	filterState: FilterGroup[] = [];
 
+	/**
+	 * Manually set the filter state
+	 */
+	setFilterState: (value: FilterGroup[]) => void;
+
+	/**
+	 * Register callback to be called when filter state changes
+	 */
+	onFilterStateChange: (callback: OnchangeCallback<FilterGroup[]>) => () => void;
+
 	constructor() {
 		const { onchange, setValue } = new Observable<FilterGroup[]>([]);
 		this.setFilterState = setValue;
@@ -45,11 +55,6 @@ export class FilterStateController {
 	};
 
 	/**
-	 * Register callback to be called when filter state changes
-	 */
-	onFilterStateChange: (callback: OnchangeCallback<FilterGroup[]>) => () => void;
-
-	/**
 	 * Add or remove all values in a filter group
 	 */
 	markAllValuesActive = (groupName: string) => {
@@ -57,11 +62,6 @@ export class FilterStateController {
 		if (!group) return;
 		this.setFilterState(this.filterState.filter(({ name }) => name !== groupName));
 	};
-
-	/**
-	 * Manually set the filter state
-	 */
-	setFilterState: (value: FilterGroup[]) => void;
 
 	/** Clears all active filters */
 	clearActiveFilters = () => {
