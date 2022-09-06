@@ -7,13 +7,13 @@ export function useActiveTab() {
 		tabs: { tabs, onActiveTabChanged, activeTab },
 	} = useControllerContext();
 
-	const [tab, setTab] = useState<Tab<string> | undefined>(tabs.find((s) => s.name === activeTab));
+	const [tab, setTab] = useState<Tab<string>>(tabs.find((s) => s.name === activeTab) ?? tabs[0]);
 
 	useEffect(() => {
 		const unsubscribe = onActiveTabChanged((tabName) => {
 			const newTab = tabs.find(({ name }) => name === tabName);
 			if (!newTab) {
-				setTab(undefined);
+				return;
 			} else {
 				setTab(newTab);
 			}
