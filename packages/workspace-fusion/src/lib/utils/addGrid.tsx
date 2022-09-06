@@ -1,5 +1,6 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
+import { GetIdentifier } from '@workspace/workspace-core';
 import { ColDef } from 'ag-grid-community';
 import { GridIcon as HeaderComponent } from '../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../types';
@@ -9,9 +10,9 @@ export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TError>,
-	objectIdentifier: keyof TData
+	getUniqueId: GetIdentifier<TData>
 ) {
-	const gridController = new GridController<TData>(objectIdentifier);
+	const gridController = new GridController<TData>(getUniqueId);
 	configureHighlightSelection(gridController, mediator);
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 	gridController.gridOptions = gridConfig.gridOptions;
