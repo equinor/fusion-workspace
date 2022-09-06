@@ -1,5 +1,3 @@
-import history from 'history/browser';
-import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
@@ -12,6 +10,7 @@ import {
 	FusionMediator,
 	CustomTab,
 	AppConfig,
+	WorkspaceFusionModule,
 } from '../types';
 import {
 	addCustomTab,
@@ -24,7 +23,7 @@ import {
 	addViewController,
 	switchTabOnNavigation,
 } from '../utils';
-import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { GetIdentifier } from '@workspace/workspace-core';
 
 interface UIContext {
 	appKey: string;
@@ -37,32 +36,24 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
-	objectIdentifier: keyof TData;
+
 	appKey?: string;
+
 	private mediator: FusionMediator<TData, TError>;
+
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 
-	constructor(objectIdentifier: keyof TData) {
-		this.objectIdentifier = objectIdentifier;
-		this.mediator = new WorkspaceReactMediator();
+	constructor(getUniqueId: GetIdentifier<TData>) {
+		this.mediator = new WorkspaceReactMediator(getUniqueId);
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
-		configureUrlWithHistory(this.mediator, history);
-
 		this.mediator.onClick(({ item }) => {
-			const id = item[this.objectIdentifier] as unknown as string;
+			const id = this.mediator.getUniqueId(item);
 			this.mediator.selection.setSelection([{ id }]);
-			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 
-		addViewController(this.viewController, this.mediator, history);
+		addViewController(this.viewController, this.mediator);
 
-		history.listen(({ action }) => {
-			if (action === Action.Pop) {
-				//Navigation back or forward;
-				switchTabOnNavigation(this.mediator, this.viewController);
-			}
-		});
 		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
 	}
 
@@ -87,6 +78,14 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
+	addModules = (modules: WorkspaceFusionModule[]) => {
+		modules.forEach((s) => {
+			console.log(`Adding module: ${s.name}`);
+			s.setup(this.mediator);
+		});
+		return this;
+	};
+
 	/**
 	 * Adds a custom tab to your workspace
 	 * Use the props to access data, onclick etc..
@@ -104,7 +103,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
+		addGarden(config, this.viewController, this.mediator, this.mediator.getUniqueId);
 		return this;
 	};
 
@@ -114,9 +113,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
+		addGrid(gridConfig, this.viewController, this.mediator, this.mediator.getUniqueId);
 		return this;
 	};
+
 	/**
 	 * Adds a sidesheet to your workspace
 	 * @param config the configuration object for sidesheet
@@ -126,6 +126,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addSidesheet(config, this.viewController, this.mediator);
 		return this;
 	};
+
 	/**
 	 * Adds a status bar to the top of your workspace.
 	 * @param config Takes in data and returns one or multiple status objects
