@@ -6,7 +6,7 @@ export class StateController {
 	onIsLoadingChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	constructor() {
-		const isLoading = new Observable<boolean>(false);
+		const isLoading = new Observable<boolean>(false, (newVal, oldVal) => newVal === oldVal);
 		this.setIsLoading = isLoading.setValue;
 		this.onIsLoadingChanged = isLoading.onchange;
 		this.isLoading = isLoading.value;

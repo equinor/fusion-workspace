@@ -9,7 +9,7 @@ export class FilterController {
 	onFilterStateChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	constructor() {
-		const filter = new Observable(false);
+		const filter = new Observable(false, (newVal, oldVal) => newVal === oldVal);
 		this.setIsFilterOpen = filter.setValue;
 		this.onFilterStateChanged = filter.onchange;
 		this.isFilterOpen = Boolean(filter.value);
