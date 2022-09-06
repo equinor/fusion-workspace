@@ -23,7 +23,7 @@ export function Grid<T>({ controller }: GridProps<T>) {
 			<AgGridReact
 				onGridReady={(api) => {
 					setGridApi(api.api);
-					selectRowNode(controller.selectedNodes.value ?? [], controller.objectIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes.value ?? [], controller.getUniqueId, api.api, rowData);
 				}}
 				gridOptions={controller.gridOptions}
 				columnDefs={controller.columnDefs}

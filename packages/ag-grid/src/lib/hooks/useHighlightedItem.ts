@@ -9,7 +9,7 @@ export function useSelectionService<TData>(controller: GridController<TData>, gr
 	useEffect(() => {
 		const unsubscribe = controller.selectedNodes.onchange((val) => {
 			if (!gridApi) return;
-			selectRowNode(val, controller.objectIdentifier, gridApi, rowData);
+			selectRowNode(val, controller.getUniqueId, gridApi, rowData);
 		});
 		return unsubscribe;
 	}, [controller, gridApi, rowData]);
@@ -17,13 +17,11 @@ export function useSelectionService<TData>(controller: GridController<TData>, gr
 
 export function selectRowNode<TData>(
 	selectedNodes: string[],
-	objectIdentifier: keyof TData,
+	getUniqueId: (item: TData) => string,
 	gridApi: GridApi,
 	rowData: TData[]
 ) {
-	const matches = selectedNodes.map((selectedId) =>
-		rowData.findIndex((item) => (item[objectIdentifier] as unknown as string) === selectedId)
-	);
+	const matches = selectedNodes.map((selectedId) => rowData.findIndex((item) => getUniqueId(item) === selectedId));
 
 	const nodes = matches.map((index) => gridApi.getRowNode(index.toString()));
 	/** Clear all previously selected, didnt find any better way to do this */

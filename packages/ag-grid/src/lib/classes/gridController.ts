@@ -4,18 +4,20 @@ import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChanged
 import { Observable } from './observable';
 
 export class GridController<TData> {
-	objectIdentifier: keyof TData;
+	getUniqueId: (item: TData) => string;
 
-	constructor(objectIdentifier: keyof TData) {
-		this.objectIdentifier = objectIdentifier;
+	constructor(getUniqueId: (item: TData) => string) {
+		this.getUniqueId = getUniqueId;
 	}
 
 	selectedNodes: Observable<string[]> = new Observable<string[]>([]);
 
 	/** The data to be used in the grid */
 	rowData: TData[] = [];
+
 	/** The column definitions for the grid */
 	columnDefs: ColDef[] = [];
+
 	/** The grid options to be used in the grid */
 	gridOptions: GridOptions | undefined = undefined;
 
@@ -23,6 +25,7 @@ export class GridController<TData> {
 	 * Callbacks
 	 */
 	private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<TData>>[] = [];
+
 	private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<TData>>[] = [];
 
 	/**
