@@ -1,16 +1,17 @@
-import { doesItemPassCriteria, doesItemPassFilter, generateFilterValues } from '../utils';
+import { doesItemPassFilter, generateFilterValues } from '../utils';
 
-import { FilterGroup, FilterItemCount, FilterValueType, ValueFormatterFilter, ValueFormatterFunction } from '../types';
+import { FilterGroup, FilterValueType, ValueFormatterFilter } from '../types';
 import { FilterStateController } from './filterStateController';
 import { SearchController } from './searchController';
 import { Observable, OnchangeCallback } from './observable';
+import { CountController } from './countController';
 
 export class FilterController<TData> {
 	filterGroups: FilterGroup[] = [];
 	filterStateController = new FilterStateController();
-	searchController = new SearchController<TData>();
+	private searchController = new SearchController<TData>();
 	valueFormatters: ValueFormatterFilter<TData>[] = [];
-
+	private countController = new CountController<TData>();
 	data: TData[] = [];
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
 	setData: (newData: TData[]) => void;
@@ -36,14 +37,12 @@ export class FilterController<TData> {
 		this.onFilteredDataChanged = fData.onchange;
 		fData.onchange((newData) => {
 			this.filteredData = newData;
-			this.searchController.filteredData = newData;
 		});
 		const data = new Observable<TData[]>();
 		this.setData = data.setValue;
 		this.onDataChange = data.onchange;
 		data.onchange((newData) => {
 			this.data = newData;
-			this.searchController.data = newData;
 		});
 		/** Filters the data whenever the filter state changes */
 		this.filterStateController.onFilterStateChange(this.filter);
@@ -55,37 +54,6 @@ export class FilterController<TData> {
 	/** Generates filter values based on the given valueformatters from data */
 	createFilterValues = () => this.setFilterValues(generateFilterValues(this.valueFormatters, this.data));
 
-	/** Gets count for all the filter values in a filter group  */
-	getFilterItemCountsForGroup = (groupName: string): FilterItemCount[] => {
-		const filterGroup = this.filterGroups.find(({ name }) => name === groupName);
-		if (!filterGroup) return [];
-
-		return filterGroup.values.map(
-			(value): FilterItemCount => ({
-				name: value,
-				count: this.getCountForFilterValue(filterGroup, value),
-			})
-		);
-	};
-
-	/** Returns the count for a specific filter value */
-	getCountForFilterValue = (
-		filterGroup: FilterGroup,
-		filterItem: FilterValueType,
-		valueFormatterFunc?: ValueFormatterFunction<unknown>
-	) => {
-		const valueFormatter =
-			valueFormatterFunc ?? this.valueFormatters.find(({ name }) => name === filterGroup.name)?.valueFormatter;
-		if (!valueFormatter) return -1;
-
-		const uncheckedValues = filterGroup.values.filter((value) => value !== filterItem);
-
-		return this.filteredData.reduce(
-			(count, val) => (doesItemPassCriteria(uncheckedValues, valueFormatter(val)) ? count + 1 : count),
-			0
-		);
-	};
-
 	private filter = () => {
 		if (!this.data || this.data.length === 0) return;
 		this.setFilteredData(
@@ -94,8 +62,25 @@ export class FilterController<TData> {
 			)
 		);
 		if (this.searchController.filterSearch !== null) {
-			this.setFilteredData(this.searchController.handleSearch() ?? []);
+			this.setFilteredData(this.searchController.handleSearch(this.data, this.filteredData) ?? []);
 		}
+	};
+
+	setSearch = this.searchController.setSearch;
+
+	getFilterItemCountsForGroup = (groupName: string) => {
+		const group = this.filterGroups.find((s) => s.name === groupName);
+		const valueFormatter = this.valueFormatters.find((s) => s.name === groupName)?.valueFormatter;
+		if (!group || !valueFormatter) return;
+		return this.countController.getFilterItemCountsForGroup(group, valueFormatter, this.filteredData);
+	};
+
+	getCountForFilterValue = (groupName: string, filterItem: FilterValueType) => {
+		const group = this.filterGroups.find((s) => s.name === groupName);
+		const valueFormatter = this.valueFormatters.find((s) => s.name === groupName)?.valueFormatter;
+		if (!group || !valueFormatter) return;
+
+		return this.countController.getCountForFilterValue(group, filterItem, valueFormatter, this.filteredData);
 	};
 
 	/** Destroys the filter */

@@ -5,13 +5,14 @@ import { Observable, OnchangeCallback } from './observable';
 export class SearchController<TData> {
 	filterSearch: FilterSearchActive<TData> | null = null;
 
-	data: TData[] = [];
-	filteredData: TData[] = [];
 	/** Clears the search and filters the data using the current filterstate */
 	clearSearch: () => void;
 
 	/** Callback for when search object changes */
 	onSearchChanged: (callback: OnchangeCallback<FilterSearchActive<TData> | null>) => () => void;
+
+	/** Search across multiple filter groups for a value that matches at least one */
+	setSearch: (value: FilterSearchActive<TData> | null) => void;
 
 	constructor() {
 		const { onchange, setValue } = new Observable<FilterSearchActive<TData> | null>(null);
@@ -23,10 +24,10 @@ export class SearchController<TData> {
 	}
 
 	/**Function for performing a search */
-	handleSearch = () => {
+	handleSearch = (data: TData[], filteredData: TData[]) => {
 		if (this.filterSearch === null) return;
 		const { searchIn, searchValue, type, valueFormatters } = this.filterSearch;
-		const haystack = searchIn === 'Data' ? this.data : this.filteredData;
+		const haystack = searchIn === 'Data' ? data : filteredData;
 		const needle = searchValue.toLowerCase();
 
 		const results =
@@ -36,7 +37,4 @@ export class SearchController<TData> {
 
 		return results;
 	};
-
-	/** Search across multiple filter groups for a value that matches at least one */
-	setSearch: (value: FilterSearchActive<TData> | null) => void;
 }
