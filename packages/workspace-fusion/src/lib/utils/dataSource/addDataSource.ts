@@ -1,5 +1,5 @@
 import { DataSourceController } from '@workspace/data-source';
-import { DataFetchAsync, FusionMediator } from '../..';
+import { DataFetchAsync, FusionMediator } from '../../types';
 
 export function addDataSource<TData, TError>(
 	dataFetch: DataFetchAsync<TData>,
