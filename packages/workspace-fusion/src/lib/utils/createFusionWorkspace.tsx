@@ -6,10 +6,10 @@ type UserConfig<TData, TError> = (
 ) => FusionWorkspaceBuilder<TData, TError>;
 
 export function createFusionWorkspace<TData, TError>(
-	objectIdentifier: keyof TData,
+	getUniqueId: (item: TData) => string,
 	builderFunc: UserConfig<TData, TError>
 ) {
-	const builder = builderFunc(new FusionWorkspaceBuilder(objectIdentifier));
+	const builder = builderFunc(new FusionWorkspaceBuilder(getUniqueId));
 
 	return sortFusionTabs(builder.viewController);
 }
