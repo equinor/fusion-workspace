@@ -46,7 +46,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
-		addViewController(this.viewController, this.mediator);
+		addViewController(this.viewController, this.mediator, history);
 
 		configureUrlWithHistory(this.mediator, history);
 

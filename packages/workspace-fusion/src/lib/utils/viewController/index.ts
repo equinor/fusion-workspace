@@ -1,1 +1,1 @@
-export { addViewController } from './addViewController';
+export { addViewController, switchTabOnNavigation } from './addViewController';
