@@ -1,1 +1,2 @@
-export { addGrid, configureHighlightSelection } from './addGrid';
+export { addGrid } from './addGrid';
+export { configureHighlightSelection } from './configureHighlightSelection';
