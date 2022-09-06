@@ -33,12 +33,8 @@ export function applyColumnStateFromGridController<TData>(controller: GridContro
 function listenForColumnResize(gridReady: GridReadyEvent, catchColumnState: () => void) {
 	let timeoutId;
 	gridReady.api.addEventListener('columnResized', () => {
-		if (timeoutId) {
-			console.log('event queued, waiting');
-			return;
-		}
+		if (timeoutId) return;
 		timeoutId = setTimeout(() => {
-			console.log('Capturing column state');
 			timeoutId = undefined;
 			catchColumnState();
 		}, 2000);
