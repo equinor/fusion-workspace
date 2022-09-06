@@ -21,7 +21,6 @@ import {
 	addGarden,
 	addConfig,
 	addViewController,
-	switchTabOnNavigation,
 } from '../utils';
 import { GetIdentifier } from '@workspace/workspace-core';
 
