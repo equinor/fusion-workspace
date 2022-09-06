@@ -2,6 +2,7 @@ import { ObjectType, OnchangeCallback } from '../types';
 import { BookmarkService } from './bookmarkService/bookmarkService';
 import { Observable } from './observable';
 import { SelectionService } from './selectionService';
+import { URLService } from './urlHandlerService';
 
 /**
  * Class to act as a mediator in the workspace
@@ -24,6 +25,7 @@ export class WorkspaceMediator<
 
 	bookmarkService = new BookmarkService<TBookmarkState>();
 	selection = new SelectionService();
+	urlService = new URLService();
 
 	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
@@ -64,8 +66,8 @@ export class WorkspaceMediator<
 			this.filteredData = val;
 		});
 		this.setFilteredData = filterData.setValue;
-
 		const click = new Observable<TOnClick>();
+
 		click.onchange((val) => {
 			this.lastClick = val;
 		});

@@ -26,4 +26,13 @@ describe('Listeners should be notified whenever the value they subscribed to cha
 		observable.setValue(newValue);
 		expect(mockFunction).toBeCalledWith(newValue, initValue);
 	});
+
+	it('Should not fire callbacks if compare function returns true', () => {
+		const value = false;
+		const observable = new Observable(value, (a, b) => a === b);
+		observable.onchange(() => {
+			throw new Error('Callback shouldnt be called, value never changed');
+		});
+		observable.setValue(value);
+	});
 });

@@ -1,5 +1,8 @@
+import history from 'history/browser';
+import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -17,9 +20,12 @@ import {
 	addSidesheet,
 	addStatusBar,
 	addGarden,
+	addConfig,
 	addViewController,
+	switchTabOnNavigation,
 	addIndexedDb,
 } from '../utils';
+import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 
 export interface WorkspaceContext {
 	ui: unknown;
@@ -28,9 +34,13 @@ export interface WorkspaceContext {
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	objectIdentifier: keyof TData;
+
 	appKey?: string;
+
 	private mediator: FusionMediator<TData, TError>;
+
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+
 	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
@@ -38,25 +48,33 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 		addViewController(this.viewController, this.mediator);
 
+		configureUrlWithHistory(this.mediator, history);
+
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
+			updateQueryParams([`item=${id}`], this.mediator, history);
+		});
+
+		history.listen(({ action }) => {
+			if (action === Action.Pop) {
+				//Navigation back or forward;
+				switchTabOnNavigation(this.mediator, this.viewController);
+			}
 		});
 
 		addIndexedDb(this.mediator);
 	}
 
-	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
-		this.appKey = appKey;
-		this.viewController.appColor = appColor;
-		this.viewController.appKey = appKey;
-		this.viewController.tabs.activeTab = defaultTab;
+	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
+		addConfig(appConfig, this.viewController);
+		this.appKey = appConfig.appKey;
 		return this;
 	};
 
 	/**
 	 * Add a function for providing data to the workspace
-	 * @param dataFetch An async function returning a data array
+	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
@@ -99,6 +117,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
 		return this;
 	};
+
 	/**
 	 * Adds a sidesheet to your workspace
 	 * @param config the configuration object for sidesheet
@@ -108,6 +127,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addSidesheet(config, this.viewController, this.mediator);
 		return this;
 	};
+
 	/**
 	 * Adds a status bar to the top of your workspace.
 	 * @param config Takes in data and returns one or multiple status objects
