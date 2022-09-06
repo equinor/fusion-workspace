@@ -44,6 +44,10 @@ function arrayToQueryParam(args: string[]) {
 		.replace(',', '&');
 }
 
+/**
+ * Returns false if the query param exists in the query params array
+ * @returns boolean
+ */
 function patchQueryParams(queryParam: string, newQueryParams: QueryParam[]) {
 	return !newQueryParams.map((s) => s.split('=')[0]).includes(queryParam.split('=')[0]);
 }
