@@ -24,17 +24,22 @@ export class FilterStateController {
 
 	/**
 	 * Check if a value is currently being filtered out from the dataset
+	 * e.g visual checkboxes uses this function to know whether to be checked or not
 	 */
 	checkValueIsInactive = (groupName: string, value: FilterValueType) =>
 		Boolean(this.filterState.find(({ name }) => name === groupName)?.values.includes(value));
 
 	/**
 	 * Get all the values that are currently being filtered out from a specific group
+	 * e.g used for checking if a group has any active filters
 	 */
 	getInactiveGroupValues = (groupName: string) =>
 		this.filterState.find(({ name }) => name === groupName)?.values ?? [];
 
-	/** add or remove a filtevalue from the list of values currently being excluded from the filtered data */
+	/**
+	 * add or remove a filtevalue from the list of values currently being excluded from the filtered data
+	 * Called when clicking a checkbox
+	 */
 	changeFilterItem = (action: 'MarkInactive' | 'MarkActive', groupName: string, newValue: FilterValueType) => {
 		if (filterGroupExists(groupName, this.filterState)) {
 			/**
@@ -56,6 +61,7 @@ export class FilterStateController {
 
 	/**
 	 * Add or remove all values in a filter group
+	 * e.g Clear active filters on one specific group
 	 */
 	markAllValuesActive = (groupName: string) => {
 		const group = this.filterState.find(({ name }) => name === groupName);
