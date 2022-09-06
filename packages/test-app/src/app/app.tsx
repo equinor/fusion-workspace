@@ -1,7 +1,7 @@
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
-import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBarConfig } from './workspaceConfig';
+import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBar } from './workspaceConfig';
 
 const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
 	addDataSource(dataSourceOptions)
@@ -16,7 +16,7 @@ const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addD
 		.addGarden({
 			data: [],
 			nodeLabelCallback: (s) => s.commpkgNo,
-			objectIdentifier: 'id',
+			objectIdentifier: 'commpkgNo',
 			initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 			fieldSettings: {},
 		})
@@ -31,7 +31,7 @@ const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addD
 				console.log(`Selection changed ${s.map((s) => s.id)}`);
 			});
 		})
-		.addStatusBarItems(statusBarConfig)
+		.addStatusBarItems(statusBar)
 );
 
 function FusionWorkspace() {

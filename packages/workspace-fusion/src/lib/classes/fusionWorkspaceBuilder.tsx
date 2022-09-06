@@ -63,6 +63,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 				switchTabOnNavigation(this.mediator, this.viewController);
 			}
 		});
+		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
