@@ -1,4 +1,5 @@
-import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
+import { WorkspaceTabNames } from '@equinor/workspace-fusion';
+import { GetIdentifier, ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
 
 export class WorkspaceReactMediator<
 	TData,
@@ -15,12 +16,20 @@ export class WorkspaceReactMediator<
 		return this;
 	};
 
+	onTabChange: (callback: OnchangeCallback<WorkspaceTabNames>) => () => void;
+
+	setActiveTab: (value: WorkspaceTabNames) => void;
+
 	isSidesheetOpen = false;
+
 	setIsSidesheetOpen: (value: boolean) => void;
+
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	isLoading = false;
+
 	setIsLoading: (value: boolean) => void;
+
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	onMount: (callback: () => void) => () => void;
@@ -31,8 +40,8 @@ export class WorkspaceReactMediator<
 
 	setUnmount: () => void;
 
-	constructor() {
-		super();
+	constructor(getUniqueId: GetIdentifier<TData>) {
+		super(getUniqueId);
 		const isLoading = new Observable(this.isLoading);
 		isLoading.onchange((val) => {
 			this.isLoading = val;
@@ -54,5 +63,9 @@ export class WorkspaceReactMediator<
 		const unMounted = new Observable(false);
 		this.onUnMount = unMounted.onchange;
 		this.setUnmount = () => unMounted.setValue(!mounted.value);
+
+		const tab = new Observable<WorkspaceTabNames>(undefined, (a, b) => a === b);
+		this.onTabChange = tab.onchange;
+		this.setActiveTab = tab.setValue;
 	}
 }
