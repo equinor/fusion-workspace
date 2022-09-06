@@ -6,3 +6,4 @@ export * from './addStatusBar';
 export * from './addCustomTab';
 export * from './createFusionWorkspace';
 export * from './addConfig';
+export * from './addViewController';

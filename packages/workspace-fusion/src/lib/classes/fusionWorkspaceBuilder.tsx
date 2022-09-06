@@ -13,7 +13,17 @@ import {
 	CustomTab,
 	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden, addConfig } from '../utils';
+import {
+	addCustomTab,
+	addDataSource,
+	addGrid,
+	addSidesheet,
+	addStatusBar,
+	addGarden,
+	addConfig,
+	addViewController,
+	switchTabOnNavigation,
+} from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 
 interface UIContext {
@@ -45,7 +55,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 
-		initWorkspaceViewController(this.viewController, this.mediator);
+		addViewController(this.viewController, this.mediator, history);
 
 		history.listen(({ action }) => {
 			if (action === Action.Pop) {
@@ -124,26 +134,4 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addStatusBar(config, this.viewController, this.mediator);
 		return this;
 	};
-}
-
-/** Switches tab when url changes due to navigation event */
-function switchTabOnNavigation<TData, TError>(
-	mediator: FusionMediator<TData, TError>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
-) {
-	const tab = mediator.urlService.url.queryParams.find((s) => s.includes('tab='));
-	if (!tab) return;
-	const newTab = tab.split('tab=')[1];
-	if (newTab === viewController.tabs.activeTab) return;
-	viewController.tabs.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
-}
-
-function initWorkspaceViewController<TData, TError>(
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>
-) {
-	viewController.isMounted.onchange((val) => (val ? mediator.setMount() : mediator.setUnmount()));
-	viewController.tabs.onActiveTabChanged((tab) => {
-		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
-	});
 }
