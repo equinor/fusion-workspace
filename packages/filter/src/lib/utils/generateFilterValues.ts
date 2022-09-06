@@ -1,11 +1,14 @@
 import { FilterGroup, FilterOptions, FilterValueType, ValueFormatterFilter } from '../types';
 
 export function generateFilterValues<T>(valueFormatters: ValueFormatterFilter<T>[], data: T[]): FilterGroup[] {
-	if (!data || data.length == 0) return [];
+	if (!data || data.length === 0) return [];
 	// Initialize all filter groups
 	const filterGroups: FilterGroup[] = valueFormatters.map(({ name }): FilterGroup => ({ name: name, values: [] }));
 
-	/** Iterate all values */
+	/**
+	 * Iterate all values
+	 * Valueformatters can return arrays of values, after appending each value a .filter is used to ensure all the values are unique
+	 */
 	data.forEach((item) =>
 		valueFormatters.forEach(({ name, valueFormatter }) => {
 			const filterGroup = filterGroups.find(({ name: filterGroupName }) => name === filterGroupName);
@@ -46,6 +49,7 @@ function sortFilterGroups<T = unknown>(groups: FilterGroup[], filterConfig: Filt
 	return groups;
 }
 
+/** Default sort function, sorts null values to the top */
 function defaultSortFunction(a: FilterValueType, b: FilterValueType): number {
 	/** Place null values on top */
 	if (a === null) return -1;
