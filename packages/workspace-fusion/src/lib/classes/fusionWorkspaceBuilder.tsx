@@ -1,6 +1,9 @@
 import { FilterOptions } from '@equinor/filter';
+import history from 'history/browser';
+import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+
 import {
 	DataFetchAsync,
 	GridConfig,
@@ -11,7 +14,19 @@ import {
 	CustomTab,
 	AppConfig,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden, addFilter } from '../utils';
+import {
+	addCustomTab,
+	addDataSource,
+	addGrid,
+	addSidesheet,
+	addStatusBar,
+	addGarden,
+	addFilter,
+	addConfig,
+	addViewController,
+	switchTabOnNavigation,
+} from '../utils';
+import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 
 interface UIContext {
 	appKey: string;
@@ -28,23 +43,34 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	appKey?: string;
 	private mediator: FusionMediator<TData, TError>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+
 	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
+		configureUrlWithHistory(this.mediator, history);
+
 		this.mediator.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
 			this.mediator.selection.setSelection([{ id }]);
+			updateQueryParams([`item=${id}`], this.mediator, history);
+		});
+
+		addViewController(this.viewController, this.mediator, history);
+
+		history.listen(({ action }) => {
+			if (action === Action.Pop) {
+				//Navigation back or forward;
+				switchTabOnNavigation(this.mediator, this.viewController);
+			}
 		});
 		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
 	}
 
-	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
-		this.appKey = appKey;
-		this.viewController.appColor = appColor;
-		this.viewController.appKey = appKey;
-		this.viewController.tabs.activeTab = defaultTab;
+	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
+		addConfig(appConfig, this.viewController);
+		this.appKey = appConfig.appKey;
 		return this;
 	};
 

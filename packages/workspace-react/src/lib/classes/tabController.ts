@@ -17,7 +17,7 @@ export class TabController<TabNames extends string> {
 	}
 
 	constructor() {
-		const activeTab = new Observable<TabNames>();
+		const activeTab = new Observable<TabNames>(undefined, (newVal, oldVal) => newVal === oldVal);
 		this.setActiveTab = activeTab.setValue;
 		this.onActiveTabChanged = activeTab.onchange;
 		this.activeTab = activeTab.value;
