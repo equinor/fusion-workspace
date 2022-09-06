@@ -5,7 +5,12 @@
 	"extends": ["plugin:@typescript-eslint/recommended"],
 	"parser": "@typescript-eslint/parser",
 	"rules": {
-		"tsdoc/syntax": "warn"
+		"tsdoc/syntax": "warn",
+		"prefer-destructuring": "warn",
+		"prefer-arrow-callback": "warn",
+		"prefer-const": "warn",
+		"lines-between-class-members": "warn",
+		"class-methods-use-this": "warn"
 	},
 	"overrides": [
 		{
