@@ -35,13 +35,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	objectIdentifier: keyof TData;
 
-	appKey?: string;
-
 	private mediator: FusionMediator<TData, TError>;
 
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 
-	constructor(objectIdentifier: keyof TData) {
+	constructor(objectIdentifier: keyof TData, appKey: string) {
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
@@ -63,12 +61,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			}
 		});
 
-		addIndexedDb(this.mediator);
+		addIndexedDb(this.mediator, appKey);
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);
-		this.appKey = appConfig.appKey;
+
 		return this;
 	};
 

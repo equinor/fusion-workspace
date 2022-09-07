@@ -3,10 +3,9 @@ import { FusionBookmark } from '../types';
 
 const UserSettings = 'User-settings';
 const DBName = 'Workspace';
-const key = 'col';
 
 export class FusionUserSettings<TData> {
-	save = async (state: FusionBookmark<TData>) => {
+	save = async (state: FusionBookmark<TData>, key: string) => {
 		const db = await this.openDb();
 		await db.put(UserSettings, state, key);
 		db.close();
@@ -20,7 +19,7 @@ export class FusionUserSettings<TData> {
 		});
 	};
 
-	read = async (): Promise<FusionBookmark<TData>> => {
+	read = async (key: string): Promise<FusionBookmark<TData>> => {
 		const userSettings: FusionBookmark<TData> = await (await this.openDb()).get(UserSettings, key);
 
 		return userSettings;

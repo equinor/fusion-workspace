@@ -3,29 +3,31 @@ import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBar } from './workspaceConfig';
 
-const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
-	addDataSource(dataSourceOptions)
-		.addGrid(gridOptions)
-		.addCustomTab(customTab)
-		.addConfig({
-			appColor: 'purple',
-			appKey: 'Handover',
-			defaultTab: 'grid',
-		})
-		.addSidesheet(sidesheetOptions)
-		.addGarden({
-			data: [],
-			nodeLabelCallback: (s) => s.commpkgNo,
-			objectIdentifier: 'commpkgNo',
-			initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-			fieldSettings: {},
-		})
-		.addMiddleware((mediator) => {
-			mediator.urlService.onUrlChange((val) => {
-				console.log('app url changed', val);
-			});
-		})
-		.addStatusBarItems(statusBar)
+const controller = createFusionWorkspace<Handover, unknown>(
+	{ appKey: 'Handover', objectIdentifier: 'commpkgNo' },
+	({ addDataSource }) =>
+		addDataSource(dataSourceOptions)
+			.addGrid(gridOptions)
+			.addCustomTab(customTab)
+			.addConfig({
+				appColor: 'purple',
+				appKey: 'Handover',
+				defaultTab: 'grid',
+			})
+			.addSidesheet(sidesheetOptions)
+			.addGarden({
+				data: [],
+				nodeLabelCallback: (s) => s.commpkgNo,
+				objectIdentifier: 'commpkgNo',
+				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+				fieldSettings: {},
+			})
+			.addMiddleware((mediator) => {
+				mediator.urlService.onUrlChange((val) => {
+					console.log('app url changed', val);
+				});
+			})
+			.addStatusBarItems(statusBar)
 );
 
 function FusionWorkspace() {
