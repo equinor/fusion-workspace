@@ -1,5 +1,5 @@
 import { FusionWorkspaceBuilder } from '../classes';
-import { sortFusionTabs } from './fusionTabOrder';
+import { sortFusionTabs } from './fusionTabOrder/fusionTabOrder';
 
 type UserConfig<TData, TError> = (
 	builder: Omit<FusionWorkspaceBuilder<TData, TError>, 'viewController'>

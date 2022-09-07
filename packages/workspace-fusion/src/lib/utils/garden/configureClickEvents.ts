@@ -1,0 +1,25 @@
+import { GardenController, GardenGroup } from '@equinor/garden';
+import { FusionMediator } from '../../types';
+
+/** Adds clickevents from mediator on garden controller  */
+export function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
+	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
+	{ selectionService, clickService }: FusionMediator<TData, TError>,
+	objectIdentifier: keyof TData
+) {
+	gardenController.clickEvents.onClickItem = (item) => {
+		clickService.click({ item: item });
+		selectionService.setSelection([{ id: item[objectIdentifier as unknown as string] }]);
+	};
+
+	gardenController.clickEvents.onClickGroup = (item) => {
+		const items = findItemsRecursively(item);
+		selectionService.setSelection(items.map((s) => ({ id: s[objectIdentifier] as unknown as string })));
+	};
+}
+
+/** Finds all items in subgroups or recursively through all subgroups */
+function findItemsRecursively<TData>(item: GardenGroup<TData>): TData[] {
+	if (item.items.length > 0) return item.items;
+	return item.subGroups.map((s) => findItemsRecursively(s)).flat();
+}

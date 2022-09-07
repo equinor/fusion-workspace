@@ -1,8 +1,7 @@
 import { SidesheetController } from '@equinor/sidesheet';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { SidesheetWrapper } from '../components';
-import { FusionMediator, WorkspaceTabNames } from '../types';
-import { SidesheetConfig } from '../types/configuration';
+import { SidesheetWrapper } from '../../components';
+import { FusionMediator, SidesheetConfig, WorkspaceTabNames } from '../../types';
 
 /** TODO: Review this and either expand context or expand baseclass. Sidesheet state is shared directly between two controllers! */
 export function addSidesheet<TData, TError>(
@@ -14,7 +13,7 @@ export function addSidesheet<TData, TError>(
 
 	mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
 
-	mediator.onClick((ev) => {
+	mediator.clickService.onClick((ev) => {
 		viewController.sidesheet.title.setValue(config.getTitle(ev));
 	});
 	sidesheetConfig<TData, TError>(new SidesheetController(), mediator);
@@ -26,7 +25,7 @@ function sidesheetConfig<TData, TError>(
 ) {
 	mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
 
-	mediator.onClick((ev) => {
+	mediator.clickService.onClick((ev) => {
 		sc.setItem(ev.item);
 		mediator.setIsSidesheetOpen(true);
 	});

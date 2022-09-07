@@ -1,5 +1,6 @@
 import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { WorkspaceContext } from '../classes/fusionWorkspaceBuilder';
+import { FusionBookmark } from './fusionBookmark';
 import { WorkspaceOnClick } from './onClick';
 
 /**
@@ -9,5 +10,6 @@ export type FusionMediator<TData, TError> = WorkspaceReactMediator<
 	TData,
 	WorkspaceOnClick<TData>,
 	TError,
-	WorkspaceContext
+	WorkspaceContext,
+	FusionBookmark<TData>
 >;
