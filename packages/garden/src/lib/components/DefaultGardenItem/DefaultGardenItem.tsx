@@ -28,7 +28,7 @@ export const DefaultGardenItem = memo(({ columnExpanded, item, depth }: DefaultG
 		};
 	}, [controller, getCustomDescription, getCustomItemColor, item]);
 
-	const isSelected = useIsSelected(item[controller.objectIdentifier] as unknown as string);
+	const isSelected = useIsSelected(controller.getIdentifier(item) as unknown as string);
 
 	return (
 		<StyledDefaultPackage

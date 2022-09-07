@@ -18,7 +18,7 @@ const controller = createFusionWorkspace<Handover, unknown>(
 			.addGarden({
 				data: [],
 				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'commpkgNo',
+				getIdentifier: (s) => s.commpkgNo,
 				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 				fieldSettings: {},
 			})
