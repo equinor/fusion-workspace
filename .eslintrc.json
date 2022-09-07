@@ -10,7 +10,90 @@
 		"prefer-arrow-callback": "warn",
 		"prefer-const": "warn",
 		"lines-between-class-members": "warn",
-		"class-methods-use-this": "warn"
+		"class-methods-use-this": "warn",
+		// require return statements to either always or never specify values
+		// https://eslint.org/docs/rules/consistent-return
+		"consistent-return": "error",
+		// specify curly brace conventions for all control statements
+		// https://eslint.org/docs/rules/curly
+		"curly": ["error", "multi-line"],
+		// require default case in switch statements
+		// https://eslint.org/docs/rules/default-case
+		"default-case": ["error", { "commentPattern": "^no default$" }],
+		// enforce a maximum number of classes per file
+		// https://eslint.org/docs/rules/max-classes-per-file
+		"max-classes-per-file": ["error", 1],
+		// Disallow returning value in constructor
+		// https://eslint.org/docs/rules/no-constructor-return
+		"no-constructor-return": "error",
+		// disallow empty functions, except for standalone funcs/arrows
+		// https://eslint.org/docs/rules/no-empty-function
+		"no-empty-function": [
+			"error",
+			{
+				"allow": ["arrowFunctions", "functions", "methods"]
+			}
+		],
+		// disallow use of eval()
+		// https://eslint.org/docs/rules/no-eval
+		"no-eval": "error",
+		// disallow unnecessary nested blocks
+		// https://eslint.org/docs/rules/no-lone-blocks
+		"no-lone-blocks": "error",
+		// disallow creation of functions within loops
+		// https://eslint.org/docs/rules/no-loop-func
+		"no-loop-func": "error",
+		// disallow use of new operator for Function object
+		// https://eslint.org/docs/rules/no-new-func
+		"no-new-func": "error",
+		// disallow reassignment of function parameters
+		// disallow parameter object manipulation except for specific exclusions
+		// rule: https://eslint.org/docs/rules/no-param-reassign.html
+		"no-param-reassign": [
+			"error",
+			{
+				"props": true,
+				"ignorePropertyModificationsFor": [
+					"acc", // for reduce accumulators
+					"accumulator", // for reduce accumulators
+					"e", // for e.returnvalue
+					"ctx", // for Koa routing
+					"context", // for Koa routing
+					"req", // for Express requests
+					"request", // for Express requests
+					"res", // for Express responses
+					"response", // for Express responses
+					"$scope", // for Angular 1 scopes
+					"staticContext" // for ReactRouter context
+				]
+			}
+		],
+		// disallow declaring the same variable more than once
+		// https://eslint.org/docs/rules/no-redeclare
+		"no-redeclare": "error",
+		// disallow use of assignment in return statement
+		// https://eslint.org/docs/rules/no-return-assign
+		"no-return-assign": ["error", "always"],
+		// disallow self assignment
+		// https://eslint.org/docs/rules/no-self-assign
+		"no-self-assign": [
+			"error",
+			{
+				"props": true
+			}
+		],
+		// disallow comparisons where both sides are exactly the same
+		// https://eslint.org/docs/rules/no-self-compare
+		"no-self-compare": "error",
+		// restrict what can be thrown as an exception
+		// https://eslint.org/docs/rules/no-throw-literal
+		"no-throw-literal": "error",
+		// Disallow unnecessary catch clauses
+		// https://eslint.org/docs/rules/no-useless-catch
+		"no-useless-catch": "error",
+		// disallow redundant return; keywords
+		// https://eslint.org/docs/rules/no-useless-return
+		"no-useless-return": "error"
 	},
 	"overrides": [
 		{
