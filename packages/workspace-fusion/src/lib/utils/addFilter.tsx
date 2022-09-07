@@ -5,15 +5,15 @@ import { FusionMediator, WorkspaceTabNames } from '../types';
 export function addFilter<TData, TError>(
 	config: FilterOptions<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>
+	{ dataService }: FusionMediator<TData, TError>
 ) {
 	const filterController = new FilterController<TData>();
 	filterController.addValueFormatters(config);
-	filterController.onFilteredDataChanged(mediator.setFilteredData);
+	filterController.onFilteredDataChanged(dataService.setFilteredData);
 	viewController.filter.FilterComponent = () => <div></div>;
-	mediator.data && filterController.setData(mediator.data);
+	dataService.data && filterController.setData(dataService.data);
 	filterController.init();
-	mediator.onDataChange((data) => {
+	dataService.onDataChange((data) => {
 		filterController.setData(data);
 		filterController.init();
 	});
