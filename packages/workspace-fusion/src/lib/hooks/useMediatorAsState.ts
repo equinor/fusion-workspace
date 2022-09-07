@@ -9,6 +9,9 @@ export const useMediatorAsState = <TData, TError>(
 
 	return {
 		...mediator,
-		filteredData,
+		dataService: {
+			...mediator.dataService,
+			filteredData,
+		},
 	};
 };

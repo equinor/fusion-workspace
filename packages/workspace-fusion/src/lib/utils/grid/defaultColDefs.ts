@@ -1,6 +1,5 @@
 import { ColDef } from 'ag-grid-community';
-
-import { FusionMediator } from '../types';
+import { FusionMediator } from '../../types';
 
 /**
  * Applies a set of default column definition parameters.
@@ -17,10 +16,10 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
  */
 export function applyWorkspaceClickToCells<TData, TError>(
 	colDefs: ColDef<TData>[],
-	mediator: FusionMediator<TData, TError>
+	{ clickService }: FusionMediator<TData, TError>
 ) {
 	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => mediator.click({ item: ev.data }),
+		onCellClicked: (ev) => clickService.click({ item: ev.data }),
 		...colDef,
 	}));
 }

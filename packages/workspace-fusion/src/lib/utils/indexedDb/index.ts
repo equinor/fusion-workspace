@@ -1,0 +1,1 @@
+export { addIndexedDb } from './addIndexedDb';

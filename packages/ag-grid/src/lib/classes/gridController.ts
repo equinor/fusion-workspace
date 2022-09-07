@@ -1,14 +1,24 @@
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, ColumnState, GridOptions } from 'ag-grid-community';
 import { registerCallback } from '../functions';
 import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChangedCallback } from '../types';
-import { Observable } from './observable';
+import { Observable, OnchangeCallback } from './observable';
 
 export class GridController<TData> {
 	objectIdentifier: keyof TData;
 
 	constructor(objectIdentifier: keyof TData) {
 		this.objectIdentifier = objectIdentifier;
+		const columnStateObservable = new Observable<ColumnState[] | undefined>();
+		columnStateObservable.isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+		const { onchange, setValue } = columnStateObservable;
+		onchange((val) => (this.columnState = val));
+		this.setColumnState = setValue;
+		this.onColumnStateChanged = onchange;
 	}
+
+	columnState?: ColumnState[];
+	setColumnState: (value: ColumnState[] | undefined) => void;
+	onColumnStateChanged: (callback: OnchangeCallback<ColumnState[] | undefined>) => () => void;
 
 	selectedNodes: Observable<string[]> = new Observable<string[]>([]);
 

@@ -1,5 +1,5 @@
-import { Observable } from '.';
-import { OnchangeCallback } from '../types';
+import { Observable } from '../';
+import { OnchangeCallback } from '../../types';
 
 interface Node {
 	id: string;
@@ -9,8 +9,10 @@ interface Node {
 export class SelectionService {
 	/** Register a callback for when the selection changes */
 	onSelectionChanged: (callback: OnchangeCallback<Node[]>) => void;
+
 	/** Function for selecting a new set of nodes */
 	setSelection: (nodes: Node[]) => void;
+
 	/** The currently selected nodes */
 	selectedNodes: Node[] = [];
 
