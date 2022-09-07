@@ -6,6 +6,5 @@ export * from './sidesheet';
 export * from './statusBar';
 export * from './addCustomTab';
 export * from './createFusionWorkspace';
-export * from './indexedDb';
 export * from './addConfig';
 export * from './viewController';

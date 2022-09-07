@@ -4,3 +4,4 @@ export * from './onClick';
 export * from './tabs';
 export * from './fusionBookmark';
 export * from './fusionController';
+export * from './modules';
