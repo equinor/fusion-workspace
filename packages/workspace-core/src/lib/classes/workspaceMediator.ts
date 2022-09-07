@@ -1,8 +1,10 @@
-import { ObjectType, OnchangeCallback } from '../types';
-import { BookmarkService } from './bookmarkService/bookmarkService';
-import { Observable } from './observable';
+import { ObjectType } from '../types';
+import { BookmarkService } from './bookmarkService';
+import { ClickService } from './clickService/clickService';
+import { DataService } from './dataService';
+import { ErrorService } from './errorService';
 import { SelectionService } from './selectionService';
-import { URLService } from './urlHandlerService';
+import { URLService } from './urlService/urlService';
 
 /**
  * Class to act as a mediator in the workspace
@@ -24,60 +26,16 @@ export class WorkspaceMediator<
 	};
 
 	bookmarkService = new BookmarkService<TBookmarkState>();
-	selection = new SelectionService();
+
+	selectionService = new SelectionService();
+
 	urlService = new URLService();
 
-	/** Register a callback to be called when filtered data changes*/
-	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
-	/** The data used for the workspace */
-	data: TData[] | undefined;
-	/** Sets the data */
-	setData: (value: TData[]) => void;
+	dataService = new DataService<TData>();
 
-	/** Register a callback to be called when filtered data changes*/
-	onFilterDataChange: (callback: OnchangeCallback<TData[]>) => () => void;
-	/** The filtered data used for the workspace */
-	filteredData: TData[] | undefined;
-	/** Sets the filtered data */
-	setFilteredData: (value: TData[]) => void;
+	clickService = new ClickService<TOnClick>();
 
-	/** Value of the last click event */
-	lastClick?: TOnClick;
-	/** Triggers a clickevent */
-	click: (clickEv: TOnClick) => void;
-	/** Register a callback to be called when click is triggered */
-	onClick: (callback: OnchangeCallback<TOnClick>) => () => void;
-	/** Triggers an error event */
-	throwError: (error: TError) => void;
-	/** Register a callback to be called when an error occurs */
-	onError: (cb: (error: TError) => void) => void;
-
-	constructor() {
-		const data = new Observable<TData[]>();
-		this.onDataChange = data.onchange;
-		data.onchange((val) => {
-			this.data = val;
-		});
-		this.setData = data.setValue;
-
-		const filterData = new Observable<TData[]>();
-		this.onFilterDataChange = filterData.onchange;
-		filterData.onchange((val) => {
-			this.filteredData = val;
-		});
-		this.setFilteredData = filterData.setValue;
-		const click = new Observable<TOnClick>();
-
-		click.onchange((val) => {
-			this.lastClick = val;
-		});
-		this.click = click.setValue;
-		this.onClick = click.onchange;
-
-		const error = new Observable<TError>();
-		this.throwError = error.setValue;
-		this.onError = error.onchange;
-	}
+	errorService = new ErrorService<TError>();
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {

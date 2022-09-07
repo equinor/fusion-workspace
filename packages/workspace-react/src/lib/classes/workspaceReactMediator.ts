@@ -17,11 +17,15 @@ export class WorkspaceReactMediator<
 	};
 
 	isSidesheetOpen = false;
+
 	setIsSidesheetOpen: (value: boolean) => void;
+
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	isLoading = false;
+
 	setIsLoading: (value: boolean) => void;
+
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	onMount: (callback: () => void) => () => void;

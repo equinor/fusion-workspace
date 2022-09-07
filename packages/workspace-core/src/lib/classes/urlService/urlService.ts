@@ -1,5 +1,5 @@
-import { OnchangeCallback } from '../types';
-import { Observable } from './observable';
+import { OnchangeCallback } from '../../types';
+import { Observable } from '../observable';
 
 interface Location {
 	queryParams: string[];
@@ -8,7 +8,9 @@ interface Location {
 
 export class URLService {
 	onUrlChange: (callback: OnchangeCallback<Location>) => void;
+
 	setUrl: (url: string) => void;
+
 	url: Location;
 
 	constructor() {

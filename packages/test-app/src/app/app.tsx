@@ -24,12 +24,6 @@ const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addD
 			mediator.urlService.onUrlChange((val) => {
 				console.log('app url changed', val);
 			});
-			mediator.onClick((click) => {
-				console.log('Clickevent happened', click);
-			});
-			mediator.selection.onSelectionChanged((s) => {
-				console.log(`Selection changed ${s.map((s) => s.id)}`);
-			});
 		})
 		.addStatusBarItems(statusBar)
 );

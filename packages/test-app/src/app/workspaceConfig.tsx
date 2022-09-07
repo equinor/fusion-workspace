@@ -84,8 +84,8 @@ export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
 ];
 
 export function CustomTab() {
-	const { click, data, filteredData, isLoading, setFilteredData } = useWorkspace();
-
+	const { clickService, dataService, isLoading } = useWorkspace();
+	const { data, filteredData, setFilteredData } = dataService;
 	return (
 		<StyledCustomTab>
 			<ul>
@@ -93,7 +93,7 @@ export function CustomTab() {
 				<li>Filtered data length: {filteredData?.length}</li>
 				<li>isLoading: {isLoading}</li>
 			</ul>
-			<Button onClick={() => click({ item: data?.[0] })}>Open sidesheet</Button>
+			<Button onClick={() => clickService.click({ item: data?.[0] })}>Open sidesheet</Button>
 			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
 		</StyledCustomTab>
 	);

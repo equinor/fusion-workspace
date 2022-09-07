@@ -3,16 +3,16 @@ import { DataFetchAsync, FusionMediator } from '../../types';
 
 export function addDataSource<TData, TError>(
 	dataFetch: DataFetchAsync<TData>,
-	controller: FusionMediator<TData, TError>
+	{ dataService, setIsLoading }: FusionMediator<TData, TError>
 ) {
 	const dataSourceController = new DataSourceController(dataFetch);
 	dataSourceController.data.onchange((data) => {
-		controller.setData(data);
+		dataService.setData(data);
 		//TEMP: Will be removed once filter is done
-		controller.setFilteredData(data);
+		dataService.setFilteredData(data);
 	});
 	dataSourceController.isLoading.onchange((isLoading) => {
-		controller.setIsLoading(isLoading);
+		setIsLoading(isLoading);
 	});
 	dataSourceController.fetch();
 }

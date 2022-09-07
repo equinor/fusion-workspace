@@ -50,9 +50,9 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 		configureUrlWithHistory(this.mediator, history);
 
-		this.mediator.onClick(({ item }) => {
+		this.mediator.clickService.onClick(({ item }) => {
 			const id = item[this.objectIdentifier] as unknown as string;
-			this.mediator.selection.setSelection([{ id }]);
+			this.mediator.selectionService.setSelection([{ id }]);
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 

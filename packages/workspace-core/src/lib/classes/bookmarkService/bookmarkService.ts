@@ -1,6 +1,8 @@
 export class BookmarkService<TBookmarkState extends Record<PropertyKey, unknown>> {
 	private onCaptureCallbacks: OnCapture<TBookmarkState>[] = [];
+
 	private onApplyCallbacks: OnCapture<TBookmarkState>[] = [];
+
 	private captureCallbacks: CaptureFunc<TBookmarkState>[] = [];
 
 	/**Subscribe to bookmark capture events */

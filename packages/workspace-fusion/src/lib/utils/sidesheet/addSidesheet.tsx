@@ -13,7 +13,7 @@ export function addSidesheet<TData, TError>(
 
 	mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
 
-	mediator.onClick((ev) => {
+	mediator.clickService.onClick((ev) => {
 		viewController.sidesheet.title.setValue(config.getTitle(ev));
 	});
 	sidesheetConfig<TData, TError>(new SidesheetController(), mediator);
@@ -25,7 +25,7 @@ function sidesheetConfig<TData, TError>(
 ) {
 	mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
 
-	mediator.onClick((ev) => {
+	mediator.clickService.onClick((ev) => {
 		sc.setItem(ev.item);
 		mediator.setIsSidesheetOpen(true);
 	});

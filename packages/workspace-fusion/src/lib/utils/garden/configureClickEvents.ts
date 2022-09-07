@@ -4,17 +4,17 @@ import { FusionMediator } from '../../types';
 /** Adds clickevents from mediator on garden controller  */
 export function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionMediator<TData, TError>,
+	{ selectionService, clickService }: FusionMediator<TData, TError>,
 	objectIdentifier: keyof TData
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
-		mediator.click({ item: item });
-		mediator.selection.setSelection([{ id: item[objectIdentifier as unknown as string] }]);
+		clickService.click({ item: item });
+		selectionService.setSelection([{ id: item[objectIdentifier as unknown as string] }]);
 	};
 
 	gardenController.clickEvents.onClickGroup = (item) => {
 		const items = findItemsRecursively(item);
-		mediator.selection.setSelection(items.map((s) => ({ id: s[objectIdentifier] as unknown as string })));
+		selectionService.setSelection(items.map((s) => ({ id: s[objectIdentifier] as unknown as string })));
 	};
 }
 

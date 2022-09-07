@@ -6,5 +6,5 @@ export function configureDataChange<TData, TError>(
 	gridController: GridController<TData>,
 	mediator: FusionMediator<TData, TError>
 ) {
-	mediator.onFilterDataChange(gridController.setRowData);
+	mediator.dataService.onFilterDataChange(gridController.setRowData);
 }
