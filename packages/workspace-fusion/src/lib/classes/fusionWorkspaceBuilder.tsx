@@ -71,9 +71,16 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
+	/** Add modules from the workspace-fusion-modules package or bring your own */
 	addModules = (modules: FusionWorkspaceModule<TData, TError>[]) => {
-		modules.forEach((s) => s.setup(this.mediator, this.appKey));
+		modules.forEach(this.runModuleSetup);
 		return this;
+	};
+
+	/** Iterate over all setup modules */
+	private runModuleSetup = (module: FusionWorkspaceModule<TData, TError>) => {
+		module.subModules?.forEach(this.runModuleSetup);
+		module.setup(this.mediator, this.appKey);
 	};
 
 	/**
