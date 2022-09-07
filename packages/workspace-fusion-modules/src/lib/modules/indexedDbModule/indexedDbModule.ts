@@ -17,7 +17,6 @@ async function setup(mediator: FusionMediator<any, any>, appKey: string) {
 	});
 
 	if (!window.location.search.includes('bookmark')) {
-		console.log('No bookmark');
 		const state = await db.read(appKey);
 		if (state) {
 			mediator.bookmarkService.apply(state);
