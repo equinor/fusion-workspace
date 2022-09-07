@@ -12,6 +12,7 @@ import {
 	FusionMediator,
 	CustomTab,
 	AppConfig,
+	FusionWorkspaceModule,
 } from '../types';
 import {
 	addCustomTab,
@@ -23,7 +24,6 @@ import {
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
-	addIndexedDb,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 
@@ -35,13 +35,14 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	objectIdentifier: keyof TData;
 
-	appKey?: string;
+	appKey: string;
 
 	private mediator: FusionMediator<TData, TError>;
 
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 
-	constructor(objectIdentifier: keyof TData) {
+	constructor(objectIdentifier: keyof TData, appKey: string) {
+		this.appKey = appKey;
 		this.objectIdentifier = objectIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
@@ -62,13 +63,16 @@ export class FusionWorkspaceBuilder<TData, TError> {
 				switchTabOnNavigation(this.mediator, this.viewController);
 			}
 		});
-
-		addIndexedDb(this.mediator);
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);
 		this.appKey = appConfig.appKey;
+		return this;
+	};
+
+	addModules = (modules: FusionWorkspaceModule<TData, TError>[]) => {
+		modules.forEach((s) => s.setup(this.mediator, this.appKey));
 		return this;
 	};
 
