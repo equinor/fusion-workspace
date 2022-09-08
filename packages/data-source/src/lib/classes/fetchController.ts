@@ -1,6 +1,5 @@
 import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 import { FetchData } from '../types';
-import { validateData } from '../utils';
 
 export class FetchController<TData> {
 	private fetch: FetchData<TData>;
@@ -10,14 +9,14 @@ export class FetchController<TData> {
 
 	constructor(fetch: FetchData<TData>) {
 		this.fetch = fetch;
-		const fetching = new Observable<boolean>();
+		const fetching = new Observable<boolean>(this.isFetching, (a, b) => a === b);
 		this.onIsFetchingChanged = fetching.onchange;
 		this.setIsFetching = fetching.setValue;
 		fetching.onchange((val) => {
 			this.isFetching = val;
 		});
 
-		const loading = new Observable<boolean>();
+		const loading = new Observable<boolean>(this.isLoading, (a, b) => a === b);
 		this.setIsLoading = loading.setValue;
 		this.onIsLoadingChanged = loading.onchange;
 		loading.onchange((val) => {
@@ -44,12 +43,20 @@ export class FetchController<TData> {
 			this.setIsLoading(true);
 		}
 		this.setIsFetching(true);
-		const promise = this.fetch(signal);
-		this.dataPromise = promise;
-		this.setData(validateData(await promise));
-		this.setIsFetching(false);
-		this.setIsLoading(false);
-		this.dataPromise = undefined;
+		try {
+			const promise = this.fetch(signal);
+			this.dataPromise = promise;
+			this.setData(await promise);
+			//Throwing the error further up the chain as it is not to be handled here, states still needs to be reset
+			// eslint-disable-next-line no-useless-catch
+		} catch (e) {
+			throw e;
+		} finally {
+			this.setIsFetching(false);
+			this.setIsLoading(false);
+			this.dataPromise = undefined;
+		}
+
 		return this.data;
 	};
 
