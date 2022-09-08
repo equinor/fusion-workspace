@@ -32,7 +32,7 @@ export function Grid<T>({ controller }: GridProps<T>) {
 				onGridReady={(api) => {
 					setGridApi(api.api);
 					setColumnApi(api.columnApi);
-					selectRowNode(controller.selectedNodes.value ?? [], controller.objectIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes.value ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
