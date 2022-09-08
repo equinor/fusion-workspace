@@ -9,7 +9,9 @@ export function HandoverSidesheet() {
 	const [activeTab, setActiveTab] = useState(0);
 	const ref = useRef<HTMLDivElement | null>(null);
 
-	const { lastClick } = useWorkspace();
+	const {
+		clickService: { lastClick },
+	} = useWorkspace();
 	if (!lastClick) return <></>;
 	const { item } = lastClick;
 

@@ -14,7 +14,13 @@ export function TabNavigation() {
 	return (
 		<TabButtonList>
 			{tabs.map(({ name, HeaderComponent }) => (
-				<TabButton isActive={name === activeTab?.name} onClick={() => setActiveTab(name)} key={name}>
+				<TabButton
+					isActive={name === activeTab?.name}
+					onClick={() => {
+						setActiveTab(name);
+					}}
+					key={name}
+				>
 					<HeaderComponent />
 				</TabButton>
 			))}
