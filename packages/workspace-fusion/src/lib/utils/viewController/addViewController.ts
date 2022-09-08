@@ -9,6 +9,8 @@ export function addViewController<TData, TError>(
 	mediator: FusionMediator<TData, TError>,
 	history: BrowserHistory
 ) {
+	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
+
 	/** Sync loading state */
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 

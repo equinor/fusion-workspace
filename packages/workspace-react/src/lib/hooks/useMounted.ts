@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
 import { WorkspaceViewController } from '../classes';
+import { useEffectOnce } from './useEffectOnce';
 
 export function useMounted<TTabNames extends string, TError>(controller: WorkspaceViewController<TTabNames, TError>) {
-	useEffect(() => {
+	useEffectOnce(() => {
 		controller.isMounted.setValue(true);
 		return () => {
 			controller.isMounted.setValue(false);
 		};
-	}, []);
+	});
 }
