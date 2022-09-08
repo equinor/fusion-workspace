@@ -1,1 +1,1 @@
-export * from './generateUniqueId';
+export * from './validateData';
