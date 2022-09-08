@@ -1,3 +1,4 @@
+import { FilterOptions } from '@equinor/filter';
 import history from 'history/browser';
 import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
@@ -20,10 +21,12 @@ import {
 	addSidesheet,
 	addStatusBar,
 	addGarden,
+	addFilter,
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
 	addIndexedDb,
+	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 
@@ -33,7 +36,7 @@ export interface WorkspaceContext {
 
 export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
-	objectIdentifier: keyof TData;
+	getIdentifier: GetIdentifier<TData>;
 
 	appKey?: string;
 
@@ -41,8 +44,8 @@ export class FusionWorkspaceBuilder<TData, TError> {
 
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 
-	constructor(objectIdentifier: keyof TData) {
-		this.objectIdentifier = objectIdentifier;
+	constructor(getIdentifier: GetIdentifier<TData>) {
+		this.getIdentifier = getIdentifier;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
@@ -51,7 +54,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		configureUrlWithHistory(this.mediator, history);
 
 		this.mediator.clickService.onClick(({ item }) => {
-			const id = item[this.objectIdentifier] as unknown as string;
+			const id = getIdentifier(item);
 			this.mediator.selectionService.setSelection([{ id }]);
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
@@ -104,7 +107,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
+		addGarden(config, this.viewController, this.mediator, this.getIdentifier);
 		return this;
 	};
 
@@ -114,7 +117,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
+		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier);
 		return this;
 	};
 
@@ -125,6 +128,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 */
 	addSidesheet = (config: SidesheetConfig<TData>) => {
 		addSidesheet(config, this.viewController, this.mediator);
+		return this;
+	};
+
+	addFilter = (config: FilterOptions<TData>) => {
+		addFilter(config, this.viewController, this.mediator);
 		return this;
 	};
 

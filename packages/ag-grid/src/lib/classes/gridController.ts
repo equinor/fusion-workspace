@@ -3,29 +3,37 @@ import { registerCallback } from '../functions';
 import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChangedCallback } from '../types';
 import { Observable, OnchangeCallback } from './observable';
 
-export class GridController<TData> {
-	objectIdentifier: keyof TData;
+export type GetIdentifier<TData> = (item: TData) => string;
 
-	constructor(objectIdentifier: keyof TData) {
-		this.objectIdentifier = objectIdentifier;
+export class GridController<TData> {
+	getIdentifier: GetIdentifier<TData>;
+
+	constructor(getIdentifier: GetIdentifier<TData>) {
+		this.getIdentifier = getIdentifier;
 		const columnStateObservable = new Observable<ColumnState[] | undefined>();
 		columnStateObservable.isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 		const { onchange, setValue } = columnStateObservable;
-		onchange((val) => (this.columnState = val));
+		onchange((val) => {
+			this.columnState = val;
+		});
 		this.setColumnState = setValue;
 		this.onColumnStateChanged = onchange;
 	}
 
 	columnState?: ColumnState[];
+
 	setColumnState: (value: ColumnState[] | undefined) => void;
+
 	onColumnStateChanged: (callback: OnchangeCallback<ColumnState[] | undefined>) => () => void;
 
 	selectedNodes: Observable<string[]> = new Observable<string[]>([]);
 
 	/** The data to be used in the grid */
 	rowData: TData[] = [];
+
 	/** The column definitions for the grid */
 	columnDefs: ColDef[] = [];
+
 	/** The grid options to be used in the grid */
 	gridOptions: GridOptions | undefined = undefined;
 
@@ -33,6 +41,7 @@ export class GridController<TData> {
 	 * Callbacks
 	 */
 	private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<TData>>[] = [];
+
 	private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<TData>>[] = [];
 
 	/**

@@ -1,83 +1,80 @@
 {
-  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
-  "sourceRoot": "packages/test-app/src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nrwl/web:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "compiler": "babel",
-        "outputPath": "dist/packages/test-app",
-        "index": "packages/test-app/src/index.html",
-        "baseHref": "/",
-        "main": "packages/test-app/src/main.tsx",
-        "polyfills": "packages/test-app/src/polyfills.ts",
-        "tsConfig": "packages/test-app/tsconfig.app.json",
-        "assets": [
-          "packages/test-app/src/favicon.ico",
-          "packages/test-app/src/assets"
-        ],
-        "styles": [],
-        "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
-      },
-      "configurations": {
-        "development": {
-          "extractLicenses": false,
-          "optimization": false,
-          "sourceMap": true,
-          "vendorChunk": true
-        },
-        "production": {
-          "fileReplacements": [
-            {
-              "replace": "packages/test-app/src/environments/environment.ts",
-              "with": "packages/test-app/src/environments/environment.prod.ts"
-            }
-          ],
-          "optimization": true,
-          "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "extractLicenses": true,
-          "vendorChunk": false
-        }
-      }
-    },
-    "serve": {
-      "executor": "@nrwl/web:dev-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "test-app:build",
-        "hmr": true
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "test-app:build:development"
-        },
-        "production": {
-          "buildTarget": "test-app:build:production",
-          "hmr": false
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/test-app/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/test-app"],
-      "options": {
-        "jestConfig": "packages/test-app/jest.config.ts",
-        "passWithNoTests": true
-      }
-    }
-  },
-  "tags": []
+	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+	"sourceRoot": "packages/test-app/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/web:webpack",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"compiler": "babel",
+				"outputPath": "dist/packages/test-app",
+				"index": "packages/test-app/src/index.html",
+				"baseHref": "/",
+				"main": "packages/test-app/src/main.tsx",
+				"polyfills": "packages/test-app/src/polyfills.ts",
+				"tsConfig": "packages/test-app/tsconfig.app.json",
+				"assets": ["packages/test-app/src/favicon.ico", "packages/test-app/src/assets"],
+				"styles": [],
+				"scripts": [],
+				"webpackConfig": "@nrwl/react/plugins/webpack"
+			},
+			"configurations": {
+				"development": {
+					"extractLicenses": false,
+					"optimization": false,
+					"sourceMap": true,
+					"vendorChunk": true
+				},
+				"production": {
+					"fileReplacements": [
+						{
+							"replace": "packages/test-app/src/environments/environment.ts",
+							"with": "packages/test-app/src/environments/environment.prod.ts"
+						}
+					],
+					"optimization": true,
+					"outputHashing": "all",
+					"sourceMap": false,
+					"namedChunks": false,
+					"extractLicenses": true,
+					"vendorChunk": false
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nrwl/web:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "test-app:build",
+				"hmr": true
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "test-app:build:development"
+				},
+				"production": {
+					"buildTarget": "test-app:build:production",
+					"hmr": false
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/test-app/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/packages/test-app"],
+			"options": {
+				"jestConfig": "packages/test-app/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
 }
