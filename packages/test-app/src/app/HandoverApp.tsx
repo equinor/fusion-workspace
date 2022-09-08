@@ -21,7 +21,7 @@ export function HandoverApp() {
 
 const createWorkspaceController = (client: HttpClientMsal) =>
 	createFusionWorkspace<Handover, unknown>(
-		(s) => s.commpkgNo,
+		{ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo },
 		({ addDataSource }) =>
 			addDataSource(async () => {
 				return await (

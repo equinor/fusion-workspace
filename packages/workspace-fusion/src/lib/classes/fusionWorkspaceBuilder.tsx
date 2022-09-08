@@ -13,6 +13,7 @@ import {
 	FusionMediator,
 	CustomTab,
 	AppConfig,
+	FusionWorkspaceModule,
 } from '../types';
 import {
 	addCustomTab,
@@ -25,7 +26,6 @@ import {
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
-	addIndexedDb,
 	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
@@ -38,14 +38,15 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
-	appKey?: string;
-
 	private mediator: FusionMediator<TData, TError>;
 
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
 
-	constructor(getIdentifier: GetIdentifier<TData>) {
+	appKey: string;
+
+	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
 		this.getIdentifier = getIdentifier;
+		this.appKey = appKey;
 		this.mediator = new WorkspaceReactMediator();
 		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
@@ -65,14 +66,23 @@ export class FusionWorkspaceBuilder<TData, TError> {
 				switchTabOnNavigation(this.mediator, this.viewController);
 			}
 		});
-
-		addIndexedDb(this.mediator);
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);
-		this.appKey = appConfig.appKey;
 		return this;
+	};
+
+	/** Add modules from the workspace-fusion-modules package or bring your own */
+	addModules = (modules: FusionWorkspaceModule<TData, TError>[]) => {
+		modules.forEach(this.runModuleSetup);
+		return this;
+	};
+
+	/** Iterate over all setup modules */
+	private runModuleSetup = (module: FusionWorkspaceModule<TData, TError>) => {
+		module.subModules?.forEach(this.runModuleSetup);
+		module.setup(this.mediator, this.appKey);
 	};
 
 	/**
