@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-
 import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { GridController } from '../classes';
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
-import { useAgGridStyles } from '@equinor/fusion-react-ag-grid-addons';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
+import { useAgGridStyles } from '@equinor/fusion-react-ag-grid-addons';
 
 interface GridProps<T> {
 	controller: GridController<T>;
@@ -26,8 +23,8 @@ export function Grid<T>({ controller }: GridProps<T>) {
 	const rowData = useRowData(controller);
 
 	useSelectionService(controller, gridApi);
-	useAgGridStyles();
 	useColumnState(controller, columnApi);
+	useAgGridStyles();
 
 	return (
 		<StyledGridWrapper className="ag-theme-alpine">
