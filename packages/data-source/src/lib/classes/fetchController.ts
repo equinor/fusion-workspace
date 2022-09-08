@@ -4,8 +4,16 @@ import { FetchData } from '../types';
 export class FetchController<TData> {
 	private fetch: FetchData<TData>;
 
-	/** If isLoading is true this function will be defined */
-	abort?: () => void;
+	/** Returns true if it aborted an api call */
+	abort = (): boolean => {
+		if (this.currAbort) {
+			this.currAbort();
+			return true;
+		}
+		return false;
+	};
+
+	private currAbort?: () => void;
 
 	constructor(fetch: FetchData<TData>) {
 		this.fetch = fetch;
@@ -38,7 +46,7 @@ export class FetchController<TData> {
 			return await this.dataPromise;
 		}
 		const { abort, signal } = new AbortController();
-		this.abort = abort;
+		this.currAbort = abort;
 		if (!this.data) {
 			this.setIsLoading(true);
 		}
@@ -55,6 +63,7 @@ export class FetchController<TData> {
 			this.setIsFetching(false);
 			this.setIsLoading(false);
 			this.dataPromise = undefined;
+			this.currAbort = undefined;
 		}
 
 		return this.data;
