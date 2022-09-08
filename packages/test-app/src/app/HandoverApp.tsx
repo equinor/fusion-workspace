@@ -20,33 +20,35 @@ export function HandoverApp() {
 }
 
 const createWorkspaceController = (client: HttpClientMsal) =>
-	createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
-		addDataSource(async () => {
-			return await (
-				await client.fetch(
-					'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover'
-				)
-			).json();
-		})
-			.addGrid(gridOptions)
-			.addCustomTab(customTab)
-			.addConfig({
-				appColor: 'purple',
-				appKey: 'Handover',
-				defaultTab: 'grid',
+	createFusionWorkspace<Handover, unknown>(
+		(s) => s.commpkgNo,
+		({ addDataSource }) =>
+			addDataSource(async () => {
+				return await (
+					await client.fetch(
+						'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover'
+					)
+				).json();
 			})
-			.addSidesheet(sidesheetOptions)
-			.addGarden({
-				data: [],
-				nodeLabelCallback: (s) => s.commpkgNo,
-				objectIdentifier: 'commpkgNo',
-				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				fieldSettings: {},
-			})
-			.addMiddleware((mediator) => {
-				mediator.urlService.onUrlChange((val) => {
-					console.log('app url changed', val);
-				});
-			})
-			.addStatusBarItems(statusBar)
+				.addGrid(gridOptions)
+				.addCustomTab(customTab)
+				.addConfig({
+					appColor: 'purple',
+					appKey: 'Handover',
+					defaultTab: 'grid',
+				})
+				.addSidesheet(sidesheetOptions)
+				.addGarden({
+					data: [],
+					nodeLabelCallback: (s) => s.commpkgNo,
+					getIdentifier: (s) => s.commpkgNo,
+					initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+					fieldSettings: {},
+				})
+				.addMiddleware((mediator) => {
+					mediator.urlService.onUrlChange((val) => {
+						console.log('app url changed', val);
+					});
+				})
+				.addStatusBarItems(statusBar)
 	);

@@ -6,10 +6,12 @@ type UserConfig<TData, TError> = (
 ) => FusionWorkspaceBuilder<TData, TError>;
 
 export function createFusionWorkspace<TData, TError>(
-	objectIdentifier: keyof TData,
+	getIdentifier: GetIdentifier<TData>,
 	builderFunc: UserConfig<TData, TError>
 ) {
-	const builder = builderFunc(new FusionWorkspaceBuilder(objectIdentifier));
+	const builder = builderFunc(new FusionWorkspaceBuilder(getIdentifier));
 
 	return sortFusionTabs(builder.viewController);
 }
+
+export type GetIdentifier<TData> = (item: TData) => string;
