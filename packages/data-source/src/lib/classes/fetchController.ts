@@ -49,6 +49,7 @@ export class FetchController<TData> {
 		this.setData(validateData(await promise));
 		this.setIsFetching(false);
 		this.setIsLoading(false);
+		this.dataPromise = undefined;
 		return this.data;
 	};
 
