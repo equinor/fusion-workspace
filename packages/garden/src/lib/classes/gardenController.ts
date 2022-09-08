@@ -14,6 +14,8 @@ import {
 import { createGarden, defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
 
+export type GetIdentifier<TData> = (item: TData) => string;
+
 const NullFunc = () => void 0;
 
 /**
@@ -30,32 +32,43 @@ export class GardenController<
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
+
 	/** The data used for creating garden groups */
 	data = new ReactiveValue<TData[]>([]);
+
 	/** The garden groups */
 	groups = new ReactiveValue<GardenGroups<TData>>([]);
+
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
+
 	fieldSettings: FieldSettings<TData, TCustomGroupByKeys, string> = {};
+
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	nodeLabelCallback: NodeLabelCallback<TData>;
-	/** Primary(unique) identifier for the data type */
-	objectIdentifier: keyof TData;
+
+	/** Function that returns the primary(unique) identifier for the data type */
+	getIdentifier: GetIdentifier<TData>;
+
 	/** The click events that exists in garden */
 	clickEvents: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
+
 	/** Override visuals and components for garden */
 	visuals: Visuals<TData> = {
 		getCustomItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
 		getCustomDescription: () => '',
 	};
+
 	/** Custom user context */
 	context?: TContext;
+
 	/** Custom group by keys */
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
+
 	/** Override default view */
 	customViews: CustomVirtualViews<TData> = {};
 
@@ -76,7 +89,7 @@ export class GardenController<
 	constructor(
 		{
 			nodeLabelCallback,
-			objectIdentifier,
+			getIdentifier,
 			initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
 			data,
 			clickEvents,
@@ -86,7 +99,7 @@ export class GardenController<
 		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 		context?: TContext
 	) {
-		this.objectIdentifier = objectIdentifier;
+		this.getIdentifier = getIdentifier;
 		this.nodeLabelCallback = nodeLabelCallback;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};

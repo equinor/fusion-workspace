@@ -8,8 +8,8 @@ export function setConfigOnController<TData, TError>(
 	gridController: GridController<TData>,
 	mediator: FusionMediator<TData, TError>
 ) {
+	gridConfig.gridOptions && gridController.setGridOptions(gridConfig.gridOptions);
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
-	gridController.gridOptions = gridConfig.gridOptions;
 }
 
 /**
