@@ -1,3 +1,4 @@
+import { FilterOptions } from '@equinor/filter';
 import history from 'history/browser';
 import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
@@ -20,6 +21,7 @@ import {
 	addSidesheet,
 	addStatusBar,
 	addGarden,
+	addFilter,
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
@@ -126,6 +128,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 */
 	addSidesheet = (config: SidesheetConfig<TData>) => {
 		addSidesheet(config, this.viewController, this.mediator);
+		return this;
+	};
+
+	addFilter = (config: FilterOptions<TData>) => {
+		addFilter(config, this.viewController, this.mediator);
 		return this;
 	};
 

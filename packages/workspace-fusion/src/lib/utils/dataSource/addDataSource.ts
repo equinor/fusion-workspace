@@ -6,13 +6,7 @@ export function addDataSource<TData, TError>(
 	{ dataService, setIsLoading }: FusionMediator<TData, TError>
 ) {
 	const dataSourceController = new DataSourceController(dataFetch);
-	dataSourceController.data.onchange((data) => {
-		dataService.setData(data);
-		//TEMP: Will be removed once filter is done
-		dataService.setFilteredData(data);
-	});
-	dataSourceController.isLoading.onchange((isLoading) => {
-		setIsLoading(isLoading);
-	});
+	dataSourceController.data.onchange(dataService.setData);
+	dataSourceController.isLoading.onchange(setIsLoading);
 	dataSourceController.fetch();
 }

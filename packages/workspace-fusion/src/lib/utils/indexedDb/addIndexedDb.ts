@@ -10,7 +10,6 @@ export async function addIndexedDb<TData, TError>(mediator: FusionMediator<TData
 	});
 
 	if (!window.location.search.includes('bookmark')) {
-		console.log('No bookmark');
 		const state = await db.read();
 		if (state) {
 			mediator.bookmarkService.apply(state);
