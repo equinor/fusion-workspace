@@ -1,2 +1,2 @@
-export { DataSourceController } from './classes';
+export { FetchController } from './classes';
 export * from './types';
