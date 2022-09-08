@@ -15,4 +15,18 @@ describe('Fetch controller should handle cancellation and spam', () => {
 		fetchController.getDataAsync();
 		expect(mockFunction).toBeCalledTimes(1);
 	});
+
+	it('Should fetch twice if awaiting promise', async () => {
+		const mockFunction = jest.fn();
+
+		const fetch = () => {
+			mockFunction();
+			return [];
+		};
+
+		const fetchController = new FetchController(fetch);
+		await fetchController.getDataAsync();
+		await fetchController.getDataAsync();
+		expect(mockFunction).toBeCalledTimes(2);
+	});
 });
