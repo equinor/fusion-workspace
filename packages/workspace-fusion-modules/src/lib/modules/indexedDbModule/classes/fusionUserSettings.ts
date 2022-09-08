@@ -12,7 +12,7 @@ export class FusionUserSettings<TData> {
 		await this.patchUserSettings(payload, key);
 	};
 
-	patchUserSettings = async (payload: UserSettings<any>, key: string) => {
+	private patchUserSettings = async (payload: UserSettings<any>, key: string) => {
 		const db = await this.openDb();
 		await db.put(TABLE_NAME, payload, key);
 		db.close();
