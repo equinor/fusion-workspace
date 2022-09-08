@@ -12,7 +12,7 @@ export interface SidesheetConfig<TData> {
 	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
 }
 
-export type DataFetchAsync<TData> = () => Promise<TData[]>;
+export type DataFetchAsync<TData> = (signal?: AbortSignal) => Promise<TData[]> | TData[];
 
 export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 

@@ -73,14 +73,14 @@ export const sidesheetOptions: SidesheetConfig<Handover> = {
 	},
 };
 
-export const dataSourceOptions = async (): Promise<Handover[]> =>
+export const dataSourceOptions = async (signal?: AbortSignal): Promise<Handover[]> =>
 	new Promise((resolve) => {
 		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
 	});
 
 export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
-	{ title: 'Total CP', value: data.reduce((prev) => (prev = prev + 1), 0) },
-	{ title: 'RFO Accepted', value: data.reduce((prev, curr) => (prev = prev + (curr.rfocIsAccepted ? 1 : 0)), 0) },
+	{ title: 'Total CP', value: data.reduce((prev) => prev + 1, 0) },
+	{ title: 'RFO Accepted', value: data.reduce((prev, curr) => prev + (curr.rfocIsAccepted ? 1 : 0), 0) },
 ];
 
 export function CustomTab() {
