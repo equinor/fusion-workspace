@@ -3,8 +3,9 @@ import { Workspace } from '@equinor/workspace-react';
 import { Handover } from './types';
 import { customTab, dataSourceOptions, gridOptions, sidesheetOptions, statusBar } from './workspaceConfig';
 
-const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', ({ addDataSource }) =>
-	addDataSource(dataSourceOptions)
+const controller = createFusionWorkspace<Handover, unknown>('commpkgNo', (builder) =>
+	builder
+		.addDataSource(dataSourceOptions)
 		.addGrid(gridOptions)
 		.addCustomTab(customTab)
 		.addConfig({
