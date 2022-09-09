@@ -1,7 +1,7 @@
 /** Function signature for when active tab changes */
 export type OnActiveTabChangedCallback<TabName, TController> = (
 	to: TabName,
-	from: TabName,
+	from: TabName | undefined,
 	controller: TController
 ) => void;
 /** Function signature for when sidesheet opens or closes */

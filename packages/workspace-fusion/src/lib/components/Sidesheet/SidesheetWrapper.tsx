@@ -1,4 +1,4 @@
-import { WorkspaceOnClick, FusionWorkspaceController } from '../../types';
+import { WorkspaceOnClick, FusionMediator } from '../../types';
 import { useOnClick } from '../../hooks/useOnClick';
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
@@ -6,7 +6,7 @@ import { MediatorProvider } from '../provider';
 
 interface SidesheetWrapperProps<TData, TError> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
-	mediator: FusionWorkspaceController<TData, TError>;
+	mediator: FusionMediator<TData, TError>;
 }
 
 Icon.add({ chevron_right, close, chevron_left });

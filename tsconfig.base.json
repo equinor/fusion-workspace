@@ -20,12 +20,14 @@
 			"@equinor/sidesheet": ["packages/sidesheet/src/index.ts"],
 			"@equinor/status-bar": ["packages/status-bar/src/index.ts"],
 			"@equinor/workspace-fusion": ["packages/workspace-fusion/src/index.ts"],
+			"@equinor/workspace-fusion-modules": ["packages/workspace-fusion-modules/src/index.ts"],
 			"@equinor/workspace-react": ["packages/workspace-react/src/index.ts"],
 			"@workspace/data-source": ["packages/data-source/src/index.ts"],
 			"@workspace/grid": ["packages/ag-grid/src/index.ts"],
 			"@workspace/power-bi": ["packages/power-bi/src/index.ts"],
 			"@workspace/table": ["packages/table/src/index.ts"],
-			"@workspace/workspace-core": ["packages/workspace-core/src/index.ts"]
+			"@workspace/workspace-core": ["packages/workspace-core/src/index.ts"],
+			"@equinor/filter": ["packages/filter/src/index.ts"]
 		},
 		"noImplicitAny": false,
 		"allowSyntheticDefaultImports": true,

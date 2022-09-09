@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { useControllerContext } from './useControllerContext';
 import { useIsSidesheetOpen } from './useIsSidesheetOpen';
 
 /**
  * Hook for returning sidesheet width
  * Will return 0 if the sidesheet is closed
  */
-export function useSidesheetWidth<TabNames extends string, TError>(
-	controller: WorkspaceViewController<TabNames, TError>
-) {
-	const isOpen = useIsSidesheetOpen(controller);
+export function useSidesheetWidth() {
+	const controller = useControllerContext();
+	const isOpen = useIsSidesheetOpen();
 
 	const [sidesheetWidth, setSidesheetWidth] = useState<number>(controller.sidesheet.width);
 

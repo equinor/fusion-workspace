@@ -42,7 +42,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
-		objectIdentifier,
+		getIdentifier,
 	} = controller;
 
 	const groups = useGardenGroups();
@@ -108,7 +108,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 								}
 								depth={item?.itemDepth}
 								width={itemWidth}
-								isSelected={selectedNodes.includes(item.item[objectIdentifier])}
+								isSelected={selectedNodes.includes(getIdentifier(item.item))}
 								rowStart={virtualRow.start}
 								columnStart={virtualColumn.start}
 								parentRef={parentRef}

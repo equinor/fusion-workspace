@@ -4,6 +4,7 @@ export class Observable<TValue> {
 		this.value = initialValue;
 	}
 
+	isEqual = (a: TValue | undefined, b: TValue): boolean => false;
 	/**List of callbacks being stored */
 	#onchangeCallbacks: Callback<TValue>[] = [];
 
@@ -24,6 +25,7 @@ export class Observable<TValue> {
 	 * @param value New value to be set
 	 */
 	setValue = (value: TValue) => {
+		if (this.isEqual(this.value, value)) return;
 		const oldValue = this.value;
 		this.value = value;
 		this.#onchangeCallbacks.forEach(({ callback }) => callback(value, oldValue));

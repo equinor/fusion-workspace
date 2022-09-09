@@ -4,19 +4,33 @@ export class WorkspaceReactMediator<
 	TData,
 	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
-	TContext extends ObjectType<TContext> = ObjectType<unknown>
-> extends WorkspaceMediator<TData, TOnClick, TError> {
+	TContext extends ObjectType<TContext> = ObjectType<unknown>,
+	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>
+> extends WorkspaceMediator<TData, TOnClick, TError, TBookmarkState> {
+	/**
+	 * Callback that returns an instance of itself
+	 * Helpful when chaining
+	 */
+	override addMiddleware = (cb: (mediator: this) => void) => {
+		cb(this);
+		return this;
+	};
+
 	isSidesheetOpen = false;
+
 	setIsSidesheetOpen: (value: boolean) => void;
+
 	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	isLoading = false;
+
 	setIsLoading: (value: boolean) => void;
+
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
-	onMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onMount: (callback: () => void) => () => void;
 
-	onUnMount: (callback: OnchangeCallback<boolean>) => () => void;
+	onUnMount: (callback: () => void) => () => void;
 
 	setMount: () => void;
 
@@ -40,6 +54,7 @@ export class WorkspaceReactMediator<
 
 		const mounted = new Observable(false);
 		this.onMount = mounted.onchange;
+
 		this.setMount = () => mounted.setValue(!mounted.value);
 
 		const unMounted = new Observable(false);

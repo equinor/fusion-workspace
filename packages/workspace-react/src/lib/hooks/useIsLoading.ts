@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { useControllerContext } from './useControllerContext';
 
-export function useIsLoading(controller: WorkspaceViewController<any, any>) {
-	const [isLoading, setIsLoading] = useState(controller.isLoading);
+export function useIsLoading() {
+	const { viewState } = useControllerContext();
+
+	const [isLoading, setIsLoading] = useState(viewState.isLoading);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.onIsLoadingChanged(setIsLoading);
+		const unsubscribe = viewState.onIsLoadingChanged(setIsLoading);
 		return unsubscribe;
 	}, []);
 
