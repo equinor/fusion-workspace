@@ -54,6 +54,7 @@ export class WorkspaceReactMediator<
 
 		const mounted = new Observable(false);
 		this.onMount = mounted.onchange;
+
 		this.setMount = () => mounted.setValue(!mounted.value);
 
 		const unMounted = new Observable(false);
