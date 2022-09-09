@@ -1,4 +1,4 @@
-import { FilterController, FilterOptions } from '@equinor/filter';
+import { Filter, FilterContextProvider, FilterOptions, ReactFilterController } from '@equinor/filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceTabNames } from '../types';
 
@@ -7,14 +7,27 @@ export function addFilter<TData, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	{ dataService }: FusionMediator<TData, TError>
 ) {
-	const filterController = new FilterController<TData>();
-	filterController.addValueFormatters(config);
+	const filterController = new ReactFilterController<TData>();
+	filterController.addGroups(config);
 	filterController.onFilteredDataChanged(dataService.setFilteredData);
-	viewController.filter.FilterComponent = () => <div></div>;
+	// eslint-disable-next-line no-param-reassign
+	viewController.filter.FilterComponent = () => <FusionFilter controller={filterController} />;
 	dataService.data && filterController.setData(dataService.data);
 	filterController.init();
 	dataService.onDataChange((data) => {
 		filterController.setData(data);
 		filterController.init();
 	});
+}
+
+interface FusionFilterProps<TData> {
+	controller: ReactFilterController<TData>;
+}
+
+function FusionFilter<TData>({ controller }: FusionFilterProps<TData>) {
+	return (
+		<FilterContextProvider controller={controller}>
+			<Filter />
+		</FilterContextProvider>
+	);
 }
