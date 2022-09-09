@@ -1,20 +1,64 @@
-import {
-	GridConfig,
-	SidesheetConfig,
-	StatusBarConfig,
-	WorkspaceOnClick,
-	useWorkspace,
-} from '@equinor/workspace-fusion';
-import { DefaultInterface } from './types';
+import { GridConfig, SidesheetConfig, StatusBarConfig, useWorkspace } from '@equinor/workspace-fusion';
+import { Handover } from './types';
 import { mockData } from './mockData';
-
 import styled from 'styled-components';
-import { tokens } from '@equinor/eds-tokens';
 import { Button } from '@equinor/eds-core-react';
+import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 
-export const gridOptions: GridConfig<DefaultInterface> = {
-	columnDefinitions: [{ field: 'id' }, { field: 'description' }, { field: 'title' }, { field: 'sequenceNumber' }],
+export const gridOptions: GridConfig<Handover> = {
+	columnDefinitions: [
+		{
+			field: 'commPkgNo',
+			valueGetter: (valueGetter) => valueGetter.data?.commpkgNo,
+			onCellClicked: undefined,
+			cellRenderer: (props) => <a href="gooogle.com">{props.valueFormatted ?? props.value}</a>,
+		},
+		{ field: 'Description', valueGetter: (s) => s.data?.description },
+		{ field: 'Disciplines', valueGetter: (s) => s.data?.mcDisciplineCodes, enableRowGroup: true },
+		{
+			field: 'Comm pkg status',
+			valueGetter: (s) => s.data?.commpkgStatus,
+			cellRenderer: (props) =>
+				(props.value || props.valueFormatted) && RenderStatus(props.valueFormatted ?? props.value),
+		},
+		{
+			field: 'MC status',
+			valueGetter: (s) => s.data?.mcStatus,
+			cellRenderer: (props) => RenderStatus(props.valueFormatted ?? props.value),
+		},
+		{ field: 'Responsible', valueGetter: (s) => s.data?.responsible },
+		{ field: 'Area', valueGetter: (s) => s.data?.area },
+		{ field: 'System', valueGetter: (s) => s.data?.system },
+		{ field: 'Priority 1', valueGetter: (s) => s.data?.priority1 },
+		{ field: 'Priority 2', valueGetter: (s) => s.data?.priority2 },
+		{ field: 'Priority 3', valueGetter: (s) => s.data?.priority3 },
+		{ field: 'Planned start date', valueGetter: (s) => s.data?.plannedStartDate, headerName: 'Planned RFC' },
+		{ field: 'forecastStartDate', headerName: 'Forecast RFC' },
+		{ field: 'rfocPlannedDate 3', headerName: 'Planned RFO', initialHide: true },
+		{ field: 'rfocActualDate', headerName: 'Actual RFO' },
+	],
+	gridOptions: {
+		pagination: true,
+		paginationPageSize: 100,
+	},
 };
+
+/** Will render MC or Comm pkg status symbol */
+const RenderStatus = (value: string) => {
+	return (
+		<span style={{ display: 'flex', alignItems: 'center' }}>
+			<StyledCircle color={value === 'OK' ? 'green' : 'grey'} />
+			{value}
+		</span>
+	);
+};
+
+const StyledCircle = styled.div<{ color: string }>`
+	height: 16px;
+	width: 16px;
+	background-color: ${({ color }) => color};
+	border-radius: 50%;
+`;
 
 export const customTab = {
 	Component: CustomTab,
@@ -22,41 +66,26 @@ export const customTab = {
 	name: 'Lines',
 };
 
-export const sidesheetOptions: SidesheetConfig<DefaultInterface> = {
-	Component: SidesheetComponent,
+export const sidesheetOptions: SidesheetConfig<Handover> = {
+	Component: HandoverSidesheet,
 	getTitle: (ev) => {
-		return ev.item.title;
+		return ev.item.commpkgNo;
 	},
 };
 
-export const dataSourceOptions = async () => mockData;
+export const dataSourceOptions = async (signal?: AbortSignal): Promise<Handover[]> =>
+	new Promise((resolve) => {
+		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
+	});
 
-export const statusBarConfig: StatusBarConfig<DefaultInterface> = [
-	{ getValue: (data) => ({ title: 'Count', value: data.length }) },
-	{
-		getValue: (data) => ({
-			title: 'Sum sequence numbers',
-			value: data.reduce((prev, curr) => (prev = prev + curr.sequenceNumber), 0),
-			description: 'Sums all the sequence numbers',
-		}),
-	},
+export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
+	{ title: 'Total CP', value: data.reduce((prev) => prev + 1, 0) },
+	{ title: 'RFO Accepted', value: data.reduce((prev, curr) => prev + (curr.rfocIsAccepted ? 1 : 0), 0) },
 ];
 
-export function SidesheetComponent(ev: WorkspaceOnClick<DefaultInterface>) {
-	const { filteredData } = useWorkspace();
-
-	return (
-		<div style={{ height: '100%', width: '100%', backgroundColor: 'green' }}>
-			{ev.item.title}
-			{ev.item.description}
-			{filteredData?.length}
-		</div>
-	);
-}
-
 export function CustomTab() {
-	const { click, data, filteredData, isLoading, setFilteredData } = useWorkspace();
-
+	const { clickService, dataService, isLoading } = useWorkspace();
+	const { data, filteredData, setFilteredData } = dataService;
 	return (
 		<StyledCustomTab>
 			<ul>
@@ -64,7 +93,7 @@ export function CustomTab() {
 				<li>Filtered data length: {filteredData?.length}</li>
 				<li>isLoading: {isLoading}</li>
 			</ul>
-			<Button onClick={() => click({ item: data?.[0] })}>Open sidesheet</Button>
+			<Button onClick={() => clickService.click({ item: data?.[0] })}>Open sidesheet</Button>
 			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
 		</StyledCustomTab>
 	);
@@ -73,5 +102,5 @@ export function CustomTab() {
 const StyledCustomTab = styled.div`
 	height: 100%;
 	width: 100%;
-	background-color: ${tokens.colors.ui.background__medium.hex};
+	background-color: rebeccapurple;
 `;

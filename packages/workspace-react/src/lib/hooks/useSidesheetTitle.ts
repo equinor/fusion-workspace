@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { WorkspaceViewController } from '../classes';
+import { useControllerContext } from './useControllerContext';
 
-export function useSidesheetTitle(controller: WorkspaceViewController<any, any>) {
+export function useSidesheetTitle() {
+	const controller = useControllerContext();
 	const [sidesheetTitle, setSidesheetTitle] = useState(controller.sidesheet.title.value);
 
 	useEffect(() => {

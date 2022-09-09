@@ -1,5 +1,6 @@
 import { WorkspaceViewController } from '../classes/workspaceViewController';
 import { useMounted } from '../hooks/useMounted';
+import { ContextProvider } from './ContextProvider';
 import { WorkspaceBody } from './workspaceBody';
 import { WorkspaceHeader } from './workspaceHeader';
 export interface WorkspaceProps<TTabName extends string, TError> {
@@ -8,11 +9,12 @@ export interface WorkspaceProps<TTabName extends string, TError> {
 
 export function Workspace<TTabNames extends string, TError>({ controller }: WorkspaceProps<TTabNames, TError>) {
 	useMounted(controller);
-
 	return (
 		<div>
-			<WorkspaceHeader controller={controller} />
-			<WorkspaceBody controller={controller} />
+			<ContextProvider controller={controller}>
+				<WorkspaceHeader />
+				<WorkspaceBody />
+			</ContextProvider>
 		</div>
 	);
 }

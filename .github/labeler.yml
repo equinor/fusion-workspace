@@ -31,6 +31,9 @@ workspace-core:
 workspace-fusion:
     - packages/workspace-fusion/**
 
+workspace-fusion-modules:
+    - packages/workspace-fusion-modules/**
+
 deps:
     - package.json
     - package-lock.json

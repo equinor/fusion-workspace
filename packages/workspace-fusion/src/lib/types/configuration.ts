@@ -12,15 +12,9 @@ export interface SidesheetConfig<TData> {
 	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
 }
 
-export type DataFetchAsync<TData> = () => Promise<TData[]>;
+export type DataFetchAsync<TData> = (signal?: AbortSignal) => Promise<TData[]> | TData[];
 
-export type GetStatusItem<TData> = (item: TData[]) => StatusItem;
-
-interface StatusBar<TData> {
-	getValue: GetStatusItem<TData>;
-}
-
-export type StatusBarConfig<TData> = [StatusBar<TData>, ...StatusBar<TData>[]];
+export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 
 export interface CustomTabProps<TData> {
 	data: TData[];
@@ -33,4 +27,10 @@ export interface CustomTab {
 	name: string;
 	HeaderComponent: () => JSX.Element;
 	Component: CustomTabComponent;
+}
+
+export interface AppConfig<TabNames extends string> {
+	appKey: string;
+	appColor: string;
+	defaultTab: TabNames;
 }
