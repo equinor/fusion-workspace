@@ -2,13 +2,12 @@
 title: Workspace Core
 category: Tech-Spec
 tags:
-- spec
-- mediator
-- controller
-- core
-- hub
+    - spec
+    - mediator
+    - controller
+    - core
+    - hub
 ---
-
 
 ## Concept
 
@@ -17,10 +16,10 @@ Workspace core should b a library independent and it's main role is to allow var
 ## Mediator
 
 A hub allowing for communication between controllers. it should be composed of smaller components to keep things clean. These components will be called services.
- main services will be `dataService` and `errorService`
+main services will be `dataService` and `errorService`
 
 ::: warning Communication
-  The mediator  should be the only communication device, and there should not be direct communications between controllers.
+The mediator should be the only communication device, and there should not be direct communications between controllers.
 :::
 
 ```mermaid
@@ -105,7 +104,7 @@ The `errorService` is in charge of centralizing all error in a workspace. It sho
 the `urlService` is in change of dispatching events when url changes and splitting ut query parameters.
 
 ::: info Query Parameters
- the url service wil not handle any query parameters only dispatch events, the handling of query parameters will be done at a higher level.
+the url service wil not handle any query parameters only dispatch events, the handling of query parameters will be done at a higher level.
 :::
 
 ### Selection Service
