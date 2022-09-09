@@ -5,8 +5,6 @@ on:
     push:
         branches:
             - main
-        paths:
-            - 'vue-press/**'
 
 jobs:
     publish:
@@ -20,7 +18,7 @@ jobs:
             - name: Generate Docs
               run: |
                   npm install
-                  npm run build
+                  npm run doc:build
             - name: Deploy Docs
               uses: JamesIves/github-pages-deploy-action@4.1.4
               with:
