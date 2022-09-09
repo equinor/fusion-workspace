@@ -1,10 +1,10 @@
-name: Generate Docs
+name: Generate Github Docs
 
 on:
     workflow_dispatch:
     push:
         branches:
-            - main
+            - feature/add-vue-press-for-documentation
         paths:
             - 'vue-press/**'
 
