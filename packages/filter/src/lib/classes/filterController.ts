@@ -1,17 +1,11 @@
 import { doesItemPassFilter, generateFilterValues } from '../utils';
 
-import {
-	FilterGroup,
-	FilterItemCount,
-	FilterSearchActive,
-	FilterValueType,
-	SearchType,
-	ValueFormatterFilter,
-} from '../types';
+import { FilterGroup, FilterItemCount, FilterSearchActive, FilterValueType, ValueFormatterFilter } from '../types';
 import { FilterStateController } from './filterStateController';
 import { SearchController } from './searchController';
 import { Observable, OnchangeCallback } from './observable';
 import { CountController } from './countController';
+import { CountCache } from './countCache';
 
 export class FilterController<TData> {
 	filterGroups: FilterGroup[] = [];
@@ -38,6 +32,8 @@ export class FilterController<TData> {
 
 	onFilterValuesGenerated: (callback: OnchangeCallback<FilterGroup[]>) => () => void;
 
+	private countCache = new CountCache();
+
 	/** Set filter values */
 	private setFilterValues: (value: FilterGroup[]) => void;
 
@@ -63,11 +59,14 @@ export class FilterController<TData> {
 		filterValues.onchange((val) => {
 			this.filterGroups = val;
 		});
+
+		this.filterStateController.onFilterStateChange(this.countCache.clear);
 	}
 
 	search = (search: FilterSearchActive<TData>) => {
 		this.searchController.setSearch(search);
 		this.searchController.handleSearch(this.data, this.filteredData);
+		this.filter();
 	};
 
 	clearSearch = this.searchController.clearSearch;
@@ -107,15 +106,24 @@ export class FilterController<TData> {
 		const group = this.filterGroups.find((s) => s.name === groupName);
 		const valueFormatter = this.valueFormatters.find((s) => s.name === groupName)?.valueFormatter;
 		if (!group || !valueFormatter) throw new Error('Group or valueformatter does not exist');
-		return this.countController.getFilterItemCountsForGroup(group, valueFormatter, this.filteredData);
+		const count = this.countController.getFilterItemCountsForGroup(group, valueFormatter, this.filteredData);
+
+		return count;
 	};
 
 	getCountForFilterValue = (groupName: string, filterItem: FilterValueType): number => {
+		const cached = this.countCache.getCount(`${groupName}${filterItem}`);
+		if (cached) {
+			return cached;
+		}
+		console.log('Calculating count');
 		const group = this.filterGroups.find((s) => s.name === groupName);
 		const valueFormatter = this.valueFormatters.find((s) => s.name === groupName)?.valueFormatter;
 		if (!group || !valueFormatter) throw new Error('Group or valueformatter does not exist');
 
-		return this.countController.getCountForFilterValue(group, filterItem, valueFormatter, this.filteredData);
+		const count = this.countController.getCountForFilterValue(group, filterItem, valueFormatter, this.filteredData);
+		this.countCache.addCount(`${groupName}${filterItem}`, count);
+		return count;
 	};
 
 	/** Destroys the filter */
