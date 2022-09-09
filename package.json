@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "doc:dev": "vuepress dev vue-press/src",
+    "doc:dev": "vuepress dev packages/_documentation/src",
     "doc:build": "vuepress build src -d docs"
   },
   "private": true,
