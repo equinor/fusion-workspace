@@ -30,7 +30,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				).json();
 			})
 				.addFilter([
-					{ name: 'CommPkg', valueFormatter: (pkg) => pkg.commpkgNo, isQuickFilter: true },
+					{ name: 'Comm status', valueFormatter: (pkg) => pkg.commpkgStatus, isQuickFilter: true },
 					{ name: 'MC status', valueFormatter: (pkg) => pkg.mcStatus, isQuickFilter: true },
 				])
 				.addGrid(gridOptions)
