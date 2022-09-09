@@ -38,17 +38,15 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
-	private mediator: FusionMediator<TData, TError>;
+	private mediator: FusionMediator<TData, TError> = new WorkspaceReactMediator();
 
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+	viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
 	appKey: string;
 
 	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
 		this.getIdentifier = getIdentifier;
 		this.appKey = appKey;
-		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
 		addViewController(this.viewController, this.mediator, history);
 
