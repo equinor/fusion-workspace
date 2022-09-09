@@ -35,10 +35,7 @@ export const FilterItem = ({
 		changeFilterItem('MarkActive', filterGroup.name, filterItem);
 	}
 	const isUnChecked = checkValueIsInactive(filterGroup.name, filterItem);
-	const count = useMemo(
-		() => getCountForFilterValue(filterGroup.name, filterItem),
-		[getCountForFilterValue, filterGroup.name, filterItem]
-	);
+	const count = getCountForFilterValue(filterGroup.name, filterItem);
 	return (
 		<FilterItemWrap
 			title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
