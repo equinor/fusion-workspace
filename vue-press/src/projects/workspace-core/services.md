@@ -2,16 +2,15 @@
 title: Services
 category: Workspace Core
 tags:
-- selection
-- single
-- multi
-- service
+    - selection
+    - single
+    - multi
+    - service
 ---
-
 
 ## Data Service
 
-The `dataService` is one of the main buildingbloks of the `WorkspaceMediator`  handling all the event data related. There are two data slots, `data` and `filteredData`.
+The `dataService` is one of the main buildingbloks of the `WorkspaceMediator` handling all the event data related. There are two data slots, `data` and `filteredData`.
 Then data is set all callbacks registered on `onDataChange` will be called. to set data use the `setData` method. this is the same for `filteredData` with `setFilteredData` and `onFilterDataChange`.
 
 ```mermaid
@@ -40,7 +39,7 @@ sequenceDiagram
 ```
 
 ::: info POC Code
-  The following code will be distributed over several files but this is the main concept.
+The following code will be distributed over several files but this is the main concept.
 :::
 
 ```TS
@@ -120,7 +119,7 @@ When a nodes are selected using the `setSelection` , `onSelectionChange` will ca
 the onSelectionChange callback will not fire if the selection is the same as the previous selection.
 
 ```TS
-  
+
   mediator.clickService.onClick(({ item }) => {
       const id = item[this.objectIdentifier()];
       this.mediator.selectionService.setSelection([{ id }]);
@@ -131,7 +130,7 @@ the onSelectionChange callback will not fire if the selection is the same as the
 ## URL Service
 
 The `urlService` main responsibility is to extract query parameters and notify `onUrlChanged`, callback registered. These callbacks will be provided with `Location` information.
-the url in the Location object is base url, meaning all characters before `?` a query in  `queryParams` items will be given as `itemId=1234` and so on.
+the url in the Location object is base url, meaning all characters before `?` a query in `queryParams` items will be given as `itemId=1234` and so on.
 
 ```TS
   interface Location {

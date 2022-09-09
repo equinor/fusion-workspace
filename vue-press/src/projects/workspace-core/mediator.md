@@ -2,8 +2,8 @@
 title: Workspace Mediator
 category: Workspace Core
 tags:
-- mediator
-- observable
+    - mediator
+    - observable
 ---
 
 ## Concept

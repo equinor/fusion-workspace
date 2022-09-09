@@ -2,7 +2,7 @@
 title: Observable
 category: Workspace Core
 tags:
-- observable
+    - observable
 ---
 
 ## Concept

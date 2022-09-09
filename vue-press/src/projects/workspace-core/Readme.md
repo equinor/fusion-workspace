@@ -2,9 +2,9 @@
 title: Workspace Core
 category: Project
 tags:
-- core
-- mediator
-- controller
+    - core
+    - mediator
+    - controller
 ---
 
 <ModuleBadge module="workspace-core" />
