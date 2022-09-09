@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - feature/add-vue-press-for-documentation
+            - main
         paths:
             - 'vue-press/**'
 
