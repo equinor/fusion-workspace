@@ -2,10 +2,10 @@ import { Icon } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 
 export interface ClickableIconProps {
-    name: string;
-    onClick?: React.MouseEventHandler<SVGSVGElement>;
-    color?: string | undefined;
-    size?: 16 | 24 | 32 | 40 | 48;
+	name: string;
+	onClick?: React.MouseEventHandler<SVGSVGElement>;
+	color?: string | undefined;
+	size?: 16 | 24 | 32 | 40 | 48;
 }
 
 /**
@@ -15,18 +15,10 @@ export interface ClickableIconProps {
  * @returns Clickable SVG
  */
 export const ClickableIcon = ({
-    name,
-    onClick,
-    color = `${tokens.colors.interactive.primary__resting.hex}`,
-    size = 24,
+	name,
+	onClick,
+	color = `${tokens.colors.interactive.primary__resting.hex}`,
+	size = 24,
 }: ClickableIconProps): JSX.Element => {
-    return (
-        <Icon
-            size={size}
-            name={name}
-            onClick={onClick}
-            style={{ cursor: 'pointer' }}
-            color={color}
-        />
-    );
+	return <Icon size={size} name={name} onClick={onClick} style={{ cursor: 'pointer' }} color={color} />;
 };
