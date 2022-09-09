@@ -17,7 +17,7 @@ function applyFusionBookmark<TData, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>
 ) {
 	gardenController.grouping.setValue(bookmark.groupingKeys);
-	gardenController.selectedNodes.setValue(bookmark.selectedNodes);
+	gardenController.selectedNodes.setValue(bookmark.selectedNodes ?? []);
 }
 
 /** Captures a garden bookmark */
