@@ -116,7 +116,6 @@ export class FilterController<TData> {
 		if (cached) {
 			return cached;
 		}
-		console.log('Calculating count');
 		const group = this.filterGroups.find((s) => s.name === groupName);
 		const valueFormatter = this.valueFormatters.find((s) => s.name === groupName)?.valueFormatter;
 		if (!group || !valueFormatter) throw new Error('Group or valueformatter does not exist');
