@@ -1,14 +1,19 @@
 import { Menu, Button, Search } from '@equinor/eds-core-react';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { useFilterContext, useFilterState } from '../../hooks';
 import { FilterValueType } from '../../types';
 import { FilterItemCheckbox } from '../filterItem/FilterItemCheckbox';
-import { ClearButtonWrapper, MenuWrapper, SearchHolder, VerticalLine } from './filterGroup.styles';
+import {
+	StyledClearButtonWrapper,
+	StyledMenuWrapper,
+	StyledSearchHolder,
+	StyledVerticalLine,
+} from '../filterGroup/filterGroup.styles';
+import { StyledList } from './filterGroupPopoverMenu.styles';
 
 interface FilterGroupPopoverMenuProps {
 	anchorEl: HTMLElement | null | undefined;
-	onClick: () => void;
+	closePopover: () => void;
 	values: FilterValueType[];
 	handleFilterItemClick: (item: FilterValueType) => void;
 	isChecked: (filterValue: FilterValueType) => boolean;
@@ -22,7 +27,7 @@ export const FilterGroupPopoverMenu = ({
 	isChecked,
 	handleFilterItemLabelClick,
 	markAllValuesActive,
-	onClick,
+	closePopover,
 	anchorEl,
 	values,
 	CustomRender,
@@ -30,15 +35,17 @@ export const FilterGroupPopoverMenu = ({
 }: FilterGroupPopoverMenuProps): JSX.Element => {
 	const [searchText, setSearchText] = useState<string>('');
 
-	const { valueFormatters, getCountForFilterValue } = useFilterContext();
+	const { getCountForFilterValue } = useFilterContext();
 	const { setFilterState, filterState } = useFilterState();
-	const valueFormatter = valueFormatters.find(({ name }) => name === groupName)?.valueFormatter;
 
 	const handleInput = (e) => setSearchText(e.target.value.toString().toLowerCase());
 
 	const getValuesMatchingSearchText = () =>
 		values.filter((s) => !searchText || s?.toString().toLowerCase().startsWith(searchText));
 
+	/**
+	 * Sets the filter state to the values matching search and closes popover
+	 */
 	const setFilterStateFromSearch = () => {
 		const valuesMatchingSearch = values.filter((s) => !getValuesMatchingSearchText().includes(s));
 
@@ -50,7 +57,7 @@ export const FilterGroupPopoverMenu = ({
 			},
 		]);
 		setSearchText('');
-		onClick();
+		closePopover();
 	};
 
 	return (
@@ -59,13 +66,13 @@ export const FilterGroupPopoverMenu = ({
 			aria-labelledby="anchor-complex"
 			open={true}
 			anchorEl={anchorEl}
-			onClose={onClick}
+			onClose={closePopover}
 			placement={'bottom-end'}
 		>
-			<MenuWrapper>
+			<StyledMenuWrapper>
 				{values.length > 7 && (
 					<>
-						<SearchHolder>
+						<StyledSearchHolder>
 							<Search
 								value={searchText}
 								placeholder="Search"
@@ -76,12 +83,12 @@ export const FilterGroupPopoverMenu = ({
 									}
 								}}
 							/>
-						</SearchHolder>
-						<VerticalLine />
+						</StyledSearchHolder>
+						<StyledVerticalLine />
 					</>
 				)}
 
-				<List>
+				<StyledList>
 					{getValuesMatchingSearchText().map((value) => (
 						<FilterItemCheckbox
 							key={value}
@@ -93,21 +100,14 @@ export const FilterGroupPopoverMenu = ({
 							count={getCountForFilterValue(groupName, value)}
 						/>
 					))}
-				</List>
-				<VerticalLine />
-				<ClearButtonWrapper>
+				</StyledList>
+				<StyledVerticalLine />
+				<StyledClearButtonWrapper>
 					<Button onClick={markAllValuesActive} variant="ghost">
 						Clear
 					</Button>
-				</ClearButtonWrapper>
-			</MenuWrapper>
+				</StyledClearButtonWrapper>
+			</StyledMenuWrapper>
 		</Menu>
 	);
 };
-
-const List = styled.div`
-	max-height: 250px;
-	padding: 8px 8px;
-	overflow: scroll;
-	height: auto;
-`;

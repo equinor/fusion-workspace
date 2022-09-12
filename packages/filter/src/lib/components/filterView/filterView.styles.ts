@@ -2,7 +2,7 @@ import { Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const Wrapper = styled.section`
+export const StyledWrapper = styled.section`
 	display: flex;
 	flex-direction: row;
 	height: 200px;
@@ -25,7 +25,7 @@ export const Wrapper = styled.section`
 	animation-name: fadeIn;
 `;
 
-export const FilterSelect = styled.div`
+export const StyledFilterSelect = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-width: fit-content;
@@ -49,7 +49,7 @@ export const FilterSelect = styled.div`
 		}
 	}
 `;
-export const FilterGroups = styled.div`
+export const StyledFilterGroups = styled.div`
 	display: flex;
 	flex-direction: row;
 	overflow-y: hidden;
@@ -62,9 +62,9 @@ export const FilterGroups = styled.div`
 	}
 `;
 
-export const FilterGroupWrapper = styled.div``;
+export const StyledFilterGroupWrapper = styled.div``;
 
-export const SearchFilterWrapper = styled.div`
+export const StyledSearchFilterWrapper = styled.div`
 	overflow-x: scroll;
 	height: -webkit-fill-available;
 
@@ -73,23 +73,23 @@ export const SearchFilterWrapper = styled.div`
 	}
 `;
 
-export const SelectBar = styled.div`
+export const StyledSelectBar = styled.div`
 	display: flex;
 	flex-direction: column;
 	background-color: ${tokens.colors.ui.background__light.rgba};
 	border-right: 2px solid ${tokens.colors.ui.background__medium.rgba};
 `;
 
-export const AddButton = styled(Button)`
+export const StyledAddButton = styled(Button)`
 	width: 36px;
 	height: 36px;
 `;
-export const SearchButton = styled(Button)`
+export const StyledSearchButton = styled(Button)`
 	width: 36px;
 	height: 36px;
 `;
 
-export const FilterSelectHeaderGroup = styled.div`
+export const StyledFilterSelectHeaderGroup = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

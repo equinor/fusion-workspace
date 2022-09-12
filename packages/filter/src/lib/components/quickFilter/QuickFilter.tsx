@@ -1,41 +1,39 @@
 import { useState } from 'react';
 
-import { CompactFilterWrapper, SearchLine, LeftSection, RightSection } from './quickFilterStyles';
-import { Chip } from '@equinor/eds-core-react';
-import styled from 'styled-components';
-import { tokens } from '@equinor/eds-tokens';
+import {
+	StyledCompactFilterWrapper,
+	StyledLeftSection,
+	StyledRightSection,
+	StyledSearchLine,
+	StyledWrapper,
+} from './quickFilter.styles';
 import { FilterGroup } from '../filterGroup';
 import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
-import { ToggleHideFilterPopover } from '../ToggleHideFilterPopover';
+import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
 import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
 import { FilterController } from '../../classes';
 import { FilterView } from '../filterView/FilterView';
-import { FilterConfiguration } from '../../types';
-import { useOnFilteredDataChanged } from '../../hooks/useOnFilteredDataChanged';
 import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
-import { useFilterContext } from '../../hooks';
+import { useFilterContext, useFilterGroups } from '../../hooks';
+import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 
 /**
  * How to separate controller and visual logic in this component?
  */
 interface QuickFilterProps<T> {
 	controller: FilterController<T>;
-	groups: Omit<FilterConfiguration<T>, 'valueFormatter'>[];
 }
 
-export function QuickFilter<T>({ controller = new FilterController(), groups }: QuickFilterProps<T>): JSX.Element {
-	useOnFilteredDataChanged();
+export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element {
+	const groups = useFilterGroups() ?? [];
 	const { setIsFilterExpanded } = useFilterContext();
+	const isFilterExpanded = useIsFilterExpanded();
 
 	const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
 	const {
 		valueFormatters,
 		filterStateController: { filterState, getInactiveGroupValues, clearActiveFilters },
 	} = controller;
-
-	function checkHasActiveFilters() {
-		return filterState.length !== 0;
-	}
 
 	const handleExpandFilterGroup = (groupName: string) =>
 		filterGroupOpen === groupName ? setFilterGroupOpen(null) : setFilterGroupOpen(groupName);
@@ -47,8 +45,6 @@ export function QuickFilter<T>({ controller = new FilterController(), groups }: 
 	const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(
 		groups.filter((s) => !s.defaultHidden).map((s) => s.name)
 	);
-
-	const isFilterExpanded = useIsFilterExpanded();
 
 	const toggleFilterIsExpanded = () => {
 		setIsFilterExpanded(!isFilterExpanded);
@@ -62,13 +58,13 @@ export function QuickFilter<T>({ controller = new FilterController(), groups }: 
 		);
 
 	return (
-		<Wrapper>
-			<CompactFilterWrapper>
-				<SearchLine>
-					<LeftSection>
+		<StyledWrapper>
+			<StyledCompactFilterWrapper>
+				<StyledSearchLine>
+					<StyledLeftSection>
 						<FilterQuickSearch />
-					</LeftSection>
-					<RightSection>
+					</StyledLeftSection>
+					<StyledRightSection>
 						{!isFilterExpanded && (
 							<>
 								{quickFilterGroups.map(
@@ -82,7 +78,7 @@ export function QuickFilter<T>({ controller = new FilterController(), groups }: 
 											/>
 										)
 								)}
-								<OtherFiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
+								<FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
 							</>
 						)}
 						<div style={{ display: 'flex' }}>
@@ -93,41 +89,16 @@ export function QuickFilter<T>({ controller = new FilterController(), groups }: 
 									visibleFilters={visibleFilterGroups}
 								/>
 							)}
-							<FilterClearIcon
-								isDisabled={!checkHasActiveFilters()}
-								onClick={() => clearActiveFilters()}
-							/>
+							<FilterClearIcon isDisabled={!filterState.length} onClick={() => clearActiveFilters()} />
 
 							<div onClick={toggleFilterIsExpanded}>
 								{isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
 							</div>
 						</div>
-					</RightSection>
-				</SearchLine>
-			</CompactFilterWrapper>
+					</StyledRightSection>
+				</StyledSearchLine>
+			</StyledCompactFilterWrapper>
 			{isFilterExpanded && <FilterView visibleFilterGroups={visibleFilterGroups} />}
-		</Wrapper>
+		</StyledWrapper>
 	);
 }
-
-const Wrapper = styled.div`
-	width: 100%;
-	overflow: scroll;
-`;
-
-interface OtherFiltersAppliedInfoProps {
-	activeFilters: number;
-}
-
-export function OtherFiltersAppliedInfo({ activeFilters }: OtherFiltersAppliedInfoProps): JSX.Element | null {
-	if (activeFilters <= 0) return null;
-
-	return <InfoChip>+{activeFilters} other filters applied</InfoChip>;
-}
-
-const InfoChip = styled(Chip)`
-	background-color: ${tokens.colors.ui.background__info.hex};
-	color: ${tokens.colors.text.static_icons__default.hex};
-	font-weight: 500;
-	font-size: 12px;
-`;

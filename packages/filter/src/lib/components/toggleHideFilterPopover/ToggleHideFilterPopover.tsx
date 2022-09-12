@@ -2,7 +2,8 @@ import { Button, Icon, Checkbox, Popover } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import styled from 'styled-components';
+import { SortObject } from '../../types/sortObject';
+import { StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
 
 interface ShowHideFilterButtonProps {
 	allFilters: string[];
@@ -10,10 +11,6 @@ interface ShowHideFilterButtonProps {
 	setVisibleFilters: (val: string[]) => void;
 }
 
-interface SortObject<T> {
-	id: string;
-	item: T;
-}
 export const ToggleHideFilterPopover = ({
 	setVisibleFilters,
 	visibleFilters,
@@ -47,7 +44,7 @@ export const ToggleHideFilterPopover = ({
 				<Popover open={isOpen} onClose={() => setIsOpen(false)} anchorEl={ref.current} placement="bottom-end">
 					<Popover.Title>Filter types</Popover.Title>
 					<Popover.Content style={{ maxHeight: '60vh', overflowY: 'scroll', overflowX: 'hidden' }}>
-						<PopoverList>
+						<StyledPopoverList>
 							<ReactSortable
 								animation={200}
 								handle={`.${DraggableHandleSelector}`}
@@ -56,7 +53,7 @@ export const ToggleHideFilterPopover = ({
 								onEnd={updateList}
 							>
 								{list.map(({ item }) => (
-									<ItemWrapper className={DraggableHandleSelector} key={item}>
+									<StyledItemWrapper className={DraggableHandleSelector} key={item}>
 										<Checkbox
 											size={2}
 											checked={visibleFilters.includes(item)}
@@ -69,29 +66,13 @@ export const ToggleHideFilterPopover = ({
 											name="drag_handle"
 											color={tokens.colors.interactive.primary__resting.hex}
 										/>
-									</ItemWrapper>
+									</StyledItemWrapper>
 								))}
 							</ReactSortable>
-						</PopoverList>
+						</StyledPopoverList>
 					</Popover.Content>
 				</Popover>
 			)}
 		</>
 	);
 };
-
-const PopoverList = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-bottom: 20px;
-`;
-
-const ItemWrapper = styled.div`
-	display: grid;
-	grid-template-columns: auto 1fr auto;
-
-	align-items: center;
-	width: 100%;
-	height: 32px;
-`;

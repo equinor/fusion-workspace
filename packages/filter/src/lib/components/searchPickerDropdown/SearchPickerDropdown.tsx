@@ -1,7 +1,7 @@
 import { Menu } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useRef, useState } from 'react';
-import { ClickableIcon } from './ClickableIcon';
+import { ClickableIcon } from '../ClickableIcon';
 
 interface MenuItem {
 	title: string;
@@ -11,6 +11,9 @@ interface SearchPickerDropdownProps {
 	menuItems: MenuItem[];
 }
 
+/**
+ * Free text search filter, choose to search between id/desc or all filters
+ */
 export function SearchPickerDropdown({ menuItems }: SearchPickerDropdownProps): JSX.Element {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isOpen, setIsOpen] = useState(false);

@@ -1,3 +1,8 @@
+/**
+ * Count cache is used by the filter controller to store the counts
+ * Count is reset everytime any filter item changes
+ * Checkbox runs counting on the fly and will commit the count to the cache
+ */
 export class CountCache {
 	countValues = new Map<string, number>();
 

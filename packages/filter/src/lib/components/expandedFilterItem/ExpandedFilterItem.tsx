@@ -1,13 +1,13 @@
 import { Checkbox } from '@equinor/eds-core-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterGroup, FilterValueType, ValueFormatterFunction } from '../../types';
 import { DEFAULT_NULL_VALUE } from '../../utils/convertFromBlank';
-import { Count, FilterItemName, FilterItemWrap } from '../filterItem/filterItem.styles';
+import { StyledCount, StyledFilterItemName, StyledFilterItemWrap } from '../filterItem/filterItem.styles';
 
 const sanitizeFilterItemName = (value: FilterValueType) => value?.toString() ?? DEFAULT_NULL_VALUE;
 
-type FilterItemValueProps = {
+type ExpandedFilterItemValueProps = {
 	virtualRowStart: number;
 	virtualRowSize: number;
 	filterItem: FilterValueType;
@@ -16,14 +16,14 @@ type FilterItemValueProps = {
 	CustomRender?: (value: FilterValueType) => JSX.Element;
 };
 
-export const FilterItem = ({
+export const ExpandedFilterItem = ({
 	virtualRowStart,
 	virtualRowSize,
 	filterItem,
 	filterGroup,
 	valueFormatter,
 	CustomRender = (value) => <>{sanitizeFilterItemName(value)}</>,
-}: FilterItemValueProps): JSX.Element => {
+}: ExpandedFilterItemValueProps): JSX.Element => {
 	const {
 		filterStateController: { changeFilterItem, checkValueIsInactive, setFilterState, filterState },
 		getCountForFilterValue,
@@ -37,7 +37,7 @@ export const FilterItem = ({
 	const isUnChecked = checkValueIsInactive(filterGroup.name, filterItem);
 	const count = getCountForFilterValue(filterGroup.name, filterItem);
 	return (
-		<FilterItemWrap
+		<StyledFilterItemWrap
 			title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
 			style={{
 				position: 'absolute',
@@ -54,10 +54,10 @@ export const FilterItem = ({
 					changeFilterItem(isUnChecked ? 'MarkActive' : 'MarkInactive', filterGroup.name, filterItem)
 				}
 			/>
-			<FilterItemName onClick={uncheckAllButThisValue}>{CustomRender(filterItem)}</FilterItemName>
-			{!isUnChecked && <Count>({count})</Count>}
-		</FilterItemWrap>
+			<StyledFilterItemName onClick={uncheckAllButThisValue}>{CustomRender(filterItem)}</StyledFilterItemName>
+			{!isUnChecked && <StyledCount>({count})</StyledCount>}
+		</StyledFilterItemWrap>
 	);
 };
 
-export const FilterItemValue = memo(FilterItem);
+export const FilterItemValue = memo(ExpandedFilterItem);

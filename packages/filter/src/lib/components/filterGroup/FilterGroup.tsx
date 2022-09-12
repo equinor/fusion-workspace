@@ -4,8 +4,9 @@ import { useRef } from 'react';
 
 import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterConfiguration, FilterValueType } from '../../types';
-import { FilterGroupWrapper, NormalText } from './filterGroup.styles';
-import { FilterGroupPopoverMenu } from './FilterGroupPopoverMenu';
+import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
+import { StyledFilterGroupWrapper } from './filterGroup.styles';
+import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
 
 interface FilterGroupProps {
 	name: string;
@@ -51,17 +52,17 @@ export const FilterGroup = <T,>({ name, isOpen, onClick }: FilterGroupProps): JS
 	if (values.length === 0) return <></>;
 	return (
 		<div>
-			<FilterGroupWrapper ref={ref} onClick={onClick}>
+			<StyledFilterGroupWrapper ref={ref} onClick={onClick}>
 				<div>{getFilterHeaderText(isAllChecked, name, checkedValues)}</div>
 				<Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
-			</FilterGroupWrapper>
+			</StyledFilterGroupWrapper>
 			{isOpen && (
 				<FilterGroupPopoverMenu
 					handleFilterItemLabelClick={handleFilterItemLabelClick}
 					handleFilterItemClick={handleFilterItemClick}
 					isChecked={isChecked}
 					markAllValuesActive={() => markAllValuesActive(name)}
-					onClick={onClick}
+					closePopover={onClick}
 					anchorEl={ref.current}
 					values={values}
 					CustomRender={customRender}
@@ -71,19 +72,3 @@ export const FilterGroup = <T,>({ name, isOpen, onClick }: FilterGroupProps): JS
 		</div>
 	);
 };
-
-export function getFilterHeaderText(
-	isAllChecked: boolean,
-	name: string,
-	checkedValues: FilterValueType[]
-): string | JSX.Element {
-	if (isAllChecked || checkedValues.length === 0) return <NormalText>{name}</NormalText>;
-
-	return (
-		<div style={{ color: tokens.colors.interactive.primary__resting.hex }}>
-			{checkedValues.length - 1 > 0
-				? `${checkedValues[0] ?? '(Blank)'}(+${checkedValues.length - 1})`
-				: `${checkedValues[0]}`}{' '}
-		</div>
-	);
-}

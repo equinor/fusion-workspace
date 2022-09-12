@@ -1,15 +1,15 @@
-import { Button, Checkbox } from '@equinor/eds-core-react';
+import { Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const Title = styled.h4<{ hasFilters: boolean }>`
+export const StyledTitle = styled.h4<{ hasFilters: boolean }>`
 	margin: 0.2rem;
 	white-space: nowrap;
 	font-size: 14px;
 	font-weight: ${({ hasFilters }) => (hasFilters ? '700' : '400')};
 `;
 
-export const Wrapper = styled.div`
+export const StyledWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 0rem 0.5rem 0rem 1rem;
@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
 		}
 	}
 `;
-export const VirtualFilterContainer = styled.div`
+export const StyledVirtualFilterContainer = styled.div`
 	height: 100%;
 	width: 100%;
 	overflow: auto;
@@ -51,22 +51,10 @@ export const VirtualFilterContainer = styled.div`
 	}
 `;
 
-export const VirtualFilterItemWrapper = styled.div`
+export const StyledVirtualFilterItemWrapper = styled.div`
 	width: auto;
 	min-width: 150px;
 	position: relative;
-`;
-export const FilterGroupWrapper = styled.div`
-	overflow-x: hidden;
-	overflow-y: scroll;
-
-	::-webkit-scrollbar {
-		height: 0.1rem;
-		width: 0.3rem;
-	}
-`;
-export const FilterItemWrapper = styled.div`
-	padding-bottom: 1rem;
 `;
 
 export const StyledFilterHeaderGroup = styled.div<{ isActive: boolean }>`
@@ -87,24 +75,7 @@ export const StyledFilterHeaderGroup = styled.div<{ isActive: boolean }>`
 	margin-bottom: 5px;
 `;
 
-export const SearchButton = styled(Button)`
+export const StyledSearchButton = styled(Button)`
 	width: 36px;
 	height: 36px;
-`;
-
-export const AllCheckbox = styled(Checkbox)`
-	grid-template-columns: auto 1fr auto;
-	display: grid;
-	max-width: 500px;
-	align-items: center;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	span {
-		font-size: 13px;
-		padding: 0px;
-
-		:first-child {
-			padding-right: 2px;
-		}
-	}
 `;
