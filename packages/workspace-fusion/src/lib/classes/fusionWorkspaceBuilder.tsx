@@ -5,7 +5,6 @@ import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {
-	DataFetchAsync,
 	GridConfig,
 	SidesheetConfig,
 	WorkspaceTabNames,
@@ -14,6 +13,7 @@ import {
 	CustomTab,
 	AppConfig,
 	FusionWorkspaceModule,
+	DataSourceOptions,
 } from '../types';
 import {
 	addCustomTab,
@@ -88,7 +88,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
+	addDataSource = (dataFetch: DataSourceOptions<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
