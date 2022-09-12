@@ -12,6 +12,8 @@ import { FilterController } from '../../classes';
 import { FilterView } from '../filterView/FilterView';
 import { FilterConfiguration } from '../../types';
 import { useOnFilteredDataChanged } from '../../hooks/useOnFilteredDataChanged';
+import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
+import { useFilterContext } from '../../hooks';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -23,6 +25,7 @@ interface QuickFilterProps<T> {
 
 export function QuickFilter<T>({ controller = new FilterController(), groups }: QuickFilterProps<T>): JSX.Element {
 	useOnFilteredDataChanged();
+	const { setIsFilterExpanded } = useFilterContext();
 
 	const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
 	const {
@@ -45,10 +48,10 @@ export function QuickFilter<T>({ controller = new FilterController(), groups }: 
 		groups.filter((s) => !s.defaultHidden).map((s) => s.name)
 	);
 
-	const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+	const isFilterExpanded = useIsFilterExpanded();
 
 	const toggleFilterIsExpanded = () => {
-		setIsFilterExpanded((s) => !s);
+		setIsFilterExpanded(!isFilterExpanded);
 		setFilterGroupOpen(null);
 	};
 

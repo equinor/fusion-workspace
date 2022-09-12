@@ -126,11 +126,11 @@ export class FilterController<TData> {
 		return count;
 	};
 
-	/** Destroys the filter */
-	destroyFilter = () => {
-		this.setData([]);
-		this.setFilteredData([]);
-		this.filterStateController.setFilterState([]);
-		this.setFilterValues([]);
+	/** Call this function when mediator should be destroyed */
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
 	};
 }

@@ -5,15 +5,17 @@ import { FusionMediator, WorkspaceTabNames } from '../types';
 export function addFilter<TData, TError>(
 	config: FilterOptions<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	{ dataService }: FusionMediator<TData, TError>
+	{ dataService, onUnMount }: FusionMediator<TData, TError>
 ) {
 	const filterController = new ReactFilterController<TData>();
+
 	filterController.addGroups(config);
 	filterController.onFilteredDataChanged(dataService.setFilteredData);
 	// eslint-disable-next-line no-param-reassign
 	viewController.filter.FilterComponent = () => <FusionFilter controller={filterController} />;
 	dataService.data && filterController.setData(dataService.data);
 	filterController.init();
+	onUnMount(filterController.destroy);
 	dataService.onDataChange((data) => {
 		filterController.setData(data);
 		filterController.init();
