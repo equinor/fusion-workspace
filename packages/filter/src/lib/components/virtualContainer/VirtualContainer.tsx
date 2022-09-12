@@ -7,7 +7,7 @@ import { searchByValue } from '../../utils/searchByvalue';
 import {
 	StyledVirtualFilterContainer,
 	StyledVirtualFilterItemWrapper,
-} from '../expandedFilterGroup/expandedFilterGroup.styles';
+} from '../sexpandedFilterGroup/expandedFilterGroup.styles';
 import { FilterItemValue } from '../expandedFilterItem/ExpandedFilterItem';
 
 interface VirtualContainerProps {
