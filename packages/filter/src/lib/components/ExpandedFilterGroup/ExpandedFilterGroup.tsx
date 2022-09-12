@@ -112,8 +112,7 @@ interface VirtualContainerProps {
 }
 
 export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
-	const { valueFormatters } = useFilterContext();
-	const filterOptions: FilterConfiguration<unknown>[] = [];
+	const { valueFormatters, groups: filterOptions } = useFilterContext();
 
 	const groupsMatchingSearch = useMemo(
 		() =>

@@ -5,7 +5,7 @@ import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
-import { customTab, gridOptions, sidesheetOptions, statusBar } from './workspaceConfig';
+import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -30,9 +30,19 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				).json();
 			})
 				.addFilter([
-					{ name: 'Comm status', valueFormatter: (pkg) => pkg.commpkgStatus, isQuickFilter: true },
+					{
+						name: 'Comm status',
+						valueFormatter: (pkg) => pkg.commpkgStatus,
+						isQuickFilter: true,
+						customValueRender: RenderStatus,
+					},
 					{ name: 'Comm ', valueFormatter: (pkg) => pkg.commpkgNo, isQuickFilter: true },
-					{ name: 'MC status', valueFormatter: (pkg) => pkg.mcStatus, isQuickFilter: true },
+					{
+						name: 'MC status',
+						valueFormatter: (pkg) => pkg.mcStatus,
+						isQuickFilter: true,
+						customValueRender: RenderStatus,
+					},
 					{
 						name: 'Discipline',
 						valueFormatter: (pkg) => pkg.mcDisciplineCodes,
