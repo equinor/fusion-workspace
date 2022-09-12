@@ -1,11 +1,15 @@
 import { FetchController } from '@workspace/data-source';
-import { DataFetchAsync, FusionMediator } from '../../types';
+import { DataSourceOptions, FusionMediator } from '../../types';
+import { createFetchFunction } from './createFetchFunction';
 
 export function addDataSource<TData, TError>(
-	dataFetch: DataFetchAsync<TData>,
-	{ dataService, setIsLoading, onMount, onUnMount }: FusionMediator<TData, TError>
+	dataFetch: DataSourceOptions<TData>,
+	mediator: FusionMediator<TData, TError>
 ) {
-	const dataSourceController = new FetchController(dataFetch);
+	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
+	const fetchFunction = createFetchFunction(dataFetch, mediator);
+
+	const dataSourceController = new FetchController<TData>(fetchFunction);
 	dataSourceController.onDataChanged(dataService.setData);
 	dataSourceController.onIsLoadingChanged(setIsLoading);
 	onMount(dataSourceController.getDataAsync);
