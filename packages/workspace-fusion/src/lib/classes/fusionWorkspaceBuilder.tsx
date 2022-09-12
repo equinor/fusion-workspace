@@ -14,6 +14,7 @@ import {
 	AppConfig,
 	FusionWorkspaceModule,
 	DataSourceOptions,
+	PowerBiConfig,
 } from '../types';
 import {
 	addCustomTab,
@@ -29,6 +30,7 @@ import {
 	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { addPowerBi } from '../utils/powerBI/addPowerBi';
 
 export interface WorkspaceContext {
 	ui: unknown;
@@ -65,6 +67,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 			}
 		});
 	}
+
+	addPowerBi = (config: PowerBiConfig) => {
+		addPowerBi(config, this.viewController, this.mediator);
+		return this;
+	};
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);

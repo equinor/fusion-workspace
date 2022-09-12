@@ -1,1 +1,1 @@
-export type WorkspaceTabNames = 'grid' | 'garden';
+export type WorkspaceTabNames = 'grid' | 'garden' | 'powerbi';

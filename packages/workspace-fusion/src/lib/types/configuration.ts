@@ -1,3 +1,4 @@
+import { GetPowerBiEmbedConfig } from '@equinor/powerbi';
 import { StatusItem } from '@equinor/status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
@@ -42,3 +43,13 @@ export interface AppConfig<TabNames extends string> {
 	appColor: string;
 	defaultTab: TabNames;
 }
+
+export type PowerBiConfig = {
+	reportUri: string;
+	getConfig: (reportUri: string) => Promise<any>;
+	getToken: (reportUri: string) => Promise<PowerBiToken>;
+};
+
+type PowerBiToken = {
+	token: string;
+};
