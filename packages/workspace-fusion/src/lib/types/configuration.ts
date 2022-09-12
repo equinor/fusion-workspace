@@ -12,7 +12,15 @@ export interface SidesheetConfig<TData> {
 	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
 }
 
-export type DataFetchAsync<TData> = (signal?: AbortSignal) => Promise<TData[]> | TData[];
+export type DataSourceOptions<TData> = {
+	/** Function for getting response object from server */
+	getResponseAsync: (signal?: AbortSignal) => Promise<Response>;
+	/**
+	 * Function for parsing response
+	 * Can be omitted if all you do is .json();
+	 */
+	responseParser?: (response: Response) => TData[] | Promise<TData[]>;
+};
 
 export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 
