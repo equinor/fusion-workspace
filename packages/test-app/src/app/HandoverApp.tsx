@@ -36,7 +36,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 						isQuickFilter: true,
 						customValueRender: RenderStatus,
 					},
-					{ name: 'Comm ', valueFormatter: (pkg) => pkg.commpkgNo, isQuickFilter: true },
+					{ name: 'Comm ', valueFormatter: (pkg) => pkg.commpkgNo },
 					{
 						name: 'MC status',
 						valueFormatter: (pkg) => pkg.mcStatus,
