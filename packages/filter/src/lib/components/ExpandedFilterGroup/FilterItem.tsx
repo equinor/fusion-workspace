@@ -25,14 +25,14 @@ export const FilterItem = ({
 	CustomRender = (value) => <>{sanitizeFilterItemName(value)}</>,
 }: FilterItemValueProps): JSX.Element => {
 	const {
-		filterStateController: { changeFilterItem, checkValueIsInactive },
-		getGroupValues,
+		filterStateController: { changeFilterItem, checkValueIsInactive, setFilterState, filterState },
 		getCountForFilterValue,
 	} = useFilterContext();
 	function uncheckAllButThisValue() {
-		getGroupValues(filterGroup.name).forEach((value) => changeFilterItem('MarkInactive', filterGroup.name, value));
-
-		changeFilterItem('MarkActive', filterGroup.name, filterItem);
+		setFilterState([
+			...filterState.filter((s) => s.name !== filterGroup.name),
+			{ name: filterGroup.name, values: [...filterGroup.values.filter((s) => s !== filterItem)] },
+		]);
 	}
 	const isUnChecked = checkValueIsInactive(filterGroup.name, filterItem);
 	const count = getCountForFilterValue(filterGroup.name, filterItem);
