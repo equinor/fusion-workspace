@@ -66,7 +66,9 @@
 		"react-test-renderer": "18.2.0",
 		"ts-jest": "27.1.4",
 		"ts-node": "~10.8.0",
-		"typescript": "~4.7.2"
+		"typescript": "~4.7.2",
+		"vuepress": "^1.9.7",
+		"vuepress-theme-hope": "^0.0.15"
 	},
 	"workspaces": [
 		"packages/**"
