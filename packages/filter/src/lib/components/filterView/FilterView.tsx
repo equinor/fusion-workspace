@@ -1,6 +1,6 @@
 import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterGroup } from '../../types';
-import { ExpandedFilterGroup } from '../sexpandedFilterGroup/ExpandedFilterGroup';
+import { ExpandedFilterGroup } from '../expandedFilterGroup/ExpandedFilterGroup';
 import { StyledFilterGroups, StyledFilterGroupWrapper, StyledWrapper } from './filterView.styles';
 
 interface FilterViewProps {
