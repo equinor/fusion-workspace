@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
-import { FilterConfiguration, FilterGroup } from '../types';
+import { FilterGroup } from '../types';
 import { useFilterContext } from './useFilterContext';
 
 /** Use filter groups as state */
-export function useFilterGroups<TData>() {
-	const { onFilterValuesGenerated, groups } = useFilterContext();
-	const [filterGroups, setGroups] = useState<FilterConfiguration<TData>[]>();
+export function useFilterGroups() {
+	const { onFilterValuesGenerated, filterGroups } = useFilterContext();
+	const [groups, setGroups] = useState<FilterGroup[]>(filterGroups);
 
 	useEffect(() => {
-		const unsub = onFilterValuesGenerated(() => {
-			setGroups(groups);
+		const unsub = onFilterValuesGenerated((values) => {
+			setGroups(values);
 		});
 		return unsub;
 	}, []);
 
-	return filterGroups;
+	return groups;
 }

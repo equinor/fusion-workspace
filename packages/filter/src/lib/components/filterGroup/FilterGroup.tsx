@@ -3,19 +3,21 @@ import { tokens } from '@equinor/eds-tokens';
 import { useRef } from 'react';
 
 import { useFilterContext } from '../../hooks/useFilterContext';
-import { FilterConfiguration, FilterValueType } from '../../types';
+import { FilterValueType } from '../../types';
 import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
 import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
+import { useFilterGroups } from '../../hooks';
 
 interface FilterGroupProps {
 	name: string;
 	isOpen: boolean;
 	onClick: () => void;
 }
-export const FilterGroup = <T,>({ name, isOpen, onClick }: FilterGroupProps): JSX.Element => {
+export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.Element => {
 	const ref = useRef<HTMLDivElement>(null);
-	const filterOptions: FilterConfiguration<T>[] = [];
+	const groups = useFilterGroups();
+	const { groups: configuration } = useFilterContext();
 
 	const {
 		filterStateController: {
@@ -35,7 +37,7 @@ export const FilterGroup = <T,>({ name, isOpen, onClick }: FilterGroupProps): JS
 			{ name: name, values: getGroupValues(name).filter((s) => s !== val) },
 		]);
 
-	const values = getGroupValues(name);
+	const values = groups.find((s) => s.name === name)?.values ?? [];
 
 	const isChecked = (filterValue: FilterValueType) => checkValueIsInactive(name, filterValue);
 
@@ -47,7 +49,7 @@ export const FilterGroup = <T,>({ name, isOpen, onClick }: FilterGroupProps): JS
 	const checkedValues = values.filter((value) => !getInactiveGroupValues(name).includes(value));
 
 	const customRender =
-		filterOptions.find((s) => s.name === name)?.customValueRender ?? ((v) => <>{v?.toString() ?? '(Blank)'}</>);
+		configuration.find((s) => s.name === name)?.customValueRender ?? ((v) => <>{v?.toString() ?? '(Blank)'}</>);
 
 	if (values.length === 0) return <></>;
 	return (

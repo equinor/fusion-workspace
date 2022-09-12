@@ -16,6 +16,7 @@ import { FilterView } from '../filterView/FilterView';
 import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
 import { useFilterContext, useFilterGroups } from '../../hooks';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
+import { FilterConfiguration } from '../../types';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -25,7 +26,7 @@ interface QuickFilterProps<T> {
 }
 
 export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element {
-	const groups = useFilterGroups() ?? [];
+	const { groups } = useFilterContext();
 	const { setIsFilterExpanded } = useFilterContext();
 	const isFilterExpanded = useIsFilterExpanded();
 
