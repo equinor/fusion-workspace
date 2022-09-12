@@ -29,9 +29,6 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 							{ signal }
 						);
 					},
-					responseParser: async (res) => {
-						return await res.json();
-					},
 				})
 				.addGrid(gridOptions)
 				.addCustomTab(customTab)
