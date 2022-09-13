@@ -1,5 +1,5 @@
 import { OnchangeCallback, Observable } from '@workspace/workspace-core';
-import { IReportEmbedConfiguration } from 'powerbi-client';
+import { IReportEmbedConfiguration, Report } from 'powerbi-client';
 import { GetPowerBiEmbedConfig } from '../types/embedConfig';
 import { Filter } from '../types/filter';
 
@@ -22,6 +22,16 @@ export class PowerBiController {
 
 	onIsReadyChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
+	private cb: OnReportReady[] = [];
+
+	onReportReady = (cb: OnReportReady) => {
+		this.cb.push(cb);
+	};
+
+	reportReady = (report: Report) => {
+		this.cb.forEach((callback) => callback(report));
+	};
+
 	constructor(reportUri: string, getConfig: GetPowerBiEmbedConfig) {
 		this.reportUri = reportUri;
 		this.getConfig = async (uri) => {
@@ -39,3 +49,5 @@ export class PowerBiController {
 		});
 	}
 }
+
+type OnReportReady = (report: Report) => void;

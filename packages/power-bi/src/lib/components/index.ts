@@ -1,1 +1,2 @@
-export * from './PowerBi';
+export { PowerBI } from './PowerBi';
+export { PowerBIFilter } from './Filter/Filter';

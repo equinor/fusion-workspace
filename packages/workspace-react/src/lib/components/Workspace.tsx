@@ -10,7 +10,7 @@ export interface WorkspaceProps<TTabName extends string, TError> {
 export function Workspace<TTabNames extends string, TError>({ controller }: WorkspaceProps<TTabNames, TError>) {
 	useMounted(controller);
 	return (
-		<div>
+		<div style={{ height: '100%', display: 'grid', gridTemplateRows: 'auto 1fr' }}>
 			<ContextProvider controller={controller}>
 				<WorkspaceHeader />
 				<WorkspaceBody />

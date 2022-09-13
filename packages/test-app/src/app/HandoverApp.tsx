@@ -14,10 +14,18 @@ export function HandoverApp() {
 		return createWorkspaceController(client);
 	}, []);
 
-	return <Workspace controller={controller} />;
+	return (
+		<div style={{ height: '100vh' }}>
+			<Workspace controller={controller} />
+		</div>
+	);
 }
 
-const createWorkspaceController = (client: HttpClientMsal) => {
+type Client = {
+	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
+};
+
+const createWorkspaceController = (client: Client) => {
 	return createFusionWorkspace<Handover, unknown>(
 		{ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo },
 		(builder) =>
@@ -63,7 +71,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 	);
 };
 
-async function getEmbedInfo(reportUri: string, client: HttpClientMsal) {
+async function getEmbedInfo(reportUri: string, client: Client) {
 	const embedUri = `https://pro-s-reports-ci.azurewebsites.net/reports/${reportUri}/config/embedinfo`;
 	const response = await client.fetch(embedUri);
 

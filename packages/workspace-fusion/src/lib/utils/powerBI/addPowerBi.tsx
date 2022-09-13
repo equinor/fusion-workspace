@@ -1,6 +1,7 @@
-import { PowerBI, PowerBiController } from '@equinor/powerbi';
+import { PowerBI, PowerBiController, PowerBIFilter } from '@equinor/powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { IReportEmbedConfiguration } from 'powerbi-client';
+import { IReportEmbedConfiguration, Report } from 'powerbi-client';
+import { useEffect, useState } from 'react';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
 
@@ -16,9 +17,29 @@ export function addPowerBi<TData, TError>(
 		HeaderComponent: PowerBiIcon,
 		name: 'powerbi',
 	});
+
+	viewController.filter.FilterComponent = () => <FusionPowerBiFilter controller={controller} />;
+
 	mediator.onMount(() => {
 		controller.getConfig && controller.getConfig(controller.reportUri);
 	});
+}
+
+interface FusionPowerBiFilterProps {
+	controller: PowerBiController;
+}
+function FusionPowerBiFilter({ controller }: FusionPowerBiFilterProps) {
+	const [report, setReport] = useState<Report | null>(null);
+
+	useEffect(() => {
+		controller.onReportReady(setReport);
+	}, []);
+
+	if (!report) {
+		return <div>Loading.....</div>;
+	}
+
+	return <PowerBIFilter isLoaded={true} report={report} />;
 }
 
 async function embedInfo(config: PowerBiConfig): Promise<IReportEmbedConfiguration> {
