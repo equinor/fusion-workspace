@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - main
+            - doc/add-docs
         paths:
             - 'docs/**'
 
@@ -16,7 +16,7 @@ jobs:
             - uses: devmasx/merge-branch@v1.3.1
               with:
                   type: now
-                  from_branch: main
+                  from_branch: doc/add-docs
                   target_branch: docs
                   github_token: ${{ github.token }}
 
@@ -25,7 +25,7 @@ jobs:
         needs: merge
         defaults:
             run:
-                working-directory: vue-press
+                working-directory: docs
 
         steps:
             - name: Checkout docs
@@ -53,6 +53,6 @@ jobs:
               run: |
                   cd ..
                   echo "!docs-dist/" >> .gitignore
-                  git add docs-dist
-                  git commit -m'updated fusion workspace docs'
+                  git add .gitignore
+                  git commit -m 'updated fusion workspace docs'
                   git push --force
