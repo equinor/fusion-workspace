@@ -5,7 +5,7 @@ on:
         branches:
             - doc/add-docs
         paths:
-            - 'docs/**'
+            - 'documentation/**'
 
 jobs:
     merge:
@@ -24,7 +24,7 @@ jobs:
         needs: merge
         defaults:
             run:
-                working-directory: docs
+                working-directory: documentation
 
         steps:
             - name: Checkout docs
@@ -43,7 +43,7 @@ jobs:
             - name: Build project
               run: |
                   yarn docs:build
-                  touch ../docs-dist/.nojekyll
+                  touch ../docs/.nojekyll
 
             - name: Config git user
               run: |
@@ -53,7 +53,7 @@ jobs:
             - name: Commit changes
               run: |
                   cd ..
-                  echo "!docs-dist/" >> .gitignore
+                  echo "!docs/" >> .gitignore
                   git add docs
                   git commit -m'docs: updated docs'
                   git push --force
