@@ -1,6 +1,6 @@
 # Fusion Workspace
 
-<p style="text-align: left;"><img src="./documentation/images/logo.png" width="350"></p>
+<p style="text-align: left;"><img src="./documentation/src/.vuepress/public/fusion.png" width="350"></p>
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
@@ -20,18 +20,18 @@ These capabilities include generating applications, libraries, etc as well as th
 
 Below are our core plugins:
 
--   [React](https://reactjs.org)
-    -   `npm install --save-dev @nrwl/react`
--   Web (no framework frontends)
-    -   `npm install --save-dev @nrwl/web`
--   [Angular](https://angular.io)
-    -   `npm install --save-dev @nrwl/angular`
--   [Nest](https://nestjs.com)
-    -   `npm install --save-dev @nrwl/nest`
--   [Express](https://expressjs.com)
-    -   `npm install --save-dev @nrwl/express`
--   [Node](https://nodejs.org)
-    -   `npm install --save-dev @nrwl/node`
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 
