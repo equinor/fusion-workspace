@@ -4,8 +4,9 @@
   "description": "Fusion workspace documentation",
   "scripts": {
     "docs:dev": "vuepress dev src",
-    "docs:build": "vuepress build dist"
+    "docs:build": "vuepress build src -d ../docs-dist"
   },
+  "dependencies": {},
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
     "@vuepress/bundler-vite": "^2.0.0-beta.51",

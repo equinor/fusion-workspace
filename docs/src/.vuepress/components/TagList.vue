@@ -21,8 +21,7 @@ export default {
 	computed: {
 		tags() {
 			let tags = {};
-			console.log(this.$pages);
-			for (let page of this.$nav.pages) {
+			for (let page of this.$site.pages) {
 				for (let index in page.frontmatter.tags) {
 					const tag = page.frontmatter.tags[index];
 					if (tag in tags) {

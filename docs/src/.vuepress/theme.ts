@@ -5,7 +5,7 @@ export default hopeTheme({
 	repo: 'equinor/fusion-workspace',
 	hostname: '#',
 	docsBranch: 'main',
-	docsDir: 'vue-press/src',
+	docsDir: 'docs/src',
 	darkmode: 'auto',
 	themeColor: {
 		default: 'red',
