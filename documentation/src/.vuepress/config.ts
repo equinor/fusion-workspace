@@ -4,10 +4,10 @@ export default hope.config({
 	base: '/fusion-workspace/',
 	title: 'Fusion Workspace',
 	description:
-		'Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.',
+		'Fusion Workspace is a libraries built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.',
 	themeConfig: {
 		logo: '/fusion.png',
-		repo: 'workspace',
+		repo: 'equinor/fusion-workspace',
 		docsBranch: 'main',
 		editLinks: true,
 		docsDir: 'docs/src',
@@ -37,7 +37,6 @@ export default hope.config({
 					{
 						title: 'Workspace Core',
 						path: '/packages/workspace-core',
-						collapsable: false,
 						children: [
 							'/packages/workspace-core/mediator',
 							'/packages/workspace-core/services',
@@ -54,7 +53,6 @@ export default hope.config({
 				children: [
 					{
 						title: 'Workspace Core',
-						collapsable: false,
 						children: [
 							'/spec/workspace-core/controller',
 							'/spec/workspace-core/mediator',
@@ -63,22 +61,18 @@ export default hope.config({
 					},
 					{
 						title: 'Workspace React',
-						collapsable: false,
 						children: ['/spec/workspace-react/widgets', '/spec/workspace-react/wrapper'],
 					},
 					{
 						title: 'Workspace Fusion',
-						collapsable: false,
 						children: ['/spec/workspace-fusion/framework'],
 					},
 					{
 						title: 'Workspace App',
-						collapsable: false,
 						children: ['/spec/workspace-app/apps'],
 					},
 					{
 						title: 'Data Source',
-						collapsable: false,
 						children: ['/spec/data-source/controller'],
 					},
 				],

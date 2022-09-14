@@ -3,17 +3,14 @@ home: true
 heroImage: /fusion.png
 action:
     - text: 🚀 Quick Start
-      link: /home/
-    - text: 📚 Tech Spec
-      link: /tech-spec/
-    - text: 📚 Projects
-      link: /projects/
+      link: /quick-start/
+    - text: 📚 Technical Specification
+      link: /spec/
+    - text: 📚 Packages
+      link: /packages/
 features:
-    - title: 🧬 Modules
-      details: Compose what you need
-      link: /modules/
     - title: ⚛️ React
-      details: Tooling for developing with React
+      details: Tooling for developing Fusion Workspace with React
     - title: ✍️ TypeScript
       details: Written in TypeScript
     - title: 📄 TypeDoc

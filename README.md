@@ -4,16 +4,7 @@
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
-| Core Pages                                                          | Description                                                                                                     |
-| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| [Intro](./documentation/Readme.md)                                  | Fusion Workspace v1.0.0 - CC workspace v2.0                                                                     |
-| [Workspace Controller](./documentation/WorkspaceController.md)      | Core component in a workspace, a pure JS library.                                                               |
-| [Workspace React Wrapper](./documentation/WorkspaceReactWrapper.md) | Wrapper for the Workspace Controller                                                                            |
-| [Fusion Workspace](./documentation/FusionWorkspaceFramework.md)     | A simplified way to create a workspace Bootstrapped with view components utilizing the Workspace React Wrapper. |
-| [Fusion Workspace App](./documentation/FusionWorkspaceApp.md)       | How a app is created.                                                                                           |
-| **Other Pages**                                                     |
-
-[Workspace Specification / Feature List](./documentation/WorkspaceProjectFeatureList.md)
+This projects documentation and specification can be found here [Fusion-Workspace](https://equinor.github.io/fusion-workspace/).
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -29,18 +20,18 @@ These capabilities include generating applications, libraries, etc as well as th
 
 Below are our core plugins:
 
--   [React](https://reactjs.org)
-    -   `npm install --save-dev @nrwl/react`
--   Web (no framework frontends)
-    -   `npm install --save-dev @nrwl/web`
--   [Angular](https://angular.io)
-    -   `npm install --save-dev @nrwl/angular`
--   [Nest](https://nestjs.com)
-    -   `npm install --save-dev @nrwl/nest`
--   [Express](https://expressjs.com)
-    -   `npm install --save-dev @nrwl/express`
--   [Node](https://nodejs.org)
-    -   `npm install --save-dev @nrwl/node`
+- [React](https://reactjs.org)
+  - `npm install --save-dev @nrwl/react`
+- Web (no framework frontends)
+  - `npm install --save-dev @nrwl/web`
+- [Angular](https://angular.io)
+  - `npm install --save-dev @nrwl/angular`
+- [Nest](https://nestjs.com)
+  - `npm install --save-dev @nrwl/nest`
+- [Express](https://expressjs.com)
+  - `npm install --save-dev @nrwl/express`
+- [Node](https://nodejs.org)
+  - `npm install --save-dev @nrwl/node`
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 
