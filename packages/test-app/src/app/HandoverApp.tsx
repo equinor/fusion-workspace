@@ -66,7 +66,7 @@ const createWorkspaceController = (client: Client) => {
 					mediator.onMount(() => console.log('App mounted'));
 					mediator.onUnMount(() => console.log('App unmounted'));
 				})
-				.addStatusBarItems(statusBar)
+				// .addStatusBarItems(statusBar)
 				.addModules([IndexedDbModule])
 	);
 };

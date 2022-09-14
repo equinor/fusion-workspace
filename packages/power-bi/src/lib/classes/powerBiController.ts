@@ -1,12 +1,15 @@
 import { OnchangeCallback, Observable } from '@workspace/workspace-core';
-import { IReportEmbedConfiguration, Report } from 'powerbi-client';
+import { IReportEmbedConfiguration, Page, Report } from 'powerbi-client';
+import { ICustomEvent } from 'service';
 import { GetPowerBiEmbedConfig } from '../types/embedConfig';
 import { Filter } from '../types/filter';
 
 export class PowerBiController {
-	pageId?: string;
+	activePage?: Page;
 
-	pageTitle?: string;
+	private setActivePage: (value: Page) => void;
+
+	onActivePageChanged: (callback: OnchangeCallback<Page>) => () => void;
 
 	reportUri: string;
 
@@ -29,6 +32,9 @@ export class PowerBiController {
 	};
 
 	reportReady = (report: Report) => {
+		report.on('pageChanged', (page: ICustomEvent<any>) => {
+			this.setActivePage(page.detail.newPage);
+		});
 		this.cb.forEach((callback) => callback(report));
 	};
 
@@ -46,6 +52,13 @@ export class PowerBiController {
 		this.onIsReadyChanged = onchange;
 		onchange((val) => {
 			this.isReady = val;
+		});
+
+		const page = new Observable<Page>();
+		this.onActivePageChanged = page.onchange;
+		this.setActivePage = page.setValue;
+		page.onchange((val) => {
+			this.activePage = val;
 		});
 	}
 }
