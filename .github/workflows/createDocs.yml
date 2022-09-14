@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - doc/add-docs
+            - main
         paths:
             - 'docs/**'
 
@@ -16,7 +16,7 @@ jobs:
             - uses: devmasx/merge-branch@v1.3.1
               with:
                   type: now
-                  from_branch: doc/add-docs
+                  from_branch: main
                   target_branch: docs
                   github_token: ${{ github.token }}
 
