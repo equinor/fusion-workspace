@@ -1,7 +1,7 @@
 import hope from 'vuepress-theme-hope';
 
 export default hope.config({
-	base: '/',
+	base: '/fusion-workspace/',
 	title: 'Fusion Workspace',
 	description:
 		'Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.',
