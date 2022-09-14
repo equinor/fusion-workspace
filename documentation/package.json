@@ -4,7 +4,7 @@
   "description": "Fusion workspace documentation",
   "scripts": {
     "docs:dev": "vuepress dev src",
-    "docs:build": "vuepress build src -d ../docs-dist"
+    "docs:build": "vuepress build src -d ../docs"
   },
   "dependencies": {},
   "devDependencies": {
