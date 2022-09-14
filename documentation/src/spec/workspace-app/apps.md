@@ -1,6 +1,9 @@
-# Fusion Workspace App
-
-[<< BACK](/README.md)
+---
+title: Fusion Workspace App
+category: workspace-apps-spec
+tags:
+    - apps
+---
 
 > A Fusion Workspace app is created easy. This is not a tutorial or incept explanation on how to create a fusion Workspace but a document explaining the concept of the Workspace apps. Mocked code examples will supply clarity.
 

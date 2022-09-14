@@ -19,8 +19,8 @@ export default hope.config({
 				link: '/packages/',
 			},
 			{
-				text: 'Tech-Spec',
-				link: '/tech-spec/',
+				text: 'Technical Specification',
+				link: '/spec/',
 			},
 			{
 				text: 'Tags',
@@ -31,7 +31,8 @@ export default hope.config({
 			{
 				title: 'Packages',
 				path: '/packages/',
-				collapsable: true,
+				collapsable: false,
+				sidebarDepth: 3,
 				children: [
 					{
 						title: 'Workspace Core',
@@ -47,9 +48,40 @@ export default hope.config({
 			},
 			{
 				title: 'Technical Specification',
-				path: '/tech-spec/',
-				collapsable: true,
-				children: ['/tech-spec/workspace-core'],
+				path: '/spec/',
+				collapsable: false,
+				sidebarDepth: 3,
+				children: [
+					{
+						title: 'Workspace Core',
+						collapsable: false,
+						children: [
+							'/spec/workspace-core/controller',
+							'/spec/workspace-core/mediator',
+							'/spec/workspace-core/services',
+						],
+					},
+					{
+						title: 'Workspace React',
+						collapsable: false,
+						children: ['/spec/workspace-react/widgets', '/spec/workspace-react/wrapper'],
+					},
+					{
+						title: 'Workspace Fusion',
+						collapsable: false,
+						children: ['/spec/workspace-fusion/framework'],
+					},
+					{
+						title: 'Workspace App',
+						collapsable: false,
+						children: ['/spec/workspace-app/apps'],
+					},
+					{
+						title: 'Data Source',
+						collapsable: false,
+						children: ['/spec/data-source/controller'],
+					},
+				],
 			},
 		],
 
@@ -57,6 +89,7 @@ export default hope.config({
 			mermaid: true,
 			codegroup: true,
 			container: true,
+			tasklist: true,
 			presentation: {
 				plugins: ['highlight', 'math', 'search', 'notes', 'zoom', 'anything', 'audio', 'chalkboard'],
 			},

@@ -1,4 +1,9 @@
-# Data Source Controllers
+---
+title: Data Source Controllers
+category: data-source-spec
+tags:
+    - data source
+---
 
 A data source controller handles the first load of the data for the workspace. A workspace can handle any data Array, the default Data source controller handles fetch calls and parses the response by default or with the optional `responseParser`. Default DataSource interface can be seen below.
 
