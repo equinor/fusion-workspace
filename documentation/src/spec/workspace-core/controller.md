@@ -1,6 +1,11 @@
-# Workspace Controller
+---
+title: Workspace Controller
+category: workspace-core-spec
+tags:
+    - controller
+---
 
-[<< BACK](/README.md)
+This may be outdated and will need refinement.
 
 The workspace controller is a common hub for all controllers. The idea is for the workspace controller to be pure JS/TS and not be dependent on any JS framework. The Workspace controller will consist of the following.
 
