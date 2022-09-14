@@ -10,7 +10,6 @@ tags:
     - click
 ---
 
-
 ## Services
 
 ### Observable
@@ -52,8 +51,8 @@ A workspace on its own will not have functionality for handling errors. The Erro
 
 The `errorService` is in charge of centralizing all error in a workspace. It should have pan event for when errors occur and away of throwing errors.
 
-- ThrowError
-- onError
+-   ThrowError
+-   onError
 
 ### Url Service
 
