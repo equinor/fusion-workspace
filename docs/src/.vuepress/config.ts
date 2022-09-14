@@ -43,6 +43,11 @@ export default hope.config({
 					},
 				],
 			},
+			{
+				title: 'Technical Specification',
+				path: '/tech-spec/',
+				children: ['/tech-spec/workspace-core'],
+			},
 		],
 
 		mdEnhance: {
