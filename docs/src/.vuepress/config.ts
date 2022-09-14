@@ -1,23 +1,57 @@
-import { searchPlugin } from '@vuepress/plugin-search';
-import { defineUserConfig } from 'vuepress';
-import theme from './theme';
+import hope from 'vuepress-theme-hope';
 
-import { registerComponentsPlugin } from '@vuepress/plugin-register-components';
-import { getDirname, path } from '@vuepress/utils';
-
-const __dirname = getDirname(import.meta.url);
-
-export default defineUserConfig({
+export default hope.config({
+	base: '/',
 	title: 'Fusion Workspace',
 	description:
 		'Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.',
-	theme,
-	plugins: [
-		searchPlugin(),
-		registerComponentsPlugin({
-			components: {
-				ModuleBadge: path.resolve(__dirname, './components/ModuleBadge.vue'),
+	themeConfig: {
+		logo: '/fusion.png',
+		repo: 'workspace',
+		docsBranch: 'main',
+		editLinks: true,
+		docsDir: 'docs/src',
+		darkmode: 'auto-switch',
+		comment: false,
+		nav: [
+			{
+				text: 'Packages',
+				link: '/packages/',
 			},
-		}),
-	],
+			{
+				text: 'Tech-Spec',
+				link: '/tech-spec/',
+			},
+			{
+				text: 'Tags',
+				link: '/tag/',
+			},
+		],
+		sidebar: [
+			{
+				title: 'Packages',
+				path: '/packages/',
+				children: [
+					{
+						title: 'Workspace Core',
+						path: '/packages/workspace-core',
+						children: [
+							'/packages/workspace-core/mediator',
+							'/packages/workspace-core/services',
+							'/packages/workspace-core/observable',
+						],
+					},
+				],
+			},
+		],
+
+		mdEnhance: {
+			mermaid: true,
+			codegroup: true,
+			container: true,
+			presentation: {
+				plugins: ['highlight', 'math', 'search', 'notes', 'zoom', 'anything', 'audio', 'chalkboard'],
+			},
+		},
+	},
 });
