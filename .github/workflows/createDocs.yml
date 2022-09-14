@@ -42,7 +42,7 @@ jobs:
 
             - name: Build project
               run: |
-                  yarn build
+                  yarn docs:build
                   touch ../docs-dist/.nojekyll
 
             - name: Config git user
