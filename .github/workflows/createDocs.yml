@@ -43,7 +43,7 @@ jobs:
             - name: Build project
               run: |
                   yarn build
-                  touch ../docs/.nojekyll
+                  touch ../docs-dist/.nojekyll
 
             - name: Config git user
               run: |
@@ -53,7 +53,7 @@ jobs:
             - name: Commit changes
               run: |
                   cd ..
-                  echo "!docs/" >> .gitignore
+                  echo "!docs-dist/" >> .gitignore
                   git add docs
                   git commit -m'docs: updated docs'
                   git push --force
