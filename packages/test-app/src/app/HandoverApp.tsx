@@ -20,15 +20,16 @@ export function HandoverApp() {
 const createWorkspaceController = (client: HttpClientMsal) => {
 	return createFusionWorkspace<Handover, unknown>(
 		{ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo },
-		({ addDataSource }) =>
-			addDataSource(async (signal) => {
-				return await (
-					await client.fetch(
-						'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
-						{ signal }
-					)
-				).json();
-			})
+		(builder) =>
+			builder
+				.addDataSource({
+					getResponseAsync: async (signal) => {
+						return await client.fetch(
+							'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
+							{ signal }
+						);
+					},
+				})
 				.addGrid(gridOptions)
 				.addCustomTab(customTab)
 				.addConfig({
