@@ -2,11 +2,11 @@
 
 We are thinking about using...
 
-- Api proxy på Verdaccio
-- Noe kan gå
+-   Api proxy på Verdaccio
+-   Noe kan gå
 
 ## Purposed
 
-- Npm
-- Verdaccio
-- Api
+-   Npm
+-   Verdaccio
+-   Api
