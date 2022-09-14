@@ -31,10 +31,12 @@ export default hope.config({
 			{
 				title: 'Packages',
 				path: '/packages/',
+				collapsable: true,
 				children: [
 					{
 						title: 'Workspace Core',
 						path: '/packages/workspace-core',
+						collapsable: false,
 						children: [
 							'/packages/workspace-core/mediator',
 							'/packages/workspace-core/services',
@@ -46,6 +48,7 @@ export default hope.config({
 			{
 				title: 'Technical Specification',
 				path: '/tech-spec/',
+				collapsable: true,
 				children: ['/tech-spec/workspace-core'],
 			},
 		],
