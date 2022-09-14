@@ -1,13 +1,11 @@
 name: Generate Docs
-
 on:
-    workflow_dispatch:
+    pull_request:
     push:
         branches:
             - doc/add-docs
         paths:
             - 'docs/**'
-
 jobs:
     merge:
         runs-on: ubuntu-latest
