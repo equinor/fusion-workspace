@@ -20,6 +20,3 @@ features:
       details: Documentation with IntelliSense
 footer: Made by Fusion with ❤️
 ---
-
-
-
