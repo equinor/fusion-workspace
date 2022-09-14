@@ -2,5 +2,5 @@
 
 /dist
 /coverage
-/docs/package.json
-/docs/package-lock.json
+/documentation/package.json
+/documentation/package-lock.json
