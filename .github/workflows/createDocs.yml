@@ -53,6 +53,6 @@ jobs:
               run: |
                   cd ..
                   echo "!docs-dist/" >> .gitignore
-                  git add .gitignore
+                  git add docs-dist
                   git commit -m 'updated fusion workspace docs'
                   git push --force
