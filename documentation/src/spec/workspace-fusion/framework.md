@@ -11,16 +11,16 @@ Fusion workspace framework, speeding up the development of workspace apps. Allow
 
 Views will include
 
-- Grid View (Ag Grids)
-- Table View (React table)
-- Garden View
-- Power-Bi View
+-   Grid View (Ag Grids)
+-   Table View (React table)
+-   Garden View
+-   Power-Bi View
 
 Possible future Views
 
-- Tree View (Core component in garden view)
-- Gantt View (New Functionality / view)
-- Analytics View (New Functionality / view)
+-   Tree View (Core component in garden view)
+-   Gantt View (New Functionality / view)
+-   Analytics View (New Functionality / view)
 
 ```TS
 function workspaceSetup (ws: FusionWorkspaceFramework) {
