@@ -26,3 +26,4 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 -   [ ] My code is easy to read.
 -   [ ] Documentation and comments is added where needed.
 -   [ ] My code is covered by tests.
+-   [ ] UX has reviewed relevant UI contributions.
