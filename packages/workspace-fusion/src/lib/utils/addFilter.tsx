@@ -1,4 +1,4 @@
-import { Filter, FilterContextProvider, FilterOptions, ReactFilterController } from '@equinor/filter';
+import { FilterContextProvider, FilterOptions, ReactFilterController } from '@equinor/filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceTabNames } from '../types';
 
@@ -11,8 +11,10 @@ export function addFilter<TData, TError>(
 
 	filterController.addGroups(config);
 	filterController.onFilteredDataChanged(dataService.setFilteredData);
-	// eslint-disable-next-line no-param-reassign
-	viewController.filter.FilterComponent = () => <FusionFilter controller={filterController} />;
+
+	viewController.addProvider(({ children }) => (
+		<FilterContextProvider controller={filterController}>{children}</FilterContextProvider>
+	));
 	dataService.data && filterController.setData(dataService.data);
 	filterController.init();
 	onUnMount(filterController.destroy);
@@ -20,16 +22,4 @@ export function addFilter<TData, TError>(
 		filterController.setData(data);
 		filterController.init();
 	});
-}
-
-interface FusionFilterProps<TData> {
-	controller: ReactFilterController<TData>;
-}
-
-function FusionFilter<TData>({ controller }: FusionFilterProps<TData>) {
-	return (
-		<FilterContextProvider controller={controller}>
-			<Filter />
-		</FilterContextProvider>
-	);
 }

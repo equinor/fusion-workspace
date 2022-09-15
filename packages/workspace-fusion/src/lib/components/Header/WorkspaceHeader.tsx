@@ -1,11 +1,11 @@
-import { useStatusBar } from '../../utils/statusBar/addStatusBar';
+import { Filter } from '@equinor/filter';
 import { ActionBar } from './ActionBar';
 
 export function WorkspaceHeader() {
 	return (
 		<div>
 			<ActionBar />
-			<div>Am a filter</div>
+			<Filter />
 		</div>
 	);
 }
