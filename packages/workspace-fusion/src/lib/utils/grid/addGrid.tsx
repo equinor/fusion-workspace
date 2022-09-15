@@ -1,7 +1,5 @@
-import { tokens } from '@equinor/eds-tokens';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
-import styled from 'styled-components';
 import { WorkspaceHeader } from '../../components/Header/WorkspaceHeader';
 import { GridIcon as HeaderComponent } from '../../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
