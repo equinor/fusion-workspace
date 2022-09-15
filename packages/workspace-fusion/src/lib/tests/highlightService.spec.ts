@@ -25,7 +25,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 			data: [],
 			initialGrouping: { horizontalGroupingAccessor: '', verticalGroupingKeys: [] },
 			nodeLabelCallback: (s) => s.id,
-			objectIdentifier: 'id',
+			getIdentifier: (s) => s.id,
 			clickEvents: {},
 		});
 		configureGardenHighlightSelection(controller, mediator);
@@ -43,7 +43,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 			ObjectType<unknown>
 		>();
 
-		const gridController = new GridController<MockData>('id');
+		const gridController = new GridController<MockData>((s) => s.id);
 
 		configureGridHighlight(gridController, mediator);
 		expect(gridController.selectedNodes.value?.length).toStrictEqual(0);
