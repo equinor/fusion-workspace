@@ -1,0 +1,25 @@
+name: Dependabot Check
+on: pull_request
+
+jobs:
+    dependabot:
+        runs-on: ubuntu-latest
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Setup node
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16'
+
+            - name: Install Node Dependencies
+              run: npm install
+
+            - name: Build packages
+              run: npx nx affected:build --base=remotes/origin/main
+
+            - name: Test packages
+              run: npx nx affected:test --base=remotes/origin/main

@@ -5,7 +5,9 @@ export class FilterController {
 	FilterComponent?: () => JSX.Element;
 
 	isFilterOpen: boolean;
+
 	setIsFilterOpen: (value: boolean) => void;
+
 	onFilterStateChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	constructor() {
@@ -13,6 +15,8 @@ export class FilterController {
 		this.setIsFilterOpen = filter.setValue;
 		this.onFilterStateChanged = filter.onchange;
 		this.isFilterOpen = Boolean(filter.value);
-		filter.onchange((val) => (this.isFilterOpen = val));
+		filter.onchange((val) => {
+			this.isFilterOpen = val;
+		});
 	}
 }

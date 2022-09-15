@@ -1,0 +1,15 @@
+{
+  "name": "fusion-workspace-docs",
+  "version": "0.0.1",
+  "description": "Fusion workspace documentation",
+  "scripts": {
+    "docs:dev": "vuepress dev src",
+    "docs:build": "vuepress build src -d ../docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.8.2",
+    "vuepress": "^1.9.7",
+    "vuepress-theme-hope": "^1.30.0"
+  }
+}
