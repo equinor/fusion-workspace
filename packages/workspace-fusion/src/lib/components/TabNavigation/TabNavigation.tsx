@@ -7,7 +7,11 @@ export function TabNavigation() {
 	return (
 		<TabButtonList>
 			{tabs.tabs.map((tab) => (
-				<TabButton isActive={activeTab?.name === tab.name} onClick={() => tabs.setActiveTab(tab.name)}>
+				<TabButton
+					key={tab.name}
+					isActive={activeTab?.name === tab.name}
+					onClick={() => tabs.setActiveTab(tab.name)}
+				>
 					<tab.TabIcon />
 				</TabButton>
 			))}
