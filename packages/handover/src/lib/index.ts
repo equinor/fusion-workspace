@@ -1,1 +1,1 @@
-export * from './App';
+export { FusionApp } from './components';
