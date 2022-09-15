@@ -1,6 +1,5 @@
 import { Observable } from '@workspace/workspace-core';
 import { Provider } from '../types';
-import { FilterController } from './filterController';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
@@ -15,18 +14,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
 
-	filter = new FilterController();
-
-	tabs = new TabController<TTabNames>();
+	tabController = new TabController<TTabNames>();
 
 	providers: Provider[] = [];
 
 	addProvider = (provider: Provider) => {
 		this.providers.push(provider);
-	};
-
-	addStatusBarComponent = (comp: Component) => {
-		this.StatusBarComponent = comp;
 	};
 
 	addSidesheetComponent = (comp: Component) => {
@@ -35,9 +28,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	/** Component for handling errors */
 	ErrorComponent?: (error: TError) => JSX.Element;
-
-	/** Status bar component to be shown in left side of header */
-	StatusBarComponent?: () => JSX.Element;
 
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
