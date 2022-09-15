@@ -21,7 +21,6 @@ export default defineConfig({
 			'@workspace/data-source': path.resolve(__dirname, '../data-source/src/index.ts'),
 			'@workspace/grid': path.resolve(__dirname, '../ag-grid/src/index.ts'),
 			'@workspace/power-bi': path.resolve(__dirname, '../power-bi/src/index.ts'),
-			'@workspace/table': path.resolve(__dirname, '../table/src/index.ts'),
 			'@workspace/workspace-core': path.resolve(__dirname, '../workspace-core/src/index.ts'),
 			'@equinor/filter': path.resolve(__dirname, '../filter/src/index.ts'),
 		},

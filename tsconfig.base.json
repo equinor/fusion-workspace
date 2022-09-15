@@ -25,7 +25,6 @@
 			"@workspace/data-source": ["packages/data-source/src/index.ts"],
 			"@workspace/grid": ["packages/ag-grid/src/index.ts"],
 			"@workspace/power-bi": ["packages/power-bi/src/index.ts"],
-			"@workspace/table": ["packages/table/src/index.ts"],
 			"@workspace/workspace-core": ["packages/workspace-core/src/index.ts"],
 			"@equinor/filter": ["packages/filter/src/index.ts"]
 		},

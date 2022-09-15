@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FusionApp } from './lib';
 import { Framework } from './lib/components/FusionFramework';
-import { HandoverApp } from './lib/components/HandoverApp';
-import { TestApp } from './lib/components/TestApp';
 
 const Wrapper = styled.div`
 	display: flex;
