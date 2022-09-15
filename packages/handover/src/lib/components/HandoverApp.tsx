@@ -28,6 +28,10 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 							'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
 							{ signal }
 						),
+					// responseParser: async (res) => {
+					// 	const data = await res.json();
+					// 	return data.concat(data).concat(data);
+					// },
 				})
 				.addFilter([
 					{
