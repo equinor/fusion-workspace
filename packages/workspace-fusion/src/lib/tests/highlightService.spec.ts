@@ -12,13 +12,6 @@ interface MockData {
 	id: string;
 }
 
-/** @equinor/fusion-ag-grid-addons needs this */
-jest.mock('@equinor/fusion-react-ag-grid-addons', () => ({
-	__esModule: true, // this property makes it work
-	default: 'mockedDefaultExport',
-	namedExport: jest.fn(),
-}));
-
 describe('Highlight service should highlight remove highlight in all its integrated components', () => {
 	it('Setting highlighted on the mediator should also set it on the garden', () => {
 		const mediator = new WorkspaceReactMediator<
