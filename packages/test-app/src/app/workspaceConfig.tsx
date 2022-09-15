@@ -46,7 +46,7 @@ export const gridOptions: GridConfig<Handover> = {
 
 export const customTab = {
 	Component: CustomTab,
-	HeaderComponent: () => <div>Custom tab</div>,
+	TabIcon: () => <div>Custom tab</div>,
 	name: 'Lines',
 };
 

@@ -1,4 +1,5 @@
 import { Observable } from '@workspace/workspace-core';
+import { Provider } from '../types';
 import { FilterController } from './filterController';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
@@ -17,6 +18,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	filter = new FilterController();
 
 	tabs = new TabController<TTabNames>();
+
+	providers: Provider[] = [];
+
+	addProvider = (provider: Provider) => {
+		this.providers.push(provider);
+	};
 
 	addStatusBarComponent = (comp: Component) => {
 		this.StatusBarComponent = comp;

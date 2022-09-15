@@ -7,6 +7,7 @@ import { configureBookmarkService } from './configureBookmarkService';
 import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';
 import { configureGardenHighlightSelection } from './configureHighlight';
+import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
 
 export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TError>(
 	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
@@ -24,6 +25,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	viewController.tabs.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',
-		HeaderComponent: GardenIcon,
+		TabIcon: GardenIcon,
+		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
 	});
 }

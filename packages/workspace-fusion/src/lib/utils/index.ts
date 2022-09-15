@@ -4,7 +4,7 @@ export * from './garden';
 export * from './grid';
 export * from './sidesheet';
 export * from './statusBar';
-export * from './addFilter';
+export * from './filter';
 export * from './addCustomTab';
 export * from './createFusionWorkspace';
 export * from './addConfig';
