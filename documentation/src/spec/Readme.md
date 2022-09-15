@@ -1,6 +1,24 @@
-# Workspace Project Feature List
+# Technical Specification
 
-[<< BACK](/README.md)
+This is the technical specification section of the project `Fusion Workspace`.
+
+## Fusion Workspace v1.0.0
+
+## Pre work and speck
+
+-   [x] Workspace Workshop (Done)
+-   [x] Workspace Controller - v0.1
+-   [x] WorkspaceProjectFeatureList - v0.1
+-   [x] WorkspaceReactWrapper - v0.1
+-   [x] FusionWorkspaceApp - v0.1
+
+> This is a speck document for the `Fusion Project Portal 1.0.0v` based on proof-of-concept `Johan Castberg Portal`. This is just an assumption of a hi level scope for the project to come, only to verify the initial thoughts.
+
+The work required to scale can be split into three parts. Work related to the workspace and the components it relies on, the Project Portal, and the conversion of `Castberg` apps to be fusion powered and ready for scale.
+
+These document will focus on the workspace section of the pre-work.
+
+## Workspace Project Feature List
 
 Initial feature list for `Fusion workspace` project. Work item identifications will be added when a feature is officially and added to the work board.
 
