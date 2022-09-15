@@ -3,8 +3,11 @@ import { Tab } from '../types';
 
 export class TabController<TabNames extends string> {
 	activeTab: TabNames | undefined;
+
 	setActiveTab: (value: TabNames) => void;
+
 	onActiveTabChanged: (callback: OnchangeCallback<TabNames>) => () => void;
+
 	tabs: Tab<TabNames>[] = [];
 
 	addTab(tab: Tab<TabNames>) {
@@ -21,6 +24,8 @@ export class TabController<TabNames extends string> {
 		this.setActiveTab = activeTab.setValue;
 		this.onActiveTabChanged = activeTab.onchange;
 		this.activeTab = activeTab.value;
-		activeTab.onchange((val) => (this.activeTab = val));
+		activeTab.onchange((val) => {
+			this.activeTab = val;
+		});
 	}
 }
