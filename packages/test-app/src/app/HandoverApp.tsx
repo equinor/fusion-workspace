@@ -65,6 +65,7 @@ const createWorkspaceController = (client: Client) => {
 						valueFormatter: (pkg) => pkg.system,
 					},
 				])
+				.addGrid(gridOptions)
 				.addPowerBi({
 					getConfig: (uri) => getEmbedInfo(uri, client),
 					reportUri: 'pp-installation',
@@ -74,35 +75,26 @@ const createWorkspaceController = (client: Client) => {
 						).json();
 					},
 				})
-				.addGrid(gridOptions)
 				.addCustomTab(customTab)
 				.addConfig({
 					appColor: 'purple',
 					appKey: 'Handover',
 					defaultTab: 'grid',
 				})
-				.addPowerBi({
-					getConfig: (uri) => getEmbedInfo(uri, client),
-					reportUri: 'pp-installation',
-					getToken: async (reportUri) => {
-						return await (
-							await client.fetch(`https://pro-s-reports-ci.azurewebsites.net/reports/${reportUri}/token`)
-						).json();
-					},
-				})
+
 				.addSidesheet(sidesheetOptions)
-				// .addGarden({
-				// 	data: [],
-				// 	nodeLabelCallback: (s) => s.commpkgNo,
-				// 	getIdentifier: (s) => s.commpkgNo,
-				// 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				// 	fieldSettings: {},
-				// })
+				.addGarden({
+					data: [],
+					nodeLabelCallback: (s) => s.commpkgNo,
+					getIdentifier: (s) => s.commpkgNo,
+					initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+					fieldSettings: {},
+				})
 				.addMiddleware((mediator) => {
 					mediator.onMount(() => console.log('App mounted'));
 					mediator.onUnMount(() => console.log('App unmounted'));
 				})
-				// .addStatusBarItems(statusBar)
+				.addStatusBarItems(statusBar)
 				.addModules([IndexedDbModule])
 	);
 };
