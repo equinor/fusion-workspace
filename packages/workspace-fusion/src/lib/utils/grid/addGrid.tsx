@@ -22,7 +22,7 @@ export function addGrid<TData, TError>(
 	configureDataChange(gridController, mediator);
 	configureBookmark(gridController, mediator);
 
-	viewController.tabs.addTab({
+	viewController.tabController.addTab({
 		Component: () => <Grid controller={gridController} />,
 		name: 'grid',
 		TabIcon: GridIcon,

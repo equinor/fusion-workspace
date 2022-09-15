@@ -22,7 +22,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	configureGardenHighlightSelection(gardenController, mediator);
 	configureBookmarkService(gardenController, mediator);
 
-	viewController.tabs.addTab({
+	viewController.tabController.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',
 		TabIcon: GardenIcon,

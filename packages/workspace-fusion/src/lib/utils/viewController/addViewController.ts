@@ -18,8 +18,8 @@ export function addViewController<TData, TError>(
 	mediator.bookmarkService.onApply((state) => state?.view && applyViewStateBookmark(state.view, viewController));
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));
 	/** Sync user settings when active tab changes */
-	viewController.tabs.onActiveTabChanged(mediator.bookmarkService.capture);
-	viewController.tabs.onActiveTabChanged((tab) => {
+	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
+	viewController.tabController.onActiveTabChanged((tab) => {
 		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
 	});
 }
@@ -32,8 +32,8 @@ export function switchTabOnNavigation<TData, TError>(
 	const tab = mediator.urlService.url.queryParams.find((params) => params.includes('tab='));
 	if (!tab) return;
 	const [, newTab] = tab.split('tab=');
-	if (newTab === viewController.tabs.activeTab) return;
-	viewController.tabs.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
+	if (newTab === viewController.tabController.activeTab) return;
+	viewController.tabController.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
 }
 
 /** Applies a fusion bookmark to the view controller */
@@ -41,7 +41,7 @@ function applyViewStateBookmark<TError>(
 	viewBookmark: ViewBookmark,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ) {
-	viewController.tabs.setActiveTab(viewBookmark.activeTab as WorkspaceTabNames);
+	viewController.tabController.setActiveTab(viewBookmark.activeTab as WorkspaceTabNames);
 }
 
 /** Captures the view state of the view controller */
@@ -50,7 +50,7 @@ function captureBookmark<TData, TError>(
 ): Pick<FusionBookmark<TData>, 'view'> {
 	return {
 		view: {
-			activeTab: viewController.tabs.activeTab,
+			activeTab: viewController.tabController.activeTab,
 		},
 	};
 }

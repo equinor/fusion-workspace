@@ -8,13 +8,7 @@ type UserConfig<TData, TError> = (
 export function createFusionWorkspace<TData, TError>(config: AppConfig<TData>, builderFunc: UserConfig<TData, TError>) {
 	const builder = builderFunc(new FusionWorkspaceBuilder(config.getIdentifier, config.appKey));
 
-	const { viewController, addMiddleware } = builder;
-
-	if (!viewController.filter.FilterComponent) {
-		addMiddleware(({ dataService }) => {
-			dataService.onDataChange(dataService.setFilteredData);
-		});
-	}
+	const { viewController } = builder;
 
 	return sortFusionTabs(viewController);
 }
