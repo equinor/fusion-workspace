@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { IndexedDbModule } from '@equinor/workspace-fusion-modules';

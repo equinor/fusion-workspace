@@ -1,6 +1,7 @@
 import { StarProgress } from '@equinor/eds-core-react';
 import createApp, { AppConfigurator } from '@equinor/fusion-framework-react-app';
 import { useFramework } from '@equinor/fusion-framework-react/hooks';
+import React from 'react';
 
 import { Suspense } from 'react';
 import styled from 'styled-components';
