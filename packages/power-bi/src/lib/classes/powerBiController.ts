@@ -1,4 +1,4 @@
-import { OnchangeCallback, Observable } from '@workspace/workspace-core';
+import { OnchangeCallback, Observable, Callback } from '@workspace/workspace-core';
 import { IReportEmbedConfiguration, Page, Report } from 'powerbi-client';
 import { ICustomEvent } from 'service';
 import { GetPowerBiEmbedConfig } from '../types/embedConfig';
@@ -25,17 +25,21 @@ export class PowerBiController {
 
 	onIsReadyChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
-	private cb: OnReportReady[] = [];
+	private cb: Callback<Report>[] = [];
 
-	onReportReady = (cb: OnReportReady) => {
-		this.cb.push(cb);
+	onReportReady = (callback: OnReportReady) => {
+		const id = Math.random() * 16;
+		this.cb.push({ callback, id });
+		return () => {
+			this.cb.filter((s) => s.id !== id);
+		};
 	};
 
-	reportReady = (report: Report) => {
-		report.on('pageChanged', (page: ICustomEvent<any>) => {
+	reportReady = (newValue: Report) => {
+		newValue.on('pageChanged', (page: ICustomEvent<any>) => {
 			this.setActivePage(page.detail.newPage);
 		});
-		this.cb.forEach((callback) => callback(report));
+		this.cb.map((s) => s.callback).forEach((callback) => callback(newValue));
 	};
 
 	constructor(reportUri: string, getConfig: GetPowerBiEmbedConfig) {
