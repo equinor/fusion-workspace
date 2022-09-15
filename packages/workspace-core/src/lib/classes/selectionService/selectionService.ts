@@ -20,7 +20,9 @@ export class SelectionService {
 		const { onchange, setValue } = new Observable<Node[]>([], isSelectionEqual);
 		this.onSelectionChanged = onchange;
 		this.setSelection = setValue;
-		onchange((val) => (this.selectedNodes = val));
+		onchange((val) => {
+			this.selectedNodes = val;
+		});
 	}
 }
 

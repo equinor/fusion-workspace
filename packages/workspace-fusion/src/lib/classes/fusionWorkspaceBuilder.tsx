@@ -1,10 +1,10 @@
+import { FilterOptions } from '@equinor/filter';
 import history from 'history/browser';
 import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {
-	DataFetchAsync,
 	GridConfig,
 	SidesheetConfig,
 	WorkspaceTabNames,
@@ -12,6 +12,8 @@ import {
 	FusionMediator,
 	CustomTab,
 	AppConfig,
+	FusionWorkspaceModule,
+	DataSourceOptions,
 } from '../types';
 import {
 	addCustomTab,
@@ -20,10 +22,10 @@ import {
 	addSidesheet,
 	addStatusBar,
 	addGarden,
+	addFilter,
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
-	addIndexedDb,
 	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
@@ -36,16 +38,15 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
-	appKey?: string;
+	private mediator: FusionMediator<TData, TError> = new WorkspaceReactMediator();
 
-	private mediator: FusionMediator<TData, TError>;
+	viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
 
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
+	appKey: string;
 
-	constructor(getIdentifier: GetIdentifier<TData>) {
+	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
 		this.getIdentifier = getIdentifier;
-		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
+		this.appKey = appKey;
 
 		addViewController(this.viewController, this.mediator, history);
 
@@ -63,14 +64,23 @@ export class FusionWorkspaceBuilder<TData, TError> {
 				switchTabOnNavigation(this.mediator, this.viewController);
 			}
 		});
-
-		addIndexedDb(this.mediator);
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);
-		this.appKey = appConfig.appKey;
 		return this;
+	};
+
+	/** Add modules from the workspace-fusion-modules package or bring your own */
+	addModules = (modules: FusionWorkspaceModule<TData, TError>[]) => {
+		modules.forEach(this.runModuleSetup);
+		return this;
+	};
+
+	/** Iterate over all setup modules */
+	private runModuleSetup = (module: FusionWorkspaceModule<TData, TError>) => {
+		module.subModules?.forEach(this.runModuleSetup);
+		module.setup(this.mediator, this.appKey);
 	};
 
 	/**
@@ -78,7 +88,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
+	addDataSource = (dataFetch: DataSourceOptions<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
@@ -126,6 +136,11 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 */
 	addSidesheet = (config: SidesheetConfig<TData>) => {
 		addSidesheet(config, this.viewController, this.mediator);
+		return this;
+	};
+
+	addFilter = (config: FilterOptions<TData>) => {
+		addFilter(config, this.viewController, this.mediator);
 		return this;
 	};
 
