@@ -1,10 +1,10 @@
 import { StarProgress } from '@equinor/eds-core-react';
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import styled from 'styled-components';
 import { FusionApp } from './lib';
 import { Framework } from './lib/components/FusionFramework';
-
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const Wrapper = styled.div`
 	display: flex;
 	flex-wrap: nowrap;
@@ -14,8 +14,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	height: 100vh;
 `;
-
-ReactDOM.render(
+root.render(
 	<React.StrictMode>
 		<Suspense
 			fallback={
@@ -29,6 +28,5 @@ ReactDOM.render(
 				<FusionApp />
 			</Framework>
 		</Suspense>
-	</React.StrictMode>,
-	document.getElementById('root')
+	</React.StrictMode>
 );
