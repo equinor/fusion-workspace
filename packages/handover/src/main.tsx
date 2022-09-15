@@ -1,14 +1,10 @@
-import createApp from '@equinor/fusion-framework-react-app';
-import { useFramework } from '@equinor/fusion-framework-react-app/framework';
-import { Fragment, StrictMode, Suspense } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import { Framework } from './app/FusionFramework';
-import styled from 'styled-components';
 import { StarProgress } from '@equinor/eds-core-react';
-import { FusionApp } from './app/FusionApp';
-
+import React, { Suspense } from 'react';
+import * as ReactDOM from 'react-dom/client';
+import styled from 'styled-components';
+import { FusionApp } from './lib';
+import { Framework } from './lib/components/FusionFramework';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
 const Wrapper = styled.div`
 	display: flex;
 	flex-wrap: nowrap;
@@ -18,9 +14,8 @@ const Wrapper = styled.div`
 	align-items: center;
 	height: 100vh;
 `;
-
 root.render(
-	<StrictMode>
+	<React.StrictMode>
 		<Suspense
 			fallback={
 				<Wrapper>
@@ -33,5 +28,5 @@ root.render(
 				<FusionApp />
 			</Framework>
 		</Suspense>
-	</StrictMode>
+	</React.StrictMode>
 );

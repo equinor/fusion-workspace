@@ -12,6 +12,13 @@ interface MockData {
 	id: string;
 }
 
+/** @equinor/fusion-ag-grid-addons needs this */
+jest.mock('@equinor/fusion-react-ag-grid-addons', () => ({
+	__esModule: true, // this property makes it work
+	default: 'mockedDefaultExport',
+	namedExport: jest.fn(),
+}));
+
 describe('Highlight service should highlight remove highlight in all its integrated components', () => {
 	it('Setting highlighted on the mediator should also set it on the garden', () => {
 		const mediator = new WorkspaceReactMediator<
@@ -25,7 +32,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 			data: [],
 			initialGrouping: { horizontalGroupingAccessor: '', verticalGroupingKeys: [] },
 			nodeLabelCallback: (s) => s.id,
-			objectIdentifier: 'id',
+			getIdentifier: (s) => s.id,
 			clickEvents: {},
 		});
 		configureGardenHighlightSelection(controller, mediator);
@@ -43,7 +50,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 			ObjectType<unknown>
 		>();
 
-		const gridController = new GridController<MockData>('id');
+		const gridController = new GridController<MockData>((s) => s.id);
 
 		configureGridHighlight(gridController, mediator);
 		expect(gridController.selectedNodes.value?.length).toStrictEqual(0);
