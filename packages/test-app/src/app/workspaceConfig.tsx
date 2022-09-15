@@ -4,6 +4,7 @@ import { mockData } from './mockData';
 import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
 import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
+import { FilterValueType } from '@equinor/filter';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -42,23 +43,6 @@ export const gridOptions: GridConfig<Handover> = {
 		paginationPageSize: 100,
 	},
 };
-
-/** Will render MC or Comm pkg status symbol */
-const RenderStatus = (value: string) => {
-	return (
-		<span style={{ display: 'flex', alignItems: 'center' }}>
-			<StyledCircle color={value === 'OK' ? 'green' : 'grey'} />
-			{value}
-		</span>
-	);
-};
-
-const StyledCircle = styled.div<{ color: string }>`
-	height: 16px;
-	width: 16px;
-	background-color: ${({ color }) => color};
-	border-radius: 50%;
-`;
 
 export const customTab = {
 	Component: CustomTab,
@@ -104,3 +88,40 @@ const StyledCustomTab = styled.div`
 	width: 100%;
 	background-color: rebeccapurple;
 `;
+
+export function RenderStatus(val: FilterValueType) {
+	return (
+		<div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+			<Circle color={getCircleColor(val)} />
+			<div>{val}</div>
+		</div>
+	);
+}
+
+const Circle = styled.div<{ color: string }>`
+	border-radius: 50%;
+	background-color: ${(s) => s.color};
+	height: 12px;
+	width: 12px;
+`;
+
+const getCircleColor = (val: FilterValueType) => {
+	if (!val) return '';
+	switch (val) {
+		case 'OS': {
+			return 'rgb(158, 158, 158)';
+		}
+		case 'OK': {
+			return 'rgb(0, 200, 83)';
+		}
+		case 'PA': {
+			return 'rgb(255, 64, 129)';
+		}
+		case 'PB': {
+			return 'rgb(255, 193, 7)';
+		}
+		default: {
+			return 'black';
+		}
+	}
+};
