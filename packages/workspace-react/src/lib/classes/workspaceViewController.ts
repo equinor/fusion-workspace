@@ -1,4 +1,5 @@
 import { Observable } from '@workspace/workspace-core';
+import React, { ReactNode } from 'react';
 import { FilterController } from './filterController';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
@@ -26,6 +27,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		this.sidesheet.Component = comp;
 	};
 
+	providers: Provider[] = [];
+
+	addProvider = (provider: Provider) => {
+		this.providers.push(provider);
+	};
+
 	/** Component for handling errors */
 	ErrorComponent?: (error: TError) => JSX.Element;
 
@@ -37,3 +44,5 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	isMounted = new Observable(false, (a, b) => a === b);
 }
+
+export type Provider = React.FC<{ children: ReactNode }>;
