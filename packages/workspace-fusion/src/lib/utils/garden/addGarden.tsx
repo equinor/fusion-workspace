@@ -1,5 +1,6 @@
 import { Garden, GardenConfig, GardenController } from '@equinor/garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
+import { WorkspaceHeader } from '../../components/Header/WorkspaceHeader';
 import { GardenIcon } from '../../icons/GardenIcon';
 import { FusionMediator, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
@@ -24,6 +25,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	viewController.tabs.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',
-		HeaderComponent: GardenIcon,
+		TabIcon: () => <GardenIcon />,
+		CustomHeader: WorkspaceHeader,
 	});
 }

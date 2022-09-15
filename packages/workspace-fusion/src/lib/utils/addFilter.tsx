@@ -10,7 +10,6 @@ export function addFilter<TData, TError>(
 	const filterController = new FilterController<TData>();
 	filterController.addValueFormatters(config);
 	filterController.onFilteredDataChanged(dataService.setFilteredData);
-	viewController.filter.FilterComponent = () => <div></div>;
 	dataService.data && filterController.setData(dataService.data);
 	filterController.init();
 	dataService.onDataChange((data) => {

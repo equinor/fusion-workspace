@@ -9,7 +9,7 @@ export function addCustomTab<TData, TError>(
 ) {
 	viewController.tabs.addTab({
 		Component: () => <CustomTabWrapper Component={Component} mediator={mediator} />,
-		HeaderComponent,
+		TabIcon: HeaderComponent,
 		name: name as WorkspaceTabNames,
 	});
 }

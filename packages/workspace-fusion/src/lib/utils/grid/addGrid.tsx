@@ -1,5 +1,8 @@
+import { tokens } from '@equinor/eds-tokens';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
+import styled from 'styled-components';
+import { WorkspaceHeader } from '../../components/Header/WorkspaceHeader';
 import { GridIcon as HeaderComponent } from '../../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
@@ -24,6 +27,15 @@ export function addGrid<TData, TError>(
 	viewController.tabs.addTab({
 		Component: () => <Grid controller={gridController} />,
 		name: 'grid',
-		HeaderComponent,
+		TabIcon: () => <HeaderComponent />,
+		CustomHeader: () => <GridHeader controller={gridController} />,
 	});
+}
+
+interface GridHeaderProps<TData> {
+	controller: GridController<TData>;
+}
+
+function GridHeader<TData>({ controller }: GridHeaderProps<TData>) {
+	return <WorkspaceHeader />;
 }
