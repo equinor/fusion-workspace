@@ -9,7 +9,11 @@ export function addFilterContext<TData, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	filterController: ReactFilterController<TData>
 ) {
-	viewController.addProvider(({ children }) => (
+	const FilterProvider = ({ children }) => (
 		<FilterContextProvider controller={filterController}>{children}</FilterContextProvider>
-	));
+	);
+	viewController.addProvider({
+		Component: FilterProvider,
+		name: 'Filter',
+	});
 }

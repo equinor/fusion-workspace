@@ -30,7 +30,7 @@ interface ProviderHandlerProps {
 function ProviderHandler({ providers, children }: ProviderHandlerProps) {
 	let isLast = false;
 	// eslint-disable-next-line prefer-const
-	let [Current, Next] = providers;
+	let [Current, Next] = providers.map((s) => s.Component);
 	if (!Next) {
 		isLast = true;
 		// eslint-disable-next-line react/jsx-no-useless-fragment
