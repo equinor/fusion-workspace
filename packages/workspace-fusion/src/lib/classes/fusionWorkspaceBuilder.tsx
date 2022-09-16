@@ -50,6 +50,8 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		this.getIdentifier = getIdentifier;
 		this.appKey = appKey;
 
+		this.mediator.onUnMount(this.mediator.destroy);
+
 		addViewController(this.viewController, this.mediator, history);
 
 		configureUrlWithHistory(this.mediator, history);

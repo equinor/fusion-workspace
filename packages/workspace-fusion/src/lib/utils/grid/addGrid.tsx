@@ -1,12 +1,12 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
-import { WorkspaceHeader } from '../../components/Header/WorkspaceHeader';
-import { GridIcon as HeaderComponent } from '../../icons/GridIcon';
+import { GridIcon } from '../../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
 import { configureBookmark } from './configureBookmark';
 import { configureDataChange } from './configureDataChange';
 import { configureHighlightSelection } from './configureHighlightSelection';
+import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
 
 export function addGrid<TData, TError>(
@@ -22,18 +22,12 @@ export function addGrid<TData, TError>(
 	configureDataChange(gridController, mediator);
 	configureBookmark(gridController, mediator);
 
-	viewController.tabs.addTab({
+	viewController.tabController.addTab({
 		Component: () => <Grid controller={gridController} />,
 		name: 'grid',
-		TabIcon: () => <HeaderComponent />,
+		TabIcon: GridIcon,
 		CustomHeader: () => <GridHeader controller={gridController} />,
 	});
-}
 
-interface GridHeaderProps<TData> {
-	controller: GridController<TData>;
-}
-
-function GridHeader<TData>({ controller }: GridHeaderProps<TData>) {
-	return <WorkspaceHeader />;
+	mediator.onUnMount(gridController.destroy);
 }

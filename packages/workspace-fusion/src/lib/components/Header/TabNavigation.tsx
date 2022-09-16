@@ -1,13 +1,13 @@
-import { useControllerContext } from 'packages/workspace-react/src/lib/hooks';
+import { useControllerContext } from '@equinor/workspace-react';
 import styled from 'styled-components';
 
 export function TabNavigation() {
-	const { tabs } = useControllerContext();
+	const { tabController } = useControllerContext();
 
 	return (
 		<StyledTabButtonRow>
-			{tabs.tabs.map((tab) => (
-				<span onClick={() => tabs.setActiveTab(tab.name)}>
+			{tabController.tabs.map((tab) => (
+				<span onClick={() => tabController.setActiveTab(tab.name)}>
 					<tab.TabIcon />
 				</span>
 			))}

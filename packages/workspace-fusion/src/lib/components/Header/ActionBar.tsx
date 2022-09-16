@@ -1,6 +1,6 @@
 import { useStatusBar } from '../../utils/statusBar/addStatusBar';
+import { TabNavigation } from '../TabNavigation';
 import { StyledActionBar } from './actionBar.styles';
-import { TabNavigation } from './TabNavigation';
 
 export function ActionBar() {
 	const StatusBar = useStatusBar();

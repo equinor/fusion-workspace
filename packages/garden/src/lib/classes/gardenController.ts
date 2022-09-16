@@ -162,4 +162,11 @@ export class GardenController<
 
 	/** Function for sorting groups after they have been grouped */
 	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
+
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
+	};
 }

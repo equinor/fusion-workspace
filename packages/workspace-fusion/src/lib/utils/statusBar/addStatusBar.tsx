@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { StatusBarWrapper } from '../../components';
 import { FusionMediator, StatusBarConfig, WorkspaceTabNames } from '../../types';
 
@@ -8,11 +8,15 @@ export function addStatusBar<TData, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TError>
 ) {
-	viewController.addProvider(({ children }) => (
+	const StatusBarProvider = ({ children }) => (
 		<StatusBarContext.Provider value={() => <StatusBarWrapper config={config} mediator={mediator} />}>
 			{children}
 		</StatusBarContext.Provider>
-	));
+	);
+	viewController.addProvider({
+		Component: StatusBarProvider,
+		name: 'Status bar',
+	});
 }
 const StatusBarContext = createContext<React.FC | undefined>(undefined);
 

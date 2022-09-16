@@ -7,5 +7,5 @@ export function addConfig<TError>(
 ) {
 	viewController.appKey = config.appKey;
 	viewController.appColor = config.appColor;
-	viewController.tabs.setActiveTab(config.defaultTab);
+	viewController.tabController.setActiveTab(config.defaultTab);
 }

@@ -7,7 +7,7 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  */
 export function TabNavigation() {
 	const {
-		tabs: { tabs, setActiveTab },
+		tabController: { tabs, setActiveTab },
 	} = useControllerContext();
 	const activeTab = useActiveTab();
 

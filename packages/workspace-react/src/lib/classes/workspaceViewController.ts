@@ -1,6 +1,5 @@
 import { Observable } from '@workspace/workspace-core';
-import React, { ReactNode } from 'react';
-import { FilterController } from './filterController';
+import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
@@ -15,12 +14,12 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
 
-	filter = new FilterController();
+	tabController = new TabController<TTabNames>();
 
-	tabs = new TabController<TTabNames>();
+	providers: Provider[] = [];
 
-	addStatusBarComponent = (comp: Component) => {
-		this.StatusBarComponent = comp;
+	addProvider = (provider: Provider) => {
+		this.providers.push(provider);
 	};
 
 	addSidesheetComponent = (comp: Component) => {
@@ -36,13 +35,17 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	/** Component for handling errors */
 	ErrorComponent?: (error: TError) => JSX.Element;
 
-	/** Status bar component to be shown in left side of header */
-	StatusBarComponent?: () => JSX.Element;
-
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
 
 	isMounted = new Observable(false, (a, b) => a === b);
+
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
+	};
 }
 
 export type Provider = React.FC<{ children: ReactNode }>;

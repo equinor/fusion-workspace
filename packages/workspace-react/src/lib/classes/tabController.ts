@@ -15,7 +15,7 @@ export class TabController<TabNames extends string> {
 			throw new Error('Duplicate tab');
 		}
 		this.tabs.push(tab);
-		this.activeTab = this.tabs[0].name;
+
 		return this;
 	}
 

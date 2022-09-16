@@ -1,8 +1,6 @@
-import { Tabs } from '@equinor/eds-core-react';
-import { PowerBI, PowerBiController, PowerBIFilter } from '@equinor/powerbi';
+import { PowerBI, PowerBiController } from '@equinor/powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { IReportEmbedConfiguration, Page, Report } from 'powerbi-client';
-import { useEffect, useState } from 'react';
+import { IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
@@ -14,7 +12,7 @@ export function addPowerBi<TData, TError>(
 ) {
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 	//TODO:  Bookmark service config
-	viewController.tabs.addTab({
+	viewController.tabController.addTab({
 		Component: () => <PowerBI controller={controller} />,
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
 		name: 'powerbi',
