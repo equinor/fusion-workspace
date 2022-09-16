@@ -29,11 +29,15 @@ export const useResizeObserver = (ref: RefObject<HTMLElement>, callback?: (entry
 		if (!ref.current) {
 			return;
 		}
-		const RO = new ResizeObserver((entries: ResizeObserverEntry[]) => handleResize(entries));
+		let RO = new ResizeObserver((entries: ResizeObserverEntry[]) => handleResize(entries));
 		RO.observe(ref.current);
 
 		// eslint-disable-next-line consistent-return
-		return RO.disconnect;
+		return () => {
+			RO.disconnect;
+			//@ts-ignore
+			RO = null;
+		};
 	}, [ref]);
 	return [width, height];
 };
