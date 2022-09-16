@@ -14,9 +14,8 @@ import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../ico
 import { FilterController } from '../../classes';
 import { FilterView } from '../filterView/FilterView';
 import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
-import { useFilterContext, useFilterGroups } from '../../hooks';
+import { useFilterContext } from '../../hooks';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
-import { FilterConfiguration } from '../../types';
 
 /**
  * How to separate controller and visual logic in this component?

@@ -33,8 +33,9 @@ export type CustomTabComponent = () => JSX.Element;
 
 export interface CustomTab {
 	name: string;
-	HeaderComponent: () => JSX.Element;
+	TabIcon: () => JSX.Element;
 	Component: CustomTabComponent;
+	CustomHeader?: () => JSX.Element;
 }
 
 export interface AppConfig<TabNames extends string> {
