@@ -25,7 +25,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				.addDataSource({
 					getResponseAsync: async (signal) =>
 						await client.fetch(
-							'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handove',
+							'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
 							{ signal }
 						),
 				})
