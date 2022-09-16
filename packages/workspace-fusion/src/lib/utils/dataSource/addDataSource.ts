@@ -14,4 +14,5 @@ export function addDataSource<TData, TError>(
 	dataSourceController.onIsLoadingChanged(setIsLoading);
 	onMount(dataSourceController.getDataAsync);
 	onUnMount(dataSourceController.abort);
+	onUnMount(dataSourceController.destroy);
 }

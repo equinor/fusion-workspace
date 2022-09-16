@@ -95,4 +95,11 @@ export class FetchController<TData> {
 
 	/** Callback to fire when isFetching changes */
 	onIsFetchingChanged: (callback: OnchangeCallback<boolean>) => () => void;
+
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
+	};
 }
