@@ -22,6 +22,8 @@ export function addViewController<TData, TError>(
 	viewController.tabs.onActiveTabChanged((tab) => {
 		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
 	});
+
+	mediator.onUnMount(viewController.destroy);
 }
 
 /** Switches tab when url changes due to navigation event */

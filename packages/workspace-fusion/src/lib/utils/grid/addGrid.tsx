@@ -26,4 +26,6 @@ export function addGrid<TData, TError>(
 		name: 'grid',
 		HeaderComponent,
 	});
+
+	mediator.onUnMount(gridController.destroy);
 }

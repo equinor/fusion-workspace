@@ -26,4 +26,6 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 		name: 'garden',
 		HeaderComponent: GardenIcon,
 	});
+
+	mediator.onUnMount(gardenController.destroy);
 }
