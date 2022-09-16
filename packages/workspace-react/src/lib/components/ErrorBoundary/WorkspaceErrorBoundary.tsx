@@ -1,3 +1,4 @@
+import { Dialog } from '@equinor/eds-core-react';
 import { ReactNode, useEffect, useState } from 'react';
 import { useControllerContext } from '../../hooks';
 
@@ -9,8 +10,6 @@ export function WorkspaceErrorBoundary({ children }: WorkspaceErrorBoundaryProps
 	const { ErrorComponent = DefaultErrorComponent, onError, error: initialError } = useControllerContext();
 
 	const [error, setError] = useState<unknown | undefined>(initialError);
-
-	console.log(error, initialError);
 
 	useEffect(() => {
 		const unsub = onError(setError);
@@ -33,5 +32,9 @@ export function WorkspaceErrorBoundary({ children }: WorkspaceErrorBoundaryProps
 
 //TODO: make default component
 export function DefaultErrorComponent() {
-	return <div>Unrecoverable error encountered</div>;
+	return (
+		<Dialog open={true}>
+			<Dialog.Header>Unrecoverable error encountered</Dialog.Header>
+		</Dialog>
+	);
 }
