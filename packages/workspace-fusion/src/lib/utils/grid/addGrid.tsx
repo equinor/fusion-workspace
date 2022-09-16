@@ -11,7 +11,7 @@ import { setConfigOnController } from './setConfigOnController';
 export function addGrid<TData, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>,
+	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	const gridController = new GridController<TData>(getIdentifier);

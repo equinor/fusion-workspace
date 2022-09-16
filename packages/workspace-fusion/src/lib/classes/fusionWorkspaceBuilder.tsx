@@ -14,6 +14,7 @@ import {
 	AppConfig,
 	FusionWorkspaceModule,
 	DataSourceOptions,
+	FusionWorkspaceError,
 } from '../types';
 import {
 	addCustomTab,
@@ -29,24 +30,29 @@ import {
 	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { DumpsterFireDialog } from '../components/ErrorComponent';
 
 export interface WorkspaceContext {
 	ui: unknown;
 }
 
-export class FusionWorkspaceBuilder<TData, TError> {
+export class FusionWorkspaceBuilder<TData> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
-	private mediator: FusionMediator<TData, TError> = new WorkspaceReactMediator();
+	private mediator: FusionMediator<TData> = new WorkspaceReactMediator();
 
-	viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
+	viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
 
 	appKey: string;
 
 	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
 		this.getIdentifier = getIdentifier;
 		this.appKey = appKey;
+
+		this.viewController.ErrorComponent = ({ error }) => {
+			return <DumpsterFireDialog text={error.detail} buttons={[]} />;
+		};
 
 		addViewController(this.viewController, this.mediator, history);
 
@@ -72,13 +78,13 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	};
 
 	/** Add modules from the workspace-fusion-modules package or bring your own */
-	addModules = (modules: FusionWorkspaceModule<TData, TError>[]) => {
+	addModules = (modules: FusionWorkspaceModule<TData, FusionWorkspaceError>[]) => {
 		modules.forEach(this.runModuleSetup);
 		return this;
 	};
 
 	/** Iterate over all setup modules */
-	private runModuleSetup = (module: FusionWorkspaceModule<TData, TError>) => {
+	private runModuleSetup = (module: FusionWorkspaceModule<TData, FusionWorkspaceError>) => {
 		module.subModules?.forEach(this.runModuleSetup);
 		module.setup(this.mediator, this.appKey);
 	};
@@ -93,7 +99,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
-	addMiddleware = (cb: (mediator: FusionMediator<TData, TError>) => void) => {
+	addMiddleware = (cb: (mediator: FusionMediator<TData>) => void) => {
 		cb(this.mediator);
 		return this;
 	};

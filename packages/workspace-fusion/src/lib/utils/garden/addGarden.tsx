@@ -11,7 +11,7 @@ import { configureGardenHighlightSelection } from './configureHighlight';
 export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TError>(
 	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>,
+	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>(gardenConfig);

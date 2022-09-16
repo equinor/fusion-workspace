@@ -1,4 +1,4 @@
-import { Observable } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 import { FilterController } from './filterController';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
@@ -26,8 +26,24 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		this.sidesheet.Component = comp;
 	};
 
+	constructor() {
+		const error = new Observable<TError | undefined>(undefined);
+		this.setError = error.setValue;
+		this.onError = error.onchange;
+
+		error.onchange((val) => {
+			this.error = val;
+		});
+	}
+
+	error?: TError;
+
+	setError: (value: TError | undefined) => void;
+
+	onError: (callback: OnchangeCallback<TError | undefined>) => () => void;
+
 	/** Component for handling errors */
-	ErrorComponent?: (error: TError) => JSX.Element;
+	ErrorComponent?: (error: ErrorProps<TError>) => JSX.Element;
 
 	/** Status bar component to be shown in left side of header */
 	StatusBarComponent?: () => JSX.Element;
@@ -37,3 +53,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	isMounted = new Observable(false, (a, b) => a === b);
 }
+
+type ErrorProps<TError> = {
+	error: TError;
+};

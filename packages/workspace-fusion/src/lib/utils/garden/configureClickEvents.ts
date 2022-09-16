@@ -3,9 +3,9 @@ import { FusionMediator } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
 
 /** Adds clickevents from mediator on garden controller  */
-export function configureClickEvents<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
+export function configureClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	{ selectionService, clickService }: FusionMediator<TData, TError>,
+	{ selectionService, clickService }: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {

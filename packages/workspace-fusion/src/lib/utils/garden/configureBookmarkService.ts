@@ -2,9 +2,9 @@ import { GardenController } from '@equinor/garden';
 import { FusionMediator, GardenBookmark } from '../../types';
 
 /** Configures the mediators bookmarkservice to work with the garden controller */
-export function configureBookmarkService<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
+export function configureBookmarkService<TData, TCustomGroupByKeys, TCustomState, TContext>(
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionMediator<TData, TError>
+	mediator: FusionMediator<TData>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
 	mediator.bookmarkService.onApply((state) => state?.garden && applyFusionBookmark(state.garden, gardenController));
