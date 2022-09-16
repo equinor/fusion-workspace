@@ -2,6 +2,8 @@ import { ReactFilterController, FilterContextProvider } from '@equinor/filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../../types';
 
+export const FUSION_FILTER_PROVIDER_NAME = 'filter';
+
 /**
  * Wraps workspace in filter context
  */
@@ -14,6 +16,6 @@ export function addFilterContext<TData, TError>(
 	);
 	viewController.addProvider({
 		Component: FilterProvider,
-		name: 'Filter',
+		name: FUSION_FILTER_PROVIDER_NAME,
 	});
 }
