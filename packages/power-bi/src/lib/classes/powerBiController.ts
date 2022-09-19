@@ -40,7 +40,7 @@ export class PowerBiController {
 		newValue.on('pageChanged', (page: ICustomEvent<any>) => {
 			this.setActivePage(page.detail.newPage);
 		});
-		this.cb.map((s) => s.callback).forEach((callback) => callback(newValue));
+		this.cb.map(({ callback }) => callback).forEach((callback) => callback(newValue));
 	};
 
 	constructor(reportUri: string, getConfig: GetPowerBiEmbedConfig) {
