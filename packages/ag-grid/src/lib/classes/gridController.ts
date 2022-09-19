@@ -85,4 +85,11 @@ export class GridController<TData> {
 	private unsubOnRowDataChanged = (id: string) => {
 		this.onRowDataChangedCallbacks = this.onRowDataChangedCallbacks.filter((s) => s.id !== id);
 	};
+
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
+	};
 }

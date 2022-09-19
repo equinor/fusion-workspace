@@ -12,4 +12,5 @@ export function addDataSource<TData>(dataFetch: DataSourceOptions<TData>, mediat
 
 	onMount(dataSourceController.getDataAsync);
 	onUnMount(dataSourceController.abort);
+	onUnMount(dataSourceController.destroy);
 }
