@@ -26,12 +26,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		this.sidesheet.Component = comp;
 	};
 
-	providers: Provider[] = [];
-
-	addProvider = (provider: Provider) => {
-		this.providers.push(provider);
-	};
-
 	/** Component for handling errors */
 	ErrorComponent?: (error: TError) => JSX.Element;
 
@@ -47,5 +41,3 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		}
 	};
 }
-
-export type Provider = React.FC<{ children: ReactNode }>;

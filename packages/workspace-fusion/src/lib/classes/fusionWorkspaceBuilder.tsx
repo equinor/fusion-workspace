@@ -15,6 +15,7 @@ import {
 	FusionWorkspaceModule,
 	DataSourceOptions,
 	PowerBiConfig,
+	FusionPowerBiConfig,
 } from '../types';
 import {
 	addCustomTab,
@@ -31,6 +32,7 @@ import {
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 import { addPowerBi } from '../utils/powerBI/addPowerBi';
+import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 
 export interface WorkspaceContext {
 	ui: unknown;
@@ -74,6 +76,13 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addPowerBi(config, this.viewController, this.mediator);
 		return this;
 	};
+
+	addFusionPowerBI({ reportUri, httpClient: client }: FusionPowerBiConfig) {
+		const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri, client);
+		const getToken = () => FusionPowerBiConfigurator.getToken(reportUri, client);
+		this.addPowerBi({ getConfig, getToken, reportUri });
+		return this;
+	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
 		addConfig(appConfig, this.viewController);

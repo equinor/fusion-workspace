@@ -1,4 +1,3 @@
-import { GetPowerBiEmbedConfig } from '@equinor/powerbi';
 import { StatusItem } from '@equinor/status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
@@ -50,7 +49,20 @@ export type PowerBiConfig = {
 	getConfig: (reportUri: string) => Promise<any>;
 	getToken: (reportUri: string) => Promise<PowerBiToken>;
 };
+/**
+ * Configuration for adding a fusion power bi client
+ * Requires client configured for fusion reports api
+ */
+export type FusionPowerBiConfig = {
+	reportUri: string;
+	httpClient: FusionClient;
+};
 
 type PowerBiToken = {
 	token: string;
+};
+
+/** Any http client, with fusion scope */
+export type FusionClient = {
+	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
 };

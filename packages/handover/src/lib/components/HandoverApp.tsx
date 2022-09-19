@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { useHttpClient } from '@equinor/fusion-framework-react-app/http';
+import { createFusionWorkspace, FusionClient } from '@equinor/workspace-fusion';
 import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
@@ -21,11 +21,7 @@ export function HandoverApp() {
 	);
 }
 
-type Client = {
-	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
-};
-
-const createWorkspaceController = (client: Client) => {
+const createWorkspaceController = (client: FusionClient) => {
 	return createFusionWorkspace<Handover, unknown>(
 		{ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo },
 		(builder) =>
@@ -66,22 +62,13 @@ const createWorkspaceController = (client: Client) => {
 					},
 				])
 				.addGrid(gridOptions)
-				.addPowerBi({
-					getConfig: (uri) => getEmbedInfo(uri, client),
-					reportUri: 'pp-installation',
-					getToken: async (reportUri) => {
-						return await (
-							await client.fetch(`https://pro-s-reports-ci.azurewebsites.net/reports/${reportUri}/token`)
-						).json();
-					},
-				})
+				.addFusionPowerBI({ httpClient: client, reportUri: 'pp-installation' })
 				.addCustomTab(customTab)
 				.addConfig({
 					appColor: 'purple',
 					appKey: 'Handover',
 					defaultTab: 'grid',
 				})
-
 				.addSidesheet(sidesheetOptions)
 				.addGarden({
 					data: [],
@@ -98,11 +85,3 @@ const createWorkspaceController = (client: Client) => {
 				.addModules([IndexedDbModule])
 	);
 };
-
-async function getEmbedInfo(reportUri: string, client: Client) {
-	const embedUri = `https://pro-s-reports-ci.azurewebsites.net/reports/${reportUri}/config/embedinfo`;
-	const response = await client.fetch(embedUri);
-
-	const data = await response.json();
-	return data;
-}
