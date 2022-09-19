@@ -1,5 +1,5 @@
 import { Menu, Button, Search } from '@equinor/eds-core-react';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFilterContext, useFilterState } from '../../hooks';
 import { FilterValueType } from '../../types';
 import { FilterItemCheckbox } from '../filterItem/FilterItemCheckbox';
@@ -33,6 +33,7 @@ export const FilterGroupPopoverMenu = ({
 	CustomRender,
 	groupName,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
+	const ref = useRef(null);
 	const [searchText, setSearchText] = useState<string>('');
 
 	const { getCountForFilterValue } = useFilterContext();
@@ -66,6 +67,7 @@ export const FilterGroupPopoverMenu = ({
 			aria-labelledby="anchor-complex"
 			open={true}
 			anchorEl={anchorEl}
+			ref={ref}
 			onClose={closePopover}
 			placement={'bottom-end'}
 		>
