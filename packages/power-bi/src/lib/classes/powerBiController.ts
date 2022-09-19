@@ -1,8 +1,9 @@
-import { OnchangeCallback, Observable, Callback } from '@workspace/workspace-core';
 import { IReportEmbedConfiguration, Page, Report } from 'powerbi-client';
 import { ICustomEvent } from 'service';
+import { Callback, OnchangeCallback } from '../types';
 import { GetPowerBiEmbedConfig } from '../types/embedConfig';
 import { Filter } from '../types/filter';
+import { Observable } from './observable';
 
 export class PowerBiController {
 	activePage?: Page;

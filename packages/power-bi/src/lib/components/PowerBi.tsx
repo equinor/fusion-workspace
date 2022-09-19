@@ -16,10 +16,6 @@ export function PowerBI({ controller }: PowerBiProps) {
 
 	if (!isReady) return <Loading />;
 
-	/**
-	 * TODO: Hooks for applying state while mounted
-	 */
-
 	return <LoadedReport controller={controller} />;
 }
 
@@ -29,8 +25,10 @@ interface LoadedReportProps {
 export const LoadedReport = ({ controller }: LoadedReportProps) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [width] = useResizeObserver(ref);
-
 	if (!controller.config) throw new Error('IsReady is true but embed config is undefined');
+	/**
+	 * TODO: Hooks for applying state while mounted
+	 */
 
 	return (
 		<StyledReportRoot ref={ref}>
