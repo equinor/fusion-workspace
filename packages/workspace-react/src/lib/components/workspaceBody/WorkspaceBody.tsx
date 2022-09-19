@@ -1,3 +1,4 @@
+import { WorkspaceErrorBoundary } from '../ErrorBoundary/WorkspaceErrorBoundary';
 import { ResizableSidesheet } from '../resizableSidesheet';
 import { WorkspaceDataLoader } from '../workspaceDataLoader';
 import { WorkspaceTab } from '../workspaceTab';
@@ -7,7 +8,9 @@ export function WorkspaceBody() {
 	return (
 		<StyledWorkspaceBody>
 			<WorkspaceDataLoader>
-				<WorkspaceTab />
+				<WorkspaceErrorBoundary>
+					<WorkspaceTab />
+				</WorkspaceErrorBoundary>
 			</WorkspaceDataLoader>
 			<ResizableSidesheet />
 		</StyledWorkspaceBody>

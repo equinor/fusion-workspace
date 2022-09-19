@@ -1,7 +1,7 @@
 import { FusionMediator } from './fusionController';
 
-export type FusionWorkspaceModule<TData, TError> = {
+export type FusionWorkspaceModule<TData> = {
 	name: string;
-	setup: (mediator: FusionMediator<TData, TError>, appKey: string) => void;
-	subModules?: FusionWorkspaceModule<TData, TError>[];
+	setup: (mediator: FusionMediator<TData>, appKey: string) => void;
+	subModules?: FusionWorkspaceModule<TData>[];
 };

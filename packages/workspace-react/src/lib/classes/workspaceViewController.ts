@@ -1,4 +1,4 @@
-import { Observable } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@workspace/workspace-core';
 import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
@@ -26,8 +26,24 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		this.sidesheet.Component = comp;
 	};
 
+	constructor() {
+		const error = new Observable<TError | undefined>(undefined);
+		this.setError = error.setValue;
+		this.onError = error.onchange;
+
+		error.onchange((val) => {
+			this.error = val;
+		});
+	}
+
+	error?: TError;
+
+	setError: (value: TError | undefined) => void;
+
+	onError: (callback: OnchangeCallback<TError | undefined>) => () => void;
+
 	/** Component for handling errors */
-	ErrorComponent?: (error: TError) => JSX.Element;
+	ErrorComponent?: (error: ErrorProps<TError>) => JSX.Element;
 
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
@@ -41,3 +57,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		}
 	};
 }
+
+type ErrorProps<TError> = {
+	error: TError;
+};

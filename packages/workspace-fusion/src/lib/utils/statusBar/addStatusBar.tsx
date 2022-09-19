@@ -6,7 +6,7 @@ import { FusionMediator, StatusBarConfig, WorkspaceTabNames } from '../../types'
 export function addStatusBar<TData, TError>(
 	config: StatusBarConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>
+	mediator: FusionMediator<TData>
 ) {
 	const StatusBarProvider = ({ children }) => (
 		<StatusBarContext.Provider value={() => <StatusBarWrapper config={config} mediator={mediator} />}>

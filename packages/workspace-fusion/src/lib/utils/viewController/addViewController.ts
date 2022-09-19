@@ -1,15 +1,17 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { BrowserHistory } from 'history';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
-import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark } from '../../types';
+import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 
 /** Configure a view controller with the mediator */
-export function addViewController<TData, TError>(
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>,
+export function addViewController<TData>(
+	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
+	mediator: FusionMediator<TData>,
 	history: BrowserHistory
 ) {
 	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
+
+	mediator.errorService.onError(viewController.setError);
 
 	/** Sync loading state */
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
@@ -28,7 +30,7 @@ export function addViewController<TData, TError>(
 
 /** Switches tab when url changes due to navigation event */
 export function switchTabOnNavigation<TData, TError>(
-	mediator: FusionMediator<TData, TError>,
+	mediator: FusionMediator<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ) {
 	const tab = mediator.urlService.url.queryParams.find((params) => params.includes('tab='));
