@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
+import { IndexedDbModule, fusionBookmarksModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
@@ -75,6 +75,6 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				mediator.onUnMount(() => console.log('App unmounted'));
 			})
 			.addStatusBarItems(statusBar)
-			.addModules([IndexedDbModule])
+			.addModules([IndexedDbModule, fusionBookmarksModule])
 	);
 };
