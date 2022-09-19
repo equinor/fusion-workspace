@@ -62,7 +62,7 @@ const createWorkspaceController = (client: FusionClient) => {
 					},
 				])
 				.addGrid(gridOptions)
-				.addFusionPowerBI({ httpClient: client, reportUri: 'pp-installation' })
+				.addFusionPowerBI({ reportUri: 'pp-work-preparation' })
 				.addCustomTab(customTab)
 				.addConfig({
 					appColor: 'purple',

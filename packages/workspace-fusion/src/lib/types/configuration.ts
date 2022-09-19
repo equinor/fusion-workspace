@@ -55,7 +55,6 @@ export type PowerBiConfig = {
  */
 export type FusionPowerBiConfig = {
 	reportUri: string;
-	httpClient: FusionClient;
 };
 
 type PowerBiToken = {

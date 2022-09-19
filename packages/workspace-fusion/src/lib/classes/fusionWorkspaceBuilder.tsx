@@ -77,9 +77,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		return this;
 	};
 
-	addFusionPowerBI({ reportUri, httpClient: client }: FusionPowerBiConfig) {
-		const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri, client);
-		const getToken = () => FusionPowerBiConfigurator.getToken(reportUri, client);
+	/** Requires fusion framework, and service discovery module */
+	addFusionPowerBI({ reportUri }: FusionPowerBiConfig) {
+		const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri);
+		const getToken = () => FusionPowerBiConfigurator.getToken(reportUri);
 		this.addPowerBi({ getConfig, getToken, reportUri });
 		return this;
 	}
