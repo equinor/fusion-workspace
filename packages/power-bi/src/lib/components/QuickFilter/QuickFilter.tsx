@@ -104,7 +104,11 @@ const FilterButtonContainer = styled.div`
 	align-items: center;
 `;
 
-const FilterWrapper = styled.div``;
+const FilterWrapper = styled.div`
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+`;
 
 interface OtherFiltersAppliedInfoProps {
 	activeFilters: number;

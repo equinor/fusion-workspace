@@ -36,12 +36,11 @@ interface PowerBIFilterOptions {
 
 type PowerBIFilterProps = {
 	report: Report;
-	isLoaded: boolean;
 	options?: PowerBIFilterOptions;
 };
 
 // TODO: Class
-export const PowerBIFilter = ({ isLoaded, report, options }: PowerBIFilterProps): JSX.Element | null => {
+export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Element | null => {
 	const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter[]>>({});
 	const [slicerFilters, setSlicerFilters] = useState<PowerBiFilter[] | null>(null);
 	const [filterGroupVisible, setFilterGroupVisible] = useState<string[]>(options?.defaultFilterGroupVisible || []);
@@ -158,7 +157,7 @@ export const PowerBIFilter = ({ isLoaded, report, options }: PowerBIFilterProps)
 	 * page is changed.
 	 */
 	useEffect(() => {
-		if (report && isLoaded) {
+		if (report) {
 			const initFilters = async () => {
 				const filters = await getFiltersAsync(report);
 				const defaultActiveFilters = await getActiveFilterValues(filters);
@@ -168,7 +167,7 @@ export const PowerBIFilter = ({ isLoaded, report, options }: PowerBIFilterProps)
 
 			initFilters();
 		}
-	}, [report, isLoaded]);
+	}, [report]);
 
 	/**
 	 * Effect should be triggered when activeFilters has changed.
@@ -176,7 +175,7 @@ export const PowerBIFilter = ({ isLoaded, report, options }: PowerBIFilterProps)
 	 * Dependency array needs to check for length because checking only object will not fire the effect.
 	 */
 	useEffect(() => {
-		if (report && isLoaded) {
+		if (report) {
 			const reCreateFilters = async () => {
 				const filters = await getFiltersAsync(report);
 

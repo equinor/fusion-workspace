@@ -45,7 +45,9 @@ export const ToggleHideFilterPopover = ({
 
 			{isOpen && (
 				<Popover open={isOpen} onClose={() => setIsOpen(false)} anchorEl={ref.current} placement="bottom-end">
-					<Popover.Title>Filter types</Popover.Title>
+					<Popover.Header>
+						<Popover.Title>Filter types</Popover.Title>
+					</Popover.Header>
 					<Popover.Content style={{ maxHeight: '60vh', overflowY: 'scroll', overflowX: 'hidden' }}>
 						<PopoverList>
 							<ReactSortable

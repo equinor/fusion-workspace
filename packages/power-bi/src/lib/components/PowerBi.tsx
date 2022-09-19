@@ -38,7 +38,7 @@ export const LoadedReport = ({ controller }: LoadedReportProps) => {
 						embedConfig={controller.config}
 						cssClassName="pbiEmbed"
 						getEmbeddedComponent={(embed) => {
-							embed.on('rendered', () => {
+							embed.on('loaded', () => {
 								controller.reportReady(embed as Report);
 							});
 						}}

@@ -13,13 +13,7 @@ export function ContextProviders({ children }: WorkspaceProvidersProps) {
 	const { providers } = useControllerContext();
 
 	return (
-		<div>
-			{providers.length > 0 ? (
-				<ProviderHandler providers={providers} children={children} />
-			) : (
-				<div>{children}</div>
-			)}
-		</div>
+		<>{providers.length > 0 ? <ProviderHandler providers={providers} children={children} /> : <>{children}</>}</>
 	);
 }
 
