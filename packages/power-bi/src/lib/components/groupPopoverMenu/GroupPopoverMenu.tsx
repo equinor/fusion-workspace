@@ -1,7 +1,6 @@
 import { Menu, Button, Search } from '@equinor/eds-core-react';
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import { EventHub } from '../../classes/eventHub';
 import { PowerBiFilterItem, ActiveFilter, PowerBiFilter } from '../../types';
 import { FilterController } from '../Filter/Filter';
 import { Case, Switch } from '../switch/Switch';
@@ -35,15 +34,6 @@ export const PowerBiGroupPopoverMenu = ({
 	const markAllValuesActive = (filter: PowerBiFilterItem) => controller.deselectAllValues(group, filter);
 
 	const [searchText, setSearchText] = useState('');
-
-	useEffect(() => {
-		const ev = new EventHub();
-
-		const unsub = ev.registerListener('PBIClicked', onCloseMenu);
-		return () => {
-			unsub();
-		};
-	}, []);
 
 	const handleInput = (e) => {
 		const { value } = e.target;

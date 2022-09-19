@@ -11,6 +11,7 @@ export function addPowerBi<TData, TError>(
 	mediator: FusionMediator<TData, TError>
 ) {
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
+
 	//TODO:  Bookmark service config
 	viewController.tabController.addTab({
 		Component: () => <PowerBI controller={controller} />,
