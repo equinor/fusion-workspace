@@ -14,10 +14,7 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
 /**
  * Applies onclick to all cells by default
  */
-export function applyWorkspaceClickToCells<TData, TError>(
-	colDefs: ColDef<TData>[],
-	{ clickService }: FusionMediator<TData, TError>
-) {
+export function applyWorkspaceClickToCells<TData>(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData>) {
 	return colDefs.map((colDef) => ({
 		onCellClicked: (ev) => clickService.click({ item: ev.data }),
 		...colDef,

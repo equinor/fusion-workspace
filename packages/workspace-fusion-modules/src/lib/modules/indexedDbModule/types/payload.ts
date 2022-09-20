@@ -4,6 +4,11 @@ import { ColumnState } from 'ag-grid-community';
 export interface UserSettings<T> {
 	garden: GardenViewState<T>;
 	grid: GridViewState;
+	view: ViewState;
+}
+
+interface ViewState {
+	activeTab?: string;
 }
 
 interface GardenViewState<T> {

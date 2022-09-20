@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-enterprise';
 import { GridController } from '../classes';
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
@@ -11,7 +9,8 @@ import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 interface GridProps<T> {
 	controller: GridController<T>;
 }

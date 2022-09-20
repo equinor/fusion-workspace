@@ -7,11 +7,12 @@ import { configureBookmarkService } from './configureBookmarkService';
 import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';
 import { configureGardenHighlightSelection } from './configureHighlight';
+import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
 
 export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TError>(
 	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>,
+	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>(gardenConfig);
@@ -21,9 +22,12 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	configureGardenHighlightSelection(gardenController, mediator);
 	configureBookmarkService(gardenController, mediator);
 
-	viewController.tabs.addTab({
+	viewController.tabController.addTab({
 		Component: () => <Garden controller={gardenController} />,
 		name: 'garden',
-		HeaderComponent: GardenIcon,
+		TabIcon: GardenIcon,
+		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
 	});
+
+	mediator.onUnMount(gardenController.destroy);
 }

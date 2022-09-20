@@ -10,11 +10,7 @@ export type QueryParam = `${QueryParamTopic}=${string}`;
 /**
  * Function for patching query parameters without manipulating the other query parameters
  */
-export function updateQueryParams<TData, TError>(
-	val: QueryParam[],
-	mediator: FusionMediator<TData, TError>,
-	history: BrowserHistory
-) {
+export function updateQueryParams<TData>(val: QueryParam[], mediator: FusionMediator<TData>, history: BrowserHistory) {
 	/** Remove all topics from existing url that you want to replace */
 	const existingQueryParams = mediator.urlService.url.queryParams.filter((queryParam) =>
 		patchQueryParams(queryParam, val)
@@ -28,10 +24,7 @@ export function updateQueryParams<TData, TError>(
 	history.push(`?${arrayToQueryParam(newQueryParams)}`);
 }
 
-export function configureUrlWithHistory<TData, TError>(
-	mediator: FusionMediator<TData, TError>,
-	history: BrowserHistory
-) {
+export function configureUrlWithHistory<TData>(mediator: FusionMediator<TData>, history: BrowserHistory) {
 	history.listen(({ location }) => {
 		mediator.urlService.setUrl(`${window.location.href}${location.search}`);
 	});
