@@ -13,7 +13,7 @@ The observable class is the core of the mediator services.
 
 ```TS
   const filterData = new Observable<TData[]>();
-  
+
   this.onFilterDataChange = filterData.onchange;
 
   filterData.onchange((val) => {
