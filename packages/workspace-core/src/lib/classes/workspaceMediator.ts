@@ -9,6 +9,7 @@ import { URLService } from './urlService/urlService';
 /**
  * Class to act as a mediator in the workspace
  * Should have all common topics included in its declaration
+ * [Workspace Mediator](https://equinor.github.io/fusion-workspace/packages/workspace-core/mediator)
  */
 export class WorkspaceMediator<
 	TData,
