@@ -1,4 +1,15 @@
 # Verify that a valid Azure Board Work Item Type Story exists
 
 name: ab-story-validation
-  uses: emagers/ab-story-validation-action@v2.0.1
+
+on: 
+  pull_request:
+    types: [opened, edited, reopened]
+
+jobs: 
+  ab-storyid:
+    runs-on: ubuntu-latest
+    name: 'Validate Azure Board StoryID'
+    steps:
+      - name: ab-story-validation
+        uses: emagers/ab-story-validation-action@v2.0.1
