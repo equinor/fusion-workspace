@@ -7,4 +7,4 @@ tags:
 
 ## Concept
 
-## Example
+The observable class is the core of the mediator services.
