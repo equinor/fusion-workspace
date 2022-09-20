@@ -26,10 +26,10 @@ export const CustomItemViewWrapper = <T,>({
 	const controller = useGardenContext();
 	const {
 		clickEvents: { onClickItem },
-		objectIdentifier,
+		getIdentifier,
 	} = controller;
 
-	const isSelected = useIsSelected(item[objectIdentifier] as unknown as string);
+	const isSelected = useIsSelected(getIdentifier(item));
 
 	const onClick = () => onClickItem && onClickItem(item, controller);
 	return (

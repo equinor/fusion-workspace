@@ -12,15 +12,17 @@ export interface SidesheetConfig<TData> {
 	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
 }
 
-export type DataFetchAsync<TData> = () => Promise<TData[]>;
+export type DataSourceOptions<TData> = {
+	/** Function for getting response object from server */
+	getResponseAsync: (signal?: AbortSignal) => Promise<Response>;
+	/**
+	 * Function for parsing response
+	 * Can be omitted if all you do is .json();
+	 */
+	responseParser?: (response: Response) => TData[] | Promise<TData[]>;
+};
 
-export type GetStatusItem<TData> = (item: TData[]) => StatusItem;
-
-interface StatusBar<TData> {
-	getValue: GetStatusItem<TData>;
-}
-
-export type StatusBarConfig<TData> = [StatusBar<TData>, ...StatusBar<TData>[]];
+export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 
 export interface CustomTabProps<TData> {
 	data: TData[];
@@ -31,8 +33,9 @@ export type CustomTabComponent = () => JSX.Element;
 
 export interface CustomTab {
 	name: string;
-	HeaderComponent: () => JSX.Element;
+	TabIcon: () => JSX.Element;
 	Component: CustomTabComponent;
+	CustomHeader?: () => JSX.Element;
 }
 
 export interface AppConfig<TabNames extends string> {

@@ -1,19 +1,10 @@
 # Fusion Workspace
 
-<p style="text-align: left;"><img src="./documentation/images/logo.png" width="350"></p>
+<p style="text-align: left;"><img src="./documentation/src/.vuepress/public/fusion.png" width="350"></p>
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
-| Core Pages                                                          | Description                                                                                                     |
-| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| [Intro](./documentation/Readme.md)                                  | Fusion Workspace v1.0.0 - CC workspace v2.0                                                                     |
-| [Workspace Controller](./documentation/WorkspaceController.md)      | Core component in a workspace, a pure JS library.                                                               |
-| [Workspace React Wrapper](./documentation/WorkspaceReactWrapper.md) | Wrapper for the Workspace Controller                                                                            |
-| [Fusion Workspace](./documentation/FusionWorkspaceFramework.md)     | A simplified way to create a workspace Bootstrapped with view components utilizing the Workspace React Wrapper. |
-| [Fusion Workspace App](./documentation/FusionWorkspaceApp.md)       | How a app is created.                                                                                           |
-| **Other Pages**                                                     |
-
-[Workspace Specification / Feature List](./documentation/WorkspaceProjectFeatureList.md)
+This projects documentation and specification can be found here [Fusion-Workspace](https://equinor.github.io/fusion-workspace/).
 
 This project was generated using [Nx](https://nx.dev).
 

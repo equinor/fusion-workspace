@@ -36,10 +36,12 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 
 	const controller = useGardenContext();
 	const {
+		selectedNodes,
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
+		getIdentifier,
 	} = controller;
 
 	const groups = useGardenGroups();
@@ -94,7 +96,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 								</StyledSubGroup>
 							)
 						) : PackageChild ? (
-							<CustomItemViewWrapper
+							<CustomItemViewWrapper<T>
 								Component={PackageChild}
 								item={item.item}
 								columnExpanded={

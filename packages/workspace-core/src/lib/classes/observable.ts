@@ -1,9 +1,10 @@
-import { Callback, OnchangeCallback } from '../types';
+import { Callback, CompareFunc, OnchangeCallback } from '../types';
 
 /** Converts a value into an observable value */
 export class Observable<TValue> {
-	constructor(initialValue?: TValue) {
+	constructor(initialValue?: TValue, compareFunc?: CompareFunc<TValue>) {
 		this.value = initialValue;
+		compareFunc && (this.compareFunc = compareFunc);
 	}
 
 	/**List of callbacks being stored */
@@ -27,9 +28,15 @@ export class Observable<TValue> {
 	 */
 	setValue = (value: TValue) => {
 		const oldValue = this.value;
+		if (this.compareFunc(value, oldValue)) return;
 		this.value = value;
 		this.#onchangeCallbacks.forEach(({ callback }) => callback(value, oldValue));
 	};
 	/** The value */
 	value?: TValue;
+	/** Prevents setting of identical values
+	 * return false if the old value is different from the new value
+	 * return true to prevent a new value from being set
+	 */
+	compareFunc: CompareFunc<TValue> = () => false;
 }

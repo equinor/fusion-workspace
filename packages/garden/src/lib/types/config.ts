@@ -1,4 +1,5 @@
 import { GardenController } from '../classes';
+import { GetIdentifier } from '../classes';
 import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, BaseRecordObject } from './';
 
 export interface GardenConfig<
@@ -10,7 +11,7 @@ export interface GardenConfig<
 	/** Data to be used for the garden */
 	data: TData[];
 	/** Primary(Unique) identifier for the data */
-	objectIdentifier: keyof TData;
+	getIdentifier: GetIdentifier<TData>;
 	/**
 	 * Callback that takes in an item and returns a label
 	 * I.E item => item.name;

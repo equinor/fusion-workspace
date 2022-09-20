@@ -2,7 +2,7 @@ import { GridController } from '../classes';
 
 const mocFunction = jest.fn();
 
-const gridController = new GridController();
+const gridController = new GridController((s) => '123');
 
 /**
  * Test to make sure the onRowDataChanged callbacks are called and passing the correct data

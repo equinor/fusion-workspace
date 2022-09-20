@@ -1,0 +1,1 @@
+export { GridHeader } from './GridWorkspaceHeader';

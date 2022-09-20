@@ -1,0 +1,1 @@
+export { GardenWorkspaceHeader } from './GardenWorkspaceHeader';

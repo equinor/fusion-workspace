@@ -1,7 +1,10 @@
+import { FilterOptions } from '@equinor/filter';
+import history from 'history/browser';
+import { Action } from 'history';
 import { GardenConfig } from '@equinor/garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+
 import {
-	DataFetchAsync,
 	GridConfig,
 	SidesheetConfig,
 	WorkspaceTabNames,
@@ -9,55 +12,95 @@ import {
 	FusionMediator,
 	CustomTab,
 	AppConfig,
+	FusionWorkspaceModule,
+	DataSourceOptions,
+	FusionWorkspaceError,
 } from '../types';
-import { addCustomTab, addDataSource, addGrid, addSidesheet, addStatusBar, addGarden } from '../utils';
-
-interface UIContext {
-	appKey: string;
-	color: string;
-}
+import {
+	addCustomTab,
+	addDataSource,
+	addGrid,
+	addSidesheet,
+	addStatusBar,
+	addGarden,
+	addFilter,
+	addConfig,
+	addViewController,
+	switchTabOnNavigation,
+	GetIdentifier,
+} from '../utils';
+import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { DumpsterFireDialog } from '../components/ErrorComponent';
 
 export interface WorkspaceContext {
-	ui: UIContext;
+	ui: unknown;
 }
 
-export class FusionWorkspaceBuilder<TData, TError> {
+export class FusionWorkspaceBuilder<TData> {
 	/** The name of your workspace/application */
-	objectIdentifier: keyof TData;
-	appKey?: string;
-	private mediator: FusionMediator<TData, TError>;
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>;
-	constructor(objectIdentifier: keyof TData) {
-		this.objectIdentifier = objectIdentifier;
-		this.mediator = new WorkspaceReactMediator();
-		this.viewController = new WorkspaceViewController<WorkspaceTabNames, TError>();
+	getIdentifier: GetIdentifier<TData>;
 
-		this.mediator.onClick(({ item }) => {
-			const id = item[this.objectIdentifier] as unknown as string;
-			this.mediator.selection.setSelection([{ id }]);
+	private mediator: FusionMediator<TData> = new WorkspaceReactMediator();
+
+	viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
+
+	appKey: string;
+
+	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
+		this.getIdentifier = getIdentifier;
+		this.appKey = appKey;
+
+		this.viewController.ErrorComponent = ({ error }) => {
+			return <DumpsterFireDialog text={error.detail} buttons={[]} />;
+		};
+		this.mediator.onUnMount(this.mediator.destroy);
+
+		addViewController(this.viewController, this.mediator, history);
+
+		configureUrlWithHistory(this.mediator, history);
+
+		this.mediator.clickService.onClick(({ item }) => {
+			const id = getIdentifier(item);
+			this.mediator.selectionService.setSelection([{ id }]);
+			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
-		this.mediator.onIsLoadingChange(this.viewController.viewState.setIsLoading);
+
+		history.listen(({ action }) => {
+			if (action === Action.Pop) {
+				//Navigation back or forward;
+				switchTabOnNavigation(this.mediator, this.viewController);
+			}
+		});
 	}
 
-	addConfig = ({ appColor, appKey, defaultTab }: AppConfig<WorkspaceTabNames>) => {
-		this.appKey = appKey;
-		this.viewController.appColor = appColor;
-		this.viewController.appKey = appKey;
-		this.viewController.tabs.activeTab = defaultTab;
+	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {
+		addConfig(appConfig, this.viewController);
 		return this;
+	};
+
+	/** Add modules from the workspace-fusion-modules package or bring your own */
+	addModules = (modules: FusionWorkspaceModule<TData>[]) => {
+		modules.forEach(this.runModuleSetup);
+		return this;
+	};
+
+	/** Iterate over all setup modules */
+	private runModuleSetup = (module: FusionWorkspaceModule<TData>) => {
+		module.subModules?.forEach(this.runModuleSetup);
+		module.setup(this.mediator, this.appKey);
 	};
 
 	/**
 	 * Add a function for providing data to the workspace
-	 * @param dataFetch An async function returning a data array
+	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addDataSource = (dataFetch: DataFetchAsync<TData>) => {
+	addDataSource = (dataFetch: DataSourceOptions<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
 
-	addMiddleware = (cb: (mediator: FusionMediator<TData, TError>) => void) => {
+	addMiddleware = (cb: (mediator: FusionMediator<TData>) => void) => {
 		cb(this.mediator);
 		return this;
 	};
@@ -79,7 +122,7 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.objectIdentifier);
+		addGarden(config, this.viewController, this.mediator, this.getIdentifier);
 		return this;
 	};
 
@@ -89,9 +132,10 @@ export class FusionWorkspaceBuilder<TData, TError> {
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator, this.objectIdentifier);
+		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier);
 		return this;
 	};
+
 	/**
 	 * Adds a sidesheet to your workspace
 	 * @param config the configuration object for sidesheet
@@ -101,6 +145,12 @@ export class FusionWorkspaceBuilder<TData, TError> {
 		addSidesheet(config, this.viewController, this.mediator);
 		return this;
 	};
+
+	addFilter = (config: FilterOptions<TData>) => {
+		addFilter(config, this.viewController, this.mediator);
+		return this;
+	};
+
 	/**
 	 * Adds a status bar to the top of your workspace.
 	 * @param config Takes in data and returns one or multiple status objects
