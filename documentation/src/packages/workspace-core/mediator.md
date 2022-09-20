@@ -11,12 +11,12 @@ tags:
 A hub allowing for communication between controllers. Is is composed of smaller communication services. Each service handles only one thing and does it well. The core service in mediator is `dataService` more information can be found [here]("/services/#data-service").
 services available in the `WorkspaceMediator` are:
 
--   dataService
--   clickService
--   selectionService
--   errorService
--   bookmarkService
--   urlService
+- dataService
+- clickService
+- selectionService
+- errorService
+- bookmarkService
+- urlService
 
 ::: warning Communication
 The mediator should be the only communication device, and there should not be direct communications between controllers.
@@ -62,12 +62,12 @@ graph LR
 
 ## Middleware
 
-To allow for complete flexibility an `AddMiddleware` function is added. This allows access to th e mediator. This should be used with caution.
+To allow for complete flexibility an `AddMiddleware` function is added. This allows access to the mediator. This should be used with caution.
 The example below is a simple data logger connecting to the onDataChange event.
 
 ```TS
     mediator.AddMiddleware((mediator) => {
-      mediator.onDataChange((data)=> {
+      mediator.dataService.onDataChange((data)=> {
         console.log("The current Data is: ", data)
       })
     })
@@ -114,8 +114,8 @@ A workspace on its own will not have functionality for handling errors. The Erro
 
 The `errorService` is in charge of centralizing all error in a workspace. It should have pan event for when errors occur and away of throwing errors.
 
--   ThrowError
--   onError
+- ThrowError
+- onError
 
 ### Url Service
 
