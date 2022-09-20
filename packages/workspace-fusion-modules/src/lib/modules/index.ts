@@ -1,2 +1,2 @@
 export { IndexedDbModule } from './indexedDbModule';
-export { fusionBookmarksModule } from './fusionBookmarksModule';
+export { fusionBookmarksModule, handleBoomarksFromPortal } from './fusionBookmarksModule';
