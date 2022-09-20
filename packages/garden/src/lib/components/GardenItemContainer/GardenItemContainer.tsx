@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
@@ -9,7 +9,7 @@ import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../
 import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles';
 import { tokens } from '@equinor/eds-tokens';
 import { Icon } from '@equinor/eds-core-react';
-import { CustomItemViewWrapper } from '../CustomItemWrapper/CustomItemWrapper';
+import { useSelected } from '../../hooks/useSelected';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<T> = {
@@ -36,7 +36,6 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 
 	const controller = useGardenContext();
 	const {
-		selectedNodes,
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
@@ -45,6 +44,8 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 	} = controller;
 
 	const groups = useGardenGroups();
+
+	const selectedIds = useSelected();
 
 	const expand = useExpand();
 
@@ -96,20 +97,26 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 								</StyledSubGroup>
 							)
 						) : PackageChild ? (
-							<CustomItemViewWrapper<T>
-								Component={PackageChild}
-								item={item.item}
+							<PackageChild
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
+								controller={controller as any}
+								data={item.item}
+								isSelected={selectedIds.includes(getIdentifier(item.item))}
+								onClick={() => {
+									controller.clickEvents.onClickItem &&
+										controller.clickEvents.onClickItem(item.item, controller);
+								}}
+								width={itemWidth}
 								depth={item?.itemDepth}
-								itemWidth={itemWidth}
 								rowStart={virtualRow.start}
 								columnStart={virtualColumn.start}
 								parentRef={parentRef}
 							/>
 						) : (
 							<DefaultGardenItem
+								isSelected={selectedIds.includes(getIdentifier(item.item))}
 								depth={item.itemDepth}
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
