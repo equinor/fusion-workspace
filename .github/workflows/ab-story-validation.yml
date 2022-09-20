@@ -13,3 +13,6 @@ jobs:
     steps:
       - name: ab-story-validation
         uses: emagers/ab-story-validation-action@v2.0.1
+        with:
+          repo-token: '${{secrets.GITHUB_TOKEN}}'
+          
