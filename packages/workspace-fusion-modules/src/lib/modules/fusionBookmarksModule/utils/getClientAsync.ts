@@ -14,17 +14,3 @@ export async function getFusionClient(): Promise<IHttpClient> {
 	const client = await fusion.modules.serviceDiscovery.createClient('bookmarks');
 	return client;
 }
-
-export const bookmarksApi = {
-	getBookmarkById,
-};
-
-async function getBookmarkById(bookmarkId: string): Promise<BookmarkResponse> {
-	const client = await getFusionClient();
-	const res = await client.fetch(`/bookmarks/${bookmarkId}`);
-	return await res.json();
-}
-export type BookmarkResponse<TPayload = unknown> = {
-	id: string;
-	payload: TPayload;
-};
