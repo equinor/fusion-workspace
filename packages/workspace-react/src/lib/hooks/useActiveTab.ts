@@ -4,7 +4,7 @@ import { useControllerContext } from './useControllerContext';
 
 export function useActiveTab() {
 	const {
-		tabs: { tabs, onActiveTabChanged, activeTab },
+		tabController: { tabs, onActiveTabChanged, activeTab },
 	} = useControllerContext();
 
 	const [tab, setTab] = useState<Tab<string> | undefined>(tabs.find((s) => s.name === activeTab));

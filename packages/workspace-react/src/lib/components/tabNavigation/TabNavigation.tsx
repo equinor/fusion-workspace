@@ -7,13 +7,13 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  */
 export function TabNavigation() {
 	const {
-		tabs: { tabs, setActiveTab },
+		tabController: { tabs, setActiveTab },
 	} = useControllerContext();
 	const activeTab = useActiveTab();
 
 	return (
 		<TabButtonList>
-			{tabs.map(({ name, HeaderComponent }) => (
+			{tabs.map(({ name, TabIcon }) => (
 				<TabButton
 					isActive={name === activeTab?.name}
 					onClick={() => {
@@ -21,7 +21,7 @@ export function TabNavigation() {
 					}}
 					key={name}
 				>
-					<HeaderComponent />
+					<TabIcon />
 				</TabButton>
 			))}
 		</TabButtonList>

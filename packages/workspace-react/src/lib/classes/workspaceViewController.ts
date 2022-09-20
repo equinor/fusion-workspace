@@ -1,5 +1,5 @@
-import { Observable } from '@workspace/workspace-core';
-import { FilterController } from './filterController';
+import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
 import { WorkspaceSidesheetController } from './workspaceSidesheetController';
@@ -14,26 +14,50 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
 
-	filter = new FilterController();
+	tabController = new TabController<TTabNames>();
 
-	tabs = new TabController<TTabNames>();
+	providers: Provider[] = [];
 
-	addStatusBarComponent = (comp: Component) => {
-		this.StatusBarComponent = comp;
+	addProvider = (provider: Provider) => {
+		this.providers.push(provider);
 	};
 
 	addSidesheetComponent = (comp: Component) => {
 		this.sidesheet.Component = comp;
 	};
 
-	/** Component for handling errors */
-	ErrorComponent?: (error: TError) => JSX.Element;
+	constructor() {
+		const error = new Observable<TError | undefined>(undefined);
+		this.setError = error.setValue;
+		this.onError = error.onchange;
 
-	/** Status bar component to be shown in left side of header */
-	StatusBarComponent?: () => JSX.Element;
+		error.onchange((val) => {
+			this.error = val;
+		});
+	}
+
+	error?: TError;
+
+	setError: (value: TError | undefined) => void;
+
+	onError: (callback: OnchangeCallback<TError | undefined>) => () => void;
+
+	/** Component for handling errors */
+	ErrorComponent?: (error: ErrorProps<TError>) => JSX.Element;
 
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
 
 	isMounted = new Observable(false, (a, b) => a === b);
+
+	destroy = () => {
+		for (const key in this) {
+			this[key] = null as unknown as this[Extract<keyof this, string>];
+			delete this[key];
+		}
+	};
 }
+
+type ErrorProps<TError> = {
+	error: TError;
+};

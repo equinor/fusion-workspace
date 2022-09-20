@@ -19,7 +19,9 @@ export class FilterStateController {
 		const { onchange, setValue } = new Observable<FilterGroup[]>([]);
 		this.setFilterState = setValue;
 		this.onFilterStateChange = onchange;
-		onchange((val) => (this.filterState = val));
+		onchange((val) => {
+			this.filterState = val;
+		});
 	}
 
 	/**
