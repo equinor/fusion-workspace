@@ -2,8 +2,8 @@ import { FusionMediator, FusionWorkspaceModule } from '@equinor/workspace-fusion
 import { bookmarksApi } from './utils/getClientAsync';
 
 /**
- * Persists view state in index db, applies by default on page load
- * Will not load if bookmark is in the url
+ * If bookmarkId is present in the url it will fetch the bookmark from fusion and apply it
+ * e.g *.equinor.com?bookmarkId="049c0648-6de2-418d-ac82-ca95531e79a7"
  */
 export const fusionBookmarksModule: FusionWorkspaceModule<any> = {
 	name: 'FusionBookmarks',
@@ -31,4 +31,12 @@ async function checkForBookmarkId() {
 	}
 
 	const bookmark = await bookmarksApi.getBookmarkById(bookmarkId);
+	validateBookmark(bookmark);
+}
+
+// Design question, is this even necessary. The function recieving the bookmark should maybe be responsible for validating its content.
+function validateBookmark(bookmark: any) {
+	if (!bookmark) {
+		throw new Error('Invalid bookmark, failed to apply');
+	}
 }
