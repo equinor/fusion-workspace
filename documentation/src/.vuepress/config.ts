@@ -43,6 +43,11 @@ export default hope.config({
 							'/packages/workspace-core/observable',
 						],
 					},
+					{
+						title: 'Workspace React',
+						path: '/packages/workspace-react',
+						children: ['/packages/workspace-react/controller'],
+					},
 				],
 			},
 			{
