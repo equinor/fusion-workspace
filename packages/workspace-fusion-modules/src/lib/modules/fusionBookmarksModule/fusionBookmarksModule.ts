@@ -9,22 +9,22 @@ import { isBookmarkAction } from './utils/typeGuard';
  * If bookmarkId is present in the url it will fetch the bookmark from fusion and apply it
  * e.g *.equinor.com?bookmarkId="049c0648-6de2-418d-ac82-ca95531e79a7"
  */
-export const fusionBookmarksModule: FusionWorkspaceModule<any> = {
+export const fusionBookmarksModule: FusionWorkspaceModule<unknown> = {
 	name: 'FusionBookmarks',
 	setup,
 };
 
-async function setup(mediator: FusionMediator<any>, appKey: string) {
+async function setup(mediator: FusionMediator<unknown>, appKey: string) {
 	mediator.urlService.onUrlChange(checkForBookmarkId);
 	mediator.onMount(checkForBookmarkId);
 
-	const bookmarkHandler = (event: MessageEvent<any>) => handler(event, mediator);
+	const bookmarkHandler = (event: MessageEvent<unknown>) => handler(event, mediator);
 
 	mediator.onMount(() => window.addEventListener('message', bookmarkHandler));
 	mediator.onUnMount(() => window.removeEventListener('message', bookmarkHandler));
 }
 
-async function handler(event: MessageEvent<any>, mediator: FusionMediator<any>): Promise<void> {
+async function handler(event: MessageEvent<unknown>, mediator: FusionMediator<unknown>): Promise<void> {
 	if (!isBookmarkAction(event.data)) return;
 	const action = event.data;
 	switch (action.type) {
@@ -40,7 +40,7 @@ async function handler(event: MessageEvent<any>, mediator: FusionMediator<any>):
 
 		case 'save': {
 			try {
-				handleSave(action.name, mediator);
+				await handleSave(action.name, mediator);
 				messageHandler.success(action);
 			} catch (e) {
 				messageHandler.failed(action);
@@ -62,7 +62,7 @@ async function handler(event: MessageEvent<any>, mediator: FusionMediator<any>):
 /**
  * Applies a bookmark to the workspace
  */
-async function handleApply(bookmarkId: string, mediator: FusionMediator<any>) {
+async function handleApply(bookmarkId: string, mediator: FusionMediator<unknown>) {
 	console.log(`applying bookmark with id ${bookmarkId}`);
 	const bookmark = await bookmarksApi.getBookmarkById(bookmarkId);
 	console.log(bookmark);
@@ -70,7 +70,7 @@ async function handleApply(bookmarkId: string, mediator: FusionMediator<any>) {
 /**
  * Saves a bookmark from the workspace
  */
-async function handleSave(name: string, mediator: FusionMediator<any>) {
+async function handleSave(name: string, mediator: FusionMediator<unknown>) {
 	console.log(`Saving bookmark requested ${name}`, mediator.bookmarkService.capture());
 }
 
