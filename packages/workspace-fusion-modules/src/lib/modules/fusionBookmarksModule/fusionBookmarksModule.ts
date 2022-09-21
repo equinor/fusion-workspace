@@ -82,13 +82,12 @@ async function handleSave(name: string, mediator: FusionMediator<unknown>, appKe
 		isShared: false,
 		payload,
 		description: '',
-		sourceSystem: {} as any,
 	};
 	const client = getFusionClient();
 
 	const response = await (
 		await client
-	).fetch('/bookmarksss', { body: JSON.stringify(bookmarkPayload), method: 'POST' });
+	).fetch('/bookmarks', { body: JSON.stringify(bookmarkPayload), method: 'POST' });
 	if (!response.ok) throw new Error('Response not ok');
 }
 
@@ -104,7 +103,7 @@ interface BookmarkPayload {
 	appKey: string;
 	contextId: string;
 	payload: unknown;
-	sourceSystem: {
+	sourceSystem?: {
 		identifier: string;
 		name: string;
 		subSystem: string;
