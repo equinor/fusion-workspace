@@ -1,6 +1,6 @@
 import { tokens } from '@equinor/eds-tokens';
-import { FilterValueType } from '@equinor/filter';
 import styled from 'styled-components';
+export type FilterValueType = string | number | null;
 
 export function getFilterHeaderText(
 	isAllChecked: boolean,
