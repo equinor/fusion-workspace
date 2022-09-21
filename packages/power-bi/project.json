@@ -1,9 +1,29 @@
 {
-	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "packages/power-bi/src",
 	"projectType": "library",
 	"tags": [],
 	"targets": {
+		"build": {
+			"executor": "@nrwl/web:rollup",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/power-bi",
+				"tsConfig": "packages/power-bi/tsconfig.lib.json",
+				"project": "packages/power-bi/package.json",
+				"entryFile": "packages/power-bi/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/power-bi/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
+			}
+		},
 		"lint": {
 			"executor": "@nrwl/linter:eslint",
 			"outputs": ["{options.outputFile}"],

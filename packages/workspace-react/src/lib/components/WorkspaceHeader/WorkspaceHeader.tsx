@@ -6,7 +6,7 @@ export function WorkspaceHeader() {
 	if (!tab || !tab.CustomHeader) return <ActionBar />;
 
 	return (
-		<div>
+		<div style={{ overflowX: 'hidden' }}>
 			<tab.CustomHeader />
 		</div>
 	);

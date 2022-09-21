@@ -17,6 +17,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@equinor/garden": ["packages/garden/src/index.ts"],
+			"@equinor/powerbi": ["packages/power-bi/src/index.ts"],
 			"@equinor/sidesheet": ["packages/sidesheet/src/index.ts"],
 			"@equinor/status-bar": ["packages/status-bar/src/index.ts"],
 			"@equinor/workspace-fusion": ["packages/workspace-fusion/src/index.ts"],

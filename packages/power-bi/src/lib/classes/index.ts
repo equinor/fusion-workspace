@@ -1,0 +1,1 @@
+export { PowerBiController } from './powerBiController';

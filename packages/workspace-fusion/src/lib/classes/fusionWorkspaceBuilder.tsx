@@ -14,6 +14,8 @@ import {
 	AppConfig,
 	FusionWorkspaceModule,
 	DataSourceOptions,
+	PowerBiConfig,
+	FusionPowerBiConfig,
 	FusionWorkspaceError,
 } from '../types';
 import {
@@ -30,6 +32,8 @@ import {
 	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
+import { addPowerBi } from '../utils/powerBI/addPowerBi';
+import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 
 export interface WorkspaceContext {
@@ -71,6 +75,19 @@ export class FusionWorkspaceBuilder<TData> {
 				switchTabOnNavigation(this.mediator, this.viewController);
 			}
 		});
+	}
+
+	addPowerBi = (config: PowerBiConfig) => {
+		addPowerBi(config, this.viewController, this.mediator);
+		return this;
+	};
+
+	/** Requires fusion framework, and service discovery module */
+	addFusionPowerBI({ reportUri }: FusionPowerBiConfig) {
+		const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri);
+		const getToken = () => FusionPowerBiConfigurator.getToken(reportUri);
+		this.addPowerBi({ getConfig, getToken, reportUri });
+		return this;
 	}
 
 	addConfig = (appConfig: AppConfig<WorkspaceTabNames>) => {

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { HttpClientMsal, useHttpClient } from '@equinor/fusion-framework-react-app/http';
+import { createFusionWorkspace, FusionClient } from '@equinor/workspace-fusion';
 import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
@@ -15,7 +15,11 @@ export function HandoverApp() {
 		return createWorkspaceController(client);
 	}, []);
 
-	return <Workspace controller={controller} />;
+	return (
+		<div style={{ height: '100vh' }}>
+			<Workspace controller={controller} />
+		</div>
+	);
 }
 
 const createWorkspaceController = (client: HttpClientMsal) => {
@@ -28,6 +32,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 						{ signal }
 					),
 			})
+			.addFusionPowerBI({ reportUri: 'pp-work-preparation' })
 			.addFilter([
 				{
 					name: 'Comm status',
