@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
 import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { IndexedDbModule, fusionBookmarksModule, handleBoomarksFromPortal } from '@equinor/workspace-fusion-modules';
+import { IndexedDbModule, fusionBookmarksModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
 import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
-import { Button } from '@equinor/eds-core-react';
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -17,20 +16,9 @@ export function HandoverApp() {
 
 	return (
 		<div>
-			<Button onClick={applyBookmark}>Apply bookmark</Button>
-			<Button onClick={saveBookmark}>Save bookmark</Button>
 			<Workspace controller={controller} />
 		</div>
 	);
-}
-
-function applyBookmark() {
-	console.log(handleBoomarksFromPortal({ type: 'apply', bookmarkId: 'd3bb58a1-1ca1-456f-bed5-041069041157' }));
-}
-
-function saveBookmark() {
-	const status = handleBoomarksFromPortal({ type: 'save', name: 'bookmark1' });
-	console.log(status);
 }
 
 const createWorkspaceController = (client: HttpClientMsal) => {
