@@ -66,7 +66,6 @@ export const FilterGroupPopoverMenu = ({
 			aria-labelledby="anchor-complex"
 			open={true}
 			anchorEl={anchorEl}
-			ref={ref}
 			onClose={closePopover}
 			placement={'bottom-end'}
 		>
