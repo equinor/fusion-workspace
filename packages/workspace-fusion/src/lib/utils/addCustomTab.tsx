@@ -5,7 +5,7 @@ import { CustomTab, FusionMediator, WorkspaceTabNames } from '../types';
 export function addCustomTab<TData, TError>(
 	{ Component, TabIcon, name, CustomHeader }: CustomTab,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>
+	mediator: FusionMediator<TData>
 ) {
 	viewController.tabController.addTab({
 		Component: () => <CustomTabWrapper Component={Component} mediator={mediator} />,

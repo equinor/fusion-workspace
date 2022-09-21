@@ -1,3 +1,4 @@
+import { GardenController } from '../classes';
 import { GetIdentifier } from '../classes';
 import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, BaseRecordObject } from './';
 
@@ -25,4 +26,5 @@ export interface GardenConfig<
 	clickEvents?: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>;
 
 	getCustomState?: (data: TData[]) => TCustomState;
+	configFunction?: (controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>) => void;
 }

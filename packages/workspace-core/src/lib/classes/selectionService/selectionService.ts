@@ -5,7 +5,10 @@ interface Node {
 	id: string;
 }
 
-/** Service for keeping track over selected nodes in the system */
+/**
+ * Service for keeping track over selected nodes in the system
+ * fro more info se documentation. [Selection Service](https://equinor.github.io/fusion-workspace/packages/workspace-core/services/#selection-service)
+ */
 export class SelectionService {
 	/** Register a callback for when the selection changes */
 	onSelectionChanged: (callback: OnchangeCallback<Node[]>) => void;

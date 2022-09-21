@@ -1,6 +1,11 @@
 import { OnchangeCallback } from '../../types';
 import { Observable } from '../observable';
 
+/**
+ * Handling data related to workspace.
+ * For more documentation see docs here.
+ * [Data Service](https://equinor.github.io/fusion-workspace/packages/workspace-core/services/#data-service)
+ */
 export class DataService<TData> {
 	/** Register a callback to be called when filtered data changes*/
 	onDataChange: (callback: OnchangeCallback<TData[]>) => () => void;

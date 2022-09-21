@@ -6,6 +6,11 @@ interface Location {
 	url: string;
 }
 
+/**
+ * The urlService main responsibility is to extract query parameters and notify onUrlChanged, callback registered.
+ * For more information se documentation
+ * [URL Service](https://equinor.github.io/fusion-workspace/packages/workspace-core/services/#url-service)
+ */
 export class URLService {
 	onUrlChange: (callback: OnchangeCallback<Location>) => void;
 

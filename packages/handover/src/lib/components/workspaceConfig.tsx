@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
 import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 import { FilterValueType } from '@equinor/filter';
+import React from 'react';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -56,11 +57,6 @@ export const sidesheetOptions: SidesheetConfig<Handover> = {
 		return ev.item.commpkgNo;
 	},
 };
-
-export const dataSourceOptions = async (signal?: AbortSignal): Promise<Handover[]> =>
-	new Promise((resolve) => {
-		setTimeout(() => resolve(mockData), Math.random() * (5000 - 500) + 500);
-	});
 
 export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
 	{ title: 'Total CP', value: data.reduce((prev) => prev + 1, 0) },

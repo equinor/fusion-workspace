@@ -6,10 +6,16 @@ import { WorkspaceOnClick } from './onClick';
 /**
  * Workspace controller for fusion with some predefined types
  */
-export type FusionMediator<TData, TError> = WorkspaceReactMediator<
+export type FusionMediator<TData> = WorkspaceReactMediator<
 	TData,
 	WorkspaceOnClick<TData>,
-	TError,
+	FusionWorkspaceError,
 	WorkspaceContext,
 	FusionBookmark<TData>
 >;
+
+export type FusionWorkspaceError = {
+	code: number;
+	detail: string;
+	title: string;
+};
