@@ -1,7 +1,7 @@
 import { ActionResponse, BookmarkActions } from '../types/actions';
 
-export const isStatus = (obj: unknown): obj is ActionResponse => {
-	return (obj as ActionResponse)?.status !== undefined;
+export const isStatus = <T>(obj: unknown): obj is ActionResponse<T> => {
+	return (obj as ActionResponse<T>)?.status !== undefined;
 };
 
 export const isBookmarkAction = (obj: unknown): obj is BookmarkActions => {
