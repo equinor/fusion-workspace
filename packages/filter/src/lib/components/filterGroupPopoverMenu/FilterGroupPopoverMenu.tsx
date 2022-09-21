@@ -33,7 +33,6 @@ export const FilterGroupPopoverMenu = ({
 	CustomRender,
 	groupName,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
-	const ref = useRef(null);
 	const [searchText, setSearchText] = useState<string>('');
 
 	const { getCountForFilterValue } = useFilterContext();
