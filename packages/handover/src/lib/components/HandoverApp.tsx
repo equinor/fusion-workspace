@@ -15,7 +15,11 @@ export function HandoverApp() {
 		return createWorkspaceController(client);
 	}, []);
 
-	return <Workspace controller={controller} />;
+	return (
+		<div style={{ height: '100vh' }}>
+			<Workspace controller={controller} />
+		</div>
+	);
 }
 
 const createWorkspaceController = (client: HttpClientMsal) => {
