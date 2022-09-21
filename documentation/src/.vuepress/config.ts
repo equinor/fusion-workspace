@@ -52,14 +52,6 @@ export default hope.config({
 				sidebarDepth: 3,
 				children: [
 					{
-						title: 'Workspace Core',
-						children: [
-							'/spec/workspace-core/controller',
-							'/spec/workspace-core/mediator',
-							'/spec/workspace-core/services',
-						],
-					},
-					{
 						title: 'Workspace React',
 						children: ['/spec/workspace-react/widgets', '/spec/workspace-react/wrapper'],
 					},

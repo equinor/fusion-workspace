@@ -1,3 +1,13 @@
+/** type for on capturing controller state function */
+type OnCapture<TState> = (state: TState) => void;
+
+/** type for capturing controller state function */
+type CaptureFunc<TState> = () => Partial<TState>;
+
+/**
+ * Allows for capturing controller states and consolidates data for persistance.
+ * for more info se documentation [Bookmark Service](https://equinor.github.io/fusion-workspace/packages/workspace-core/services/#bookmark-service)
+ */
 export class BookmarkService<TBookmarkState extends Record<PropertyKey, unknown>> {
 	private onCaptureCallbacks: OnCapture<TBookmarkState>[] = [];
 
@@ -36,7 +46,3 @@ export class BookmarkService<TBookmarkState extends Record<PropertyKey, unknown>
 		this.captureCallbacks.push(cb);
 	}
 }
-
-type OnCapture<TState> = (state: TState) => void;
-
-type CaptureFunc<TState> = () => Partial<TState>;

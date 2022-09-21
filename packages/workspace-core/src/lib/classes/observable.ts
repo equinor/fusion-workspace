@@ -1,6 +1,10 @@
 import { Callback, CompareFunc, OnchangeCallback } from '../types';
 
-/** Converts a value into an observable value */
+/**
+ * Converts a value into an observable value
+ * for more information se documentation.
+ * [Observable](https://equinor.github.io/fusion-workspace/packages/workspace-core/observable)
+ */
 export class Observable<TValue> {
 	constructor(initialValue?: TValue, compareFunc?: CompareFunc<TValue>) {
 		this.value = initialValue;
