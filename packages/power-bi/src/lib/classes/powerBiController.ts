@@ -28,21 +28,6 @@ export class PowerBiController {
 
 	private cb: Callback<Report>[] = [];
 
-	onReportReady = (callback: OnReportReady) => {
-		const id = Math.random() * 16;
-		this.cb.push({ callback, id });
-		return () => {
-			this.cb.filter((s) => s.id !== id);
-		};
-	};
-
-	reportReady = (newValue: Report) => {
-		newValue.on('pageChanged', (page: ICustomEvent<any>) => {
-			this.setActivePage(page.detail.newPage);
-		});
-		this.cb.map(({ callback }) => callback).forEach((callback) => callback(newValue));
-	};
-
 	constructor(reportUri: string, getConfig: GetPowerBiEmbedConfig) {
 		this.reportUri = reportUri;
 		this.getConfig = async (uri) => {
@@ -66,6 +51,21 @@ export class PowerBiController {
 			this.activePage = val;
 		});
 	}
+
+	onReportReady = (callback: OnReportReady) => {
+		const id = Math.random() * 16;
+		this.cb.push({ callback, id });
+		return () => {
+			this.cb.filter((s) => s.id !== id);
+		};
+	};
+
+	reportReady = (newValue: Report) => {
+		newValue.on('pageChanged', (page: ICustomEvent<any>) => {
+			this.setActivePage(page.detail.newPage);
+		});
+		this.cb.map(({ callback }) => callback).forEach((callback) => callback(newValue));
+	};
 }
 
 type OnReportReady = (report: Report) => void;
