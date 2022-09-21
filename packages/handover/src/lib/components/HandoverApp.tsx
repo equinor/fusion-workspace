@@ -6,6 +6,7 @@ import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
 import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
+import { gardenConfig } from './gardenConfig';
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -63,13 +64,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				defaultTab: 'grid',
 			})
 			.addSidesheet(sidesheetOptions)
-			.addGarden({
-				data: [],
-				nodeLabelCallback: (s) => s.commpkgNo,
-				getIdentifier: (s) => s.commpkgNo,
-				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				fieldSettings: {},
-			})
+			.addGarden(gardenConfig)
 			.addMiddleware((mediator) => {
 				mediator.onMount(() => console.log('App mounted'));
 				mediator.onUnMount(() => console.log('App unmounted'));

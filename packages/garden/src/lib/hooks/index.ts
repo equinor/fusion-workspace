@@ -7,4 +7,4 @@ export * from './useItemWidths';
 export * from './useRefresh';
 export * from './useVirtualScrolling';
 export * from './useGardenContext';
-export * from './useIsSelected';
+export * from './useSelected';

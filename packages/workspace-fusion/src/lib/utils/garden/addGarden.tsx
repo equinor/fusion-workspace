@@ -16,7 +16,7 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 	getIdentifier: GetIdentifier<TData>
 ) {
 	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>(gardenConfig);
-
+	gardenConfig.configFunction && gardenConfig.configFunction(gardenController);
 	configureDataChange(gardenController, mediator);
 	configureClickEvents(gardenController, mediator, getIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
