@@ -53,7 +53,7 @@ const VirtualRowWrapper = styled.div`
 	position: relative;
 `;
 
-export const FilterItemValue = memo(VirtualFilterItemCheckbox);
+const FilterItemValue = memo(VirtualFilterItemCheckbox);
 
 const Parent = styled.div`
 	height: 100%;
