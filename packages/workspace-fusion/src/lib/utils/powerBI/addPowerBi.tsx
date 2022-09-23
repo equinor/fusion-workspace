@@ -8,7 +8,7 @@ import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
 export function addPowerBi<TData, TError>(
 	powerBiConfig: PowerBiConfig,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TError>
+	mediator: FusionMediator<TData>
 ) {
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 
@@ -18,6 +18,7 @@ export function addPowerBi<TData, TError>(
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
 		name: 'powerbi',
 		TabIcon: () => <PowerBiIcon />,
+		ignoreLoading: true,
 	});
 
 	mediator.onMount(() => {

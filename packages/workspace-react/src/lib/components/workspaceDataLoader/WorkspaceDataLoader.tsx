@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useActiveTab } from '../../hooks';
 import { useIsLoading } from '../../hooks/useIsLoading';
 import { WorkspaceLoadingSpinner } from '../workspaceLoadingSpinner';
 
@@ -12,7 +13,14 @@ interface WorkspaceDataLayerProps {
  */
 
 export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
-	if (useIsLoading()) {
+	const activeTab = useActiveTab();
+	const isLoading = useIsLoading();
+
+	if (activeTab?.ignoreLoading) {
+		return <>{children}</>;
+	}
+
+	if (isLoading) {
 		return <WorkspaceLoadingSpinner />;
 	}
 
