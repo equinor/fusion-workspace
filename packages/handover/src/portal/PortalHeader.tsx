@@ -12,7 +12,6 @@ export const PortalHeader = () => {
 
 const StyledHeader = styled.div`
 	height: 48px;
-	width: 100vw;
 	display: flex;
 	padding: 0 1em;
 	align-items: center;
