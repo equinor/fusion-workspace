@@ -13,6 +13,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import { openDB } from 'idb';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { GanttChart } from './GanttChart';
 
 Icon.add({ star_circle, star_filled, star_half, star_outlined });
 
@@ -77,6 +78,11 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 							<StarredItems />
 						</QueryClientProvider>
 					),
+				})
+				.addCustomTab({
+					Component: GanttChart,
+					name: 'gantt',
+					TabIcon: () => <div>gantt</div>,
 				})
 				.addConfig({
 					appColor: 'purple',

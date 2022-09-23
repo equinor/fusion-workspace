@@ -15,6 +15,7 @@ import {
 } from './popoverContent.styles';
 import { FlagIcon } from './FlagIcon';
 import { SizeIcons } from './SizeIcons';
+import React from 'react';
 
 type PopoverContentProps = {
 	data: Handover;
