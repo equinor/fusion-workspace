@@ -13,11 +13,12 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 interface GridProps<T> {
 	controller: GridController<T>;
+	height: number;
 }
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<T>({ controller }: GridProps<T>) {
+export function Grid<T>({ controller, height }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
@@ -26,7 +27,7 @@ export function Grid<T>({ controller }: GridProps<T>) {
 	useColumnState(controller, columnApi);
 
 	return (
-		<StyledGridWrapper className="ag-theme-alpine">
+		<StyledGridWrapper style={{ height }} className="ag-theme-alpine">
 			<AgGridReact
 				onGridReady={(api) => {
 					setGridApi(api.api);
