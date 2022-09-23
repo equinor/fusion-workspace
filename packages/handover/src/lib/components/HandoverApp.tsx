@@ -1,21 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { HttpClientMsal, useHttpClient } from '@equinor/fusion-framework-react-app/http';
-import { createFusionWorkspace, FusionClient, useWorkspace } from '@equinor/workspace-fusion';
-import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
+import { createFusionWorkspace, useFilteredData, useWorkspace, WorkspaceHeader } from '@equinor/workspace-fusion';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
 import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
 import { gardenConfig } from './gardenConfig';
 import { CircularProgress, Icon } from '@equinor/eds-core-react';
-import { star_circle, star_filled, star_half, star_outlined } from '@equinor/eds-icons';
+import { star_circle, star_filled, star_half, star_outlined, bar_chart } from '@equinor/eds-icons';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef } from 'ag-grid-community';
 import { openDB } from 'idb';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { GanttChart } from './GanttChart';
+import { GantTask, GanttChart, useResizeObserver } from './GanttChart';
+import styled from 'styled-components';
 
-Icon.add({ star_circle, star_filled, star_half, star_outlined });
+Icon.add({ star_circle, star_filled, star_half, star_outlined, bar_chart });
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -80,9 +79,10 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 					),
 				})
 				.addCustomTab({
-					Component: GanttChart,
+					CustomHeader: WorkspaceHeader,
+					Component: HandoverGanttChart,
 					name: 'gantt',
-					TabIcon: () => <div>gantt</div>,
+					TabIcon: GanttIcon,
 				})
 				.addConfig({
 					appColor: 'purple',
@@ -99,6 +99,42 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 		// .addModules([IndexedDbModule])
 	);
 };
+
+function HandoverGanttChart() {
+	const filteredData = useFilteredData<Handover>(useWorkspace());
+	const ref = useRef<HTMLDivElement>(null);
+	const { width, height } = useResizeObserver(ref);
+	if (!filteredData) {
+		return <div>no data</div>;
+	}
+
+	return (
+		<div ref={ref}>
+			<GanttChart<Handover>
+				height={height}
+				width={width}
+				data={filteredData}
+				transform={(e) =>
+					e
+						.filter((s) => s.plannedStartDate && s.plannedFinishDate)
+						.map(
+							(comm, i, a): GantTask<Handover> => ({
+								id: comm.commpkgNo,
+								name: comm.commpkgNo,
+								start: new Date(comm.plannedStartDate),
+								end: new Date(comm.plannedFinishDate),
+								progress: Number(comm.progress),
+								type: 'task',
+								item: comm,
+								project: comm.system,
+								dependencies: [a[i - 1]?.commpkgNo],
+							})
+						)
+				}
+			/>
+		</div>
+	);
+}
 
 const StarredItems = () => {
 	const { dataService } = useWorkspace();
@@ -163,3 +199,17 @@ type SaveAction = {
 	action: 'save';
 	id: string;
 };
+
+const GanttIcon = () => (
+	<StyledGantIconWrapper>
+		<Icon name="bar_chart" color={'#6F6F6F'} />
+	</StyledGantIconWrapper>
+);
+
+const StyledGantIconWrapper = styled.div`
+	transform: rotate(90deg);
+	width: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;

@@ -2,7 +2,7 @@ import { useOnFilteredDataChanged } from '@equinor/filter';
 import { useWorkspace } from '@equinor/workspace-fusion';
 import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from 'gantt-task-react';
 import 'gantt-task-react/dist/index.css';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Handover } from './types';
 /**
  * Default Gantt sample
@@ -10,16 +10,29 @@ import { Handover } from './types';
 
 const options = ['Week', 'Month', 'Year'];
 
-export const GanttChart = () => {
-	const data = useOnFilteredDataChanged() as Handover[];
+interface GanttChartProps<T> {
+	transform: (data: T[]) => GantTask<T>[];
+	data: T[];
+	height: number;
+	width: number;
+}
+
+export const GanttChart = <T,>({ data, transform, height, width }: GanttChartProps<T>) => {
 	const { clickService } = useWorkspace();
 	const [viewMode, setViewMode] = useState(ViewMode.Year);
 	const [pageSize, setPageSize] = useState(25);
 
 	const [page, setPage] = useState(1);
 
+	const gantData = useMemo(() => {
+		return transform(data).slice(page * pageSize, page * pageSize + pageSize);
+	}, [data, page, pageSize]);
+
 	const ref = useRef(null);
-	const [width, height] = useResizeObserver(ref);
+
+	if (gantData.length === 0) {
+		return <div>No data</div>;
+	}
 	return (
 		<div>
 			<div style={{ width: '500px', display: 'flex', gap: '0.5em' }}>
@@ -46,11 +59,11 @@ export const GanttChart = () => {
 					viewMode={viewMode}
 					fontFamily="Equinor"
 					barProgressColor={tokens.colors.interactive.primary__resting.hex}
-					onClick={(task) => clickService.click({ item: (task as GantTask).item })}
+					onClick={(task) => clickService.click({ item: (task as GantTask<T>).item })}
 					TooltipContent={({ task }) => (
 						<div style={{ backgroundColor: 'white', border: '2px solid grey' }}>
 							<PopoverContent
-								data={(task as GantTask).item}
+								data={(task as GantTask<T>).item}
 								itemOptions={{
 									barColor: 'red',
 									commStatusColor: 'red',
@@ -64,30 +77,15 @@ export const GanttChart = () => {
 						</div>
 					)}
 					ganttHeight={height}
-					tasks={data
-						.slice(page * pageSize, page * pageSize + pageSize)
-						.filter((s) => s.plannedStartDate && s.plannedFinishDate)
-						.map(
-							(comm, i, a): GantTask => ({
-								id: comm.commpkgNo,
-								name: comm.commpkgNo,
-								start: comm.plannedStartDate ? new Date(comm.plannedStartDate) : new Date(),
-								end: comm.plannedFinishDate ? new Date(comm.plannedFinishDate) : new Date(),
-								progress: Number(comm.progress),
-								type: 'task',
-								item: comm,
-								project: comm.system,
-								dependencies: [a[i - 1]?.commpkgNo],
-							})
-						)}
+					tasks={gantData}
 				/>
 			</div>
 		</div>
 	);
 };
 
-interface GantTask extends Task {
-	item: Handover;
+export interface GantTask<T> extends Task {
+	item: T;
 }
 
 import { RefObject, useCallback, useLayoutEffect, useState } from 'react';
@@ -140,5 +138,5 @@ export const useResizeObserver = (ref: RefObject<HTMLElement>, callback?: (entry
 			RO = null;
 		};
 	}, [ref]);
-	return [width, height];
+	return { width, height };
 };
