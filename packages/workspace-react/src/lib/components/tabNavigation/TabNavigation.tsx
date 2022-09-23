@@ -11,6 +11,7 @@ export function TabNavigation() {
 	} = useControllerContext();
 	const activeTab = useActiveTab();
 
+	if (tabs.length <= 1) return null;
 	return (
 		<TabButtonList>
 			{tabs.map(({ name, TabIcon }) => (
