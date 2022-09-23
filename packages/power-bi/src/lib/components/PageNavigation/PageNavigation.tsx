@@ -7,6 +7,7 @@ interface PageNavigationProps {
 	controller: PowerBiController;
 }
 export function PageNavigation({ controller }: PageNavigationProps) {
+	const [activePage, setActivePage] = useState(controller.activePage);
 	const [pages, setPages] = useState<Page[]>([]);
 	const [report, setReport] = useState<Report | null>(null);
 
@@ -20,10 +21,16 @@ export function PageNavigation({ controller }: PageNavigationProps) {
 		return unsub;
 	}, []);
 
+	useEffect(() => {
+		const unsub = controller.onActivePageChanged(setActivePage);
+		return unsub;
+	}, []);
+
 	return (
 		<Tabs>
 			{pages.map(({ name, displayName, setActive }) => (
 				<Tabs.Tab
+					active={activePage?.name === name}
 					key={name}
 					onClick={() => {
 						report?.setPage(name);
