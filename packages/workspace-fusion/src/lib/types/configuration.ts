@@ -36,6 +36,7 @@ export interface CustomTab {
 	TabIcon: () => JSX.Element;
 	Component: CustomTabComponent;
 	CustomHeader?: () => JSX.Element;
+	ignoreLoading?: boolean;
 }
 
 export interface AppConfig<TabNames extends string> {

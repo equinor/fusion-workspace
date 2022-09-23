@@ -1,14 +1,29 @@
-import { GridConfig, SidesheetConfig, StatusBarConfig, useWorkspace } from '@equinor/workspace-fusion';
+import { GridConfig, SidesheetConfig, StatusBarConfig } from '@equinor/workspace-fusion';
 import { Handover } from './types';
-import { mockData } from './mockData';
 import styled from 'styled-components';
-import { Button } from '@equinor/eds-core-react';
+import { Icon } from '@equinor/eds-core-react';
 import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 import { FilterValueType } from '@equinor/filter';
 import React from 'react';
+import { home } from '@equinor/eds-icons';
+import { tokens } from '@equinor/eds-tokens';
+import { Tab } from 'packages/workspace-react/src/lib/types';
+import { StarredItemsDb } from './HandoverApp';
+Icon.add({ home });
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
+		{
+			field: 'isStarred',
+			onCellClicked: async (props) => {
+				if (props.data?.commpkgNo) {
+					await StarredItemsDb.save({ action: 'save', id: props.data?.commpkgNo });
+				}
+			},
+			cellRenderer: (props) => {
+				return <Icon name={'star_filled'} />;
+			},
+		},
 		{
 			field: 'commPkgNo',
 			valueGetter: (valueGetter) => valueGetter.data?.commpkgNo,
@@ -45,10 +60,11 @@ export const gridOptions: GridConfig<Handover> = {
 	},
 };
 
-export const customTab = {
+export const customTab: Tab<string> = {
 	Component: CustomTab,
-	TabIcon: () => <div>Custom tab</div>,
-	name: 'Lines',
+	TabIcon: () => <Icon name="home" color="#6F6F6F" />,
+	name: 'Home',
+	ignoreLoading: true,
 };
 
 export const sidesheetOptions: SidesheetConfig<Handover> = {
@@ -64,25 +80,47 @@ export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
 ];
 
 export function CustomTab() {
-	const { clickService, dataService, isLoading } = useWorkspace();
-	const { data, filteredData, setFilteredData } = dataService;
 	return (
 		<StyledCustomTab>
-			<ul>
-				<li>Data length: {data?.length}</li>
-				<li>Filtered data length: {filteredData?.length}</li>
-				<li>isLoading: {isLoading}</li>
-			</ul>
-			<Button onClick={() => clickService.click({ item: data?.[0] })}>Open sidesheet</Button>
-			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
+			<Header>Handover Garden</Header>
+			<Paragraph>
+				Handover Garden monitors commissioning package progress in a project and presents the status visually.
+				It is used to keep track of and plan handover from construction to commissioning, and commissioning to
+				operations. By using the Handover Garden all stakeholders and project personnel are easily updated on
+				commissioning status, and decisions are based on the same information. NB: All information is imported
+				from Procosys and must be available in Procosys to be displayed in Fusion. The main window shows
+				weekly/daily handover plan The header indicates the week number (or date) for planned handover of
+				commissioning packages, giving an overview of a project. Clicking a week (date) will expand the week and
+				show package descriptions in the garden. Different handover milestones can be selected, with RFOC, RFCC
+				and TAC most commonly used. There are also other options available for grouping the garden, such as
+				system or package responsible, found under the “Group by” section to the right. Commissioning package
+				status Package background colors indicate package milestone, as shown in the table below. No handover
+				certificate signed DCC Sent/Accepted RFRC Sent/Accepted RFCC Sent/Accepted TAC Sent/Accepted RFOC
+				Sent/Accepted D-01 / D-02 D-03 / D-04 C-01 / C-02 C-06 C-07 / C-08 Package colors will show partly
+				handover where some of the MC packages in a commissioning package are handed over.
+			</Paragraph>
 		</StyledCustomTab>
 	);
 }
 
+const Paragraph = styled.div`
+	width: 50%;
+	font-size: 16px;
+	color: ${tokens.colors.text.static_icons__default.hex};
+`;
+
+const Header = styled.h1`
+	font-size: 32px;
+	color: ${tokens.colors.text.static_icons__default.hex};
+`;
+
 const StyledCustomTab = styled.div`
 	height: 100%;
 	width: 100%;
-	background-color: rebeccapurple;
+	min-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `;
 
 export function RenderStatus(val: FilterValueType) {

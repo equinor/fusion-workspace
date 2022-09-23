@@ -9,7 +9,7 @@ interface WorkspaceDataLayerProps {
 
 /**
  * Component that renders a loading spinner while data is fetching
- * @param children Children to render when data is done loading
+ * @param children - Children to render when data is done loading
  */
 
 export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
