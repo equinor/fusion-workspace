@@ -30,7 +30,7 @@ export function PageNavigation({ controller }: PageNavigationProps) {
 		<Tabs>
 			{pages.map(({ name, displayName, setActive }) => (
 				<Tabs.Tab
-					active={activePage?.name === name}
+					active={isActivePage(activePage, displayName)}
 					key={name}
 					onClick={() => {
 						report?.setPage(name);
@@ -41,4 +41,12 @@ export function PageNavigation({ controller }: PageNavigationProps) {
 			))}
 		</Tabs>
 	);
+}
+
+/**
+ * Checking displayName because of subpages
+ * Ever PBI report has to have same displayName on its subpages for this to work
+ */
+function isActivePage(page: Page | undefined, displayName: string) {
+	return page?.displayName === displayName;
 }
