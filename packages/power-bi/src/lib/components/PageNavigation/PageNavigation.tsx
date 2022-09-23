@@ -7,6 +7,7 @@ interface PageNavigationProps {
 	controller: PowerBiController;
 }
 export function PageNavigation({ controller }: PageNavigationProps) {
+	const [activePage, setActivePage] = useState(controller.activePage);
 	const [pages, setPages] = useState<Page[]>([]);
 	const [report, setReport] = useState<Report | null>(null);
 
@@ -20,10 +21,16 @@ export function PageNavigation({ controller }: PageNavigationProps) {
 		return unsub;
 	}, []);
 
+	useEffect(() => {
+		const unsub = controller.onActivePageChanged(setActivePage);
+		return unsub;
+	}, []);
+
 	return (
 		<Tabs>
 			{pages.map(({ name, displayName, setActive }) => (
 				<Tabs.Tab
+					active={isActivePage(activePage, displayName)}
 					key={name}
 					onClick={() => {
 						report?.setPage(name);
@@ -34,4 +41,12 @@ export function PageNavigation({ controller }: PageNavigationProps) {
 			))}
 		</Tabs>
 	);
+}
+
+/**
+ * Checking displayName because of subpages
+ * Ever PBI report has to have same displayName on its subpages for this to work
+ */
+function isActivePage(page: Page | undefined, displayName: string) {
+	return page?.displayName === displayName;
 }
