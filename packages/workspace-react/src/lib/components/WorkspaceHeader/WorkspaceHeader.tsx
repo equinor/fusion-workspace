@@ -5,9 +5,5 @@ export function WorkspaceHeader() {
 	const tab = useActiveTab();
 	if (!tab || !tab.CustomHeader) return <ActionBar />;
 
-	return (
-		<div>
-			<tab.CustomHeader />
-		</div>
-	);
+	return <tab.CustomHeader />;
 }

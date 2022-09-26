@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { useHttpClient, HttpClientMsal } from '@equinor/fusion-framework-react-app/http';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { HttpClientMsal, useHttpClient } from '@equinor/fusion-framework-react-app/http';
+import { createFusionWorkspace, FusionClient } from '@equinor/workspace-fusion';
 import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
 import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
+import { gardenConfig } from './gardenConfig';
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -27,6 +28,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 						{ signal }
 					),
 			})
+			.addFusionPowerBI({ reportUri: 'pp-work-preparation' })
 			.addFilter([
 				{
 					name: 'Comm status',
@@ -63,13 +65,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 				defaultTab: 'grid',
 			})
 			.addSidesheet(sidesheetOptions)
-			.addGarden({
-				data: [],
-				nodeLabelCallback: (s) => s.commpkgNo,
-				getIdentifier: (s) => s.commpkgNo,
-				initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-				fieldSettings: {},
-			})
+			.addGarden(gardenConfig)
 			.addMiddleware((mediator) => {
 				mediator.onMount(() => console.log('App mounted'));
 				mediator.onUnMount(() => console.log('App unmounted'));

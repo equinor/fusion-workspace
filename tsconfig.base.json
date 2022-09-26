@@ -16,7 +16,9 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@equinor/filter": ["packages/filter/src/index.ts"],
 			"@equinor/garden": ["packages/garden/src/index.ts"],
+			"@equinor/powerbi": ["packages/power-bi/src/index.ts"],
 			"@equinor/sidesheet": ["packages/sidesheet/src/index.ts"],
 			"@equinor/status-bar": ["packages/status-bar/src/index.ts"],
 			"@equinor/workspace-fusion": ["packages/workspace-fusion/src/index.ts"],
@@ -25,8 +27,7 @@
 			"@workspace/data-source": ["packages/data-source/src/index.ts"],
 			"@workspace/grid": ["packages/ag-grid/src/index.ts"],
 			"@workspace/power-bi": ["packages/power-bi/src/index.ts"],
-			"@workspace/workspace-core": ["packages/workspace-core/src/index.ts"],
-			"@equinor/filter": ["packages/filter/src/index.ts"]
+			"@workspace/workspace-core": ["packages/workspace-core/src/index.ts"]
 		},
 		"noImplicitAny": false,
 		"allowSyntheticDefaultImports": true,

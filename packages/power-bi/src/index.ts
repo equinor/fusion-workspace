@@ -1,1 +1,1 @@
-export * from './lib/power-bi';
+export * from './lib';

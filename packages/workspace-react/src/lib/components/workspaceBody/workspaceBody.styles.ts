@@ -5,5 +5,6 @@ export const StyledWorkspaceBody = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 32px 0px 0px 32px;
+	margin: 16px;
+	overflow: hidden;
 `;

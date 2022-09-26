@@ -29,5 +29,6 @@ export const StyledSearchLine = styled.div`
 
 export const StyledWrapper = styled.div`
 	width: 100%;
-	overflow: scroll;
+	overflow-y: hidden;
+	overflow-x: auto;
 `;

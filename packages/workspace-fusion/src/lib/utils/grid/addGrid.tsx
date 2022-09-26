@@ -1,5 +1,7 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { Grid, GridController } from '@workspace/grid';
+import { useRef } from 'react';
+import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
 import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
@@ -23,7 +25,7 @@ export function addGrid<TData, TError>(
 	configureBookmark(gridController, mediator);
 
 	viewController.tabController.addTab({
-		Component: () => <Grid controller={gridController} />,
+		Component: () => <GridWrapper controller={gridController} />,
 		name: 'grid',
 		TabIcon: GridIcon,
 		CustomHeader: () => <GridHeader controller={gridController} />,
@@ -31,3 +33,18 @@ export function addGrid<TData, TError>(
 
 	mediator.onUnMount(gridController.destroy);
 }
+
+type GridWrapperProps<TData> = {
+	controller: GridController<TData>;
+};
+
+const GridWrapper = <TData,>({ controller }: GridWrapperProps<TData>) => {
+	const ref = useRef(null);
+	const [_, height] = useResizeObserver(ref);
+
+	return (
+		<div style={{ height: '100%', width: '100%' }} ref={ref}>
+			<Grid controller={controller} height={height} />
+		</div>
+	);
+};

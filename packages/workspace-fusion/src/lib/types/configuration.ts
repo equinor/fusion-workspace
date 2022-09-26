@@ -43,3 +43,25 @@ export interface AppConfig<TabNames extends string> {
 	appColor: string;
 	defaultTab: TabNames;
 }
+
+export type PowerBiConfig = {
+	reportUri: string;
+	getConfig: (reportUri: string) => Promise<any>;
+	getToken: (reportUri: string) => Promise<PowerBiToken>;
+};
+/**
+ * Configuration for adding a fusion power bi client
+ * Requires client configured for fusion reports api
+ */
+export type FusionPowerBiConfig = {
+	reportUri: string;
+};
+
+type PowerBiToken = {
+	token: string;
+};
+
+/** Any http client, with fusion scope */
+export type FusionClient = {
+	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
+};

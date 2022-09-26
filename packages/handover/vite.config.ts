@@ -23,6 +23,7 @@ export default defineConfig({
 			'@workspace/power-bi': path.resolve(__dirname, '../power-bi/src/index.ts'),
 			'@workspace/workspace-core': path.resolve(__dirname, '../workspace-core/src/index.ts'),
 			'@equinor/filter': path.resolve(__dirname, '../filter/src/index.ts'),
+			'@equinor/powerbi': path.resolve(__dirname, '../power-bi/src/index.ts'),
 		},
 	},
 });
