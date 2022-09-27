@@ -15,23 +15,24 @@ Every app is unique in it's own way, and sometimes the provided functionality is
 Adding a custom tab to your workspace.
 
 ```TS
-function CustomTab(){
-//Use useWorkspace hook to access workspace state
-const {dataService: {filteredData}} = useWorkspace();
-return (
-    <div>
-        {filteredData.length}
-    </div>
-)
-}
+const Chart = () => {
+	const { dataService } = useWorkspace();
+
+	if (!dataService.filteredData) {
+		return <div></div>;
+	}
+
+	return (
+		<SomeChartComponent data={dataService.filteredData} />
+	);
+};
+
 createFusionWorkspace()
 .addCustomTab({
-        Component: CustomTab,
-		TabIcon: () => <div>Custom tab</div>,
-		CustomHeader: undefined,
-		name: "Custom tab",
+        Component: Chart,
+		TabIcon: () => <div>Chart</div>,
+		name: "Chart",
 })
-
 ```
 
 ## Advanced example

@@ -34,7 +34,7 @@ export default hope.config({
 		sidebar: [
 			{
 				title: 'Overview',
-				path: '/overview/',
+				path: '/overview/quick-start',
 				collapsable: false,
 				sidebarDepth: 3,
 				children: [
@@ -60,9 +60,18 @@ export default hope.config({
 					},
 					{
 						title: 'Custom tab',
-						collapsable: true,
 						path: '/overview/customtab',
-						children: ['/overview/customtab/basic', '/overview/customtab/advanced'],
+						children: [],
+					},
+					{
+						title: 'Status bar',
+						path: '/overview/statusbar',
+						children: [],
+					},
+					{
+						title: 'Data source',
+						path: '/overview/datasource',
+						children: [],
 					},
 				],
 			},
