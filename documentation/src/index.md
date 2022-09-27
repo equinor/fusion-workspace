@@ -3,7 +3,7 @@ home: true
 heroImage: /fusion.png
 action:
     - text: 🚀 Quick Start
-      link: /quick-start/
+      link: /overview/
     - text: 📚 Technical Specification
       link: /spec/
     - text: 📚 Packages

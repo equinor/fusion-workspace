@@ -15,6 +15,10 @@ export default hope.config({
 		comment: false,
 		nav: [
 			{
+				text: 'Overview',
+				link: '/overview/',
+			},
+			{
 				text: 'Packages',
 				link: '/packages/',
 			},
@@ -29,6 +33,40 @@ export default hope.config({
 		],
 		sidebar: [
 			{
+				title: 'Overview',
+				path: '/overview/',
+				collapsable: false,
+				sidebarDepth: 3,
+				children: [
+					{
+						title: 'Quick start',
+						path: '/overview/quick-start',
+						children: [],
+					},
+					{
+						title: 'Installation',
+						path: '/overview/installation',
+						children: [],
+					},
+					{
+						title: 'Garden',
+						path: '/overview/garden',
+						children: [],
+					},
+					{
+						title: 'Grid',
+						path: '/overview/grid',
+						children: [],
+					},
+					{
+						title: 'Custom tab',
+						collapsable: true,
+						path: '/overview/customtab',
+						children: ['/overview/customtab/basic', '/overview/customtab/advanced'],
+					},
+				],
+			},
+			{
 				title: 'Packages',
 				path: '/packages/',
 				collapsable: false,
@@ -42,6 +80,11 @@ export default hope.config({
 							'/packages/workspace-core/services',
 							'/packages/workspace-core/observable',
 						],
+					},
+					{
+						title: 'Workspace Fusion',
+						path: '/packages/workspace-fusion',
+						children: [],
 					},
 				],
 			},
