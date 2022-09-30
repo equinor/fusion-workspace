@@ -1,14 +1,15 @@
-import { GridController } from '@workspace/grid';
+/* eslint-disable no-param-reassign */
+import { ProxyGrid } from '@workspace/grid';
 import { FusionMediator, GridBookmark } from '../../types';
 import { snapshotGridState } from './snapShotGridState';
 
-export function configureBookmark<TData>(gridController: GridController<TData>, mediator: FusionMediator<TData>) {
+export function configureBookmark<TData>(gridController: ProxyGrid<TData>, mediator: FusionMediator<TData>) {
 	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
 	mediator.bookmarkService.onApply((state) => state?.grid && applyGridBookmark(state.grid, gridController));
-	gridController.onColumnStateChanged(mediator.bookmarkService.capture);
+	gridController.subscribe('columnState', mediator.bookmarkService.capture);
 }
 
-function applyGridBookmark<TData>(bookmark: GridBookmark, gridController: GridController<TData>) {
-	gridController.selectedNodes.setValue(bookmark.selectedNodes ?? []);
-	gridController.setColumnState(bookmark.columnState);
+function applyGridBookmark<TData>(bookmark: GridBookmark, gridController: ProxyGrid<TData>) {
+	gridController.selectedNodes = bookmark.selectedNodes ?? [];
+	gridController.columnState = bookmark.columnState;
 }

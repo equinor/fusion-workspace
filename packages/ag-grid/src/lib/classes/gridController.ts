@@ -1,32 +1,25 @@
 import { ColDef, ColumnState, GridOptions } from 'ag-grid-community';
-import { registerCallback } from '../functions';
-import { Callback, OnCallbackSet, OnGridOptionsChangedCallback, OnRowDataChangedCallback } from '../types';
-import { Observable, OnchangeCallback } from './observable';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 
-export class GridController<TData> {
+export function createGridController<T>(getIdentifier: GetIdentifier<T>): ProxyGrid<T> {
+	return proxyDecorator(new GridController(getIdentifier));
+}
+
+export type ProxyGrid<T> = GridController<T> & {
+	subscribe: <K extends keyof GridController<T>>(key: K, cb: (ev: GridController<T>[K]) => void) => void;
+};
+
+class GridController<TData> {
 	getIdentifier: GetIdentifier<TData>;
 
 	constructor(getIdentifier: GetIdentifier<TData>) {
 		this.getIdentifier = getIdentifier;
-		const columnStateObservable = new Observable<ColumnState[] | undefined>();
-		columnStateObservable.isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-		const { onchange, setValue } = columnStateObservable;
-		onchange((val) => {
-			this.columnState = val;
-		});
-		this.setColumnState = setValue;
-		this.onColumnStateChanged = onchange;
 	}
 
 	columnState?: ColumnState[];
 
-	setColumnState: (value: ColumnState[] | undefined) => void;
-
-	onColumnStateChanged: (callback: OnchangeCallback<ColumnState[] | undefined>) => () => void;
-
-	selectedNodes: Observable<string[]> = new Observable<string[]>([]);
+	selectedNodes: string[] = [];
 
 	/** The data to be used in the grid */
 	rowData: TData[] = [];
@@ -37,59 +30,44 @@ export class GridController<TData> {
 	/** The grid options to be used in the grid */
 	gridOptions: GridOptions | undefined = undefined;
 
-	/**
-	 * Callbacks
-	 */
-	private onRowDataChangedCallbacks: Callback<OnRowDataChangedCallback<TData>>[] = [];
-
-	private onGridOptionsChangedCallbacks: Callback<OnGridOptionsChangedCallback<TData>>[] = [];
-
-	/**
-	 * Updates the grid options
-	 * @param gridOptions new grid options
-	 */
-	setGridOptions = (gridOptions: GridOptions) => {
-		this.gridOptions = gridOptions;
-		this.onGridOptionsChangedCallbacks.forEach(({ callback }) => callback(gridOptions, this));
-	};
-
-	/**
-	 * Registers a function to be called upon when grid options changes
-	 * @param cb The callback to be called on whenever grid options changes
-	 * @returns The given id for the callback, and a function for unsubscribing.
-	 */
-	onGridOptionsChanged = (cb: OnGridOptionsChangedCallback<TData>) =>
-		registerCallback(cb, this.onGridOptionsChangedCallbacks, this.unsubOnGridOptionsChanged);
-
-	private unsubOnGridOptionsChanged = (id: string) => {
-		this.onGridOptionsChangedCallbacks = this.onGridOptionsChangedCallbacks.filter((s) => s.id !== id);
-	};
-
-	/**
-	 * Sets new row data and triggers all the onRowDataChanged callback's.
-	 * @param newData the new data to be set
-	 */
-	setRowData = (newData: TData[]) => {
-		this.rowData = newData;
-		this.onRowDataChangedCallbacks.forEach(({ callback }) => callback(newData, this));
-	};
-
-	/**
-	 * Registers a function to be called upon when row data changes
-	 * @param callback The callback to be called on whenever row data changes
-	 * @returns The given id for the callback, and a function for unsubscribing.
-	 */
-	onRowDataChanged = (callback: OnRowDataChangedCallback<TData>): OnCallbackSet =>
-		registerCallback(callback, this.onRowDataChangedCallbacks, this.unsubOnRowDataChanged);
-
-	private unsubOnRowDataChanged = (id: string) => {
-		this.onRowDataChangedCallbacks = this.onRowDataChangedCallbacks.filter((s) => s.id !== id);
-	};
-
 	destroy = () => {
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];
 		}
 	};
+}
+
+type OnChangeCallback<T, K extends keyof T> = (ev: T[K]) => void;
+
+function proxyDecorator<T>(obj: T) {
+	const subMap = new Map<string, OnChangeCallback<T, keyof T>[]>(Object.keys(obj).map((key) => [key, []]));
+
+	return new Proxy(
+		{
+			...obj,
+			subscribe: <K extends keyof T>(key: K, cb: OnChangeCallback<T, K>) => {
+				if (typeof key !== 'string') return;
+				const arr = subMap.get(key);
+				if (Array.isArray(arr)) {
+					subMap.set(key, [...arr, cb as OnChangeCallback<T, keyof T>]);
+				}
+			},
+		},
+		{
+			set(prop, index, newVal) {
+				if (index === 'subscribe') return false;
+				/** Emits new value */
+
+				if (typeof newVal !== 'function') {
+					console.log(newVal);
+					//Functions cant be cloned
+					subMap.get(index as string)?.forEach((s) => s(newVal));
+				}
+				// eslint-disable-next-line no-param-reassign
+				prop[index as keyof T] = newVal;
+				return true;
+			},
+		}
+	);
 }

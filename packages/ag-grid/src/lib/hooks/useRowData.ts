@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { GridController } from '../classes';
+import { ProxyGrid } from '../classes';
 
-export function useRowData<TData>(controller: GridController<TData>) {
+export function useRowData<TData>(controller: ProxyGrid<TData>) {
 	const [rowData, setRowData] = useState(controller.rowData);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.onRowDataChanged(setRowData);
-		return unsubscribe;
+		controller.subscribe('rowData', setRowData);
 	}, [controller]);
 
 	return rowData;

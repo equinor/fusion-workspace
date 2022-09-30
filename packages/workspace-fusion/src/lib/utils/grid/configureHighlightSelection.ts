@@ -1,11 +1,9 @@
-import { GridController } from '@workspace/grid';
+import { ProxyGrid } from '@workspace/grid';
 import { FusionMediator } from '../../types';
 
-export function configureHighlightSelection<TData>(
-	gridController: GridController<TData>,
-	mediator: FusionMediator<TData>
-) {
-	mediator.selectionService.onSelectionChanged((val) =>
-		gridController.selectedNodes.setValue(val.map(({ id }) => id))
-	);
+export function configureHighlightSelection<TData>(gridController: ProxyGrid<TData>, mediator: FusionMediator<TData>) {
+	mediator.selectionService.onSelectionChanged((val) => {
+		// eslint-disable-next-line no-param-reassign
+		gridController.selectedNodes = val.map(({ id }) => id);
+	});
 }

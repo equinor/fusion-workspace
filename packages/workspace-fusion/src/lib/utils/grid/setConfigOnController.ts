@@ -1,14 +1,18 @@
-import { GridController } from '@workspace/grid';
+import { ProxyGrid } from '@workspace/grid';
 import { ColDef } from 'ag-grid-community';
 import { FusionMediator, GridConfig } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function setConfigOnController<TData>(
 	gridConfig: GridConfig<TData>,
-	gridController: GridController<TData>,
+	gridController: ProxyGrid<TData>,
 	mediator: FusionMediator<TData>
 ) {
-	gridConfig.gridOptions && gridController.setGridOptions(gridConfig.gridOptions);
+	if (gridConfig.gridOptions) {
+		// eslint-disable-next-line no-param-reassign
+		gridController.gridOptions = gridConfig.gridOptions;
+	}
+	// eslint-disable-next-line no-param-reassign
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 }
 

@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { Grid, GridController } from '@workspace/grid';
+import { Grid, createGridController, ProxyGrid } from '@workspace/grid';
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
@@ -17,7 +17,7 @@ export function addGrid<TData, TError>(
 	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
-	const gridController = new GridController<TData>(getIdentifier);
+	const gridController = createGridController(getIdentifier);
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);
@@ -35,7 +35,7 @@ export function addGrid<TData, TError>(
 }
 
 type GridWrapperProps<TData> = {
-	controller: GridController<TData>;
+	controller: ProxyGrid<TData>;
 };
 
 const GridWrapper = <TData,>({ controller }: GridWrapperProps<TData>) => {
