@@ -1,8 +1,8 @@
-import { GridController } from '../classes';
+import { createGridController } from '../utils';
 
 const mocFunction = jest.fn();
 
-const gridController = new GridController((s) => '123');
+const gridController = createGridController<{ age: number }>(() => '123');
 
 /**
  * Test to make sure the onRowDataChanged callbacks are called and passing the correct data
@@ -10,12 +10,15 @@ const gridController = new GridController((s) => '123');
 describe('Validates that callbacks are called when row data changes', () => {
 	it('Should call the onRowDataChangedCallback', () => {
 		expect(gridController.rowData.length).toBe(0);
-		gridController.onRowDataChanged((s) => {
+		/**Will be called instantly because its a behaviour subject */
+		gridController.rowData$.subscribe((s) => {
+			if (!s) {
+				throw Error('Argument undefined');
+			}
 			mocFunction();
-			expect(s.length).toBe(2);
 		});
-		gridController.setRowData([1, 2]);
 		expect(mocFunction).toBeCalled();
-		expect(mocFunction).toBeCalledTimes(1);
+		gridController.rowData = [{ age: 12 }, { age: 12 }, { age: 12 }];
+		expect(mocFunction).toBeCalledTimes(2);
 	});
 });

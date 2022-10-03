@@ -3,12 +3,15 @@ import { ColDef } from 'ag-grid-community';
 import { FusionMediator, GridConfig } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function setConfigOnController<TData>(
+export function setConfigOnController<TData extends Record<PropertyKey, unknown>>(
 	gridConfig: GridConfig<TData>,
 	gridController: GridController<TData>,
 	mediator: FusionMediator<TData>
 ) {
-	gridConfig.gridOptions && gridController.setGridOptions(gridConfig.gridOptions);
+	if (gridConfig.gridOptions) {
+		gridController.gridOptions = gridConfig.gridOptions;
+	}
+
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 }
 
