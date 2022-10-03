@@ -10,10 +10,13 @@ export function useSelectionService<TData extends Record<PropertyKey, unknown>>(
 	const rowData = useRowData(controller);
 
 	useEffect(() => {
-		const { unsubscribe } = controller.selectedNodes$.subscribe((val) => {
+		const subscription = controller.selectedNodes$.subscribe((val) => {
 			if (!gridApi) return;
 			selectRowNode(val, controller.getIdentifier, gridApi, rowData);
 		});
+		return () => {
+			subscription.unsubscribe();
+		};
 	}, [controller, gridApi, rowData]);
 }
 

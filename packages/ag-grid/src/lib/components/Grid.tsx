@@ -33,7 +33,7 @@ export function Grid<T extends Record<PropertyKey, unknown>>({ controller, heigh
 				onGridReady={(api) => {
 					setGridApi(api.api);
 					setColumnApi(api.columnApi);
-					selectRowNode(controller.selectedNodes.value ?? [], controller.getIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}

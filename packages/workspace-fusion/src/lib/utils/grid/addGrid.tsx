@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { createGridController, Grid } from '@workspace/grid';
+import { createGridController, Grid, GridController } from '@workspace/grid';
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
@@ -34,11 +34,11 @@ export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 	mediator.onUnMount(gridController.destroy);
 }
 
-type GridWrapperProps<TData> = {
-	controller: any;
+type GridWrapperProps<TData extends Record<PropertyKey, unknown>> = {
+	controller: GridController<TData>;
 };
 
-const GridWrapper = <TData,>({ controller }: GridWrapperProps<TData>) => {
+const GridWrapper = <TData extends Record<PropertyKey, unknown>>({ controller }: GridWrapperProps<TData>) => {
 	const ref = useRef(null);
 	const [_, height] = useResizeObserver(ref);
 

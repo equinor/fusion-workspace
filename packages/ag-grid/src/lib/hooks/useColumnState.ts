@@ -12,9 +12,11 @@ export function useColumnState<T extends Record<PropertyKey, unknown>>(
 ) {
 	useEffect(() => {
 		if (!columnApi) return;
-		const { unsubscribe } = controller.columnState$.subscribe(() =>
+		const subscription = controller.columnState$.subscribe(() =>
 			applyColumnStateFromGridController(controller, columnApi)
 		);
-		// eslint-disable-next-line consistent-return
+		return () => {
+			subscription.unsubscribe();
+		};
 	}, [columnApi, controller]);
 }

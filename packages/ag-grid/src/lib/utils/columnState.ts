@@ -1,8 +1,11 @@
 import { GridReadyEvent, ColumnApi } from 'ag-grid-community';
-import { GridController } from '../classes';
+import { GridController } from '../types';
 
 /** Listens for any column change */
-export function listenForColumnChanges<TData>(controller: GridController<TData>, gridReady: GridReadyEvent) {
+export function listenForColumnChanges<TData extends Record<PropertyKey, unknown>>(
+	controller: GridController<TData>,
+	gridReady: GridReadyEvent
+) {
 	const catchColumnState = () => updateColumnState(controller, gridReady.columnApi);
 	gridReady.api.addEventListener('columnMoved', catchColumnState);
 	gridReady.api.addEventListener('columnVisible', catchColumnState);
@@ -13,14 +16,20 @@ export function listenForColumnChanges<TData>(controller: GridController<TData>,
 }
 
 /** Updates the controllers column state */
-function updateColumnState<TData>(controller: GridController<TData>, columnApi: ColumnApi) {
-	controller.setColumnState(columnApi.getColumnState());
+function updateColumnState<TData extends Record<PropertyKey, unknown>>(
+	controller: GridController<TData>,
+	columnApi: ColumnApi
+) {
+	controller.columnState = columnApi.getColumnState();
 }
 
 /**
  * Applies the column state from the controller on the grid
  */
-export function applyColumnStateFromGridController<TData>(controller: GridController<TData>, columnApi: ColumnApi) {
+export function applyColumnStateFromGridController<TData extends Record<PropertyKey, unknown>>(
+	controller: GridController<TData>,
+	columnApi: ColumnApi
+) {
 	if (controller.columnState) {
 		columnApi.applyColumnState({ applyOrder: true, state: controller.columnState });
 	}
