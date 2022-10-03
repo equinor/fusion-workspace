@@ -1,5 +1,5 @@
 import { ColumnState, ColDef, GridOptions } from 'ag-grid-community';
-import { SubscriberProxy } from '../utils/createProxy';
+import { SubscriberProxy } from '../types';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 
