@@ -9,10 +9,11 @@ export function createGridController<T extends object>(getIdentifier: GetIdentif
 
 export type ProxyGrid<T extends object> = DecoratedProxy<GridController<T>>;
 
+//Proxy needs subscribe-able fields to be defined even if they're undefined
 class GridController<TData> {
 	getIdentifier: GetIdentifier<TData>;
 
-	columnState?: ColumnState[];
+	columnState: ColumnState[] | undefined = undefined;
 
 	constructor(getIdentifier: GetIdentifier<TData>) {
 		this.getIdentifier = getIdentifier;

@@ -15,7 +15,6 @@ export type DecoratedProxy<T extends object> = T & { subscribe: Subscribe<T> };
 
 export function proxyDecorator<T extends object>(obj: T): DecoratedProxy<T> {
 	const subMap = new Map<string, Callback<T, keyof T>[]>(Object.keys(obj).map((key) => [key, []]));
-
 	return new Proxy(
 		{
 			...obj,
