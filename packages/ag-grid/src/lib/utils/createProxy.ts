@@ -1,15 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-
-/**Picks keys that extends the given type */
-export type PickTypeKeys<Obj, Type, T extends keyof Obj = keyof Obj> = {
-	[P in keyof Obj]: Obj[P] extends Type ? P : never;
-}[T];
-
-export type OmitType<T, Type> = Omit<T, PickTypeKeys<T, Type>>;
-
-export type SubscriberProxy<Type> = Type & {
-	[Property in keyof OmitType<Type, (...args: any) => any> as `${Property & string}$`]: Observable<Type[Property]>;
-};
+import { SubscriberProxy } from '../types';
 
 function createSubjects<T extends Record<PropertyKey, unknown>>(obj: T) {
 	const subjects = new Map<string, BehaviorSubject<unknown>>();
@@ -35,6 +25,7 @@ export function createProxy<T extends Record<PropertyKey, unknown>>(obj: T): Sub
 	return new Proxy(proxiedObject, {
 		set(prop, index, newVal) {
 			if (index.toString().includes('$')) {
+				//Dont allow reassigning of observables
 				return false;
 			}
 
