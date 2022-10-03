@@ -64,6 +64,11 @@ export default hope.config({
 						children: [],
 					},
 					{
+						title: 'Filter',
+						path: '/overview/filter',
+						children: [],
+					},
+					{
 						title: 'Status bar',
 						path: '/overview/statusbar',
 						children: [],

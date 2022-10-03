@@ -18,4 +18,4 @@ AG-Grid documentation can be found [here](https://www.ag-grid.com/react-data-gri
 
 ## Illustration
 
-![Alt text](./gridIllustration.png 'Illustration')
+![Alt text](./pictures/gridIllustration.png 'Illustration')

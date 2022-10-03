@@ -11,3 +11,7 @@ tags:
 ## Basic example
 
 ## Advanced example
+
+## Illustration
+
+![Alt text](./pictures/garden.png 'Illustration')
