@@ -3,7 +3,7 @@ import { ColDef } from 'ag-grid-community';
 import { FusionMediator, GridConfig } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function setConfigOnController<TData>(
+export function setConfigOnController<TData extends object>(
 	gridConfig: GridConfig<TData>,
 	gridController: ProxyGrid<TData>,
 	mediator: FusionMediator<TData>
@@ -18,8 +18,8 @@ export function setConfigOnController<TData>(
 
 /**
  * Applies some default settings to the column definitions.
- * @param columnDefs column definitions to alter
- * @param mediator Workspace controller
+ * @param columnDefs - column definitions to alter
+ * @param mediator - Workspace controller
  * @returns Altered column definitions
  */
 function prepareColumnDefintions<TData>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData>) {

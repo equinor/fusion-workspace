@@ -11,14 +11,14 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-interface GridProps<T> {
+interface GridProps<T extends object> {
 	controller: ProxyGrid<T>;
 	height: number;
 }
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<T>({ controller, height }: GridProps<T>) {
+export function Grid<T extends object>({ controller, height }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);

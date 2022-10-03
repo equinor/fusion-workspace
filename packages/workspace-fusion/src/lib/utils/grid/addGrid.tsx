@@ -11,7 +11,7 @@ import { configureHighlightSelection } from './configureHighlightSelection';
 import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
 
-export function addGrid<TData, TError>(
+export function addGrid<TData extends object, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
@@ -34,11 +34,11 @@ export function addGrid<TData, TError>(
 	mediator.onUnMount(gridController.destroy);
 }
 
-type GridWrapperProps<TData> = {
+type GridWrapperProps<TData extends object> = {
 	controller: ProxyGrid<TData>;
 };
 
-const GridWrapper = <TData,>({ controller }: GridWrapperProps<TData>) => {
+const GridWrapper = <TData extends object>({ controller }: GridWrapperProps<TData>) => {
 	const ref = useRef(null);
 	const [_, height] = useResizeObserver(ref);
 

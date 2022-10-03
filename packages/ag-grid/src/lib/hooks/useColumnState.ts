@@ -6,9 +6,13 @@ import { applyColumnStateFromGridController } from '../utils';
 /** Hook for listening to external column state changes
  * Will trigger when someone calls the controller.setColumnState()
  */
-export function useColumnState<T>(controller: ProxyGrid<T>, columnApi: ColumnApi | undefined) {
-	useEffect(() => {
+export function useColumnState<T extends object>(controller: ProxyGrid<T>, columnApi: ColumnApi | undefined) {
+	useEffect((): undefined | (() => void) => {
 		if (!columnApi) return;
-		controller.subscribe('columnState', () => applyColumnStateFromGridController(controller, columnApi));
+		const unsub = controller.subscribe('columnState', () =>
+			applyColumnStateFromGridController(controller, columnApi)
+		);
+		// eslint-disable-next-line consistent-return
+		return unsub;
 	}, [columnApi, controller]);
 }

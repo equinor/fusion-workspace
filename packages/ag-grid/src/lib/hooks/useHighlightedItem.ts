@@ -3,14 +3,18 @@ import { useEffect } from 'react';
 import { GetIdentifier, ProxyGrid } from '../classes';
 import { useRowData } from './useRowData';
 
-export function useSelectionService<TData>(controller: ProxyGrid<TData>, gridApi: GridApi<any> | undefined) {
+export function useSelectionService<TData extends object>(
+	controller: ProxyGrid<TData>,
+	gridApi: GridApi<any> | undefined
+) {
 	const rowData = useRowData(controller);
 
 	useEffect(() => {
-		controller.subscribe('selectedNodes', (val) => {
+		const unsub = controller.subscribe('selectedNodes', (val) => {
 			if (!gridApi) return;
 			selectRowNode(val, controller.getIdentifier, gridApi, rowData);
 		});
+		return unsub;
 	}, [controller, gridApi, rowData]);
 }
 
