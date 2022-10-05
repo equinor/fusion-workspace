@@ -11,6 +11,7 @@
 		"prefer-const": "warn",
 		"lines-between-class-members": "warn",
 		"class-methods-use-this": "warn",
+		"@typescript-eslint/consistent-type-definitions": ["error", "type"],
 		// specify curly brace conventions for all control statements
 		// https://eslint.org/docs/rules/curly
 		"curly": ["error", "multi-line"],
