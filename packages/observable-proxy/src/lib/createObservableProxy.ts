@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SubscriberProxy } from './types';
+import { ObservableProxy } from './types';
 
+/**Creates a behaviour subject for all the keys in an object */
 function createSubjects<T extends Record<PropertyKey, unknown>>(obj: T) {
 	const subjects = new Map<string, BehaviorSubject<unknown>>();
 	const object: Record<PropertyKey, Observable<any>> = {};
@@ -17,13 +18,19 @@ function createSubjects<T extends Record<PropertyKey, unknown>>(obj: T) {
 	};
 }
 
+/**
+ * Creates an observable proxy from an any object by wrapping it in proxy and emitting values on reassigning
+ * @param obj - Object you want to attach observables to
+ * @param compare - Optional compare function to prevent emitting duplicates
+ * @returns - decorated object
+ */
 export function createObservableProxy<T extends Record<PropertyKey, unknown>>(
 	obj: T,
 	compare?: (prop: T, index: keyof T, newVal: T[keyof T]) => boolean
-): SubscriberProxy<T> {
+): ObservableProxy<T> {
 	const { object, subjects } = createSubjects(obj);
 
-	const decoratedObject: SubscriberProxy<T> = {
+	const decoratedObject: ObservableProxy<T> = {
 		...object,
 		...obj,
 		completeAll: () => {
