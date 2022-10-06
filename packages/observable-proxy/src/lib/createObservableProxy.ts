@@ -47,7 +47,7 @@ export function createObservableProxy<T extends Record<PropertyKey, unknown>>(
 
 			if (compare) {
 				if (compare(prop, index, newVal)) {
-					return false;
+					return true;
 				}
 			}
 
