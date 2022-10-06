@@ -34,4 +34,11 @@ describe('Testing observable proxy', () => {
 		proxy.name = '123';
 		expect(mockFunction).toBeCalledTimes(1);
 	});
+
+	it('Should not create observable properties for functions', () => {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		const proxy = createObservableProxy({ cb: () => {} });
+		// {cb, completeAll}
+		expect(Object.keys(proxy).length).toStrictEqual(2);
+	});
 });
