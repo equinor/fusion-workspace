@@ -11,7 +11,7 @@ export function addViewController<TData>(
 ) {
 	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
 
-	mediator.errorService.onError(viewController.setError);
+	mediator.errorService.error$.subscribe(viewController.setError);
 
 	/** Sync loading state */
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);

@@ -13,7 +13,7 @@ export function addSidesheet<TData, TError>(
 
 	mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
 
-	mediator.clickService.onClick((ev) => {
+	mediator.clickService.click$.subscribe((ev) => {
 		viewController.sidesheet.title.setValue(config.getTitle(ev));
 	});
 	sidesheetConfig<TData>(new SidesheetController(), mediator);
@@ -22,7 +22,7 @@ export function addSidesheet<TData, TError>(
 function sidesheetConfig<TData>(sc: SidesheetController<TData, unknown>, mediator: FusionMediator<TData>) {
 	mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
 
-	mediator.clickService.onClick((ev) => {
+	mediator.clickService.click$.subscribe((ev) => {
 		sc.setItem(ev.item);
 		mediator.setIsSidesheetOpen(true);
 	});

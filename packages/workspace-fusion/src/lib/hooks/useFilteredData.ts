@@ -5,9 +5,14 @@ export function useFilteredData<TData>({ dataService }: FusionMediator<TData>) {
 	const [data, setData] = useState<TData[]>(dataService.filteredData ?? []);
 
 	useEffect(() => {
-		const unsubscribe = dataService.onFilterDataChange(setData);
-		return unsubscribe;
-	}, []);
+		const subscription = dataService.filteredData$.subscribe((newData) => {
+			if (!newData) return;
+			setData(newData);
+		});
+		return () => {
+			subscription.unsubscribe();
+		};
+	}, [dataService.filteredData$]);
 
 	return data;
 }
