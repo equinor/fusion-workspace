@@ -25,4 +25,13 @@ describe('Testing observable proxy', () => {
 		/**Will always be called once due to behaviour subjects nature */
 		expect(mockFunction).toBeCalledTimes(1);
 	});
+
+	it('Should not emit values if all subjects are closed', () => {
+		const proxy = createObservableProxy({ name: '' });
+		const mockFunction = jest.fn();
+		proxy.name$.subscribe(mockFunction);
+		proxy.completeAll();
+		proxy.name = '123';
+		expect(mockFunction).toBeCalledTimes(1);
+	});
 });
