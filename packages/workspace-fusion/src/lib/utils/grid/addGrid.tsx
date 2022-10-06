@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { Grid, GridController } from '@workspace/grid';
+import { createGridController, Grid, GridController } from '@workspace/grid';
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
@@ -11,13 +11,13 @@ import { configureHighlightSelection } from './configureHighlightSelection';
 import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
 
-export function addGrid<TData, TError>(
+export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
-	const gridController = new GridController<TData>(getIdentifier);
+	const gridController = createGridController<TData>(getIdentifier);
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);
@@ -34,11 +34,11 @@ export function addGrid<TData, TError>(
 	mediator.onUnMount(gridController.destroy);
 }
 
-type GridWrapperProps<TData> = {
+type GridWrapperProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
 };
 
-const GridWrapper = <TData,>({ controller }: GridWrapperProps<TData>) => {
+const GridWrapper = <TData extends Record<PropertyKey, unknown>>({ controller }: GridWrapperProps<TData>) => {
 	const ref = useRef(null);
 	const [_, height] = useResizeObserver(ref);
 

@@ -1,17 +1,22 @@
 import { GridApi } from 'ag-grid-community';
 import { useEffect } from 'react';
-import { GetIdentifier, GridController } from '../classes';
+import { GetIdentifier, GridController } from '../types';
 import { useRowData } from './useRowData';
 
-export function useSelectionService<TData>(controller: GridController<TData>, gridApi: GridApi<any> | undefined) {
+export function useSelectionService<TData extends Record<PropertyKey, unknown>>(
+	controller: GridController<TData>,
+	gridApi: GridApi<any> | undefined
+) {
 	const rowData = useRowData(controller);
 
 	useEffect(() => {
-		const unsubscribe = controller.selectedNodes.onchange((val) => {
+		const subscription = controller.selectedNodes$.subscribe((val) => {
 			if (!gridApi) return;
 			selectRowNode(val, controller.getIdentifier, gridApi, rowData);
 		});
-		return unsubscribe;
+		return () => {
+			subscription.unsubscribe();
+		};
 	}, [controller, gridApi, rowData]);
 }
 
