@@ -52,13 +52,13 @@ The following code will be distributed over several files but this is the main c
       });
       dataSourceController.fetch();
 
-      mediator.dataService.onDataChange((data) =>{
+      mediator.dataService.data$.subscribe((data) =>{
         filterController.setData(data);
         filterController.filter()
       });
 
       filterController.onFilteredDataChange((data)=> {
-        mediator.setFilteredData(data)
+        mediator.filteredData = data
       })
 
 
@@ -71,18 +71,18 @@ The error service is a simple service for handling error occurring in a workspac
 ```TS
     const mediator = new WorkspaceMediator();
 
-    mediator.errorService.onError((error) => console.error(error))
+    mediator.errorService.error$.subscribe((error) => console.error(error))
     mediator.errorService.throwError("An error has occurred");
 ```
 
 ## Click Service
 
-The `chickService` is responsible for all main.
+The `clickService` is responsible for capturing the click of one or more items in the workspace.
 
 ```TS
 
 mediator.click({item: item})
-mediator.onClick((ev) => console.log(ev))
+mediator.click$.subscribe((ev) => console.log(ev))
 
 
 export function applyWorkspaceClickToCells<TData, TError>(
@@ -98,7 +98,7 @@ export function applyWorkspaceClickToCells<TData, TError>(
 ```
 
 ```TS
-    mediator.clickService.onClick((ev) => {
+    mediator.clickService.click$.subscribe((ev) => {
         sc.setItem(ev.item);
         mediator.setIsSidesheetOpen(true);
 
@@ -107,22 +107,14 @@ export function applyWorkspaceClickToCells<TData, TError>(
 
 ## Selection Service
 
-The `selectionService` keeps tracks the selected items, also called nodes in the workspace. A node contains the selected items id.
+The `selectionService` keeps track of the selected items. SelectedNodes is a list of strings containing the unique identifiers of each selection
+
+When the selectedNodes attribute is updated the selectedNodes$ observable will emit a new value.
 
 ```TS
-    interface Node {
-      id: string;
-    }
-```
-
-When a nodes are selected using the `setSelection` , `onSelectionChange` will call all registered callback's with the selected nodes.
-the onSelectionChange callback will not fire if the selection is the same as the previous selection.
-
-```TS
-
   mediator.clickService.onClick(({ item }) => {
-      const id = item[this.objectIdentifier()];
-      this.mediator.selectionService.setSelection([{ id }]);
+      const id = getIdentifier(item);
+      this.mediator.selectionService.selectedNodes = [id];
   );
 
 ```
