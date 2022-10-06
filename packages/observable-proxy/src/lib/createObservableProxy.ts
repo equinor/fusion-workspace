@@ -23,26 +23,31 @@ export function createObservableProxy<T extends Record<PropertyKey, unknown>>(
 ): SubscriberProxy<T> {
 	const { object, subjects } = createSubjects(obj);
 
-	return new Proxy(
-		{ ...obj, ...object },
-		{
-			set(prop, index, newVal) {
-				if (index.toString().includes('$')) {
-					//Dont allow reassigning of observables
+	const decoratedObject: SubscriberProxy<T> = {
+		...object,
+		...obj,
+		completeAll: () => {
+			subjects.forEach((s) => s.complete());
+		},
+	};
+
+	return new Proxy(decoratedObject, {
+		set(prop, index, newVal) {
+			if (index.toString().includes('$')) {
+				//Dont allow reassigning of observables
+				return false;
+			}
+
+			if (compare) {
+				if (compare(prop, index, newVal)) {
 					return false;
 				}
+			}
 
-				if (compare) {
-					if (compare(prop, index, newVal)) {
-						return false;
-					}
-				}
-
-				subjects.get(`${String(index)}$`)?.next(newVal);
-				// eslint-disable-next-line no-param-reassign
-				prop[index as keyof T] = newVal;
-				return true;
-			},
-		}
-	);
+			subjects.get(`${String(index)}$`)?.next(newVal);
+			// eslint-disable-next-line no-param-reassign
+			prop[index as keyof T] = newVal;
+			return true;
+		},
+	});
 }

@@ -18,4 +18,4 @@ type Doc = SubscriberProxy<Test> // {name: string, name$: Observable<string>}
  */
 export type SubscriberProxy<Type> = Type & {
 	[Property in keyof OmitType<Type, (...args: any) => any> as `${Property & string}$`]: Observable<Type[Property]>;
-};
+} & { completeAll: () => void };

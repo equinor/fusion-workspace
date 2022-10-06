@@ -17,6 +17,5 @@ export function createGridController<TData extends Record<PropertyKey, unknown>>
 			});
 		},
 	});
-
 	return controller;
 }
