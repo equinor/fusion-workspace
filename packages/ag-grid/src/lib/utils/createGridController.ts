@@ -1,10 +1,10 @@
+import { createObservableProxy } from '@equinor/observable-proxy';
 import { GetIdentifier, GridController } from '../types/gridController';
-import { createProxy } from './createProxy';
 
 export function createGridController<TData extends Record<PropertyKey, unknown>>(
 	getIdentifier: GetIdentifier<TData>
 ): GridController<TData> {
-	const controller: GridController<TData> = createProxy({
+	const controller: GridController<TData> = createObservableProxy({
 		columnDefs: [],
 		columnState: [],
 		getIdentifier,

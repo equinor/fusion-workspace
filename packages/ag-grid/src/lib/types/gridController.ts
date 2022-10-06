@@ -1,5 +1,5 @@
+import { SubscriberProxy } from '@equinor/observable-proxy';
 import { ColumnState, ColDef, GridOptions } from 'ag-grid-community';
-import { SubscriberProxy } from '../types';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 
