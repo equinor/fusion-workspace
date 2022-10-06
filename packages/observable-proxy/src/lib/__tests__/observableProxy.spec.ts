@@ -22,6 +22,7 @@ describe('Testing observable proxy', () => {
 		const mockFunction = jest.fn();
 		proxy.name$.subscribe(mockFunction);
 		proxy.name = TEST_NAME;
+		/**Will always be called once due to behaviour subjects nature */
 		expect(mockFunction).toBeCalledTimes(1);
 	});
 });
