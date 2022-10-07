@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
-import { GridController } from '../classes';
+
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
@@ -11,14 +11,15 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-interface GridProps<T> {
+import { GridController } from '../types';
+interface GridProps<T extends Record<PropertyKey, unknown>> {
 	controller: GridController<T>;
 	height: number;
 }
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<T>({ controller, height }: GridProps<T>) {
+export function Grid<T extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
@@ -32,7 +33,7 @@ export function Grid<T>({ controller, height }: GridProps<T>) {
 				onGridReady={(api) => {
 					setGridApi(api.api);
 					setColumnApi(api.columnApi);
-					selectRowNode(controller.selectedNodes.value ?? [], controller.getIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
