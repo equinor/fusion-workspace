@@ -36,11 +36,11 @@ import { addPowerBi } from '../utils/powerBI/addPowerBi';
 import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 
-export interface WorkspaceContext {
+export type WorkspaceContext = {
 	ui: unknown;
-}
+};
 
-export class FusionWorkspaceBuilder<TData> {
+export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
@@ -63,9 +63,9 @@ export class FusionWorkspaceBuilder<TData> {
 
 		configureUrlWithHistory(this.mediator, history);
 
-		this.mediator.clickService.onClick(({ item }) => {
+		this.mediator.clickService.click$.subscribe(({ item }) => {
 			const id = getIdentifier(item);
-			this.mediator.selectionService.setSelection([{ id }]);
+			this.mediator.selectionService.selectedNodes = [id];
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 

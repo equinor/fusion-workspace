@@ -6,7 +6,7 @@ export function configureGardenHighlightSelection<TData, TCustomGroupByKeys, TCu
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionMediator<TData>
 ) {
-	mediator.selectionService.onSelectionChanged((val) => {
-		gardenController.selectedNodes.setValue(val.map(({ id }) => id));
+	mediator.selectionService.selectedNodes$.subscribe((val) => {
+		gardenController.selectedNodes.setValue(val);
 	});
 }

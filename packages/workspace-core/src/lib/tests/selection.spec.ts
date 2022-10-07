@@ -1,15 +1,16 @@
 import { Observable } from '../classes';
-import { SelectionService } from '../classes/selectionService';
+import { createSelectionService } from '../utils';
 
 describe('Selection service should store selection information', () => {
 	it('Should interact correctly with a controller', () => {
-		const selection = new SelectionService();
+		const selection = createSelectionService();
 
 		const dummy = new Observable<string[]>([]);
 
-		selection.onSelectionChanged((sel) => dummy.setValue(sel.map((s) => s.id)));
+		selection.selectedNodes$.subscribe(dummy.setValue);
+
 		expect(dummy.value?.length).toStrictEqual(0);
-		selection.setSelection([{ id: '123' }]);
+		selection.selectedNodes = ['123'];
 		expect(dummy.value?.length).toStrictEqual(1);
 	});
 });

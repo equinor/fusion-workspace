@@ -31,7 +31,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 		configureGardenHighlightSelection(controller, mediator);
 
 		expect(controller.selectedNodes.value.length).toStrictEqual(0);
-		mediator.selectionService.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
+		mediator.selectionService.selectedNodes = [HIGHLIGHTEDMOCKID];
 		expect(controller.selectedNodes.value[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 
@@ -47,7 +47,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 
 		configureGridHighlight(gridController, mediator);
 		expect(gridController.selectedNodes.length).toStrictEqual(0);
-		mediator.selectionService.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
+		mediator.selectionService.selectedNodes = [HIGHLIGHTEDMOCKID];
 		expect(gridController.selectedNodes?.[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 });
