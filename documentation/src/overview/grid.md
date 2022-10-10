@@ -14,6 +14,27 @@ AG-Grid documentation can be found [here](https://www.ag-grid.com/react-data-gri
 
 ## Basic example
 
+```TS
+    .addGridOptions({
+        	columnDefinitions: [
+    	{
+    		field: 'commPkgNo',
+    		valueGetter: (valueGetter) => valueGetter.data?.commpkgNo,
+    		onCellClicked: undefined,
+    	},
+    	{ field: 'Description', valueGetter: (s) => s.data?.description },
+
+    	{ field: 'Responsible', valueGetter: (s) => s.data?.responsible },
+    	{ field: 'Area', valueGetter: (s) => s.data?.area },
+    	{ field: 'System', valueGetter: (s) => s.data?.system },
+    	    ],
+        gridOptions: {
+    	    pagination: true,
+    	    paginationPageSize: 100,
+        },
+    })
+```
+
 ## Advanced example
 
 ## Illustration
