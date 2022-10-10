@@ -8,6 +8,8 @@ tags:
 
 ## Concept
 
+The goal of datasource is to simplify data fetching by removing the need for checking status codes and parsing errors.
+
 ## Example
 
 Fetches data from server and will automatically parse it as json;
