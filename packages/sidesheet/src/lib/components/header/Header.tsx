@@ -1,5 +1,7 @@
 import { Icon, Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
+import { useObservable } from '../../hooks/useObservable';
+import { useSidesheet } from '../provider/sidesheetControllerProvider';
 import {
 	StyledColourTab,
 	StyledHeader,
@@ -8,17 +10,17 @@ import {
 	StyledTitle,
 } from './sidesheetHeader.styles';
 
-type SidesheetHeaderProps = {
-	color: string;
-	title: string;
-	close: () => void;
-};
+export function SidesheetHeader() {
+	const { item$, title$, config$ } = useSidesheet();
 
-export function SidesheetHeader({ close, color, title }: SidesheetHeaderProps) {
+	const config = useObservable(config$, config$.value);
+	const title = useObservable(title$, title$.value);
+	const close = () => item$.next(null);
+
 	return (
 		<StyledHeader>
 			<StyledLeftHeader>
-				<StyledColourTab appColor={color}>
+				<StyledColourTab appColor={config?.color ?? ''}>
 					<Icon name="chevron_right" size={24} color={tokens.colors.ui.background__default.hex} />
 				</StyledColourTab>
 				<StyledTitle>{title}</StyledTitle>
