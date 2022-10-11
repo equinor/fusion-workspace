@@ -17,7 +17,9 @@ export function addViewController<TData>(
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 
 	/** Bookmarks */
-	mediator.bookmarkService.onApply((state) => state?.view && applyViewStateBookmark(state.view, viewController));
+	mediator.bookmarkService.apply$.subscribe(
+		(state) => state?.view && applyViewStateBookmark(state.view, viewController)
+	);
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));
 	/** Sync user settings when active tab changes */
 	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
