@@ -18,5 +18,5 @@ export function useColumnState<T extends Record<PropertyKey, unknown>>(
 		return () => {
 			subscription.unsubscribe();
 		};
-	}, [columnApi, controller]);
+	}, [controller]);
 }
