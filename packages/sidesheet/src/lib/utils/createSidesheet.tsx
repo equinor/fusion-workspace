@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import { BehaviorSubject } from 'rxjs';
+import { Sidesheet } from '../components';
+import { useObservable } from '../hooks/useObservable';
 import { Provider, SubHeading, Tab, SidesheetConfig, TitleFunction, SidesheetController, DefaultError } from '../types';
 
 export function createSidesheet<TItem extends Record<PropertyKey, unknown>, TError extends DefaultError>() {
@@ -35,9 +38,15 @@ export function createSidesheet<TItem extends Record<PropertyKey, unknown>, TErr
 		isOpen$,
 	};
 
+	let resolverFunction: (itemId: string) => Promise<TItem>;
+
 	const configurator = {
 		addMenuOptions: (options: []) => {
 			menuOptions$.next(options);
+			return configurator;
+		},
+		addGetItemAsync: (getItemAsync: (itemId: string) => Promise<TItem>) => {
+			resolverFunction = getItemAsync;
 			return configurator;
 		},
 		addTab: (tab: Tab<TItem>) => {
@@ -61,7 +70,24 @@ export function createSidesheet<TItem extends Record<PropertyKey, unknown>, TErr
 			providers$.next([...providers$.value, provider]);
 			return configurator;
 		},
-		controller,
+		Create: (props: { itemId: string }) => {
+			const item = useObservable(item$, item$.value);
+
+			useEffect(() => {
+				if (!resolverFunction) {
+					throw Error('No resolver function registered');
+				}
+				item$.next(null);
+				/**!! Possible memory leak */
+				resolverFunction(props.itemId).then((s) => item$.next(s));
+			}, [props.itemId]);
+
+			if (!item) {
+				return <div>loading...</div>;
+			}
+
+			return <Sidesheet itemId={props.itemId} controller={controller} />;
+		},
 	};
 
 	return configurator;

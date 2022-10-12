@@ -1,7 +1,7 @@
 import { Icon, Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
+import { useSidesheet } from '../../hooks';
 import { useObservable } from '../../hooks/useObservable';
-import { useSidesheet } from '../provider/sidesheetControllerProvider';
 import {
 	StyledColourTab,
 	StyledHeader,

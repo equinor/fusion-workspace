@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode } from 'react';
 import { DefaultError, SidesheetController } from '../../types';
 type SidesheetControllerContextProviderProps = {
 	children: ReactNode;
@@ -9,5 +9,3 @@ export function SidesheetControllerContextProvider({ children, controller }: Sid
 }
 
 export const SidesheetContext = createContext({} as SidesheetController<Record<PropertyKey, unknown>, DefaultError>);
-
-export const useSidesheet = () => useContext(SidesheetContext);

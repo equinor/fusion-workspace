@@ -1,9 +1,9 @@
 import { useObservable } from '../../hooks/useObservable';
-import { useSidesheet } from '../provider/sidesheetControllerProvider';
 
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 import { Icon } from '@equinor/eds-core-react';
+import { useSidesheet } from '../../hooks';
 
 export function ErrorBanner() {
 	const { error$, throwError } = useSidesheet();

@@ -8,10 +8,12 @@ import { SidesheetTabs } from './tabs/SidesheetTabs';
 
 type SidesheetProps<TItem extends Record<PropertyKey, unknown>, TError extends DefaultError> = {
 	controller: SidesheetController<TItem, TError>;
+	itemId: string;
 };
 
 export function Sidesheet<TItem extends Record<PropertyKey, unknown>, TError extends DefaultError>({
 	controller,
+	itemId,
 }: SidesheetProps<TItem, TError>): JSX.Element | null {
 	const isOpen = useObservable(controller.isOpen$, controller.isOpen$.value);
 

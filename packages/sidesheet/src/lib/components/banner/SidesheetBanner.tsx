@@ -1,7 +1,7 @@
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
+import { useSidesheet } from '../../hooks';
 import { useObservable } from '../../hooks/useObservable';
-import { useSidesheet } from '../provider/sidesheetControllerProvider';
 
 export function SidesheetBanner(): JSX.Element {
 	const { subHeadings$ } = useSidesheet();

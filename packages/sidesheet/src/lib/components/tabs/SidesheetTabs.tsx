@@ -1,8 +1,8 @@
 import { useObservable } from '../../hooks/useObservable';
-import { useSidesheet } from '../provider/sidesheetControllerProvider';
 import { Tabs } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
+import { useSidesheet } from '../../hooks';
 
 export const SidesheetTabs = () => {
 	const { tabs$, activeTab$, item$ } = useSidesheet();
