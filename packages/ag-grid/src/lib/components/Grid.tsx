@@ -1,23 +1,47 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
+import { ColDef, ColumnApi, GridApi, GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
 
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
-import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
+import { applyColumnStateFromGridController, createGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
-interface GridProps<T extends Record<PropertyKey, unknown>> {
+type GridProps<T extends Record<PropertyKey, unknown>> = {
 	controller: GridController<T>;
 	height: number;
-}
+};
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
+
+type ReactGridProps<T extends Record<PropertyKey, unknown>> = {
+	height: number;
+	rowData: T[];
+	colDefs: ColDef<T>[];
+	gridOptions?: GridOptions<T>;
+};
+
+export function ReactGrid<T extends Record<PropertyKey, unknown>>({
+	height,
+	rowData,
+	colDefs,
+	gridOptions,
+}: ReactGridProps<T>) {
+	const controller = useMemo(() => {
+		const s = createGridController(() => '');
+		s.columnDefs = colDefs;
+		s.rowData = rowData;
+		s.gridOptions = gridOptions;
+		return s;
+	}, [colDefs, gridOptions, rowData]);
+
+	return <Grid controller={controller} height={height} />;
+}
 
 export function Grid<T extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<T>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
@@ -37,7 +61,7 @@ export function Grid<T extends Record<PropertyKey, unknown>>({ controller, heigh
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
-				// gridOptions={controller.gridOptions}
+				gridOptions={controller.gridOptions}
 				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}
