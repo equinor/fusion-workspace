@@ -57,7 +57,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 		this.viewController.ErrorComponent = ({ error }) => {
 			return <DumpsterFireDialog text={error.detail} buttons={[]} />;
 		};
-		this.mediator.onUnMount(this.mediator.destroy);
+		this.mediator.unMount$.subscribe(this.mediator.destroy);
 
 		addViewController(this.viewController, this.mediator, history);
 

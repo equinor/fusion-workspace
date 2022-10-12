@@ -21,7 +21,7 @@ export function addPowerBi<TData, TError>(
 		ignoreLoading: true,
 	});
 
-	mediator.onMount(() => {
+	mediator.mount$.subscribe(() => {
 		controller.getConfig && controller.getConfig(controller.reportUri);
 	});
 }

@@ -1,4 +1,5 @@
 import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
+import { Subject } from 'rxjs';
 
 export class WorkspaceReactMediator<
 	TData,
@@ -28,13 +29,9 @@ export class WorkspaceReactMediator<
 
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
-	onMount: (callback: () => void) => () => void;
+	mount$ = new Subject<boolean>();
 
-	onUnMount: (callback: () => void) => () => void;
-
-	setMount: () => void;
-
-	setUnmount: () => void;
+	unMount$ = new Subject<boolean>();
 
 	constructor() {
 		super();
@@ -51,14 +48,5 @@ export class WorkspaceReactMediator<
 		});
 		this.setIsSidesheetOpen = isSidesheetOpen.setValue;
 		this.onSidesheetStateChange = isSidesheetOpen.onchange;
-
-		const mounted = new Observable(false);
-		this.onMount = mounted.onchange;
-
-		this.setMount = () => mounted.setValue(!mounted.value);
-
-		const unMounted = new Observable(false);
-		this.onUnMount = unMounted.onchange;
-		this.setUnmount = () => unMounted.setValue(!mounted.value);
 	}
 }

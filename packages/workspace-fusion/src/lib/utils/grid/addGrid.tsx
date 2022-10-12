@@ -31,7 +31,7 @@ export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 		CustomHeader: () => <GridHeader controller={gridController} />,
 	});
 
-	mediator.onUnMount(gridController.destroy);
+	mediator.unMount$.subscribe(gridController.destroy);
 }
 
 type GridWrapperProps<TData extends Record<PropertyKey, unknown>> = {

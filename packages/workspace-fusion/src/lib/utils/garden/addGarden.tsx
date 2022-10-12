@@ -29,5 +29,5 @@ export function addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, TEr
 		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
 	});
 
-	mediator.onUnMount(gardenController.destroy);
+	mediator.unMount$.subscribe(gardenController.destroy);
 }

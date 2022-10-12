@@ -3,6 +3,7 @@ import { WorkspaceViewController } from './workspaceViewController';
 
 export class WorkspaceReact<TabNames extends string, TData, TOnClick, TError, TContext> {
 	controller = new WorkspaceViewController<TabNames, TError>();
+
 	mediator = new WorkspaceReactMediator<TData, TOnClick, TError, TContext>();
 	/** Adds a tab to the workspace */
 
@@ -27,12 +28,4 @@ function mediatorSetup<TabNames extends string, TData, TOnClick, TError, TContex
 	mediator: WorkspaceReactMediator<TData, TOnClick, TError, TContext>
 ) {
 	mediator.onIsLoadingChange(controller.viewState.setIsLoading);
-
-	controller.isMounted.onchange((mounted) => {
-		if (mounted) {
-			mediator.setMount();
-		} else {
-			mediator.setUnmount();
-		}
-	});
 }

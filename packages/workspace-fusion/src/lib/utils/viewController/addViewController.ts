@@ -9,7 +9,8 @@ export function addViewController<TData>(
 	mediator: FusionMediator<TData>,
 	history: BrowserHistory
 ) {
-	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
+	viewController.mount$.subscribe(() => mediator.mount$.next(true));
+	viewController.unMount$.subscribe(() => mediator.unMount$.next(true));
 
 	mediator.errorService.error$.subscribe(viewController.setError);
 
@@ -27,7 +28,7 @@ export function addViewController<TData>(
 		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
 	});
 
-	mediator.onUnMount(viewController.destroy);
+	mediator.unMount$.subscribe(viewController.destroy);
 }
 
 /** Switches tab when url changes due to navigation event */

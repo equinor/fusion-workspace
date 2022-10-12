@@ -15,5 +15,5 @@ export function addFilter<TData, TError>(
 
 	addFilterContext(viewController, filterController);
 	configureOnDataChange(mediator, filterController);
-	mediator.onUnMount(filterController.destroy);
+	mediator.unMount$.subscribe(filterController.destroy);
 }

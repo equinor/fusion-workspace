@@ -3,9 +3,9 @@ import { useEffectOnce } from './useEffectOnce';
 
 export function useMounted<TTabNames extends string, TError>(controller: WorkspaceViewController<TTabNames, TError>) {
 	useEffectOnce(() => {
-		controller.isMounted.setValue(true);
+		controller.mount$.next(true);
 		return () => {
-			controller.isMounted.setValue(false);
+			controller.unMount$.next(true);
 		};
 	});
 }

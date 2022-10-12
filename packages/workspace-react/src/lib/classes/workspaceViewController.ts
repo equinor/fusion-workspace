@@ -1,4 +1,5 @@
 import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Subject } from 'rxjs';
 import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
@@ -48,7 +49,9 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
 
-	isMounted = new Observable(false, (a, b) => a === b);
+	mount$ = new Subject();
+
+	unMount$ = new Subject();
 
 	destroy = () => {
 		for (const key in this) {
