@@ -1,6 +1,11 @@
 import { ObjectType } from '../types';
-import { createClickService, createErrorService, createDataService, createSelectionService } from '../utils';
-import { BookmarkService } from './bookmarkService';
+import {
+	createClickService,
+	createErrorService,
+	createDataService,
+	createSelectionService,
+	createBookmarksService,
+} from '../utils';
 import { URLService } from './urlService/urlService';
 
 /**
@@ -23,7 +28,7 @@ export class WorkspaceMediator<
 		return this;
 	};
 
-	bookmarkService = new BookmarkService<TBookmarkState>();
+	bookmarkService = createBookmarksService<TBookmarkState>();
 
 	urlService = new URLService();
 

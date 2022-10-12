@@ -7,7 +7,7 @@ export function configureBookmark<TData extends Record<PropertyKey, unknown>>(
 	mediator: FusionMediator<TData>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
-	mediator.bookmarkService.onApply((state) => state?.grid && applyGridBookmark(state.grid, gridController));
+	mediator.bookmarkService.apply$.subscribe((state) => state?.grid && applyGridBookmark(state.grid, gridController));
 	gridController.columnState$.subscribe(mediator.bookmarkService.capture);
 }
 
