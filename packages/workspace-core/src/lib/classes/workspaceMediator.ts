@@ -1,9 +1,11 @@
 import { ObjectType } from '../types';
-import { BookmarkService } from './bookmarkService';
-import { ClickService } from './clickService/clickService';
-import { DataService } from './dataService';
-import { ErrorService } from './errorService';
-import { SelectionService } from './selectionService';
+import {
+	createClickService,
+	createErrorService,
+	createDataService,
+	createSelectionService,
+	createBookmarksService,
+} from '../utils';
 import { URLService } from './urlService/urlService';
 
 /**
@@ -13,7 +15,7 @@ import { URLService } from './urlService/urlService';
  */
 export class WorkspaceMediator<
 	TData,
-	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
+	TOnClick extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>
 > {
@@ -26,17 +28,17 @@ export class WorkspaceMediator<
 		return this;
 	};
 
-	bookmarkService = new BookmarkService<TBookmarkState>();
-
-	selectionService = new SelectionService();
+	bookmarkService = createBookmarksService<TBookmarkState>();
 
 	urlService = new URLService();
 
-	dataService = new DataService<TData>();
+	selectionService = createSelectionService();
 
-	clickService = new ClickService<TOnClick>();
+	dataService = createDataService<TData>();
 
-	errorService = new ErrorService<TError>();
+	clickService = createClickService<TOnClick>();
+
+	errorService = createErrorService<TError>();
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {

@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
-import { GridController } from '../classes';
+
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
@@ -11,14 +11,26 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-interface GridProps<T> {
-	controller: GridController<T>;
+import { GridController } from '../types';
+
+type GridProps<TData extends Record<PropertyKey, unknown>> = {
+	controller: GridController<TData>;
 	height: number;
-}
+};
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<T>({ controller, height }: GridProps<T>) {
+/**
+ * Grid to be used with a controller
+ * This component is for more advanced usage then you can get with the React Grid.
+ * ```TS
+ * const gc = new GridController()
+ * gc.colDefs = [{field: "id"}];
+ * gc.rowData = [{id: "123"},{id: "1234"}]
+ * <Grid controller={gc} />
+ * ```
+ */
+export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
@@ -32,11 +44,11 @@ export function Grid<T>({ controller, height }: GridProps<T>) {
 				onGridReady={(api) => {
 					setGridApi(api.api);
 					setColumnApi(api.columnApi);
-					selectRowNode(controller.selectedNodes.value ?? [], controller.getIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
-				// gridOptions={controller.gridOptions}
+				gridOptions={controller.gridOptions}
 				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}

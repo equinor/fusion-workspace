@@ -7,13 +7,13 @@ import { configureOnDataChange } from './configureOnDataChange';
 export function addFilter<TData, TError>(
 	config: FilterOptions<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	{ dataService, onUnMount }: FusionMediator<TData>
+	mediator: FusionMediator<TData>
 ) {
 	const filterController = new ReactFilterController<TData>();
 
 	filterController.addGroups(config);
 
 	addFilterContext(viewController, filterController);
-	configureOnDataChange(dataService, filterController);
-	onUnMount(filterController.destroy);
+	configureOnDataChange(mediator, filterController);
+	mediator.onUnMount(filterController.destroy);
 }

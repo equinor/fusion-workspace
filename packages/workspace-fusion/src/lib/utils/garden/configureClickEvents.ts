@@ -10,12 +10,12 @@ export function configureClickEvents<TData, TCustomGroupByKeys, TCustomState, TC
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
 		clickService.click({ item: item });
-		selectionService.setSelection([{ id: getIdentifier(item) }]);
+		selectionService.selectedNodes = [getIdentifier(item)];
 	};
 
 	gardenController.clickEvents.onClickGroup = (group) => {
 		const items = findItemsRecursively(group);
-		selectionService.setSelection(items.map((s) => ({ id: getIdentifier(s) })));
+		selectionService.selectedNodes = items.map(getIdentifier);
 	};
 }
 

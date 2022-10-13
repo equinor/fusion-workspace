@@ -1,6 +1,6 @@
 import { GardenController } from '@equinor/garden';
 import { WorkspaceReactMediator } from '@equinor/workspace-react';
-import { GridController } from '@workspace/grid';
+import { createGridController } from '@workspace/grid';
 import { ObjectType } from '@workspace/workspace-core';
 import { WorkspaceOnClick } from '../types';
 import { configureGardenHighlightSelection } from '../utils/garden';
@@ -8,9 +8,9 @@ import { configureHighlightSelection as configureGridHighlight } from '../utils/
 
 const HIGHLIGHTEDMOCKID = '123';
 
-interface MockData {
+type MockData = {
 	id: string;
-}
+};
 
 describe('Highlight service should highlight remove highlight in all its integrated components', () => {
 	it('Setting highlighted on the mediator should also set it on the garden', () => {
@@ -31,7 +31,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 		configureGardenHighlightSelection(controller, mediator);
 
 		expect(controller.selectedNodes.value.length).toStrictEqual(0);
-		mediator.selectionService.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
+		mediator.selectionService.selectedNodes = [HIGHLIGHTEDMOCKID];
 		expect(controller.selectedNodes.value[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 
@@ -43,11 +43,11 @@ describe('Highlight service should highlight remove highlight in all its integra
 			ObjectType<unknown>
 		>();
 
-		const gridController = new GridController<MockData>((s) => s.id);
+		const gridController = createGridController<MockData>((s) => s.id);
 
 		configureGridHighlight(gridController, mediator);
-		expect(gridController.selectedNodes.value?.length).toStrictEqual(0);
-		mediator.selectionService.setSelection([{ id: HIGHLIGHTEDMOCKID }]);
-		expect(gridController.selectedNodes.value?.[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
+		expect(gridController.selectedNodes.length).toStrictEqual(0);
+		mediator.selectionService.selectedNodes = [HIGHLIGHTEDMOCKID];
+		expect(gridController.selectedNodes?.[0]).toStrictEqual(HIGHLIGHTEDMOCKID);
 	});
 });

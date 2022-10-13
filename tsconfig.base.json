@@ -16,6 +16,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@equinor/observable-proxy": ["packages/observable-proxy/src/index.ts"],
 			"@equinor/filter": ["packages/filter/src/index.ts"],
 			"@equinor/garden": ["packages/garden/src/index.ts"],
 			"@equinor/powerbi": ["packages/power-bi/src/index.ts"],
