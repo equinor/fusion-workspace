@@ -1,5 +1,5 @@
 import { ColDef } from 'ag-grid-community';
 
-export interface GridConfig {
+export type GridConfig = {
 	colDefs: ColDef[];
-}
+};
