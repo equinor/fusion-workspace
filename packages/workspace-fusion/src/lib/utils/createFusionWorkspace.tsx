@@ -13,15 +13,17 @@ export function createFusionWorkspace<TData>(config: AppConfig<TData>, builderFu
 
 	/** Check if filter provider is present, otherwise bypass data */
 	if (!viewController.providers.find(({ name }) => name === FUSION_FILTER_PROVIDER_NAME)) {
-		builder.addMiddleware(({ dataService }) => dataService.onDataChange(dataService.setFilteredData));
+		builder.addMiddleware(({ dataService }) =>
+			dataService.data$.subscribe((val) => val && dataService.setFilteredData(val, 'Bypass filter'))
+		);
 	}
 
 	return sortFusionTabs(viewController);
 }
 
-interface AppConfig<TData> {
+type AppConfig<TData> = {
 	getIdentifier: GetIdentifier<TData>;
 	appKey: string;
-}
+};
 
 export type GetIdentifier<TData> = (item: TData) => string;

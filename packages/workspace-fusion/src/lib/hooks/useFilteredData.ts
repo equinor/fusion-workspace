@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FusionMediator } from '../types/fusionController';
 
 export function useFilteredData<TData>({ dataService }: FusionMediator<TData>) {
-	const [data, setData] = useState<TData[]>(dataService.filteredData ?? []);
+	const [data, setData] = useState<TData[]>([]);
 
 	useEffect(() => {
 		const subscription = dataService.filteredData$.subscribe((newData) => {

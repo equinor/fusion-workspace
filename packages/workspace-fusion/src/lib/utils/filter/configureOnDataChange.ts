@@ -7,9 +7,9 @@ export function configureOnDataChange<TData>(
 	filterController: ReactFilterController<TData>
 ) {
 	filterController.onFilteredDataChanged((newData) => {
-		mediator.dataService.filteredData = newData;
+		mediator.dataService.setFilteredData(newData, 'filter');
 	});
-	mediator.dataService.data && filterController.setData(mediator.dataService.data);
+
 	filterController.init();
 	mediator.dataService.data$.subscribe((data) => {
 		filterController.setData(data ?? []);

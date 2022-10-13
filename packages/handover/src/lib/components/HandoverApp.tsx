@@ -1,12 +1,23 @@
 import React, { useMemo } from 'react';
 import { HttpClientMsal, useHttpClient } from '@equinor/fusion-framework-react-app/http';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { IndexedDbModule } from '@equinor/workspace-fusion-modules';
+import { createFusionWorkspace, FusionMediator } from '@equinor/workspace-fusion';
+import { DevtoolsModule, IndexedDbModule } from '@equinor/workspace-fusion-modules';
 import { Workspace } from '@equinor/workspace-react';
 
 import { Handover } from './types';
 import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } from './workspaceConfig';
 import { gardenConfig } from './gardenConfig';
+import { Button } from '@equinor/eds-core-react';
+import { Observable } from 'rxjs';
+
+async function getValueFromObservable<T>(obs$: Observable<T>): Promise<T> {
+	return new Promise((res) => {
+		const sub = obs$.subscribe((val) => {
+			res(val);
+			sub.unsubscribe();
+		});
+	});
+}
 
 export function HandoverApp() {
 	const client = useHttpClient('portal');
@@ -15,8 +26,24 @@ export function HandoverApp() {
 		return createWorkspaceController(client);
 	}, []);
 
-	return <Workspace controller={controller} />;
+	return (
+		<>
+			<Button
+				onClick={async () =>
+					outerScope.dataService.setData(
+						(await getValueFromObservable(outerScope.dataService.filteredData$)) ?? [],
+						'end-user'
+					)
+				}
+			>
+				Click me
+			</Button>
+			<Workspace controller={controller} />
+		</>
+	);
 }
+
+let outerScope: FusionMediator<Handover>;
 
 const createWorkspaceController = (client: HttpClientMsal) => {
 	return createFusionWorkspace<Handover>({ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo }, (builder) =>
@@ -67,10 +94,11 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 			.addSidesheet(sidesheetOptions)
 			.addGarden(gardenConfig)
 			.addMiddleware((mediator) => {
+				outerScope = mediator;
 				mediator.onMount(() => console.log('App mounted'));
 				mediator.onUnMount(() => console.log('App unmounted'));
 			})
 			.addStatusBarItems(statusBar)
-			.addModules([IndexedDbModule])
+			.addModules([IndexedDbModule, DevtoolsModule])
 	);
 };

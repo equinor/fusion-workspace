@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
 import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
 import { FilterValueType } from '@equinor/filter';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { filter } from 'rxjs';
 
 export const gridOptions: GridConfig<Handover> = {
 	columnDefinitions: [
@@ -65,7 +66,20 @@ export const statusBar: StatusBarConfig<Handover> = (data: Handover[]) => [
 
 export function CustomTab() {
 	const { clickService, dataService, isLoading } = useWorkspace();
-	const { data, filteredData, setFilteredData } = dataService;
+	const { data$, filteredData$, setFilteredData } = dataService;
+	const [data, setData] = useState<unknown[] | null>([]);
+	const [filteredData, setStateFData] = useState<unknown[] | null>([]);
+
+	useEffect(() => {
+		const sub = data$.subscribe(setData);
+		const fSub = filteredData$.subscribe(setStateFData);
+
+		return () => {
+			fSub.unsubscribe();
+			sub.unsubscribe();
+		};
+	}, []);
+
 	return (
 		<StyledCustomTab>
 			<ul>
@@ -73,8 +87,8 @@ export function CustomTab() {
 				<li>Filtered data length: {filteredData?.length}</li>
 				<li>isLoading: {isLoading}</li>
 			</ul>
-			<Button onClick={() => clickService.click({ item: data?.[0] })}>Open sidesheet</Button>
-			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [])}>Change data</Button>
+			<Button onClick={() => clickService.click({ item: data?.[0] }, 'customTab')}>Open sidesheet</Button>
+			<Button onClick={() => setFilteredData(filteredData?.slice(0, 2) ?? [], 'customTab')}>Change data</Button>
 		</StyledCustomTab>
 	);
 }

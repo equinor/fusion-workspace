@@ -5,6 +5,10 @@
 		"declaration": true,
 		"types": []
 	},
-	"include": ["**/*.ts"],
+	"include": [
+		"**/*.ts",
+		"src/lib/modules/devtools/devtoolsModule.tsx",
+		"src/lib/modules/workspace-devtools/devtoolsModule.tsx"
+	],
 	"exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

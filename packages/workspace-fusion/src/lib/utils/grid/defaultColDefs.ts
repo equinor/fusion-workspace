@@ -16,7 +16,7 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
  */
 export function applyWorkspaceClickToCells<TData>(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData>) {
 	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => clickService.click({ item: ev.data }),
+		onCellClicked: (ev) => clickService.click({ item: ev.data }, 'grid'),
 		...colDef,
 	}));
 }

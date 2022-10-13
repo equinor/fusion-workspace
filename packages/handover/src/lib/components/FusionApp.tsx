@@ -1,4 +1,5 @@
 import { StarProgress } from '@equinor/eds-core-react';
+
 import createApp, { AppConfigurator } from '@equinor/fusion-framework-react-app';
 import { useFramework } from '@equinor/fusion-framework-react/hooks';
 import React from 'react';
@@ -26,6 +27,7 @@ export const configurator = createApp(HandoverApp, configCallback, []);
 export const FusionApp = () => {
 	const framework = useFramework();
 	const Component = configurator(framework, { name: 'Handover' });
+
 	return (
 		<Suspense
 			fallback={

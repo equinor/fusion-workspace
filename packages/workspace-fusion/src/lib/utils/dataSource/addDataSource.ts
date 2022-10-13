@@ -8,7 +8,7 @@ export function addDataSource<TData>(dataFetch: DataSourceOptions<TData>, mediat
 
 	const dataSourceController = new FetchController<TData>(fetchFunction);
 	dataSourceController.onDataChanged((newData) => {
-		dataService.data = newData;
+		dataService.setData(newData, 'DataSource');
 	});
 	dataSourceController.onIsLoadingChanged(setIsLoading);
 

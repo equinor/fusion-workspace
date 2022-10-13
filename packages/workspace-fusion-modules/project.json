@@ -5,6 +5,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nrwl/js:tsc",
+			"external": ["react/jsx-runtime"],
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/packages/workspace-fusion-modules",

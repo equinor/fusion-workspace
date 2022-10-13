@@ -9,7 +9,7 @@ export function configureClickEvents<TData, TCustomGroupByKeys, TCustomState, TC
 	getIdentifier: GetIdentifier<TData>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
-		clickService.click({ item: item });
+		clickService.click({ item: item }, 'Garden');
 		selectionService.selectedNodes = [getIdentifier(item)];
 	};
 
