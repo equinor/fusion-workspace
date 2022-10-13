@@ -1,49 +1,36 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColDef, ColumnApi, GridApi, GridOptions, SideBarDef } from 'ag-grid-community';
+import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
 
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
 import { StyledGridWrapper } from './grid.styles';
-import { applyColumnStateFromGridController, createGridController, listenForColumnChanges } from '../utils';
+import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
-type GridProps<T extends Record<PropertyKey, unknown>> = {
-	controller: GridController<T>;
+
+type GridProps<TData extends Record<PropertyKey, unknown>> = {
+	controller: GridController<TData>;
 	height: number;
 };
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-type ReactGridProps<T extends Record<PropertyKey, unknown>> = {
-	height: number;
-	rowData: T[];
-	colDefs: ColDef<T>[];
-	gridOptions?: GridOptions<T>;
-};
-
-export function ReactGrid<T extends Record<PropertyKey, unknown>>({
-	height,
-	rowData,
-	colDefs,
-	gridOptions,
-}: ReactGridProps<T>) {
-	const controller = useMemo(() => {
-		const s = createGridController(() => '');
-		s.columnDefs = colDefs;
-		s.rowData = rowData;
-		s.gridOptions = gridOptions;
-		return s;
-	}, [colDefs, gridOptions, rowData]);
-
-	return <Grid controller={controller} height={height} />;
-}
-
-export function Grid<T extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<T>) {
+/**
+ * Grid to be used with a controller
+ * This component is for more advanced usage then you can get with the React Grid.
+ * ```TS
+ * const gc = new GridController()
+ * gc.colDefs = [{field: "id"}];
+ * gc.rowData = [{id: "123"},{id: "1234"}]
+ * <Grid controller={gc} />
+ * ```
+ */
+export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
