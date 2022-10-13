@@ -14,11 +14,16 @@ export const DevtoolsModule: FusionWorkspaceModule<any> = {
 };
 
 async function setup(mediator: FusionMediator<any>) {
-	if (!document.getElementById(CONTAINER_NAME)) {
-		const node = document.createElement('div');
-		node.id = CONTAINER_NAME;
-		const el = window.document.body.appendChild(node);
-		const root = ReactDOM.createRoot(el);
-		root.render(<AuditTrail />);
-	}
+	document.getElementById(CONTAINER_NAME)?.remove();
+	const node = document.createElement('div');
+	node.id = CONTAINER_NAME;
+	const el = window.document.body.appendChild(node);
+
+	const root = ReactDOM.createRoot(el);
+	root.render(<AuditTrail />);
+
+	mediator.onUnMount(() => {
+		root.unmount();
+		el.remove();
+	});
 }
