@@ -12,7 +12,6 @@ type OmitType<T, Type> = Omit<T, PickTypeKeys<T, Type>>;
  * Creates a union of an object and creates a Observable of all properties
 ```TS
 type Test = {name: string};
-
 type Doc = SubscriberProxy<Test> // {name: string, name$: Observable<string>}
 ```
  */
