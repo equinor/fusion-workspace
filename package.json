@@ -2,7 +2,16 @@
 	"name": "workspace",
 	"version": "0.0.0",
 	"license": "MIT",
-	"scripts": {},
+	"scripts": {
+		"lint:staged": "lint-staged",
+		"bootstrap": "lerna bootstrap",
+		"lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
+		"clean": "yarn run clean:modules && yarn run clean:build",
+		"clean:build": "rm -rf packages/*/dist",
+		"build": "lerna run build",
+		"build:clean": "rm -rf packages/*/dist && yarn run build",
+		"npm:clean": "rm -rf node_modules && lerna exec 'rm -rf node_modules'"
+	},
 	"private": true,
 	"dependencies": {
 		"@ag-grid-community/client-side-row-model": "^28.1.1",
@@ -34,6 +43,8 @@
 		"typesafe-actions": "^5.1.0"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^17.1.2",
+		"@commitlint/config-conventional": "^17.1.0",
 		"@nrwl/cli": "14.3.6",
 		"@nrwl/cypress": "14.3.6",
 		"@nrwl/devkit": "^14.3.6",
@@ -60,6 +71,7 @@
 		"@vitejs/plugin-react": "^1.3.2",
 		"babel-jest": "27.5.1",
 		"babel-plugin-styled-components": "1.10.7",
+		"conventional-changelog-conventionalcommits": "^5.0.0",
 		"cypress": "^9.1.0",
 		"eslint": "~8.15.0",
 		"eslint-config-prettier": "8.1.0",
@@ -69,7 +81,10 @@
 		"eslint-plugin-react": "7.30.0",
 		"eslint-plugin-react-hooks": "4.6.0",
 		"eslint-plugin-tsdoc": "^0.2.16",
+		"husky": "^8.0.1",
 		"jest": "27.5.1",
+		"lerna": "^6.0.0",
+		"lint-staged": "^13.0.3",
 		"nx": "14.5.4",
 		"nx-plugin-vite": "^2.2.1",
 		"prettier": "^2.6.2",
@@ -81,5 +96,11 @@
 	},
 	"workspaces": [
 		"packages/**"
-	]
+	],
+	"lint-staged": {
+		"./packages/**/src/**/*.{ts,tsx}": [
+			"eslint --quiet --fix",
+			"jest --bail --findRelatedTests --passWithNoTests"
+		]
+	}
 }
