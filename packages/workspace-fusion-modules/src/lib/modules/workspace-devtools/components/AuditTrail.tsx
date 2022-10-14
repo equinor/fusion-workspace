@@ -2,22 +2,20 @@ import { Chip, Icon, Typography } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { report_bug } from '@equinor/eds-icons';
 import { useState, useMemo, useEffect } from 'react';
-import { fromEvent, filter, map } from 'rxjs';
 import styled from 'styled-components';
 import { Log } from './Log';
 import { DevtoolsBug } from './DevtoolsBug';
-import { ChangeEvent } from '@equinor/workspace-core';
+import { FusionMediator } from '@equinor/workspace-fusion';
+import { PropChangedEvent } from '@equinor/workspace-core';
 
 Icon.add({ report_bug });
 
-const audit$ = fromEvent(window, 'message').pipe(
-	filter((ev) => (ev as MessageEvent)?.data?.type === 'audit'),
-	map<Event, ChangeEvent>((s) => (s as MessageEvent).data)
-);
-
-export function AuditTrail() {
+type AuditTrailProps = {
+	mediator: FusionMediator<any>;
+};
+export function AuditTrail({ mediator }: AuditTrailProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const [ev, setEv] = useState<ChangeEvent[]>([]);
+	const [ev, setEv] = useState<PropChangedEvent[]>([]);
 	const [target, setTarget] = useState<string | null>(null);
 
 	const events = useMemo(
@@ -29,8 +27,8 @@ export function AuditTrail() {
 	);
 
 	useEffect(() => {
-		const sub = audit$.subscribe((ev) =>
-			setEv((s) => [...s, ev].sort((a, b) => (a.timestamp.getTime() > b.timestamp.getTime() ? -1 : 1)))
+		const sub = mediator.dataService.data$.subscribe((ev) =>
+			setEv((s) => [...s, ev.event].sort((a, b) => (a.timestamp.getTime() > b.timestamp.getTime() ? -1 : 1)))
 		);
 		return () => sub.unsubscribe();
 	}, []);

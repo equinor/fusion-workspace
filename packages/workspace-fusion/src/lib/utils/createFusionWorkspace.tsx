@@ -14,7 +14,9 @@ export function createFusionWorkspace<TData>(config: AppConfig<TData>, builderFu
 	/** Check if filter provider is present, otherwise bypass data */
 	if (!viewController.providers.find(({ name }) => name === FUSION_FILTER_PROVIDER_NAME)) {
 		builder.addMiddleware(({ dataService }) =>
-			dataService.data$.subscribe((val) => val && dataService.setFilteredData(val, 'Bypass filter'))
+			dataService.data$.subscribe(
+				({ newValue }) => newValue && dataService.setFilteredData(newValue, 'Bypass filter')
+			)
 		);
 	}
 

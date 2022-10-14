@@ -6,8 +6,8 @@ export function configureDataChange<TData extends Record<PropertyKey, unknown>>(
 	gridController: GridController<TData>,
 	mediator: FusionMediator<TData>
 ) {
-	mediator.dataService.filteredData$.subscribe((data) => {
-		if (!data) return;
-		gridController.rowData = data;
+	mediator.dataService.filteredData$.subscribe(({ newValue }) => {
+		if (!newValue) return;
+		gridController.rowData = newValue;
 	});
 }

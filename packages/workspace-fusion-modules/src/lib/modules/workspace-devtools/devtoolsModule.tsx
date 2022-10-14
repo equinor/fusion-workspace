@@ -20,7 +20,7 @@ async function setup(mediator: FusionMediator<any>) {
 	const el = window.document.body.appendChild(node);
 
 	const root = ReactDOM.createRoot(el);
-	root.render(<AuditTrail />);
+	root.render(<AuditTrail mediator={mediator} />);
 
 	mediator.onUnMount(() => {
 		root.unmount();

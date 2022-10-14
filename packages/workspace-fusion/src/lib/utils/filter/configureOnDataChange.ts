@@ -11,8 +11,8 @@ export function configureOnDataChange<TData>(
 	});
 
 	filterController.init();
-	mediator.dataService.data$.subscribe((data) => {
-		filterController.setData(data ?? []);
+	mediator.dataService.data$.subscribe(({ newValue }) => {
+		filterController.setData(newValue ?? []);
 		filterController.init();
 	});
 }

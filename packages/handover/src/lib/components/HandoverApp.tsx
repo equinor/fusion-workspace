@@ -31,7 +31,7 @@ export function HandoverApp() {
 			<Button
 				onClick={async () =>
 					outerScope.dataService.setData(
-						(await getValueFromObservable(outerScope.dataService.filteredData$)) ?? [],
+						(await (await getValueFromObservable(outerScope.dataService.filteredData$)).newValue) ?? [],
 						'end-user'
 					)
 				}

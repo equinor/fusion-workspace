@@ -6,5 +6,5 @@ export function configureDataChange<TData, TCustomGroupByKeys, TCustomState, TCo
 	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
 	{ dataService }: FusionMediator<TData>
 ) {
-	dataService.filteredData$.subscribe((newData) => newData && gardenController.data.setValue(newData));
+	dataService.filteredData$.subscribe(({ newValue }) => newValue && gardenController.data.setValue(newValue));
 }
