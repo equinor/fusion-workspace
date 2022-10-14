@@ -27,10 +27,10 @@ jobs:
             - uses: actions/cache@v2
               with:
                   path: '**/node_modules'
-                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
             - name: Install Node Dependencies
-              run: yarn install --frozen-lockfile
+              run: npm ci --legacy-peer-deps
 
             - name: Config git user
               run: |
