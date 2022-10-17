@@ -35,11 +35,10 @@ export function switchTabOnNavigation<TData, TError>(
 	mediator: FusionMediator<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ) {
-	const tab = mediator.urlService.url.queryParams.find((params) => params.includes('tab='));
-	if (!tab) return;
-	const [, newTab] = tab.split('tab=');
-	if (newTab === viewController.tabController.activeTab) return;
-	viewController.tabController.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
+	const tab = mediator.urlService.url.searchParams.get('tab');
+	if (tab) {
+		viewController.tabController.setActiveTab(tab as WorkspaceTabNames);
+	}
 }
 
 /** Applies a fusion bookmark to the view controller */
