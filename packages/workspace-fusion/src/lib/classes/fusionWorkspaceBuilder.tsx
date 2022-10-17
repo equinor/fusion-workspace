@@ -1,7 +1,7 @@
-import { FilterOptions } from '@equinor/filter';
+import { FilterOptions } from '@equinor/workspace-filter';
 import history from 'history/browser';
 import { Action } from 'history';
-import { GardenConfig } from '@equinor/garden';
+import { GardenConfig } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {

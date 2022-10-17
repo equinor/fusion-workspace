@@ -1,4 +1,4 @@
-import { FetchController } from '@workspace/data-source';
+import { FetchController } from '@equinor/workspace-data-source';
 import { DataSourceOptions, FusionMediator } from '../../types';
 import { createFetchFunction } from './createFetchFunction';
 

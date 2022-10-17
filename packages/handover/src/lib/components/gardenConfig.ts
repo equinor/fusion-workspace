@@ -1,4 +1,4 @@
-import { GardenConfig, GardenController, GardenGroup, GardenGroups, GardenItem } from '@equinor/garden';
+import { GardenConfig, GardenController, GardenGroup, GardenGroups, GardenItem } from '@equinor/workspace-garden';
 import { ExtendedGardenFields, handoverFieldSettings } from '../fieldSettings';
 import { getFieldKeyBasedOnPlannedForecast, getYearAndWeekAndDayFromString, getYearAndWeekFromDate } from '../utils';
 import { Handover } from './types';

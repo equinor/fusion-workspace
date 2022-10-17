@@ -1,4 +1,4 @@
-import { GridController } from '@workspace/grid';
+import { GridController } from '@equinor/workspace-grid';
 import { FusionMediator } from '../../types';
 
 /**Update data on gridController whenever filtered data on mediator changes */

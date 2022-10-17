@@ -1,20 +1,20 @@
-import { GroupingKeys } from '@equinor/garden';
+import { GroupingKeys } from '@equinor/workspace-garden';
 import { ColumnState } from 'ag-grid-community';
 
-export interface UserSettings<T> {
+export type UserSettings<T> = {
 	garden: GardenViewState<T>;
 	grid: GridViewState;
 	view: ViewState;
-}
+};
 
-interface ViewState {
+type ViewState = {
 	activeTab?: string;
-}
+};
 
-interface GardenViewState<T> {
+type GardenViewState<T> = {
 	groupingKeys: GroupingKeys<T> | undefined;
-}
+};
 
-interface GridViewState {
+type GridViewState = {
 	columnState: ColumnState[] | undefined;
-}
+};

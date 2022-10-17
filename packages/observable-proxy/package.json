@@ -1,5 +1,5 @@
 {
-	"name": "@equinor/observable-proxy",
+	"name": "@equinor/workspace-observable-proxy",
 	"version": "0.0.1",
 	"type": "commonjs"
 }

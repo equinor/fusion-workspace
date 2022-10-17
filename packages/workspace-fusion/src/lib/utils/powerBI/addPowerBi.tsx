@@ -1,4 +1,4 @@
-import { PowerBI, PowerBiController } from '@equinor/powerbi';
+import { PowerBI, PowerBiController } from '@equinor/workspace-powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';

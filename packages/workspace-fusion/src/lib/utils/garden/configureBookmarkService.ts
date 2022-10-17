@@ -1,4 +1,4 @@
-import { GardenController } from '@equinor/garden';
+import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator, GardenBookmark } from '../../types';
 
 /** Configures the mediators bookmarkservice to work with the garden controller */

@@ -4,7 +4,7 @@ import { mockData } from './mockData';
 import styled from 'styled-components';
 import { Button } from '@equinor/eds-core-react';
 import { HandoverSidesheet } from './HandoverSidesheet/HandoverSidesheet';
-import { FilterValueType } from '@equinor/filter';
+import { FilterValueType } from '@equinor/workspace-filter';
 import React from 'react';
 
 export const gridOptions: GridConfig<Handover> = {

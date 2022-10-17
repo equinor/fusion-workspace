@@ -1,4 +1,4 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
