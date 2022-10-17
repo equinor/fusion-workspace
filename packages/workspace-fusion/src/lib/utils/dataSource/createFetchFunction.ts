@@ -1,4 +1,4 @@
-import { FetchData } from '@workspace/data-source';
+import { FetchData } from '@equinor/workspace-data-source';
 import { DataSourceOptions, FusionMediator } from '../../types';
 
 /**

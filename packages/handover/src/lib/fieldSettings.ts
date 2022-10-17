@@ -1,4 +1,4 @@
-import { FieldSettings } from '@equinor/garden';
+import { FieldSettings } from '@equinor/workspace-garden';
 import { Handover } from './components/types';
 import { getProgressKey, sortByNumber } from './utils';
 

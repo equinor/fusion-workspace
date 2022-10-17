@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { createGridController, Grid, GridController } from '@workspace/grid';
+import { createGridController, Grid, GridController } from '@equinor/workspace-grid';
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';

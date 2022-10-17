@@ -1,4 +1,4 @@
-import { ReactFilterController } from '@equinor/filter';
+import { ReactFilterController } from '@equinor/workspace-filter';
 import { FusionMediator } from '../../types';
 
 /** Sync data changes between filter controller and dataservice */

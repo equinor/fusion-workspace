@@ -1,4 +1,4 @@
-import { CustomItemView } from '@equinor/garden';
+import { CustomItemView } from '@equinor/workspace-garden';
 import { memo, useMemo, useRef, useState } from 'react';
 
 import { PopoverContent } from './Popover/PopoverContent';

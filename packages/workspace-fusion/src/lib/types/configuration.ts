@@ -1,16 +1,16 @@
-import { StatusItem } from '@equinor/status-bar';
+import { StatusItem } from '@equinor/workspace-status-bar';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { WorkspaceOnClick } from './onClick';
 
-export interface GridConfig<T> {
+export type GridConfig<T> = {
 	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
 	gridOptions?: GridOptions<T>;
-}
+};
 
-export interface SidesheetConfig<TData> {
+export type SidesheetConfig<TData> = {
 	Component: (props: WorkspaceOnClick<TData>) => JSX.Element;
 	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
-}
+};
 
 export type DataSourceOptions<TData> = {
 	/** Function for getting response object from server */
@@ -24,25 +24,25 @@ export type DataSourceOptions<TData> = {
 
 export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
 
-export interface CustomTabProps<TData> {
+export type CustomTabProps<TData> = {
 	data: TData[];
 	onClick: (ev: WorkspaceOnClick<TData>) => void;
-}
+};
 
 export type CustomTabComponent = () => JSX.Element;
 
-export interface CustomTab {
+export type CustomTab = {
 	name: string;
 	TabIcon: () => JSX.Element;
 	Component: CustomTabComponent;
 	CustomHeader?: () => JSX.Element;
-}
+};
 
-export interface AppConfig<TabNames extends string> {
+export type AppConfig<TabNames extends string> = {
 	appKey: string;
 	appColor: string;
 	defaultTab: TabNames;
-}
+};
 
 export type PowerBiConfig = {
 	reportUri: string;

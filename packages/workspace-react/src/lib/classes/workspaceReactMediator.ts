@@ -1,4 +1,4 @@
-import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
+import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@equinor/workspace-core';
 
 export class WorkspaceReactMediator<
 	TData,

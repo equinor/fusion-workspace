@@ -1,4 +1,4 @@
-import { GardenController, GardenGroup } from '@equinor/garden';
+import { GardenController, GardenGroup } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
 

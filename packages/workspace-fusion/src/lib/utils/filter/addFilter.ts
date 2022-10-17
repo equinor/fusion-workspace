@@ -1,4 +1,4 @@
-import { FilterOptions, ReactFilterController } from '@equinor/filter';
+import { FilterOptions, ReactFilterController } from '@equinor/workspace-filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { WorkspaceTabNames, FusionMediator } from '../../types';
 import { addFilterContext } from './addFilterContext';

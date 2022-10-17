@@ -1,11 +1,11 @@
-import { PageNavigation, PowerBiController } from '@equinor/powerbi';
+import { PageNavigation, PowerBiController } from '@equinor/workspace-powerbi';
 import { FusionPowerBiFilter } from '../../utils/powerBI/FusionPowerBIFilter';
 import { TabNavigation } from '../TabNavigation';
 import { StyledActionBar } from './actionBar.styles';
 
-interface PowerBiHeaderProps {
+type PowerBiHeaderProps = {
 	controller: PowerBiController;
-}
+};
 
 export function PowerBiHeader({ controller }: PowerBiHeaderProps) {
 	return (
