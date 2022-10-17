@@ -16,6 +16,7 @@ export function createFusionWorkspace<TData extends Record<PropertyKey, unknown>
 
 	/** Check if filter provider is present, otherwise bypass data */
 	if (!viewController.providers.find(({ name }) => name === FUSION_FILTER_PROVIDER_NAME)) {
+		console.debug('addFilter was never called, assigning data to filtered data');
 		builder.addMiddleware(({ dataService }) => {
 			dataService.data$.subscribe((val) => {
 				if (!val) return;

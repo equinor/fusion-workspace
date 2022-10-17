@@ -45,7 +45,8 @@ export function createObservableProxy<T extends Record<PropertyKey, unknown>>(
 				//Dont allow reassigning of observables
 				return false;
 			}
-			logPropReassign(String(index), newVal);
+
+			// logPropReassign(String(index), newVal);
 
 			if (compare) {
 				if (compare(prop, index, newVal)) {

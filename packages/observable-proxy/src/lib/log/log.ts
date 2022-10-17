@@ -1,3 +1,5 @@
+/**Prefix for easier filtering of logs */
+const prefix = (propName: string) => `[proxy-${propName}]`;
 /**
  * Logs reassigning of properties
  * @param propName - Name of the property
@@ -6,20 +8,28 @@
 export function logPropReassign(propName: string, newVal: any) {
 	switch (true) {
 		case Array.isArray(newVal): {
-			console.debug(`${prefix(propName)} ${propName} was assigned a new length of ${newVal.length}`);
+			console.groupCollapsed(`${prefix(propName)} ${propName} was assigned a new length of ${newVal.length}`),
+				console.trace(`${propName}`),
+				console.debug(newVal),
+				console.groupEnd();
+
 			break;
 		}
 
 		case typeof newVal === 'object': {
-			console.debug(`${prefix(propName)} ${propName} was assigned a new object ${JSON.stringify(newVal)}`);
+			console.groupCollapsed(
+				`${prefix(propName)} ${propName} was assigned a new object ${JSON.stringify(newVal)}`
+			);
+			console.trace(`${propName}`);
+			console.groupEnd();
 			break;
 		}
 
 		default: {
-			console.debug(`${prefix(propName)} ${propName} was given a new value of ${propName}`);
+			console.groupCollapsed();
+			console.trace(`${prefix(propName)} ${propName} was given a new value of ${propName}`, {});
+			console.groupEnd();
 			break;
 		}
 	}
 }
-
-const prefix = (propName: string) => `[proxy-${propName}]`;
