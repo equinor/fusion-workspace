@@ -6,14 +6,14 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 
-interface GardenProps<
+type GardenProps<
 	TData,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
-> {
+> = {
 	controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>;
-}
+};
 
 Icon.add({ chevron_down, chevron_up });
 
