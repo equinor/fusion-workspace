@@ -17,3 +17,4 @@ jobs:
             - run: npx nx format:check
             - run: npx nx affected --target=test --parallel=3 --ci --code-coverage
             - run: npx nx affected --target=build --parallel=3
+            - run: npx nx affected --target=build-storybook --parallel=3
