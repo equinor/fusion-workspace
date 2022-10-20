@@ -58,3 +58,5 @@ export function createObservableProxy<T extends Record<PropertyKey, unknown>>(
 		},
 	});
 }
+
+export default createObservableProxy;
