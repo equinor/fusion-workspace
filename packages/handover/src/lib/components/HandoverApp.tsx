@@ -59,6 +59,12 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 			])
 			.addGrid(gridOptions)
 			.addCustomTab(customTab)
+			.addCustomTab({
+				Component: () => <div>Admin page</div>,
+				name: 'Admin',
+				TabIcon: () => <div>Admin</div>,
+				predicate: async () => new Promise((res) => setTimeout(() => res(true), 5000)),
+			})
 			.addConfig({
 				appColor: 'purple',
 				appKey: 'Handover',
