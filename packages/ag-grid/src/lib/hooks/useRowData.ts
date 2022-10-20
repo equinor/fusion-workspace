@@ -1,15 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useObservable } from '@equinor/workspace-observable-proxy';
 import { GridController } from '../types';
 
-export function useRowData<TData extends Record<PropertyKey, unknown>>(controller: GridController<TData>) {
-	const [rowData, setRowData] = useState(controller.rowData);
-
-	useEffect(() => {
-		const subscription = controller.rowData$.subscribe(setRowData);
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, [controller]);
-
-	return rowData;
-}
+export const useRowData = <TData extends Record<PropertyKey, unknown>>(controller: GridController<TData>) =>
+	useObservable(controller.rowData$, controller.rowData);

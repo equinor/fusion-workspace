@@ -1,18 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useObservable } from '@equinor/workspace-observable-proxy';
 import { FusionMediator } from '../types/fusionController';
 
-export function useFilteredData<TData>({ dataService }: FusionMediator<TData>) {
-	const [data, setData] = useState<TData[]>(dataService.filteredData ?? []);
-
-	useEffect(() => {
-		const subscription = dataService.filteredData$.subscribe((newData) => {
-			if (!newData) return;
-			setData(newData);
-		});
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, [dataService.filteredData$]);
-
-	return data;
-}
+export const useFilteredData = <TData>({ dataService }: FusionMediator<TData>) =>
+	useObservable(dataService.filteredData$, dataService.filteredData);

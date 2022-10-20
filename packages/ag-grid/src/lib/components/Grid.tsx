@@ -44,7 +44,7 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 				onGridReady={(api) => {
 					setGridApi(api.api);
 					setColumnApi(api.columnApi);
-					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
+					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData ?? []);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}

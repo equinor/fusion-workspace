@@ -12,7 +12,7 @@ export function useSelectionService<TData extends Record<PropertyKey, unknown>>(
 	useEffect(() => {
 		const subscription = controller.selectedNodes$.subscribe((val) => {
 			if (!gridApi) return;
-			selectRowNode(val, controller.getIdentifier, gridApi, rowData);
+			selectRowNode(val, controller.getIdentifier, gridApi, rowData ?? []);
 		});
 		return () => {
 			subscription.unsubscribe();
