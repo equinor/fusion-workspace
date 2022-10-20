@@ -7,7 +7,7 @@ export async function addCustomTab<TData, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>
 ) {
-	if (!tab.predicate || !(await tab.predicate())) return;
+	if (tab.predicate && !(await tab.predicate())) return;
 	viewController.tabController.tabs.push({
 		Component: () => <CustomTabWrapper Component={tab.Component} mediator={mediator} />,
 		TabIcon: tab.TabIcon,
