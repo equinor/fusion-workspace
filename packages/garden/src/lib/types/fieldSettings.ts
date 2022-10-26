@@ -5,7 +5,7 @@ export type GetKeyFunction<
 	TData,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
-> = (item: TData, itemKey: keyof TData | TExtendedFields, customGroupByKeys: TCustomGroupByKeys) => string[] | string;
+> = (item: TData, itemKey: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
 
 export type FieldSetting<
 	ItemType,
