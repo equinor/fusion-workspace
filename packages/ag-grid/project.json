@@ -1,31 +1,30 @@
 {
-	"$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+	"name": "ag-grid",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "packages/ag-grid/src",
 	"projectType": "library",
 	"tags": [],
+	"implicitDependencies": ["observable-proxy"],
 	"targets": {
 		"build": {
-			"executor": "@nrwl/js:tsc",
+			"executor": "@nrwl/web:rollup",
 			"outputs": ["{options.outputPath}"],
-			"dependsOn": ["^build"],
 			"options": {
 				"outputPath": "dist/packages/ag-grid",
-				"main": "packages/ag-grid/src/index.ts",
 				"tsConfig": "packages/ag-grid/tsconfig.lib.json",
-				"assets": ["packages/ag-grid/*.md"]
+				"project": "packages/ag-grid/package.json",
+				"entryFile": "packages/ag-grid/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/ag-grid/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
 			}
-		},
-		"publish": {
-			"executor": "@nrwl/workspace:run-commands",
-			"options": {
-				"command": "node tools/scripts/publish.mjs ag-grid {args.ver} {args.tag}"
-			},
-			"dependsOn": [
-				{
-					"projects": "self",
-					"target": "build"
-				}
-			]
 		},
 		"lint": {
 			"executor": "@nrwl/linter:eslint",

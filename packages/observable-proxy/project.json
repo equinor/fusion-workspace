@@ -4,13 +4,23 @@
 	"projectType": "library",
 	"targets": {
 		"build": {
-			"executor": "@nrwl/js:tsc",
+			"executor": "@nrwl/web:rollup",
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/packages/observable-proxy",
-				"main": "packages/observable-proxy/src/index.ts",
 				"tsConfig": "packages/observable-proxy/tsconfig.lib.json",
-				"assets": ["packages/observable-proxy/*.md"]
+				"project": "packages/observable-proxy/package.json",
+				"entryFile": "packages/observable-proxy/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/observable-proxy/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
 			}
 		},
 		"lint": {
