@@ -8,10 +8,10 @@ jobs:
     main:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
               with:
                   fetch-depth: 0
-            - uses: nrwl/nx-set-shas@v2
+            - uses: nrwl/nx-set-shas@v3
             - run: npm ci --legacy-peer-deps
             - run: npx nx workspace-lint
             - run: npx nx format:check
