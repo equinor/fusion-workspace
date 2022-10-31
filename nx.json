@@ -11,6 +11,11 @@
 			}
 		}
 	},
+	"targetDefaults": {
+		"build": {
+			"dependsOn": ["^build"]
+		}
+	},
 	"generators": {
 		"@nrwl/react": {
 			"application": {

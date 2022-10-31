@@ -7,23 +7,13 @@
 	"implicitDependencies": ["observable-proxy"],
 	"targets": {
 		"build": {
-			"executor": "@nrwl/web:rollup",
+			"executor": "@nrwl/js:tsc",
 			"outputs": ["{options.outputPath}"],
 			"options": {
 				"outputPath": "dist/packages/ag-grid",
+				"main": "packages/ag-grid/src/index.ts",
 				"tsConfig": "packages/ag-grid/tsconfig.lib.json",
-				"project": "packages/ag-grid/package.json",
-				"entryFile": "packages/ag-grid/src/index.ts",
-				"external": ["react/jsx-runtime"],
-				"rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-				"compiler": "babel",
-				"assets": [
-					{
-						"glob": "packages/ag-grid/README.md",
-						"input": ".",
-						"output": "."
-					}
-				]
+				"assets": ["packages/ag-grid/*.md"]
 			}
 		},
 		"lint": {
