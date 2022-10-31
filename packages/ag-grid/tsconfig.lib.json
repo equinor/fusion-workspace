@@ -24,6 +24,6 @@
 		"**/*.stories.jsx",
 		"**/*.stories.tsx"
 	],
-	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-	"references": [{ "path": "../observable-proxy/tsconfig.json" }]
+	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+	// "references": [{ "path": "../observable-proxy/tsconfig.json" }]
 }
