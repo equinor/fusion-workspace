@@ -3,8 +3,7 @@
 	"compilerOptions": {
 		"rootDir": ".",
 		"strict": true,
-		"sourceMap": true,
-		"declaration": false,
+		"declaration": true,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
@@ -33,8 +32,7 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true
+		"isolatedModules": true
 	},
 	"exclude": ["node_modules", "tmp"]
 }
