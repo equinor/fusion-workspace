@@ -11,6 +11,11 @@
 			}
 		}
 	},
+	"pluginsConfig": {
+		"@nrwl/js": {
+			"analyzeSourceFiles": true
+		}
+	},
 	"generators": {
 		"@nrwl/react": {
 			"application": {
