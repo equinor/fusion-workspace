@@ -1,4 +1,4 @@
-import { GridController } from '@equinor/workspace-grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { ColDef } from 'ag-grid-community';
 import { FusionMediator, GridConfig } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';

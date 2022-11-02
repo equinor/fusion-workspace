@@ -1,4 +1,4 @@
-import { GridController } from '@equinor/workspace-grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { GridBookmark } from '../../types';
 
 export function snapshotGridState<TData extends Record<PropertyKey, unknown>>(

@@ -1,9 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"outDir": "../../dist/out-tsc",
-		"types": ["node"]
-	},
 	"exclude": [
 		"jest.config.ts",
 		"**/*.spec.ts",
@@ -12,6 +8,7 @@
 		"**/*.test.tsx",
 		"**/*.spec.js",
 		"**/*.test.js",
+		"**/*.d.ts",
 		"**/*.spec.jsx",
 		"**/*.test.jsx",
 		"**/*.stories.ts",

@@ -94,12 +94,12 @@
 		"vite": "^3.1.1"
 	},
 	"workspaces": [
-		"packages/**"
+		"packages/**",
+		"apps/**"
 	],
 	"lint-staged": {
 		"./packages/**/src/**/*.{ts,tsx}": [
-			"eslint --quiet --fix",
-			"jest --bail --findRelatedTests --passWithNoTests"
+			"eslint --quiet --fix"
 		]
 	}
 }
