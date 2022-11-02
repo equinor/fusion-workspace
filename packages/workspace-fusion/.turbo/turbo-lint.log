@@ -1,0 +1,57 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\classes\fusionWorkspaceBuilder.tsx
+  148:5  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  158:5  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  173:5  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\components\CustomTabWrapper.tsx
+  4:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\components\ErrorComponent.tsx
+  3:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\components\Sidesheet\SidesheetWrapper.tsx
+  7:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\components\provider\MediatorProvider.tsx
+  9:41  warning  'TError' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\hooks\useMediatorContext.ts
+  5:96  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\hooks\useOnClick.ts
+  18:5  warning  React Hook useEffect has a missing dependency: 'click$'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\hooks\useResizeObserver.ts
+   4:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen              tsdoc/syntax
+   5:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen              tsdoc/syntax
+  17:10  warning  Use array destructuring                                                                                                prefer-destructuring
+  43:5   warning  React Hook useLayoutEffect has a missing dependency: 'handleResize'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\types\configuration.ts
+  54:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\types\onClick.ts
+  1:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\utils\grid\addGrid.tsx
+  43:9  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\utils\grid\defaultColDefs.ts
+  7:4  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\utils\grid\setConfigOnController.ts
+  20:4  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  21:4  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-fusion\src\lib\utils\powerBI\FusionPowerBIFilter.tsx
+  15:35  warning  Unexpected any. Specify a different type                                                                       @typescript-eslint/no-explicit-any
+  29:5   warning  React Hook useEffect has a missing dependency: 'controller'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 21 problems (4 errors, 17 warnings)
+  4 errors and 0 warnings potentially fixable with the `--fix` option.
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

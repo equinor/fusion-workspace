@@ -3,12 +3,12 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
+		"build": "npx turbo build",
+		"lint": "npx turbo lint",
 		"lint:staged": "lint-staged",
 		"bootstrap": "lerna bootstrap",
-		"lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
 		"clean": "yarn run clean:modules && yarn run clean:build",
 		"clean:build": "rm -rf packages/*/dist",
-		"build": "lerna run build",
 		"build:clean": "rm -rf packages/*/dist && yarn run build",
 		"npm:clean": "rm -rf node_modules && lerna exec 'rm -rf node_modules'"
 	},
@@ -47,6 +47,7 @@
 		"sortablejs": "^1.15.0",
 		"styled-components": "^5.3.5",
 		"tslib": "^2.3.0",
+		"turbo": "^1.6.3",
 		"typesafe-actions": "^5.1.0",
 		"url-loader": "^4.1.1"
 	},

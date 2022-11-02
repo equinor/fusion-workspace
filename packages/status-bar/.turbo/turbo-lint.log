@@ -1,0 +1,17 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\status-bar\src\lib\components\StatusBar.tsx
+  5:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\status-bar\src\lib\components\StatusBarItem.tsx
+  4:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\status-bar\src\lib\types\statusItem.ts
+  1:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+✖ 3 problems (3 errors, 0 warnings)
+  3 errors and 0 warnings potentially fixable with the `--fix` option.
+error Command failed with exit code 1.
+
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

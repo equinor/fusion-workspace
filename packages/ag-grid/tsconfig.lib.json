@@ -4,10 +4,6 @@
 		"outDir": "../../dist/out-tsc",
 		"types": ["node"]
 	},
-	"files": [
-		"../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-		"../../node_modules/@nrwl/react/typings/image.d.ts"
-	],
 	"exclude": [
 		"jest.config.ts",
 		"**/*.spec.ts",
@@ -23,5 +19,6 @@
 		"**/*.stories.jsx",
 		"**/*.stories.tsx"
 	],
-	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+	"references": [{ "path": "../workspace-core" }]
 }

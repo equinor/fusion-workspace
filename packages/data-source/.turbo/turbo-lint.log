@@ -1,0 +1,2 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/

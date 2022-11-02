@@ -1,5 +1,8 @@
 {
 	"name": "@equinor/workspace-data-source",
 	"version": "0.0.1",
-	"type": "commonjs"
+	"scripts": {
+		"build": "tsc -b",
+		"lint": "eslint --ext .ts,.tsx,.js src/"
+	}
 }

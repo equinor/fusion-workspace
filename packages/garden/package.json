@@ -1,4 +1,8 @@
 {
 	"name": "@equinor/workspace-garden",
-	"version": "0.0.1"
+	"version": "0.0.1",
+	"scripts": {
+		"build": "tsc -b",
+		"lint": "eslint --ext .ts,.tsx,.js src/"
+	}
 }

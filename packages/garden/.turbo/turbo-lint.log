@@ -1,0 +1,112 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\classes\gardenController.ts
+   22:4  warning  tsdoc-param-tag-missing-hyphen: The @typeParam block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+   23:4  warning  tsdoc-param-tag-missing-hyphen: The @typeParam block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+   24:4  warning  tsdoc-param-tag-missing-hyphen: The @typeParam block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+   25:4  warning  tsdoc-param-tag-missing-hyphen: The @typeParam block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  164:2  warning  Expected 'this' to be used by class method 'postGroupSorting'                                                  class-methods-use-this
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\classes\reactiveValue.ts
+   7:2   warning  Expected blank line between class members  lines-between-class-members
+   9:2   warning  Expected blank line between class members  lines-between-class-members
+  31:11  error    Use a `type` instead of an `interface`     @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\DefaultGardenItem\DefaultGardenItem.tsx
+  4:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\ExpandProvider\ExpandProvider.tsx
+  17:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\FilterSelector\FilterSelector.tsx
+  24:5  warning  React Hook useCallback has a missing dependency: 'setVerticalGroupingKeys'. Either include it or remove the dependency array                                        react-hooks/exhaustive-deps
+  29:5  warning  React Hook useCallback has missing dependencies: 'setHorizontalGroupingAccessor' and 'setVerticalGroupingKeys'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\Garden.tsx
+   9:11  error    Use a `type` instead of an `interface`    @typescript-eslint/consistent-type-definitions
+  46:9   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\GardenItemContainer\GardenItemContainer.tsx
+    1:28  warning  'useEffect' is defined but never used     @typescript-eslint/no-unused-vars
+    1:39  warning  'useState' is defined but never used      @typescript-eslint/no-unused-vars
+   21:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\HeaderContainer\HeaderContainer.tsx
+  42:3  warning  React Hook useCallback has missing dependencies: 'controller' and 'getCustomDescription'. Either include them or remove the dependency array. Outer scope values like 'getGardenItems' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\components\VirtualGarden\VirtualGarden.tsx
+  58:47  warning  React Hook useCallback has an unnecessary dependency: 'contextWidths'. Either exclude it or remove the dependency array     react-hooks/exhaustive-deps
+  86:5   warning  React Hook useLayoutEffect has a missing dependency: 'columnVirtualizer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useGardenGroups.ts
+  20:5  warning  React Hook useEffect has a missing dependency: 'controller.groups'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useGroupingKeys.ts
+  18:5  warning  React Hook useEffect has a missing dependency: 'onChange'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useReactiveValue.ts
+  10:5  warning  React Hook useEffect has a missing dependency: 'reactiveValue'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useRefresh.ts
+  4:8  warning  Use array destructuring  prefer-destructuring
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useSelected.ts
+  12:5  warning  React Hook useEffect has a missing dependency: 'selectedNodes'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\hooks\useVirtualScrolling.ts
+   6:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  28:11  warning  Unexpected any. Specify a different type                                                                   @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\test\mockGarden.ts
+  8:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  8:68  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\test\updateCustomState.spec.ts
+   6:13  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+  10:13  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\config.ts
+  17:15  warning  tsdoc-escape-greater-than: The ">" character should be escaped using a backslash to avoid confusion with an HTML tag  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\events.ts
+  21:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\fieldSettings.ts
+  27:4  warning  tsdoc-undefined-tag: The TSDoc tag "@template" is not defined in this configuration  tsdoc/syntax
+  28:4  warning  tsdoc-undefined-tag: The TSDoc tag "@template" is not defined in this configuration  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\gardenGroup.ts
+  15:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\gardenOptions.ts
+   5:18  error    Use a `type` instead of an `interface`    @typescript-eslint/consistent-type-definitions
+  18:18  error    Use a `type` instead of an `interface`    @typescript-eslint/consistent-type-definitions
+  22:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  27:18  error    Use a `type` instead of an `interface`    @typescript-eslint/consistent-type-definitions
+  34:18  error    Use a `type` instead of an `interface`    @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\keys.ts
+  3:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\types\visuals.ts
+  9:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\utils\getDescriptionWidth.ts
+  33:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  60:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  74:2   warning  Forbidden non-null assertion                                                                               @typescript-eslint/no-non-null-assertion
+  75:8   warning  Use object destructuring                                                                                   prefer-destructuring
+  75:16  warning  Forbidden non-null assertion                                                                               @typescript-eslint/no-non-null-assertion
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\garden\src\lib\utils\getGardenItems.ts
+  17:8  warning  Use object destructuring                                                                                   prefer-destructuring
+  55:4  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  56:4  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+
+✖ 52 problems (13 errors, 39 warnings)
+  13 errors and 4 warnings potentially fixable with the `--fix` option.
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

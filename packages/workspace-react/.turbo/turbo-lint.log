@@ -1,0 +1,68 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\classes\workspaceReact.ts
+  6:2  warning  Expected blank line between class members  lines-between-class-members
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\classes\workspaceSidesheetController.ts
+  29:5  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  37:5  warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\ContextProvider.tsx
+  5:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\ErrorBoundary\WorkspaceErrorBoundary.tsx
+   5:11  error    Use a `type` instead of an `interface`                                                           @typescript-eslint/consistent-type-definitions
+  29:10  warning  Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all  react/jsx-no-useless-fragment
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\Workspace.tsx
+  8:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\contextProviders\ContextProviders.tsx
+   5:11  error    Use a `type` instead of an `interface`                                                           @typescript-eslint/consistent-type-definitions
+  16:3   warning  Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all  react/jsx-no-useless-fragment
+  16:93  warning  Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all  react/jsx-no-useless-fragment
+  20:11  error    Use a `type` instead of an `interface`                                                           @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\resizableSidesheet\ResizableSidesheet.tsx
+  13:8  warning  Use object destructuring  prefer-destructuring
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\resizableSidesheet\SidesheetHeader.tsx
+  11:11  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\components\workspaceDataLoader\WorkspaceDataLoader.tsx
+   6:11  error    Use a `type` instead of an `interface`                                                                     @typescript-eslint/consistent-type-definitions
+  12:4   warning  tsdoc-param-tag-missing-hyphen: The @param block should be followed by a parameter name and then a hyphen  tsdoc/syntax
+  20:10  warning  Fragments should contain more than one child - otherwise, there’s no need for a Fragment at all            react/jsx-no-useless-fragment
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\context\controllerContext.ts
+  4:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  4:77  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\hooks\useActiveTab.ts
+  22:5  warning  React Hook useEffect has missing dependencies: 'onActiveTabChanged' and 'tabs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\hooks\useIsLoading.ts
+  12:5  warning  React Hook useEffect has a missing dependency: 'viewState'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\hooks\useIsSidesheetOpen.ts
+  12:5  warning  React Hook useEffect has a missing dependency: 'controller.sidesheet'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\hooks\useSidesheetTitle.ts
+  11:5  warning  React Hook useEffect has a missing dependency: 'controller.sidesheet.title'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\hooks\useSidesheetWidth.ts
+  18:5  warning  React Hook useEffect has a missing dependency: 'controller.sidesheet'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\types\callback.ts
+  1:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+  6:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\workspace-react\src\lib\types\tab.ts
+  1:18  error  Use a `type` instead of an `interface`  @typescript-eslint/consistent-type-definitions
+
+✖ 26 problems (10 errors, 16 warnings)
+  10 errors and 2 warnings potentially fixable with the `--fix` option.
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

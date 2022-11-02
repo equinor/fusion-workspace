@@ -1,0 +1,12 @@
+warning package.json: No license field
+$ eslint --ext .ts,.tsx,.js src/
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\observable-proxy\src\lib\createObservableProxy.ts
+  7:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\gustav.eikaas\repo\fusion-workspace3\fusion-workspace\packages\observable-proxy\src\lib\types\subscriberProxy.ts
+  20:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 3 problems (0 errors, 3 warnings)
+
