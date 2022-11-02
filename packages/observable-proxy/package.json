@@ -5,5 +5,10 @@
 	"scripts": {
 		"build": "tsc -b",
 		"lint": "eslint --ext .ts,.tsx,.js src/"
+	},
+	"main": "dist/esm/index.js",
+	"types": "dist/types/index.d.ts",
+	"exports": {
+		".": "./dist/esm/index.js"
 	}
 }

@@ -1,7 +1,6 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		"rootDir": ".",
 		"strict": true,
 		"sourceMap": false,
 		"composite": true,
