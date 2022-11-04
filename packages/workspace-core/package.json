@@ -3,16 +3,18 @@
 	"version": "0.0.1",
 	"type": "module",
 	"license": "MIT",
+	"private": false,
 	"scripts": {
 		"build": "tsc -b",
 		"lint": "eslint --ext .ts,.tsx,.js src/"
 	},
-	"main": "dist/esm/index.js",
+	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
-	"exports": {
-		".": "./dist/esm/index.js"
-	},
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"@equinor/workspace-observable-proxy": "0.0.1",
+		"rxjs": "^7.5.7"
+	}
 }

@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom/client';
 import styled from 'styled-components';
 import { FusionApp } from './lib';
 import { Framework } from './lib/components/FusionFramework';
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const Wrapper = styled.div`
 	display: flex;
