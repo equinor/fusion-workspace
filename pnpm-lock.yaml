@@ -6439,7 +6439,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.6
+      styled-components: 5.3.6_react-is@18.2.0
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
