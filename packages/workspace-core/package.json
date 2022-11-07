@@ -8,6 +8,9 @@
 		"build": "tsc -b",
 		"lint": "eslint --ext .ts,.tsx"
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
 	"files": [
@@ -32,5 +35,6 @@
 		"type": "git",
 		"url": "git+https://github.com/equinor/fusion-workspace.git",
 		"directory": "packages/workspace-core"
-	}
+	},
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
