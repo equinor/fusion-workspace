@@ -1,5 +1,5 @@
 import { GroupingKeys } from '@equinor/workspace-garden';
-import { ColumnState } from 'ag-grid-community';
+import { ColumnState } from '@equinor/workspace-ag-grid';
 import { WorkspaceTabNames } from './tabs';
 
 export type FusionBookmark<TData> = {

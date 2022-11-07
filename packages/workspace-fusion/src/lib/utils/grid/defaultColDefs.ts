@@ -1,4 +1,4 @@
-import { ColDef } from 'ag-grid-community';
+import { ColDef } from '@equinor/workspace-ag-grid';
 import { FusionMediator } from '../../types';
 
 /**
@@ -14,9 +14,12 @@ export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]
 /**
  * Applies onclick to all cells by default
  */
-export function applyWorkspaceClickToCells<TData>(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData>) {
+export function applyWorkspaceClickToCells<TData>(
+	colDefs: ColDef<TData>[],
+	{ clickService }: FusionMediator<TData>
+): ColDef<TData>[] {
 	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => clickService.click({ item: ev.data }),
+		onCellClicked: (ev) => ev.data && clickService.click({ item: ev.data }),
 		...colDef,
 	}));
 }

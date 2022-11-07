@@ -1,4 +1,4 @@
-import { GridController } from '@equinor/workspace-grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { FusionMediator, GridBookmark } from '../../types';
 import { snapshotGridState } from './snapShotGridState';
 
