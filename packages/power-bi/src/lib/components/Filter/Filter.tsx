@@ -68,7 +68,6 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
 	) => {
 		try {
 			const slicerFilter = createAdvancedPbiFilter(filter, allVisibleFilterValues);
-
 			setActiveFilters((prev) => ({
 				...prev,
 				[filter.type]: allVisibleFilterValues,

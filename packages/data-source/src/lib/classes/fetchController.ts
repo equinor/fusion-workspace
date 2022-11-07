@@ -17,6 +17,7 @@ export class FetchController<TData> {
 
 	constructor(fetch: FetchData<TData>) {
 		this.fetch = fetch;
+
 		const fetching = new Observable<boolean>(this.isFetching, (a, b) => a === b);
 		this.onIsFetchingChanged = fetching.onchange;
 		this.setIsFetching = fetching.setValue;
