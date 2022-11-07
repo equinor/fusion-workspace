@@ -1,5 +1,5 @@
 import { StatusItem } from '@equinor/workspace-status-bar';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions } from '@equinor/workspace-ag-grid';
 import { WorkspaceOnClick } from './onClick';
 
 export type GridConfig<T> = {

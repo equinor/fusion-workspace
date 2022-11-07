@@ -25,5 +25,10 @@
 		"react": ">= 16.8.0",
 		"react-dom": ">= 16.8.0",
 		"react-is@": ">= 16.8.0"
+	},
+	"devDependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-is": "^18.2.0"
 	}
 }
