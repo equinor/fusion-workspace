@@ -19,7 +19,6 @@ export function WorkspaceDataLoader({ children }: WorkspaceDataLayerProps) {
 	if (activeTab?.ignoreLoading) {
 		return <>{children}</>;
 	}
-
 	if (isLoading) {
 		return <WorkspaceLoadingSpinner />;
 	}
