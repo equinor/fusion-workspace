@@ -64,5 +64,8 @@
 		"./packages/**/src/**/*.{ts,tsx}": [
 			"eslint --quiet --fix"
 		]
-	}
+	},
+	"workspaces": [
+		"packages/**"
+	]
 }
