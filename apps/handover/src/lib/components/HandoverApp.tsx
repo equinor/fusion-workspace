@@ -14,7 +14,7 @@ export function HandoverApp() {
 	const controller = useMemo(() => {
 		return createWorkspaceController(client);
 	}, []);
-
+	return null;
 	return <Workspace controller={controller} />;
 }
 
@@ -28,7 +28,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 						{ signal }
 					),
 			})
-			.addFusionPowerBI({ reportUri: 'pp-work-preparation' })
+			// .addFusionPowerBI({ reportUri: 'pp-work-preparation' })
 			.addFilter([
 				{
 					name: 'Comm status',
