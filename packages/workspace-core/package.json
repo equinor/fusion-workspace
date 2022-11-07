@@ -6,7 +6,7 @@
 	"private": false,
 	"scripts": {
 		"build": "tsc -b",
-		"lint": "eslint --ext .ts,.tsx,.js src/"
+		"lint": "eslint --ext .ts,.tsx"
 	},
 	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
