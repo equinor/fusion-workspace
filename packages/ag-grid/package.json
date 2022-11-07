@@ -13,6 +13,9 @@
 	"files": [
 		"dist"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"dependencies": {
 		"@ag-grid-community/client-side-row-model": "^28.1.1",
 		"@ag-grid-community/core": "^28.2.1",
@@ -38,5 +41,6 @@
 		"type": "git",
 		"url": "git+https://github.com/equinor/fusion-workspace.git",
 		"directory": "packages/ag-grid"
-	}
+	},
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }

@@ -9,6 +9,9 @@
 		"lint": "eslint --ext .ts,.tsx",
 		"test": "jest"
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"module": "dist/esm/index.js",
 	"types": "dist/types/index.d.ts",
 	"files": [
@@ -33,5 +36,6 @@
 		"type": "git",
 		"url": "git+https://github.com/equinor/fusion-workspace.git",
 		"directory": "packages/observable-proxy"
-	}
+	},
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
