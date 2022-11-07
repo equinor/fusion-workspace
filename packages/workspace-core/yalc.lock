@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@equinor/workspace-core": {
-      "signature": "32f8364268942f9b4a64f40f6b67a4e2",
-      "file": true
-    }
-  }
-}
