@@ -13,10 +13,11 @@
 		"dist"
 	],
 	"dependencies": {
-		"react-sortablejs": "^6.1.4",
-		"sortablejs": "^1.15.0",
 		"@equinor/eds-core-react": "^0.20.4",
 		"@equinor/eds-tokens": "^0.7.1",
+		"react-sortablejs": "^6.1.4",
+		"react-virtual": "^2.10.4",
+		"sortablejs": "^1.15.0",
 		"styled-components": "^5.3.5"
 	},
 	"peerDependencies": {
