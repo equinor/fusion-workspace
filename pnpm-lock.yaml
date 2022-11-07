@@ -252,7 +252,7 @@ importers:
       '@equinor/eds-tokens': 0.9.0
       '@equinor/fusion-framework': ^4.3.1
       '@equinor/workspace-ag-grid': workspace:^0.0.2
-      '@equinor/workspace-data-source': workspace:^0.0.1
+      '@equinor/workspace-data-source': workspace:^0.0.2
       '@equinor/workspace-filter': workspace:^0.0.1
       '@equinor/workspace-garden': workspace:^0.0.1
       '@equinor/workspace-powerbi': workspace:^0.0.1
