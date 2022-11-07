@@ -184,7 +184,10 @@ importers:
     specifiers: {}
 
   packages/status-bar:
-    specifiers: {}
+    specifiers:
+      '@equinor/eds-tokens': ^0.9.0
+    dependencies:
+      '@equinor/eds-tokens': 0.9.0
 
   packages/workspace-core:
     specifiers:
@@ -198,32 +201,50 @@ importers:
     specifiers:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
+      '@equinor/workspace-ag-grid': workspace:^0.0.2
+      '@equinor/workspace-data-source': workspace:^0.0.1
+      '@equinor/workspace-filter': workspace:^0.0.1
+      '@equinor/workspace-garden': workspace:^0.0.1
+      '@equinor/workspace-powerbi': workspace:^0.0.1
+      '@equinor/workspace-react': workspace:^0.0.1
       history: ^5.3.0
     dependencies:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
+      '@equinor/workspace-ag-grid': link:../ag-grid
+      '@equinor/workspace-data-source': link:../data-source
+      '@equinor/workspace-filter': link:../filter
+      '@equinor/workspace-garden': link:../garden
+      '@equinor/workspace-powerbi': link:../power-bi
+      '@equinor/workspace-react': link:../workspace-react
       history: 5.3.0
 
   packages/workspace-fusion-modules:
     specifiers:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
+      '@equinor/workspace-fusion': workspace:^0.0.1
       history: ^5.3.0
+      idb: ^7.1.1
     dependencies:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
+      '@equinor/workspace-fusion': link:../workspace-fusion
       history: 5.3.0
+      idb: 7.1.1
 
   packages/workspace-react:
     specifiers:
       '@equinor/eds-core-react': ^0.26.0
       '@equinor/eds-tokens': ^0.9.0
       '@equinor/workspace-core': workspace:^0.0.1
+      re-resizable: ^6.9.9
       styled-components: ^5.3.6
     dependencies:
       '@equinor/eds-core-react': 0.26.0_styled-components@5.3.6
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-core': link:../workspace-core
+      re-resizable: 6.9.9
       styled-components: 5.3.6
 
 packages:
@@ -10584,6 +10605,10 @@ packages:
       postcss: 7.0.39
     dev: true
 
+  /idb/7.1.1:
+    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+    dev: false
+
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
     dev: true
@@ -14459,6 +14484,13 @@ packages:
       minimist: 1.2.7
       strip-json-comments: 2.0.1
     dev: true
+
+  /re-resizable/6.9.9:
+    resolution: {integrity: sha512-l+MBlKZffv/SicxDySKEEh42hR6m5bAHfNu3Tvxks2c4Ah+ldnWjfnVRwxo/nxF27SsUsxDS0raAzFuJNKABXA==}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
+    dev: false
 
   /react-docgen-typescript/2.2.2_typescript@4.7.4:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
