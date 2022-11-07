@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-ag-grid",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"type": "module",
 	"private": false,
 	"license": "MIT",
@@ -20,7 +20,7 @@
 		"@ag-grid-community/client-side-row-model": "^28.1.1",
 		"@ag-grid-community/core": "^28.2.1",
 		"@ag-grid-enterprise/column-tool-panel": "^28.1.1",
-		"@equinor/workspace-core": "workspace:^0.0.3",
+		"@equinor/workspace-core": "workspace:^0.0.4",
 		"@equinor/workspace-observable-proxy": "workspace:^0.0.3",
 		"ag-grid-community": "^28.1.0",
 		"ag-grid-enterprise": "^28.1.3",
