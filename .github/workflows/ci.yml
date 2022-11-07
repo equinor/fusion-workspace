@@ -13,5 +13,5 @@ jobs:
                   fetch-depth: 0
             - uses: nrwl/nx-set-shas@v2
             - run: npx pnpm i
-            - run: npx turbo run build
-            - run: npx turbo run test
+            - run: npx lerna run build
+            - run: npx lerna run test
