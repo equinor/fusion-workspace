@@ -3,8 +3,8 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"build": "npx turbo build",
-		"lint": "npx turbo lint",
+		"build": "npx lerna run build",
+		"lint": "npx lerna run lint",
 		"lint:staged": "lint-staged",
 		"bootstrap": "lerna bootstrap",
 		"clean": "yarn run clean:modules && yarn run clean:build",
@@ -14,8 +14,7 @@
 	},
 	"private": true,
 	"dependencies": {
-		"tslib": "^2.3.0",
-		"turbo": "^1.6.3"
+		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.1.2",
