@@ -14,5 +14,10 @@
 	],
 	"dependencies": {
 		"@equinor/workspace-core": "workspace:^0.0.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/equinor/fusion-workspace.git",
+		"directory": "packages/data-source"
 	}
 }

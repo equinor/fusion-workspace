@@ -26,5 +26,10 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/equinor/fusion-workspace.git",
+		"directory": "packages/sidesheet"
 	}
 }
