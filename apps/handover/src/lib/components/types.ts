@@ -1,4 +1,4 @@
-export interface Handover {
+export type Handover = {
 	siteCode: string;
 	projectIdentifier: string;
 	projectDescription: string;
@@ -73,4 +73,4 @@ export interface Handover {
 	rfocActualDate: string;
 	rfocShippedDate: string;
 	rowKey: string;
-}
+};

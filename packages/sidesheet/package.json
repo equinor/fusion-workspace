@@ -17,12 +17,14 @@
 		"react-dom": ">= 16.8.0",
 		"react-is@": ">= 16.8.0"
 	},
+	"dependencies": {
+		"@equinor/eds-core-react": "^0.26.0",
+		"@equinor/eds-icons": "^0.15.0",
+		"@equinor/eds-tokens": "^0.9.0"
+	},
 	"devDependencies": {
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0"
-	},
-	"dependencies": {
-		"@equinor/eds-icons": "^0.15.0"
 	}
 }
