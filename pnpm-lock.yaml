@@ -114,11 +114,15 @@ importers:
       styled-components: 5.3.6_react-is@18.2.0
 
   packages/data-source:
-    specifiers: {}
+    specifiers:
+      '@equinor/workspace-core': workspace:^0.0.1
+    dependencies:
+      '@equinor/workspace-core': link:../workspace-core
 
   packages/filter:
     specifiers:
       '@equinor/eds-core-react': ^0.20.4
+      '@equinor/eds-icons': ^0.15.0
       '@equinor/eds-tokens': ^0.7.1
       react-sortablejs: ^6.1.4
       react-virtual: ^2.10.4
@@ -126,6 +130,7 @@ importers:
       styled-components: ^5.3.5
     dependencies:
       '@equinor/eds-core-react': 0.20.4_styled-components@5.3.6
+      '@equinor/eds-icons': 0.15.0
       '@equinor/eds-tokens': 0.7.1
       react-sortablejs: 6.1.4_sortablejs@1.15.0
       react-virtual: 2.10.4

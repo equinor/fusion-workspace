@@ -11,5 +11,8 @@
 	"types": "dist/types/index.d.ts",
 	"files": [
 		"dist"
-	]
+	],
+	"dependencies": {
+		"@equinor/workspace-core": "workspace:^0.0.1"
+	}
 }
