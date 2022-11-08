@@ -259,7 +259,7 @@ importers:
             '@equinor/workspace-ag-grid': workspace:^0.0.6
             '@equinor/workspace-data-source': workspace:^0.0.6
             '@equinor/workspace-filter': workspace:^0.0.6
-            '@equinor/workspace-garden': workspace:^0.0.6
+            '@equinor/workspace-garden': workspace:^0.0.7
             '@equinor/workspace-powerbi': workspace:^0.0.5
             '@equinor/workspace-react': workspace:^0.0.5
             '@equinor/workspace-sidesheet': workspace:^0.0.5
@@ -296,8 +296,8 @@ importers:
             '@equinor/eds-core-react': 0.26.0
             '@equinor/eds-tokens': 0.9.0
             '@equinor/workspace-ag-grid': workspace:^0.0.6
-            '@equinor/workspace-fusion': workspace:^0.1.8
-            '@equinor/workspace-garden': workspace:^0.0.6
+            '@equinor/workspace-fusion': workspace:^0.1.9
+            '@equinor/workspace-garden': workspace:^0.0.7
             history: ^5.3.0
             idb: ^7.1.1
             react: ^18.2.0
