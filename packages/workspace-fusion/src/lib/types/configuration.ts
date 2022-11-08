@@ -11,11 +11,11 @@ export type GardenConfig<
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data'>;
+> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data' | 'getIdentifier'>;
 
 export type GridConfig<T> = {
 	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: GridOptions<T>;
+	gridOptions?: Omit<GridOptions<T>, 'rowData'>;
 };
 
 export type SidesheetConfig<TData> = {

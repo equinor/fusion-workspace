@@ -136,10 +136,19 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * Adds a garden tab to your workspace
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
+	addGarden = <
+		TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.getIdentifier);
+		addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+			config,
+			this.viewController,
+			this.mediator,
+			this.getIdentifier
+		);
 		return this;
 	};
 
