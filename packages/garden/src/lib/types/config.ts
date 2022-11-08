@@ -1,6 +1,13 @@
-import { GardenController } from '../classes';
 import { GetIdentifier } from '../classes';
-import { GroupingKeys, FieldSettings, OnClickEvents, NodeLabelCallback, BaseRecordObject } from './';
+import {
+	GroupingKeys,
+	FieldSettings,
+	OnClickEvents,
+	NodeLabelCallback,
+	BaseRecordObject,
+	CustomVirtualViews,
+	Visuals,
+} from './';
 
 export type GardenConfig<
 	TData,
@@ -24,7 +31,10 @@ export type GardenConfig<
 	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
 	clickEvents?: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>;
-
+	/** Replace built-in components with your own */
+	customViews?: CustomVirtualViews<TData>;
+	/** Visual details */
+	visuals?: Visuals<TData>;
+	/** Function for calculating custom state */
 	getCustomState?: (data: TData[]) => TCustomState;
-	configFunction?: (controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>) => void;
 };
