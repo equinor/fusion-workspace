@@ -12,6 +12,11 @@ jobs:
         name: Create release
         runs-on: ubuntu-latest
         steps:
+            - name: Pushing to the protected branch 'main'
+              uses: CasperWA/push-protected@v2
+              with:
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  branch: main
             - uses: actions/checkout@v2
               with:
                   fetch-depth: 0
