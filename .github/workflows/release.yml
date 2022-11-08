@@ -17,11 +17,9 @@ jobs:
                   fetch-depth: 0
 
             - name: Setup node
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
-                  node-version: '16'
-                  cache: 'npm'
-                  registry-url: https://registry.npmjs.org
+                  node-version: 16
             - run: pnpm install -r --frozen-lockfile
             - run: pnpm run -r build
             - name: Config git user
