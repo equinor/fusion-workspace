@@ -40,7 +40,6 @@ export class Observable<TValue> {
 	value?: TValue;
 	/** Prevents setting of identical values
 	 * return false if the old value is different from the new value
-	 * return true to prevent a new value from being set
 	 */
 	compareFunc: CompareFunc<TValue> = () => false;
 }

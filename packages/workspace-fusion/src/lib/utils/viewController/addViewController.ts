@@ -17,7 +17,9 @@ export function addViewController<TData>(
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 
 	/** Bookmarks */
-	mediator.bookmarkService.onApply((state) => state?.view && applyViewStateBookmark(state.view, viewController));
+	mediator.bookmarkService.apply$.subscribe(
+		(state) => state?.view && applyViewStateBookmark(state.view, viewController)
+	);
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));
 	/** Sync user settings when active tab changes */
 	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
@@ -33,11 +35,10 @@ export function switchTabOnNavigation<TData, TError>(
 	mediator: FusionMediator<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ) {
-	const tab = mediator.urlService.url.queryParams.find((params) => params.includes('tab='));
-	if (!tab) return;
-	const [, newTab] = tab.split('tab=');
-	if (newTab === viewController.tabController.activeTab) return;
-	viewController.tabController.setActiveTab(tab.split('tab=')[1] as WorkspaceTabNames);
+	const tab = mediator.urlService.url.searchParams.get('tab');
+	if (tab) {
+		viewController.tabController.setActiveTab(tab as WorkspaceTabNames);
+	}
 }
 
 /** Applies a fusion bookmark to the view controller */

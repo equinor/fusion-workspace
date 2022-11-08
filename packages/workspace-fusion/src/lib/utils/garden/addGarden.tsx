@@ -1,4 +1,4 @@
-import { Garden, GardenConfig, GardenController } from '@equinor/garden';
+import { Garden, GardenConfig, GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { GardenIcon } from '../../icons/GardenIcon';
 import { FusionMediator, WorkspaceTabNames } from '../../types';

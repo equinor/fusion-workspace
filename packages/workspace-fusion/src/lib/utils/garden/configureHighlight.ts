@@ -1,4 +1,4 @@
-import { GardenController } from '@equinor/garden';
+import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../types';
 
 /** Configures gardencontroller to highlight nodes when mediator selection changes */

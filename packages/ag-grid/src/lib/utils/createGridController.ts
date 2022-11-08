@@ -1,4 +1,4 @@
-import { createObservableProxy } from '@equinor/observable-proxy';
+import { createObservableProxy } from '@equinor/workspace-observable-proxy';
 import { BaseController, GetIdentifier, GridController } from '../types/gridController';
 
 /**Creates a new instance of a grid controller */

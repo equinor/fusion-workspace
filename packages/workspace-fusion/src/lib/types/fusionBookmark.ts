@@ -1,32 +1,32 @@
-import { GroupingKeys } from '@equinor/garden';
-import { ColumnState } from 'ag-grid-community';
+import { GroupingKeys } from '@equinor/workspace-garden';
+import { ColumnState } from '@equinor/workspace-ag-grid';
 import { WorkspaceTabNames } from './tabs';
 
-export interface FusionBookmark<TData> {
+export type FusionBookmark<TData> = {
 	grid?: GridBookmark;
 	filter?: FilterBookmark;
 	powerBI?: PowerBIBookmark;
 	garden?: GardenBookmark<TData>;
 	view?: ViewBookmark;
-}
+};
 
-export interface ViewBookmark {
+export type ViewBookmark = {
 	activeTab?: WorkspaceTabNames;
-}
+};
 
-export interface GardenBookmark<TData> {
+export type GardenBookmark<TData> = {
 	groupingKeys: GroupingKeys<TData>;
 	selectedNodes: string[];
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface GridBookmark {
+export type GridBookmark = {
 	selectedNodes: string[] | undefined;
 	columnState: ColumnState[] | undefined;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface PowerBIBookmark {}
+export type PowerBIBookmark = Record<string, unknown>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface FilterBookmark {}
+export type FilterBookmark = Record<string, unknown>;

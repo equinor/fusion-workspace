@@ -1,8 +1,10 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 
 export class StateController {
 	isLoading: boolean | undefined;
+
 	setIsLoading: (value: boolean) => void;
+
 	onIsLoadingChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	constructor() {
@@ -10,6 +12,8 @@ export class StateController {
 		this.setIsLoading = isLoading.setValue;
 		this.onIsLoadingChanged = isLoading.onchange;
 		this.isLoading = isLoading.value;
-		isLoading.onchange((val) => (this.isLoading = val));
+		isLoading.onchange((val) => {
+			this.isLoading = val;
+		});
 	}
 }

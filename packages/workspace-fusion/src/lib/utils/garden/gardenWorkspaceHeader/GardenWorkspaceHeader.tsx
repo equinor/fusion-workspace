@@ -1,9 +1,9 @@
-import { GardenController } from '@equinor/garden';
+import { GardenController } from '@equinor/workspace-garden';
 import { WorkspaceHeader } from '../../../components/Header/WorkspaceHeader';
 
-interface GardenWorkspaceHeaderProps<TData, TCustomGroupByKeys, TCustomState, TContext> {
+type GardenWorkspaceHeaderProps<TData, TCustomGroupByKeys, TCustomState, TContext> = {
 	controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>;
-}
+};
 
 export function GardenWorkspaceHeader<TData, TCustomGroupByKeys, TCustomState, TContext>({
 	controller,

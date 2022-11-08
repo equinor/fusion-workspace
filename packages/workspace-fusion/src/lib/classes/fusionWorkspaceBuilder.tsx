@@ -1,7 +1,6 @@
-import { FilterOptions } from '@equinor/filter';
+import { FilterOptions } from '@equinor/workspace-filter';
 import history from 'history/browser';
-import { Action } from 'history';
-import { GardenConfig } from '@equinor/garden';
+import { GardenConfig } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {
@@ -35,6 +34,7 @@ import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 import { addPowerBi } from '../utils/powerBI/addPowerBi';
 import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
+import { Action } from 'history';
 
 export type WorkspaceContext = {
 	ui: unknown;

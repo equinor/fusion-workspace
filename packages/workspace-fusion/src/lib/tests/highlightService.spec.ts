@@ -1,7 +1,7 @@
-import { GardenController } from '@equinor/garden';
+import { GardenController } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator } from '@equinor/workspace-react';
-import { createGridController } from '@workspace/grid';
-import { ObjectType } from '@workspace/workspace-core';
+import { createGridController } from '@equinor/workspace-grid';
+import { ObjectType } from '@equinor/workspace-core';
 import { WorkspaceOnClick } from '../types';
 import { configureGardenHighlightSelection } from '../utils/garden';
 import { configureHighlightSelection as configureGridHighlight } from '../utils/grid';

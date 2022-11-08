@@ -1,4 +1,4 @@
-import { GardenController } from '@equinor/garden';
+import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../types';
 
 /** Updates data on gardencontroller whenever filtered data on mediator changes */

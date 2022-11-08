@@ -1,4 +1,4 @@
-import { GridController } from '@workspace/grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { FusionMediator, GridBookmark } from '../../types';
 import { snapshotGridState } from './snapShotGridState';
 
@@ -7,7 +7,7 @@ export function configureBookmark<TData extends Record<PropertyKey, unknown>>(
 	mediator: FusionMediator<TData>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
-	mediator.bookmarkService.onApply((state) => state?.grid && applyGridBookmark(state.grid, gridController));
+	mediator.bookmarkService.apply$.subscribe((state) => state?.grid && applyGridBookmark(state.grid, gridController));
 	gridController.columnState$.subscribe(mediator.bookmarkService.capture);
 }
 

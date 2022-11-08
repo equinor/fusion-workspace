@@ -1,4 +1,4 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 import { FetchData } from '../types';
 
 export class FetchController<TData> {
@@ -17,6 +17,7 @@ export class FetchController<TData> {
 
 	constructor(fetch: FetchData<TData>) {
 		this.fetch = fetch;
+
 		const fetching = new Observable<boolean>(this.isFetching, (a, b) => a === b);
 		this.onIsFetchingChanged = fetching.onchange;
 		this.setIsFetching = fetching.setValue;

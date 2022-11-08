@@ -1,4 +1,4 @@
-import { FetchData } from '@workspace/data-source';
+import { FetchData } from '@equinor/workspace-data-source';
 import { DataSourceOptions, FusionMediator } from '../../types';
 
 /**
@@ -15,7 +15,7 @@ export function createFetchFunction<TData>(
 			const data = await (options.responseParser ? options.responseParser(response) : response.json());
 			return data;
 		} catch (e) {
-			mediator.errorService.throwError({ code: 0, detail: 'Something went wrong', title: 'Error' });
+			mediator.errorService.error({ code: 0, detail: 'Something went wrong', title: 'Error' });
 		}
 		return [];
 	};

@@ -1,5 +1,27 @@
 {
-	"name": "@equinor/data-source",
-	"version": "0.0.1",
-	"type": "commonjs"
+	"name": "@equinor/workspace-data-source",
+	"version": "0.0.6",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc -b",
+		"lint": "eslint --ext .ts,.tsx"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"module": "dist/esm/index.js",
+	"types": "dist/types/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@equinor/workspace-core": "workspace:^0.0.5"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/equinor/fusion-workspace.git",
+		"directory": "packages/data-source"
+	},
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }

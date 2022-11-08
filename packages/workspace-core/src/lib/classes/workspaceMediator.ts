@@ -1,7 +1,12 @@
 import { ObjectType } from '../types';
-import { createClickService, createErrorService, createDataService, createSelectionService } from '../utils';
-import { BookmarkService } from './bookmarkService';
-import { URLService } from './urlService/urlService';
+import {
+	createClickService,
+	createErrorService,
+	createDataService,
+	createSelectionService,
+	createBookmarksService,
+	createUrlService,
+} from '../utils';
 
 /**
  * Class to act as a mediator in the workspace
@@ -23,9 +28,9 @@ export class WorkspaceMediator<
 		return this;
 	};
 
-	bookmarkService = new BookmarkService<TBookmarkState>();
+	bookmarkService = createBookmarksService<TBookmarkState>();
 
-	urlService = new URLService();
+	urlService = createUrlService();
 
 	selectionService = createSelectionService();
 
@@ -37,6 +42,11 @@ export class WorkspaceMediator<
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {
+		this.urlService.completeAll();
+		this.dataService.completeAll();
+		this.selectionService.completeAll();
+		this.clickService.complete();
+		this.errorService.complete();
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];

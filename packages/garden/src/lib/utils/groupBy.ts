@@ -1,19 +1,16 @@
 import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-interface GroupByArgs<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> {
+type GroupByArgs<TData, TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>> = {
 	arr: TData[];
 	keys: string[];
 	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
-	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
+	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
 	isExpanded?: boolean;
 	preGroupFiltering: PreGroupByFiltering<TData>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	depth: number;
-}
+};
 
 const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> | undefined => {
 	return acc.find((x) => x.value === valueKey);
@@ -109,16 +106,16 @@ export function groupBy<
 	return gardengroups;
 }
 
-interface GroupByArrayArgs<
+type GroupByArrayArgs<
 	TData,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> {
+> = {
 	arr: TData[];
 	key: keyof TData | string;
 	preGroupFiltering: (arr: TData[], groupByKey: string) => TData[];
-	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
+	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
 	isExpanded?: boolean;
-}
+};
 
 function groupByArray<
 	TData,

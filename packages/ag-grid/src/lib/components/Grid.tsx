@@ -12,14 +12,25 @@ import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
-interface GridProps<T extends Record<PropertyKey, unknown>> {
-	controller: GridController<T>;
+
+type GridProps<TData extends Record<PropertyKey, unknown>> = {
+	controller: GridController<TData>;
 	height: number;
-}
+};
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<T extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<T>) {
+/**
+ * Grid to be used with a controller
+ * This component is for more advanced usage then you can get with the React Grid.
+ * ```TS
+ * const gc = new GridController()
+ * gc.colDefs = [{field: "id"}];
+ * gc.rowData = [{id: "123"},{id: "1234"}]
+ * <Grid controller={gc} />
+ * ```
+ */
+export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
@@ -37,7 +48,7 @@ export function Grid<T extends Record<PropertyKey, unknown>>({ controller, heigh
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
-				// gridOptions={controller.gridOptions}
+				gridOptions={controller.gridOptions}
 				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}

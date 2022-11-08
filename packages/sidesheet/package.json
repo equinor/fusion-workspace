@@ -1,5 +1,39 @@
 {
-	"name": "@equinor/sidesheet",
-	"version": "0.0.1",
-	"type": "commonjs"
+	"name": "@equinor/workspace-sidesheet",
+	"version": "0.0.5",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc -b",
+		"lint": "eslint --ext .ts,.tsx"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"module": "dist/esm/index.js",
+	"types": "dist/types/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"peerDependencies": {
+		"react": ">= 16.8.0",
+		"react-dom": ">= 16.8.0",
+		"react-is": ">= 16.8.0"
+	},
+	"dependencies": {
+		"@equinor/eds-core-react": "^0.26.0",
+		"@equinor/eds-icons": "^0.15.0",
+		"@equinor/eds-tokens": "^0.9.0"
+	},
+	"devDependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-is": "^18.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/equinor/fusion-workspace.git",
+		"directory": "packages/sidesheet"
+	},
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
