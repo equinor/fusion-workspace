@@ -5,7 +5,6 @@ import { BaseRecordObject } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
-
 interface GardenProps<
 	TData,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
