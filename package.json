@@ -3,8 +3,10 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"build": "npx lerna run build",
-		"lint": "npx lerna run lint",
+		"build": "pnpm -r build",
+		"publish": "pnpm publish -r",
+		"prepublish": "pnpm build && lerna version && pnpm publish -r --dry-run",
+		"lint": "pnpm -r lint",
 		"lint:staged": "lint-staged",
 		"bootstrap": "lerna bootstrap",
 		"clean": "yarn run clean:modules && yarn run clean:build",
