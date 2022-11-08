@@ -15,7 +15,7 @@ export type GardenConfig<
 
 export type GridConfig<T> = {
 	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: GridOptions<T>;
+	gridOptions?: Omit<GridOptions<T>, 'rowData'>;
 };
 
 export type SidesheetConfig<TData> = {
