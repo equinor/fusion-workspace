@@ -96,6 +96,8 @@ export class GardenController<
 			customGroupByKeys,
 			fieldSettings,
 			getCustomState,
+			customViews,
+			visuals,
 		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 		context?: TContext
 	) {
@@ -106,6 +108,14 @@ export class GardenController<
 		this.clickEvents = clickEvents ?? {};
 
 		this.customGroupByKeys = new ReactiveValue<TCustomGroupByKeys>(customGroupByKeys ?? ({} as TCustomGroupByKeys));
+
+		if (visuals) {
+			this.visuals = { ...this.visuals, ...visuals };
+		}
+
+		if (customViews) {
+			this.customViews = { ...this.customViews, ...customViews };
+		}
 
 		if (getCustomState) {
 			this.getCustomState = getCustomState;
