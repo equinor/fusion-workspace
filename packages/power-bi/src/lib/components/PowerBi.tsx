@@ -7,7 +7,9 @@ import { useIsReady } from '../hooks';
 import { useResizeObserver } from '../hooks/useResizeObserver';
 import { StyledReportContainer, StyledReportRoot } from './powerbi.styles';
 import styled from 'styled-components';
-
+import { chevron_down, chevron_up } from '@equinor/eds-icons';
+import { Icon } from '@equinor/eds-core-react';
+Icon.add({ chevron_down, chevron_up });
 interface PowerBiProps {
 	controller: PowerBiController;
 }
