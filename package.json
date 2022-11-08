@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "pnpm -r build",
 		"lint": "pnpm -r lint",
-		"publish": "pnpm build && lerna version && pnpm publish -r",
+		"shipit": "pnpm build && lerna version && pnpm publish -r",
 		"lint:staged": "lint-staged"
 	},
 	"private": true,
