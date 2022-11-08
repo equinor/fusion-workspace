@@ -12,9 +12,11 @@ jobs:
         name: Create release
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout repo
+              uses: actions/checkout@v2
               with:
-                  fetch-depth: 0
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  path: main
             - uses: pnpm/action-setup@v2
               with:
                   version: 7.14.0
@@ -24,11 +26,6 @@ jobs:
                   node-version: 16
             - run: pnpm install -r --frozen-lockfile
             - run: pnpm run -r build
-            - name: Config git user
-              run: |
-                  git config --global user.name 'github-actions[bot]'
-                  git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-                  git fetch --depth=1 origin +refs/tags/*:refs/tags/*
             - name: Bump versions
               run: npx lerna version --yes --create-release github
               env:
