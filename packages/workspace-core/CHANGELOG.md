@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.5...@equinor/workspace-core@0.0.6) (2022-11-08)
+
+**Note:** Version bump only for package @equinor/workspace-core
+
 ## [0.0.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.4...@equinor/workspace-core@0.0.5) (2022-11-07)
 
 **Note:** Version bump only for package @equinor/workspace-core

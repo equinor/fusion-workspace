@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-observable-proxy",
-	"version": "0.0.4",
+	"version": "0.1.0",
 	"private": false,
 	"type": "module",
 	"license": "MIT",
