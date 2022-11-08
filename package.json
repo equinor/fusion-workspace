@@ -3,14 +3,10 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"build": "npx lerna run build",
-		"lint": "npx lerna run lint",
-		"lint:staged": "lint-staged",
-		"bootstrap": "lerna bootstrap",
-		"clean": "yarn run clean:modules && yarn run clean:build",
-		"clean:build": "rm -rf packages/*/dist",
-		"build:clean": "rm -rf packages/*/dist && yarn run build",
-		"npm:clean": "rm -rf node_modules && lerna exec 'rm -rf node_modules'"
+		"build": "pnpm -r build",
+		"lint": "pnpm -r lint",
+		"publish": "pnpm build && lerna version && pnpm publish -r",
+		"lint:staged": "lint-staged"
 	},
 	"private": true,
 	"dependencies": {
