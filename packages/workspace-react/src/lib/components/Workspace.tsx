@@ -1,4 +1,4 @@
-import { useSetFallbackTab } from 'lib/hooks/useSetFallbackTab';
+import { useSetFallbackTab } from '../hooks/useSetFallbackTab';
 import { WorkspaceViewController } from '../classes/workspaceViewController';
 import { useMounted } from '../hooks/useMounted';
 import { ContextProvider } from './ContextProvider';
