@@ -1,3 +1,8 @@
+/**
+ * Integrations folder for exporting types from the integration
+ * namespace: @equinor/workspace-fusion/garden
+ */
+
 import {
 	CustomGroupView,
 	CustomHeaderView,
@@ -5,7 +10,7 @@ import {
 	CustomVirtualViews,
 	FieldSetting,
 	FieldSettings,
-	GardenConfig,
+	GardenConfig as OriginalGardenConfig,
 	GardenController,
 	GardenGroup,
 	GardenGroups,
@@ -29,8 +34,13 @@ import {
 	PreGroupByFiltering,
 	Visuals,
 	findNodeCallback,
+	getGardenItems,
+	isSubGroup,
 } from '@equinor/workspace-garden';
 
+/**Garden utils functions */
+export { getGardenItems, isSubGroup };
+/**Garden types */
 export type {
 	CustomGroupView,
 	CustomHeaderView,
@@ -63,3 +73,11 @@ export type {
 	Visuals,
 	findNodeCallback,
 };
+
+/** Override remove config types that is handled internally */
+type GardenConfig<
+	TData extends Record<PropertyKey, unknown>,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data' | 'getIdentifier'>;

@@ -1,5 +1,6 @@
 import { Garden, GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
+import { GardenConfig } from '../../integrations/garden';
 import { GardenIcon } from '../../icons/GardenIcon';
 import { FusionMediator, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
@@ -8,7 +9,6 @@ import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';
 import { configureGardenHighlightSelection } from './configureHighlight';
 import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
-import { GardenConfig } from '../../types';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,

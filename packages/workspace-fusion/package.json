@@ -28,8 +28,22 @@
 			],
 			"power-bi": [
 				"dist/types/lib/integrations/power-bi/index"
+			],
+			"filter": [
+				"dist/types/lib/integrations/filter/index"
+			],
+			"status-bar": [
+				"dist/types/lib/integrations/status-bar/index"
 			]
 		}
+	},
+	"exports": {
+		".": "./dist/esm/index.js",
+		"./garden": "./dist/esm/lib/integrations/garden/index.js",
+		"./filter": "./dist/esm/lib/integrations/filter/index.js",
+		"./status-bar": "./dist/esm/lib/integrations/status-bar/index.js",
+		"./power-bi": "./dist/esm/lib/integrations/power-bi/index.js",
+		"./grid": "./dist/esm/lib/integrations/grid/index.js"
 	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.26.0",
