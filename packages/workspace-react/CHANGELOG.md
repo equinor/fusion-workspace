@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.5...@equinor/workspace-react@0.0.6) (2022-11-09)
+
+### Bug Fixes
+
+-   :bug: set fallback tab if none set (workspace-react) ([#159](https://github.com/equinor/fusion-workspace/issues/159)) ([074f04c](https://github.com/equinor/fusion-workspace/commit/074f04cb36d7e34c72ffbc802049aec94224cee0))
+
 ## [0.0.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.4...@equinor/workspace-react@0.0.5) (2022-11-07)
 
 **Note:** Version bump only for package @equinor/workspace-react
