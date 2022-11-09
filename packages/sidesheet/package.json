@@ -26,6 +26,8 @@
 		"@equinor/eds-tokens": "^0.9.0"
 	},
 	"devDependencies": {
+		"@types/react": "^18.0.25",
+		"@types/react-dom": "^18.0.8",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0"
