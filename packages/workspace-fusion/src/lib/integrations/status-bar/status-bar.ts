@@ -5,4 +5,6 @@
 
 import { StatusItem } from '@equinor/workspace-status-bar';
 
-export type { StatusItem };
+type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
+
+export type { StatusItem, StatusBarConfig };

@@ -37,4 +37,23 @@ export type {
 	PowerBiFilterItem,
 	SlicerData,
 	SlicerFilter,
+	FusionPowerBiConfig,
+	PowerBiToken,
+	PowerBiConfig,
+};
+
+/**
+ * Configuration for adding a fusion power bi client
+ * Requires client configured for fusion reports api
+ */
+type FusionPowerBiConfig = {
+	reportUri: string;
+};
+type PowerBiToken = {
+	token: string;
+};
+type PowerBiConfig = {
+	reportUri: string;
+	getConfig: (reportUri: string) => Promise<any>;
+	getToken: (reportUri: string) => Promise<PowerBiToken>;
 };
