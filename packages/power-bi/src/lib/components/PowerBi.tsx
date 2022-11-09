@@ -5,9 +5,11 @@ import { Report } from 'powerbi-client';
 import { Loading } from './loading';
 import { useIsReady } from '../hooks';
 import { useResizeObserver } from '../hooks/useResizeObserver';
-import './style.css';
 import { StyledReportContainer, StyledReportRoot } from './powerbi.styles';
-
+import styled from 'styled-components';
+import { chevron_down, chevron_up } from '@equinor/eds-icons';
+import { Icon } from '@equinor/eds-core-react';
+Icon.add({ chevron_down, chevron_up });
 interface PowerBiProps {
 	controller: PowerBiController;
 }
@@ -34,7 +36,7 @@ export const LoadedReport = ({ controller }: LoadedReportProps) => {
 		<StyledReportRoot ref={ref}>
 			<StyledReportContainer>
 				<div style={{ height: `${0.41 * width}px` }}>
-					<PowerBIEmbed
+					<Embed
 						embedConfig={controller.config}
 						cssClassName="pbiEmbed"
 						getEmbeddedComponent={(embed) => {
@@ -48,3 +50,16 @@ export const LoadedReport = ({ controller }: LoadedReportProps) => {
 		</StyledReportRoot>
 	);
 };
+
+const Embed = styled(PowerBIEmbed)`
+	.pbiEmbed {
+		width: 100%;
+		height: 100%;
+	}
+
+	.pbiEmbed > iframe {
+		border: 0;
+		width: 100%;
+		height: 100%;
+	}
+`;

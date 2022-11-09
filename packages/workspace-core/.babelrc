@@ -1,10 +1,8 @@
 {
-	"presets": [
-		[
-			"@nrwl/web/babel",
-			{
-				"useBuiltIns": "usage"
-			}
-		]
-	]
+	"presets": ["@babel/preset-typescript"],
+	"env": {
+		"test": {
+			"plugins": ["@babel/plugin-transform-modules-commonjs"]
+		}
+	}
 }

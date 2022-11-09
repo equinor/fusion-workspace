@@ -1,6 +1,5 @@
-import { PowerBI, PowerBiController } from '@equinor/workspace-powerbi';
+import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/workspace-powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';

@@ -1,10 +1,21 @@
 import { StatusItem } from '@equinor/workspace-status-bar';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions } from '@equinor/workspace-ag-grid';
 import { WorkspaceOnClick } from './onClick';
+import { GardenConfig as OriginalGardenConfig } from '@equinor/workspace-garden';
+import { FilterOptions as FilterConfig } from '@equinor/workspace-filter';
+
+export type { FilterConfig };
+
+export type GardenConfig<
+	TData extends Record<PropertyKey, unknown>,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data' | 'getIdentifier'>;
 
 export type GridConfig<T> = {
 	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: GridOptions<T>;
+	gridOptions?: Omit<GridOptions<T>, 'rowData'>;
 };
 
 export type SidesheetConfig<TData> = {

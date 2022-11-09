@@ -1,6 +1,5 @@
 import { FilterOptions } from '@equinor/workspace-filter';
 import history from 'history/browser';
-import { Action } from 'history';
 import { GardenConfig } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
@@ -35,6 +34,7 @@ import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 import { addPowerBi } from '../utils/powerBI/addPowerBi';
 import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
+import { Action } from 'history';
 
 export type WorkspaceContext = {
 	ui: unknown;
@@ -136,10 +136,19 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * Adds a garden tab to your workspace
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addGarden = <TCustomGroupByKeys, TCustomState, TContext>(
+	addGarden = <
+		TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	>(
 		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden(config, this.viewController, this.mediator, this.getIdentifier);
+		addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+			config,
+			this.viewController,
+			this.mediator,
+			this.getIdentifier
+		);
 		return this;
 	};
 

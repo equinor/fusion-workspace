@@ -1,16 +1,9 @@
 {
 	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"outDir": "../../dist/out-tsc",
-		"types": ["node"]
-	},
-	"files": [
-		"../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-		"../../node_modules/@nrwl/react/typings/image.d.ts"
-	],
 	"exclude": [
 		"jest.config.ts",
 		"**/*.spec.ts",
+		"**/*.d.ts",
 		"**/*.test.ts",
 		"**/*.spec.tsx",
 		"**/*.test.tsx",
@@ -19,5 +12,17 @@
 		"**/*.spec.jsx",
 		"**/*.test.jsx"
 	],
-	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+	"references": [
+		{ "path": "../garden" },
+		{ "path": "../workspace-core" },
+		{ "path": "../workspace-react" },
+		{ "path": "../sidesheet" },
+		{ "path": "../filter" },
+		{ "path": "../power-bi" },
+		{ "path": "../status-bar" },
+		{ "path": "../ag-grid" },
+		{ "path": "../data-source" },
+		{ "path": "../observable-proxy" }
+	]
 }

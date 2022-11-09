@@ -42,7 +42,7 @@ export class GardenController<
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
 
-	fieldSettings: FieldSettings<TData, TCustomGroupByKeys, string> = {};
+	fieldSettings: FieldSettings<TData, string, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	nodeLabelCallback: NodeLabelCallback<TData>;
@@ -96,6 +96,8 @@ export class GardenController<
 			customGroupByKeys,
 			fieldSettings,
 			getCustomState,
+			customViews,
+			visuals,
 		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
 		context?: TContext
 	) {
@@ -106,6 +108,14 @@ export class GardenController<
 		this.clickEvents = clickEvents ?? {};
 
 		this.customGroupByKeys = new ReactiveValue<TCustomGroupByKeys>(customGroupByKeys ?? ({} as TCustomGroupByKeys));
+
+		if (visuals) {
+			this.visuals = { ...this.visuals, ...visuals };
+		}
+
+		if (customViews) {
+			this.customViews = { ...this.customViews, ...customViews };
+		}
 
 		if (getCustomState) {
 			this.getCustomState = getCustomState;

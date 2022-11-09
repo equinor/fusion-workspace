@@ -1,10 +1,10 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		"rootDir": ".",
 		"strict": true,
-		"sourceMap": true,
-		"declaration": false,
+		"sourceMap": false,
+		"composite": true,
+		"declaration": true,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
@@ -20,7 +20,7 @@
 			"@equinor/workspace-fusion-modules": ["packages/workspace-fusion-modules/src/index.ts"],
 			"@equinor/workspace-react": ["packages/workspace-react/src/index.ts"],
 			"@equinor/workspace-core": ["packages/workspace-core/src/index.ts"],
-			"@equinor/workspace-observable-proxy": ["packages/observable-proxy/src/index.ts"],
+			// "@equinor/workspace-observable-proxy": ["packages/observable-proxy/src/index.ts"],
 			"@equinor/workspace-filter": ["packages/filter/src/index.ts"],
 			"@equinor/workspace-garden": ["packages/garden/src/index.ts"],
 			"@equinor/workspace-powerbi": ["packages/power-bi/src/index.ts"],
@@ -33,8 +33,7 @@
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true
+		"isolatedModules": true
 	},
-	"exclude": ["node_modules", "tmp"]
+	"exclude": ["node_modules", "tmp", "**/*.d.ts"]
 }

@@ -3,16 +3,18 @@ import { BaseRecordObject } from './customGeneric';
 export type GetSortFunction = (a: string, b: string) => number;
 export type GetKeyFunction<
 	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (item: TData, itemKey: keyof TData | string, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = (item: TData, itemKey: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
 
 export type FieldSetting<
 	ItemType,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys>
 > = {
 	key?: keyof ItemType | string;
 	label?: string;
-	getKey?: GetKeyFunction<ItemType, TCustomGroupByKeys>;
+	getKey?: GetKeyFunction<ItemType, TExtendedFields, TCustomGroupByKeys>;
 	getColumnSort?: GetSortFunction;
 };
 
@@ -27,6 +29,6 @@ export type FieldSetting<
  */
 export type FieldSettings<
 	ItemType,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
-	ExtendedFields extends string = never
-> = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, TCustomGroupByKeys>>>;
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, ExtendedFields, TCustomGroupByKeys>>>;

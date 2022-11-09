@@ -7,9 +7,7 @@ interface StatusBarProps {
 }
 
 export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
-	if (!items.length) {
-		return null;
-	}
+	if (!items.length) return null;
 
 	return (
 		<StyledStatusBar>
