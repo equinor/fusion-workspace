@@ -3,8 +3,7 @@ import { createGridController, Grid, GridController } from '@equinor/workspace-a
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
-import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
-import { GetIdentifier } from '../createFusionWorkspace';
+import { FusionMediator, GetIdentifier, GridConfig, WorkspaceTabNames } from '../../types';
 import { configureBookmark } from './configureBookmark';
 import { configureDataChange } from './configureDataChange';
 import { configureHighlightSelection } from './configureHighlightSelection';

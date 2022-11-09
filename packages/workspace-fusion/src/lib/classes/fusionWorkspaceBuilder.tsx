@@ -10,12 +10,13 @@ import {
 	StatusBarConfig,
 	FusionMediator,
 	CustomTab,
-	AppConfig,
 	FusionWorkspaceModule,
 	DataSourceOptions,
 	PowerBiConfig,
 	FusionPowerBiConfig,
 	FusionWorkspaceError,
+	GetIdentifier,
+	AppConfig,
 } from '../types';
 import {
 	addCustomTab,
@@ -28,7 +29,6 @@ import {
 	addConfig,
 	addViewController,
 	switchTabOnNavigation,
-	GetIdentifier,
 } from '../utils';
 import { configureUrlWithHistory, updateQueryParams } from './fusionUrlHandler';
 import { addPowerBi } from '../utils/powerBI/addPowerBi';
@@ -36,9 +36,7 @@ import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 import { Action } from 'history';
 
-export type WorkspaceContext = {
-	ui: unknown;
-};
+export type WorkspaceContext = {};
 
 export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> {
 	/** The name of your workspace/application */

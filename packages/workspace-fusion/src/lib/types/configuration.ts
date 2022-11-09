@@ -3,6 +3,7 @@ import { ColDef, GridOptions } from '@equinor/workspace-ag-grid';
 import { WorkspaceOnClick } from './onClick';
 import { GardenConfig as OriginalGardenConfig } from '@equinor/workspace-garden';
 import { FilterOptions as FilterConfig } from '@equinor/workspace-filter';
+import { FusionWorkspaceBuilder } from 'lib/classes';
 
 export type { FilterConfig };
 
@@ -81,3 +82,24 @@ type PowerBiToken = {
 export type FusionClient = {
 	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
 };
+
+export type PreConfig<TData> = {
+	getIdentifier: GetIdentifier<TData>;
+	appKey: string;
+};
+
+/**Used for getting a unique id from TData */
+export type GetIdentifier<TData> = (item: TData) => string;
+/**
+ * Callback function for configuring workspace
+ * ```TS
+ * builder
+ * 	.addGrid(opts)
+ * 	.addGarden(opts)
+ * 	.addConfig(opts)
+ *
+ * ```
+ */
+export type UserConfig<TData extends Record<PropertyKey, unknown>> = (
+	builder: Omit<FusionWorkspaceBuilder<TData>, 'viewController'>
+) => FusionWorkspaceBuilder<TData>;
