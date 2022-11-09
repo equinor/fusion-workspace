@@ -15,6 +15,22 @@
 	"files": [
 		"dist"
 	],
+	"typesVersions": {
+		">=4.2": {
+			".": [
+				"dist/types/index"
+			],
+			"garden": [
+				"dist/types/lib/integrations/garden/index"
+			],
+			"grid": [
+				"dist/types/lib/integrations/grid/index"
+			],
+			"power-bi": [
+				"dist/types/lib/integrations/power-bi/index"
+			]
+		}
+	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
