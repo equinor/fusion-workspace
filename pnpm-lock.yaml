@@ -32,7 +32,7 @@ importers:
     devDependencies:
       '@commitlint/cli': 17.2.0
       '@commitlint/config-conventional': 17.2.0
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       '@typescript-eslint/eslint-plugin': 5.24.0_ynoyga2kju3ncc7rzgm66y2j6a
       '@typescript-eslint/parser': 5.24.0_4hx5bygx4rxgd7xwyndf6ymwce
@@ -198,7 +198,7 @@ importers:
       react-virtual: 2.10.4_react@18.2.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -239,7 +239,7 @@ importers:
       '@equinor/eds-tokens': 0.9.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       '@types/styled-components': 5.1.26
       react: 18.2.0
@@ -284,7 +284,7 @@ importers:
       '@equinor/workspace-filter': workspace:^0.0.6
       '@equinor/workspace-garden': workspace:^0.0.7
       '@equinor/workspace-powerbi': workspace:^0.0.5
-      '@equinor/workspace-react': workspace:^0.0.5
+      '@equinor/workspace-react': workspace:^0.0.7
       '@equinor/workspace-sidesheet': workspace:^0.0.5
       '@equinor/workspace-status-bar': workspace:^0.0.6
       '@types/styled-components': ^5.1.26
@@ -319,7 +319,7 @@ importers:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-ag-grid': workspace:^0.0.6
-      '@equinor/workspace-fusion': workspace:^0.1.9
+      '@equinor/workspace-fusion': workspace:^0.1.11
       '@equinor/workspace-garden': workspace:^0.0.7
       history: ^5.3.0
       idb: ^7.1.1
@@ -352,13 +352,13 @@ importers:
       react-is: ^18.2.0
       styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.26.0_vjnypufdujrjelvl5gfeyrdu3e
+      '@equinor/eds-core-react': 0.26.0_maey765qzsqrp6bbazpxj7endy
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-core': link:../workspace-core
       re-resizable: 6.9.9_biqbaboplfbrettd7655fr4n2y
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1252,29 +1252,6 @@ packages:
       - supports-color
     dev: false
 
-  /@equinor/eds-core-react/0.26.0_vjnypufdujrjelvl5gfeyrdu3e:
-    resolution: {integrity: sha512-LHzZ6KACh/M2PM6w8OjcohKN77xEtyOb5bpxzMuLPcM7hUK3F0WIdLCBTrwhaz8c/HuzvwqAsX1yLPufw+qRpA==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.1
-      '@equinor/eds-icons': 0.15.0
-      '@equinor/eds-tokens': 0.9.0
-      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
-      '@floating-ui/react-dom-interactions': 0.10.3_ocvlaah2275pzedeuxsmtxxp2y
-      downshift: 6.1.12_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - supports-color
-    dev: false
-
   /@equinor/eds-icons/0.11.0:
     resolution: {integrity: sha512-KNyq/2HN88oDTRUpBUJpq5FFYroS8YthpKaQP75ncGBC3iAsuN7VkpmfTorlMDGYTDZa62FLHTCTqBRXuPd32A==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -1498,20 +1475,6 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
       aria-hidden: 1.2.1_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - '@types/react'
-    dev: false
-
-  /@floating-ui/react-dom-interactions/0.10.3_ocvlaah2275pzedeuxsmtxxp2y:
-    resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
-      aria-hidden: 1.2.1_wlff343ihbuq5ksmlrv2tytkq4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
@@ -3182,7 +3145,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -3250,13 +3213,6 @@ packages:
       '@types/react': 18.0.25
     dev: true
 
-  /@types/react/18.0.13:
-    resolution: {integrity: sha512-psqptIYQxGUFuGYwP3KCFVtPTkMpIcrqFmtKblWEUQhLuYLpHBwJkXhjp6eHfDM5IbyskY4x7qQpLedEsPkHlA==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
-      csstype: 3.1.1
-
   /@types/react/18.0.25:
     resolution: {integrity: sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==}
     dependencies:
@@ -3275,7 +3231,7 @@ packages:
     resolution: {integrity: sha512-KuKJ9Z6xb93uJiIyxo/+ksS7yLjS1KzG6iv5i78dhVg/X3u5t1H7juRWqVmodIdz6wGVaIApo1u01kmFRdJHVw==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       csstype: 3.1.1
     dev: true
 
@@ -3663,21 +3619,6 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      react: 18.2.0
-      tslib: 2.4.1
-    dev: false
-
-  /aria-hidden/1.2.1_wlff343ihbuq5ksmlrv2tytkq4:
-    resolution: {integrity: sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
-      react: ^16.9.0 || ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@types/react': 18.0.13
       react: 18.2.0
       tslib: 2.4.1
     dev: false
