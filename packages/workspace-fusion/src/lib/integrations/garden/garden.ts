@@ -16,9 +16,9 @@ import {
 	GardenGroups,
 	GardenItem,
 	GardenItemWithDepth,
-	GetCustomDescription,
-	GetCustomItemColor,
-	GetGroupDescriptionFunc,
+	GetDescription,
+	GetItemColor,
+	GetGroupDescription,
 	GetIdentifier,
 	GetKeyFunction,
 	GetSortFunction,
@@ -27,7 +27,7 @@ import {
 	HighlightHorizontalColumn,
 	HorizontalGroupingAccessor,
 	ItemWidthCalculation,
-	NodeLabelCallback,
+	GetDisplayName,
 	OnClickEvents,
 	OnClickGroup,
 	OnClickItem,
@@ -54,9 +54,9 @@ export type {
 	GardenGroups,
 	GardenItem,
 	GardenItemWithDepth,
-	GetCustomDescription,
-	GetCustomItemColor,
-	GetGroupDescriptionFunc,
+	GetDescription,
+	GetItemColor,
+	GetGroupDescription,
 	GetIdentifier,
 	GetKeyFunction,
 	GetSortFunction,
@@ -65,7 +65,7 @@ export type {
 	HighlightHorizontalColumn,
 	HorizontalGroupingAccessor,
 	ItemWidthCalculation,
-	NodeLabelCallback,
+	GetDisplayName,
 	OnClickEvents,
 	OnClickGroup,
 	OnClickItem,
@@ -80,4 +80,7 @@ type GardenConfig<
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data' | 'getIdentifier'>;
+> = Omit<
+	OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+	'data' | 'getIdentifier' | 'clickEvents'
+>;

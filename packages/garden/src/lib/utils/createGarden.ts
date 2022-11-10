@@ -26,7 +26,7 @@ export function createGarden<
 	const groupedData = groupBy({
 		arr: data,
 		keys: allGroupingKeys,
-		groupDescriptionFunc: visuals?.getGroupDescriptionFunc,
+		groupDescriptionFunc: visuals?.getGroupDescription,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,
 		customGroupByKeys: customGroupByKeys?.value,

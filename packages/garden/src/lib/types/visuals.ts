@@ -1,10 +1,4 @@
-import {
-	ItemWidthCalculation,
-	HighlightHorizontalColumn,
-	GetCustomDescription,
-	GetCustomItemColor,
-	GetGroupDescriptionFunc,
-} from './';
+import { ItemWidthCalculation, HighlightHorizontalColumn, GetDescription, GetItemColor, GetGroupDescription } from './';
 
 export interface Visuals<TData> {
 	/**Function for calculating the longest width of a garden column */
@@ -26,9 +20,9 @@ export interface Visuals<TData> {
 	 */
 	collapseSubGroupsByDefault?: boolean;
 	/** Function that returns the string of text that is to be displayed when a column is expanded */
-	getCustomDescription?: GetCustomDescription<TData>;
+	getDescription?: GetDescription<TData>;
 	/** Function that returns the color of the item to be displayed */
-	getCustomItemColor?: GetCustomItemColor<TData>;
+	getItemColor?: GetItemColor<TData>;
 	/** Returns a description for a garden group */
-	getGroupDescriptionFunc?: GetGroupDescriptionFunc<TData>;
+	getGroupDescription?: GetGroupDescription<TData>;
 }

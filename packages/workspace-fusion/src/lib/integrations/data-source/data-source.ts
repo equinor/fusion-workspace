@@ -1,8 +1,8 @@
 import { FetchData } from '@equinor/workspace-data-source';
 
-export type { DataSourceOptions, FetchData };
+export type { DataSourceConfig, FetchData };
 
-type DataSourceOptions<TData> = {
+type DataSourceConfig<TData> = {
 	/** Function for getting response object from server */
 	getResponseAsync: (signal?: AbortSignal) => Promise<Response>;
 	/**
