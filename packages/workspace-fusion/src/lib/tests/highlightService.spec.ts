@@ -23,7 +23,7 @@ describe('Highlight service should highlight remove highlight in all its integra
 		const controller = new GardenController<MockData>({
 			data: [],
 			initialGrouping: { horizontalGroupingAccessor: '', verticalGroupingKeys: [] },
-			nodeLabelCallback: (s) => s.id,
+			getDisplayName: (s) => s.id,
 			getIdentifier: (s) => s.id,
 			clickEvents: {},
 		});

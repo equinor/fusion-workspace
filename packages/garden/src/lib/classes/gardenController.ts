@@ -88,7 +88,7 @@ export class GardenController<
 
 	constructor(
 		{
-			nodeLabelCallback,
+			getDisplayName: nodeLabelCallback,
 			getIdentifier,
 			initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
 			data,

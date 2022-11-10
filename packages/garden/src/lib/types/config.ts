@@ -3,7 +3,7 @@ import {
 	GroupingKeys,
 	FieldSettings,
 	OnClickEvents,
-	NodeLabelCallback,
+	NodeLabelCallback as GetDisplayName,
 	BaseRecordObject,
 	CustomVirtualViews,
 	Visuals,
@@ -17,13 +17,20 @@ export type GardenConfig<
 > = {
 	/** Data to be used for the garden */
 	data: TData[];
-	/** Primary(Unique) identifier for the data */
+	/**
+	 * Primary(Unique) identifier for the data
+	 * ```TS
+	 * (item) => item.id
+	 * ```
+	 */
 	getIdentifier: GetIdentifier<TData>;
 	/**
 	 * Callback that takes in an item and returns a label
-	 * I.E item => item.name;
+	 * ```TS
+	 * (i) => i.title
+	 * ```
 	 */
-	nodeLabelCallback: NodeLabelCallback<TData>;
+	getDisplayName: GetDisplayName<TData>;
 	/** The keys used for grouping when the garden loads initially */
 	initialGrouping: GroupingKeys<TData>;
 	/** The available keys to be used for grouping */
@@ -35,6 +42,14 @@ export type GardenConfig<
 	customViews?: CustomVirtualViews<TData>;
 	/** Visual details */
 	visuals?: Visuals<TData>;
-	/** Function for calculating custom state */
+	/** Function for calculating custom state
+	 *
+	 * Will re-run everytime data changes
+	 * ```TS
+	 * function getCustomState(data: MyType[]){
+	 * return data.filter((v,i,a) => a.indexOf(i) === v).length / 2
+	 * }
+	 * ```
+	 */
 	getCustomState?: (data: TData[]) => TCustomState;
 };
