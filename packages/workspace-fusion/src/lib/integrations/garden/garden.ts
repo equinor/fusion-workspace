@@ -65,7 +65,7 @@ export type {
 	HighlightHorizontalColumn,
 	HorizontalGroupingAccessor,
 	ItemWidthCalculation,
-	GetDisplayName as NodeLabelCallback,
+	GetDisplayName,
 	OnClickEvents,
 	OnClickGroup,
 	OnClickItem,
