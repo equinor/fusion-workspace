@@ -58,9 +58,9 @@ export class GardenController<
 
 	/** Override visuals and components for garden */
 	visuals: Visuals<TData> = {
-		getCustomItemColor: () => defaultItemColor,
+		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
-		getCustomDescription: () => '',
+		getDescription: () => '',
 	};
 
 	/** Custom user context */
