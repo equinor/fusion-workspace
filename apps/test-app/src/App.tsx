@@ -22,23 +22,16 @@ export default App;
 function createWorkspace() {
 	const controller = createFusionWorkspace<S>({ appKey: 'Handover', getIdentifier: (s) => s.id }, (s) =>
 		s
-			.addFilter([
-				{
-					name: 'id',
-					valueFormatter: (s) => s.id,
-					isQuickFilter: true,
-				},
-			])
-			.addGrid({ columnDefinitions: [{ field: 'id' }, { field: 'age' }] })
-			.addGarden({
-				data: [],
-				getIdentifier: (s) => s.id,
-				initialGrouping: {
-					horizontalGroupingAccessor: 'id',
-					verticalGroupingKeys: [],
-				},
-				nodeLabelCallback: (s) => s.id,
+			.addFilter({
+				filterGroups: [
+					{
+						name: 'id',
+						valueFormatter: (s) => s.id,
+						isQuickFilter: true,
+					},
+				],
 			})
+			.addGrid({ columnDefinitions: [{ field: 'id' }, { field: 'age' }] })
 			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
 			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
 	);
