@@ -20,14 +20,14 @@ export type GardenConfig<
 	/**
 	 * Primary(Unique) identifier for the data
 	 * ```TS
-	 * (item) => item.id
+	 * getIdentifier: (item) => item.id
 	 * ```
 	 */
 	getIdentifier: GetIdentifier<TData>;
 	/**
 	 * Callback that takes in an item and returns a label
 	 * ```TS
-	 * (i) => i.title
+	 * getDisplayName: (i) => i.title
 	 * ```
 	 */
 	getDisplayName: GetDisplayName<TData>;
@@ -46,9 +46,11 @@ export type GardenConfig<
 	 *
 	 * Will re-run everytime data changes
 	 * ```TS
-	 * function getCustomState(data: MyType[]){
+	 *
+	 * getCustomState: (data: MyType[]) => {
 	 * return data.filter((v,i,a) => a.indexOf(i) === v).length / 2
 	 * }
+	 *
 	 * ```
 	 */
 	getCustomState?: (data: TData[]) => TCustomState;
