@@ -8,7 +8,6 @@ import {
 	FilterController,
 	FilterGroup,
 	FilterItemCount,
-	FilterOptions,
 	FilterSearchActive,
 	FilterValueType,
 	ReactFilterController,
@@ -19,12 +18,17 @@ import {
 	ValueFormatterFunction,
 } from '@equinor/workspace-filter';
 
+/** Fusion workspace filter config */
+type FilterConfig<T extends Record<PropertyKey, unknown>> = {
+	filterGroups: FilterConfiguration<T>[];
+};
+
 export type {
 	FilterConfiguration,
 	FilterController,
 	FilterGroup,
 	FilterItemCount,
-	FilterOptions,
+	FilterConfig,
 	FilterSearchActive,
 	FilterValueType,
 	ReactFilterController,

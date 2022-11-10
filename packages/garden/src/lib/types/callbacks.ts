@@ -14,8 +14,8 @@ export type HighlightHorizontalColumn<
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
 > = (groupBy: string, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
 
-export type GetCustomDescription<T> = (item: T | GardenItem<T>, controller: GardenController<T>) => string;
-export type GetCustomItemColor<T> = (item: T, controller: GardenController<T>) => string;
-export type GetGroupDescriptionFunc<T> = (item: T, groupingKey: string) => string;
+export type GetDescription<T> = (item: T | GardenItem<T>, controller: GardenController<T>) => string;
+export type GetItemColor<T> = (item: T, controller: GardenController<T>) => string;
+export type GetGroupDescription<T> = (item: T, groupingKey: string) => string;
 
-export type NodeLabelCallback<T> = (item: T, controller: GardenController<T>) => string;
+export type GetDisplayName<T> = (item: T, controller: GardenController<T>) => string;
