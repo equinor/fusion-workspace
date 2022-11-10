@@ -29,11 +29,11 @@ import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 import { Action } from 'history';
 import { GardenConfig } from '../integrations/garden';
-import { FilterOptions } from '../integrations/filter';
+import { FilterConfig } from '../integrations/filter';
 import { GridConfig } from '../integrations/grid';
 import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
 import { StatusBarConfig } from '../integrations/status-bar';
-import { DataSourceOptions } from '../integrations/data-source';
+import { DataSourceConfig } from '../integrations/data-source';
 
 export type WorkspaceContext = {
 	ui: unknown;
@@ -111,7 +111,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addDataSource = (dataFetch: DataSourceOptions<TData>) => {
+	addDataSource = (dataFetch: DataSourceConfig<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
@@ -171,7 +171,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 		return this;
 	};
 
-	addFilter = (config: FilterOptions<TData>) => {
+	addFilter = (config: FilterConfig<TData>) => {
 		addFilter(config, this.viewController, this.mediator);
 		return this;
 	};
