@@ -192,7 +192,7 @@ importers:
       react-virtual: 2.10.4_react@18.2.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
-      '@types/react': 18.0.25
+      '@types/react': 18.0.13
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
@@ -273,7 +273,7 @@ importers:
       '@equinor/workspace-ag-grid': workspace:^0.0.6
       '@equinor/workspace-data-source': workspace:^0.0.6
       '@equinor/workspace-filter': workspace:^0.0.6
-      '@equinor/workspace-garden': workspace:^0.0.7
+      '@equinor/workspace-garden': workspace:^0.1.0
       '@equinor/workspace-powerbi': workspace:^0.0.5
       '@equinor/workspace-react': workspace:^0.0.7
       '@equinor/workspace-sidesheet': workspace:^0.0.5
@@ -312,8 +312,8 @@ importers:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-ag-grid': workspace:^0.0.6
-      '@equinor/workspace-fusion': workspace:^0.1.11
-      '@equinor/workspace-garden': workspace:^0.0.7
+      '@equinor/workspace-fusion': workspace:^0.2.0
+      '@equinor/workspace-garden': workspace:^0.1.0
       history: ^5.3.0
       idb: ^7.1.1
       react: ^18.2.0
@@ -345,14 +345,14 @@ importers:
       react-is: ^18.2.0
       styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.26.0_maey765qzsqrp6bbazpxj7endy
+      '@equinor/eds-core-react': 0.26.0_vjnypufdujrjelvl5gfeyrdu3e
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-core': link:../workspace-core
       re-resizable: 6.9.9_biqbaboplfbrettd7655fr4n2y
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
       '@types/jest': 27.4.1
-      '@types/react': 18.0.25
+      '@types/react': 18.0.13
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
@@ -1200,7 +1200,7 @@ packages:
       - supports-color
     dev: false
 
-  /@equinor/eds-core-react/0.26.0_maey765qzsqrp6bbazpxj7endy:
+  /@equinor/eds-core-react/0.26.0_vjnypufdujrjelvl5gfeyrdu3e:
     resolution: {integrity: sha512-LHzZ6KACh/M2PM6w8OjcohKN77xEtyOb5bpxzMuLPcM7hUK3F0WIdLCBTrwhaz8c/HuzvwqAsX1yLPufw+qRpA==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
@@ -1212,7 +1212,7 @@ packages:
       '@equinor/eds-icons': 0.15.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
-      '@floating-ui/react-dom-interactions': 0.10.3_2zx2umvpluuhvlq44va5bta2da
+      '@floating-ui/react-dom-interactions': 0.10.3_ocvlaah2275pzedeuxsmtxxp2y
       downshift: 6.1.12_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1424,20 +1424,6 @@ packages:
       '@floating-ui/core': 1.0.1
     dev: false
 
-  /@floating-ui/react-dom-interactions/0.10.3_2zx2umvpluuhvlq44va5bta2da:
-    resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
-      aria-hidden: 1.2.1_fan5qbzahqtxlm5dzefqlqx5ia
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - '@types/react'
-    dev: false
-
   /@floating-ui/react-dom-interactions/0.10.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
     peerDependencies:
@@ -1446,6 +1432,20 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
       aria-hidden: 1.2.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
+  /@floating-ui/react-dom-interactions/0.10.3_ocvlaah2275pzedeuxsmtxxp2y:
+    resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/react-dom': 1.0.0_biqbaboplfbrettd7655fr4n2y
+      aria-hidden: 1.2.1_wlff343ihbuq5ksmlrv2tytkq4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
@@ -3184,12 +3184,20 @@ packages:
       '@types/react': 18.0.25
     dev: true
 
+  /@types/react/18.0.13:
+    resolution: {integrity: sha512-psqptIYQxGUFuGYwP3KCFVtPTkMpIcrqFmtKblWEUQhLuYLpHBwJkXhjp6eHfDM5IbyskY4x7qQpLedEsPkHlA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.1
+
   /@types/react/18.0.25:
     resolution: {integrity: sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
+    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
@@ -3568,21 +3576,6 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
 
-  /aria-hidden/1.2.1_fan5qbzahqtxlm5dzefqlqx5ia:
-    resolution: {integrity: sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
-      react: ^16.9.0 || ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@types/react': 18.0.25
-      react: 18.2.0
-      tslib: 2.4.1
-    dev: false
-
   /aria-hidden/1.2.1_react@18.2.0:
     resolution: {integrity: sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==}
     engines: {node: '>=10'}
@@ -3593,6 +3586,21 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      react: 18.2.0
+      tslib: 2.4.1
+    dev: false
+
+  /aria-hidden/1.2.1_wlff343ihbuq5ksmlrv2tytkq4:
+    resolution: {integrity: sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
+      react: ^16.9.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.0.13
       react: 18.2.0
       tslib: 2.4.1
     dev: false

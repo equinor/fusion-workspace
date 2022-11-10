@@ -1,5 +1,8 @@
 import './App.css';
 import { Workspace, createFusionWorkspace } from '@equinor/workspace-fusion';
+import { isSubGroup, getGardenItems } from '@equinor/workspace-fusion/garden';
+
+console.log(isSubGroup, getGardenItems);
 
 type S = {
 	id: string;

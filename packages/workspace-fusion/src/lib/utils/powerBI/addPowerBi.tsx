@@ -2,7 +2,8 @@ import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
-import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
+import { WorkspaceTabNames, FusionMediator } from '../../types';
+import { PowerBiConfig } from '../../integrations/power-bi';
 
 export function addPowerBi<TData, TError>(
 	powerBiConfig: PowerBiConfig,

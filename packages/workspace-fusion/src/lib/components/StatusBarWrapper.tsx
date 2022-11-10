@@ -1,6 +1,7 @@
 import { StatusBar } from '@equinor/workspace-status-bar';
 
-import { FusionMediator, StatusBarConfig } from '../types';
+import { FusionMediator } from '../types';
+import { StatusBarConfig } from '../integrations/status-bar';
 import { useFilteredData } from '../hooks/useFilteredData';
 
 type StatusBarWrapperProps<TData> = {

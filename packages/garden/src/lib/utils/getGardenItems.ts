@@ -3,10 +3,6 @@ import { GardenItem } from '../types/gardenItem';
 
 type ColumnStates = 'No items' | 'No subgroups' | 'Not Expanded';
 
-export const isSubGroup = <T>(arg: GardenItem<T> | undefined): arg is GardenGroup<T> => {
-	return (arg as GardenGroup<T>).value !== undefined;
-};
-
 const getSubGroupItems = <T>(
 	column: GardenGroup<T>,
 	subGroupIndex: number,
