@@ -18,4 +18,4 @@ export type GetDescription<T> = (item: T | GardenItem<T>, controller: GardenCont
 export type GetItemColor<T> = (item: T, controller: GardenController<T>) => string;
 export type GetGroupDescription<T> = (item: T, groupingKey: string) => string;
 
-export type NodeLabelCallback<T> = (item: T, controller: GardenController<T>) => string;
+export type GetDisplayName<T> = (item: T, controller: GardenController<T>) => string;

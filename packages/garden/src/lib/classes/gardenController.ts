@@ -5,7 +5,7 @@ import {
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
-	NodeLabelCallback,
+	GetDisplayName,
 	OnClickEvents,
 	Visuals,
 	GardenConfig,
@@ -45,7 +45,7 @@ export class GardenController<
 	fieldSettings: FieldSettings<TData, string, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
-	nodeLabelCallback: NodeLabelCallback<TData>;
+	nodeLabelCallback: GetDisplayName<TData>;
 
 	/** Function that returns the primary(unique) identifier for the data type */
 	getIdentifier: GetIdentifier<TData>;
@@ -88,7 +88,7 @@ export class GardenController<
 
 	constructor(
 		{
-			getDisplayName: nodeLabelCallback,
+			getDisplayName,
 			getIdentifier,
 			initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
 			data,
@@ -102,7 +102,7 @@ export class GardenController<
 		context?: TContext
 	) {
 		this.getIdentifier = getIdentifier;
-		this.nodeLabelCallback = nodeLabelCallback;
+		this.nodeLabelCallback = getDisplayName;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};

@@ -3,7 +3,7 @@ import {
 	GroupingKeys,
 	FieldSettings,
 	OnClickEvents,
-	NodeLabelCallback as GetDisplayName,
+	GetDisplayName,
 	BaseRecordObject,
 	CustomVirtualViews,
 	Visuals,
