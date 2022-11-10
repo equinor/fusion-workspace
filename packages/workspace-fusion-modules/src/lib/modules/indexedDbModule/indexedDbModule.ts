@@ -1,4 +1,4 @@
-import { FusionMediator, FusionWorkspaceModule } from '@equinor/workspace-fusion';
+import { FusionMediator, FusionWorkspaceModule } from '@equinor/workspace-fusion/';
 import { FusionUserSettings } from './classes/fusionUserSettings';
 
 /**

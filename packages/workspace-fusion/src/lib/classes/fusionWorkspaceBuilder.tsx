@@ -1,20 +1,13 @@
-import { FilterOptions } from '@equinor/workspace-filter';
 import history from 'history/browser';
-import { GardenConfig } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {
-	GridConfig,
 	SidesheetConfig,
 	WorkspaceTabNames,
-	StatusBarConfig,
 	FusionMediator,
 	CustomTab,
 	AppConfig,
 	FusionWorkspaceModule,
-	DataSourceOptions,
-	PowerBiConfig,
-	FusionPowerBiConfig,
 	FusionWorkspaceError,
 } from '../types';
 import {
@@ -35,6 +28,12 @@ import { addPowerBi } from '../utils/powerBI/addPowerBi';
 import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 import { Action } from 'history';
+import { GardenConfig } from '../integrations/garden';
+import { FilterOptions } from '../integrations/filter';
+import { GridConfig } from '../integrations/grid';
+import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
+import { StatusBarConfig } from '../integrations/status-bar';
+import { DataSourceOptions } from '../integrations/data-source';
 
 export type WorkspaceContext = {
 	ui: unknown;

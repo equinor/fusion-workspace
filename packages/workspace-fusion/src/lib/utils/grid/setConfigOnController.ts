@@ -1,5 +1,5 @@
-import { GridController, ColDef } from '@equinor/workspace-ag-grid';
-import { FusionMediator, GridConfig } from '../../types';
+import { GridConfig, GridController, ColDef } from '../../integrations/grid';
+import { FusionMediator } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function setConfigOnController<TData extends Record<PropertyKey, unknown>>(

@@ -1,5 +1,5 @@
-import { GroupingKeys } from '@equinor/workspace-garden';
-import { ColumnState } from '@equinor/workspace-ag-grid';
+import { ColumnState } from '@equinor/workspace-fusion/grid';
+import { GroupingKeys } from '@equinor/workspace-fusion/garden';
 
 export type UserSettings<T> = {
 	garden: GardenViewState<T>;
