@@ -1,18 +1,6 @@
 {
 	"extends": "./tsconfig.json",
-	"exclude": [
-		"jest.config.ts",
-		"**/*.spec.ts",
-		"**/*.d.ts",
-		"**/*.test.ts",
-		"**/*.spec.tsx",
-		"**/*.test.tsx",
-		"**/*.spec.js",
-		"**/*.test.js",
-		"**/*.spec.jsx",
-		"**/*.test.jsx"
-	],
-	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+	"include": ["src"],
 	"references": [
 		{ "path": "../garden" },
 		{ "path": "../workspace-core" },
