@@ -81,13 +81,11 @@ function App() {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const mounted = useRef(false);
 	useEffect(() => {
-		let cleanup: () => void;
 		if (!mounted.current) {
-			cleanup = WorkOrderSidesheet({ el: ref.current as HTMLDivElement });
+			WorkOrderSidesheet({ el: ref.current as HTMLDivElement, props: {} });
 			mounted.current = true;
 			return;
 		}
-		return () => cleanup();
 	}, []);
 
 	return (
