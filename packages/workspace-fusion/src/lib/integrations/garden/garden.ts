@@ -18,7 +18,6 @@ import {
 	GardenItemWithDepth,
 	GetDescription,
 	GetItemColor,
-	GetGroupDescription,
 	GetIdentifier,
 	GetKeyFunction,
 	GetSortFunction,
@@ -36,12 +35,16 @@ import {
 	findNodeCallback,
 	getGardenItems,
 	isSubGroup,
+	GardenDataIntercepters,
+	PostGroupBySorting,
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
 export { getGardenItems, isSubGroup };
 /**Garden types */
 export type {
+	GardenDataIntercepters,
+	PostGroupBySorting,
 	CustomGroupView,
 	CustomHeaderView,
 	CustomItemView,
@@ -56,7 +59,6 @@ export type {
 	GardenItemWithDepth,
 	GetDescription,
 	GetItemColor,
-	GetGroupDescription,
 	GetIdentifier,
 	GetKeyFunction,
 	GetSortFunction,
@@ -77,10 +79,11 @@ export type {
 /** Override remove config types that is handled internally */
 type GardenConfig<
 	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = Omit<
-	OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+	OriginalGardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 	'data' | 'getIdentifier' | 'clickEvents'
 >;

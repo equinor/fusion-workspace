@@ -2,9 +2,9 @@ import React, { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenController } from '../classes';
 import { GardenGroup, GardenGroups } from '.';
 
-export interface CustomItemView<T> {
-	data: T;
-	controller: GardenController<T>;
+export interface CustomItemView<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> {
+	data: TData;
+	controller: Omit<GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>, 'destroy'>;
 	onClick: () => void;
 	columnExpanded: boolean;
 	isSelected: boolean;
@@ -15,13 +15,13 @@ export interface CustomItemView<T> {
 	width?: number;
 }
 
-export interface CustomGroupView<T> {
-	data: GardenGroup<T>;
+export interface CustomGroupView<TData> {
+	data: GardenGroup<TData>;
 	onClick: () => void;
-	onSelect?: (item: T) => void;
+	onSelect?: (item: TData) => void;
 	onGroupeSelect?: (item: any) => void;
 	columnExpanded: boolean;
-	groupByKeys: (keyof T | string)[];
+	groupByKeys: (keyof TData | string)[];
 }
 
 export interface CustomHeaderView<T> {
@@ -31,11 +31,19 @@ export interface CustomHeaderView<T> {
 	groupByKey?: string;
 }
 
-export interface CustomVirtualViews<T> {
-	customItemView?: MemoExoticComponent<(args: CustomItemView<T>) => JSX.Element>;
-	customGroupView?: MemoExoticComponent<(args: CustomGroupView<T>) => JSX.Element>;
-	customHeaderView?: MemoExoticComponent<(args: CustomHeaderView<T>) => JSX.Element>;
-	customGroupByView?: React.FC;
+export interface CustomVirtualViews<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> {
+	customItemView?: MemoExoticComponent<
+		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+	>;
+	customGroupView?: MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
+	customHeaderView?: MemoExoticComponent<(args: CustomHeaderView<TData>) => JSX.Element>;
+	customGroupByView?: (
+		props: CustomGroupViewProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+	) => JSX.Element;
 }
+
+type CustomGroupViewProps<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> = {
+	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+};
 
 export type PreGroupByFiltering<T = unknown> = (arr: T[], groupByKey: string) => T[];

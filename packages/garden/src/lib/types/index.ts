@@ -7,5 +7,5 @@ export * from './keys';
 export * from './callbacks';
 export * from './events';
 export * from './visuals';
-export * from './config';
+export type { GardenConfig, GardenDataIntercepters, PostGroupBySorting } from './config';
 export * from './customGeneric';

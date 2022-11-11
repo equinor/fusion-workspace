@@ -12,21 +12,31 @@ import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
+	TExtendedGardenFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
 	TError extends Record<PropertyKey, unknown>
 >(
-	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {
-	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>({
-		...gardenConfig,
-		data: [],
-		getIdentifier,
-	});
+	const gardenController = new GardenController<
+		TData,
+		TExtendedGardenFields,
+		TCustomGroupByKeys,
+		TCustomState,
+		TContext
+	>(
+		{
+			...gardenConfig,
+			data: [],
+			getIdentifier,
+		},
+		(destroy) => mediator.onUnMount(destroy)
+	);
 	configureDataChange(gardenController, mediator);
 	configureClickEvents(gardenController, mediator, getIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
@@ -38,6 +48,4 @@ export function addGarden<
 		TabIcon: GardenIcon,
 		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
 	});
-
-	mediator.onUnMount(gardenController.destroy);
 }

@@ -1,8 +1,8 @@
-import { ItemWidthCalculation, HighlightHorizontalColumn, GetDescription, GetItemColor, GetGroupDescription } from './';
+import { ItemWidthCalculation, HighlightHorizontalColumn, GetDescription, GetItemColor } from './';
 
-export interface Visuals<TData> {
+export interface Visuals<TData, TExtendedFields extends string, TCustomGroupByKeys> {
 	/**Function for calculating the longest width of a garden column */
-	calculateItemWidth: ItemWidthCalculation<TData>;
+	calculateItemWidth: ItemWidthCalculation<TData, TExtendedFields, TCustomGroupByKeys>;
 	/**
 	 * Height of a single garden item
 	 * Necessary for virtualization to work.
@@ -13,7 +13,7 @@ export interface Visuals<TData> {
 	 * Function for highlighting a single garden header
 	 * I.E highlight the current week number
 	 */
-	highlightHorizontalColumn?: HighlightHorizontalColumn;
+	highlightHorizontalColumn?: HighlightHorizontalColumn<TData, TExtendedFields, TCustomGroupByKeys>;
 	/**
 	 * Specifies whether the garden groups should by closed by default
 	 * If true, groups are closed by default
@@ -23,6 +23,4 @@ export interface Visuals<TData> {
 	getDescription?: GetDescription<TData>;
 	/** Function that returns the color of the item to be displayed */
 	getItemColor?: GetItemColor<TData>;
-	/** Returns a description for a garden group */
-	getGroupDescription?: GetGroupDescription<TData>;
 }

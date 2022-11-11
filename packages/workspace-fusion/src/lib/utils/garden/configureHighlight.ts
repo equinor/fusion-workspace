@@ -2,8 +2,14 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../types';
 
 /** Configures gardencontroller to highlight nodes when mediator selection changes */
-export function configureGardenHighlightSelection<TData, TCustomGroupByKeys, TCustomState, TContext>(
-	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
+export function configureGardenHighlightSelection<
+	TData,
+	TExtendedFields extends string,
+	TCustomGroupByKeys,
+	TCustomState,
+	TContext
+>(
+	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionMediator<TData>
 ) {
 	mediator.selectionService.selectedNodes$.subscribe((val) => {

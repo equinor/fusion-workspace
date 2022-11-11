@@ -3,8 +3,8 @@ import { FusionMediator } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
 
 /** Adds clickevents from mediator on garden controller  */
-export function configureClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>(
-	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
+export function configureClickEvents<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext>(
+	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 	{ selectionService, clickService }: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>
 ) {

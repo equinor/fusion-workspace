@@ -12,18 +12,22 @@ import { Icon } from '@equinor/eds-core-react';
 import { useSelected } from '../../hooks/useSelected';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
-type PackageContainerProps<T> = {
+type PackageContainerProps<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> = {
 	virtualColumn: VirtualItem;
 	rowVirtualizer: VirtualHookReturn;
-	items: GardenItem<T>[] | null;
-	packageChild?: React.MemoExoticComponent<(args: CustomItemView<T>) => JSX.Element>;
-	customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<T>) => JSX.Element>;
+	items: GardenItem<TData>[] | null;
+	packageChild?: React.MemoExoticComponent<
+		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+	>;
+	customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
 	handleExpand: any;
 	itemWidth?: number;
-	handleOnClick: (item: T) => void;
+	handleOnClick: (item: TData) => void;
 	parentRef: MutableRefObject<HTMLDivElement | null>;
 };
-export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.Element => {
+export const GardenItemContainer = <TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext>(
+	props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+): JSX.Element => {
 	const {
 		rowVirtualizer,
 		virtualColumn,
@@ -71,7 +75,7 @@ export const GardenItemContainer = <T,>(props: PackageContainerProps<T>): JSX.El
 							CustomSubGroup ? (
 								<CustomSubGroup
 									columnExpanded={item.isExpanded}
-									data={item as GardenGroup<T>}
+									data={item as GardenGroup<TData>}
 									onClick={() => handleExpand(item)}
 									onSelect={(item) => onClickItem && onClickItem(item, controller)}
 									onGroupeSelect={(group) => onClickGroup && onClickGroup(group, controller)}
