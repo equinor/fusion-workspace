@@ -1,11 +1,15 @@
 import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-type GroupByArgs<TData, TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>> = {
+type GroupByArgs<
+	TData,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+> = {
 	arr: TData[];
-	keys: string[];
+	keys: (keyof TData | TExtendedFields)[];
 	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
-	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	isExpanded?: boolean;
 	preGroupFiltering: PreGroupByFiltering<TData>;
 	customGroupByKeys?: TCustomGroupByKeys;
@@ -18,6 +22,7 @@ const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> 
 
 export function groupBy<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
 >({
 	arr,
@@ -28,7 +33,7 @@ export function groupBy<
 	isExpanded,
 	preGroupFiltering,
 	depth,
-}: GroupByArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
+}: GroupByArgs<TData, TExtendedFields, TCustomGroupByKeys>): GardenGroups<TData> {
 	const key = (keys[0] && keys[0].toString()) || undefined;
 	if (!key) return [];
 	if (!arr || arr.length === 0) return [];
@@ -42,7 +47,7 @@ export function groupBy<
 		gardengroups = groupByArray({
 			arr: arr,
 			preGroupFiltering: preGroupFiltering,
-			key: key,
+			key: key as keyof TData | TExtendedFields,
 			fieldSettings: fieldSettings,
 			isExpanded: depth === 0 ? true : isExpanded,
 		});
@@ -108,17 +113,19 @@ export function groupBy<
 
 type GroupByArrayArgs<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
 > = {
 	arr: TData[];
-	key: keyof TData | string;
+	key: keyof TData | TExtendedFields;
 	preGroupFiltering: (arr: TData[], groupByKey: string) => TData[];
-	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	isExpanded?: boolean;
 };
 
 function groupByArray<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
 >({
 	arr,
@@ -126,7 +133,7 @@ function groupByArray<
 	preGroupFiltering,
 	fieldSettings,
 	isExpanded,
-}: GroupByArrayArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
+}: GroupByArrayArgs<TData, TExtendedFields, TCustomGroupByKeys>): GardenGroups<TData> {
 	const fieldSetting = fieldSettings?.[key];
 	const childKey = fieldSetting?.key;
 

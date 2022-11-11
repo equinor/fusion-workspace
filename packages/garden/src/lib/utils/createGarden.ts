@@ -4,9 +4,10 @@ import { groupBy } from '../utils/groupBy';
 
 export function createGarden<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TContext = unknown
->(props: GardenController<TData, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
+>(props: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const {
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
@@ -25,7 +26,7 @@ export function createGarden<
 
 	const groupedData = groupBy({
 		arr: data,
-		keys: allGroupingKeys,
+		keys: allGroupingKeys as (TExtendedFields | keyof TData)[],
 		groupDescriptionFunc: visuals?.getGroupDescription,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,

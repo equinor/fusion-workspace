@@ -136,13 +136,14 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGarden = <
+		TExtendedFields extends string = string,
 		TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 	>(
-		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
+		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
 			config,
 			this.viewController,
 			this.mediator,
