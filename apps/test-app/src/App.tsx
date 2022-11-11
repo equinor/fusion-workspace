@@ -100,6 +100,7 @@ const Workspace = createFusionWorkspace<S>({ appKey: 'Handover', getIdentifier: 
 		.addGarden<ExtendedFields, CustomGroupByKeys, CustomState>({
 			getDisplayName: (s) => s.age.toString(),
 			initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
+
 			customViews: {
 				customGroupByView: (s) => {
 					return <div></div>;

@@ -99,10 +99,15 @@ export class GardenController<
 			getCustomState,
 			customViews,
 			visuals,
+			intercepters,
 		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 		getDestructor: (destroy: () => void) => void,
 		context?: TContext
 	) {
+		if (intercepters?.postGroupSorting) {
+			this.postGroupSorting = intercepters.postGroupSorting;
+		}
+
 		this.getIdentifier = getIdentifier;
 		this.nodeLabelCallback = getDisplayName;
 		this.data.value = data;
@@ -162,7 +167,12 @@ export class GardenController<
 	 * Function for grouping data.
 	 */
 	groupData = () => {
-		this.groups.setValue(this.postGroupSorting(createGarden(this)));
+		this.groups.setValue(
+			this.postGroupSorting(createGarden(this), [
+				this.grouping.value.horizontalGroupingAccessor as keyof TData,
+				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
+			])
+		);
 	};
 
 	/**
@@ -174,7 +184,8 @@ export class GardenController<
 	};
 
 	/** Function for sorting groups after they have been grouped */
-	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
+	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | ExtendedFields)[]): GardenGroups<TData> =>
+		groups;
 
 	#destroy = () => {
 		for (const key in this) {

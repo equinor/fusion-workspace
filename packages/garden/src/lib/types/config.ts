@@ -7,6 +7,7 @@ import {
 	BaseRecordObject,
 	CustomVirtualViews,
 	Visuals,
+	GardenGroups,
 } from './';
 
 export type GardenConfig<
@@ -55,4 +56,14 @@ export type GardenConfig<
 	 * ```
 	 */
 	getCustomState?: (data: TData[]) => TCustomState;
+	intercepters?: GardenDataIntercepters<TData, TExtendedFields>;
+};
+
+export type PostGroupBySorting<T, TExtendedFields extends string> = (
+	data: GardenGroups<T>,
+	keys: (keyof T | TExtendedFields)[]
+) => GardenGroups<T>;
+
+export type GardenDataIntercepters<T, TExtendedFields extends string> = {
+	postGroupSorting?: PostGroupBySorting<T, TExtendedFields>;
 };
