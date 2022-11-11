@@ -27,7 +27,6 @@ export function createGarden<
 	const groupedData = groupBy({
 		arr: data,
 		keys: allGroupingKeys as (TExtendedFields | keyof TData)[],
-		groupDescriptionFunc: visuals?.getGroupDescription,
 		fieldSettings: fieldSettings,
 		isExpanded: visuals?.collapseSubGroupsByDefault,
 		customGroupByKeys: customGroupByKeys?.value,

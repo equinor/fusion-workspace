@@ -37,7 +37,13 @@ export interface CustomVirtualViews<TData, TExtendedFields extends string, TCust
 	>;
 	customGroupView?: MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
 	customHeaderView?: MemoExoticComponent<(args: CustomHeaderView<TData>) => JSX.Element>;
-	customGroupByView?: React.FC;
+	customGroupByView?: (
+		props: CustomGroupViewProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+	) => JSX.Element;
 }
+
+type CustomGroupViewProps<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> = {
+	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+};
 
 export type PreGroupByFiltering<T = unknown> = (arr: T[], groupByKey: string) => T[];

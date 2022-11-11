@@ -58,7 +58,7 @@ export class GardenController<
 	};
 
 	/** Override visuals and components for garden */
-	visuals: Visuals<TData, TCustomGroupByKeys> = {
+	visuals: Visuals<TData, ExtendedFields, TCustomGroupByKeys> = {
 		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
 		getDescription: () => '',

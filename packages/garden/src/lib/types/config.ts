@@ -35,14 +35,14 @@ export type GardenConfig<
 	/** The keys used for grouping when the garden loads initially */
 	initialGrouping: GroupingKeys<TData>;
 	/** The available keys to be used for grouping */
-	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
 	clickEvents?: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 	/** Replace built-in components with your own */
 	customViews?: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 	/** Visual details */
-	visuals?: Visuals<TData, TExtendedFields>;
+	visuals?: Visuals<TData, TExtendedFields, TCustomGroupByKeys>;
 	/** Function for calculating custom state
 	 *
 	 * Will re-run everytime data changes

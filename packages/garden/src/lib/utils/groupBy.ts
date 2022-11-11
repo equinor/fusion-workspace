@@ -8,7 +8,6 @@ type GroupByArgs<
 > = {
 	arr: TData[];
 	keys: (keyof TData | TExtendedFields)[];
-	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
 	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	isExpanded?: boolean;
 	preGroupFiltering: PreGroupByFiltering<TData>;
@@ -29,7 +28,6 @@ export function groupBy<
 	keys,
 	customGroupByKeys,
 	fieldSettings,
-	groupDescriptionFunc = () => '',
 	isExpanded,
 	preGroupFiltering,
 	depth,
@@ -74,7 +72,6 @@ export function groupBy<
 						isExpanded: Boolean(depth === 0 ? true : isExpanded),
 						items: [item],
 						subGroups: [],
-						description: groupDescriptionFunc(item, key),
 						subGroupCount: 0,
 						depth: depth,
 					});
@@ -93,7 +90,6 @@ export function groupBy<
 		gardengroups[index].subGroups = groupBy({
 			arr: gardengroups[index].items,
 			keys: nextKeys,
-			groupDescriptionFunc: groupDescriptionFunc,
 			fieldSettings: fieldSettings,
 			isExpanded: isExpanded,
 			customGroupByKeys: customGroupByKeys,
