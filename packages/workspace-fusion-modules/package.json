@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-fusion-modules",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -19,8 +19,8 @@
 		"@equinor/eds-core-react": "0.26.0",
 		"@equinor/eds-tokens": "0.9.0",
 		"@equinor/workspace-ag-grid": "workspace:^0.0.7",
-		"@equinor/workspace-fusion": "workspace:^0.3.1",
-		"@equinor/workspace-garden": "workspace:^0.1.2",
+		"@equinor/workspace-fusion": "workspace:^0.3.2",
+		"@equinor/workspace-garden": "workspace:^0.1.3",
 		"history": "^5.3.0",
 		"idb": "^7.1.1"
 	},
