@@ -4,8 +4,8 @@ import { GardenGroup, GardenGroups } from '.';
 
 export interface CustomItemView<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
@@ -39,8 +39,8 @@ export interface CustomHeaderView<TData extends Record<PropertyKey, unknown>> {
 
 export interface CustomVirtualViews<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
@@ -56,8 +56,8 @@ export interface CustomVirtualViews<
 
 export type CustomGroupViewProps<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {

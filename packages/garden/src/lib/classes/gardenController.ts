@@ -27,7 +27,7 @@ const NullFunc = () => void 0;
 export class GardenController<
 	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {

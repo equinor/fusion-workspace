@@ -7,14 +7,14 @@ import { BaseRecordObject, GardenGroups, GardenItem } from '.';
  */
 export type ItemWidthCalculation<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 > = (garden: GardenGroups<TData>, key: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => number;
 
 export type HighlightHorizontalColumn<
 	TData extends Record<PropertyKey, unknown>,
-	ExtendedFields extends string = string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 > = (groupBy: keyof TData | ExtendedFields, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
 
 export type GetDescription<TData extends Record<PropertyKey, unknown>> = (item: TData | GardenItem<TData>) => string;

@@ -3,8 +3,8 @@ import { PreGroupByFiltering } from '../types';
 
 type GroupByArgs<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 > = {
 	arr: TData[];
 	keys: (keyof TData | TExtendedFields)[];
@@ -24,8 +24,8 @@ const lookupGroup = <T extends Record<PropertyKey, unknown>>(
 
 export function groupBy<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 >({
 	arr,
 	keys,
@@ -112,8 +112,8 @@ export function groupBy<
 
 type GroupByArrayArgs<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 > = {
 	arr: TData[];
 	key: keyof TData | TExtendedFields;

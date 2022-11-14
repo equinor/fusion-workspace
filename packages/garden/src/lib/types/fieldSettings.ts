@@ -1,14 +1,14 @@
 export type GetSortFunction = (a: string, b: string) => number;
 export type GetKeyFunction<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = (item: TData, itemKey: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
 
 export type FieldSetting<
 	ItemType extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
 	key?: keyof ItemType | string;
 	label?: string;
@@ -27,6 +27,6 @@ export type FieldSetting<
  */
 export type FieldSettings<
 	ItemType extends Record<PropertyKey, unknown>,
-	ExtendedFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, ExtendedFields, TCustomGroupByKeys>>>;

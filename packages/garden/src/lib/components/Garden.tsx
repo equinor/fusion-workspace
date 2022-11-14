@@ -8,7 +8,7 @@ import { chevron_down, chevron_up } from '@equinor/eds-icons';
 interface GardenProps<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
@@ -19,8 +19,8 @@ Icon.add({ chevron_down, chevron_up });
 
 export function Garden<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {

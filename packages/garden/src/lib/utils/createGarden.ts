@@ -4,8 +4,8 @@ import { groupBy } from '../utils/groupBy';
 
 export function createGarden<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TContext = unknown
 >(props: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const {

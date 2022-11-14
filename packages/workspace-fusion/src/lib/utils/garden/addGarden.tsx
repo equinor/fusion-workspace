@@ -12,8 +12,8 @@ import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedGardenFields extends string = string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TExtendedGardenFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
