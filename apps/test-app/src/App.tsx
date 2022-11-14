@@ -78,19 +78,9 @@ type S = {
 };
 
 function App() {
-	const ref = useRef<HTMLDivElement | null>(null);
-	const mounted = useRef(false);
-	useEffect(() => {
-		if (!mounted.current) {
-			WorkOrderSidesheet({ el: ref.current as HTMLDivElement, props: {} });
-			mounted.current = true;
-			return;
-		}
-	}, []);
-
 	return (
 		<div className="App" style={{ height: '100vh' }}>
-			<div ref={ref}></div>
+			<WorkOrderSidesheet woId="123" />
 		</div>
 	);
 }

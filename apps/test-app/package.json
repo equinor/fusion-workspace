@@ -12,6 +12,7 @@
 		"@equinor/eds-core-react": "^0.26.0",
 		"@equinor/workspace-ag-grid": "workspace:^0.0.7",
 		"@equinor/workspace-fusion": "workspace:0.3.0",
+		"@equinor/workspace-sidesheet": "workspace:^0.0.6",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",

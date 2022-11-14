@@ -1,7 +1,7 @@
 import { Button } from '@equinor/eds-core-react';
-import { createWidget } from './createSidesheet';
+import { createWidget, useResizeContext } from '@equinor/workspace-sidesheet';
 
-export const ScopeChangeSidesheet = createWidget(({ replace, props }) => {
+export const { Component: ScopeChangeSidesheet, render } = createWidget(({ replace, props }) => {
 	console.log('Scope change props', props);
 	return (
 		<div>
@@ -9,10 +9,10 @@ export const ScopeChangeSidesheet = createWidget(({ replace, props }) => {
 			<Button
 				onClick={() =>
 					replace(async (el, replace) => {
-						const cleanup = (await import('./HandoverSidesheet')).HandoverSidesheet({
+						const cleanup = (await import('./HandoverSidesheet')).render({
 							el: el,
 							replace,
-							props: { id: 123 },
+							props: { id: '123' },
 						});
 						return cleanup;
 					})
@@ -23,3 +23,5 @@ export const ScopeChangeSidesheet = createWidget(({ replace, props }) => {
 		</div>
 	);
 });
+
+export default render;

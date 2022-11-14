@@ -54,6 +54,7 @@ importers:
       '@equinor/eds-core-react': ^0.26.0
       '@equinor/workspace-ag-grid': workspace:^0.0.7
       '@equinor/workspace-fusion': workspace:0.3.0
+      '@equinor/workspace-sidesheet': workspace:^0.0.6
       '@types/react': ^18.0.25
       '@types/react-dom': ^18.0.8
       '@types/sortablejs': ^1.15.0
@@ -68,6 +69,7 @@ importers:
       '@equinor/eds-core-react': 0.26.0_2zx2umvpluuhvlq44va5bta2da
       '@equinor/workspace-ag-grid': link:../../packages/ag-grid
       '@equinor/workspace-fusion': link:../../packages/workspace-fusion
+      '@equinor/workspace-sidesheet': link:../../packages/sidesheet
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
@@ -234,15 +236,19 @@ importers:
       '@equinor/eds-icons': ^0.15.0
       '@equinor/eds-tokens': ^0.9.0
       '@types/jest': 27.4.1
+      '@types/react': '>= 16.8.0'
+      re-resizable: ^6.9.9
       react: ^18.2.0
       react-dom: ^18.2.0
       react-is: ^18.2.0
     dependencies:
-      '@equinor/eds-core-react': 0.26.0_biqbaboplfbrettd7655fr4n2y
+      '@equinor/eds-core-react': 0.26.0_2zx2umvpluuhvlq44va5bta2da
       '@equinor/eds-icons': 0.15.0
       '@equinor/eds-tokens': 0.9.0
+      re-resizable: 6.9.9_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@types/jest': 27.4.1
+      '@types/react': 18.0.25
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
