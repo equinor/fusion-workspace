@@ -1,7 +1,7 @@
 import {
 	CustomVirtualViews,
 	FieldSettings,
-	findNodeCallback,
+	FindNodeCallback,
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
@@ -178,7 +178,7 @@ export class GardenController<
 	/**
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
-	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
+	setHighlightedNode = (nodeIdOrCallback: (string | null) | FindNodeCallback<TData>) => {
 		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
 		this.selectedNodes.setValue(val ? [val] : []);
 	};

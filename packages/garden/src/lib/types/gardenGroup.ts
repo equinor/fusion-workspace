@@ -1,4 +1,4 @@
-export type GardenGroup<TData> = {
+export type GardenGroup<TData extends Record<PropertyKey, unknown>> = {
 	groupKey: keyof TData;
 	value: string;
 	subGroups: GardenGroups<TData>;
@@ -10,7 +10,7 @@ export type GardenGroup<TData> = {
 	depth: number;
 };
 
-export type GardenGroups<TData> = GardenGroup<TData>[];
+export type GardenGroups<TData extends Record<PropertyKey, unknown>> = GardenGroup<TData>[];
 
 export interface GroupDescriptionFunc<TData> {
 	(data: TData, groupingKey: string): string;

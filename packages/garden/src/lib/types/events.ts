@@ -4,8 +4,8 @@ import { BaseRecordObject } from '.';
 
 /** Function signature for clicking an item */
 export type OnClickItem<
-	TData,
-	TExtendedFields extends string,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
@@ -15,8 +15,8 @@ export type OnClickItem<
 ) => void;
 /** Function signature for clicking a group containing children in the garden */
 export type OnClickGroup<
-	TData,
-	TExtendedFields extends string,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = Record<string, unknown>,
 	TContext = unknown
@@ -27,8 +27,8 @@ export type OnClickGroup<
 
 /**Onclick events for garden */
 export interface OnClickEvents<
-	TData,
-	TExtendedFields extends string,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown

@@ -11,11 +11,11 @@ import {
 } from './';
 
 export type GardenConfig<
-	TData,
-	TExtendedFields extends string,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
 	/** Data to be used for the garden */
 	data: TData[];
@@ -59,11 +59,14 @@ export type GardenConfig<
 	intercepters?: GardenDataIntercepters<TData, TExtendedFields>;
 };
 
-export type PostGroupBySorting<T, TExtendedFields extends string> = (
-	data: GardenGroups<T>,
-	keys: (keyof T | TExtendedFields)[]
-) => GardenGroups<T>;
+export type PostGroupBySorting<TData extends Record<PropertyKey, unknown>, TExtendedFields extends string = string> = (
+	data: GardenGroups<TData>,
+	keys: (keyof TData | TExtendedFields)[]
+) => GardenGroups<TData>;
 
-export type GardenDataIntercepters<T, TExtendedFields extends string> = {
-	postGroupSorting?: PostGroupBySorting<T, TExtendedFields>;
+export type GardenDataIntercepters<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string
+> = {
+	postGroupSorting?: PostGroupBySorting<TData, TExtendedFields>;
 };

@@ -12,11 +12,11 @@ import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedGardenFields extends string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TError extends Record<PropertyKey, unknown>
+	TExtendedGardenFields extends string = string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,

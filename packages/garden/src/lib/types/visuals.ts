@@ -1,6 +1,10 @@
 import { ItemWidthCalculation, HighlightHorizontalColumn, GetDescription, GetItemColor } from './';
 
-export interface Visuals<TData, TExtendedFields extends string, TCustomGroupByKeys> {
+export interface Visuals<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> {
 	/**Function for calculating the longest width of a garden column */
 	calculateItemWidth: ItemWidthCalculation<TData, TExtendedFields, TCustomGroupByKeys>;
 	/**

@@ -32,10 +32,11 @@ import {
 	OnClickItem,
 	PreGroupByFiltering,
 	Visuals,
-	findNodeCallback,
+	FindNodeCallback,
 	getGardenItems,
 	isSubGroup,
 	GardenDataIntercepters,
+	CustomGroupViewProps,
 	PostGroupBySorting,
 } from '@equinor/workspace-garden';
 
@@ -43,6 +44,7 @@ import {
 export { getGardenItems, isSubGroup };
 /**Garden types */
 export type {
+	CustomGroupViewProps,
 	GardenDataIntercepters,
 	PostGroupBySorting,
 	CustomGroupView,
@@ -73,13 +75,13 @@ export type {
 	OnClickItem,
 	PreGroupByFiltering,
 	Visuals,
-	findNodeCallback,
+	FindNodeCallback as findNodeCallback,
 };
 
 /** Override remove config types that is handled internally */
 type GardenConfig<
 	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
+	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
