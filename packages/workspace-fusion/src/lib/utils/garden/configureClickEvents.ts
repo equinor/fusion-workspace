@@ -6,9 +6,9 @@ import { GetIdentifier } from '../createFusionWorkspace';
 export function configureClickEvents<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys,
-	TCustomState,
-	TContext
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 	{ selectionService, clickService }: FusionMediator<TData>,

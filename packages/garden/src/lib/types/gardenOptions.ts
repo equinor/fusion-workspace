@@ -3,7 +3,7 @@ import { GardenController } from '../classes';
 import { GardenGroup, GardenGroups } from '.';
 
 export interface CustomItemView<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
@@ -38,7 +38,7 @@ export interface CustomHeaderView<TData extends Record<PropertyKey, unknown>> {
 }
 
 export interface CustomVirtualViews<
-	TData extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,

@@ -4,7 +4,7 @@ import { StatusBarWrapper } from '../../components';
 import { FusionMediator, WorkspaceTabNames } from '../../types';
 import { StatusBarConfig } from '../../integrations/status-bar';
 
-export function addStatusBar<TData, TError>(
+export function addStatusBar<TData extends Record<PropertyKey, unknown>, TError>(
 	config: StatusBarConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>

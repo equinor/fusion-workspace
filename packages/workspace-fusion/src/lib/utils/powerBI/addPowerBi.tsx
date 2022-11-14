@@ -5,7 +5,7 @@ import { PowerBiIcon } from '../../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator } from '../../types';
 import { PowerBiConfig } from '../../integrations/power-bi';
 
-export function addPowerBi<TData, TError>(
+export function addPowerBi<TData extends Record<PropertyKey, unknown>, TError>(
 	powerBiConfig: PowerBiConfig,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>

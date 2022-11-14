@@ -4,7 +4,7 @@ import { SidesheetWrapper } from '../../components';
 import { FusionMediator, SidesheetConfig, WorkspaceTabNames } from '../../types';
 
 /** TODO: Review this and either expand context or expand baseclass. Sidesheet state is shared directly between two controllers! */
-export function addSidesheet<TData, TError>(
+export function addSidesheet<TData extends Record<PropertyKey, unknown>, TError>(
 	config: SidesheetConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>
@@ -19,7 +19,10 @@ export function addSidesheet<TData, TError>(
 	sidesheetConfig<TData>(new SidesheetController(), mediator);
 }
 
-function sidesheetConfig<TData>(sc: SidesheetController<TData, unknown>, mediator: FusionMediator<TData>) {
+function sidesheetConfig<TData extends Record<PropertyKey, unknown>>(
+	sc: SidesheetController<TData, unknown>,
+	mediator: FusionMediator<TData>
+) {
 	mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
 
 	mediator.clickService.click$.subscribe((ev) => {

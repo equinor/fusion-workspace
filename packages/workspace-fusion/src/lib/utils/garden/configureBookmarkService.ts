@@ -5,9 +5,9 @@ import { FusionMediator, GardenBookmark } from '../../types';
 export function configureBookmarkService<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys,
-	TCustomState,
-	TContext
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
 	mediator: FusionMediator<TData>
@@ -23,9 +23,9 @@ export function configureBookmarkService<
 function applyFusionBookmark<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys,
-	TCustomState,
-	TContext
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
 >(
 	bookmark: GardenBookmark<TData>,
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
@@ -38,9 +38,9 @@ function applyFusionBookmark<
 function captureGardenBookmark<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys,
-	TCustomState,
-	TContext
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
 ): GardenBookmark<TData> {

@@ -12,10 +12,14 @@ export function useGardenGroups() {
 		},
 	} = controller;
 
-	const [groups, setGroups] = useState<GardenGroups<unknown>>(controller.groups.value);
+	const [groups, setGroups] = useState<GardenGroups<Record<PropertyKey, unknown>>>(
+		controller.groups.value as GardenGroups<Record<PropertyKey, unknown>>
+	);
 
 	useEffect(() => {
-		const unsubscribe = controller.groups.onChange(setGroups);
+		const unsubscribe = controller.groups.onChange((val) =>
+			setGroups(val as GardenGroups<Record<PropertyKey, unknown>>)
+		);
 		return unsubscribe;
 	}, []);
 

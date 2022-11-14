@@ -1,6 +1,6 @@
 import { GardenGroup, GardenGroups } from '../types';
 
-const getSubGroupCounts = <T>(subGroup: GardenGroup<T>): number => {
+const getSubGroupCounts = <T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): number => {
 	let count = subGroup.subGroups.length;
 	/** If subgroup is not expanded - we only want the number of group headers. Don't care about items. */
 	if (!subGroup?.isExpanded) {
@@ -17,7 +17,7 @@ const getSubGroupCounts = <T>(subGroup: GardenGroup<T>): number => {
 
 	return count;
 };
-const getGardenRowCountPerColumn = <T>(gardenColumn: GardenGroup<T>): number => {
+const getGardenRowCountPerColumn = <T extends Record<PropertyKey, unknown>>(gardenColumn: GardenGroup<T>): number => {
 	let count = gardenColumn.subGroups.length;
 	gardenColumn.subGroups.forEach((_, index) => {
 		const subGroup = gardenColumn.subGroups[index];
@@ -26,7 +26,7 @@ const getGardenRowCountPerColumn = <T>(gardenColumn: GardenGroup<T>): number => 
 
 	return count;
 };
-export const getRowCount = <T>(garden: GardenGroups<T>): number => {
+export const getRowCount = <T extends Record<PropertyKey, unknown>>(garden: GardenGroups<T>): number => {
 	let count = 0;
 	// If garden is not grouped, then all garden items will have subgroupcount equal to zero
 	// So we can just check first item and then return.

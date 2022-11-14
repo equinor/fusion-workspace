@@ -8,7 +8,7 @@ export type OnClickItem<
 	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = (
 	item: TData,
 	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
@@ -19,7 +19,7 @@ export type OnClickGroup<
 	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = Record<string, unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = (
 	item: GardenGroup<TData>,
 	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
@@ -31,7 +31,7 @@ export interface OnClickEvents<
 	TExtendedFields extends string = string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	/** Fires when an item is clicked */
 	onClickItem?: OnClickItem<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;

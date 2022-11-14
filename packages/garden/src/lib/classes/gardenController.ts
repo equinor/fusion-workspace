@@ -25,11 +25,11 @@ const NullFunc = () => void 0;
  * @typeParam Custom user context, store anything here
  */
 export class GardenController<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);

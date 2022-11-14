@@ -3,7 +3,7 @@ import { BaseRecordObject, GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
 export function createGarden<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TContext = unknown
