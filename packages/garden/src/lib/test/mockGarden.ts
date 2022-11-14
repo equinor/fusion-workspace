@@ -5,10 +5,10 @@ export type MockInterface = {
 	name: string;
 };
 
-export const defaultGardenConfig: GardenConfig<MockInterface, any, any, unknown> = {
+export const defaultGardenConfig: GardenConfig<MockInterface, any, any, any, unknown> = {
 	data: [],
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-	nodeLabelCallback: (s) => s.name,
+	getDisplayName: (s) => s.name,
 	getIdentifier: (s) => s.id,
 	clickEvents: {},
 	customGroupByKeys: {},

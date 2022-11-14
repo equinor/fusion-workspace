@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-data-source",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -16,12 +16,15 @@
 		"dist"
 	],
 	"dependencies": {
-		"@equinor/workspace-core": "workspace:^0.0.5"
+		"@equinor/workspace-core": "workspace:^0.0.6"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/equinor/fusion-workspace.git",
 		"directory": "packages/data-source"
 	},
-	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
+	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4",
+	"devDependencies": {
+		"@types/jest": "27.4.1"
+	}
 }

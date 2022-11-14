@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-filter",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -32,6 +32,8 @@
 	"devDependencies": {
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
+		"@types/jest": "27.4.1",
+		"@types/sortablejs": "1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0"

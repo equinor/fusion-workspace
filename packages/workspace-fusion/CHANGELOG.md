@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.3.0...@equinor/workspace-fusion@0.3.1) (2022-11-11)
+
+**Note:** Version bump only for package @equinor/workspace-fusion
+
+## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.2.0...@equinor/workspace-fusion@0.3.0) (2022-11-10)
+
+### Features
+
+-   :children_crossing: return component directly ([#168](https://github.com/equinor/fusion-workspace/issues/168)) ([de242d4](https://github.com/equinor/fusion-workspace/commit/de242d47955cc9ad1de43cd5f4708178307d2a96))
+
+### Reverts
+
+-   :rewind: revert mistake merge ([04c43c7](https://github.com/equinor/fusion-workspace/commit/04c43c79b1182837d59338f098d4ea1556a9219b))
+
+## [0.2.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.1.11...@equinor/workspace-fusion@0.2.0) (2022-11-10)
+
+### Features
+
+-   :sparkles: export integration types from workspace-fusion ([#165](https://github.com/equinor/fusion-workspace/issues/165)) ([9fe9389](https://github.com/equinor/fusion-workspace/commit/9fe9389a0b6ead5393ada9c8218383e7f3407440))
+
 ## [0.1.11](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.1.10...@equinor/workspace-fusion@0.1.11) (2022-11-09)
 
 **Note:** Version bump only for package @equinor/workspace-fusion

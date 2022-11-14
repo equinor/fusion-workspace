@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-fusion",
-	"version": "0.1.11",
+	"version": "0.3.1",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -15,19 +15,53 @@
 	"files": [
 		"dist"
 	],
+	"typesVersions": {
+		">=4.2": {
+			".": [
+				"dist/types/index"
+			],
+			"garden": [
+				"dist/types/lib/integrations/garden/index"
+			],
+			"grid": [
+				"dist/types/lib/integrations/grid/index"
+			],
+			"power-bi": [
+				"dist/types/lib/integrations/power-bi/index"
+			],
+			"filter": [
+				"dist/types/lib/integrations/filter/index"
+			],
+			"status-bar": [
+				"dist/types/lib/integrations/status-bar/index"
+			],
+			"data-source": [
+				"dist/types/lib/integrations/data-source/index"
+			]
+		}
+	},
+	"exports": {
+		".": "./dist/esm/index.js",
+		"./garden": "./dist/esm/lib/integrations/garden/index.js",
+		"./filter": "./dist/esm/lib/integrations/filter/index.js",
+		"./status-bar": "./dist/esm/lib/integrations/status-bar/index.js",
+		"./power-bi": "./dist/esm/lib/integrations/power-bi/index.js",
+		"./grid": "./dist/esm/lib/integrations/grid/index.js",
+		"./data-source": "./dist/esm/lib/integrations/data-source/index.js"
+	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
 		"@equinor/eds-tokens": "0.9.0",
 		"@equinor/fusion-framework": "^4.3.1",
-		"@equinor/workspace-ag-grid": "workspace:^0.0.6",
-		"@equinor/workspace-data-source": "workspace:^0.0.6",
-		"@equinor/workspace-filter": "workspace:^0.0.6",
-		"@equinor/workspace-garden": "workspace:^0.0.7",
-		"@equinor/workspace-powerbi": "workspace:^0.0.5",
-		"@equinor/workspace-react": "workspace:^0.0.7",
-		"@equinor/workspace-sidesheet": "workspace:^0.0.5",
-		"@equinor/workspace-status-bar": "workspace:^0.0.6",
+		"@equinor/workspace-ag-grid": "workspace:^0.0.7",
+		"@equinor/workspace-data-source": "workspace:^0.0.7",
+		"@equinor/workspace-filter": "workspace:^0.0.7",
+		"@equinor/workspace-garden": "workspace:^0.1.2",
+		"@equinor/workspace-powerbi": "workspace:^0.0.6",
+		"@equinor/workspace-react": "workspace:^0.0.8",
+		"@equinor/workspace-sidesheet": "workspace:^0.0.6",
+		"@equinor/workspace-status-bar": "workspace:^0.0.7",
 		"history": "^5.3.0",
 		"styled-components": "^5.3.6"
 	},
@@ -37,6 +71,7 @@
 		"react-is": ">= 16.8.0"
 	},
 	"devDependencies": {
+		"@types/jest": "27.4.1",
 		"@types/styled-components": "^5.1.26",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

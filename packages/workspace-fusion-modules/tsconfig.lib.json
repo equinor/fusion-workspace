@@ -1,6 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["**/*.ts"],
-	"exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.d.ts", "**/*.test.ts"],
+	"include": ["src"],
 	"references": [{ "path": "../workspace-fusion" }]
 }

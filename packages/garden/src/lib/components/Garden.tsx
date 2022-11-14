@@ -7,21 +7,23 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 interface GardenProps<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
 > {
-	controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 }
 
 Icon.add({ chevron_down, chevron_up });
 
 export function Garden<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
->({ controller }: GardenProps<TData, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {
+>({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {
 	//TODO:Handle no data better in garden
 
 	return (
@@ -29,6 +31,7 @@ export function Garden<
 			value={
 				controller as unknown as GardenController<
 					unknown,
+					string,
 					BaseRecordObject<unknown>,
 					BaseRecordObject<unknown>,
 					unknown
@@ -41,5 +44,5 @@ export function Garden<
 }
 
 export const GardenContext = createContext<
-	GardenController<unknown, BaseRecordObject<unknown>, BaseRecordObject<unknown>, unknown>
+	GardenController<unknown, string, BaseRecordObject<unknown>, BaseRecordObject<unknown>, unknown>
 >({} as any);

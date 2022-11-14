@@ -3,13 +3,14 @@ import { createGridController, Grid, GridController } from '@equinor/workspace-a
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
-import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
+import { FusionMediator, WorkspaceTabNames } from '../../types';
 import { GetIdentifier } from '../createFusionWorkspace';
 import { configureBookmark } from './configureBookmark';
 import { configureDataChange } from './configureDataChange';
 import { configureHighlightSelection } from './configureHighlightSelection';
 import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
+import { GridConfig } from '../../integrations/grid';
 
 export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 	gridConfig: GridConfig<TData>,

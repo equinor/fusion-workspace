@@ -1,48 +1,6 @@
 import './App.css';
-import { Workspace, createFusionWorkspace } from '@equinor/workspace-fusion';
-
-type S = {
-	id: string;
-	age: number;
-};
-
-function App() {
-	return (
-		<div className="App" style={{ height: '100vh' }}>
-			<Workspace controller={createWorkspace()} />
-		</div>
-	);
-}
-
-export default App;
-
-function createWorkspace() {
-	const controller = createFusionWorkspace<S>({ appKey: 'Handover', getIdentifier: (s) => s.id }, (s) =>
-		s
-			.addFilter([
-				{
-					name: 'id',
-					valueFormatter: (s) => s.id,
-					isQuickFilter: true,
-				},
-			])
-			.addGrid({ columnDefinitions: [{ field: 'id' }, { field: 'age' }] })
-			.addGarden({
-				data: [],
-				getIdentifier: (s) => s.id,
-				initialGrouping: {
-					horizontalGroupingAccessor: 'id',
-					verticalGroupingKeys: [],
-				},
-				nodeLabelCallback: (s) => s.id,
-			})
-			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
-			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
-	);
-
-	return controller;
-}
-
+import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { isSubGroup, getGardenItems } from '@equinor/workspace-fusion/garden';
 const MOCK_DATA: S[] = [
 	{
 		id: '123',
@@ -109,3 +67,56 @@ const MOCK_DATA: S[] = [
 		age: 18,
 	},
 ];
+
+type S = {
+	id: string;
+	age: number;
+};
+
+function App() {
+	return (
+		<div className="App" style={{ height: '100vh' }}>
+			<Workspace />
+		</div>
+	);
+}
+
+export default App;
+
+const Workspace = createFusionWorkspace<S>({ appKey: 'Handover', getIdentifier: (s) => s.id }, (s) =>
+	s
+		.addFilter({
+			filterGroups: [
+				{
+					name: 'id',
+					valueFormatter: (s) => s.id,
+					isQuickFilter: true,
+				},
+			],
+		})
+		.addGrid({ columnDefinitions: [{ field: 'id' }, { field: 'age' }] })
+		.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
+		.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
+		.addGarden<ExtendedFields, CustomGroupByKeys, CustomState>({
+			getDisplayName: (s) => s.age.toString(),
+			initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
+
+			customViews: {
+				customGroupByView: (s) => {
+					return <div></div>;
+				},
+			},
+		})
+);
+
+type CustomState = {
+	NotSure: 'not sure';
+};
+
+type CustomGroupByKeys = {
+	SOmeKey: 'Some key';
+};
+
+type ExtendedFields = 'Yes' | 'no';
+
+// customGroupByView: Controller<types>

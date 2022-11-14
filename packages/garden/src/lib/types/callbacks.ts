@@ -7,15 +7,17 @@ import { BaseRecordObject, GardenGroups, GardenItem } from '.';
  */
 export type ItemWidthCalculation<
 	TData,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (garden: GardenGroups<TData>, key: string, customGroupByKeys?: TCustomGroupByKeys) => number;
+> = (garden: GardenGroups<TData>, key: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => number;
 
 export type HighlightHorizontalColumn<
+	TData,
+	ExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (groupBy: string, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
+> = (groupBy: keyof TData | ExtendedFields, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
 
-export type GetCustomDescription<T> = (item: T | GardenItem<T>, controller: GardenController<T>) => string;
-export type GetCustomItemColor<T> = (item: T, controller: GardenController<T>) => string;
-export type GetGroupDescriptionFunc<T> = (item: T, groupingKey: string) => string;
+export type GetDescription<T> = (item: T | GardenItem<T>) => string;
+export type GetItemColor<T> = (item: T) => string;
 
-export type NodeLabelCallback<T> = (item: T, controller: GardenController<T>) => string;
+export type GetDisplayName<T> = (item: T, controller: GardenController<T>) => string;

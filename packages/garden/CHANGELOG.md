@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.1.1...@equinor/workspace-garden@0.1.2) (2022-11-11)
+
+**Note:** Version bump only for package @equinor/workspace-garden
+
+## [0.1.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.1.0...@equinor/workspace-garden@0.1.1) (2022-11-10)
+
+**Note:** Version bump only for package @equinor/workspace-garden
+
+## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.0.7...@equinor/workspace-garden@0.1.0) (2022-11-10)
+
+### Features
+
+-   :sparkles: export integration types from workspace-fusion ([#165](https://github.com/equinor/fusion-workspace/issues/165)) ([9fe9389](https://github.com/equinor/fusion-workspace/commit/9fe9389a0b6ead5393ada9c8218383e7f3407440))
+
 ## [0.0.7](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.0.6...@equinor/workspace-garden@0.0.7) (2022-11-08)
 
 **Note:** Version bump only for package @equinor/workspace-garden

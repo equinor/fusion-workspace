@@ -5,7 +5,7 @@ import {
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
-	NodeLabelCallback,
+	GetDisplayName,
 	OnClickEvents,
 	Visuals,
 	GardenConfig,
@@ -26,6 +26,7 @@ const NullFunc = () => void 0;
  */
 export class GardenController<
 	TData,
+	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext = unknown
@@ -42,25 +43,25 @@ export class GardenController<
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
 
-	fieldSettings: FieldSettings<TData, string, TCustomGroupByKeys> = {};
+	fieldSettings: FieldSettings<TData, ExtendedFields, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
-	nodeLabelCallback: NodeLabelCallback<TData>;
+	nodeLabelCallback: GetDisplayName<TData>;
 
 	/** Function that returns the primary(unique) identifier for the data type */
 	getIdentifier: GetIdentifier<TData>;
 
 	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext> = {
+	clickEvents: OnClickEvents<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
 
 	/** Override visuals and components for garden */
-	visuals: Visuals<TData> = {
-		getCustomItemColor: () => defaultItemColor,
+	visuals: Visuals<TData, ExtendedFields, TCustomGroupByKeys> = {
+		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
-		getCustomDescription: () => '',
+		getDescription: () => '',
 	};
 
 	/** Custom user context */
@@ -70,7 +71,7 @@ export class GardenController<
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
 	/** Override default view */
-	customViews: CustomVirtualViews<TData> = {};
+	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {};
 
 	/**
 	 * Property for holding calculated information based on data, this property will update every time data is updated
@@ -88,7 +89,7 @@ export class GardenController<
 
 	constructor(
 		{
-			nodeLabelCallback,
+			getDisplayName,
 			getIdentifier,
 			initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
 			data,
@@ -98,11 +99,17 @@ export class GardenController<
 			getCustomState,
 			customViews,
 			visuals,
-		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+			intercepters,
+		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
+		getDestructor: (destroy: () => void) => void,
 		context?: TContext
 	) {
+		if (intercepters?.postGroupSorting) {
+			this.postGroupSorting = intercepters.postGroupSorting;
+		}
+
 		this.getIdentifier = getIdentifier;
-		this.nodeLabelCallback = nodeLabelCallback;
+		this.nodeLabelCallback = getDisplayName;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};
@@ -130,6 +137,7 @@ export class GardenController<
 		this.groupData();
 
 		this.data.onChange(this.groupData);
+		getDestructor(this.#destroy);
 	}
 
 	/**
@@ -159,7 +167,12 @@ export class GardenController<
 	 * Function for grouping data.
 	 */
 	groupData = () => {
-		this.groups.setValue(this.postGroupSorting(createGarden(this)));
+		this.groups.setValue(
+			this.postGroupSorting(createGarden(this), [
+				this.grouping.value.horizontalGroupingAccessor as keyof TData,
+				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
+			])
+		);
 	};
 
 	/**
@@ -171,9 +184,10 @@ export class GardenController<
 	};
 
 	/** Function for sorting groups after they have been grouped */
-	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
+	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | ExtendedFields)[]): GardenGroups<TData> =>
+		groups;
 
-	destroy = () => {
+	#destroy = () => {
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];

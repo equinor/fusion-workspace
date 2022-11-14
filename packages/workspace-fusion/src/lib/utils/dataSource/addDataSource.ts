@@ -1,8 +1,9 @@
 import { FetchController } from '@equinor/workspace-data-source';
-import { DataSourceOptions, FusionMediator } from '../../types';
+import { FusionMediator } from '../../types';
+import { DataSourceConfig } from '../../integrations/data-source';
 import { createFetchFunction } from './createFetchFunction';
 
-export function addDataSource<TData>(dataFetch: DataSourceOptions<TData>, mediator: FusionMediator<TData>) {
+export function addDataSource<TData>(dataFetch: DataSourceConfig<TData>, mediator: FusionMediator<TData>) {
 	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
 	const fetchFunction = createFetchFunction(dataFetch, mediator);
 

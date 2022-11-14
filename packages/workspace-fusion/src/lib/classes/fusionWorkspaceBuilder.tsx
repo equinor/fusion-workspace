@@ -1,20 +1,13 @@
-import { FilterOptions } from '@equinor/workspace-filter';
 import history from 'history/browser';
-import { GardenConfig } from '@equinor/workspace-garden';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 
 import {
-	GridConfig,
 	SidesheetConfig,
 	WorkspaceTabNames,
-	StatusBarConfig,
 	FusionMediator,
 	CustomTab,
 	AppConfig,
 	FusionWorkspaceModule,
-	DataSourceOptions,
-	PowerBiConfig,
-	FusionPowerBiConfig,
 	FusionWorkspaceError,
 } from '../types';
 import {
@@ -35,6 +28,12 @@ import { addPowerBi } from '../utils/powerBI/addPowerBi';
 import { FusionPowerBiConfigurator } from './fusionPowerBiConfig';
 import { DumpsterFireDialog } from '../components/ErrorComponent';
 import { Action } from 'history';
+import { GardenConfig } from '../integrations/garden';
+import { FilterConfig } from '../integrations/filter';
+import { GridConfig } from '../integrations/grid';
+import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
+import { StatusBarConfig } from '../integrations/status-bar';
+import { DataSourceConfig } from '../integrations/data-source';
 
 export type WorkspaceContext = {
 	ui: unknown;
@@ -112,7 +111,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @param dataFetch - An async function returning a data array
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
-	addDataSource = (dataFetch: DataSourceOptions<TData>) => {
+	addDataSource = (dataFetch: DataSourceConfig<TData>) => {
 		addDataSource(dataFetch, this.mediator);
 		return this;
 	};
@@ -137,13 +136,14 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGarden = <
+		TExtendedFields extends string = string,
 		TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 	>(
-		config: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>
+		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
 	) => {
-		addGarden<TData, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
 			config,
 			this.viewController,
 			this.mediator,
@@ -172,7 +172,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 		return this;
 	};
 
-	addFilter = (config: FilterOptions<TData>) => {
+	addFilter = (config: FilterConfig<TData>) => {
 		addFilter(config, this.viewController, this.mediator);
 		return this;
 	};
