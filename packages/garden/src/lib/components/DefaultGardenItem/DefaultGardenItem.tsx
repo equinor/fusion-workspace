@@ -1,3 +1,4 @@
+import { GardenController } from '../../classes';
 import { memo, useMemo } from 'react';
 import { useGardenContext } from '../../hooks';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
@@ -17,7 +18,16 @@ export const DefaultGardenItem = memo(
 		} = controller;
 
 		const { color, description, label } = useMemo(() => {
-			const label = controller.nodeLabelCallback(item, controller);
+			const label = controller.nodeLabelCallback(
+				item,
+				controller as GardenController<
+					Record<PropertyKey, unknown>,
+					never,
+					never,
+					Record<PropertyKey, unknown>,
+					Record<PropertyKey, unknown>
+				>
+			);
 			const color = (getItemColor && getItemColor(item)) ?? 'grey';
 
 			const description = getDescription && getDescription(item);
