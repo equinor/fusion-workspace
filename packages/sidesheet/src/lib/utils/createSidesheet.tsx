@@ -2,7 +2,6 @@ import { ResizeWrapper } from '../components/ResizeWrapper';
 import { useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ReplaceFunction, mountSidesheetFrame, Cleanup } from '../components/SidesheetFrame';
-import { useEffectOnce } from '../hooks/useEffectOnce';
 
 export type SidesheetProps<TProps> = {
 	replace?: ReplaceFunction;
@@ -35,7 +34,7 @@ type ComponentLoaderProps<TProps> = {
 function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 	const ref = useRef<HTMLDivElement | null>(null);
 
-	useEffectOnce(() => {
+	useEffect(() => {
 		let teardown: () => void | undefined;
 		props.render({ el: ref.current as HTMLDivElement, props: props.props }).then((s) => {
 			teardown = s;
@@ -45,9 +44,9 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 				teardown();
 			}
 		};
-	});
+	}, [props.props]);
 
-	return <div id="Component" ref={ref} />;
+	return <div style={{ height: '100%' }} id="Component" ref={ref} />;
 }
 
 async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: ComponentProps<TProps>) => JSX.Element) {

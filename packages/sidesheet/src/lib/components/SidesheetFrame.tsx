@@ -44,7 +44,7 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 		replace(initialComponent);
 	}, []);
 
-	return <div id="sidesheetroot" ref={ref}></div>;
+	return <div style={{ height: '100%' }} id="sidesheetroot" ref={ref}></div>;
 }
 export type Cleanup = () => void;
 export type ReplaceFunction = (

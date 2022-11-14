@@ -9,18 +9,5 @@ export function addSidesheet<TData extends Record<PropertyKey, unknown>, TError>
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>
 ) {
-	// viewController.addSidesheetComponent(() => <SidesheetWrapper Component={config.Component} mediator={mediator} />);
-	// mediator.onSidesheetStateChange(viewController.sidesheet.setIsOpen);
-	// mediator.clickService.click$.subscribe((ev) => {
-	// 	viewController.sidesheet.title.setValue(config.getTitle(ev));
-	// });
-	// sidesheetConfig<TData>(new SidesheetController(), mediator);
-}
-
-function sidesheetConfig<TData extends Record<PropertyKey, unknown>>(sc: any, mediator: FusionMediator<TData>) {
-	// mediator.onSidesheetStateChange((isOpen) => sc.setSidesheetState(isOpen ? 'Open' : 'Closed'));
-	// mediator.clickService.click$.subscribe((ev) => {
-	// 	sc.setItem(ev.item);
-	// 	mediator.setIsSidesheetOpen(true);
-	// });
+	viewController.addSidesheetComponent(() => <SidesheetWrapper Component={config.Component} mediator={mediator} />);
 }

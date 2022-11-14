@@ -2,9 +2,7 @@ import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 import { Provider } from '../types';
 import { StateController } from './stateController';
 import { TabController } from './tabController';
-import { WorkspaceSidesheetController } from './workspaceSidesheetController';
 
-type Component = () => JSX.Element;
 export class WorkspaceViewController<TTabNames extends string, TError> {
 	appKey?: string;
 
@@ -12,18 +10,18 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 
 	viewState = new StateController();
 
-	sidesheet: WorkspaceSidesheetController = new WorkspaceSidesheetController();
-
 	tabController = new TabController<TTabNames>();
 
 	providers: Provider[] = [];
+
+	Sidesheet: (() => JSX.Element) | undefined;
 
 	addProvider = (provider: Provider) => {
 		this.providers.push(provider);
 	};
 
-	addSidesheetComponent = (comp: Component) => {
-		this.sidesheet.Component = comp;
+	addSidesheetComponent = (comp: () => JSX.Element) => {
+		this.Sidesheet = comp;
 	};
 
 	constructor() {

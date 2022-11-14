@@ -1,10 +1,13 @@
+import { useControllerContext } from '../../hooks';
 import { WorkspaceErrorBoundary } from '../ErrorBoundary/WorkspaceErrorBoundary';
-import { ResizableSidesheet } from '../resizableSidesheet';
+
 import { WorkspaceDataLoader } from '../workspaceDataLoader';
 import { WorkspaceTab } from '../workspaceTab';
 import { StyledWorkspaceBody } from './workspaceBody.styles';
 
 export function WorkspaceBody() {
+	const { Sidesheet } = useControllerContext();
+
 	return (
 		<StyledWorkspaceBody>
 			<WorkspaceDataLoader>
@@ -12,7 +15,7 @@ export function WorkspaceBody() {
 					<WorkspaceTab />
 				</WorkspaceErrorBoundary>
 			</WorkspaceDataLoader>
-			<ResizableSidesheet />
+			{Sidesheet && <Sidesheet />}
 		</StyledWorkspaceBody>
 	);
 }
