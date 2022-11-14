@@ -2,7 +2,7 @@ import { GroupingKeys } from '@equinor/workspace-garden';
 import { ColumnState } from '@equinor/workspace-ag-grid';
 import { WorkspaceTabNames } from './tabs';
 
-export type FusionBookmark<TData> = {
+export type FusionBookmark<TData extends Record<PropertyKey, unknown>> = {
 	grid?: GridBookmark;
 	filter?: FilterBookmark;
 	powerBI?: PowerBIBookmark;
@@ -14,7 +14,7 @@ export type ViewBookmark = {
 	activeTab?: WorkspaceTabNames;
 };
 
-export type GardenBookmark<TData> = {
+export type GardenBookmark<TData extends Record<PropertyKey, unknown>> = {
 	groupingKeys: GroupingKeys<TData>;
 	selectedNodes: string[];
 };

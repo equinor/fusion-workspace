@@ -12,12 +12,21 @@ import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer'
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
 
-type VirtualGardenProps<T> = {
+type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
 	width?: number;
-	handleOnItemClick: (item: T) => void;
+	handleOnItemClick: (item: TData) => void;
 };
 
-export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenProps<T>): JSX.Element => {
+export const VirtualGarden = <
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>({
+	width,
+	handleOnItemClick,
+}: VirtualGardenProps<TData>): JSX.Element => {
 	const parentRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,7 +73,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 	const packageChild = customItemView ?? undefined;
 
 	const handleExpand = useCallback(
-		<T,>(subGroup: GardenGroup<T>): void => {
+		<T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
 			subGroup.isExpanded = !subGroup.isExpanded;
 
 			refresh();
@@ -96,15 +105,31 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 			<HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
 				const currentColumn = garden[virtualColumn.index];
-				const columnItems = getGardenItems<T>(currentColumn as GardenGroup<T>, true);
+				const columnItems = getGardenItems<TData>(currentColumn as GardenGroup<TData>, true);
 
 				return (
 					<Fragment key={virtualColumn.index}>
 						<GardenItemContainer
 							rowVirtualizer={rowVirtualizer}
 							items={columnItems}
-							packageChild={packageChild as CustomVirtualViews<T>['customItemView']}
-							customSubGroup={customGroupView as CustomVirtualViews<T>['customGroupView']}
+							packageChild={
+								packageChild as CustomVirtualViews<
+									TData,
+									TExtendedFields,
+									TCustomGroupByKeys,
+									TCustomState,
+									TContext
+								>['customItemView']
+							}
+							customSubGroup={
+								customGroupView as CustomVirtualViews<
+									TData,
+									TExtendedFields,
+									TCustomGroupByKeys,
+									TCustomState,
+									TContext
+								>['customGroupView']
+							}
 							handleExpand={handleExpand}
 							itemWidth={width}
 							handleOnClick={handleOnItemClick}

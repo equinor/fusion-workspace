@@ -1,1 +1,1 @@
-export type findNodeCallback<T> = (data: T[]) => string | null;
+export type FindNodeCallback<TData extends Record<PropertyKey, unknown>> = (data: TData[]) => string | null;

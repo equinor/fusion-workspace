@@ -101,4 +101,26 @@ const Workspace = createFusionWorkspace<S>({ appKey: 'Handover', getIdentifier: 
 		.addGrid({ columnDefinitions: [{ field: 'id' }, { field: 'age' }] })
 		.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
 		.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
+		.addGarden<ExtendedFields, CustomGroupByKeys, CustomState>({
+			getDisplayName: (s) => s.age.toString(),
+			initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
+
+			customViews: {
+				customGroupByView: (s) => {
+					return <div></div>;
+				},
+			},
+		})
 );
+
+type CustomState = {
+	NotSure: 'not sure';
+};
+
+type CustomGroupByKeys = {
+	SOmeKey: 'Some key';
+};
+
+type ExtendedFields = 'Yes' | 'no';
+
+// customGroupByView: Controller<types>

@@ -6,7 +6,7 @@ import { sanitizePayload } from '../utils/sanitizePayload';
 const TABLE_NAME = 'User-settings';
 const DB_NAME = 'Workspace';
 
-export class FusionUserSettings<TData> {
+export class FusionUserSettings<TData extends Record<PropertyKey, unknown>> {
 	save = async (state: FusionBookmark<TData>, key: string) => {
 		const payload = sanitizePayload(state);
 		await this.patchUserSettings(payload, key);

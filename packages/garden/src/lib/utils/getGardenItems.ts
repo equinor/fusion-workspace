@@ -3,12 +3,12 @@ import { GardenItem } from '../types/gardenItem';
 
 type ColumnStates = 'No items' | 'No subgroups' | 'Not Expanded';
 
-const getSubGroupItems = <T>(
-	column: GardenGroup<T>,
+const getSubGroupItems = <TData extends Record<PropertyKey, unknown>>(
+	column: GardenGroup<TData>,
 	subGroupIndex: number,
 	includeSubGroupValue = false
-): GardenItem<T>[] => {
-	const items: GardenItem<T>[] = [];
+): GardenItem<TData>[] => {
+	const items: GardenItem<TData>[] = [];
 	const subGroup = column.subGroups[subGroupIndex];
 	const isExpanded = subGroup.isExpanded;
 
@@ -31,7 +31,7 @@ const getSubGroupItems = <T>(
 	return items;
 };
 
-const getGardenColumnState = <T>(column: GardenGroup<T>): ColumnStates | null => {
+const getGardenColumnState = <T extends Record<PropertyKey, unknown>>(column: GardenGroup<T>): ColumnStates | null => {
 	const columnHasNoItems = column.count === 0 && column.subGroupCount === 0;
 	if (columnHasNoItems) return 'No items';
 
@@ -52,7 +52,7 @@ const getGardenColumnState = <T>(column: GardenGroup<T>): ColumnStates | null =>
  * @param includeSubGroupValue Set to true if group value is wanted inside return value
  * @returns Array of objects with garden items and their depth (and subgroup value if second parameter is true)
  */
-export const getGardenItems = <T = unknown>(
+export const getGardenItems = <T extends Record<PropertyKey, unknown>>(
 	column: GardenGroup<T> | undefined,
 	includeSubGroupValue = false
 ): GardenItem<T>[] | null => {

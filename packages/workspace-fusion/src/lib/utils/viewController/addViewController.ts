@@ -4,7 +4,7 @@ import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 
 /** Configure a view controller with the mediator */
-export function addViewController<TData>(
+export function addViewController<TData extends Record<PropertyKey, unknown>>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
 	mediator: FusionMediator<TData>,
 	history: BrowserHistory
@@ -31,7 +31,7 @@ export function addViewController<TData>(
 }
 
 /** Switches tab when url changes due to navigation event */
-export function switchTabOnNavigation<TData, TError>(
+export function switchTabOnNavigation<TData extends Record<PropertyKey, unknown>, TError>(
 	mediator: FusionMediator<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ) {
@@ -50,7 +50,7 @@ function applyViewStateBookmark<TError>(
 }
 
 /** Captures the view state of the view controller */
-function captureBookmark<TData, TError>(
+function captureBookmark<TData extends Record<PropertyKey, unknown>, TError>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
 ): Pick<FusionBookmark<TData>, 'view'> {
 	return {

@@ -7,13 +7,15 @@ import {
 	BaseRecordObject,
 	CustomVirtualViews,
 	Visuals,
+	GardenGroups,
 } from './';
 
 export type GardenConfig<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
 	/** Data to be used for the garden */
 	data: TData[];
@@ -34,14 +36,14 @@ export type GardenConfig<
 	/** The keys used for grouping when the garden loads initially */
 	initialGrouping: GroupingKeys<TData>;
 	/** The available keys to be used for grouping */
-	fieldSettings?: FieldSettings<TData, string, TCustomGroupByKeys>;
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
-	clickEvents?: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>;
+	clickEvents?: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 	/** Replace built-in components with your own */
-	customViews?: CustomVirtualViews<TData>;
+	customViews?: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 	/** Visual details */
-	visuals?: Visuals<TData>;
+	visuals?: Visuals<TData, TExtendedFields, TCustomGroupByKeys>;
 	/** Function for calculating custom state
 	 *
 	 * Will re-run everytime data changes
@@ -54,4 +56,17 @@ export type GardenConfig<
 	 * ```
 	 */
 	getCustomState?: (data: TData[]) => TCustomState;
+	intercepters?: GardenDataIntercepters<TData, TExtendedFields>;
+};
+
+export type PostGroupBySorting<TData extends Record<PropertyKey, unknown>, TExtendedFields extends string = never> = (
+	data: GardenGroups<TData>,
+	keys: (keyof TData | TExtendedFields)[]
+) => GardenGroups<TData>;
+
+export type GardenDataIntercepters<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never
+> = {
+	postGroupSorting?: PostGroupBySorting<TData, TExtendedFields>;
 };

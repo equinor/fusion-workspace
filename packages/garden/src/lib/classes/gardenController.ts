@@ -1,7 +1,7 @@
 import {
 	CustomVirtualViews,
 	FieldSettings,
-	findNodeCallback,
+	FindNodeCallback,
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
@@ -25,10 +25,11 @@ const NullFunc = () => void 0;
  * @typeParam Custom user context, store anything here
  */
 export class GardenController<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TData extends Record<PropertyKey, unknown>,
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
@@ -42,7 +43,7 @@ export class GardenController<
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
 
-	fieldSettings: FieldSettings<TData, string, TCustomGroupByKeys> = {};
+	fieldSettings: FieldSettings<TData, ExtendedFields, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	nodeLabelCallback: GetDisplayName<TData>;
@@ -51,13 +52,13 @@ export class GardenController<
 	getIdentifier: GetIdentifier<TData>;
 
 	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext> = {
+	clickEvents: OnClickEvents<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
 
 	/** Override visuals and components for garden */
-	visuals: Visuals<TData> = {
+	visuals: Visuals<TData, ExtendedFields, TCustomGroupByKeys> = {
 		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
 		getDescription: () => '',
@@ -70,7 +71,7 @@ export class GardenController<
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
 	/** Override default view */
-	customViews: CustomVirtualViews<TData> = {};
+	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {};
 
 	/**
 	 * Property for holding calculated information based on data, this property will update every time data is updated
@@ -98,9 +99,15 @@ export class GardenController<
 			getCustomState,
 			customViews,
 			visuals,
-		}: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+			intercepters,
+		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
+		getDestructor: (destroy: () => void) => void,
 		context?: TContext
 	) {
+		if (intercepters?.postGroupSorting) {
+			this.postGroupSorting = intercepters.postGroupSorting;
+		}
+
 		this.getIdentifier = getIdentifier;
 		this.nodeLabelCallback = getDisplayName;
 		this.data.value = data;
@@ -130,6 +137,7 @@ export class GardenController<
 		this.groupData();
 
 		this.data.onChange(this.groupData);
+		getDestructor(this.#destroy);
 	}
 
 	/**
@@ -159,21 +167,27 @@ export class GardenController<
 	 * Function for grouping data.
 	 */
 	groupData = () => {
-		this.groups.setValue(this.postGroupSorting(createGarden(this)));
+		this.groups.setValue(
+			this.postGroupSorting(createGarden(this), [
+				this.grouping.value.horizontalGroupingAccessor as keyof TData,
+				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
+			])
+		);
 	};
 
 	/**
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
-	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
+	setHighlightedNode = (nodeIdOrCallback: (string | null) | FindNodeCallback<TData>) => {
 		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
 		this.selectedNodes.setValue(val ? [val] : []);
 	};
 
 	/** Function for sorting groups after they have been grouped */
-	postGroupSorting = (groups: GardenGroups<TData>): GardenGroups<TData> => groups;
+	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | ExtendedFields)[]): GardenGroups<TData> =>
+		groups;
 
-	destroy = () => {
+	#destroy = () => {
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];
