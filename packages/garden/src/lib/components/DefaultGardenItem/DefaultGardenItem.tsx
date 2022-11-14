@@ -13,7 +13,7 @@ export const DefaultGardenItem = memo(
 		const controller = useGardenContext();
 		const {
 			clickEvents: { onClickItem },
-			visuals: { getItemColor, getDescription },
+			visuals: { getDescription, getItemColor },
 		} = controller;
 
 		const { color, description, label } = useMemo(() => {
@@ -27,7 +27,7 @@ export const DefaultGardenItem = memo(
 				color,
 				description,
 			};
-		}, [controller, getDescription, getItemColor, item]);
+		}, [controller, getItemColor, getDescription, item]);
 
 		return (
 			<StyledDefaultPackage
