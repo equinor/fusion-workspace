@@ -1,6 +1,5 @@
 import history from 'history/browser';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import { combineLatestWith } from 'rxjs/operators';
 import {
 	SidesheetConfig,
 	WorkspaceTabNames,
@@ -81,7 +80,7 @@ export class FusionWorkspaceBuilder<
 	}
 	currentSubscription: Subscription | undefined = undefined;
 	addWorkspaceState = (cb: (filteredData: TData[]) => TContext) => {
-		if (!this.currentSubscription) throw new Error('addWorkspaceState can only be invoked once');
+		if (this.currentSubscription) throw new Error('addWorkspaceState can only be invoked once');
 		this.currentSubscription = this.mediator.dataService.filteredData$.subscribe((filteredData) => {
 			if (!filteredData) return;
 			this.#context.next(cb(filteredData));
@@ -150,17 +149,16 @@ export class FusionWorkspaceBuilder<
 	 */
 	addGarden = <
 		TExtendedFields extends string = never,
-		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 	>(
-		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>
 	) => {
-		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext, FusionWorkspaceError>(
 			config,
 			this.viewController,
 			this.mediator,
-			this.getIdentifier
+			this.getIdentifier,
+			this.#context
 		);
 		return this;
 	};

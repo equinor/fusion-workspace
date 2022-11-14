@@ -99,26 +99,25 @@ const Workspace = createFusionWorkspace<S, { length: number }>(
 			})
 			.addGrid({
 				columnDefinitions: [
-					{ field: 'id', cellRenderer: (s: ICellRendererProps) => <div>{s.context.length}</div> },
+					{ field: 'id' },
 					{
 						field: 'age',
 					},
 				],
 			})
 			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
-			.addCalculatedContext((data, fdata) => {
-				if (!fdata) return { length: 0 };
-				console.log(`data`, data, 'fdata', fdata);
-				return { length: fdata.length };
-			})
+			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
 			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
-			.addGarden<ExtendedFields, CustomGroupByKeys, CustomState>({
+			.addGarden<ExtendedFields, CustomGroupByKeys>({
 				getDisplayName: (s) => s.age.toString(),
 				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
 
 				customViews: {
-					customGroupByView: (s) => {
-						return <div></div>;
+					customGroupByView: ({ controller }) => {
+						console.log(controller.customState);
+						controller.customState?.length;
+
+						return <div>{JSON.stringify(controller.customState) ?? null}</div>;
 					},
 				},
 			})

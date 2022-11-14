@@ -9,19 +9,21 @@ import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';
 import { configureGardenHighlightSelection } from './configureHighlight';
 import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedGardenFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TCustomState, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
-	getIdentifier: GetIdentifier<TData>
+	getIdentifier: GetIdentifier<TData>,
+	context: BehaviorSubject<TCustomState>
 ) {
 	const gardenController = new GardenController<
 		TData,
@@ -34,9 +36,11 @@ export function addGarden<
 			...gardenConfig,
 			data: [],
 			getIdentifier,
+			getCustomState: () => context.getValue(),
 		},
 		(destroy) => mediator.onUnMount(destroy)
 	);
+
 	configureDataChange(gardenController, mediator);
 	configureClickEvents(gardenController, mediator, getIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
