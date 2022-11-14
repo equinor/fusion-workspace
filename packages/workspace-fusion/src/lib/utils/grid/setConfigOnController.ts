@@ -20,6 +20,9 @@ export function setConfigOnController<TData extends Record<PropertyKey, unknown>
  * @param mediator Workspace controller
  * @returns Altered column definitions
  */
-function prepareColumnDefintions<TData>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData>) {
+function prepareColumnDefintions<TData extends Record<PropertyKey, unknown>>(
+	columnDefs: ColDef<TData>[],
+	mediator: FusionMediator<TData>
+) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, mediator));
 }

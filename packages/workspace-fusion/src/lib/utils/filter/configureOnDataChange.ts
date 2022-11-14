@@ -2,7 +2,7 @@ import { ReactFilterController } from '@equinor/workspace-filter';
 import { FusionMediator } from '../../types';
 
 /** Sync data changes between filter controller and dataservice */
-export function configureOnDataChange<TData>(
+export function configureOnDataChange<TData extends Record<PropertyKey, unknown>>(
 	mediator: FusionMediator<TData>,
 	filterController: ReactFilterController<TData>
 ) {

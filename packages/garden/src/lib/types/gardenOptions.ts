@@ -1,8 +1,14 @@
-import React, { MemoExoticComponent, MutableRefObject } from 'react';
+import { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenController } from '../classes';
 import { GardenGroup, GardenGroups } from '.';
 
-export interface CustomItemView<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> {
+export interface CustomItemView<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> {
 	data: TData;
 	controller: Omit<GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>, 'destroy'>;
 	onClick: () => void;
@@ -15,7 +21,7 @@ export interface CustomItemView<TData, TExtendedFields extends string, TCustomGr
 	width?: number;
 }
 
-export interface CustomGroupView<TData> {
+export interface CustomGroupView<TData extends Record<PropertyKey, unknown>> {
 	data: GardenGroup<TData>;
 	onClick: () => void;
 	onSelect?: (item: TData) => void;
@@ -24,14 +30,20 @@ export interface CustomGroupView<TData> {
 	groupByKeys: (keyof TData | string)[];
 }
 
-export interface CustomHeaderView<T> {
-	garden: GardenGroups<T>;
+export interface CustomHeaderView<TData extends Record<PropertyKey, unknown>> {
+	garden: GardenGroups<TData>;
 	columnIndex: number;
 	columnIsExpanded: boolean;
 	groupByKey?: string;
 }
 
-export interface CustomVirtualViews<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> {
+export interface CustomVirtualViews<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> {
 	customItemView?: MemoExoticComponent<
 		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
 	>;
@@ -42,8 +54,17 @@ export interface CustomVirtualViews<TData, TExtendedFields extends string, TCust
 	) => JSX.Element;
 }
 
-type CustomGroupViewProps<TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext> = {
+export type CustomGroupViewProps<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+> = {
 	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 };
 
-export type PreGroupByFiltering<T = unknown> = (arr: T[], groupByKey: string) => T[];
+export type PreGroupByFiltering<TData extends Record<PropertyKey, unknown>> = (
+	arr: TData[],
+	groupByKey: string
+) => TData[];

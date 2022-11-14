@@ -1,7 +1,7 @@
 import {
 	CustomVirtualViews,
 	FieldSettings,
-	findNodeCallback,
+	FindNodeCallback,
 	GardenGroups,
 	GroupingKeys,
 	HorizontalGroupingAccessor,
@@ -25,11 +25,11 @@ const NullFunc = () => void 0;
  * @typeParam Custom user context, store anything here
  */
 export class GardenController<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
@@ -178,7 +178,7 @@ export class GardenController<
 	/**
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
-	setHighlightedNode = (nodeIdOrCallback: (string | null) | findNodeCallback<TData>) => {
+	setHighlightedNode = (nodeIdOrCallback: (string | null) | FindNodeCallback<TData>) => {
 		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
 		this.selectedNodes.setValue(val ? [val] : []);
 	};

@@ -30,7 +30,7 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 	const expanded = useExpand();
 
 	const handleHeaderClick = useCallback(
-		(index: number, column: GardenGroup<unknown>) => {
+		(index: number, column: GardenGroup<Record<PropertyKey, unknown>>) => {
 			expandColumn({
 				type: ActionType.EXPAND_COLUMN,
 				index,
@@ -63,7 +63,7 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 								columnIsExpanded={
 									expanded.expandedColumns?.[garden[virtualColumn.index].value]?.isExpanded
 								}
-								groupByKey={groupByKey}
+								groupByKey={groupByKey as string}
 							/>
 						) : (
 							<>

@@ -136,8 +136,8 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGarden = <
-		TExtendedFields extends string = string,
-		TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+		TExtendedFields extends string = never,
+		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 	>(

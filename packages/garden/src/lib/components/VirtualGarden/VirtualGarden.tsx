@@ -12,12 +12,18 @@ import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer'
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
 
-type VirtualGardenProps<TData> = {
+type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
 	width?: number;
 	handleOnItemClick: (item: TData) => void;
 };
 
-export const VirtualGarden = <TData, TExtendedFields extends string, TCustomGroupByKeys, TCustomState, TContext>({
+export const VirtualGarden = <
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TCustomState extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>({
 	width,
 	handleOnItemClick,
 }: VirtualGardenProps<TData>): JSX.Element => {
@@ -67,7 +73,7 @@ export const VirtualGarden = <TData, TExtendedFields extends string, TCustomGrou
 	const packageChild = customItemView ?? undefined;
 
 	const handleExpand = useCallback(
-		<T,>(subGroup: GardenGroup<T>): void => {
+		<T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
 			subGroup.isExpanded = !subGroup.isExpanded;
 
 			refresh();

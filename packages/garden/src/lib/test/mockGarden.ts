@@ -5,7 +5,7 @@ export type MockInterface = {
 	name: string;
 };
 
-export const defaultGardenConfig: GardenConfig<MockInterface, any, any, any, unknown> = {
+export const defaultGardenConfig: GardenConfig<MockInterface, any, any, any, Record<PropertyKey, unknown>> = {
 	data: [],
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
 	getDisplayName: (s) => s.name,

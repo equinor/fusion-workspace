@@ -6,7 +6,7 @@ import { DataSourceConfig } from '../../integrations/data-source';
  * Transforms configuration object to data source controller fetch method
  * Will check response codes automatically and throw errors through the mediator
  */
-export function createFetchFunction<TData>(
+export function createFetchFunction<TData extends Record<PropertyKey, unknown>>(
 	options: DataSourceConfig<TData>,
 	mediator: FusionMediator<TData>
 ): FetchData<TData> {

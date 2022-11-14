@@ -6,11 +6,11 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 interface GardenProps<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 }
@@ -18,11 +18,11 @@ interface GardenProps<
 Icon.add({ chevron_down, chevron_up });
 
 export function Garden<
-	TData,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {
 	//TODO:Handle no data better in garden
 
@@ -30,11 +30,11 @@ export function Garden<
 		<GardenContext.Provider
 			value={
 				controller as unknown as GardenController<
-					unknown,
+					Record<PropertyKey, unknown>,
 					string,
 					BaseRecordObject<unknown>,
 					BaseRecordObject<unknown>,
-					unknown
+					Record<PropertyKey, unknown>
 				>
 			}
 		>
@@ -44,5 +44,11 @@ export function Garden<
 }
 
 export const GardenContext = createContext<
-	GardenController<unknown, string, BaseRecordObject<unknown>, BaseRecordObject<unknown>, unknown>
+	GardenController<
+		Record<PropertyKey, unknown>,
+		string,
+		BaseRecordObject<unknown>,
+		BaseRecordObject<unknown>,
+		Record<PropertyKey, unknown>
+	>
 >({} as any);

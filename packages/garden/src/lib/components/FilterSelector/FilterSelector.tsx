@@ -5,15 +5,18 @@ import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
 import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
-const getFieldSettingsKeyFromLabel = <T,>(label: string, fieldSettings: FieldSettings<T, string>) =>
-	Object.keys(fieldSettings).find((k) => fieldSettings[k]?.label === label) || label;
+const getFieldSettingsKeyFromLabel = <T extends Record<PropertyKey, unknown>>(
+	label: string,
+	fieldSettings: FieldSettings<T, string>
+) => Object.keys(fieldSettings).find((k) => fieldSettings[k]?.label === label) || label;
 
-const getFieldSettingsLabelFromKey = <T,>(key: string, fieldSettings: FieldSettings<T, string>) =>
-	fieldSettings?.[key]?.label || key;
+const getFieldSettingsLabelFromKey = <T extends Record<PropertyKey, unknown>>(
+	key: string,
+	fieldSettings: FieldSettings<T, string>
+) => fieldSettings?.[key]?.label || key;
 
 export function FilterSelector(): JSX.Element | null {
 	const controller = useGardenContext();
-
 	const { setHorizontalGroupingAccessor, setVerticalGroupingKeys, customViews, data, fieldSettings } = controller;
 
 	const { gardenKey, groupByKeys } = useGroupingKeys();
