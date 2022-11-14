@@ -12,8 +12,9 @@ const getFieldSettingsLabelFromKey = <T,>(key: string, fieldSettings: FieldSetti
 	fieldSettings?.[key]?.label || key;
 
 export function FilterSelector(): JSX.Element | null {
-	const { setHorizontalGroupingAccessor, setVerticalGroupingKeys, customViews, data, fieldSettings } =
-		useGardenContext();
+	const controller = useGardenContext();
+
+	const { setHorizontalGroupingAccessor, setVerticalGroupingKeys, customViews, data, fieldSettings } = controller;
 
 	const { gardenKey, groupByKeys } = useGroupingKeys();
 
@@ -83,7 +84,7 @@ export function FilterSelector(): JSX.Element | null {
 
 	return (
 		<StyledSelectRowWrapper>
-			{CustomGroupByView && <CustomGroupByView />}
+			{CustomGroupByView && <CustomGroupByView controller={controller} />}
 
 			<StyledSeparator> Group by </StyledSeparator>
 

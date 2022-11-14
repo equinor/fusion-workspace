@@ -18,7 +18,7 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 
 	const controller = useGardenContext();
 	const {
-		visuals: { getCustomDescription = () => '' },
+		visuals: { getDescription = () => '' },
 		customViews: { customHeaderView: HeaderChild },
 
 		grouping: {
@@ -36,7 +36,7 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 				index,
 				key: column.value,
 				descriptionData: getGardenItems(column),
-				customDescription: (item) => getCustomDescription(item, controller),
+				customDescription: (item) => getDescription(item),
 			});
 		},
 		[expandColumn, getGardenItems]
