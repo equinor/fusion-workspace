@@ -1,6 +1,6 @@
 import history from 'history/browser';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-
+import { combineLatestWith } from 'rxjs/operators';
 import {
 	SidesheetConfig,
 	WorkspaceTabNames,
@@ -34,19 +34,23 @@ import { GridConfig } from '../integrations/grid';
 import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
 import { StatusBarConfig } from '../integrations/status-bar';
 import { DataSourceConfig } from '../integrations/data-source';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export type WorkspaceContext = {
 	ui: unknown;
 };
 
-export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> {
+export class FusionWorkspaceBuilder<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
 	private mediator: FusionMediator<TData> = new WorkspaceReactMediator();
 
 	viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
-
+	#context = new BehaviorSubject<TContext>({} as TContext);
 	appKey: string;
 
 	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
@@ -75,6 +79,15 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 			}
 		});
 	}
+	currentSubscription: Subscription | undefined = undefined;
+	addWorkspaceState = (cb: (filteredData: TData[]) => TContext) => {
+		if (!this.currentSubscription) throw new Error('addWorkspaceState can only be invoked once');
+		this.currentSubscription = this.mediator.dataService.filteredData$.subscribe((filteredData) => {
+			if (!filteredData) return;
+			this.#context.next(cb(filteredData));
+		});
+		return this;
+	};
 
 	addPowerBi = (config: PowerBiConfig) => {
 		addPowerBi(config, this.viewController, this.mediator);

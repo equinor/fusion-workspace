@@ -63,6 +63,7 @@
 		"@equinor/workspace-sidesheet": "workspace:^0.0.6",
 		"@equinor/workspace-status-bar": "workspace:^0.0.7",
 		"history": "^5.3.0",
+		"rxjs": "^7.5.7",
 		"styled-components": "^5.3.6"
 	},
 	"peerDependencies": {

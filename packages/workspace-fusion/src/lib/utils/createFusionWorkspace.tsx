@@ -3,15 +3,15 @@ import { FusionWorkspaceBuilder } from '../classes';
 import { FUSION_FILTER_PROVIDER_NAME } from './filter/addFilterContext';
 import { sortFusionTabs } from './fusionTabOrder';
 
-type UserConfig<TData extends Record<PropertyKey, unknown>> = (
-	builder: Omit<FusionWorkspaceBuilder<TData>, 'viewController'>
-) => FusionWorkspaceBuilder<TData>;
+type UserConfig<TData extends Record<PropertyKey, unknown>, TContext extends Record<PropertyKey, unknown> = never> = (
+	builder: FusionWorkspaceBuilder<TData, TContext>
+) => FusionWorkspaceBuilder<TData, TContext>;
 
-export function createFusionWorkspace<TData extends Record<PropertyKey, unknown>>(
-	config: AppConfig<TData>,
-	builderFunc: UserConfig<TData>
-): () => JSX.Element {
-	const builder = builderFunc(new FusionWorkspaceBuilder(config.getIdentifier, config.appKey));
+export function createFusionWorkspace<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(config: AppConfig<TData>, builderFunc: UserConfig<TData, TContext>): () => JSX.Element {
+	const builder = builderFunc(new FusionWorkspaceBuilder<TData, TContext>(config.getIdentifier, config.appKey));
 
 	const { viewController } = builder;
 
