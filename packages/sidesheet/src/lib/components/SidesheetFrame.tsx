@@ -1,3 +1,4 @@
+import { Cleanup, Frame, ReplaceFunction } from '../types/types';
 import { useCallback, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -51,12 +52,3 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 
 	return <div style={{ height: '100%' }} id="sidesheetroot" ref={ref}></div>;
 }
-export type Cleanup = () => void;
-export type ReplaceFunction = (
-	newComp: (el: HTMLDivElement, replace: Frame) => Promise<Cleanup> | Cleanup
-) => Promise<Cleanup>;
-
-export type Frame = {
-	replace: ReplaceFunction;
-	unmount: () => void;
-};

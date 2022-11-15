@@ -1,7 +1,8 @@
 import { ResizeWrapper } from '../components/ResizeWrapper';
 import { useEffect, useRef } from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { mountSidesheetFrame, Cleanup, Frame } from '../components/SidesheetFrame';
+import { mountSidesheetFrame } from '../components/SidesheetFrame';
+import { Frame, Cleanup } from '../types';
 
 export type SidesheetProps<TProps> = {
 	frame?: Frame;
