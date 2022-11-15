@@ -27,9 +27,11 @@ export function addGrid<
 	const gridController = createGridController<TData, TContext>(getIdentifier);
 
 	if (context) {
-		context.subscribe((s) => {
+		const sub = context.subscribe((s) => {
 			gridController.context = s;
 		});
+
+		mediator.onUnMount(() => sub.unsubscribe());
 	}
 
 	setConfigOnController(gridConfig, gridController, mediator);
