@@ -1,10 +1,10 @@
-import { Cleanup, Frame, ReplaceFunction } from '../types/types';
+import { Frame, ReplaceFunction } from '../types/types';
 import { useCallback, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
 type SidesheetFrameProps = {
 	/**Loads parent frame */
-	component: (el: HTMLDivElement, frame: Frame) => Promise<Cleanup> | Cleanup;
+	component: (el: HTMLDivElement, frame: Frame) => Promise<VoidFunction> | VoidFunction;
 	el: HTMLDivElement;
 };
 
@@ -19,7 +19,7 @@ type TeardownWrapper = {
 };
 
 type SidesheetRootProps = {
-	initialComponent: (el: HTMLDivElement, frame: Frame) => Promise<Cleanup> | Cleanup;
+	initialComponent: (el: HTMLDivElement, frame: Frame) => Promise<VoidFunction> | VoidFunction;
 };
 
 /**

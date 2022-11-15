@@ -2,7 +2,7 @@ import { ResizeWrapper } from '../components/ResizeWrapper';
 import { useEffect, useRef } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { mountSidesheetFrame } from '../components/SidesheetFrame';
-import { Frame, Cleanup } from '../types';
+import { Frame } from '../types';
 
 export type SidesheetProps<TProps> = {
 	frame?: Frame;
@@ -35,7 +35,7 @@ export const createWidget = <TProps,>(
 
 type ComponentLoaderProps<TProps> = {
 	props: TProps;
-	render: (props: SidesheetProps<TProps>) => Promise<Cleanup>;
+	render: (props: SidesheetProps<TProps>) => Promise<VoidFunction>;
 };
 
 function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {

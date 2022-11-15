@@ -1,8 +1,6 @@
-export type Cleanup = VoidFunction;
-
 export type ReplaceFunction = (
-	newComp: (el: HTMLDivElement, replace: Frame) => Promise<Cleanup> | Cleanup
-) => Promise<Cleanup>;
+	newComp: (el: HTMLDivElement, replace: Frame) => Promise<VoidFunction> | VoidFunction
+) => Promise<VoidFunction>;
 
 export type Frame = {
 	replace: ReplaceFunction;
