@@ -1,6 +1,7 @@
 import './App.css';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
 import { isSubGroup, getGardenItems } from '@equinor/workspace-fusion/garden';
+import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { HandoverSidesheet } from './sidesheet/test-app-sidesheet/HandoverSidesheet';
 import { useEffect, useRef, useState } from 'react';
 import { ScopeChangeSidesheet } from './sidesheet/test-app-sidesheet/ScopeChangeSidesheet';
