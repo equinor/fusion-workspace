@@ -22,6 +22,9 @@ type SidesheetRootProps = {
 	initialComponent: (el: HTMLDivElement, frame: Frame) => Promise<Cleanup> | Cleanup;
 };
 
+/**
+ * Creates a sidesheet frame that allows the child to replace itself
+ */
 function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 	const ref = useRef<HTMLDivElement | null>(null);
 
@@ -46,6 +49,7 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 	}, []);
 
 	useEffect(() => {
+		//No teardown here because either the frame's teardown is called or the component is replaced in which case it will teardown
 		//bootstrap first component
 		replace(initialComponent);
 	}, []);
