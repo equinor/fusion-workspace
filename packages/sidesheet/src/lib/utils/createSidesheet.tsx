@@ -55,13 +55,13 @@ async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: Compo
 		if (!root) {
 			root = createRoot(el);
 		}
-		const rerender = () =>
-			root!.render(
-				<ResizeWrapper minWidth={20}>
-					<Comp props={props.props} replace={replace} />
-				</ResizeWrapper>
-			);
-		rerender();
+
+		root.render(
+			<ResizeWrapper minWidth={20}>
+				<Comp props={props.props} replace={replace} />
+			</ResizeWrapper>
+		);
+
 		return () => root!.unmount();
 	};
 
