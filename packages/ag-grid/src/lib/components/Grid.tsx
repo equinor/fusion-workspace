@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
@@ -32,6 +32,17 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
  */
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const [gridApi, setGridApi] = useState<GridApi>();
+
+	const gridOptions = useRef({ ...controller.gridOptions, context: controller.context });
+
+	useEffect(() => {
+		const sub = controller.context$.subscribe((s) => {
+			gridOptions.current.context = s;
+			gridApi?.refreshCells();
+		});
+		return () => sub.unsubscribe();
+	}, []);
+
 	const [columnApi, setColumnApi] = useState<ColumnApi>();
 	const rowData = useRowData(controller);
 
@@ -48,7 +59,7 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
-				gridOptions={controller.gridOptions}
+				gridOptions={gridOptions.current}
 				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}

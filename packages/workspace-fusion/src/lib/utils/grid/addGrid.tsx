@@ -11,14 +11,26 @@ import { configureHighlightSelection } from './configureHighlightSelection';
 import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
 import { GridConfig } from '../../integrations/grid';
+import { BehaviorSubject } from 'rxjs';
 
-export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
+export function addGrid<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown>
+>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
-	getIdentifier: GetIdentifier<TData>
+	getIdentifier: GetIdentifier<TData>,
+	context?: BehaviorSubject<TContext>
 ) {
-	const gridController = createGridController<TData>(getIdentifier);
+	const gridController = createGridController<TData, TContext>(getIdentifier);
+
+	if (context) {
+		context.subscribe((s) => {
+			gridController.context = s;
+		});
+	}
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);

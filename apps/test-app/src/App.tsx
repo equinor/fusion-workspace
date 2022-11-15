@@ -1,7 +1,6 @@
 import './App.css';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { isSubGroup, getGardenItems } from '@equinor/workspace-fusion/garden';
-import { ICellRendererProps } from '@equinor/workspace-fusion/grid';
+
 const MOCK_DATA: S[] = [
 	{
 		id: '124',
@@ -97,16 +96,19 @@ const Workspace = createFusionWorkspace<S, { length: number }>(
 					},
 				],
 			})
+			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
 			.addGrid({
 				columnDefinitions: [
 					{ field: 'id' },
 					{
 						field: 'age',
+						valueGetter: (s) => {
+							return s.context.length;
+						},
 					},
 				],
 			})
 			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
-			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
 			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
 			.addGarden<ExtendedFields, CustomGroupByKeys>({
 				getDisplayName: (s) => s.age.toString(),

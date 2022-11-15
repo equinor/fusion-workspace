@@ -169,7 +169,7 @@ export class FusionWorkspaceBuilder<
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier);
+		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier, this.#context);
 		return this;
 	};
 
