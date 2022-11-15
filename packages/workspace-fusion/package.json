@@ -35,6 +35,9 @@
 			"status-bar": [
 				"dist/types/lib/integrations/status-bar/index"
 			],
+			"sidesheet": [
+				"dist/types/lib/integrations/sidesheet/index"
+			],
 			"data-source": [
 				"dist/types/lib/integrations/data-source/index"
 			]
@@ -47,7 +50,8 @@
 		"./status-bar": "./dist/esm/lib/integrations/status-bar/index.js",
 		"./power-bi": "./dist/esm/lib/integrations/power-bi/index.js",
 		"./grid": "./dist/esm/lib/integrations/grid/index.js",
-		"./data-source": "./dist/esm/lib/integrations/data-source/index.js"
+		"./data-source": "./dist/esm/lib/integrations/data-source/index.js",
+		"./sidesheet": "./dist/esm/lib/integrations/sidesheet/index.js"
 	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.26.0",
