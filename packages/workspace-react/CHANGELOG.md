@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.7...@equinor/workspace-react@0.1.0) (2022-11-15)
+
+### Features
+
+-   :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
+
 ## [0.0.8](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.7...@equinor/workspace-react@0.0.8) (2022-11-10)
 
 **Note:** Version bump only for package @equinor/workspace-react
