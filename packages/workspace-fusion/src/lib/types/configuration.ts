@@ -1,10 +1,5 @@
 import { WorkspaceOnClick } from './onClick';
 
-export type SidesheetConfig<TData> = {
-	Component: (props: WorkspaceOnClick<TData>) => JSX.Element;
-	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
-};
-
 export type CustomTabProps<TData> = {
 	data: TData[];
 	onClick: (ev: WorkspaceOnClick<TData>) => void;

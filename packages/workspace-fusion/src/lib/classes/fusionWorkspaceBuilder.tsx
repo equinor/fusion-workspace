@@ -1,7 +1,6 @@
 import history from 'history/browser';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import {
-	SidesheetConfig,
 	WorkspaceTabNames,
 	FusionMediator,
 	CustomTab,
@@ -34,6 +33,7 @@ import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
 import { StatusBarConfig } from '../integrations/status-bar';
 import { DataSourceConfig } from '../integrations/data-source';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { SidesheetConfig } from '../integrations/sidesheet';
 
 export type WorkspaceContext = {
 	ui: unknown;

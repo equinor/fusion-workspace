@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.3.2...@equinor/workspace-fusion@0.4.0) (2022-11-15)
+
+### Features
+
+-   :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
+
 ## [0.3.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.3.1...@equinor/workspace-fusion@0.3.2) (2022-11-14)
 
 **Note:** Version bump only for package @equinor/workspace-fusion
