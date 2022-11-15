@@ -1,7 +1,6 @@
 import { Button } from '@equinor/eds-core-react';
 import { createWidget, useResizeContext } from '@equinor/workspace-sidesheet';
 import { sidesheets } from './sidesheets';
-import { render as WorkOrderRender } from './WorkorderSidesheet';
 
 export type HandoverProps = {
 	id: string;

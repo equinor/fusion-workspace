@@ -1,6 +1,5 @@
-import { createWidget, useResizeContext } from '@equinor/workspace-sidesheet';
+import { createWidget } from '@equinor/workspace-sidesheet';
 import { Button } from '@equinor/eds-core-react';
-import { render as ScopeChangeRender } from './ScopeChangeSidesheet';
 import { sidesheets } from './sidesheets';
 
 export type WorkOrderProps = {

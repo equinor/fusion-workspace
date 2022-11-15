@@ -1,4 +1,3 @@
-// import { SidesheetController } from '@equinor/workspace-sidesheet';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { SidesheetWrapper } from '../../components';
 import { FusionMediator, SidesheetConfig, WorkspaceTabNames } from '../../types';

@@ -1,5 +1,5 @@
 import { Button } from '@equinor/eds-core-react';
-import { createWidget, useResizeContext } from '@equinor/workspace-sidesheet';
+import { createWidget } from '@equinor/workspace-sidesheet';
 import { sidesheets } from './sidesheets';
 
 export type ScopeChangeProps = {
