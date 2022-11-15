@@ -1,16 +1,16 @@
 import { ResizeWrapper } from '../components/ResizeWrapper';
 import { useEffect, useRef } from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { ReplaceFunction, mountSidesheetFrame, Cleanup } from '../components/SidesheetFrame';
+import { mountSidesheetFrame, Cleanup, Frame } from '../components/SidesheetFrame';
 
 export type SidesheetProps<TProps> = {
-	replace?: ReplaceFunction;
+	replace?: Frame;
 	el: HTMLDivElement;
 	props: TProps;
 };
 
 type ComponentProps<TProps> = {
-	replace: ReplaceFunction;
+	replace: Frame;
 	props: TProps;
 };
 
@@ -51,7 +51,7 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 
 async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: ComponentProps<TProps>) => JSX.Element) {
 	let root: undefined | Root;
-	const renderComp = (el: HTMLDivElement, replace: ReplaceFunction) => {
+	const renderComp = (el: HTMLDivElement, replace: Frame) => {
 		if (!root) {
 			root = createRoot(el);
 		}
@@ -65,8 +65,8 @@ async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: Compo
 		return () => root!.unmount();
 	};
 
-	if (props.replace) {
-		return await props.replace(renderComp);
+	if (props.replace?.replace) {
+		return await props.replace.replace(renderComp);
 	}
 	return mountSidesheetFrame({
 		el: props.el,

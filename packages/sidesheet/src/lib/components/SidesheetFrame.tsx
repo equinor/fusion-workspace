@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 type SidesheetFrameProps = {
 	/**Loads parent frame */
-	component: (el: HTMLDivElement, replace: ReplaceFunction) => Promise<Cleanup> | Cleanup;
+	component: (el: HTMLDivElement, frame: Frame) => Promise<Cleanup> | Cleanup;
 	el: HTMLDivElement;
 };
 
@@ -18,7 +18,7 @@ type TeardownWrapper = {
 };
 
 type SidesheetRootProps = {
-	initialComponent: (el: HTMLDivElement, replace: ReplaceFunction) => Promise<Cleanup> | Cleanup;
+	initialComponent: (el: HTMLDivElement, frame: Frame) => Promise<Cleanup> | Cleanup;
 };
 
 function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
@@ -26,14 +26,20 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 
 	const teardown = useRef<null | TeardownWrapper>(null);
 
+	const unmount = () => {
+		if (teardown.current) {
+			teardown.current.teardown();
+		}
+	};
+
 	const replace: ReplaceFunction = useCallback(async (newComp) => {
 		/**Teardown old component if there is one */
 		if (teardown.current) {
 			teardown.current.teardown();
 		}
-
+		if (!newComp) return {} as Cleanup;
 		/** Mount new el */
-		const cleanup = await newComp(ref.current as HTMLDivElement, replace);
+		const cleanup = await newComp(ref.current as HTMLDivElement, { replace, unmount });
 		/**Assing teardown func to be used when replace is called again */
 		teardown.current = { teardown: cleanup };
 		return cleanup;
@@ -48,5 +54,10 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 }
 export type Cleanup = () => void;
 export type ReplaceFunction = (
-	newComp: (el: HTMLDivElement, replace: ReplaceFunction) => Promise<Cleanup> | Cleanup
+	newComp?: (el: HTMLDivElement, replace: Frame) => Promise<Cleanup> | Cleanup
 ) => Promise<Cleanup>;
+
+export type Frame = {
+	replace: ReplaceFunction;
+	unmount: () => void;
+};

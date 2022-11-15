@@ -8,11 +8,13 @@ type WorkOrderProps = {
 
 export const { Component: WorkOrderSidesheet, render } = createWidget<WorkOrderProps>(({ replace, props }) => {
 	console.log('wo props', props);
+
 	return (
 		<div>
+			<button onClick={() => replace.unmount()}>unmount</button>
 			<div>Am Workorder sidesheet</div>
 			<div>My props are {JSON.stringify(props)}</div>
-			<Button onClick={() => replace((el, replace) => ScopeChangeRender({ el: el, props: {}, replace }))}>
+			<Button onClick={() => replace.replace((el, replace) => ScopeChangeRender({ el: el, props: {}, replace }))}>
 				Replace with Scope change
 			</Button>
 		</div>
