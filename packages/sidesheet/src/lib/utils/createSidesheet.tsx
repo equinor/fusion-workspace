@@ -1,6 +1,6 @@
 import { ResizeWrapper } from '../components/ResizeWrapper';
 import { useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, Root } from 'react-dom/client';
 import { ReplaceFunction, mountSidesheetFrame, Cleanup } from '../components/SidesheetFrame';
 
 export type SidesheetProps<TProps> = {
@@ -35,7 +35,7 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 	const ref = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		let teardown: () => void | undefined;
+		let teardown: undefined | (() => void);
 		props.render({ el: ref.current as HTMLDivElement, props: props.props }).then((s) => {
 			teardown = s;
 		});
@@ -50,14 +50,19 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 }
 
 async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: ComponentProps<TProps>) => JSX.Element) {
+	let root: undefined | Root;
 	const renderComp = (el: HTMLDivElement, replace: ReplaceFunction) => {
-		const root = createRoot(el);
-		root.render(
-			<ResizeWrapper minWidth={20}>
-				<Comp props={props.props} replace={replace} />
-			</ResizeWrapper>
-		);
-		return () => root.unmount();
+		if (!root) {
+			root = createRoot(el);
+		}
+		const rerender = () =>
+			root!.render(
+				<ResizeWrapper minWidth={20}>
+					<Comp props={props.props} replace={replace} />
+				</ResizeWrapper>
+			);
+		rerender();
+		return () => root!.unmount();
 	};
 
 	if (props.replace) {

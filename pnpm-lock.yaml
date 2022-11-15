@@ -204,6 +204,7 @@ importers:
       '@equinor/eds-tokens': ^0.9.0
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
+      '@types/react-dom': ^18.0.8
       re-resizable: ^6.9.9
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -216,6 +217,7 @@ importers:
     devDependencies:
       '@types/jest': 27.4.1
       '@types/react': 18.0.25
+      '@types/react-dom': 18.0.8
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
