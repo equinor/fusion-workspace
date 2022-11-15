@@ -7,7 +7,7 @@ type HandoverProps = {
 	initial?: { id: string; description: string };
 };
 
-export const { Component: HandoverSidesheet, render } = createWidget<HandoverProps>(({ replace, props }) => {
+export const { Component: HandoverSidesheet, render } = createWidget<HandoverProps>(({ frame, props }) => {
 	console.log('Handover props', props);
 
 	const { isMinimized, setIsMinimized, setWidth, width } = useResizeContext();
@@ -19,7 +19,7 @@ export const { Component: HandoverSidesheet, render } = createWidget<HandoverPro
 			<div>Am handover sidesheet</div>
 			<Button
 				onClick={() =>
-					replace((el, replace) => WorkOrderRender({ el, replace, props: { woId: 'Some new id' } }))
+					frame.replace((el, frame) => WorkOrderRender({ el, frame, props: { woId: 'Some new id' } }))
 				}
 			>
 				Replace with WO

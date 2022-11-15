@@ -37,7 +37,6 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 		if (teardown.current) {
 			teardown.current.teardown();
 		}
-		if (!newComp) return {} as Cleanup;
 		/** Mount new el */
 		const cleanup = await newComp(ref.current as HTMLDivElement, { replace, unmount });
 		/**Assing teardown func to be used when replace is called again */
@@ -54,7 +53,7 @@ function SidesheetRoot({ initialComponent }: SidesheetRootProps) {
 }
 export type Cleanup = () => void;
 export type ReplaceFunction = (
-	newComp?: (el: HTMLDivElement, replace: Frame) => Promise<Cleanup> | Cleanup
+	newComp: (el: HTMLDivElement, replace: Frame) => Promise<Cleanup> | Cleanup
 ) => Promise<Cleanup>;
 
 export type Frame = {

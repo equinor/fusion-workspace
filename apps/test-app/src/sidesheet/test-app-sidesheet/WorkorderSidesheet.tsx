@@ -6,15 +6,15 @@ type WorkOrderProps = {
 	woId: string;
 };
 
-export const { Component: WorkOrderSidesheet, render } = createWidget<WorkOrderProps>(({ replace, props }) => {
+export const { Component: WorkOrderSidesheet, render } = createWidget<WorkOrderProps>(({ frame, props }) => {
 	console.log('wo props', props);
 
 	return (
 		<div>
-			<button onClick={() => replace.unmount()}>unmount</button>
+			<button onClick={() => frame.unmount()}>unmount</button>
 			<div>Am Workorder sidesheet</div>
 			<div>My props are {JSON.stringify(props)}</div>
-			<Button onClick={() => replace.replace((el, replace) => ScopeChangeRender({ el: el, props: {}, replace }))}>
+			<Button onClick={() => frame.replace((el, frame) => ScopeChangeRender({ el: el, props: {}, frame }))}>
 				Replace with Scope change
 			</Button>
 		</div>

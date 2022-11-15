@@ -4,13 +4,13 @@ import { createRoot, Root } from 'react-dom/client';
 import { mountSidesheetFrame, Cleanup, Frame } from '../components/SidesheetFrame';
 
 export type SidesheetProps<TProps> = {
-	replace?: Frame;
+	frame?: Frame;
 	el: HTMLDivElement;
 	props: TProps;
 };
 
 type ComponentProps<TProps> = {
-	replace: Frame;
+	frame: Frame;
 	props: TProps;
 };
 
@@ -51,22 +51,22 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 
 async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: ComponentProps<TProps>) => JSX.Element) {
 	let root: undefined | Root;
-	const renderComp = (el: HTMLDivElement, replace: Frame) => {
+	const renderComp = (el: HTMLDivElement, frame: Frame) => {
 		if (!root) {
 			root = createRoot(el);
 		}
 
 		root.render(
 			<ResizeWrapper minWidth={20}>
-				<Comp props={props.props} replace={replace} />
+				<Comp props={props.props} frame={frame} />
 			</ResizeWrapper>
 		);
 
 		return () => root!.unmount();
 	};
 
-	if (props.replace?.replace) {
-		return await props.replace.replace(renderComp);
+	if (props.frame?.replace) {
+		return await props.frame.replace(renderComp);
 	}
 	return mountSidesheetFrame({
 		el: props.el,
