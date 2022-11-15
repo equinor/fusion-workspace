@@ -5,10 +5,11 @@ import { ReactNode, useState, createContext } from 'react';
 type ResizeSidesheetProps = {
 	children: ReactNode;
 	minWidth: number;
+	defaultWidth?: number;
 };
 
-export function ResizeWrapper({ children, minWidth = 20 }: ResizeSidesheetProps) {
-	const [width, setWidth] = useState<number>(700);
+export function ResizeWrapper({ children, minWidth = 20, defaultWidth = 700 }: ResizeSidesheetProps) {
+	const [width, setWidth] = useState<number>(defaultWidth);
 	const [isMinimized, setIsMinimized] = useState(false);
 
 	return (

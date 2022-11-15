@@ -20,10 +20,16 @@ type ComponentProps<TProps> = {
  * @param Comp - Component you want to render
  * @returns teardown function
  */
-export const createWidget = <TProps,>(Comp: (props: ComponentProps<TProps>) => JSX.Element) => ({
-	render: (props: SidesheetProps<TProps>) => render(props, Comp),
+export const createWidget = <TProps,>(
+	Comp: (props: ComponentProps<TProps>) => JSX.Element,
+	resizeOptions?: { defaultWidth?: number }
+) => ({
+	render: (props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth),
 	Component: (props: TProps) => (
-		<ComponentLoader render={(props: SidesheetProps<TProps>) => render(props, Comp)} props={props} />
+		<ComponentLoader
+			render={(props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth)}
+			props={props}
+		/>
 	),
 });
 
@@ -50,7 +56,11 @@ function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
 	return <div style={{ height: '100%' }} id="Component" ref={ref} />;
 }
 
-async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: ComponentProps<TProps>) => JSX.Element) {
+async function render<TProps>(
+	props: SidesheetProps<TProps>,
+	Comp: (props: ComponentProps<TProps>) => JSX.Element,
+	defaultWidth?: number
+) {
 	let root: undefined | Root;
 	const renderComp = (el: HTMLDivElement, frame: Frame) => {
 		if (!root) {
@@ -58,7 +68,7 @@ async function render<TProps>(props: SidesheetProps<TProps>, Comp: (props: Compo
 		}
 
 		root.render(
-			<ResizeWrapper minWidth={20}>
+			<ResizeWrapper minWidth={20} defaultWidth={defaultWidth}>
 				<Comp props={props.props} frame={frame} />
 			</ResizeWrapper>
 		);
