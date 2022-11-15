@@ -71,6 +71,8 @@ export class FusionWorkspaceBuilder<
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 
+		this.mediator.onUnMount(() => this.#context.complete());
+
 		history.listen(({ action }) => {
 			if (action === Action.Pop) {
 				//Navigation back or forward;
