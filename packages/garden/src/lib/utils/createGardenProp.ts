@@ -1,7 +1,6 @@
 import { GardenController } from '../classes';
-import { ReactiveValue } from '../classes/reactiveValue';
 import { GardenProp } from '../types/gardenProp';
-import { useState, useEffect } from 'react';
+import { valueToState } from './valueToState';
 
 export const createGardenProp = <
 	TData extends Record<PropertyKey, unknown>,
@@ -27,20 +26,9 @@ export const createGardenProp = <
 		),
 	getIdentifier: controller.getIdentifier,
 	useContext: () => controller.customState,
-	useCurrentGroupingKeys: () => ItemToState(controller.grouping),
-	useCustomGroupByKeys: () => (controller.customGroupByKeys ? ItemToState(controller.customGroupByKeys) : undefined),
-	useData: () => ItemToState(controller.data),
-	useGroups: () => ItemToState(controller.groups),
-	useSelectedNodes: () => [ItemToState(controller.selectedNodes), controller.selectedNodes.setValue],
+	useCurrentGroupingKeys: () => valueToState(controller.grouping),
+	useCustomGroupByKeys: () => (controller.customGroupByKeys ? valueToState(controller.customGroupByKeys) : undefined),
+	useData: () => valueToState(controller.data),
+	useGroups: () => valueToState(controller.groups),
+	useSelectedNodes: () => [valueToState(controller.selectedNodes), controller.selectedNodes.setValue],
 });
-
-const ItemToState = <T>({ onChange, value }: ReactiveValue<T>) => {
-	const [val, setVal] = useState(value);
-
-	useEffect(() => {
-		const unsub = onChange(setVal);
-		return () => unsub();
-	}, []);
-
-	return val;
-};
