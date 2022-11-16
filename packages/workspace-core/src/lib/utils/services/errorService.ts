@@ -8,6 +8,5 @@ export function createErrorService<TError extends Record<PropertyKey, unknown>>(
 	return {
 		error: (click: TError) => errorSubject.next(click),
 		error$: errorSubject.asObservable(),
-		complete: errorSubject.complete,
 	};
 }
