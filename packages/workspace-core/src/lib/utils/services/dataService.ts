@@ -9,7 +9,5 @@ export const createDataService = <TData>(destroy: ServiceCtor) => {
 
 	destroy(() => dataService.completeAll());
 
-	return {
-		...dataService,
-	};
+	return dataService;
 };
