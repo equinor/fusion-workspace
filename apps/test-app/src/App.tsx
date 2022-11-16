@@ -1,5 +1,7 @@
 import './App.css';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { memo } from 'react';
+import { CustomItemView } from '@equinor/workspace-fusion/garden';
 
 const MOCK_DATA: S[] = [
 	{
@@ -73,6 +75,8 @@ type S = {
 	age: number;
 };
 
+const MemoGardenItem = memo(HandoverGardenItem);
+
 function App() {
 	return (
 		<div className="App" style={{ height: '100vh' }}>
@@ -115,11 +119,14 @@ const Workspace = createFusionWorkspace<S, { length: number }>(
 				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
 
 				customViews: {
+					customItemView: MemoGardenItem,
 					customGroupByView: ({ controller }) => {
-						console.log(controller.customState);
-						controller.customState?.length;
+						const context = controller.useContext();
 
-						return <div>{JSON.stringify(controller.customState) ?? null}</div>;
+						console.log(context);
+						context?.length;
+
+						return <div>{JSON.stringify(context) ?? null}</div>;
 					},
 				},
 			})
@@ -136,3 +143,50 @@ type CustomGroupByKeys = {
 type ExtendedFields = 'Yes' | 'no';
 
 // customGroupByView: Controller<types>
+
+function HandoverGardenItem({
+	data,
+	controller,
+	onClick,
+	columnExpanded,
+	depth,
+	width: itemWidth = 300,
+	isSelected,
+	rowStart,
+	columnStart,
+	parentRef,
+}: CustomItemView<S, ExtendedFields, CustomGroupByKeys>): JSX.Element {
+	const {
+		getDisplayName,
+		getIdentifier,
+		useContext,
+		useSelectedNodes,
+		onClickItem,
+		useCurrentGroupingKeys,
+		useCustomGroupByKeys,
+		useData,
+		useGroups,
+	} = controller;
+
+	const displayName = getDisplayName(data);
+	const uniqueId = getIdentifier(data);
+	const context = useContext();
+	/** Will re-render when nodes change */
+	const [nodes, setNodes] = useSelectedNodes();
+	const click = onClickItem;
+	/** Will re-render when grouping changes */
+	const groups = useGroups();
+	/** Will re-render when filtered data changes */
+	const filteredData = useData();
+	/** Will re-render when grouping changes */
+	const { horizontalGroupingAccessor, verticalGroupingKeys } = useCurrentGroupingKeys();
+	/** Will re-render when keys change */
+	const customGroupByKeys = useCustomGroupByKeys();
+
+	return (
+		<>
+			<div>Am garden item</div>
+			<div>{JSON.stringify(context)}</div>
+		</>
+	);
+}
