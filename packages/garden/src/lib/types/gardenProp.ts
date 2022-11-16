@@ -1,22 +1,27 @@
 import { GetIdentifier } from '../classes';
-import { GetDisplayName } from './callbacks';
 import { GardenGroup } from './gardenGroup';
 import { GroupingKeys } from './keys';
 
 export type GardenProp<
 	TData extends Record<PropertyKey, unknown>,
-	ExtendedFields extends string = never,
+	_ExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	_TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
+	/** Will re-render when nodes change */
 	useSelectedNodes: () => [selectedNodes: string[], setSelectedNodes: (nodes: string[]) => void];
+	/** Will re-render when filtered data changes */
 	useData: () => TData[];
+	/** Will re-render when grouping changes */
 	useGroups: () => GardenGroup<TData>[];
+	/** Will re-render when grouping changes */
 	useCurrentGroupingKeys: () => GroupingKeys<TData>;
-	getDisplayName: GetDisplayName<TData>;
+	getDisplayName: (item: TData) => string;
 	getIdentifier: GetIdentifier<TData>;
 	onClickItem: (item: TData) => void;
-	useContext: () => TContext | undefined;
+	/** Will rerender when context changes */
+	useContext: () => TCustomState | undefined;
+	/** Will re-render when keys change */
 	useCustomGroupByKeys: () => TCustomGroupByKeys | undefined;
 };
