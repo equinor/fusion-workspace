@@ -10,7 +10,7 @@ import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles'
 import { tokens } from '@equinor/eds-tokens';
 import { Icon } from '@equinor/eds-core-react';
 import { useSelected } from '../../hooks/useSelected';
-import { createGardenProp } from 'lib/utils/createGardenProp';
+import { createGardenProp } from '../../utils/createGardenProp';
 import { GardenProp } from '../../types/gardenProp';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
