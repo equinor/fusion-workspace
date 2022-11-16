@@ -2,12 +2,14 @@ import { createObservableProxy } from '@equinor/workspace-observable-proxy';
 import { BaseController, GetIdentifier, GridController } from '../types/gridController';
 
 /**Creates a new instance of a grid controller */
-export function createGridController<TData extends Record<PropertyKey, unknown>>(
-	getIdentifier: GetIdentifier<TData>
-): GridController<TData> {
-	const controller: GridController<TData> = createObservableProxy<BaseController<TData>>({
+export function createGridController<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>(getIdentifier: GetIdentifier<TData>): GridController<TData, TContext> {
+	const controller: GridController<TData, TContext> = createObservableProxy<BaseController<TData, TContext>>({
 		columnDefs: [],
 		columnState: [],
+		context: undefined,
 		getIdentifier,
 		gridOptions: undefined,
 		rowData: [],

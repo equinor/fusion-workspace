@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { ColumnApi, GridApi, SideBarDef } from 'ag-grid-community';
+import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
 
@@ -31,24 +31,32 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
  * ```
  */
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
-	const [gridApi, setGridApi] = useState<GridApi>();
-	const [columnApi, setColumnApi] = useState<ColumnApi>();
+	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
+
+	useEffect(() => {
+		const sub = controller.context$.subscribe((s) => {
+			gridOptions.current.context = s;
+			if (gridOptions.current.api) {
+				gridOptions.current.api.refreshCells();
+			}
+		});
+		return () => sub.unsubscribe();
+	}, []);
+
 	const rowData = useRowData(controller);
 
-	useSelectionService(controller, gridApi);
-	useColumnState(controller, columnApi);
+	useSelectionService(controller, gridOptions.current?.api ?? undefined);
+	useColumnState(controller, gridOptions.current.columnApi ?? undefined);
 
 	return (
 		<StyledGridWrapper style={{ height }} className="ag-theme-alpine">
 			<AgGridReact
 				onGridReady={(api) => {
-					setGridApi(api.api);
-					setColumnApi(api.columnApi);
 					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
-				gridOptions={controller.gridOptions}
+				gridOptions={gridOptions.current}
 				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}

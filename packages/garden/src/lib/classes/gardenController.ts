@@ -78,12 +78,12 @@ export class GardenController<
 	 */
 	customState?: TCustomState;
 
-	getCustomState?: (data: TData[]) => TCustomState;
+	#getCustomState?: (data: TData[]) => TCustomState;
 
 	/** Updates the custom state if data changes */
 	private updateCustomState = (data: TData[]) => {
-		if (this.getCustomState) {
-			this.customState = this.getCustomState(data);
+		if (this.#getCustomState) {
+			this.customState = this.#getCustomState(data);
 		}
 	};
 
@@ -125,7 +125,7 @@ export class GardenController<
 		}
 
 		if (getCustomState) {
-			this.getCustomState = getCustomState;
+			this.#getCustomState = getCustomState;
 			//init
 			this.updateCustomState(data);
 			this.data.onChange(this.updateCustomState);

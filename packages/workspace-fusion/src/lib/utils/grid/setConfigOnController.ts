@@ -2,11 +2,10 @@ import { GridConfig, GridController, ColDef } from '../../integrations/grid';
 import { FusionMediator } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function setConfigOnController<TData extends Record<PropertyKey, unknown>>(
-	gridConfig: GridConfig<TData>,
-	gridController: GridController<TData>,
-	mediator: FusionMediator<TData>
-) {
+export function setConfigOnController<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>(gridConfig: GridConfig<TData>, gridController: GridController<TData, TContext>, mediator: FusionMediator<TData>) {
 	if (gridConfig.gridOptions) {
 		gridController.gridOptions = gridConfig.gridOptions;
 	}

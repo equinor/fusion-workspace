@@ -1,6 +1,5 @@
 import history from 'history/browser';
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-
 import {
 	WorkspaceTabNames,
 	FusionMediator,
@@ -33,20 +32,24 @@ import { GridConfig } from '../integrations/grid';
 import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
 import { StatusBarConfig } from '../integrations/status-bar';
 import { DataSourceConfig } from '../integrations/data-source';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { SidesheetConfig } from '../integrations/sidesheet';
 
 export type WorkspaceContext = {
 	ui: unknown;
 };
 
-export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> {
+export class FusionWorkspaceBuilder<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+> {
 	/** The name of your workspace/application */
 	getIdentifier: GetIdentifier<TData>;
 
 	private mediator: FusionMediator<TData> = new WorkspaceReactMediator();
 
 	viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
-
+	#context = new BehaviorSubject<TContext>({} as TContext);
 	appKey: string;
 
 	constructor(getIdentifier: GetIdentifier<TData>, appKey: string) {
@@ -68,6 +71,8 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 			updateQueryParams([`item=${id}`], this.mediator, history);
 		});
 
+		this.mediator.onUnMount(() => this.#context.complete());
+
 		history.listen(({ action }) => {
 			if (action === Action.Pop) {
 				//Navigation back or forward;
@@ -75,6 +80,15 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 			}
 		});
 	}
+	currentSubscription: Subscription | undefined = undefined;
+	addWorkspaceState = (cb: (filteredData: TData[]) => TContext) => {
+		if (this.currentSubscription) throw new Error('addWorkspaceState can only be invoked once');
+		this.currentSubscription = this.mediator.dataService.filteredData$.subscribe((filteredData) => {
+			if (!filteredData) return;
+			this.#context.next(cb(filteredData));
+		});
+		return this;
+	};
 
 	addPowerBi = (config: PowerBiConfig) => {
 		addPowerBi(config, this.viewController, this.mediator);
@@ -137,17 +151,16 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 */
 	addGarden = <
 		TExtendedFields extends string = never,
-		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-		TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-		TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 	>(
-		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>
 	) => {
-		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext, FusionWorkspaceError>(
+		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext, FusionWorkspaceError>(
 			config,
 			this.viewController,
 			this.mediator,
-			this.getIdentifier
+			this.getIdentifier,
+			this.#context
 		);
 		return this;
 	};
@@ -158,7 +171,7 @@ export class FusionWorkspaceBuilder<TData extends Record<PropertyKey, unknown>> 
 	 * @returns an instance of the workspace builder (for method chaining)
 	 */
 	addGrid = (gridConfig: GridConfig<TData>) => {
-		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier);
+		addGrid(gridConfig, this.viewController, this.mediator, this.getIdentifier, this.#context);
 		return this;
 	};
 
