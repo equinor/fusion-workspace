@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-observable-proxy@0.0.5...@equinor/workspace-observable-proxy@0.1.0) (2022-11-16)
+
+### Features
+
+-   workspace context ([#175](https://github.com/equinor/fusion-workspace/issues/175)) ([17a858f](https://github.com/equinor/fusion-workspace/commit/17a858f81ee1c7a00f72cab5f495232a9d0fcc0e))
+
 ## [0.0.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-observable-proxy@0.0.4...@equinor/workspace-observable-proxy@0.0.5) (2022-11-10)
 
 **Note:** Version bump only for package @equinor/workspace-observable-proxy
