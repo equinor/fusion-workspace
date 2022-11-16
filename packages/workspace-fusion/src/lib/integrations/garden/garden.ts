@@ -88,5 +88,5 @@ type GardenConfig<
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = Omit<
 	OriginalGardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	'data' | 'getIdentifier' | 'clickEvents' | 'getCustomState'
+	'data' | 'getIdentifier' | 'clickEvents' | 'getContext'
 >;

@@ -6,8 +6,7 @@ export type GardenProp<
 	TData extends Record<PropertyKey, unknown>,
 	_ExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	_TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
 	/** Will re-render when nodes change */
 	useSelectedNodes: () => [selectedNodes: string[], setSelectedNodes: (nodes: string[]) => void];
@@ -21,7 +20,7 @@ export type GardenProp<
 	getIdentifier: GetIdentifier<TData>;
 	onClickItem: (item: TData) => void;
 	/** Will rerender when context changes */
-	useContext: () => TCustomState | undefined;
+	useContext: () => TContext | undefined;
 	/** Will re-render when keys change */
 	useCustomGroupByKeys: () => TCustomGroupByKeys | undefined;
 };

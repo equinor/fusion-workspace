@@ -48,7 +48,7 @@ export type GardenConfig<
 	 * Will re-run everytime data changes
 	 * ```TS
 	 *
-	 * getCustomState: (data: MyType[]) => {
+	 * getContext: (data: MyType[]) => {
 	 * return data.filter((v,i,a) => a.indexOf(i) === v).length / 2
 	 * }
 	 *
