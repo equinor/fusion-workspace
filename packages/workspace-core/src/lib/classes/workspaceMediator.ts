@@ -6,6 +6,7 @@ import {
 	createSelectionService,
 	createBookmarksService,
 	createUrlService,
+	createContextService,
 } from '../utils';
 
 /**
@@ -17,7 +18,8 @@ export class WorkspaceMediator<
 	TData,
 	TOnClick extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
-	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>
+	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/**
 	 * Callback that returns an instance of itself
@@ -28,25 +30,29 @@ export class WorkspaceMediator<
 		return this;
 	};
 
-	bookmarkService = createBookmarksService<TBookmarkState>();
+	#destructors = new Array<VoidFunction>();
 
-	urlService = createUrlService();
+	#appendDestructor = (destructor: VoidFunction) => {
+		this.#destructors.push(destructor);
+	};
 
-	selectionService = createSelectionService();
+	bookmarkService = createBookmarksService<TBookmarkState>(this.#appendDestructor);
 
-	dataService = createDataService<TData>();
+	urlService = createUrlService(this.#appendDestructor);
 
-	clickService = createClickService<TOnClick>();
+	selectionService = createSelectionService(this.#appendDestructor);
 
-	errorService = createErrorService<TError>();
+	dataService = createDataService<TData>(this.#appendDestructor);
+
+	clickService = createClickService<TOnClick>(this.#appendDestructor);
+
+	errorService = createErrorService<TError>(this.#appendDestructor);
+
+	contextService = createContextService<TContext>(this.#appendDestructor);
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {
-		this.urlService.completeAll();
-		this.dataService.completeAll();
-		this.selectionService.completeAll();
-		this.clickService.complete();
-		this.errorService.complete();
+		this.#destructors.forEach((destroy) => destroy());
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];

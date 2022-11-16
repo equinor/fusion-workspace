@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs';
+import { ServiceCtor } from '../../types/serviceCtor';
 
 /** type for capturing controller state function */
 type CaptureFunc<TState> = () => Partial<TState>;
@@ -8,7 +9,7 @@ type CaptureFunc<TState> = () => Partial<TState>;
  * for more info se documentation [Bookmark Service](https://equinor.github.io/fusion-workspace/packages/workspace-core/services/#bookmark-service)
  */
 
-export function createBookmarksService<TBookmarkState extends Record<PropertyKey, unknown>>() {
+export function createBookmarksService<TBookmarkState extends Record<PropertyKey, unknown>>(destroy: ServiceCtor) {
 	const captureCallbacks: CaptureFunc<TBookmarkState>[] = [];
 	const capture$ = new Subject<TBookmarkState>();
 	const capture = () => capture$.next(getBookmarkState());
@@ -17,6 +18,12 @@ export function createBookmarksService<TBookmarkState extends Record<PropertyKey
 	const registerCapture = (cb: CaptureFunc<TBookmarkState>) => {
 		captureCallbacks.push(cb);
 	};
+
+	/** Pass destructor to caller function */
+	destroy(() => {
+		capture$.complete();
+		apply$.complete();
+	});
 
 	const getBookmarkState = () =>
 		// eslint-disable-next-line no-return-assign

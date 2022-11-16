@@ -7,11 +7,5 @@ export const useMediatorAsState = <TData extends Record<PropertyKey, unknown>>(
 ): FusionMediator<TData> => {
 	const filteredData = useFilteredData(mediator);
 
-	return {
-		...mediator,
-		dataService: {
-			...mediator.dataService,
-			filteredData,
-		},
-	};
+	return Object.assign({}, mediator, { dataService: { ...mediator.dataService, filteredData } });
 };
