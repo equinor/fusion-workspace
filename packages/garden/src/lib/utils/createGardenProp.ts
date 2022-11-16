@@ -13,9 +13,20 @@ export const createGardenProp = <
 	controller: GardenController<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
 ): GardenProp<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> => ({
 	onClickItem: (item) => controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item, controller),
-	getDisplayName: controller.getDisplayName,
+	getDisplayName: (item: TData) =>
+		controller.getDisplayName(
+			item,
+			//TODO: Investigate why default value never breaks type inferring
+			controller as GardenController<
+				TData,
+				never,
+				never,
+				Record<PropertyKey, unknown>,
+				Record<PropertyKey, unknown>
+			>
+		),
 	getIdentifier: controller.getIdentifier,
-	useContext: () => controller.context,
+	useContext: () => controller.customState,
 	useCurrentGroupingKeys: () => ItemToState(controller.grouping),
 	useCustomGroupByKeys: () => (controller.customGroupByKeys ? ItemToState(controller.customGroupByKeys) : undefined),
 	useData: () => ItemToState(controller.data),
