@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
@@ -10,6 +10,8 @@ import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles'
 import { tokens } from '@equinor/eds-tokens';
 import { Icon } from '@equinor/eds-core-react';
 import { useSelected } from '../../hooks/useSelected';
+import { createGardenProp } from 'lib/utils/createGardenProp';
+import { GardenProp } from '../../types/gardenProp';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
@@ -121,7 +123,15 @@ export const GardenItemContainer = <
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
-								controller={controller as any}
+								controller={
+									createGardenProp(controller) as GardenProp<
+										TData,
+										TExtendedFields,
+										TCustomGroupByKeys,
+										TCustomState,
+										TContext
+									>
+								}
 								data={item.item}
 								isSelected={selectedIds.includes(getIdentifier(item.item))}
 								onClick={() => {

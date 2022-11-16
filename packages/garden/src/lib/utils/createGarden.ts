@@ -6,7 +6,8 @@ export function createGarden<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TContext = unknown
+	TCustomState extends Record<PropertyKey, unknown> = never,
+	TContext extends Record<PropertyKey, unknown> = never
 >(props: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const {
 		grouping: {

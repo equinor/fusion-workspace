@@ -1,4 +1,5 @@
 import { SingleSelect } from '@equinor/eds-core-react';
+import { createGardenProp } from '../../utils/createGardenProp';
 import { Fragment, useCallback, useMemo } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
@@ -87,7 +88,7 @@ export function FilterSelector(): JSX.Element | null {
 
 	return (
 		<StyledSelectRowWrapper>
-			{CustomGroupByView && <CustomGroupByView controller={controller} />}
+			{CustomGroupByView && <CustomGroupByView controller={createGardenProp(controller)} />}
 
 			<StyledSeparator> Group by </StyledSeparator>
 

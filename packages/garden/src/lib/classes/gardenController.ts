@@ -46,7 +46,7 @@ export class GardenController<
 	fieldSettings: FieldSettings<TData, ExtendedFields, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
-	nodeLabelCallback: GetDisplayName<TData>;
+	getDisplayName: GetDisplayName<TData>;
 
 	/** Function that returns the primary(unique) identifier for the data type */
 	getIdentifier: GetIdentifier<TData>;
@@ -109,7 +109,7 @@ export class GardenController<
 		}
 
 		this.getIdentifier = getIdentifier;
-		this.nodeLabelCallback = getDisplayName;
+		this.getDisplayName = getDisplayName;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};
@@ -168,10 +168,22 @@ export class GardenController<
 	 */
 	groupData = () => {
 		this.groups.setValue(
-			this.postGroupSorting(createGarden(this), [
-				this.grouping.value.horizontalGroupingAccessor as keyof TData,
-				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
-			])
+			this.postGroupSorting(
+				createGarden(
+					//TODO: Investigate TContext being interpreted as Record<PropertyKey,unknown>
+					this as GardenController<
+						TData,
+						ExtendedFields,
+						TCustomGroupByKeys,
+						TCustomState,
+						Record<PropertyKey, unknown>
+					>
+				),
+				[
+					this.grouping.value.horizontalGroupingAccessor as keyof TData,
+					...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
+				]
+			)
 		);
 	};
 

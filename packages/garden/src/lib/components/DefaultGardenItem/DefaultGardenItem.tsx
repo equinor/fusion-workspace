@@ -18,7 +18,7 @@ export const DefaultGardenItem = memo(
 		} = controller;
 
 		const { color, description, label } = useMemo(() => {
-			const label = controller.nodeLabelCallback(
+			const label = controller.getDisplayName(
 				item,
 				controller as GardenController<
 					Record<PropertyKey, unknown>,

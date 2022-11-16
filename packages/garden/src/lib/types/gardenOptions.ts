@@ -1,6 +1,7 @@
 import { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenController } from '../classes';
 import { GardenGroup, GardenGroups } from '.';
+import { GardenProp } from './gardenProp';
 
 export interface CustomItemView<
 	TData extends Record<PropertyKey, unknown>,
@@ -10,7 +11,7 @@ export interface CustomItemView<
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	data: TData;
-	controller: Omit<GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>, 'destroy'>;
+	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 	onClick: () => void;
 	columnExpanded: boolean;
 	isSelected: boolean;
@@ -61,7 +62,7 @@ export type CustomGroupViewProps<
 	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
-	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
 };
 
 export type PreGroupByFiltering<TData extends Record<PropertyKey, unknown>> = (
