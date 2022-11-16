@@ -117,7 +117,6 @@ export const VirtualGarden = <
 									TData,
 									TExtendedFields,
 									TCustomGroupByKeys,
-									TCustomState,
 									TContext
 								>['customItemView']
 							}
@@ -126,7 +125,6 @@ export const VirtualGarden = <
 									TData,
 									TExtendedFields,
 									TCustomGroupByKeys,
-									TCustomState,
 									TContext
 								>['customGroupView']
 							}

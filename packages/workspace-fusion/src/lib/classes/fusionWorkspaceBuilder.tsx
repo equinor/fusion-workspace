@@ -153,9 +153,9 @@ export class FusionWorkspaceBuilder<
 		TExtendedFields extends string = never,
 		TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 	>(
-		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>
+		config: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>
 	) => {
-		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext, FusionWorkspaceError>(
+		addGarden<TData, TExtendedFields, TCustomGroupByKeys, TContext, FusionWorkspaceError>(
 			config,
 			this.viewController,
 			this.mediator,

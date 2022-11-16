@@ -20,13 +20,7 @@ export const DefaultGardenItem = memo(
 		const { color, description, label } = useMemo(() => {
 			const label = controller.getDisplayName(
 				item,
-				controller as GardenController<
-					Record<PropertyKey, unknown>,
-					never,
-					never,
-					Record<PropertyKey, unknown>,
-					Record<PropertyKey, unknown>
-				>
+				controller as GardenController<Record<PropertyKey, unknown>, never, never, Record<PropertyKey, unknown>>
 			);
 			const color = (getItemColor && getItemColor(item)) ?? 'grey';
 

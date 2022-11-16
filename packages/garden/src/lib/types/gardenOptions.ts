@@ -1,5 +1,4 @@
 import { MemoExoticComponent, MutableRefObject } from 'react';
-import { GardenController } from '../classes';
 import { GardenGroup, GardenGroups } from '.';
 import { GardenProp } from './gardenProp';
 
@@ -7,11 +6,10 @@ export interface CustomItemView<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	data: TData;
-	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 	onClick: () => void;
 	columnExpanded: boolean;
 	isSelected: boolean;
@@ -42,16 +40,15 @@ export interface CustomVirtualViews<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
 	customItemView?: MemoExoticComponent<
-		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
 	>;
 	customGroupView?: MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
 	customHeaderView?: MemoExoticComponent<(args: CustomHeaderView<TData>) => JSX.Element>;
 	customGroupByView?: (
-		props: CustomGroupViewProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+		props: CustomGroupViewProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>
 	) => JSX.Element;
 }
 
@@ -59,10 +56,9 @@ export type CustomGroupViewProps<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
-	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 };
 
 export type PreGroupByFiltering<TData extends Record<PropertyKey, unknown>> = (

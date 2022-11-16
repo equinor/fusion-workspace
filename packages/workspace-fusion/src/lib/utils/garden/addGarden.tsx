@@ -15,28 +15,21 @@ export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedGardenFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(
-	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TCustomState, TContext>,
+	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData>,
 	getIdentifier: GetIdentifier<TData>,
-	context: BehaviorSubject<TCustomState>
+	context: BehaviorSubject<TContext>
 ) {
-	const gardenController = new GardenController<
-		TData,
-		TExtendedGardenFields,
-		TCustomGroupByKeys,
-		TCustomState,
-		TContext
-	>(
+	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>(
 		{
 			...gardenConfig,
 			data: [],
 			getIdentifier,
-			getCustomState: () => context.getValue(),
+			getContext: () => context.getValue(),
 		},
 		(destroy) => mediator.onUnMount(destroy)
 	);

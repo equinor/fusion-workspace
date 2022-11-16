@@ -9,10 +9,9 @@ interface GardenProps<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
-	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -21,9 +20,8 @@ export function Garden<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
->({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {
+>({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>): JSX.Element | null {
 	//TODO:Handle no data better in garden
 
 	return (
@@ -32,8 +30,7 @@ export function Garden<
 				controller as unknown as GardenController<
 					Record<PropertyKey, unknown>,
 					string,
-					BaseRecordObject<unknown>,
-					BaseRecordObject<unknown>,
+					Record<PropertyKey, unknown>,
 					Record<PropertyKey, unknown>
 				>
 			}
@@ -44,11 +41,5 @@ export function Garden<
 }
 
 export const GardenContext = createContext<
-	GardenController<
-		Record<PropertyKey, unknown>,
-		string,
-		BaseRecordObject<unknown>,
-		BaseRecordObject<unknown>,
-		Record<PropertyKey, unknown>
-	>
+	GardenController<Record<PropertyKey, unknown>, string, Record<PropertyKey, unknown>, Record<PropertyKey, unknown>>
 >({} as any);

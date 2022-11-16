@@ -14,7 +14,6 @@ export type GardenConfig<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
 	/** Data to be used for the garden */
@@ -39,9 +38,9 @@ export type GardenConfig<
 	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	/** Supply functions for handling clicks in the garden */
-	clickEvents?: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	clickEvents?: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 	/** Replace built-in components with your own */
-	customViews?: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>;
+	customViews?: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 	/** Visual details */
 	visuals?: Visuals<TData, TExtendedFields, TCustomGroupByKeys>;
 	/** Function for calculating custom state
@@ -55,7 +54,7 @@ export type GardenConfig<
 	 *
 	 * ```
 	 */
-	getCustomState?: (data: TData[]) => TCustomState;
+	getContext?: (data: TData[]) => TContext;
 	intercepters?: GardenDataIntercepters<TData, TExtendedFields>;
 };
 

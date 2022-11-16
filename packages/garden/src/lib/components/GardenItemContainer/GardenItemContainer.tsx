@@ -18,14 +18,13 @@ type PackageContainerProps<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 > = {
 	virtualColumn: VirtualItem;
 	rowVirtualizer: VirtualHookReturn;
 	items: GardenItem<TData>[] | null;
 	packageChild?: React.MemoExoticComponent<
-		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
 	>;
 	customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
 	handleExpand: any;
@@ -37,10 +36,9 @@ export const GardenItemContainer = <
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 >(
-	props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+	props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>
 ): JSX.Element => {
 	const {
 		rowVirtualizer,
@@ -128,7 +126,6 @@ export const GardenItemContainer = <
 										TData,
 										TExtendedFields,
 										TCustomGroupByKeys,
-										TCustomState,
 										TContext
 									>
 								}
