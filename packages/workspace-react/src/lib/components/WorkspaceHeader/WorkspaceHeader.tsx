@@ -3,7 +3,6 @@ import { ActionBar } from '../ActionBar';
 
 export function WorkspaceHeader() {
 	const tab = useActiveTab();
-	if (!tab || !tab.CustomHeader) return <ActionBar />;
 
-	return <tab.CustomHeader />;
+	return <div id="workspace_header">{!tab || !tab.CustomHeader ? <ActionBar /> : <tab.CustomHeader />}</div>;
 }

@@ -9,7 +9,7 @@ export function WorkspaceBody() {
 	const { Sidesheet } = useControllerContext();
 
 	return (
-		<StyledWorkspaceBody>
+		<StyledWorkspaceBody id="workspace_body">
 			<WorkspaceDataLoader>
 				<WorkspaceErrorBoundary>
 					<WorkspaceTab />

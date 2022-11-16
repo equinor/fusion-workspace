@@ -7,5 +7,9 @@ export function WorkspaceTab() {
 	const tab = useActiveTab();
 	if (!tab) return null;
 	const { Component } = tab;
-	return <Component />;
+	return (
+		<div id={`tab_${tab.name}`}>
+			<Component />
+		</div>
+	);
 }
