@@ -4,7 +4,7 @@ import { FilterController } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FusionWorkspaceError, FusionMediator } from './fusionController';
-import { WorkspaceOnClick } from './onClick';
+import { WorkspaceOnClick } from './event';
 import { WorkspaceTabNames } from './tabs';
 import { WorkspaceProps } from '../components/Workspace';
 

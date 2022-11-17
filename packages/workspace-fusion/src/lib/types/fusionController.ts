@@ -1,6 +1,6 @@
 import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { FusionBookmark } from './fusionBookmark';
-import { WorkspaceOnClick } from './onClick';
+import { WorkspaceOnClick } from './event';
 
 //TODO: Generic, temp
 type WorkspaceContext = {
