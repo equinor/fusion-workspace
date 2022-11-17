@@ -1,5 +1,12 @@
 import './App.css';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import Workspace, { FusionMediator, WorkspaceConfig } from '@equinor/workspace-fusion';
+import { GridConfig } from '@equinor/workspace-fusion/grid';
+import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
+import { useCallback, useRef, useState } from 'react';
+import { GardenConfig } from '@equinor/workspace-fusion/garden';
+import { FilterConfig } from '@equinor/workspace-fusion/filter';
+import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
+import { Button } from '@equinor/eds-core-react';
 
 const MOCK_DATA: S[] = [
 	{
@@ -73,57 +80,108 @@ type S = {
 	age: number;
 };
 
+const options: WorkspaceConfig<S> = {
+	getIdentifier: (s) => s.id,
+};
+
+const gridOptions: GridConfig<S> = {
+	columnDefinitions: [{ field: 'id', valueGetter: (s) => s.context.length }],
+};
+
+const gardenOptions: GardenConfig<S> = {
+	getDisplayName: (s) => s.id,
+	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+};
+
+const filterOptions: FilterConfig<S> = { filterGroups: [{ name: 'id', valueFormatter: (s) => s.id }] };
+
+const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
+
+const responseParser = () => [
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+];
+
 function App() {
+	const workspaceApi = useRef<null | FusionMediator<S>>(null);
+	const [contextId, setContextId] = useState('abc');
+
+	const getResponseAsync = useCallback(async () => {
+		return new Response(undefined, { status: 200 });
+	}, [contextId]);
+
 	return (
 		<div className="App" style={{ height: '100vh' }}>
-			<Workspace />
+			<Button onClick={() => setContextId((Math.random() * 16).toString())}>Switch context</Button>
+			<Workspace
+				onWorkspaceReady={(ev) => {
+					workspaceApi.current = ev.api;
+				}}
+				contextOptions={contextOptions}
+				statusBarOptions={statusBarOptions}
+				workspaceOptions={options}
+				gridOptions={gridOptions}
+				gardenOptions={gardenOptions}
+				filterOptions={filterOptions}
+				dataOptions={{
+					getResponseAsync: getResponseAsync,
+					responseParser: responseParser,
+				}}
+			/>
 		</div>
 	);
 }
 
 export default App;
 
-const Workspace = createFusionWorkspace<S, { length: number }>(
-	{ appKey: 'Handover', getIdentifier: (s) => s.id },
-	(s) =>
-		s
-			.addFilter({
-				filterGroups: [
-					{
-						name: 'id',
-						valueFormatter: (s) => s.id,
-						isQuickFilter: true,
-					},
-				],
-			})
-			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
-			.addGrid({
-				columnDefinitions: [
-					{ field: 'id' },
-					{
-						field: 'age',
-						valueGetter: (s) => {
-							return s.context.length;
-						},
-					},
-				],
-			})
-			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
-			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
-			.addGarden<ExtendedFields, CustomGroupByKeys>({
-				getDisplayName: (s) => s.age.toString(),
-				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
+const contextOptions = (data: S[]) => ({ length: data.length });
 
-				customViews: {
-					customGroupByView: ({ controller }) => {
-						console.log(controller.customState);
-						controller.customState?.length;
+// const Workspace = createFusionWorkspace<S, { length: number }>(
+// 	{ appKey: 'Handover', getIdentifier: (s) => s.id },
+// 	(s) =>
+// 		s
+// 			.addFilter({
+// 				filterGroups: [
+// 					{
+// 						name: 'id',
+// 						valueFormatter: (s) => s.id,
+// 						isQuickFilter: true,
+// 					},
+// 				],
+// 			})
+// 			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
+// 			.addGrid({
+// 				columnDefinitions: [
+// 					{ field: 'id' },
+// 					{
+// 						field: 'age',
+// 						valueGetter: (s) => {
+// 							return s.context.length;
+// 						},
+// 					},
+// 				],
+// 			})
+// 			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
+// 			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
+// 			.addGarden<ExtendedFields, CustomGroupByKeys>({
+// 				getDisplayName: (s) => s.age.toString(),
+// 				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
 
-						return <div>{JSON.stringify(controller.customState) ?? null}</div>;
-					},
-				},
-			})
-);
+// 				customViews: {
+// 					customGroupByView: ({ controller }) => {
+// 						console.log(controller.customState);
+// 						controller.customState?.length;
+
+// 						return <div>{JSON.stringify(controller.customState) ?? null}</div>;
+// 					},
+// 				},
+// 			})
+// );
 
 type CustomState = {
 	NotSure: 'not sure';
