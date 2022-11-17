@@ -8,76 +8,77 @@ import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
 import { Button } from '@equinor/eds-core-react';
 
-const MOCK_DATA: S[] = [
-	{
-		id: '124',
-		age: 18,
-	},
-	{
-		id: '594ed20c-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5ccd8d6a-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-];
+// const MOCK_DATA: S[] = [
+// 	{
+// 		id: '124',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '594ed20c-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5ccd8d6a-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// 	{
+// 		id: '123',
+// 		age: 18,
+// 	},
+// ];
 
 type S = {
 	id: string;
 	age: number;
+	contextId: string;
 };
 
 const options: WorkspaceConfig<S> = {
@@ -85,7 +86,7 @@ const options: WorkspaceConfig<S> = {
 };
 
 const gridOptions: GridConfig<S> = {
-	columnDefinitions: [{ field: 'id', valueGetter: (s) => s.context.length }],
+	columnDefinitions: [{ field: 'id', valueGetter: (s) => s.context.length }, { field: 'contextId' }],
 };
 
 const gardenOptions: GardenConfig<S> = {
@@ -97,14 +98,14 @@ const filterOptions: FilterConfig<S> = { filterGroups: [{ name: 'id', valueForma
 
 const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
 
-const responseParser = () => [
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString() },
+const getItems = (contextId: string) => [
+	{ age: 2, id: '123', contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 ];
 
 function App() {
@@ -112,7 +113,16 @@ function App() {
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
-		return new Response(undefined, { status: 200 });
+		return new Promise<Response>((res) =>
+			setTimeout(
+				() =>
+					res({
+						status: 200,
+						json: async () => getItems(contextId),
+					} as Response),
+				2000
+			)
+		);
 	}, [contextId]);
 
 	return (
@@ -130,7 +140,7 @@ function App() {
 				filterOptions={filterOptions}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
-					responseParser: responseParser,
+					// responseParser: responseParser,
 				}}
 			/>
 		</div>

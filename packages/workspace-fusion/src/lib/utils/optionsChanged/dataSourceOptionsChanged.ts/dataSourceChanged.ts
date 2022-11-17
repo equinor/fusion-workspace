@@ -1,4 +1,4 @@
-import { createFetchFunction } from 'lib/utils/dataSource/createFetchFunction';
+import { createFetchFunction } from '../../../utils/dataSource/createFetchFunction';
 import { WorkspaceConfiguration } from '../../../types';
 
 /**
