@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useEffectOnce, Workspace as WorkspaceView } from '@equinor/workspace-react';
-import { CustomTab, FusionMediator, WorkspaceConfig, WorkspaceConfiguration } from '../types';
+import { CustomTab, WorkspaceConfig, WorkspaceConfiguration } from '../types';
 import { DataSourceConfig } from '../integrations/data-source';
 import { FilterConfig } from '../integrations/filter';
 import { GardenConfig } from '../integrations/garden';
@@ -10,10 +10,7 @@ import { SidesheetConfig } from '../integrations/sidesheet';
 import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
 import { didOptionsChange } from '../utils/optionsChanged/didOptionsChange';
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
-
-type OnWorkspaceReadyEvent<TData extends Record<PropertyKey, unknown>> = {
-	api: FusionMediator<TData>;
-};
+import { OnWorkspaceReadyEvent } from '../types/event';
 
 export type WorkspaceProps<
 	TData extends Record<PropertyKey, unknown>,
