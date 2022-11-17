@@ -1,14 +1,10 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
-import { StyledCount, StyledPackageRoot } from './gardenItemContainer.styles';
-import { DefaultGardenItem } from '../DefaultGardenItem/DefaultGardenItem';
+import { StyledPackageRoot } from './gardenItemContainer.styles';
 import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../types';
-import { StyledSubGroup, StyledSubGroupText } from '../SubGroup/subGroup.styles';
-import { tokens } from '@equinor/eds-tokens';
-import { Icon } from '@equinor/eds-core-react';
 import { useSelected } from '../../hooks/useSelected';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
@@ -66,13 +62,15 @@ export const GardenItemContainer = <
 	const expand = useExpand();
 
 	const CustomSubGroup = props?.customSubGroup;
+
+	if (!PackageChild) throw new Error('No garden item registered');
+	if (!CustomSubGroup) throw new Error('No garden group registered');
+
 	return (
 		<>
 			{rowVirtualizer.virtualItems.map((virtualRow) => {
 				const item = items?.[virtualRow.index];
 				if (!item) return null;
-
-				const width = isSubGroup(item) ? 100 - item.depth * 3 : 100;
 
 				return (
 					<StyledPackageRoot
@@ -84,39 +82,15 @@ export const GardenItemContainer = <
 						}}
 					>
 						{isSubGroup(item) ? (
-							CustomSubGroup ? (
-								<CustomSubGroup
-									columnExpanded={item.isExpanded}
-									data={item as GardenGroup<TData>}
-									onClick={() => handleExpand(item)}
-									onSelect={(item) => onClickItem && onClickItem(item, controller)}
-									onGroupeSelect={(group) => onClickGroup && onClickGroup(group, controller)}
-									groupByKeys={[horizontalGroupingAccessor, ...verticalGroupingKeys]}
-								/>
-							) : (
-								<StyledSubGroup onClick={() => handleExpand(item)} style={{ width: `${width}%` }}>
-									<StyledSubGroupText>
-										<div
-											onClick={() =>
-												onClickGroup &&
-												onClickGroup(
-													item as GardenGroup<Record<PropertyKey, unknown>>,
-													controller
-												)
-											}
-										>
-											{item.value}
-										</div>
-										{item.description && ' - ' + item.description}
-										<StyledCount>({item.count})</StyledCount>
-									</StyledSubGroupText>
-									<Icon
-										name={item.isExpanded ? 'chevron_up' : 'chevron_down'}
-										color={tokens.colors.interactive.primary__resting.hex}
-									/>
-								</StyledSubGroup>
-							)
-						) : PackageChild ? (
+							<CustomSubGroup
+								columnExpanded={item.isExpanded}
+								data={item}
+								onClick={() => handleExpand(item)}
+								onSelect={(item) => onClickItem && onClickItem(item, controller)}
+								onGroupeSelect={(group) => onClickGroup && onClickGroup(group, controller)}
+								groupByKeys={[horizontalGroupingAccessor, ...verticalGroupingKeys]}
+							/>
+						) : (
 							<PackageChild
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
@@ -133,15 +107,6 @@ export const GardenItemContainer = <
 								rowStart={virtualRow.start}
 								columnStart={virtualColumn.start}
 								parentRef={parentRef}
-							/>
-						) : (
-							<DefaultGardenItem
-								isSelected={selectedIds.includes(getIdentifier(item.item))}
-								depth={item.itemDepth}
-								columnExpanded={
-									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
-								}
-								item={item.item as unknown as Record<string, string>}
 							/>
 						)}
 					</StyledPackageRoot>

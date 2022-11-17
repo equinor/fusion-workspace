@@ -1,5 +1,6 @@
 import './App.css';
 import { createFusionWorkspace } from '@equinor/workspace-fusion';
+import { memo } from 'react';
 
 const MOCK_DATA: S[] = [
 	{
@@ -113,15 +114,34 @@ const Workspace = createFusionWorkspace<S, { length: number }>(
 			.addGarden<ExtendedFields, CustomGroupByKeys>({
 				getDisplayName: (s) => s.age.toString(),
 				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
-
-				customViews: {
-					customGroupByView: ({ controller }) => {
-						console.log(controller.customState);
-						controller.customState?.length;
-
-						return <div>{JSON.stringify(controller.customState) ?? null}</div>;
+				visuals: {
+					calculateItemWidth: () => 200,
+					getDescription: (s) => {
+						return 'test';
 					},
 				},
+				customViews: {
+					customHeaderView: memo((args) => {
+						return <div style={{ backgroundColor: 'red' }}>{args.garden[args.columnIndex].value}</div>;
+					}),
+					customItemView: memo((args) => {
+						return (
+							<div>
+								<div>am custom</div>
+								{args.columnExpanded && <div>Custom desc</div>}
+							</div>
+						);
+					}),
+				},
+				// customViews: {
+				// 	customGroupView: memo(() => <div>am custom</div>),
+				// 	customGroupByView: ({ controller }) => {
+				// 		console.log(controller.customState);
+				// 		controller.customState?.length;
+
+				// 		return <div>{JSON.stringify(controller.customState) ?? null}</div>;
+				// 	},
+				// },
 			})
 );
 
