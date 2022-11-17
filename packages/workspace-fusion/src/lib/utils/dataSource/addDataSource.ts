@@ -20,5 +20,6 @@ export function addDataSource<TData extends Record<PropertyKey, unknown>>(
 	onMount(dataSourceController.getDataAsync);
 	onUnMount(dataSourceController.abort);
 	onUnMount(dataSourceController.destroy);
+
 	return dataSourceController;
 }

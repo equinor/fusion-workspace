@@ -1,3 +1,4 @@
+import { createFetchFunction } from 'lib/utils/dataSource/createFetchFunction';
 import { WorkspaceConfiguration } from '../../../types';
 
 /**
@@ -13,8 +14,16 @@ export function didDataSourceOptionsChange<
 	current: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>,
 	previous: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ) {
+	if (!previous.dataSourceController) return;
+	const dataSourceController = previous.dataSourceController;
+
+	/** Check if fetch function got a new reference */
 	if (current.rawOptions.dataOptions?.getResponseAsync !== previous.rawOptions.dataOptions?.getResponseAsync) {
-		console.log('Get data reference changed, refetching...');
-		previous.dataSourceController?.getDataAsync();
+		/** Only react if there is new dataoptions, removing dataoptions is not currently supported */
+		if (current.rawOptions.dataOptions) {
+			dataSourceController.setFetch(createFetchFunction(current.rawOptions.dataOptions, previous.mediator));
+			dataSourceController.reset();
+			dataSourceController.getDataAsync();
+		}
 	}
 }

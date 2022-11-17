@@ -16,6 +16,7 @@ export type CustomTabProps<TData> = {
 
 export type WorkspaceConfig<TData> = {
 	getIdentifier: GetIdentifier<TData>;
+	appKey: string;
 };
 
 export type CustomTabComponent = () => JSX.Element;
