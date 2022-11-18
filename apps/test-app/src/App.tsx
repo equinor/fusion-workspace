@@ -5,6 +5,7 @@ import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
 import { memo, useCallback, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
+import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
 import { Button } from '@equinor/eds-core-react';
 
@@ -41,17 +42,17 @@ const contextOptions = (data: S[]) => ({ length: data.length });
 const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
 
 const getItems = (contextId: string) => [
-	// { age: 2, id: '123', contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: 2, id: '123', contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 ];
 
 function App() {
-	const workspaceApi = useRef<null | FusionMediator<S>>(null);
+	const workspaceApi = useRef<null | FusionMediator<S, { length: number }>>(null);
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
@@ -73,9 +74,6 @@ function App() {
 			<Workspace
 				onWorkspaceReady={(ev) => {
 					workspaceApi.current = ev.api;
-					ev.api.contextService.context$.subscribe((s) => {
-						console.log(`New context value, ${s}`);
-					});
 				}}
 				contextOptions={contextOptions}
 				statusBarOptions={statusBarOptions}
@@ -83,7 +81,13 @@ function App() {
 				gridOptions={gridOptions}
 				gardenOptions={gardenOptions}
 				filterOptions={filterOptions}
-				sidesheetOptions={{ Component: (props) => <div>Am a sidesheet bro</div> }}
+				sidesheetOptions={{
+					Sidesheet: (props) => {
+						console.log(props);
+
+						return <div>am sidesheet </div>;
+					},
+				}}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
 				}}
