@@ -5,10 +5,14 @@ import { WorkspaceTabNames, FusionMediator } from '../../types';
 import { addFilterContext } from './addFilterContext';
 import { configureOnDataChange } from './configureOnDataChange';
 
-export function addFilter<TData extends Record<PropertyKey, unknown>, TError>(
+export function addFilter<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	config: FilterConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	const filterController = new ReactFilterController<TData>();
 

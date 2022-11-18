@@ -15,23 +15,20 @@ import { BehaviorSubject } from 'rxjs';
 export function addGrid<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown> = never
 >(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>,
-	getIdentifier: GetIdentifier<TData>,
-	context?: BehaviorSubject<TContext>
+	mediator: FusionMediator<TData, TContext>,
+	getIdentifier: GetIdentifier<TData>
 ) {
 	const gridController = createGridController<TData, TContext>(getIdentifier);
 
-	if (context) {
-		const sub = context.subscribe((s) => {
-			gridController.context = s;
-		});
+	const sub = mediator.contextService.context$.subscribe((s) => {
+		gridController.context = s;
+	});
 
-		mediator.onUnMount(() => sub.unsubscribe());
-	}
+	mediator.onUnMount(() => sub.unsubscribe());
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);

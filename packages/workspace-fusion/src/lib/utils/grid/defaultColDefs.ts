@@ -16,10 +16,10 @@ export function applyDefaultColumnDefinitions<TData extends Record<PropertyKey, 
 /**
  * Applies onclick to all cells by default
  */
-export function applyWorkspaceClickToCells<TData extends Record<PropertyKey, unknown>>(
-	colDefs: ColDef<TData>[],
-	{ clickService }: FusionMediator<TData>
-): ColDef<TData>[] {
+export function applyWorkspaceClickToCells<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData, TContext>): ColDef<TData>[] {
 	return colDefs.map((colDef) => ({
 		onCellClicked: (ev) => ev.data && clickService.click({ item: ev.data }),
 		...colDef,

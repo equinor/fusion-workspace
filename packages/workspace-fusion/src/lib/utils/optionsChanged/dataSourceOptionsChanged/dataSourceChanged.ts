@@ -31,10 +31,13 @@ export function didDataSourceOptionsChange<
 /**
  * Refetch data if the getResponseAsync function changes
  */
-function handleDataSourceChanged<TData extends Record<PropertyKey, unknown>>(
+function handleDataSourceChanged<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	dataSourceController: FetchController<TData>,
 	dataOptions: DataSourceConfig<TData>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	dataSourceController.setFetch(createFetchFunction(dataOptions, mediator));
 	dataSourceController.reset();

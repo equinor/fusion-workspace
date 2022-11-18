@@ -2,10 +2,14 @@ import { WorkspaceViewController } from '@equinor/workspace-react';
 import { CustomTabWrapper } from '../components';
 import { CustomTab, FusionMediator, WorkspaceTabNames } from '../types';
 
-export async function addCustomTab<TData extends Record<PropertyKey, unknown>, TError>(
+export async function addCustomTab<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	tab: CustomTab,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	if (tab.predicate && !(await tab.predicate())) return;
 	viewController.tabController.tabs.push({

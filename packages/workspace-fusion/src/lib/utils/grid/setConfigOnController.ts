@@ -4,8 +4,12 @@ import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './def
 
 export function setConfigOnController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
->(gridConfig: GridConfig<TData>, gridController: GridController<TData, TContext>, mediator: FusionMediator<TData>) {
+	TContext extends Record<PropertyKey, unknown> = never
+>(
+	gridConfig: GridConfig<TData>,
+	gridController: GridController<TData, TContext>,
+	mediator: FusionMediator<TData, TContext>
+) {
 	if (gridConfig.gridOptions) {
 		gridController.gridOptions = gridConfig.gridOptions;
 	}
@@ -19,9 +23,9 @@ export function setConfigOnController<
  * @param mediator Workspace controller
  * @returns Altered column definitions
  */
-function prepareColumnDefintions<TData extends Record<PropertyKey, unknown>>(
-	columnDefs: ColDef<TData>[],
-	mediator: FusionMediator<TData>
-) {
+function prepareColumnDefintions<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData, TContext>) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, mediator));
 }

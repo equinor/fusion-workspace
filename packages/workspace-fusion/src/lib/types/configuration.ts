@@ -54,7 +54,7 @@ export type WorkspaceConfiguration<
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
 	gridController?: GridController<TData>;
 	workspaceConfig: WorkspaceConfig<TData>;
-	mediator: FusionMediator<TData>;
+	mediator: FusionMediator<TData, TContext>;
 	filterController?: FilterController<TData>;
 	dataSourceController?: FetchController<TData>;
 	rawOptions: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>;

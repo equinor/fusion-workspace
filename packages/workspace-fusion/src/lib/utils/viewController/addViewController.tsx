@@ -5,9 +5,12 @@ import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 
 /** Configure a view controller with the mediator */
-export function addViewController<TData extends Record<PropertyKey, unknown>>(
+export function addViewController<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData>,
+	mediator: FusionMediator<TData, TContext>,
 	history: BrowserHistory
 ) {
 	viewController.ErrorComponent = ({ error }) => <DumpsterFireDialog text={error.detail} buttons={[]} />;
@@ -33,10 +36,11 @@ export function addViewController<TData extends Record<PropertyKey, unknown>>(
 }
 
 /** Switches tab when url changes due to navigation event */
-export function switchTabOnNavigation<TData extends Record<PropertyKey, unknown>, TError>(
-	mediator: FusionMediator<TData>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
-) {
+export function switchTabOnNavigation<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(mediator: FusionMediator<TData, TContext>, viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
 	const tab = mediator.urlService.url.searchParams.get('tab');
 	if (tab) {
 		viewController.tabController.setActiveTab(tab as WorkspaceTabNames);

@@ -5,7 +5,6 @@ import history from 'history/browser';
 import { FusionPowerBiConfigurator } from '../classes';
 import { configureUrlWithHistory, updateQueryParams } from '../classes/fusionUrlHandler';
 import { WorkspaceConfiguration, FusionMediator, WorkspaceTabNames, FusionWorkspaceError } from '../types';
-import { BehaviorSubject } from 'rxjs';
 import { addCustomTab } from './addCustomTab';
 import { addDataSource } from './dataSource';
 import { addFilter } from './filter';
@@ -25,10 +24,7 @@ export function createConfigurationObject<
 >(
 	props: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ): WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> {
-	//Switch to contextService
-	const context = new BehaviorSubject<TContext>({} as TContext);
-
-	const mediator: FusionMediator<TData> = new WorkspaceReactMediator();
+	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator();
 	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
 	addViewController(viewController, mediator, history);
 	configureUrlWithHistory(mediator, history);
@@ -41,7 +37,7 @@ export function createConfigurationObject<
 	if (props.contextOptions) {
 		mediator.dataService.filteredData$.subscribe((data) => {
 			if (!data || !props.contextOptions) return;
-			context.next(props.contextOptions(data));
+			mediator.contextService.setContext(props.contextOptions(data));
 		});
 	}
 	if (props.fusionPowerBiOptions) {
@@ -70,10 +66,10 @@ export function createConfigurationObject<
 		});
 	}
 	if (props.gardenOptions) {
-		addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier, context);
+		addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	}
 	if (props.gridOptions) {
-		addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier, context);
+		addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	}
 	if (props.sidesheetOptions) {
 		addSidesheet(props.sidesheetOptions, viewController, mediator);
@@ -87,8 +83,6 @@ export function createConfigurationObject<
 		mediator.selectionService.selectedNodes = [id];
 		updateQueryParams([`item=${id}`], mediator, history);
 	});
-
-	//TODO: this.mediator.onUnMount(() => this.#context.complete());
 
 	history.listen(({ action }) => {
 		if (action === Action.Pop) {

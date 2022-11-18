@@ -19,16 +19,15 @@ export function addGarden<
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>,
-	getIdentifier: GetIdentifier<TData>,
-	context: BehaviorSubject<TContext>
+	mediator: FusionMediator<TData, TContext>,
+	getIdentifier: GetIdentifier<TData>
 ) {
 	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>(
 		{
 			...gardenConfig,
 			data: [],
 			getIdentifier,
-			getContext: () => context.getValue(),
+			getContext: () => mediator.contextService.getContext(),
 		},
 		(destroy) => mediator.onUnMount(destroy)
 	);

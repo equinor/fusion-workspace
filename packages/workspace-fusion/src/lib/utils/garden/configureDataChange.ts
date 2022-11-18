@@ -9,7 +9,7 @@ export function configureDataChange<
 	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	{ dataService }: FusionMediator<TData>
+	{ dataService }: FusionMediator<TData, TContext>
 ) {
 	dataService.filteredData$.subscribe((newData) => newData && gardenController.data.setValue(newData));
 }

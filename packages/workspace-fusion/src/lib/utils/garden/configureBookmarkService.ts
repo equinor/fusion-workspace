@@ -9,7 +9,7 @@ export function configureBookmarkService<
 	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
 	mediator.bookmarkService.apply$.subscribe(

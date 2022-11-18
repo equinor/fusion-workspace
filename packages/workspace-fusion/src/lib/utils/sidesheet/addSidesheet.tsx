@@ -3,11 +3,14 @@ import { SidesheetConfig } from '../../integrations/sidesheet';
 import { SidesheetWrapper } from '../../components';
 import { FusionMediator, WorkspaceTabNames } from '../../types';
 
-/** TODO: Review this and either expand context or expand baseclass. Sidesheet state is shared directly between two controllers! */
-export function addSidesheet<TData extends Record<PropertyKey, unknown>, TError>(
+export function addSidesheet<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	config: SidesheetConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	viewController.addSidesheetComponent(() => <SidesheetWrapper Component={config.Component} mediator={mediator} />);
 }
