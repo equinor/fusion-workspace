@@ -47,7 +47,7 @@ export function Workspace<
 	 * Triggers on every parent render and updates configuration accordingly
 	 * Careful with doing complex operations in here
 	 */
-	didOptionsChange(createConfigurationObject(props), configuration.current);
+	didOptionsChange(props, configuration.current);
 
 	/**
 	 * Calls user's callback to pass the api

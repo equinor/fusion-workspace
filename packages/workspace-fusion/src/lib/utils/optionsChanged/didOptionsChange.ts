@@ -1,3 +1,4 @@
+import { WorkspaceProps } from '../../components';
 import { WorkspaceConfiguration } from '../../types';
 import { didDataSourceOptionsChange } from './dataSourceOptionsChanged.ts/dataSourceChanged';
 
@@ -7,8 +8,8 @@ export function didOptionsChange<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(
-	current: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>,
-	previous: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>
+	newConfig: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>,
+	current: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ) {
-	didDataSourceOptionsChange(current, previous);
+	didDataSourceOptionsChange(newConfig, current);
 }
