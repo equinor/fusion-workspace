@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
-import { CustomItemView } from 'lib/types';
+import { CustomItemView } from '../../../types';
 
 const GardenItem = <
 	TData extends Record<PropertyKey, unknown>,

@@ -66,6 +66,8 @@
 		"@equinor/workspace-react": "workspace:^0.2.1",
 		"@equinor/workspace-sidesheet": "workspace:^0.1.0",
 		"@equinor/workspace-status-bar": "workspace:^0.0.7",
+		"@types/react": ">= 16.8.0",
+		"@types/react-dom": "^18.0.8",
 		"history": "^5.3.0",
 		"rxjs": "^7.5.7",
 		"styled-components": "^5.3.6"

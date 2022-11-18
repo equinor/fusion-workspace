@@ -1,4 +1,4 @@
-import { GardenController } from 'lib/classes';
+import { GardenController } from '../classes';
 import { useContext } from 'react';
 import { GardenContext } from '../components';
 

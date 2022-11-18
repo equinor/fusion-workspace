@@ -41,13 +41,13 @@ const contextOptions = (data: S[]) => ({ length: data.length });
 const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
 
 const getItems = (contextId: string) => [
-	{ age: 2, id: '123', contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: 2, id: '123', contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	// { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 ];
 
 function App() {

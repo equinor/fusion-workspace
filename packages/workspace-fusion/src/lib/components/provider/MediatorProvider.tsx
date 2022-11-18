@@ -17,7 +17,11 @@ export const MediatorProvider = <
 	children,
 	mediator,
 }: MediatorProviderProps<TData, TContext>) => (
-	<MediatorContext.Provider value={useMediatorAsState(mediator)}>{children}</MediatorContext.Provider>
+	<MediatorContext.Provider
+		value={useMediatorAsState(mediator as unknown as FusionMediator<Record<PropertyKey, unknown>, never>)}
+	>
+		{children}
+	</MediatorContext.Provider>
 );
 
 export const MediatorContext = createContext<FusionMediator<Record<PropertyKey, unknown>>>(

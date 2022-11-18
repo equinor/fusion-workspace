@@ -26,7 +26,7 @@ export type WorkspaceProps<
 	sidesheetOptions?: SidesheetConfig<TData>;
 	workspaceOptions: WorkspaceConfig<TData>;
 	customTabs?: CustomTab[];
-	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData>) => void;
+	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData, TContext>) => void;
 	fusionPowerBiOptions?: FusionPowerBiConfig;
 	powerBiOptions?: PowerBiConfig;
 	contextOptions?: (filteredData: TData[]) => TContext;
