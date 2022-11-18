@@ -16,6 +16,7 @@ type S = {
 
 const options: WorkspaceConfig<S> = {
 	getIdentifier: (s) => s.id,
+	appKey: 'Handover',
 };
 
 const gridOptions: GridConfig<S> = {

@@ -1,6 +1,6 @@
 import { WorkspaceProps } from '../../components';
 import { WorkspaceConfiguration } from '../../types';
-import { didDataSourceOptionsChange } from './dataSourceOptionsChanged.ts/dataSourceChanged';
+import { didDataSourceOptionsChange } from './dataSourceOptionsChanged/dataSourceChanged';
 
 export function didOptionsChange<
 	TData extends Record<PropertyKey, unknown>,

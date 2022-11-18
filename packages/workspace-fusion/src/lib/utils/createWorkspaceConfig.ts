@@ -88,8 +88,7 @@ export function createConfigurationObject<
 		updateQueryParams([`item=${id}`], mediator, history);
 	});
 
-	//do it later
-	// this.mediator.onUnMount(() => this.#context.complete());
+	//TODO: this.mediator.onUnMount(() => this.#context.complete());
 
 	history.listen(({ action }) => {
 		if (action === Action.Pop) {

@@ -1,4 +1,4 @@
-import { createFetchFunction } from '../../../utils/dataSource/createFetchFunction';
+import { createFetchFunction } from '../../dataSource/createFetchFunction';
 import { FusionMediator, WorkspaceConfiguration } from '../../../types';
 import { FetchController } from '@equinor/workspace-data-source';
 import { DataSourceConfig } from '../../../integrations/data-source';
