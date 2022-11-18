@@ -19,8 +19,10 @@ export type GardenProp<
 	getDisplayName: (item: TData) => string;
 	getIdentifier: GetIdentifier<TData>;
 	onClickItem: (item: TData) => void;
-	/** Will rerender when context changes */
 	useContext: () => TContext | undefined;
+	/** Will rerender when context changes */
 	/** Will re-render when keys change */
 	useCustomGroupByKeys: () => TCustomGroupByKeys | undefined;
+	getDescription: (item: TData) => string | undefined;
+	getItemColor: (item: TData) => string | undefined;
 };

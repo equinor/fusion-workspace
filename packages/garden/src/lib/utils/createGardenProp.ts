@@ -24,4 +24,6 @@ export const createGardenProp = <
 	useData: () => valueToState(controller.data),
 	useGroups: () => valueToState(controller.groups),
 	useSelectedNodes: () => [valueToState(controller.selectedNodes), controller.selectedNodes.setValue],
+	getDescription: (item: TData) => (controller.visuals.getDescription ? controller.visuals.getDescription(item) : ''),
+	getItemColor: (item: TData) => (controller.visuals.getItemColor ? controller.visuals.getItemColor(item) : 'grey'),
 });
