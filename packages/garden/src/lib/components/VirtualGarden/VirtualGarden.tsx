@@ -29,7 +29,7 @@ export const VirtualGarden = <
 	const parentRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const garden = useGardenGroups();
+	const garden = useGardenGroups<TData>();
 	const {
 		grouping: {
 			value: { horizontalGroupingAccessor: gardenKey },
@@ -104,29 +104,15 @@ export const VirtualGarden = <
 			<HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
 				const currentColumn = garden[virtualColumn.index];
-				const columnItems = getGardenItems<TData>(currentColumn as GardenGroup<TData>, true);
+				const columnItems = getGardenItems<TData>(currentColumn, true);
 
 				return (
 					<Fragment key={virtualColumn.index}>
 						<GardenItemContainer
 							rowVirtualizer={rowVirtualizer}
 							items={columnItems}
-							packageChild={
-								packageChild as CustomVirtualViews<
-									TData,
-									TExtendedFields,
-									TCustomGroupByKeys,
-									TContext
-								>['customItemView']
-							}
-							customSubGroup={
-								customGroupView as CustomVirtualViews<
-									TData,
-									TExtendedFields,
-									TCustomGroupByKeys,
-									TContext
-								>['customGroupView']
-							}
+							packageChild={packageChild}
+							customSubGroup={customGroupView}
 							handleExpand={handleExpand}
 							itemWidth={width}
 							handleOnClick={handleOnItemClick}
