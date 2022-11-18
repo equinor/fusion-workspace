@@ -175,16 +175,10 @@ export class GardenController<
 	 */
 	groupData = () => {
 		this.groups.setValue(
-			this.postGroupSorting(
-				createGarden(
-					//TODO: Investigate TContext being interpreted as Record<PropertyKey,unknown>
-					this as GardenController<TData, ExtendedFields, TCustomGroupByKeys, Record<PropertyKey, unknown>>
-				),
-				[
-					this.grouping.value.horizontalGroupingAccessor as keyof TData,
-					...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
-				]
-			)
+			this.postGroupSorting(createGarden(this), [
+				this.grouping.value.horizontalGroupingAccessor as keyof TData,
+				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
+			])
 		);
 	};
 
