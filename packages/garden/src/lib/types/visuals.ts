@@ -6,7 +6,7 @@ export interface Visuals<
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > {
 	/**Function for calculating the longest width of a garden column */
-	calculateItemWidth: ItemWidthCalculation<TData, TExtendedFields, TCustomGroupByKeys>;
+	calculateItemWidth?: ItemWidthCalculation<TData, TExtendedFields, TCustomGroupByKeys>;
 	/**
 	 * Height of a single garden item
 	 * Necessary for virtualization to work.

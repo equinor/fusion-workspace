@@ -4,8 +4,6 @@ import { ActionType } from '../ExpandProvider';
 import { Header, HeaderRoot } from './headerContainer.styles';
 import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
 import { getGardenItems } from '../../utils/getGardenItems';
-import styled from 'styled-components';
-import { tokens } from '@equinor/eds-tokens';
 import { GardenGroup } from '../../types';
 import { useGardenContext, useGardenGroups } from '../../hooks';
 
@@ -18,7 +16,7 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 
 	const controller = useGardenContext();
 	const {
-		visuals: { getDescription = () => '' },
+		visuals,
 		customViews: { customHeaderView: HeaderChild },
 
 		grouping: {
@@ -36,11 +34,14 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 				index,
 				key: column.value,
 				descriptionData: getGardenItems(column),
-				customDescription: (item) => getDescription(item),
+				customDescription: visuals.getDescription,
 			});
 		},
 		[expandColumn, getGardenItems]
 	);
+
+	if (!HeaderChild) throw new Error('No header component registered');
+
 	return (
 		<HeaderRoot>
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
@@ -56,31 +57,15 @@ export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: Header
 						}}
 						key={virtualColumn.index}
 					>
-						{HeaderChild ? (
-							<HeaderChild
-								garden={garden}
-								columnIndex={virtualColumn.index}
-								columnIsExpanded={
-									expanded.expandedColumns?.[garden[virtualColumn.index].value]?.isExpanded
-								}
-								groupByKey={groupByKey as string}
-							/>
-						) : (
-							<>
-								{garden[virtualColumn.index].value}
-								<Count>({garden[virtualColumn.index].count})</Count>
-							</>
-						)}
+						<HeaderChild
+							garden={garden}
+							columnIndex={virtualColumn.index}
+							columnIsExpanded={expanded.expandedColumns?.[garden[virtualColumn.index].value]?.isExpanded}
+							groupByKey={groupByKey as string}
+						/>
 					</Header>
 				);
 			})}
 		</HeaderRoot>
 	);
 };
-
-export const Count = styled.span`
-	color: ${tokens.colors.text.static_icons__default.hex};
-	font-weight: 300;
-	font-size: 0.8rem;
-	margin-left: 0.8em;
-`;

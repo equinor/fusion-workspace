@@ -1,192 +1,83 @@
 import './App.css';
-import { createFusionWorkspace } from '@equinor/workspace-fusion';
-import { memo } from 'react';
-import { CustomItemView } from '@equinor/workspace-fusion/garden';
-
-const MOCK_DATA: S[] = [
-	{
-		id: '124',
-		age: 18,
-	},
-	{
-		id: '594ed20c-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5ccd8d6a-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '5eb8a128-642b-11ed-81ce-0242ac120002',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-	{
-		id: '123',
-		age: 18,
-	},
-];
+import Workspace, { FusionMediator, WorkspaceConfig } from '@equinor/workspace-fusion';
+import { GridConfig } from '@equinor/workspace-fusion/grid';
+import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
+import { useCallback, useRef, useState } from 'react';
+import { GardenConfig } from '@equinor/workspace-fusion/garden';
+import { FilterConfig } from '@equinor/workspace-fusion/filter';
+import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
+import { Button } from '@equinor/eds-core-react';
 
 type S = {
 	id: string;
 	age: number;
+	contextId: string;
 };
 
-const MemoGardenItem = memo(HandoverGardenItem);
+const options: WorkspaceConfig<S> = {
+	getIdentifier: (s) => s.id,
+	appKey: 'Handover',
+};
+
+const gridOptions: GridConfig<S> = {
+	columnDefinitions: [{ field: 'id', valueGetter: (s) => s.context.length }, { field: 'contextId' }],
+};
+
+const gardenOptions: GardenConfig<S> = {
+	getDisplayName: (s) => s.id,
+	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+};
+
+const filterOptions: FilterConfig<S> = { filterGroups: [{ name: 'id', valueFormatter: (s) => s.id }] };
+const contextOptions = (data: S[]) => ({ length: data.length });
+const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
+
+const getItems = (contextId: string) => [
+	{ age: 2, id: '123', contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+];
 
 function App() {
+	const workspaceApi = useRef<null | FusionMediator<S>>(null);
+	const [contextId, setContextId] = useState('abc');
+
+	const getResponseAsync = useCallback(async () => {
+		return new Promise<Response>((res) =>
+			setTimeout(
+				() =>
+					res({
+						status: 200,
+						json: async () => getItems(contextId),
+					} as Response),
+				2000
+			)
+		);
+	}, [contextId]);
+
 	return (
 		<div className="App" style={{ height: '100vh' }}>
-			<Workspace />
+			<Button onClick={() => setContextId((Math.random() * 16).toString())}>Switch context</Button>
+			<Workspace
+				onWorkspaceReady={(ev) => {
+					workspaceApi.current = ev.api;
+				}}
+				contextOptions={contextOptions}
+				statusBarOptions={statusBarOptions}
+				workspaceOptions={options}
+				gridOptions={gridOptions}
+				gardenOptions={gardenOptions}
+				filterOptions={filterOptions}
+				dataOptions={{
+					getResponseAsync: getResponseAsync,
+				}}
+			/>
 		</div>
 	);
 }
 
 export default App;
-
-const Workspace = createFusionWorkspace<S, { length: number }>(
-	{ appKey: 'Handover', getIdentifier: (s) => s.id },
-	(s) =>
-		s
-			.addFilter({
-				filterGroups: [
-					{
-						name: 'id',
-						valueFormatter: (s) => s.id,
-						isQuickFilter: true,
-					},
-				],
-			})
-			.addWorkspaceState((filteredData) => ({ length: filteredData.length }))
-			.addGrid({
-				columnDefinitions: [
-					{ field: 'id' },
-					{
-						field: 'age',
-						valueGetter: (s) => {
-							return s.context.length;
-						},
-					},
-				],
-			})
-			.addStatusBarItems((s) => [{ title: 'count', value: s.length }])
-			.addMiddleware((s) => (s.dataService.data = MOCK_DATA))
-			.addGarden<ExtendedFields, CustomGroupByKeys>({
-				getDisplayName: (s) => s.age.toString(),
-				initialGrouping: { horizontalGroupingAccessor: 'commPkgNo', verticalGroupingKeys: [] },
-
-				customViews: {
-					customItemView: MemoGardenItem,
-					customGroupByView: ({ controller }) => {
-						const context = controller.useContext();
-
-						console.log(context);
-						context?.length;
-
-						return <div>{JSON.stringify(context) ?? null}</div>;
-					},
-				},
-			})
-);
-
-type CustomState = {
-	NotSure: 'not sure';
-};
-
-type CustomGroupByKeys = {
-	SOmeKey: 'Some key';
-};
-
-type ExtendedFields = 'Yes' | 'no';
-
-// customGroupByView: Controller<types>
-
-function HandoverGardenItem({
-	data,
-	controller,
-	onClick,
-	columnExpanded,
-	depth,
-	width: itemWidth = 300,
-	isSelected,
-	rowStart,
-	columnStart,
-	parentRef,
-}: CustomItemView<S, ExtendedFields, CustomGroupByKeys>): JSX.Element {
-	const {
-		getDisplayName,
-		getIdentifier,
-		useContext,
-		useSelectedNodes,
-		onClickItem,
-		useCurrentGroupingKeys,
-		useCustomGroupByKeys,
-		useData,
-		useGroups,
-	} = controller;
-
-	const displayName = getDisplayName(data);
-	const uniqueId = getIdentifier(data);
-	const context = useContext();
-	/** Will re-render when nodes change */
-	const [nodes, setNodes] = useSelectedNodes();
-	const click = onClickItem;
-	/** Will re-render when grouping changes */
-	const groups = useGroups();
-	/** Will re-render when filtered data changes */
-	const filteredData = useData();
-	/** Will re-render when grouping changes */
-	const { horizontalGroupingAccessor, verticalGroupingKeys } = useCurrentGroupingKeys();
-	/** Will re-render when keys change */
-	const customGroupByKeys = useCustomGroupByKeys();
-
-	return (
-		<>
-			<div>Am garden item</div>
-			<div>{JSON.stringify(context)}</div>
-		</>
-	);
-}

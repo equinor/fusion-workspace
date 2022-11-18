@@ -1,3 +1,4 @@
+import { DefaultHeaderView, DefaultGardenItem, DefaultGroupView } from '../components/defaultComponents';
 import {
 	CustomVirtualViews,
 	FieldSettings,
@@ -10,6 +11,9 @@ import {
 	Visuals,
 	GardenConfig,
 	BaseRecordObject,
+	CustomItemView,
+	CustomGroupView,
+	CustomHeaderView,
 } from '../types';
 import { createGarden, defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
@@ -67,7 +71,15 @@ export class GardenController<
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
 	/** Override default view */
-	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {};
+	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {
+		customItemView: DefaultGardenItem as React.MemoExoticComponent<
+			(args: CustomItemView<TData, ExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
+		>,
+		customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
+		customHeaderView: DefaultHeaderView as React.MemoExoticComponent<
+			(args: CustomHeaderView<TData>) => JSX.Element
+		>,
+	};
 
 	/**
 	 * Property for holding calculated information based on data, this property will update every time data is updated

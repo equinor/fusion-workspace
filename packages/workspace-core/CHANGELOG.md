@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.5...@equinor/workspace-core@0.0.8) (2022-11-18)
+
+### Bug Fixes
+
+-   :bug: dataservice lost this scoping ([#182](https://github.com/equinor/fusion-workspace/issues/182)) ([13df51d](https://github.com/equinor/fusion-workspace/commit/13df51df79ea82cd038d52df0b898692c6cd1430))
+
 ## [0.0.7](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.5...@equinor/workspace-core@0.0.7) (2022-11-16)
 
 **Note:** Version bump only for package @equinor/workspace-core

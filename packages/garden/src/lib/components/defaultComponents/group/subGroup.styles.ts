@@ -22,6 +22,14 @@ export const StyledSubGroup = styled.div`
 	}
 `;
 
+export const StyledCount = styled.span`
+	color: ${tokens.colors.text.static_icons__default.rgba};
+	font-weight: 300;
+	font-size: 0.8rem;
+	margin-left: 0.8em;
+	padding-bottom: 0.5rem;
+`;
+
 export const StyledSubGroupText = styled.div`
 	display: flex;
 	margin-left: 4px;

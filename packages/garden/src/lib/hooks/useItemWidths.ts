@@ -18,7 +18,9 @@ export function useItemWidths() {
 
 	useEffect(() => {
 		if (groups && amountOfColumns > 0) {
-			const width = calculateItemWidth(groups, horizontalGroupingAccessor, customGroupByKeys?.value);
+			const width = calculateItemWidth
+				? calculateItemWidth(groups, horizontalGroupingAccessor, customGroupByKeys?.value)
+				: 300;
 			setWidths(new Array(amountOfColumns).fill(width));
 		}
 	}, [amountOfColumns, groups, calculateItemWidth, customGroupByKeys, horizontalGroupingAccessor]);

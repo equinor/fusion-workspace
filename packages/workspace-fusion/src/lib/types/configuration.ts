@@ -1,8 +1,22 @@
-import { WorkspaceOnClick } from './onClick';
+import { GridController } from '@equinor/workspace-ag-grid';
+import { FetchController } from '@equinor/workspace-data-source';
+import { FilterController } from '@equinor/workspace-filter';
+import { GardenController } from '@equinor/workspace-garden';
+import { WorkspaceViewController } from '@equinor/workspace-react';
+import { FusionWorkspaceError, FusionMediator } from './fusionController';
+import { WorkspaceOnClick } from './event';
+import { WorkspaceTabNames } from './tabs';
+import { WorkspaceProps } from '../components/Workspace';
 
+export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
 	data: TData[];
 	onClick: (ev: WorkspaceOnClick<TData>) => void;
+};
+
+export type WorkspaceConfig<TData> = {
+	getIdentifier: GetIdentifier<TData>;
+	appKey: string;
 };
 
 export type CustomTabComponent = () => JSX.Element;
@@ -28,4 +42,20 @@ export type AppConfig<TabNames extends string> = {
 /** Any http client, with fusion scope */
 export type FusionClient = {
 	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
+};
+
+export type WorkspaceConfiguration<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+> = {
+	gardenController?: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>;
+	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
+	gridController?: GridController<TData>;
+	workspaceConfig: WorkspaceConfig<TData>;
+	mediator: FusionMediator<TData>;
+	filterController?: FilterController<TData>;
+	dataSourceController?: FetchController<TData>;
+	rawOptions: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>;
 };

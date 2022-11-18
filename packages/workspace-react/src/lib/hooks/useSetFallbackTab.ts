@@ -1,4 +1,4 @@
-import { WorkspaceViewController } from 'lib/classes';
+import { WorkspaceViewController } from '../classes';
 import { useEffect } from 'react';
 
 export const useSetFallbackTab = <TTabName extends string, TError>(
