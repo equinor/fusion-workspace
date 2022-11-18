@@ -1,5 +1,6 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { BrowserHistory } from 'history';
+import { DumpsterFireDialog } from '../../components/ErrorComponent';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 
@@ -9,6 +10,7 @@ export function addViewController<TData extends Record<PropertyKey, unknown>>(
 	mediator: FusionMediator<TData>,
 	history: BrowserHistory
 ) {
+	viewController.ErrorComponent = ({ error }) => <DumpsterFireDialog text={error.detail} buttons={[]} />;
 	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
 
 	mediator.errorService.error$.subscribe(viewController.setError);

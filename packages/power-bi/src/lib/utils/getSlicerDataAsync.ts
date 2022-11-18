@@ -1,4 +1,4 @@
-import { SlicerData } from 'lib/types';
+import { SlicerData } from '../types';
 import { VisualDescriptor } from 'powerbi-client';
 
 export const getSlicerDataAsync = async (slicer: VisualDescriptor): Promise<SlicerData> => {

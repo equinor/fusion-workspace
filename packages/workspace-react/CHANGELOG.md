@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.1.0...@equinor/workspace-react@0.2.0) (2022-11-18)
+
+### Features
+
+-   :sparkles: reactify workspace-fusion setup ([#186](https://github.com/equinor/fusion-workspace/issues/186)) ([5e3d318](https://github.com/equinor/fusion-workspace/commit/5e3d318c8193271fbddeab261ce26e4827eb6321))
+
 ## [0.1.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.1.0...@equinor/workspace-react@0.1.1) (2022-11-16)
 
 **Note:** Version bump only for package @equinor/workspace-react

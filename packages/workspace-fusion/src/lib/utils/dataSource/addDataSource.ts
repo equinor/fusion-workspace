@@ -11,6 +11,7 @@ export function addDataSource<TData extends Record<PropertyKey, unknown>>(
 	const fetchFunction = createFetchFunction(dataFetch, mediator);
 
 	const dataSourceController = new FetchController<TData>(fetchFunction);
+
 	dataSourceController.onDataChanged((newData) => {
 		dataService.data = newData;
 	});
@@ -19,4 +20,6 @@ export function addDataSource<TData extends Record<PropertyKey, unknown>>(
 	onMount(dataSourceController.getDataAsync);
 	onUnMount(dataSourceController.abort);
 	onUnMount(dataSourceController.destroy);
+
+	return dataSourceController;
 }
