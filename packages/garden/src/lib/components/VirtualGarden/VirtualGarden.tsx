@@ -37,7 +37,7 @@ export const VirtualGarden = <
 		visuals: { rowHeight, highlightHorizontalColumn },
 		customViews: { customGroupView, customItemView },
 		customGroupByKeys,
-	} = useGardenContext();
+	} = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 
 	const refresh = useRefresh();
 
@@ -82,7 +82,7 @@ export const VirtualGarden = <
 	const highlightedColumn = useMemo(
 		() =>
 			highlightHorizontalColumn
-				? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value ?? {})
+				? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value)
 				: undefined,
 		[highlightHorizontalColumn, gardenKey, customGroupByKeys]
 	);

@@ -32,7 +32,7 @@ export class GardenController<
 	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);

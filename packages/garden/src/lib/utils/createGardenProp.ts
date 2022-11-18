@@ -6,7 +6,7 @@ export const createGardenProp = <
 	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown> = never
 >(
 	controller: GardenController<TData, ExtendedFields, TCustomGroupByKeys, TContext>
 ): GardenProp<TData, ExtendedFields, TCustomGroupByKeys, TContext> => ({
@@ -15,7 +15,7 @@ export const createGardenProp = <
 		controller.getDisplayName(
 			item,
 			//TODO: Investigate why default value never breaks type inferring
-			controller as GardenController<TData, never, never, Record<PropertyKey, unknown>>
+			controller as GardenController<TData, never, never, never>
 		),
 	getIdentifier: controller.getIdentifier,
 	useContext: () => controller.context,

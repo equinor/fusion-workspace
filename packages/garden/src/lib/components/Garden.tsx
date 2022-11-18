@@ -26,20 +26,13 @@ export function Garden<
 
 	return (
 		<GardenContext.Provider
-			value={
-				controller as unknown as GardenController<
-					Record<PropertyKey, unknown>,
-					string,
-					Record<PropertyKey, unknown>,
-					Record<PropertyKey, unknown>
-				>
-			}
+			value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
 		>
 			<VirtualContainer />
 		</GardenContext.Provider>
 	);
 }
 
-export const GardenContext = createContext<
-	GardenController<Record<PropertyKey, unknown>, string, Record<PropertyKey, unknown>, Record<PropertyKey, unknown>>
->({} as any);
+export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>, never, never, never> | null>(
+	null
+);

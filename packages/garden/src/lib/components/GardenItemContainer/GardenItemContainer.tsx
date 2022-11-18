@@ -4,10 +4,9 @@ import { useVirtual, VirtualItem } from 'react-virtual';
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
-import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../types';
+import { CustomGroupView, CustomItemView, GardenItem } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
 import { createGardenProp } from '../../utils/createGardenProp';
-import { GardenProp } from '../../types/gardenProp';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
@@ -46,7 +45,7 @@ export const GardenItemContainer = <
 		items,
 	} = props;
 
-	const controller = useGardenContext();
+	const controller = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 	const {
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
@@ -95,14 +94,7 @@ export const GardenItemContainer = <
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
-								controller={
-									createGardenProp(controller) as GardenProp<
-										TData,
-										TExtendedFields,
-										TCustomGroupByKeys,
-										TContext
-									>
-								}
+								controller={createGardenProp(controller)}
 								data={item.item}
 								isSelected={selectedIds.includes(getIdentifier(item.item))}
 								onClick={() => {
