@@ -9,7 +9,7 @@ export function configureClickEvents<
 	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	{ selectionService, clickService }: FusionMediator<TData>,
+	{ selectionService, clickService }: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {

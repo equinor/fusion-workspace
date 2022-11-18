@@ -9,7 +9,7 @@ export function configureGardenHighlightSelection<
 	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	mediator.selectionService.selectedNodes$.subscribe((val) => {
 		gardenController.selectedNodes.setValue(val);

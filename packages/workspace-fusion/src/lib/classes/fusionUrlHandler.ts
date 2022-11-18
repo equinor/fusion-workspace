@@ -10,11 +10,10 @@ export type QueryParam = `${QueryParamTopic}=${string}`;
 /**
  * Function for patching query parameters without manipulating the other query parameters
  */
-export function updateQueryParams<TData extends Record<PropertyKey, unknown>>(
-	val: QueryParam[],
-	mediator: FusionMediator<TData>,
-	history: BrowserHistory
-) {
+export function updateQueryParams<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(val: QueryParam[], mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
 	val.forEach((val) => {
 		const [topic, value] = val.split('=');
 		mediator.urlService.url.searchParams.set(topic, value);
@@ -22,10 +21,10 @@ export function updateQueryParams<TData extends Record<PropertyKey, unknown>>(
 	history.push(mediator.urlService.url.toString());
 }
 
-export function configureUrlWithHistory<TData extends Record<PropertyKey, unknown>>(
-	mediator: FusionMediator<TData>,
-	history: BrowserHistory
-) {
+export function configureUrlWithHistory<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
 	history.listen(() => {
 		mediator.urlService.url = new URL(window.location.href);
 	});

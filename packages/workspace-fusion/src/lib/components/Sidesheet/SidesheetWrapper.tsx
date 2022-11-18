@@ -4,16 +4,19 @@ import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
 import { MediatorProvider } from '../provider';
 
-interface SidesheetWrapperProps<TData extends Record<PropertyKey, unknown>> {
+interface SidesheetWrapperProps<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+> {
 	Component: (ev: WorkspaceOnClick<TData>) => JSX.Element;
-	mediator: FusionMediator<TData>;
+	mediator: FusionMediator<TData, TContext>;
 }
 
 Icon.add({ chevron_right, close, chevron_left });
-export function SidesheetWrapper<TData extends Record<PropertyKey, unknown>>({
-	Component,
-	mediator,
-}: SidesheetWrapperProps<TData>) {
+export function SidesheetWrapper<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>({ Component, mediator }: SidesheetWrapperProps<TData, TContext>) {
 	const clickEvent = useOnClick(mediator);
 
 	/**

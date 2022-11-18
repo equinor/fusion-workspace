@@ -2,7 +2,7 @@ import './App.css';
 import Workspace, { FusionMediator, WorkspaceConfig } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { useCallback, useRef, useState } from 'react';
+import { memo, useCallback, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
@@ -26,6 +26,13 @@ const gridOptions: GridConfig<S> = {
 const gardenOptions: GardenConfig<S> = {
 	getDisplayName: (s) => s.id,
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
+	customViews: {
+		customItemView: memo((props) => {
+			const context = props.controller.useContext();
+
+			return <div>hello {JSON.stringify(context)}</div>;
+		}),
+	},
 };
 
 const filterOptions: FilterConfig<S> = { filterGroups: [{ name: 'id', valueFormatter: (s) => s.id }] };
@@ -65,6 +72,9 @@ function App() {
 			<Workspace
 				onWorkspaceReady={(ev) => {
 					workspaceApi.current = ev.api;
+					ev.api.contextService.context$.subscribe((s) => {
+						console.log(`New context value, ${s}`);
+					});
 				}}
 				contextOptions={contextOptions}
 				statusBarOptions={statusBarOptions}
@@ -72,6 +82,7 @@ function App() {
 				gridOptions={gridOptions}
 				gardenOptions={gardenOptions}
 				filterOptions={filterOptions}
+				sidesheetOptions={{ Component: (props) => <div>Am a sidesheet bro</div> }}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
 				}}

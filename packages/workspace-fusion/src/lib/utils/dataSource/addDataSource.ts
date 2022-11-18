@@ -3,10 +3,10 @@ import { FusionMediator } from '../../types';
 import { DataSourceConfig } from '../../integrations/data-source';
 import { createFetchFunction } from './createFetchFunction';
 
-export function addDataSource<TData extends Record<PropertyKey, unknown>>(
-	dataFetch: DataSourceConfig<TData>,
-	mediator: FusionMediator<TData>
-) {
+export function addDataSource<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(dataFetch: DataSourceConfig<TData>, mediator: FusionMediator<TData, TContext>) {
 	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
 	const fetchFunction = createFetchFunction(dataFetch, mediator);
 
