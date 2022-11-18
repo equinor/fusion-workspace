@@ -6,7 +6,6 @@ const GardenItem = <
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({
 	columnExpanded,
@@ -14,14 +13,11 @@ const GardenItem = <
 	data: item,
 	isSelected,
 	depth,
-}: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => {
-	const {
-		clickEvents: { onClickItem },
-		visuals: { getDescription, getItemColor },
-	} = controller;
+}: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => {
+	const { onClickItem, getDisplayName, getItemColor, getDescription } = controller;
 
 	const { color, description, label } = useMemo(() => {
-		const label = controller.nodeLabelCallback(item, controller as any);
+		const label = getDisplayName(item);
 		const color = (getItemColor && getItemColor(item)) ?? 'grey';
 
 		const description = getDescription && getDescription(item);
@@ -36,7 +32,7 @@ const GardenItem = <
 	return (
 		<StyledDefaultPackage
 			bgColor={color}
-			onClick={() => onClickItem && onClickItem(item, controller as any)}
+			onClick={() => onClickItem && onClickItem(item)}
 			isSelected={isSelected}
 			depth={depth ?? 0}
 		>
