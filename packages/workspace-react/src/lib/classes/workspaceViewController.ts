@@ -24,10 +24,14 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 		this.Sidesheet = comp;
 	};
 
-	constructor() {
+	constructor(defaultTab?: TTabNames) {
 		const error = new Observable<TError | undefined>(undefined);
 		this.setError = error.setValue;
 		this.onError = error.onchange;
+
+		if (defaultTab) {
+			this.tabController.setActiveTab(defaultTab);
+		}
 
 		error.onchange((val) => {
 			this.error = val;

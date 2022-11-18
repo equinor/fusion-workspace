@@ -17,6 +17,7 @@ type S = {
 const options: WorkspaceConfig<S> = {
 	getIdentifier: (s) => s.id,
 	appKey: 'Handover',
+	defaultTab: 'grid',
 };
 
 const gridOptions: GridConfig<S> = {
