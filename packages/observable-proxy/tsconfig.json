@@ -17,6 +17,5 @@
 		"incremental": false
 	},
 	"files": [],
-	"include": ["src"],
-	"exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.d.ts", "**/*.test.ts", "tsconfig.lib.tsbuildinfo"]
+	"include": ["src"]
 }

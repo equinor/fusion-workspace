@@ -1,6 +1,5 @@
 {
 	"extends": "./tsconfig.json",
-	"include": ["**/*.ts"],
-	"exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.d.ts", "**/*.test.ts", "/tests"],
+	"include": ["src"],
 	"references": [{ "path": "../observable-proxy" }]
 }

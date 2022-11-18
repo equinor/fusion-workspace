@@ -1,6 +1,6 @@
-export type HorizontalGroupingAccessor<T> = keyof T | string;
+export type HorizontalGroupingAccessor<TData extends Record<PropertyKey, unknown>> = keyof TData | string;
 
-export interface GroupingKeys<T> {
-	horizontalGroupingAccessor: HorizontalGroupingAccessor<T>;
+export interface GroupingKeys<TData extends Record<PropertyKey, unknown>> {
+	horizontalGroupingAccessor: HorizontalGroupingAccessor<TData>;
 	verticalGroupingKeys: string[];
 }

@@ -3,21 +3,32 @@ import { createGridController, Grid, GridController } from '@equinor/workspace-a
 import { useRef } from 'react';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 import { GridIcon } from '../../icons/GridIcon';
-import { FusionMediator, GridConfig, WorkspaceTabNames } from '../../types';
-import { GetIdentifier } from '../createFusionWorkspace';
+import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../types';
 import { configureBookmark } from './configureBookmark';
 import { configureDataChange } from './configureDataChange';
 import { configureHighlightSelection } from './configureHighlightSelection';
 import { GridHeader } from './GridWorkspaceHeader';
 import { setConfigOnController } from './setConfigOnController';
+import { GridConfig } from '../../integrations/grid';
+import { NoDataSplashScreen } from '../../components/NoDataSplashScreen';
 
-export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
+export function addGrid<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	gridConfig: GridConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>,
+	mediator: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
-	const gridController = createGridController<TData>(getIdentifier);
+	const gridController = createGridController<TData, TContext>(getIdentifier);
+
+	const sub = mediator.contextService.context$.subscribe((s) => {
+		gridController.context = s;
+	});
+
+	mediator.onUnMount(() => sub.unsubscribe());
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);
@@ -25,7 +36,7 @@ export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 	configureBookmark(gridController, mediator);
 
 	viewController.tabController.addTab({
-		Component: () => <GridWrapper controller={gridController} />,
+		Component: () => <GridWrapper controller={gridController} mediator={mediator} />,
 		name: 'grid',
 		TabIcon: GridIcon,
 		CustomHeader: () => <GridHeader controller={gridController} />,
@@ -34,17 +45,29 @@ export function addGrid<TData extends Record<PropertyKey, unknown>, TError>(
 	mediator.onUnMount(gridController.destroy);
 }
 
-type GridWrapperProps<TData extends Record<PropertyKey, unknown>> = {
+type GridWrapperProps<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+> = {
 	controller: GridController<TData>;
+	mediator: FusionMediator<TData, TContext>;
 };
 
-const GridWrapper = <TData extends Record<PropertyKey, unknown>>({ controller }: GridWrapperProps<TData>) => {
+const GridWrapper = <
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>({
+	controller,
+	mediator,
+}: GridWrapperProps<TData, TContext>) => {
 	const ref = useRef(null);
 	const [_, height] = useResizeObserver(ref);
 
 	return (
 		<div style={{ height: '100%', width: '100%' }} ref={ref}>
-			<Grid controller={controller} height={height} />
+			<NoDataSplashScreen mediator={mediator}>
+				<Grid controller={controller} height={height} />
+			</NoDataSplashScreen>
 		</div>
 	);
 };

@@ -1,43 +1,74 @@
 import { Garden, GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
+import { GardenConfig } from '../../integrations/garden';
 import { GardenIcon } from '../../icons/GardenIcon';
-import { FusionMediator, WorkspaceTabNames } from '../../types';
-import { GetIdentifier } from '../createFusionWorkspace';
+import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../types';
 import { configureBookmarkService } from './configureBookmarkService';
 import { configureClickEvents } from './configureClickEvents';
 import { configureDataChange } from './configureDataChange';
 import { configureGardenHighlightSelection } from './configureHighlight';
 import { GardenWorkspaceHeader } from './gardenWorkspaceHeader';
-import { GardenConfig } from '../../types';
+import { NoDataSplashScreen } from '../../components/NoDataSplashScreen';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TError extends Record<PropertyKey, unknown>
+	TExtendedGardenFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(
-	gardenConfig: GardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>,
+	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>,
+	mediator: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
-	const gardenController = new GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>({
-		...gardenConfig,
-		data: [],
-		getIdentifier,
-	});
+	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>(
+		{
+			...gardenConfig,
+			data: [],
+			getIdentifier,
+			getContext: () => mediator.contextService.getContext(),
+		},
+		(destroy) => mediator.onUnMount(destroy)
+	);
+
 	configureDataChange(gardenController, mediator);
 	configureClickEvents(gardenController, mediator, getIdentifier);
 	configureGardenHighlightSelection(gardenController, mediator);
 	configureBookmarkService(gardenController, mediator);
 
 	viewController.tabController.addTab({
-		Component: () => <Garden controller={gardenController} />,
+		Component: () => <GardenWrapper controller={gardenController} mediator={mediator} />,
 		name: 'garden',
 		TabIcon: GardenIcon,
 		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
 	});
-
-	mediator.onUnMount(gardenController.destroy);
 }
+
+type GardenWrapperProps<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedGardenFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+> = {
+	controller: GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>;
+	mediator: FusionMediator<TData, TContext>;
+};
+
+const GardenWrapper = <
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedGardenFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>({
+	controller,
+	mediator,
+}: GardenWrapperProps<TData, TExtendedGardenFields, TCustomGroupByKeys, TError, TContext>) => {
+	return (
+		<NoDataSplashScreen mediator={mediator}>
+			<Garden controller={controller} />
+		</NoDataSplashScreen>
+	);
+};

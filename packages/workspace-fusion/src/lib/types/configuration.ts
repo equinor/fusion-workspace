@@ -1,43 +1,23 @@
-import { StatusItem } from '@equinor/workspace-status-bar';
-import { ColDef, GridOptions } from '@equinor/workspace-ag-grid';
-import { WorkspaceOnClick } from './onClick';
-import { GardenConfig as OriginalGardenConfig } from '@equinor/workspace-garden';
-import { FilterOptions as FilterConfig } from '@equinor/workspace-filter';
+import { GridController } from '@equinor/workspace-ag-grid';
+import { FetchController } from '@equinor/workspace-data-source';
+import { FilterController } from '@equinor/workspace-filter';
+import { GardenController } from '@equinor/workspace-garden';
+import { WorkspaceViewController } from '@equinor/workspace-react';
+import { FusionWorkspaceError, FusionMediator } from './fusionController';
+import { WorkspaceOnClick } from './event';
+import { WorkspaceTabNames } from './tabs';
+import { WorkspaceProps } from '../components/Workspace';
 
-export type { FilterConfig };
-
-export type GardenConfig<
-	TData extends Record<PropertyKey, unknown>,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = Omit<OriginalGardenConfig<TData, TCustomGroupByKeys, TCustomState, TContext>, 'data' | 'getIdentifier'>;
-
-export type GridConfig<T> = {
-	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: Omit<GridOptions<T>, 'rowData'>;
-};
-
-export type SidesheetConfig<TData> = {
-	Component: (props: WorkspaceOnClick<TData>) => JSX.Element;
-	getTitle: (clickEv: WorkspaceOnClick<TData>) => string;
-};
-
-export type DataSourceOptions<TData> = {
-	/** Function for getting response object from server */
-	getResponseAsync: (signal?: AbortSignal) => Promise<Response>;
-	/**
-	 * Function for parsing response
-	 * Can be omitted if all you do is .json();
-	 */
-	responseParser?: (response: Response) => TData[] | Promise<TData[]>;
-};
-
-export type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
-
+export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
 	data: TData[];
 	onClick: (ev: WorkspaceOnClick<TData>) => void;
+};
+
+export type WorkspaceConfig<TData, TabNames extends string = WorkspaceTabNames> = {
+	getIdentifier: GetIdentifier<TData>;
+	appKey: string;
+	defaultTab?: TabNames;
 };
 
 export type CustomTabComponent = () => JSX.Element;
@@ -60,24 +40,23 @@ export type AppConfig<TabNames extends string> = {
 	defaultTab: TabNames;
 };
 
-export type PowerBiConfig = {
-	reportUri: string;
-	getConfig: (reportUri: string) => Promise<any>;
-	getToken: (reportUri: string) => Promise<PowerBiToken>;
-};
-/**
- * Configuration for adding a fusion power bi client
- * Requires client configured for fusion reports api
- */
-export type FusionPowerBiConfig = {
-	reportUri: string;
-};
-
-type PowerBiToken = {
-	token: string;
-};
-
 /** Any http client, with fusion scope */
 export type FusionClient = {
 	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
+};
+
+export type WorkspaceConfiguration<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+> = {
+	gardenController?: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
+	gridController?: GridController<TData>;
+	workspaceConfig: WorkspaceConfig<TData>;
+	mediator: FusionMediator<TData, TContext>;
+	filterController?: FilterController<TData>;
+	dataSourceController?: FetchController<TData>;
+	rawOptions: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>;
 };

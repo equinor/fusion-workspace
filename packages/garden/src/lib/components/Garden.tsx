@@ -6,40 +6,33 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 interface GardenProps<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
-	controller: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>;
+	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 }
 
 Icon.add({ chevron_down, chevron_up });
 
 export function Garden<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext = unknown
->({ controller }: GardenProps<TData, TCustomGroupByKeys, TCustomState, TContext>): JSX.Element | null {
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+>({ controller }: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>): JSX.Element | null {
 	//TODO:Handle no data better in garden
 
 	return (
 		<GardenContext.Provider
-			value={
-				controller as unknown as GardenController<
-					unknown,
-					BaseRecordObject<unknown>,
-					BaseRecordObject<unknown>,
-					unknown
-				>
-			}
+			value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
 		>
 			<VirtualContainer />
 		</GardenContext.Provider>
 	);
 }
 
-export const GardenContext = createContext<
-	GardenController<unknown, BaseRecordObject<unknown>, BaseRecordObject<unknown>, unknown>
->({} as any);
+export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>, never, never, never> | null>(
+	null
+);

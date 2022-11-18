@@ -7,17 +7,19 @@ import { FusionMediator } from '../../types';
  * @param columnDefs List of column defintions to override.
  * @returns A list of column defintions with default settings injected
  */
-export function applyDefaultColumnDefinitions<TData>(columnDefs: ColDef<TData>[]): ColDef<TData>[] {
+export function applyDefaultColumnDefinitions<TData extends Record<PropertyKey, unknown>>(
+	columnDefs: ColDef<TData>[]
+): ColDef<TData>[] {
 	return columnDefs.map((colDef): ColDef<TData> => ({ resizable: true, sortable: true, ...colDef }));
 }
 
 /**
  * Applies onclick to all cells by default
  */
-export function applyWorkspaceClickToCells<TData>(
-	colDefs: ColDef<TData>[],
-	{ clickService }: FusionMediator<TData>
-): ColDef<TData>[] {
+export function applyWorkspaceClickToCells<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData, TContext>): ColDef<TData>[] {
 	return colDefs.map((colDef) => ({
 		onCellClicked: (ev) => ev.data && clickService.click({ item: ev.data }),
 		...colDef,

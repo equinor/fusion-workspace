@@ -1,11 +1,14 @@
-import { GridController, ColDef } from '@equinor/workspace-ag-grid';
-import { FusionMediator, GridConfig } from '../../types';
+import { GridConfig, GridController, ColDef } from '../../integrations/grid';
+import { FusionMediator } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function setConfigOnController<TData extends Record<PropertyKey, unknown>>(
+export function setConfigOnController<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	gridConfig: GridConfig<TData>,
-	gridController: GridController<TData>,
-	mediator: FusionMediator<TData>
+	gridController: GridController<TData, TContext>,
+	mediator: FusionMediator<TData, TContext>
 ) {
 	if (gridConfig.gridOptions) {
 		gridController.gridOptions = gridConfig.gridOptions;
@@ -20,6 +23,9 @@ export function setConfigOnController<TData extends Record<PropertyKey, unknown>
  * @param mediator Workspace controller
  * @returns Altered column definitions
  */
-function prepareColumnDefintions<TData>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData>) {
+function prepareColumnDefintions<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData, TContext>) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, mediator));
 }

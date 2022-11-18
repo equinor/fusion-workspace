@@ -6,16 +6,21 @@ import { BaseRecordObject, GardenGroups, GardenItem } from '.';
  * @returns the number of px in width for the largest item in the column
  */
 export type ItemWidthCalculation<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (garden: GardenGroups<TData>, key: string, customGroupByKeys?: TCustomGroupByKeys) => number;
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = (garden: GardenGroups<TData>, key: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => number;
 
 export type HighlightHorizontalColumn<
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (groupBy: string, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
+	TData extends Record<PropertyKey, unknown>,
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = (groupBy: keyof TData | ExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string | undefined;
 
-export type GetCustomDescription<T> = (item: T | GardenItem<T>, controller: GardenController<T>) => string;
-export type GetCustomItemColor<T> = (item: T, controller: GardenController<T>) => string;
-export type GetGroupDescriptionFunc<T> = (item: T, groupingKey: string) => string;
+export type GetDescription<TData extends Record<PropertyKey, unknown>> = (item: TData) => string;
+export type GetItemColor<TData extends Record<PropertyKey, unknown>> = (item: TData) => string;
 
-export type NodeLabelCallback<T> = (item: T, controller: GardenController<T>) => string;
+export type GetDisplayName<TData extends Record<PropertyKey, unknown>> = (
+	item: TData,
+	controller: GardenController<TData>
+) => string;

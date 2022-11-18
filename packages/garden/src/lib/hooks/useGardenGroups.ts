@@ -3,8 +3,8 @@ import { GardenGroups } from '../types';
 import { defaultSortFunction } from '../utils/defaultSortFunction';
 import { useGardenContext } from './useGardenContext';
 
-export function useGardenGroups() {
-	const controller = useGardenContext();
+export function useGardenGroups<TData extends Record<PropertyKey, unknown>>() {
+	const controller = useGardenContext<TData>();
 	const {
 		fieldSettings,
 		grouping: {
@@ -12,10 +12,10 @@ export function useGardenGroups() {
 		},
 	} = controller;
 
-	const [groups, setGroups] = useState<GardenGroups<unknown>>(controller.groups.value);
+	const [groups, setGroups] = useState<GardenGroups<TData>>(controller.groups.value);
 
 	useEffect(() => {
-		const unsubscribe = controller.groups.onChange(setGroups);
+		const unsubscribe = controller.groups.onChange((val) => setGroups(val));
 		return unsubscribe;
 	}, []);
 

@@ -4,6 +4,18 @@ import { FetchData } from '../types';
 export class FetchController<TData> {
 	private fetch: FetchData<TData>;
 
+	setFetch = (fetch: FetchData<TData>) => {
+		this.fetch = fetch;
+	};
+
+	reset = () => {
+		this.data = undefined;
+		this.currAbort = undefined;
+		this.dataPromise = undefined;
+		this.isLoading = false;
+		this.isFetching = false;
+	};
+
 	/** Returns true if it aborted an api call */
 	abort = (): boolean => {
 		if (this.currAbort) {

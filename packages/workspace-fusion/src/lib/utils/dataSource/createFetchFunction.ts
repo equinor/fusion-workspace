@@ -1,14 +1,15 @@
 import { FetchData } from '@equinor/workspace-data-source';
-import { DataSourceOptions, FusionMediator } from '../../types';
+import { FusionMediator } from '../../types';
+import { DataSourceConfig } from '../../integrations/data-source';
 
 /**
  * Transforms configuration object to data source controller fetch method
  * Will check response codes automatically and throw errors through the mediator
  */
-export function createFetchFunction<TData>(
-	options: DataSourceOptions<TData>,
-	mediator: FusionMediator<TData>
-): FetchData<TData> {
+export function createFetchFunction<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(options: DataSourceConfig<TData>, mediator: FusionMediator<TData, TContext>): FetchData<TData> {
 	const fetch = async () => {
 		try {
 			const response = await options.getResponseAsync();

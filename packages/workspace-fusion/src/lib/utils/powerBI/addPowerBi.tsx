@@ -2,12 +2,17 @@ import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
-import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
+import { WorkspaceTabNames, FusionMediator } from '../../types';
+import { PowerBiConfig } from '../../integrations/power-bi';
 
-export function addPowerBi<TData, TError>(
+export function addPowerBi<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	powerBiConfig: PowerBiConfig,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 
