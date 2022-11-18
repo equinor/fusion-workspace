@@ -25,7 +25,9 @@ export function createConfigurationObject<
 	props: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ): WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> {
 	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator();
-	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>();
+	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
+		props.workspaceOptions.defaultTab
+	);
 	addViewController(viewController, mediator, history);
 	configureUrlWithHistory(mediator, history);
 	const configuration: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> = {

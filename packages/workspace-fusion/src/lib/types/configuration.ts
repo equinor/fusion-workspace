@@ -14,9 +14,10 @@ export type CustomTabProps<TData> = {
 	onClick: (ev: WorkspaceOnClick<TData>) => void;
 };
 
-export type WorkspaceConfig<TData> = {
+export type WorkspaceConfig<TData, TabNames extends string = WorkspaceTabNames> = {
 	getIdentifier: GetIdentifier<TData>;
 	appKey: string;
+	defaultTab?: TabNames;
 };
 
 export type CustomTabComponent = () => JSX.Element;
