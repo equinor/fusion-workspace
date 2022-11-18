@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.6.0...@equinor/workspace-fusion@0.7.0) (2022-11-18)
+
+### Features
+
+-   garden DTO ([#177](https://github.com/equinor/fusion-workspace/issues/177)) ([005d8f6](https://github.com/equinor/fusion-workspace/commit/005d8f65b50ef3b351f4163afda56dfd60a2559c))
+
 ## [0.6.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.4.0...@equinor/workspace-fusion@0.6.0) (2022-11-18)
 
 ### Features
