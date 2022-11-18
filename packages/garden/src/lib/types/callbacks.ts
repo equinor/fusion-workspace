@@ -15,7 +15,7 @@ export type HighlightHorizontalColumn<
 	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
-> = (groupBy: keyof TData | ExtendedFields, customGroupByKeys: TCustomGroupByKeys) => string | undefined;
+> = (groupBy: keyof TData | ExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string | undefined;
 
 export type GetDescription<TData extends Record<PropertyKey, unknown>> = (item: TData) => string;
 export type GetItemColor<TData extends Record<PropertyKey, unknown>> = (item: TData) => string;

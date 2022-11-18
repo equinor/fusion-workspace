@@ -6,10 +6,9 @@ export function configureGardenHighlightSelection<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 >(
-	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
+	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 	mediator: FusionMediator<TData>
 ) {
 	mediator.selectionService.selectedNodes$.subscribe((val) => {

@@ -15,6 +15,7 @@ import {
 	GardenGroup,
 	GardenGroups,
 	GardenItem,
+	GardenProp,
 	GardenItemWithDepth,
 	GetDescription,
 	GetItemColor,
@@ -47,6 +48,7 @@ export type {
 	CustomGroupViewProps,
 	GardenDataIntercepters,
 	PostGroupBySorting,
+	GardenProp,
 	CustomGroupView,
 	CustomHeaderView,
 	CustomItemView,
@@ -83,9 +85,8 @@ type GardenConfig<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TCustomState extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = Omit<
-	OriginalGardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
-	'data' | 'getIdentifier' | 'clickEvents' | 'getCustomState'
+	OriginalGardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
+	'data' | 'getIdentifier' | 'clickEvents' | 'getContext'
 >;

@@ -4,22 +4,22 @@ import { useVirtual, VirtualItem } from 'react-virtual';
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
-import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../types';
+import { CustomGroupView, CustomItemView, GardenItem } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
+import { createGardenProp } from '../../utils/createGardenProp';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 > = {
 	virtualColumn: VirtualItem;
 	rowVirtualizer: VirtualHookReturn;
 	items: GardenItem<TData>[] | null;
 	packageChild?: React.MemoExoticComponent<
-		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+		(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
 	>;
 	customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
 	handleExpand: any;
@@ -31,10 +31,9 @@ export const GardenItemContainer = <
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TCustomState extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 >(
-	props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TCustomState, TContext>
+	props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>
 ): JSX.Element => {
 	const {
 		rowVirtualizer,
@@ -46,7 +45,7 @@ export const GardenItemContainer = <
 		items,
 	} = props;
 
-	const controller = useGardenContext();
+	const controller = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 	const {
 		clickEvents: { onClickGroup, onClickItem },
 		grouping: {
@@ -95,7 +94,7 @@ export const GardenItemContainer = <
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}
-								controller={controller as any}
+								controller={createGardenProp(controller)}
 								data={item.item}
 								isSelected={selectedIds.includes(getIdentifier(item.item))}
 								onClick={() => {

@@ -50,7 +50,7 @@ export type WorkspaceConfiguration<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
-	gardenController?: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>;
+	gardenController?: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
 	gridController?: GridController<TData>;
 	workspaceConfig: WorkspaceConfig<TData>;

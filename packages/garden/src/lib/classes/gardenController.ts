@@ -32,8 +32,7 @@ export class GardenController<
 	TData extends Record<PropertyKey, unknown>,
 	ExtendedFields extends string = never,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
-	TCustomState extends BaseRecordObject<TCustomState> = BaseRecordObject<unknown>,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
@@ -50,13 +49,13 @@ export class GardenController<
 	fieldSettings: FieldSettings<TData, ExtendedFields, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
-	nodeLabelCallback: GetDisplayName<TData>;
+	getDisplayName: GetDisplayName<TData>;
 
 	/** Function that returns the primary(unique) identifier for the data type */
 	getIdentifier: GetIdentifier<TData>;
 
 	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {
+	clickEvents: OnClickEvents<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
@@ -68,16 +67,13 @@ export class GardenController<
 		getDescription: () => '',
 	};
 
-	/** Custom user context */
-	context?: TContext;
-
 	/** Custom group by keys */
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
 	/** Override default view */
-	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext> = {
+	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {
 		customItemView: DefaultGardenItem as React.MemoExoticComponent<
-			(args: CustomItemView<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>) => JSX.Element
+			(args: CustomItemView<TData, ExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
 		>,
 		customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
 		customHeaderView: DefaultHeaderView as React.MemoExoticComponent<
@@ -88,14 +84,14 @@ export class GardenController<
 	/**
 	 * Property for holding calculated information based on data, this property will update every time data is updated
 	 */
-	customState?: TCustomState;
+	context?: TContext;
 
-	#getCustomState?: (data: TData[]) => TCustomState;
+	#getContext?: (data: TData[]) => TContext;
 
 	/** Updates the custom state if data changes */
-	private updateCustomState = (data: TData[]) => {
-		if (this.#getCustomState) {
-			this.customState = this.#getCustomState(data);
+	private updateContext = (data: TData[]) => {
+		if (this.#getContext) {
+			this.context = this.#getContext(data);
 		}
 	};
 
@@ -108,20 +104,19 @@ export class GardenController<
 			clickEvents,
 			customGroupByKeys,
 			fieldSettings,
-			getCustomState,
+			getContext,
 			customViews,
 			visuals,
 			intercepters,
-		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TCustomState, TContext>,
-		getDestructor: (destroy: () => void) => void,
-		context?: TContext
+		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TContext>,
+		getDestructor: (destroy: () => void) => void
 	) {
 		if (intercepters?.postGroupSorting) {
 			this.postGroupSorting = intercepters.postGroupSorting;
 		}
 
 		this.getIdentifier = getIdentifier;
-		this.nodeLabelCallback = getDisplayName;
+		this.getDisplayName = getDisplayName;
 		this.data.value = data;
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};
@@ -136,16 +131,16 @@ export class GardenController<
 			this.customViews = { ...this.customViews, ...customViews };
 		}
 
-		if (getCustomState) {
-			this.#getCustomState = getCustomState;
+		if (getContext) {
+			this.#getContext = getContext;
 			//init
-			this.updateCustomState(data);
-			this.data.onChange(this.updateCustomState);
+			this.updateContext(data);
+			this.data.onChange(this.updateContext);
 		}
 
 		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
-		this.context = context;
+
 		this.groupData();
 
 		this.data.onChange(this.groupData);

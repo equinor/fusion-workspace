@@ -9,3 +9,4 @@ export * from './events';
 export * from './visuals';
 export type { GardenConfig, GardenDataIntercepters, PostGroupBySorting } from './config';
 export * from './customGeneric';
+export * from './gardenProp';

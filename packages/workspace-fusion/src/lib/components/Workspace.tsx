@@ -18,7 +18,7 @@ export type WorkspaceProps<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
-	gardenOptions?: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext, TContext>;
+	gardenOptions?: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 	gridOptions?: GridConfig<TData>;
 	filterOptions?: FilterConfig<TData>;
 	dataOptions?: DataSourceConfig<TData>;
