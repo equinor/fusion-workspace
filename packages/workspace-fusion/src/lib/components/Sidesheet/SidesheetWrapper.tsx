@@ -3,7 +3,7 @@ import { useOnClick } from '../../hooks/useOnClick';
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
 import { MediatorProvider } from '../provider';
-import { SidesheetConfig } from 'lib/integrations/sidesheet';
+import { SidesheetConfig } from '../../integrations/sidesheet';
 
 interface SidesheetWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
