@@ -1,3 +1,3 @@
+import { Workspace } from './lib';
 export * from './lib';
-import { Workspace } from '@equinor/workspace-react';
-export { Workspace };
+export default Workspace;
