@@ -15,6 +15,7 @@ import { addPowerBi } from './powerBI/addPowerBi';
 import { addSidesheet } from './sidesheet';
 import { addStatusBar } from './statusBar';
 import { addViewController, switchTabOnNavigation } from './viewController';
+import { addFusionPowerBi } from './powerBI/addFusionPowerBi';
 
 export function createConfigurationObject<
 	TData extends Record<PropertyKey, unknown>,
@@ -42,18 +43,11 @@ export function createConfigurationObject<
 			mediator.contextService.setContext(props.contextOptions(data));
 		});
 	}
-	if (props.fusionPowerBiOptions) {
-		const reportUri = props.fusionPowerBiOptions.reportUri;
-		const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri);
-		const getToken = () => FusionPowerBiConfigurator.getToken(reportUri);
-		addPowerBi({ getConfig, getToken, reportUri }, viewController, mediator);
-	}
-	if (props.powerBiOptions) {
-		addPowerBi(props.powerBiOptions, viewController, mediator);
-	}
-	if (props.dataOptions) {
-		configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
-	}
+
+	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
+	addPowerBi(props.powerBiOptions, viewController, mediator);
+
+	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
 	if (props.customTabs) {
 		props.customTabs.forEach((s) => addCustomTab(s, viewController, mediator));
 	}
@@ -67,9 +61,7 @@ export function createConfigurationObject<
 			mediator.dataService.filteredData = val;
 		});
 	}
-	if (props.gardenOptions) {
-		addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	}
+	addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	if (props.gridOptions) {
 		addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	}
