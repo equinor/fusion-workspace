@@ -4,7 +4,6 @@ import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
-import { useAgGridStyles } from '../hooks/useAgGridStyles';
 import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
@@ -30,8 +29,6 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
  */
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
-
-	useAgGridStyles();
 
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
