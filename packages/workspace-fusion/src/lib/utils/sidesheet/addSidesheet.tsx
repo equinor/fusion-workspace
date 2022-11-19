@@ -1,7 +1,7 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { SidesheetConfig } from '../../integrations/sidesheet';
 import { SidesheetWrapper } from '../../components';
-import { FusionMediator, WorkspaceTabNames } from '../../types';
+import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../types';
 
 export function addSidesheet<
 	TData extends Record<PropertyKey, unknown>,
@@ -10,7 +10,10 @@ export function addSidesheet<
 >(
 	config: SidesheetConfig<TData>,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext>,
+	getIdentifier: GetIdentifier<TData>
 ) {
-	viewController.addSidesheetComponent(() => <SidesheetWrapper Component={config.Component} mediator={mediator} />);
+	viewController.addSidesheetComponent(() => (
+		<SidesheetWrapper getIdentifier={getIdentifier} Component={config.Sidesheet} mediator={mediator} />
+	));
 }

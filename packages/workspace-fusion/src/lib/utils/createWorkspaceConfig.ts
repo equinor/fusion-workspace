@@ -66,7 +66,7 @@ export function createConfigurationObject<
 		addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	}
 	if (props.sidesheetOptions) {
-		addSidesheet(props.sidesheetOptions, viewController, mediator);
+		addSidesheet(props.sidesheetOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
 	}
 	if (props.statusBarOptions) {
 		addStatusBar(props.statusBarOptions, viewController, mediator);
