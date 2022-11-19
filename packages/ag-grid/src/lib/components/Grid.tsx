@@ -3,14 +3,12 @@ import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
 import 'ag-grid-enterprise';
-
 import { useRowData, selectRowNode, useSelectionService, useColumnState } from '../hooks';
+import { useAgGridStyles } from '../hooks/useAgGridStyles';
 import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
@@ -32,6 +30,8 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
  */
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
+
+	useAgGridStyles();
 
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
