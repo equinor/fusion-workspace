@@ -1,6 +1,6 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FusionPowerBiConfigurator } from '../../classes';
-import { FusionMediator, FusionWorkspaceError, WorkspaceTabNames } from 'lib/types';
+import { FusionMediator, FusionWorkspaceError, WorkspaceTabNames } from '../../types';
 import { FusionPowerBiConfig } from '../../integrations/power-bi';
 import { addPowerBi } from './addPowerBi';
 

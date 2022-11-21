@@ -1,4 +1,4 @@
-import { FusionMediator } from '../types';
+import { FusionMediator, GetIdentifier } from '../types';
 import { BrowserHistory } from 'history';
 
 /** A union type of the workspace query parameters */
@@ -24,8 +24,13 @@ export function updateQueryParams<
 export function configureUrlWithHistory<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
+>(mediator: FusionMediator<TData, TContext>, history: BrowserHistory, getIdentifier: GetIdentifier<TData>) {
 	history.listen(() => {
 		mediator.urlService.url = new URL(window.location.href);
+	});
+	mediator.clickService.click$.subscribe(({ item }) => {
+		const id = getIdentifier(item);
+		mediator.selectionService.selectedNodes = [id];
+		updateQueryParams([`item=${id}`], mediator, history);
 	});
 }

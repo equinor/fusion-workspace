@@ -5,6 +5,6 @@ export * from './grid';
 export * from './sidesheet';
 export * from './statusBar';
 export * from './filter';
-export * from './addCustomTab';
+export * from './customTab/addCustomTab';
 export * from './addConfig';
 export * from './viewController';

@@ -1,5 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { BrowserHistory } from 'history';
+import { Action, BrowserHistory } from 'history';
 import { DumpsterFireDialog } from '../../components/ErrorComponent';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
@@ -30,6 +30,14 @@ export function addViewController<
 	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
 	viewController.tabController.onActiveTabChanged((tab) => {
 		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
+	});
+
+	/** Switch tab if somebody presses the navigation buttons in browser */
+	history.listen(({ action }) => {
+		if (action === Action.Pop) {
+			//Navigation back or forward;
+			switchTabOnNavigation(mediator, viewController);
+		}
 	});
 
 	mediator.onUnMount(viewController.destroy);

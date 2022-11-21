@@ -8,11 +8,12 @@ export function addSidesheet<
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never
 >(
-	config: SidesheetConfig<TData>,
+	config: SidesheetConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
+	if (!config) return;
 	viewController.addSidesheetComponent(() => (
 		<SidesheetWrapper getIdentifier={getIdentifier} Component={config.Sidesheet} mediator={mediator} />
 	));

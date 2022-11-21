@@ -1,11 +1,8 @@
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import { WorkspaceProps } from '../components/Workspace';
-import { Action } from 'history';
 import history from 'history/browser';
-import { FusionPowerBiConfigurator } from '../classes';
-import { configureUrlWithHistory, updateQueryParams } from '../classes/fusionUrlHandler';
+import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
 import { WorkspaceConfiguration, FusionMediator, WorkspaceTabNames, FusionWorkspaceError } from '../types';
-import { addCustomTab } from './addCustomTab';
 import { addDataSource } from './dataSource';
 import { addFilter } from './filter';
 import { sortFusionTabs } from './fusionTabOrder';
@@ -14,8 +11,10 @@ import { addGrid } from './grid';
 import { addPowerBi } from './powerBI/addPowerBi';
 import { addSidesheet } from './sidesheet';
 import { addStatusBar } from './statusBar';
-import { addViewController, switchTabOnNavigation } from './viewController';
+import { addViewController } from './viewController';
 import { addFusionPowerBi } from './powerBI/addFusionPowerBi';
+import { addCustomTabs } from './customTab';
+import { addContext } from './context';
 
 export function createConfigurationObject<
 	TData extends Record<PropertyKey, unknown>,
@@ -29,62 +28,26 @@ export function createConfigurationObject<
 	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
 		props.workspaceOptions.defaultTab
 	);
-	addViewController(viewController, mediator, history);
-	configureUrlWithHistory(mediator, history);
 	const configuration: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> = {
 		mediator,
 		viewController,
 		workspaceConfig: props.workspaceOptions,
 		rawOptions: props,
 	};
-	if (props.contextOptions) {
-		mediator.dataService.filteredData$.subscribe((data) => {
-			if (!data || !props.contextOptions) return;
-			mediator.contextService.setContext(props.contextOptions(data));
-		});
-	}
 
+	addViewController(viewController, mediator, history);
+	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
+	configureUrlWithHistory(mediator, history, props.workspaceOptions.getIdentifier);
+	addContext(props.contextOptions, viewController, mediator);
 	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
 	addPowerBi(props.powerBiOptions, viewController, mediator);
-
-	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
-	if (props.customTabs) {
-		props.customTabs.forEach((s) => addCustomTab(s, viewController, mediator));
-	}
-	if (props.filterOptions) {
-		addFilter(props.filterOptions, viewController, mediator);
-	} else {
-		//TODO: Extract
-		//bypass filterdata
-		mediator.dataService.data$.subscribe((val) => {
-			if (!val) return;
-			mediator.dataService.filteredData = val;
-		});
-	}
+	addCustomTabs(props.customTabs, viewController, mediator);
 	addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	if (props.gridOptions) {
-		addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	}
-	if (props.sidesheetOptions) {
-		addSidesheet(props.sidesheetOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	}
-	if (props.statusBarOptions) {
-		addStatusBar(props.statusBarOptions, viewController, mediator);
-	}
-
-	mediator.clickService.click$.subscribe(({ item }) => {
-		const id = props.workspaceOptions.getIdentifier(item);
-		mediator.selectionService.selectedNodes = [id];
-		updateQueryParams([`item=${id}`], mediator, history);
-	});
-
-	history.listen(({ action }) => {
-		if (action === Action.Pop) {
-			//Navigation back or forward;
-			switchTabOnNavigation(mediator, viewController);
-		}
-	});
-
+	addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
+	addSidesheet(props.sidesheetOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
+	addStatusBar(props.statusBarOptions, viewController, mediator);
+	addFilter(props.filterOptions, viewController, mediator);
 	sortFusionTabs(viewController);
+
 	return configuration;
 }
