@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.0...@equinor/workspace-garden@0.5.1) (2022-11-21)
+
+### Bug Fixes
+
+-   :bug: fix count for array grouping ([#192](https://github.com/equinor/fusion-workspace/issues/192)) ([bb041c4](https://github.com/equinor/fusion-workspace/commit/bb041c4e8d1bf8e49762512c14a1bd07d1e2d31a))
+
 ## [0.5.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.4.0...@equinor/workspace-garden@0.5.0) (2022-11-21)
 
 ### Features
