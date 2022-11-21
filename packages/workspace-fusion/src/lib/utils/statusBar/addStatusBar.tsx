@@ -9,10 +9,11 @@ export function addStatusBar<
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never
 >(
-	config: StatusBarConfig<TData>,
+	config: StatusBarConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext>
 ) {
+	if (!config) return;
 	const StatusBarProvider = ({ children }) => (
 		<StatusBarContext.Provider value={() => <StatusBarWrapper config={config} mediator={mediator} />}>
 			{children}
