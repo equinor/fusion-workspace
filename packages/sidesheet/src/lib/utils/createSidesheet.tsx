@@ -26,34 +26,22 @@ export const createWidget = <TProps,>(
 ) => ({
 	render: (props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth),
 	Component: (props: TProps) => (
-		<ComponentLoader
-			render={(props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth)}
-			props={props}
-		/>
+		<ComponentLoader Comp={Comp} props={props} defaultWidth={resizeOptions?.defaultWidth} />
 	),
 });
 
 type ComponentLoaderProps<TProps> = {
 	props: TProps;
-	render: (props: SidesheetProps<TProps>) => Promise<VoidFunction>;
+	Comp: (props: ComponentProps<TProps>) => JSX.Element;
+	defaultWidth?: number;
 };
 
 function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
-	const ref = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		let teardown: undefined | (() => void);
-		props.render({ el: ref.current as HTMLDivElement, props: props.props }).then((s) => {
-			teardown = s;
-		});
-		return () => {
-			if (teardown) {
-				teardown();
-			}
-		};
-	}, [props.props]);
-
-	return <div style={{ height: '100%' }} id="Component" ref={ref} />;
+	return (
+		<ResizeWrapper minWidth={20} defaultWidth={props.defaultWidth}>
+			<props.Comp props={props.props} frame={{} as any} />
+		</ResizeWrapper>
+	);
 }
 
 async function render<TProps>(
