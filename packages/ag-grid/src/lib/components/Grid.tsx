@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
@@ -9,6 +9,7 @@ import { applyColumnStateFromGridController, listenForColumnChanges } from '../u
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import { GridController } from '../types';
+import { useAgGridStyles } from '../hooks/useAgGridStyles';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
@@ -29,6 +30,8 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
  */
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
+
+	useAgGridStyles();
 
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
