@@ -5,7 +5,7 @@ import { BaseController, GetIdentifier, GridController } from '../types/gridCont
 export function createGridController<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
->(getIdentifier: GetIdentifier<TData>): GridController<TData, TContext> {
+>(getIdentifier: GetIdentifier<TData>, destroy: (destroy: VoidFunction) => void): GridController<TData, TContext> {
 	const controller: GridController<TData, TContext> = createObservableProxy<BaseController<TData, TContext>>({
 		columnDefs: [],
 		columnState: [],
@@ -20,5 +20,6 @@ export function createGridController<
 			});
 		},
 	});
+	destroy(() => controller.destroy());
 	return controller;
 }

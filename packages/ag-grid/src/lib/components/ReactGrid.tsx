@@ -1,5 +1,5 @@
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { createGridController } from '../utils';
 import { Grid } from './Grid';
 
@@ -24,13 +24,32 @@ export function ReactGrid<TData extends Record<PropertyKey, unknown>>({
 	colDefs,
 	gridOptions,
 }: ReactGridProps<TData>) {
+	const teardown = useRef<VoidFunction | null>(null);
+
+	/** Must be same for useEffect and useMemo */
+	const triggers = useRef([colDefs, gridOptions, rowData]);
+
 	const controller = useMemo(() => {
-		const cont = createGridController(() => '');
+		const cont = createGridController(
+			() => '',
+			(destroy) => {
+				teardown.current = destroy;
+			}
+		);
 		cont.columnDefs = colDefs;
 		cont.rowData = rowData;
 		cont.gridOptions = gridOptions;
 		return cont;
-	}, [colDefs, gridOptions, rowData]);
+	}, [...triggers.current]);
+
+	useEffect(
+		() => () => {
+			if (typeof teardown.current === 'function') {
+				teardown.current();
+			}
+		},
+		[...triggers.current]
+	);
 
 	return <Grid controller={controller} height={height} />;
 }

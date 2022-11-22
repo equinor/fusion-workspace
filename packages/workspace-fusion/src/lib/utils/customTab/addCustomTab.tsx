@@ -1,6 +1,6 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { CustomTabWrapper } from '../components';
-import { CustomTab, FusionMediator, WorkspaceTabNames } from '../types';
+import { CustomTabWrapper } from '../../components';
+import { CustomTab, FusionMediator, WorkspaceTabNames } from '../../types';
 
 export async function addCustomTab<
 	TData extends Record<PropertyKey, unknown>,

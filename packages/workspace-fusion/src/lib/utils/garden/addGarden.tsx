@@ -17,11 +17,13 @@ export function addGarden<
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
 	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(
-	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>,
+	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
+	if (!gardenConfig) return;
+
 	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>(
 		{
 			...gardenConfig,

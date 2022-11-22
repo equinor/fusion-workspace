@@ -10,10 +10,18 @@ export function addFilter<
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never
 >(
-	config: FilterConfig<TData>,
+	config: FilterConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext>
 ) {
+	if (!config) {
+		mediator.dataService.data$.subscribe((val) => {
+			if (!val) return;
+			mediator.dataService.filteredData = val;
+		});
+		return;
+	}
+
 	const filterController = new ReactFilterController<TData>();
 
 	filterController.addGroups(config.filterGroups);

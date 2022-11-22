@@ -10,10 +10,11 @@ export function addPowerBi<
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never
 >(
-	powerBiConfig: PowerBiConfig,
+	powerBiConfig: PowerBiConfig | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext>
 ) {
+	if (!powerBiConfig) return;
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 
 	//TODO:  Bookmark service config
