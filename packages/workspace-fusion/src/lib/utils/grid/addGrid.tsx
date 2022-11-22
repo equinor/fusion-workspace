@@ -23,7 +23,7 @@ export function addGrid<
 	getIdentifier: GetIdentifier<TData>
 ) {
 	if (!gridConfig) return;
-	const gridController = createGridController<TData, TContext>(getIdentifier);
+	const gridController = createGridController<TData, TContext>(getIdentifier, mediator.onUnMount);
 
 	const sub = mediator.contextService.context$.subscribe((s) => {
 		gridController.context = s;
@@ -42,8 +42,6 @@ export function addGrid<
 		TabIcon: GridIcon,
 		CustomHeader: () => <GridHeader controller={gridController} />,
 	});
-
-	mediator.onUnMount(gridController.destroy);
 }
 
 type GridWrapperProps<
