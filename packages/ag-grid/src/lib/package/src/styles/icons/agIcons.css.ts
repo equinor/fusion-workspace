@@ -4,6 +4,9 @@ import {
 	asc,
 	cancel,
 	chart,
+	checkboxCheckedSvg,
+	checkboxIndeterminate,
+	checkboxUnchecked,
 	colorPicker,
 	columns,
 	contracted,
@@ -202,5 +205,19 @@ export const agIcons = `.ag-theme-material .ag-icon-aggregation {
   }
   .ag-theme-material .ag-right-arrow::before {
     ${injectIcon(right)}
+  }
+  .ag-theme-material .ag-checkbox-input-wrapper.ag-checked {
+    background: transparent url(data:image/svg+xml,${encodeURIComponent(checkboxCheckedSvg)}) center/contain no-repeat;
+    color: transparent;
+  }
+  .ag-theme-material .ag-checkbox-input-wrapper.ag-indeterminate {
+    background: transparent url(data:image/svg+xml,${encodeURIComponent(
+		checkboxIndeterminate
+	)}) center/contain no-repeat;
+    color: transparent;
+  }
+  .ag-theme-material .ag-checkbox-input-wrapper  {
+    background: transparent url(data:image/svg+xml,${encodeURIComponent(checkboxUnchecked)}) center/contain no-repeat;
+    color: transparent;
   }
   `;
