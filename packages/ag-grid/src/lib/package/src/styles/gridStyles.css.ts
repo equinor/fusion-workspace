@@ -1,53 +1,64 @@
-import { aggregation } from '../icons/aggregation.svg';
-import { arrows } from '../icons/arrows.svg';
-import { asc } from '../icons/asc.svg';
-import { cancel } from '../icons/cancel.svg';
-import { chart } from '../icons/chart.svg';
-import { checkboxCheckedSvg } from '../icons/checkbox-checked.svg';
-import { checkboxUnchecked } from '../icons/checkbox-unchecked.svg';
-import { colorPicker } from '../icons/color-picker.svg';
-import { columns } from '../icons/columns.svg';
-import { contracted } from '../icons/contracted.svg';
-import { copy } from '../icons/copy.svg';
-import { cross } from '../icons/cross.svg';
-import { csv } from '../icons/csv.svg';
-import { desc } from '../icons/desc.svg';
-import { excel } from '../icons/excel.svg';
-import { expanded } from '../icons/expanded.svg';
-import { eyeSlash } from '../icons/eye-slash.svg';
-import { eye } from '../icons/eye.svg';
-import { filter } from '../icons/filter.svg';
-import { first } from '../icons/first.svg';
-import { grip } from '../icons/grip.svg';
-import { group } from '../icons/group.svg';
-import { last } from '../icons/last.svg';
-import { left } from '../icons/left.svg';
-import { linked } from '../icons/linked.svg';
-import { loading } from '../icons/loading.svg';
-import { maximize } from '../icons/maximize.svg';
-import { menu } from '../icons/menu.svg';
-import { minimize } from '../icons/minimize.svg';
-import { next } from '../icons/next.svg';
-import { none } from '../icons/none.svg';
-import { notAllowed } from '../icons/not-allowed.svg';
-import { paste } from '../icons/paste.svg';
-import { pin } from '../icons/pin.svg';
-import { pivot } from '../icons/pivot.svg';
-import { previous } from '../icons/previous.svg';
-import { right } from '../icons/right.svg';
-import { save } from '../icons/save.svg';
-import { smallDown } from '../icons/small-down.svg';
-import { smallLeft } from '../icons/small-left.svg';
-import { smallRight } from '../icons/small-right.svg';
-import { smallUp } from '../icons/small-up.svg';
-import { tick } from '../icons/tick.svg';
-import { treeClosed } from '../icons/tree-closed.svg';
-import { treeIndeterminate } from '../icons/tree-indeterminate.svg';
+import {
+	aggregation,
+	arrows,
+	asc,
+	cancel,
+	chart,
+	colorPicker,
+	columns,
+	contracted,
+	copy,
+	cross,
+	csv,
+	desc,
+	excel,
+	expanded,
+	eye,
+	eyeSlash,
+	filter,
+	first,
+	grip,
+	group,
+	last,
+	left,
+	linked,
+	loading,
+	maximize,
+	menu,
+	minimize,
+	next,
+	none,
+	notAllowed,
+	paste,
+	pin,
+	pivot,
+	previous,
+	right,
+	save,
+	smallDown,
+	smallLeft,
+	smallRight,
+	smallUp,
+	tick,
+	treeClosed,
+	treeIndeterminate,
+	treeOpen,
+	unlinked,
+} from '../icons';
 
 export const THEME_NAME = 'ag-theme-material';
 
 function parseIcon(value: string) {
 	return `data:image/svg+xml,${encodeURIComponent(value)}`;
+}
+
+function injectIcon(value: string) {
+	return `background: transparent
+  url(${parseIcon(value)})
+    center/contain no-repeat;
+  color: transparent;
+  height: 20px;
+  width: 20px;`;
 }
 
 export const agStyles = `
@@ -78,363 +89,148 @@ export const agStyles = `
     -moz-osx-font-smoothing: grayscale;
   }
   .ag-theme-material .ag-icon-aggregation {
-    background: transparent
-    url(${parseIcon(aggregation)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(aggregation)}
   }
   .ag-theme-material .ag-icon-arrows {
-    background: transparent
-    url(${parseIcon(arrows)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(arrows)}
   }
   .ag-theme-material .ag-icon-asc {
-    background: transparent
-    url(${parseIcon(asc)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(asc)}
   }
   .ag-theme-material .ag-icon-cancel {
-    background: transparent
-    url(${parseIcon(cancel)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(cancel)}
   }
   .ag-theme-material .ag-icon-chart {
-    background: transparent
-    url(${parseIcon(chart)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(chart)}
   }
   .ag-theme-material .ag-icon-color-picker {
-    background: transparent
-    url(${parseIcon(colorPicker)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(colorPicker)}
   }
   .ag-theme-material .ag-icon-columns {
-    background: transparent
-    url(${parseIcon(columns)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(columns)}
   }
   .ag-theme-material .ag-icon-contracted {
-    background: transparent
-    url(${parseIcon(contracted)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(contracted)}
   }
   .ag-theme-material .ag-icon-copy {
-    background: transparent
-    url(${parseIcon(copy)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(copy)}
   }
   .ag-theme-material .ag-icon-cross {
-    background: transparent
-    url(${parseIcon(cross)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(cross)}
   }
   .ag-theme-material .ag-icon-csv {
-    background: transparent
-    url(${parseIcon(csv)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(csv)}
   }
   .ag-theme-material .ag-icon-desc {
-    background: transparent
-    url(${parseIcon(desc)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(desc)}
   }
   .ag-theme-material .ag-icon-excel {
-    background: transparent
-    url(${parseIcon(excel)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(excel)}
   }
   .ag-theme-material .ag-icon-expanded {
-    background: transparent
-    url(${parseIcon(expanded)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(expanded)}
   }
   .ag-theme-material .ag-icon-eye-slash {
-    background: transparent
-    url(${parseIcon(eyeSlash)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(eyeSlash)}
   }
   .ag-theme-material .ag-icon-eye {
-    background: transparent
-    url(${parseIcon(eye)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(eye)}
   }
   .ag-theme-material .ag-icon-filter {
-    background: transparent
-    url(${parseIcon(filter)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(filter)}
   }
   .ag-theme-material .ag-icon-first {
-    background: transparent
-    url(${parseIcon(first)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(first)}
   }
   .ag-theme-material .ag-icon-grip {
-    background: transparent
-    url(${parseIcon(grip)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(grip)}
   }
-  .ag-theme-material .ag-icon-group::before {
-    background: transparent
-    url(${parseIcon(group)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-group {
+    ${injectIcon(group)}
   }
-  .ag-theme-material .ag-icon-last::before {
-    background: transparent
-    url(${parseIcon(last)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-last {
+    ${injectIcon(last)}
   }
-  .ag-theme-material .ag-icon-left::before {
-    background: transparent
-    url(${parseIcon(left)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-left {
+    ${injectIcon(left)}
   }
-  .ag-theme-material .ag-icon-linked::before {
-    background: transparent
-    url(${parseIcon(linked)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-linked {
+    ${injectIcon(linked)}
   }
-  .ag-theme-material .ag-icon-loading::before {
-    background: transparent
-    url(${parseIcon(loading)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-loading {
+    ${injectIcon(loading)}
   }
   .ag-theme-material .ag-icon-maximize {
-    background: transparent
-    url(${parseIcon(maximize)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(maximize)}
   }
   .ag-theme-material .ag-icon-menu {
-    background: transparent
-    url(${parseIcon(menu)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+   ${injectIcon(menu)}
   }
   .ag-theme-material .ag-icon-minimize {
-    background: transparent
-    url(${parseIcon(minimize)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(minimize)}
   }
   .ag-theme-material .ag-icon-next {
-    background: transparent
-    url(${parseIcon(next)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(next)}
   }
   .ag-theme-material .ag-icon-none {
-    background: transparent
-    url(${parseIcon(none)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(none)}
   }
   .ag-theme-material .ag-icon-not-allowed {
-    background: transparent
-    url(${parseIcon(notAllowed)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(notAllowed)}
   }
   .ag-theme-material .ag-icon-paste {
-    background: transparent
-    url(${parseIcon(paste)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(paste)}
   }
   .ag-theme-material .ag-icon-pin {
-    background: transparent
-    url(${parseIcon(pin)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(pin)}
   }
   .ag-theme-material .ag-icon-pivot {
-    background: transparent
-    url(${parseIcon(pivot)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(pivot)}
   }
   .ag-theme-material .ag-icon-previous {
-    background: transparent
-    url(${parseIcon(previous)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(previous)}
   }
   .ag-theme-material .ag-icon-right {
-    background: transparent
-    url(${parseIcon(right)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(right)}
   }
   .ag-theme-material .ag-icon-save {
-    background: transparent
-    url(${parseIcon(save)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(save)}
   }
   .ag-theme-material .ag-icon-small-down {
-    background: transparent
-    url(${parseIcon(smallDown)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(smallDown)}
   }
   .ag-theme-material .ag-icon-small-left {
-    background: transparent
-    url(${parseIcon(smallLeft)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(smallLeft)}
   }
   .ag-theme-material .ag-icon-small-right {
-    background: transparent
-    url(${parseIcon(smallRight)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(smallRight)}
   }
   .ag-theme-material .ag-icon-small-up {
-    background: transparent
-    url(${parseIcon(smallUp)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(smallUp)}
   }
   .ag-theme-material .ag-icon-tick {
-    background: transparent
-    url(${parseIcon(tick)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(tick)}
   }
   .ag-theme-material .ag-icon-tree-closed {
-    background: transparent
-    url(${parseIcon(treeClosed)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+    ${injectIcon(treeClosed)}
   }
-  .ag-theme-material .ag-icon-tree-indeterminate::before {
-    background: transparent
-    url(${parseIcon(treeIndeterminate)})
-      center/contain no-repeat;
-    color: transparent;
-    height: 20px;
-    width: 20px;
+  .ag-theme-material .ag-icon-tree-indeterminate {
+    ${injectIcon(treeIndeterminate)}
   }
-  .ag-theme-material .ag-icon-tree-open::before {
-    content: "\f131";
+  .ag-theme-material .ag-icon-tree-open {
+    ${injectIcon(treeOpen)}
   }
-  .ag-theme-material .ag-icon-unlinked::before {
-    content: "\f132";
+  .ag-theme-material .ag-icon-unlinked {
+    ${injectIcon(unlinked)}
   }
   .ag-theme-material .ag-icon-row-drag::before {
     content: "\f116";
   }
   .ag-theme-material .ag-left-arrow::before {
-    content: "\f119";
+    ${injectIcon(left)}
   }
   .ag-theme-material .ag-right-arrow::before {
-    content: "\f128";
+    ${injectIcon(right)}
   }
   .ag-theme-material .ag-root-wrapper, .ag-theme-material .ag-sticky-top {
     background-color: #fff;
