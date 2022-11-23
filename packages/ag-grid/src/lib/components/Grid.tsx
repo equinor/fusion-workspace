@@ -35,7 +35,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
 
-	useAgStyles();
+	const themeName = useAgStyles();
 
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
@@ -55,7 +55,7 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 	return (
 		<StyledGridWrapper style={{ height }}>
 			<AgGridReact
-				className="ag-theme-material"
+				className={themeName}
 				onGridReady={(api) => {
 					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);

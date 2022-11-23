@@ -54,14 +54,12 @@ function parseIcon(value: string) {
 }
 
 function injectIcon(value: string) {
-	return `background: transparent
-  url(${parseIcon(value)})
-    center/contain no-repeat;
+	return `content: url(${parseIcon(value)});
   color: transparent;
   height: 20px;
   width: 20px;`;
 }
-
+//TODO: fix csv and excel not working svg is too big
 export const agIcons = `.ag-theme-material .ag-icon-aggregation {
     ${injectIcon(aggregation)}
   }
