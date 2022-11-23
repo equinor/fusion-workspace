@@ -62,7 +62,7 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 					listenForColumnChanges(controller, api);
 				}}
 				gridOptions={gridOptions.current}
-				sideBar={sideBar}
+				// sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}
 				rowSelection="multiple"
