@@ -10,7 +10,7 @@ export const agStyles = `
     color: rgba(0, 0, 0, 0.87);
     color: var(--ag-foreground-color, rgba(0, 0, 0, 0.87));
     font-family: Equinor, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     line-height: normal;
   }
   @font-face {
