@@ -70,6 +70,15 @@ function App() {
 
 	return (
 		<div className="App" style={{ height: '100vh' }}>
+			<div
+				style={{
+					backgroundImage: "url('https://www.ag-grid.com/example-assets/svg-icons/menu.svg')",
+					height: '50px',
+					width: '50px',
+				}}
+			>
+				test icon
+			</div>
 			<Button onClick={() => setContextId((Math.random() * 16).toString())}>Switch context</Button>
 			<Workspace
 				onWorkspaceReady={(ev) => {

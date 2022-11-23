@@ -9,9 +9,11 @@ import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+// import 'ag-grid-community/dist/styles/ag-grid.css';
+// import 'ag-grid-community/dist/styles/ag-theme-material.css';
+// import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
+import { AgGridEdsStyleProvider, useAgStyles } from '../package/src';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
@@ -33,6 +35,8 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
 
+	useAgStyles();
+
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
 			gridOptions.current.context = s;
@@ -49,8 +53,9 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 	useColumnState(controller, gridOptions.current.columnApi ?? undefined);
 
 	return (
-		<StyledGridWrapper style={{ height }} className="ag-theme-alpine">
+		<StyledGridWrapper style={{ height }}>
 			<AgGridReact
+				className="ag-theme-material"
 				onGridReady={(api) => {
 					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
