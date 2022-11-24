@@ -61,7 +61,7 @@ function injectIcon(value: string) {
 
 	return css.replace(/\n/g, '');
 }
-//TODO: fix csv and excel not working svg is too big
+
 export const agIcons = `.ag-theme-material .ag-icon-aggregation {
     ${injectIcon(aggregation)}
   }
