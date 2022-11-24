@@ -54,10 +54,12 @@ function parseIcon(value: string) {
 }
 
 function injectIcon(value: string) {
-	return `content: url(${parseIcon(value)});
+	const css = `content: url("${parseIcon(value)}");
   color: transparent;
   height: 20px;
   width: 20px;`;
+
+	return css.replace(/\n/g, '');
 }
 //TODO: fix csv and excel not working svg is too big
 export const agIcons = `.ag-theme-material .ag-icon-aggregation {
@@ -91,7 +93,7 @@ export const agIcons = `.ag-theme-material .ag-icon-aggregation {
     ${injectIcon(cross)}
   }
   .ag-theme-material .ag-icon-csv {
-    ${injectIcon(csv)}
+     ${injectIcon(csv)}
   }
   .ag-theme-material .ag-icon-desc {
     ${injectIcon(desc)}
