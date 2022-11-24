@@ -3,27 +3,11 @@
 Please include a summary of the change and which issue is fixed.
 List any external dependencies that are required for this change.
 
-Completes: AB#FILL_IN_YOUR_ISSUE_ID
-
-## Type of change
-
-Remove options that are not relevant.
-
--   [ ] Bug fix (non-breaking change which fixes an issue)
--   [ ] New feature (non-breaking change which adds functionality)
--   [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
--   [ ] This change requires a documentation update
-
-## How Has This Been Tested?
-
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
+Addresses: AB#FILL_IN_YOUR_ISSUE_ID
 
 ## Checklist
 
--   [ ] My code follows the style guidelines of this project
--   [ ] I have performed a self-review of my own code.
--   [ ] I have linked my DevOps task using the AB# tag.
--   [ ] My code is easy to read.
--   [ ] Documentation and comments is added where needed.
--   [ ] My code is covered by tests.
--   [ ] UX has reviewed relevant UI contributions.
+- [ ] My code follows the style guidelines of this project
+- [ ] Documentation and comments is added where needed.
+- [ ] My code is covered by tests.
+- [ ] UX has reviewed relevant UI contributions.
