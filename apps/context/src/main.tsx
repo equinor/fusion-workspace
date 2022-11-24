@@ -2,7 +2,7 @@ import { ComponentRenderArgs, IAppConfigurator, makeComponent } from '@equinor/f
 import { enableAgGrid } from '@equinor/fusion-framework-module-ag-grid';
 import { useHttpClient } from '@equinor/fusion-framework-react-app/http';
 
-import { StrictMode, useCallback } from 'react';
+import { StrictMode, useCallback, memo } from 'react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Workspace } from '@equinor/workspace-fusion';
@@ -21,12 +21,18 @@ export type Type = {
 	parentTypeIds: string[];
 };
 
+type Value = {
+	isValid: boolean;
+	projectMasterId: null;
+	wbs: string;
+};
+
 export type Context = {
 	id: string;
 	externalId: string;
 	source: string;
 	type: Type;
-	value: string;
+	value: Value;
 	title: string;
 	isActive: boolean;
 	isDeleted: boolean;
@@ -60,11 +66,11 @@ const MyApp = () => {
 		<StrictMode>
 			<GlobalStyle />
 			<div style={{ height: '100vh', margin: 0 }}>
-				<Workspace<Context>
-					workspaceOptions={{ appKey: 'context', getIdentifier: (s) => s.externalId }}
+				<Workspace<Context, {}>
+					workspaceOptions={{ appKey: 'context', getIdentifier: (s) => s.externalId, defaultTab: 'grid' }}
 					statusBarOptions={(data) => [
 						{ title: 'Count', value: data.length },
-						{ title: 'Project type', value: data.filter((s) => s.type.id === 'Project').length },
+						{ title: 'Project type', value: data.filter((s) => s.type?.id === 'Project').length },
 					]}
 					gridOptions={{
 						columnDefinitions: [
@@ -80,7 +86,8 @@ const MyApp = () => {
 								field: 'created',
 								valueGetter: (s) => s.data && new Date(s.data.created).toLocaleDateString('no'),
 							},
-							{ field: 'source' },
+							{ field: 'WBS', valueGetter: (s) => s.data?.value.wbs },
+							{ field: 'Project master id', valueGetter: (s) => s.data?.value.projectMasterId },
 							{ field: 'isActive', valueGetter: (s) => (s.data?.isActive ? 'yes' : 'no') },
 							{ field: 'isDeleted', valueGetter: (s) => (s.data?.isDeleted ? 'yes' : 'no') },
 						],
@@ -88,7 +95,7 @@ const MyApp = () => {
 					}}
 					filterOptions={{
 						filterGroups: [
-							{ name: 'Type', valueFormatter: (s) => s.type.id, isQuickFilter: true },
+							{ name: 'Type', valueFormatter: (s) => s.type?.id ?? null, isQuickFilter: true },
 							{
 								name: 'isActive',
 								defaultUncheckedValues: ['No'],
@@ -102,6 +109,14 @@ const MyApp = () => {
 								valueFormatter: (s) => (s.isDeleted ? 'Yes' : 'No'),
 							},
 						],
+					}}
+					gardenOptions={{
+						getDisplayName: (s) => s.title,
+						fieldSettings: { type: { getKey: (s) => s?.type?.id } },
+						initialGrouping: { horizontalGroupingAccessor: 'type', verticalGroupingKeys: [] },
+						visuals: {
+							calculateItemWidth: (s) => 300,
+						},
 					}}
 					onWorkspaceReady={(a) => {
 						a.api.dataService.data = [{ externalId: '123' } as any];
