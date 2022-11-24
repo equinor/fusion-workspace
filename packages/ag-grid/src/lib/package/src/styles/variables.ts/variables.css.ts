@@ -21,8 +21,10 @@ const inputVariables = `
  */
 const general = `
 --ag-border-color: ${tokens.colors.ui.background__medium.hex};
+--ag-background-color: ${tokens.colors.ui.background__default.hex};
 --ag-foreground-color: ${tokens.colors.text.static_icons__default.hex};
 --ag-material-primary-color: ${tokens.colors.interactive.primary__resting.hex};
+--ag-data-color: ${tokens.colors.text.static_icons__default.hex};
 
 `;
 /**
