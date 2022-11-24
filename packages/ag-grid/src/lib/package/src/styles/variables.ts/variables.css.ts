@@ -50,6 +50,7 @@ const column = `
 const header = `
 --ag-subheader-background-color: ${tokens.colors.interactive.table__header__fill_resting.hex};
 --ag-header-background-color: ${tokens.colors.interactive.table__header__fill_resting.hex};
+--ag-header-cell-hover-background-color: ${tokens.colors.ui.background__medium.hex};
 `;
 
 const controlPanel = `
@@ -79,4 +80,4 @@ const checkbox = `
 --ag-checkbox-unchecked-color: red;
 `;
 
-export const agVariables = concat(general, header, row, selection, checkbox);
+export const agVariables = concat(general, header, row, selection, checkbox, row);
