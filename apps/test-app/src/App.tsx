@@ -7,6 +7,7 @@ import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
+import { microsoft_excel } from '@equinor/eds-icons';
 import { Button } from '@equinor/eds-core-react';
 
 type S = {

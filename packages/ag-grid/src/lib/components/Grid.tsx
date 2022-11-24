@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
@@ -9,9 +9,8 @@ import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
+import { useAgStyles } from '../package/src';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
@@ -33,6 +32,8 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule
 export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, height }: GridProps<TData>) {
 	const gridOptions = useRef<GridOptions>({ ...controller.gridOptions, context: controller.context });
 
+	const themeName = useAgStyles();
+
 	useEffect(() => {
 		const sub = controller.context$.subscribe((s) => {
 			gridOptions.current.context = s;
@@ -49,15 +50,17 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 	useColumnState(controller, gridOptions.current.columnApi ?? undefined);
 
 	return (
-		<StyledGridWrapper style={{ height }} className="ag-theme-alpine">
+		<StyledGridWrapper style={{ height }}>
 			<AgGridReact
+				rowHeight={32}
+				headerHeight={32}
+				className={themeName}
 				onGridReady={(api) => {
 					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
 					applyColumnStateFromGridController(controller, api.columnApi);
 					listenForColumnChanges(controller, api);
 				}}
 				gridOptions={gridOptions.current}
-				sideBar={sideBar}
 				columnDefs={controller.columnDefs}
 				rowData={rowData}
 				rowSelection="multiple"
