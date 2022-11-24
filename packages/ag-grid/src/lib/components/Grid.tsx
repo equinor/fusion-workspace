@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, SideBarDef } from 'ag-grid-community';
 import { ModuleRegistry } from '@ag-grid-community/core';
@@ -9,11 +9,8 @@ import { StyledGridWrapper } from './grid.styles';
 import { applyColumnStateFromGridController, listenForColumnChanges } from '../utils';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-// import 'ag-grid-community/dist/styles/ag-grid.css';
-// import 'ag-grid-community/dist/styles/ag-theme-material.css';
-// import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { GridController } from '../types';
-import { AgGridEdsStyleProvider, useAgStyles } from '../package/src';
+import { useAgStyles } from '../package/src';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
@@ -55,6 +52,8 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 	return (
 		<StyledGridWrapper style={{ height }}>
 			<AgGridReact
+				rowHeight={32}
+				headerHeight={32}
 				className={themeName}
 				onGridReady={(api) => {
 					selectRowNode(controller.selectedNodes ?? [], controller.getIdentifier, api.api, rowData);
