@@ -1,4 +1,4 @@
-import { FusionMediator } from '../types';
+import { FusionMediator, GetIdentifier } from '../types';
 import { BrowserHistory } from 'history';
 
 /** A union type of the workspace query parameters */
@@ -10,37 +10,27 @@ export type QueryParam = `${QueryParamTopic}=${string}`;
 /**
  * Function for patching query parameters without manipulating the other query parameters
  */
-export function updateQueryParams<TData>(val: QueryParam[], mediator: FusionMediator<TData>, history: BrowserHistory) {
-	/** Remove all topics from existing url that you want to replace */
-	const existingQueryParams = mediator.urlService.url.queryParams.filter((queryParam) =>
-		patchQueryParams(queryParam, val)
-	);
-
-	const newQueryParams = [...existingQueryParams, ...val].sort();
-
-	/** Dont update url if nothing changed */
-	if (arrayToQueryParam(mediator.urlService.url.queryParams) === arrayToQueryParam(newQueryParams)) return;
-
-	history.push(`?${arrayToQueryParam(newQueryParams)}`);
-}
-
-export function configureUrlWithHistory<TData>(mediator: FusionMediator<TData>, history: BrowserHistory) {
-	history.listen(({ location }) => {
-		mediator.urlService.setUrl(`${window.location.href}${location.search}`);
+export function updateQueryParams<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(val: QueryParam[], mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
+	val.forEach((val) => {
+		const [topic, value] = val.split('=');
+		mediator.urlService.url.searchParams.set(topic, value);
 	});
+	history.push(mediator.urlService.url.toString());
 }
 
-function arrayToQueryParam(args: string[]) {
-	return args
-		.map((s) => `${s}`)
-		.toString()
-		.replace(',', '&');
-}
-
-/**
- * Returns false if the query param exists in the query params array
- * @returns boolean
- */
-function patchQueryParams(queryParam: string, newQueryParams: QueryParam[]) {
-	return !newQueryParams.map((s) => s.split('=')[0]).includes(queryParam.split('=')[0]);
+export function configureUrlWithHistory<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(mediator: FusionMediator<TData, TContext>, history: BrowserHistory, getIdentifier: GetIdentifier<TData>) {
+	history.listen(() => {
+		mediator.urlService.url = new URL(window.location.href);
+	});
+	mediator.clickService.click$.subscribe(({ item }) => {
+		const id = getIdentifier(item);
+		mediator.selectionService.selectedNodes = [id];
+		updateQueryParams([`item=${id}`], mediator, history);
+	});
 }

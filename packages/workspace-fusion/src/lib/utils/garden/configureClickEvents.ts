@@ -1,26 +1,30 @@
-import { GardenController, GardenGroup } from '@equinor/garden';
-import { FusionMediator } from '../../types';
-import { GetIdentifier } from '../createFusionWorkspace';
+import { GardenController, GardenGroup } from '@equinor/workspace-garden';
+import { FusionMediator, GetIdentifier } from '../../types';
 
 /** Adds clickevents from mediator on garden controller  */
-export function configureClickEvents<TData, TCustomGroupByKeys, TCustomState, TContext>(
-	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	{ selectionService, clickService }: FusionMediator<TData>,
+export function configureClickEvents<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>(
+	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
+	{ selectionService, clickService }: FusionMediator<TData, TContext>,
 	getIdentifier: GetIdentifier<TData>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
 		clickService.click({ item: item });
-		selectionService.setSelection([{ id: getIdentifier(item) }]);
+		selectionService.selectedNodes = [getIdentifier(item)];
 	};
 
 	gardenController.clickEvents.onClickGroup = (group) => {
 		const items = findItemsRecursively(group);
-		selectionService.setSelection(items.map((s) => ({ id: getIdentifier(s) })));
+		selectionService.selectedNodes = items.map(getIdentifier);
 	};
 }
 
 /** Finds all items in subgroups or recursively through all subgroups */
-function findItemsRecursively<TData>(item: GardenGroup<TData>): TData[] {
+function findItemsRecursively<TData extends Record<PropertyKey, unknown>>(item: GardenGroup<TData>): TData[] {
 	if (item.items.length > 0) return item.items;
-	return item.subGroups.map((s) => findItemsRecursively(s)).flat();
+	return item.subGroups.map((group) => findItemsRecursively(group)).flat();
 }

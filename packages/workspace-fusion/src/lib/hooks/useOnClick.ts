@@ -6,13 +6,18 @@ import { FusionMediator } from '../types/fusionController';
  * Listens to the workspace controller onClick event and captures it in a reactive state
  * @returns workspace onCLick event as reactive state
  */
-export function useOnClick<TData>({ clickService: { lastClick, onClick } }: FusionMediator<TData>) {
-	const [clickEvent, setClickEvent] = useState<WorkspaceOnClick<TData> | undefined>(lastClick);
+export function useOnClick<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>({ clickService: { click$ } }: FusionMediator<TData, TContext>) {
+	const [clickEvent, setClickEvent] = useState<WorkspaceOnClick<TData> | undefined>();
 
 	useEffect(() => {
-		const unsubscribe = onClick(setClickEvent);
+		const subscription = click$.subscribe(setClickEvent);
 
-		return unsubscribe;
+		return () => {
+			subscription.unsubscribe();
+		};
 	}, []);
 
 	return clickEvent;

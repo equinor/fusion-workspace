@@ -1,10 +1,10 @@
-import { GridController } from '@workspace/grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { WorkspaceHeader } from '../../../components/Header/WorkspaceHeader';
 
-interface GridHeaderProps<TData> {
+type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
-}
+};
 
-export function GridHeader<TData>({ controller }: GridHeaderProps<TData>) {
+export function GridHeader<TData extends Record<PropertyKey, unknown>>({ controller }: GridHeaderProps<TData>) {
 	return <WorkspaceHeader />;
 }

@@ -1,19 +1,32 @@
-import { FilterOptions, ReactFilterController } from '@equinor/filter';
+import { ReactFilterController } from '@equinor/workspace-filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
+import { FilterConfig } from '../../integrations/filter';
 import { WorkspaceTabNames, FusionMediator } from '../../types';
 import { addFilterContext } from './addFilterContext';
 import { configureOnDataChange } from './configureOnDataChange';
 
-export function addFilter<TData, TError>(
-	config: FilterOptions<TData>,
+export function addFilter<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
+	config: FilterConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	{ dataService, onUnMount }: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
+	if (!config) {
+		mediator.dataService.data$.subscribe((val) => {
+			if (!val) return;
+			mediator.dataService.filteredData = val;
+		});
+		return;
+	}
+
 	const filterController = new ReactFilterController<TData>();
 
-	filterController.addGroups(config);
+	filterController.addGroups(config.filterGroups);
 
 	addFilterContext(viewController, filterController);
-	configureOnDataChange(dataService, filterController);
-	onUnMount(filterController.destroy);
+	configureOnDataChange(mediator, filterController);
+	mediator.onUnMount(filterController.destroy);
 }

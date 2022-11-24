@@ -1,18 +1,18 @@
-import { BaseRecordObject } from './customGeneric';
-
 export type GetSortFunction = (a: string, b: string) => number;
 export type GetKeyFunction<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> = (item: TData, itemKey: keyof TData | string, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+> = (item: TData, itemKey: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string[] | string;
 
 export type FieldSetting<
-	ItemType,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	ItemType extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
 	key?: keyof ItemType | string;
 	label?: string;
-	getKey?: GetKeyFunction<ItemType, TCustomGroupByKeys>;
+	getKey?: GetKeyFunction<ItemType, TExtendedFields, TCustomGroupByKeys>;
 	getColumnSort?: GetSortFunction;
 };
 
@@ -26,7 +26,7 @@ export type FieldSetting<
  * @template ExtendedFields (optional) string literal that defines fields that does not exist on the base model.
  */
 export type FieldSettings<
-	ItemType,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
-	ExtendedFields extends string = never
-> = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, TCustomGroupByKeys>>>;
+	ItemType extends Record<PropertyKey, unknown>,
+	ExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+> = Partial<Record<keyof ItemType | ExtendedFields, FieldSetting<ItemType, ExtendedFields, TCustomGroupByKeys>>>;

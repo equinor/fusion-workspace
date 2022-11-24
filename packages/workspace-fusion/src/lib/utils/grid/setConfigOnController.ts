@@ -1,14 +1,19 @@
-import { GridController } from '@workspace/grid';
-import { ColDef } from 'ag-grid-community';
-import { FusionMediator, GridConfig } from '../../types';
+import { GridConfig, GridController, ColDef } from '../../integrations/grid';
+import { FusionMediator } from '../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
-export function setConfigOnController<TData>(
+export function setConfigOnController<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
 	gridConfig: GridConfig<TData>,
-	gridController: GridController<TData>,
-	mediator: FusionMediator<TData>
+	gridController: GridController<TData, TContext>,
+	mediator: FusionMediator<TData, TContext>
 ) {
-	gridConfig.gridOptions && gridController.setGridOptions(gridConfig.gridOptions);
+	if (gridConfig.gridOptions) {
+		gridController.gridOptions = gridConfig.gridOptions;
+	}
+
 	gridController.columnDefs = prepareColumnDefintions(gridConfig.columnDefinitions, mediator);
 }
 
@@ -18,6 +23,9 @@ export function setConfigOnController<TData>(
  * @param mediator Workspace controller
  * @returns Altered column definitions
  */
-function prepareColumnDefintions<TData>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData>) {
+function prepareColumnDefintions<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
+>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData, TContext>) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, mediator));
 }

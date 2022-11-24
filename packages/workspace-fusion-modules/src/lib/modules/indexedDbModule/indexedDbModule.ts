@@ -1,4 +1,4 @@
-import { FusionMediator, FusionWorkspaceModule } from '@equinor/workspace-fusion';
+import { FusionMediator, FusionWorkspaceModule } from '@equinor/workspace-fusion/';
 import { FusionUserSettings } from './classes/fusionUserSettings';
 
 /**
@@ -12,7 +12,7 @@ export const IndexedDbModule: FusionWorkspaceModule<any> = {
 
 async function setup(mediator: FusionMediator<any>, appKey: string) {
 	const db = new FusionUserSettings<any>();
-	mediator.bookmarkService.onCapture((res) => {
+	mediator.bookmarkService.capture$.subscribe((res) => {
 		db.save(res, appKey);
 	});
 

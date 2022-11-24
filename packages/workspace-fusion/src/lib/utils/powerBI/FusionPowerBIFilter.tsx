@@ -1,10 +1,10 @@
-import { PowerBiController, PowerBIFilter } from '@equinor/powerbi';
+import { PowerBiController, PowerBIFilter } from '@equinor/workspace-powerbi';
 import { Report } from 'powerbi-client';
 import { useState, useEffect } from 'react';
 
-interface FusionPowerBiFilterProps {
+type FusionPowerBiFilterProps = {
 	controller: PowerBiController;
-}
+};
 export function FusionPowerBiFilter({ controller }: FusionPowerBiFilterProps) {
 	const [report, setReport] = useState<Report | null>(null);
 	const [isLoaded, setIsLoaded] = useState(false);

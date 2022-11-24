@@ -1,15 +1,20 @@
-import { PowerBI, PowerBiController } from '@equinor/powerbi';
+import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/workspace-powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { IReportEmbedConfiguration } from 'powerbi-client';
 import { PowerBiHeader } from '../../components/Header/PowerBiHeader';
 import { PowerBiIcon } from '../../icons/PowerBiIcon';
-import { WorkspaceTabNames, FusionMediator, PowerBiConfig } from '../../types';
+import { WorkspaceTabNames, FusionMediator } from '../../types';
+import { PowerBiConfig } from '../../integrations/power-bi';
 
-export function addPowerBi<TData, TError>(
-	powerBiConfig: PowerBiConfig,
+export function addPowerBi<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(
+	powerBiConfig: PowerBiConfig | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
+	if (!powerBiConfig) return;
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 
 	//TODO:  Bookmark service config

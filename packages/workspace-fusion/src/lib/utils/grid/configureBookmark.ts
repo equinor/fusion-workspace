@@ -1,14 +1,20 @@
-import { GridController } from '@workspace/grid';
+import { GridController } from '@equinor/workspace-ag-grid';
 import { FusionMediator, GridBookmark } from '../../types';
 import { snapshotGridState } from './snapShotGridState';
 
-export function configureBookmark<TData>(gridController: GridController<TData>, mediator: FusionMediator<TData>) {
+export function configureBookmark<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>(gridController: GridController<TData, TContext>, mediator: FusionMediator<TData, TContext>) {
 	mediator.bookmarkService.registerCapture(() => ({ grid: snapshotGridState(gridController) }));
-	mediator.bookmarkService.onApply((state) => state?.grid && applyGridBookmark(state.grid, gridController));
-	gridController.onColumnStateChanged(mediator.bookmarkService.capture);
+	mediator.bookmarkService.apply$.subscribe((state) => state?.grid && applyGridBookmark(state.grid, gridController));
+	gridController.columnState$.subscribe(mediator.bookmarkService.capture);
 }
 
-function applyGridBookmark<TData>(bookmark: GridBookmark, gridController: GridController<TData>) {
-	gridController.selectedNodes.setValue(bookmark.selectedNodes ?? []);
-	gridController.setColumnState(bookmark.columnState);
+function applyGridBookmark<TData extends Record<PropertyKey, unknown>>(
+	bookmark: GridBookmark,
+	gridController: GridController<TData>
+) {
+	gridController.selectedNodes = bookmark.selectedNodes ?? [];
+	gridController.columnState = bookmark.columnState;
 }

@@ -1,7 +1,7 @@
 {
 	"root": true,
 	"ignorePatterns": ["**/*"],
-	"plugins": ["@nrwl/nx", "eslint-plugin-tsdoc"],
+	"plugins": ["eslint-plugin-tsdoc"],
 	"extends": ["plugin:@typescript-eslint/recommended"],
 	"parser": "@typescript-eslint/parser",
 	"rules": {
@@ -11,9 +11,7 @@
 		"prefer-const": "warn",
 		"lines-between-class-members": "warn",
 		"class-methods-use-this": "warn",
-		// require return statements to either always or never specify values
-		// https://eslint.org/docs/rules/consistent-return
-		"consistent-return": "error",
+		"@typescript-eslint/consistent-type-definitions": ["error", "type"],
 		// specify curly brace conventions for all control statements
 		// https://eslint.org/docs/rules/curly
 		"curly": ["error", "multi-line"],
@@ -46,28 +44,6 @@
 		// disallow use of new operator for Function object
 		// https://eslint.org/docs/rules/no-new-func
 		"no-new-func": "error",
-		// disallow reassignment of function parameters
-		// disallow parameter object manipulation except for specific exclusions
-		// rule: https://eslint.org/docs/rules/no-param-reassign.html
-		"no-param-reassign": [
-			"error",
-			{
-				"props": true,
-				"ignorePropertyModificationsFor": [
-					"acc", // for reduce accumulators
-					"accumulator", // for reduce accumulators
-					"e", // for e.returnvalue
-					"ctx", // for Koa routing
-					"context", // for Koa routing
-					"req", // for Express requests
-					"request", // for Express requests
-					"res", // for Express responses
-					"response", // for Express responses
-					"$scope", // for Angular 1 scopes
-					"staticContext" // for ReactRouter context
-				]
-			}
-		],
 		// disallow declaring the same variable more than once
 		// https://eslint.org/docs/rules/no-redeclare
 		"no-redeclare": "error",
@@ -94,35 +70,5 @@
 		// disallow redundant return; keywords
 		// https://eslint.org/docs/rules/no-useless-return
 		"no-useless-return": "error"
-	},
-	"overrides": [
-		{
-			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-			"rules": {
-				"@nrwl/nx/enforce-module-boundaries": [
-					"error",
-					{
-						"enforceBuildableLibDependency": true,
-						"allow": [],
-						"depConstraints": [
-							{
-								"sourceTag": "*",
-								"onlyDependOnLibsWithTags": ["*"]
-							}
-						]
-					}
-				]
-			}
-		},
-		{
-			"files": ["*.ts", "*.tsx"],
-			"extends": ["plugin:@nrwl/nx/typescript"],
-			"rules": {}
-		},
-		{
-			"files": ["*.js", "*.jsx"],
-			"extends": ["plugin:@nrwl/nx/javascript"],
-			"rules": {}
-		}
-	]
+	}
 }
