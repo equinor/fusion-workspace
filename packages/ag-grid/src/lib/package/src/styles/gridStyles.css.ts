@@ -1,3 +1,4 @@
+import { agHeaderCellFocus } from './header/ag-header-cell-focus.css';
 import { agIcons } from './icons/agIcons.css';
 import { agVariables } from './variables.ts/variables.css';
 
@@ -4057,6 +4058,7 @@ export const agStyles = `
   .ag-theme-material .ag-keyboard-focus .ag-header-cell:focus {
     outline: none;
   }
+  ${agHeaderCellFocus}
   .ag-theme-material .ag-keyboard-focus .ag-header-cell:focus::after {
     content: "";
     position: absolute;
