@@ -9,6 +9,7 @@ import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
 import { microsoft_excel } from '@equinor/eds-icons';
 import { Button } from '@equinor/eds-core-react';
+import { Component } from './widget/widget';
 
 type S = {
 	id: string;
@@ -86,7 +87,7 @@ function App() {
 					Sidesheet: (props) => {
 						console.log(props);
 
-						return <div>am sidesheet </div>;
+						return <Component id={props.id} />;
 					},
 				}}
 				dataOptions={{
