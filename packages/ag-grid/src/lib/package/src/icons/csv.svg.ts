@@ -1,4 +1,6 @@
-export const csv = `<svg width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+import { tokens } from '@equinor/eds-tokens';
+
+export const csv = `<svg fill="${tokens.colors.interactive.primary__resting.hex}" width="100%" height="100%" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
 <g id="csv" transform="matrix(0.0628455,0,0,0.0628455,3.93367,-0.0538814)">
     <path d="M384,131.9C376.247,123.467 273.575,3.427 269.1,-1.1L48,-0.1C21.5,0 0,21.5 0,48L0,464C0,490.5 21.5,512 48,512L336,512C362.5,512 384,490.5 384,464L384,131.9ZM348.1,134L257,134L257,27.9L348.1,134ZM30,479L30,27L230,27L231,132C231,145.3 229.7,161 243,161L354,161L355,479L30,479Z" style="fill-rule:nonzero;"/>
     <g transform="matrix(1.39197,0,0,2.06442,-182.891,-281.022)">
