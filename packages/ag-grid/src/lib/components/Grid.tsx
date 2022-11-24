@@ -10,7 +10,7 @@ import { applyColumnStateFromGridController, listenForColumnChanges } from '../u
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import { GridController } from '../types';
-import { useAgStyles } from '../package/src';
+import { useAgStyles } from '../../ag-grid-styling';
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
