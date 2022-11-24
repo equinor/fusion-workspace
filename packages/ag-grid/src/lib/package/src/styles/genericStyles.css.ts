@@ -1,3 +1,4 @@
+import { agCell } from './cell/ag-cell';
 import { agHeaderCellText } from './header/ag-header-cell-text.css';
 
 export const genericStyles = `
@@ -726,12 +727,7 @@ ${agHeaderCellText}
 * Cells
 ****************************
 */
-.ag-cell {
- display: inline-block;
- position: absolute;
- white-space: nowrap;
- height: 100%;
-}
+${agCell}
 
 .ag-cell-value {
  -webkit-box-flex: 1;
