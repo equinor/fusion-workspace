@@ -2,12 +2,11 @@ import { ComponentRenderArgs, IAppConfigurator, makeComponent } from '@equinor/f
 import { enableAgGrid } from '@equinor/fusion-framework-module-ag-grid';
 import { useHttpClient } from '@equinor/fusion-framework-react-app/http';
 
-import { StrictMode, useCallback, memo } from 'react';
+import { StrictMode, useCallback } from 'react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Workspace } from '@equinor/workspace-fusion';
-import { createGlobalStyle } from 'styled-components';
-import { DateTime } from 'luxon';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const dataProxy = {
 	clientId: '5a842df8-3238-415d-b168-9f16a6a6031b',
@@ -36,8 +35,8 @@ export type Context = {
 	title: string;
 	isActive: boolean;
 	isDeleted: boolean;
-	created: Date;
-	updated: Date;
+	created: string;
+	updated: string;
 };
 
 const configure = async (config: IAppConfigurator) => {
@@ -50,17 +49,14 @@ const configure = async (config: IAppConfigurator) => {
 
 const GlobalStyle = createGlobalStyle`
 .body {
-margin: 0
+margin: -17px;
 }
 `;
 
 const MyApp = () => {
 	const client = useHttpClient('data-proxy');
 
-	const getResponseAsync = useCallback(async () => {
-		const commpkgs = await client.fetch(`/contexts`);
-		return commpkgs;
-	}, [dataProxy]);
+	const getResponseAsync = useCallback(async () => client.fetch(`/contexts`), [dataProxy]);
 
 	return (
 		<StrictMode>
@@ -87,7 +83,11 @@ const MyApp = () => {
 								valueGetter: (s) => s.data && new Date(s.data.created).toLocaleDateString('no'),
 							},
 							{ field: 'WBS', valueGetter: (s) => s.data?.value.wbs },
-							{ field: 'Project master id', valueGetter: (s) => s.data?.value.projectMasterId },
+							{
+								field: 'Project master id',
+								valueGetter: (s) => s.data?.value.projectMasterId,
+								hide: true,
+							},
 							{ field: 'isActive', valueGetter: (s) => (s.data?.isActive ? 'yes' : 'no') },
 							{ field: 'isDeleted', valueGetter: (s) => (s.data?.isDeleted ? 'yes' : 'no') },
 						],
@@ -118,20 +118,61 @@ const MyApp = () => {
 							calculateItemWidth: (s) => 300,
 						},
 					}}
-					onWorkspaceReady={(a) => {
-						a.api.dataService.data = [{ externalId: '123' } as any];
-					}}
 					dataOptions={{ getResponseAsync }}
 					sidesheetOptions={{
-						Sidesheet: (props) => {
-							return <div style={{ height: '100%' }}>{props.id}</div>;
-						},
+						Sidesheet: (props) =>
+							props.item ? <ContextSidesheet id={props.id} item={props.item} /> : <></>,
 					}}
 				/>
 			</div>
 		</StrictMode>
 	);
 };
+
+const StyledSidesheetWrapper = styled.div`
+	height: 100%;
+	width: 800px;
+	display: flex;
+	flex-direction: column;
+`;
+
+const Title = styled.div`
+	font-weight: 500;
+	font-size: 24px;
+`;
+
+const TitleWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	height: 50px;
+	margin-left: 10px;
+`;
+
+const BodyWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+`;
+
+export function ContextSidesheet(props: { id: string; item: Context }) {
+	if (!props.item) return null;
+
+	return (
+		<StyledSidesheetWrapper>
+			<div>
+				<TitleWrapper>
+					<Title>{props.item.title}</Title>
+				</TitleWrapper>
+			</div>
+			<BodyWrapper>
+				{props.item.value.wbs && <div>WBS: {props.item.value.wbs}</div>}
+				<div>Type: {props.item.type.id}</div>
+				<div>Created: {new Date(props.item.created).toLocaleDateString('no')}</div>
+				{props.item.updated && <div>Updated: {new Date(props.item.updated).toLocaleDateString('no')}</div>}
+			</BodyWrapper>
+		</StyledSidesheetWrapper>
+	);
+}
 
 export default function render(el: HTMLElement, args: ComponentRenderArgs) {
 	/** Create root from provided element */
