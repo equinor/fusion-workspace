@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 import { CustomItemView } from '../../../types';
+import { Typography } from '@equinor/eds-core-react';
 
 const GardenItem = <
 	TData extends Record<PropertyKey, unknown>,
@@ -36,7 +37,9 @@ const GardenItem = <
 			isSelected={isSelected}
 			depth={depth ?? 0}
 		>
-			<div>{label}</div>
+			<Typography as={'span'} title={label}>
+				{label}
+			</Typography>
 			{columnExpanded && <div>{description}</div>}
 		</StyledDefaultPackage>
 	);
