@@ -49,6 +49,15 @@ export function ReactGrid<TData extends Record<PropertyKey, unknown>>({
 	});
 
 	if (!controller) return null;
+	if (controller.rowData !== rowData) {
+		controller.rowData = rowData;
+	}
+	if (controller.gridOptions !== gridOptions) {
+		controller.gridOptions = gridOptions;
+	}
+	if (controller.columnDefs !== colDefs) {
+		controller.columnDefs = colDefs;
+	}
 
 	return <Grid controller={controller} height={height} />;
 }
