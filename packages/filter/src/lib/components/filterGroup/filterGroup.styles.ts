@@ -33,10 +33,10 @@ export const StyledVerticalLine = styled.div`
 `;
 
 export const StyledSearchHolder = styled.div`
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0.8em;
-	padding-bottom: calc(8px + 0.8em);
+	> div > div {
+		background: none;
+		box-shadow: none;
+	}
 `;
 
 export const StyledMenuWrapper = styled.div`

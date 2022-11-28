@@ -2,6 +2,7 @@ import { Button, Icon, Checkbox, Popover } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
+import styled from 'styled-components';
 import { SortObject } from '../../types/sortObject';
 import { StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
 
@@ -10,6 +11,17 @@ interface ShowHideFilterButtonProps {
 	visibleFilters: string[];
 	setVisibleFilters: (val: string[]) => void;
 }
+
+const PButton = styled.button`
+	background: none;
+	border: none;
+	height: 48px;
+	width: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+`;
 
 export const ToggleHideFilterPopover = ({
 	setVisibleFilters,
@@ -34,10 +46,11 @@ export const ToggleHideFilterPopover = ({
 
 	return (
 		<>
+			{/* TODO: FIX styling */}
 			<div ref={ref}>
-				<Button title="Add filters" variant="ghost_icon" onClick={() => setIsOpen(true)}>
+				<PButton title="Add filters" onClick={() => setIsOpen(true)}>
 					<Icon name="playlist_add" color={tokens.colors.interactive.primary__resting.hex} />
-				</Button>
+				</PButton>
 			</div>
 
 			{isOpen && (
@@ -45,7 +58,7 @@ export const ToggleHideFilterPopover = ({
 					<Popover.Header>
 						<Popover.Title>Filter types</Popover.Title>
 					</Popover.Header>
-					<Popover.Content style={{ maxHeight: '60vh', overflowY: 'scroll', overflowX: 'hidden' }}>
+					<Popover.Content style={{ maxHeight: '60vh', overflowY: 'auto', overflowX: 'hidden' }}>
 						<StyledPopoverList>
 							<ReactSortable
 								animation={200}
@@ -63,7 +76,7 @@ export const ToggleHideFilterPopover = ({
 												handleChange(item);
 											}}
 										/>
-										<div>{item}</div>
+										<div style={{ textTransform: 'capitalize' }}>{item}</div>
 										<Icon
 											name="drag_handle"
 											color={tokens.colors.interactive.primary__resting.hex}

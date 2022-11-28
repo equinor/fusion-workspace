@@ -16,6 +16,8 @@ import { FilterView } from '../filterView/FilterView';
 import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
 import { useFilterContext } from '../../hooks';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
+import { Button } from '@equinor/eds-core-react';
+import styled from 'styled-components';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -23,6 +25,17 @@ import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 interface QuickFilterProps<T> {
 	controller: FilterController<T>;
 }
+
+const PButton = styled.button`
+	background: none;
+	border: none;
+	height: 48px;
+	width: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+`;
 
 export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element {
 	const { groups } = useFilterContext();
@@ -89,11 +102,14 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 									visibleFilters={visibleFilterGroups}
 								/>
 							)}
-							<FilterClearIcon isDisabled={!filterState.length} onClick={() => clearActiveFilters()} />
 
-							<div onClick={toggleFilterIsExpanded}>
+							<PButton onClick={() => clearActiveFilters()}>
+								<FilterClearIcon isDisabled={!filterState.length} />
+							</PButton>
+
+							<PButton onClick={toggleFilterIsExpanded}>
 								{isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-							</div>
+							</PButton>
 						</div>
 					</StyledRightSection>
 				</StyledSearchLine>

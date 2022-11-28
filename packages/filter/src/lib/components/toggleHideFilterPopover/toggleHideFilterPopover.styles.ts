@@ -14,4 +14,5 @@ export const StyledItemWrapper = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 32px;
+	min-width: 200px;
 `;
