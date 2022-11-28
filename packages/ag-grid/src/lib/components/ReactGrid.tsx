@@ -1,5 +1,7 @@
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffectOnce } from '../hooks/useEffectOnce';
+import { GridController } from '../types';
+import { useState } from 'react';
 import { createGridController } from '../utils';
 import { Grid } from './Grid';
 
@@ -24,32 +26,29 @@ export function ReactGrid<TData extends Record<PropertyKey, unknown>>({
 	colDefs,
 	gridOptions,
 }: ReactGridProps<TData>) {
-	const teardown = useRef<VoidFunction | null>(null);
+	const [controller, setController] = useState<null | GridController<TData>>(null);
 
-	/** Must be same for useEffect and useMemo */
-	const triggers = useRef([colDefs, gridOptions, rowData]);
-
-	const controller = useMemo(() => {
-		const cont = createGridController(
+	useEffectOnce(() => {
+		let teardown: VoidFunction | null = null;
+		const contr = createGridController<TData, {}>(
 			() => '',
 			(destroy) => {
-				teardown.current = destroy;
+				teardown = () => destroy();
 			}
 		);
-		cont.columnDefs = colDefs;
-		cont.rowData = rowData;
-		cont.gridOptions = gridOptions;
-		return cont;
-	}, [...triggers.current]);
+		contr.columnDefs = colDefs;
+		contr.rowData = rowData;
+		contr.gridOptions = gridOptions;
+		setController(contr);
 
-	useEffect(
-		() => () => {
-			if (typeof teardown.current === 'function') {
-				teardown.current();
+		return () => {
+			if (teardown) {
+				teardown();
 			}
-		},
-		[...triggers.current]
-	);
+		};
+	});
+
+	if (!controller) return null;
 
 	return <Grid controller={controller} height={height} />;
 }
