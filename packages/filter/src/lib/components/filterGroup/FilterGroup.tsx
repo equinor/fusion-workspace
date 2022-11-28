@@ -8,6 +8,7 @@ import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
 import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
 import { useFilterGroups } from '../../hooks';
+import styled from 'styled-components';
 
 interface FilterGroupProps {
 	name: string;
@@ -55,9 +56,7 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
 	return (
 		<div>
 			<StyledFilterGroupWrapper ref={ref} onClick={onClick}>
-				<div style={{ textTransform: 'capitalize', padding: '0 0.25rem' }}>
-					{getFilterHeaderText(isAllChecked, name, checkedValues)}
-				</div>
+				<FilterText>{getFilterHeaderText(isAllChecked, name, checkedValues)}</FilterText>
 				<Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
 			</StyledFilterGroupWrapper>
 			{isOpen && (
@@ -76,3 +75,7 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
 		</div>
 	);
 };
+const FilterText = styled.div`
+	text-transform: capitalize;
+	padding: 0 0.25rem;
+`;
