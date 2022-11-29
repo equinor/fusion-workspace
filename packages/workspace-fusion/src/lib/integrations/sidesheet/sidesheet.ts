@@ -13,6 +13,15 @@ export type SidesheetProps<TData> = {
 	 * If its a click event you will get the item
 	 */
 	item?: TData;
+	/**
+	 * Let's the sidesheet interact with workspace
+	 */
+	controller: Controller;
+};
+
+export type Controller = {
+	close: VoidFunction;
+	invalidate?: VoidFunction;
 };
 
 export type SidesheetConfig<TData> = {
