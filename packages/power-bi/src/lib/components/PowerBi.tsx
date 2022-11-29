@@ -36,25 +36,29 @@ export const LoadedReport = ({ controller }: LoadedReportProps) => {
 		<StyledReportRoot ref={ref}>
 			<StyledReportContainer>
 				<div style={{ height: `${0.41 * width}px` }}>
-					<Embed
-						embedConfig={controller.config}
-						cssClassName="pbiEmbed"
-						getEmbeddedComponent={(embed) => {
-							embed.on('loaded', () => {
-								controller.reportReady(embed as Report);
-							});
-						}}
-					/>
+					<PowerBiWrapper>
+						<PowerBIEmbed
+							cssClassName="pbiEmbed"
+							embedConfig={controller.config}
+							getEmbeddedComponent={(embed) => {
+								embed.on('loaded', () => {
+									controller.reportReady(embed as Report);
+								});
+							}}
+						/>
+					</PowerBiWrapper>
 				</div>
 			</StyledReportContainer>
 		</StyledReportRoot>
 	);
 };
 
-const Embed = styled(PowerBIEmbed)`
+const PowerBiWrapper = styled.div.attrs({
+	className: 'pbiEmbed',
+})`
 	.pbiEmbed {
-		width: 100%;
 		height: 100%;
+		width: 100%;
 	}
 
 	.pbiEmbed > iframe {
