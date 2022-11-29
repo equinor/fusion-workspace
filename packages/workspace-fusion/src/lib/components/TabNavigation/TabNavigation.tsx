@@ -6,7 +6,7 @@ import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
 import styled from 'styled-components';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
-const Divider = styled.hr`
+const StyledDivider = styled.hr`
 	width: 1px;
 	height: auto;
 	align-self: stretch;
@@ -29,7 +29,7 @@ export function TabNavigation() {
 					<tab.TabIcon />
 				</TabButton>
 			))}
-			<Divider />
+			<StyledDivider />
 			<TabButton isActive={false}>
 				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
 			</TabButton>
