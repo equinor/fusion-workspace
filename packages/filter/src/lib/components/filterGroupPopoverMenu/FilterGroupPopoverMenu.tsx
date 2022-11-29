@@ -59,7 +59,7 @@ export const FilterGroupPopoverMenu = ({
 		setSearchText('');
 		closePopover();
 	};
-
+	const searchClassName = 'eds-search';
 	return (
 		<Menu
 			id="menu-complex"
@@ -72,8 +72,9 @@ export const FilterGroupPopoverMenu = ({
 			<StyledMenuWrapper>
 				{values.length > 7 && (
 					<>
-						<StyledSearchHolder>
+						<StyledSearchHolder className={searchClassName}>
 							<Search
+								className={searchClassName}
 								value={searchText}
 								placeholder="Search"
 								onInput={handleInput}

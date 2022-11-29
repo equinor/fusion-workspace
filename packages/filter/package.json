@@ -31,7 +31,9 @@
 	},
 	"devDependencies": {
 		"@types/jest": "27.4.1",
+		"@types/react": ">= 16.8.0",
 		"@types/sortablejs": "1",
+		"@types/styled-components": "^5.1.26",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0"
