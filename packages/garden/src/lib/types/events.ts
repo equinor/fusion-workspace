@@ -1,5 +1,6 @@
+import { GardenController } from '../classes';
 import { GardenGroup } from '.';
-import { GardenController } from '..';
+
 import { BaseRecordObject } from '.';
 
 /** Function signature for clicking an item */

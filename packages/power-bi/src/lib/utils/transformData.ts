@@ -1,4 +1,4 @@
-import { ActiveFilter } from '..';
+import { ActiveFilter } from '../';
 import { IS_BLANK } from './constants';
 
 /**
