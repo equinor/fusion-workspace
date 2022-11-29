@@ -56,7 +56,7 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
 	return (
 		<div>
 			<StyledFilterGroupWrapper ref={ref} onClick={onClick}>
-				<FilterText>{getFilterHeaderText(isAllChecked, name, checkedValues)}</FilterText>
+				<StyledFilterText>{getFilterHeaderText(isAllChecked, name, checkedValues)}</StyledFilterText>
 				<Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
 			</StyledFilterGroupWrapper>
 			{isOpen && (
@@ -75,7 +75,7 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
 		</div>
 	);
 };
-const FilterText = styled.div`
+const StyledFilterText = styled.div`
 	text-transform: capitalize;
 	padding: 0 0.25rem;
 `;
