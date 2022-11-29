@@ -16,6 +16,7 @@ import { FilterView } from '../filterView/FilterView';
 import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
 import { useFilterContext } from '../../hooks';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
+import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -89,11 +90,14 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 									visibleFilters={visibleFilterGroups}
 								/>
 							)}
-							<FilterClearIcon isDisabled={!filterState.length} onClick={() => clearActiveFilters()} />
 
-							<div onClick={toggleFilterIsExpanded}>
+							<StyledButton onClick={() => clearActiveFilters()}>
+								<FilterClearIcon isDisabled={!filterState.length} />
+							</StyledButton>
+
+							<StyledButton onClick={toggleFilterIsExpanded}>
 								{isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-							</div>
+							</StyledButton>
 						</div>
 					</StyledRightSection>
 				</StyledSearchLine>
