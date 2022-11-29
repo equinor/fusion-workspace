@@ -32,8 +32,8 @@ export const StyledVerticalLine = styled.div`
 	background-color: ${tokens.colors.ui.background__medium.hex};
 `;
 
-export const StyledSearchHolder = styled.div`
-	> div > div {
+export const StyledSearchHolder = styled.div<{ className: string }>`
+	.${({ className }) => className} > div {
 		background: none;
 		box-shadow: none;
 	}
