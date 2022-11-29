@@ -7,7 +7,7 @@ export function WorkspaceHeader() {
 	if (!tab || !tab.CustomHeader) return <ActionBar />;
 
 	return (
-		<StyledWorkspaceHeader>
+		<StyledWorkspaceHeader id="workspace_header_wrapper">
 			<tab.CustomHeader />
 		</StyledWorkspaceHeader>
 	);

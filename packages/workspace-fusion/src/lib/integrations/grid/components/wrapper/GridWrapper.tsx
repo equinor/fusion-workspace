@@ -25,7 +25,7 @@ export const GridWrapper = <
 	const [_, height] = useResizeObserver(ref);
 
 	return (
-		<div style={{ height: '100%', width: '100%' }} ref={ref}>
+		<div id="workspace_grid_wrapper" style={{ height: '100%', width: '100%' }} ref={ref}>
 			<NoDataSplashScreen mediator={mediator}>
 				<Grid controller={controller} height={height} />
 			</NoDataSplashScreen>
