@@ -9,18 +9,21 @@ import { FusionMediator } from '../types/fusionController';
 export function useOnClick<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
->({ clickService: { click$ } }: FusionMediator<TData, TContext>): [WorkspaceOnClick<TData> | undefined, () => void] {
+>(mediator: FusionMediator<TData, TContext>): [WorkspaceOnClick<TData> | undefined, () => void] {
 	const [clickEvent, setClickEvent] = useState<WorkspaceOnClick<TData> | undefined>();
 
 	useEffect(() => {
-		const subscription = click$.subscribe(setClickEvent);
+		const subscription = mediator.clickService.click$.subscribe(setClickEvent);
 
 		return () => {
 			subscription.unsubscribe();
 		};
 	}, []);
 
-	const clearClickEvent = useCallback(() => setClickEvent(undefined), []);
+	const clearClickEvent = useCallback(() => {
+		setClickEvent(undefined);
+		mediator.selectionService.selectedNodes = [];
+	}, []);
 
 	return [clickEvent, clearClickEvent];
 }
