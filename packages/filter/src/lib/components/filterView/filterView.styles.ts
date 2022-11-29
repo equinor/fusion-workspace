@@ -11,7 +11,7 @@ export const StyledWrapper = styled.section`
 	border-bottom: 1.5px solid ${tokens.colors.ui.background__medium.rgba};
 	transition: height 0.35s ease;
 	width: 100%;
-	overflow-x: scroll;
+	overflow-x: auto;
 	overflow-y: hidden;
 	@keyframes fadeIn {
 		from {

@@ -1,4 +1,4 @@
-import { Icon, Search } from '@equinor/eds-core-react';
+import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useMemo, useState } from 'react';
 import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterClearIcon } from '../../icons';
@@ -8,6 +8,8 @@ import { searchByValue } from '../../utils/searchByvalue';
 import { Case, Switch } from '../../utils/Switch';
 import { StyledSearchButton, StyledFilterHeaderGroup, StyledTitle, StyledWrapper } from './expandedFilterGroup.styles';
 import { VirtualContainer } from '../virtualContainer/VirtualContainer';
+import styled from 'styled-components';
+import { tokens } from '@equinor/eds-tokens';
 
 interface FilterGroupeComponentProps {
 	filterGroup: FilterGroup;
@@ -79,20 +81,23 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 						/>
 					</Case>
 					<Case when={true}>
-						<StyledTitle
-							onClick={() => isSearchable && handleSearchButtonClick()}
-							hasFilters={hasAnyActiveFilters}
-						>
-							{filterGroup.name}
-						</StyledTitle>
-						{isSearchable && (
-							<StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
-								<Icon name={'search'} id={'search'} />
-							</StyledSearchButton>
-						)}
-						{hasAnyActiveFilters && (
-							<FilterClearIcon onClick={() => markAllValuesActive(filterGroup.name)} />
-						)}
+						<StyledFilterGroupName>
+							<StyledTitle onClick={() => isSearchable && handleSearchButtonClick()}>
+								{filterGroup.name}
+							</StyledTitle>
+							<div>
+								{isSearchable && (
+									<StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
+										<Icon name={'search'} id={'search'} />
+									</StyledSearchButton>
+								)}
+								{hasAnyActiveFilters && (
+									<Button variant="ghost_icon" onClick={() => markAllValuesActive(filterGroup.name)}>
+										<FilterClearIcon />
+									</Button>
+								)}
+							</div>
+						</StyledFilterGroupName>
 					</Case>
 				</Switch>
 			</StyledFilterHeaderGroup>
@@ -100,3 +105,14 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 		</StyledWrapper>
 	);
 };
+
+const StyledFilterGroupName = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	&:hover {
+		background-color: ${tokens.colors.ui.background__medium.hex};
+	}
+`;
