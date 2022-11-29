@@ -1,5 +1,6 @@
 import { agHeaderCellFocus } from './header/ag-header-cell-focus.css';
 import { agIcons } from './icons/agIcons.css';
+import { pagination } from './pagination/agPagingPanel';
 import { agVariables } from './variables.ts/variables.css';
 
 export const THEME_NAME = 'ag-theme-material';
@@ -4161,14 +4162,7 @@ export const agStyles = `
     width: 100%;
     z-index: 1;
   }
-  .ag-theme-material .ag-paging-panel {
-    border-top: 1px solid;
-    border-top-color: #e2e2e2;
-    border-top-color: var(--ag-border-color, #e2e2e2);
-    color: rgba(0, 0, 0, 0.54);
-    color: var(--ag-secondary-foreground-color, rgba(0, 0, 0, 0.54));
-    height: 56px;
-  }
+  ${pagination}
   .ag-theme-material .ag-paging-panel > * {
     margin: 0 24px;
   }
