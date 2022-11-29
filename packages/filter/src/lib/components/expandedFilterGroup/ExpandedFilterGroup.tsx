@@ -81,7 +81,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 						/>
 					</Case>
 					<Case when={true}>
-						<TitleTestHeader>
+						<StyledFilterGroupName>
 							<StyledTitle onClick={() => isSearchable && handleSearchButtonClick()}>
 								{filterGroup.name}
 							</StyledTitle>
@@ -97,7 +97,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 									</Button>
 								)}
 							</div>
-						</TitleTestHeader>
+						</StyledFilterGroupName>
 					</Case>
 				</Switch>
 			</StyledFilterHeaderGroup>
@@ -106,7 +106,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 	);
 };
 
-const TitleTestHeader = styled.div`
+const StyledFilterGroupName = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
