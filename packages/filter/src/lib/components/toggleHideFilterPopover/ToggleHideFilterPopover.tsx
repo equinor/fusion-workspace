@@ -1,27 +1,15 @@
-import { Button, Icon, Checkbox, Popover } from '@equinor/eds-core-react';
+import { Icon, Checkbox, Popover } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import styled from 'styled-components';
 import { SortObject } from '../../types/sortObject';
-import { StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
+import { StyledButton, StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
 
 interface ShowHideFilterButtonProps {
 	allFilters: string[];
 	visibleFilters: string[];
 	setVisibleFilters: (val: string[]) => void;
 }
-
-const PButton = styled.button`
-	background: none;
-	border: none;
-	height: 48px;
-	width: 48px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-`;
 
 export const ToggleHideFilterPopover = ({
 	setVisibleFilters,
@@ -48,9 +36,9 @@ export const ToggleHideFilterPopover = ({
 		<>
 			{/* TODO: FIX styling */}
 			<div ref={ref}>
-				<PButton title="Add filters" onClick={() => setIsOpen(true)}>
+				<StyledButton title="Add filters" onClick={() => setIsOpen(true)}>
 					<Icon name="playlist_add" color={tokens.colors.interactive.primary__resting.hex} />
-				</PButton>
+				</StyledButton>
 			</div>
 
 			{isOpen && (
