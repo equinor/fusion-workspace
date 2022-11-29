@@ -1,13 +1,18 @@
 import { useActiveTab } from '../../hooks';
 import { ActionBar } from '../ActionBar';
+import styled from 'styled-components';
 
 export function WorkspaceHeader() {
 	const tab = useActiveTab();
 	if (!tab || !tab.CustomHeader) return <ActionBar />;
 
 	return (
-		<div style={{ paddingTop: '24px' }}>
+		<StyledWorkspaceHeader>
 			<tab.CustomHeader />
-		</div>
+		</StyledWorkspaceHeader>
 	);
 }
+
+const StyledWorkspaceHeader = styled.div`
+	padding-top: 24px;
+`;
