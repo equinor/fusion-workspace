@@ -6,7 +6,7 @@ import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FusionWorkspaceError, FusionMediator } from './fusionController';
 import { WorkspaceOnClick } from './event';
 import { WorkspaceTabNames } from './tabs';
-import { WorkspaceProps } from '../components/Workspace';
+import { WorkspaceProps } from './workspaceProps';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
@@ -38,11 +38,6 @@ export type AppConfig<TabNames extends string> = {
 	appKey: string;
 	appColor: string;
 	defaultTab: TabNames;
-};
-
-/** Any http client, with fusion scope */
-export type FusionClient = {
-	fetch: (uri: string, init?: RequestInit) => Promise<Response>;
 };
 
 export type WorkspaceConfiguration<

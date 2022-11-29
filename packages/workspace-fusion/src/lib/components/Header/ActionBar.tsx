@@ -1,4 +1,4 @@
-import { useStatusBar } from '../../utils/statusBar/addStatusBar';
+import { useStatusBar } from '../../integrations/status-bar/utils/addStatusBar';
 import { TabNavigation } from '../TabNavigation';
 import { StyledActionBar } from './actionBar.styles';
 

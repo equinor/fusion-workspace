@@ -1,6 +1,5 @@
-import { WorkspaceProps } from '../../components';
-import { WorkspaceConfiguration } from '../../types';
-import { didDataSourceOptionsChange } from './dataSourceOptionsChanged/dataSourceChanged';
+import { WorkspaceConfiguration, WorkspaceProps } from '../../types';
+import { didDataSourceOptionsChange } from '../../integrations/data-source/utils/dataSourceChanged';
 
 export function didOptionsChange<
 	TData extends Record<PropertyKey, unknown>,
@@ -11,5 +10,10 @@ export function didOptionsChange<
 	newConfig: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>,
 	current: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ) {
-	didDataSourceOptionsChange(newConfig, current);
+	didDataSourceOptionsChange(
+		newConfig,
+		current.rawOptions.dataOptions,
+		current.dataSourceController,
+		current.mediator
+	);
 }
