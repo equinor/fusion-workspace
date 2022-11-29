@@ -324,7 +324,11 @@ function App() {
 					Sidesheet: (props) => {
 						console.log(props);
 
-						return <div>am sidesheet </div>;
+						return (
+							<div>
+								am sidesheet <button onClick={() => props.controller.close()}>Close am x</button>
+							</div>
+						);
 					},
 				}}
 				dataOptions={{

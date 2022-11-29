@@ -19,7 +19,7 @@ export function SidesheetWrapper<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >({ Component, mediator, getIdentifier }: SidesheetWrapperProps<TData, TContext>) {
-	const clickEvent = useOnClick(mediator);
+	const [clickEvent, clearClickEvent] = useOnClick(mediator);
 
 	/**
 	 * Add fusion sidesheet header here with color etc here..
@@ -28,11 +28,17 @@ export function SidesheetWrapper<
 	if (!clickEvent?.item) {
 		return null;
 	}
+
 	//TODO: Introduce url loading of sidesheets
 	return (
 		<div>
 			<MediatorProvider mediator={mediator}>
-				<Component id={getIdentifier(clickEvent.item)} item={clickEvent.item} />
+				{/* TODO: add invalidate */}
+				<Component
+					id={getIdentifier(clickEvent.item)}
+					item={clickEvent.item}
+					controller={{ close: clearClickEvent }}
+				/>
 			</MediatorProvider>
 		</div>
 	);

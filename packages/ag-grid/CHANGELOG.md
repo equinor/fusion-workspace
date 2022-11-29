@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.0...@equinor/workspace-ag-grid@0.3.1) (2022-11-29)
+
+### Bug Fixes
+
+-   :bug: fix reactGrid crashing ([#204](https://github.com/equinor/fusion-workspace/issues/204)) ([ffca79c](https://github.com/equinor/fusion-workspace/commit/ffca79cfb8c8f22c76212e6c276f3d8dba4bea78))
+
 ## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.2.1...@equinor/workspace-ag-grid@0.3.0) (2022-11-24)
 
 ### Features
