@@ -24,6 +24,4 @@ export function addStatusBar<
 		name: 'Status bar',
 	});
 }
-const StatusBarContext = createContext<React.FC | undefined>(undefined);
-
-export const useStatusBar = () => useContext(StatusBarContext);
+export const StatusBarContext = createContext<React.FC | undefined>(undefined);
