@@ -1,8 +1,11 @@
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const TabButton = styled.div<{ isActive: boolean }>`
-	height: 100%;
+export const TabButton = styled.button<{ isActive: boolean }>`
+	height: 48px;
+	width: 48px;
+	border: none;
+	background: none;
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -13,7 +16,7 @@ export const TabButton = styled.div<{ isActive: boolean }>`
 	::after {
 		content: '';
 		position: absolute;
-		bottom: -2px;
+		bottom: 1px;
 		right: 0;
 		left: 0;
 		height: 2px;
@@ -24,5 +27,5 @@ export const TabButton = styled.div<{ isActive: boolean }>`
 export const TabButtonList = styled.div`
 	height: 100%;
 	display: flex;
-	gap: 2em;
+	padding-right: 0.5rem;
 `;
