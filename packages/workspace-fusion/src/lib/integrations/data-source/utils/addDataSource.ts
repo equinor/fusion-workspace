@@ -1,6 +1,6 @@
 import { FetchController } from '@equinor/workspace-data-source';
 import { FusionMediator } from '../../../types';
-import { DataSourceConfig } from '..';
+import { DataSourceConfig } from '../';
 import { createFetchFunction } from './createFetchFunction';
 
 export function addDataSource<

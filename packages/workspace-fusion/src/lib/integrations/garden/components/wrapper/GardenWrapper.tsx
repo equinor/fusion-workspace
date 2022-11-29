@@ -1,6 +1,6 @@
 import { GardenController, Garden } from '@equinor/workspace-garden';
-import { NoDataSplashScreen } from 'lib/components/NoDataSplashScreen';
-import { FusionMediator } from 'lib/types';
+import { NoDataSplashScreen } from '../../../../components/NoDataSplashScreen';
+import { FusionMediator } from '../../../../types';
 
 type GardenWrapperProps<
 	TData extends Record<PropertyKey, unknown>,

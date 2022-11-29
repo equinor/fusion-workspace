@@ -1,4 +1,4 @@
-import { GridConfig, GridController, ColDef } from '..';
+import { GridConfig, GridController, ColDef } from '../';
 import { FusionMediator } from '../../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 

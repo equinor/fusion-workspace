@@ -1,6 +1,6 @@
 import { FetchData } from '@equinor/workspace-data-source';
 import { FusionMediator } from '../../../types';
-import { DataSourceConfig } from '..';
+import { DataSourceConfig } from '../';
 
 /**
  * Transforms configuration object to data source controller fetch method

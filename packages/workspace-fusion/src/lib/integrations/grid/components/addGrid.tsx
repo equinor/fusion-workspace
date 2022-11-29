@@ -7,7 +7,7 @@ import { configureDataChange } from '../utils/configureDataChange';
 import { configureHighlightSelection } from '../utils/configureHighlightSelection';
 import { GridHeader } from './workspaceHeader';
 import { setConfigOnController } from '../utils/setConfigOnController';
-import { GridConfig } from '..';
+import { GridConfig } from '../';
 import { GridWrapper } from './wrapper';
 
 export function addGrid<

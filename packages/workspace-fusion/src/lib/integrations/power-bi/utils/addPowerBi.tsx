@@ -3,7 +3,7 @@ import { WorkspaceViewController } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator } from '../../../types';
-import { PowerBiConfig } from '..';
+import { PowerBiConfig } from '../';
 
 export function addPowerBi<
 	TData extends Record<PropertyKey, unknown>,
