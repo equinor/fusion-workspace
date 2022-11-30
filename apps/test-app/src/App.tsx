@@ -22,7 +22,11 @@ const options: WorkspaceConfig<S> = {
 };
 
 const gridOptions: GridConfig<S> = {
-	columnDefinitions: [{ field: 'id', valueGetter: (s) => 's.context.length' }, { field: 'contextId' }],
+	columnDefinitions: [
+		{ field: 'id', valueGetter: (s) => 's.context.length' },
+		{ field: 'contextId' },
+		{ field: 'age' },
+	],
 	gridOptions: { pagination: true, paginationPageSize: 100 },
 };
 
