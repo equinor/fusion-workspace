@@ -64,7 +64,6 @@ export class GardenController<
 	visuals: Visuals<TData, ExtendedFields, TCustomGroupByKeys> = {
 		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
-		getDescription: () => '',
 	};
 
 	/** Custom group by keys */
