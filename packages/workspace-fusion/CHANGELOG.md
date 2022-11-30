@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.8.4...@equinor/workspace-fusion@0.8.5) (2022-11-30)
+
+### Bug Fixes
+
+-   :bug: fix unsubscribe history ([#212](https://github.com/equinor/fusion-workspace/issues/212)) ([1a5f0bb](https://github.com/equinor/fusion-workspace/commit/1a5f0bbaf30b68290155a4d0322a18d46631eb71))
+
 ## [0.8.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.8.3...@equinor/workspace-fusion@0.8.4) (2022-11-29)
 
 **Note:** Version bump only for package @equinor/workspace-fusion

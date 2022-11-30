@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.2...@equinor/workspace-garden@0.5.3) (2022-11-30)
+
+### Bug Fixes
+
+-   :bug: fix custom description not working ([#219](https://github.com/equinor/fusion-workspace/issues/219)) ([9671f87](https://github.com/equinor/fusion-workspace/commit/9671f87a4322cd4d96d12f66c7cef646b477f4e7))
+
 ## [0.5.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.1...@equinor/workspace-garden@0.5.2) (2022-11-29)
 
 **Note:** Version bump only for package @equinor/workspace-garden
