@@ -1,14 +1,19 @@
+import { ReactNode } from 'react';
 import { useStatusBar } from '../../integrations/status-bar';
 import { TabNavigation } from '../TabNavigation';
 import { StyledActionBar } from './actionBar.styles';
 
-export function ActionBar() {
+type TabNavigationChildren = {
+	children?: ReactNode;
+};
+
+export function ActionBar(props: TabNavigationChildren) {
 	const StatusBar = useStatusBar();
 
 	return (
 		<StyledActionBar>
 			{StatusBar && <StatusBar />}
-			<TabNavigation />
+			<TabNavigation children={props.children} />
 		</StyledActionBar>
 	);
 }
