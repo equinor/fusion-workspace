@@ -10,7 +10,7 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
 	if (!items.length) return null;
 
 	return (
-		<StyledStatusBar>
+		<StyledStatusBar id="status_bar_root">
 			{items.map((item) => (
 				<StatusBarItem key={item.title} item={item} />
 			))}

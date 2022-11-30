@@ -15,7 +15,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
 	const { tabController } = useControllerContext();
 	const activeTab = useActiveTab();
 	return (
-		<TabButtonList>
+		<TabButtonList id="fusion_workspace_tab_navigation">
 			{tabController.tabs.map((tab) => (
 				<TabButton
 					title={tab.name}

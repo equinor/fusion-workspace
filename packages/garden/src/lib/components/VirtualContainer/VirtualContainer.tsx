@@ -26,7 +26,7 @@ export const VirtualContainer = (): JSX.Element | null => {
 	}
 
 	return (
-		<StyledVirtualContainer>
+		<StyledVirtualContainer id={'garden_root'}>
 			<FilterSelector />
 			<ExpandProvider initialWidths={widths}>
 				<VirtualGarden

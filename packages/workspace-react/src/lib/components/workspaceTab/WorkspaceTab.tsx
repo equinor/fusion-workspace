@@ -8,8 +8,8 @@ export function WorkspaceTab() {
 	if (!tab) return null;
 	const { Component } = tab;
 	return (
-		<StyledWorkspaceTab>
-			<StyledWorkspaceTabContent>
+		<StyledWorkspaceTab id="workspace_tab_wrapper">
+			<StyledWorkspaceTabContent id="workspace_tab_content">
 				<Component />
 			</StyledWorkspaceTabContent>
 		</StyledWorkspaceTab>
