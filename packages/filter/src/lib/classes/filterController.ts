@@ -1,8 +1,7 @@
-import { doesItemPassFilter, generateFilterValues } from '../utils';
+import { doesItemPassFilter, generateFilterValues, searchForIncludes, searchForStartsWith } from '../utils';
 
 import { FilterGroup, FilterItemCount, FilterSearchActive, FilterValueType, ValueFormatterFilter } from '../types';
 import { FilterStateController } from './filterStateController';
-import { SearchController } from './searchController';
 import { Observable, OnchangeCallback } from './observable';
 import { CountController } from './countController';
 import { CountCache } from './countCache';
@@ -11,8 +10,6 @@ export class FilterController<TData> {
 	filterGroups: FilterGroup[] = [];
 
 	filterStateController = new FilterStateController();
-
-	private searchController = new SearchController<TData>();
 
 	valueFormatters: ValueFormatterFilter<TData>[] = [];
 
@@ -64,12 +61,29 @@ export class FilterController<TData> {
 	}
 
 	search = (search: FilterSearchActive<TData>) => {
-		this.searchController.setSearch(search);
-		this.searchController.handleSearch(this.data, this.filteredData);
+		this.setSearch(search);
 		this.filter();
 	};
 
-	clearSearch = this.searchController.clearSearch;
+	private filterSearch: FilterSearchActive<TData> | null = null;
+	private handleSearch = (data: TData[], filteredData: TData[]) => {
+		if (this.filterSearch === null) return;
+		const { searchIn, searchValue, type, valueFormatters } = this.filterSearch;
+		const haystack = searchIn === 'Data' ? data : filteredData;
+		const needle = searchValue.toLowerCase();
+
+		const results =
+			type === 'includes'
+				? searchForIncludes(valueFormatters, haystack, needle)
+				: searchForStartsWith(valueFormatters, haystack, needle);
+
+		return results;
+	};
+
+	clearSearch = () => {
+		this.filterSearch = null;
+		this.filter();
+	};
 
 	/**Function for adding a valueformatter */
 	addValueFormatters = (valueFormatters: ValueFormatterFilter<TData>[]) => {
@@ -95,12 +109,14 @@ export class FilterController<TData> {
 				doesItemPassFilter(item, this.filterStateController.filterState, this.valueFormatters)
 			)
 		);
-		if (this.searchController.filterSearch !== null) {
-			this.setFilteredData(this.searchController.handleSearch(this.data, this.filteredData) ?? []);
+		if (this.filterSearch !== null) {
+			this.setFilteredData(this.handleSearch(this.data, this.filteredData) ?? []);
 		}
 	};
 
-	setSearch = this.searchController.setSearch;
+	setSearch = (value: FilterSearchActive<TData> | null) => {
+		this.filterSearch = value;
+	};
 
 	getFilterItemCountsForGroup = (groupName: string): FilterItemCount[] => {
 		const group = this.filterGroups.find((s) => s.name === groupName);
