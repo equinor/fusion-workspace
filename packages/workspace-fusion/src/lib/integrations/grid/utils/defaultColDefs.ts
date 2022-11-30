@@ -19,9 +19,12 @@ export function applyDefaultColumnDefinitions<TData extends Record<PropertyKey, 
 export function applyWorkspaceClickToCells<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
->(colDefs: ColDef<TData>[], { clickService }: FusionMediator<TData, TContext>): ColDef<TData>[] {
+>(colDefs: ColDef<TData>[], { selectionService, getIdentifier }: FusionMediator<TData, TContext>): ColDef<TData>[] {
 	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => ev.data && clickService.click({ item: ev.data }),
+		onCellClicked: (ev) => {
+			if (!ev.data) return;
+			selectionService.selectedNodes = [{ id: getIdentifier(ev.data), item: ev.data }];
+		},
 		...colDef,
 	}));
 }

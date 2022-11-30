@@ -2,11 +2,11 @@ import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@eq
 
 export class WorkspaceReactMediator<
 	TData,
-	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
+	TNode,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>,
 	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>
-> extends WorkspaceMediator<TData, TOnClick, TError, TBookmarkState, TContext> {
+> extends WorkspaceMediator<TData, TNode, TError, TBookmarkState, TContext> {
 	/**
 	 * Callback that returns an instance of itself
 	 * Helpful when chaining
@@ -30,8 +30,11 @@ export class WorkspaceReactMediator<
 
 	setUnmount: () => void;
 
-	constructor() {
+	getIdentifier: (item: TData) => string;
+
+	constructor(getIdentifier: (item: TData) => string) {
 		super();
+		this.getIdentifier = getIdentifier;
 
 		const isLoading = new Observable(this.isLoading);
 		isLoading.onchange((val) => {

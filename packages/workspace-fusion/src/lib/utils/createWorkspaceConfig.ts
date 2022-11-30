@@ -29,7 +29,8 @@ export function createConfigurationObject<
 >(
 	props: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ): WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> {
-	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator();
+	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator(props.workspaceOptions.getIdentifier);
+
 	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
 		props.workspaceOptions.defaultTab
 	);
@@ -42,7 +43,7 @@ export function createConfigurationObject<
 
 	addViewController(viewController, mediator, history);
 	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
-	configureUrlWithHistory(mediator, history, props.workspaceOptions.getIdentifier);
+	configureUrlWithHistory(mediator, history);
 	addContext(props.contextOptions, viewController, mediator);
 	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
 	addPowerBi(props.powerBiOptions, viewController, mediator);

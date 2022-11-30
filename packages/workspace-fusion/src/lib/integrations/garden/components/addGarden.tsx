@@ -34,7 +34,7 @@ export function addGarden<
 	);
 
 	configureDataChange(gardenController, mediator);
-	configureClickEvents(gardenController, mediator, getIdentifier);
+	configureClickEvents(gardenController, mediator);
 	configureGardenHighlightSelection(gardenController, mediator);
 	configureBookmarkService(gardenController, mediator);
 

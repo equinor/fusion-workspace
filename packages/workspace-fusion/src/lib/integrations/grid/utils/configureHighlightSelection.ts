@@ -6,6 +6,6 @@ export function configureHighlightSelection<
 	TContext extends Record<PropertyKey, unknown>
 >(gridController: GridController<TData, TContext>, mediator: FusionMediator<TData, TContext>) {
 	mediator.selectionService.selectedNodes$.subscribe((val) => {
-		gridController.selectedNodes = val;
+		gridController.selectedNodes = val.map((s) => s.id);
 	});
 }

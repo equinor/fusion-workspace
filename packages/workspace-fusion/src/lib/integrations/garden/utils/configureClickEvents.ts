@@ -9,18 +9,16 @@ export function configureClickEvents<
 	TContext extends Record<PropertyKey, unknown>
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	{ selectionService, clickService }: FusionMediator<TData, TContext>,
-	getIdentifier: GetIdentifier<TData>
+	{ selectionService, getIdentifier }: FusionMediator<TData, TContext>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
-		clickService.click({ item: item });
-		selectionService.selectedNodes = [getIdentifier(item)];
+		selectionService.selectedNodes = [{ id: getIdentifier(item), item }];
 	};
 
-	gardenController.clickEvents.onClickGroup = (group) => {
-		const items = findItemsRecursively(group);
-		selectionService.selectedNodes = items.map(getIdentifier);
-	};
+	// gardenController.clickEvents.onClickGroup = (group) => {
+	// 	const items = findItemsRecursively(group);
+	// 	selectionService.selectedNodes = items.map(getIdentifier);
+	// };
 }
 
 /** Finds all items in subgroups or recursively through all subgroups */

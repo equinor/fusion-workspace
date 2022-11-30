@@ -1,6 +1,5 @@
 import { ObjectType } from '../types';
 import {
-	createClickService,
 	createErrorService,
 	createDataService,
 	createSelectionService,
@@ -16,7 +15,7 @@ import {
  */
 export class WorkspaceMediator<
 	TData,
-	TOnClick extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TNode,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
@@ -40,11 +39,9 @@ export class WorkspaceMediator<
 
 	urlService = createUrlService(this.#appendDestructor);
 
-	selectionService = createSelectionService(this.#appendDestructor);
+	selectionService = createSelectionService<TNode>(this.#appendDestructor);
 
 	dataService = createDataService<TData>(this.#appendDestructor);
-
-	clickService = createClickService<TOnClick>(this.#appendDestructor);
 
 	errorService = createErrorService<TError>(this.#appendDestructor);
 

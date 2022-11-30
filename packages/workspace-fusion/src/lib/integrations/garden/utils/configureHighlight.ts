@@ -12,6 +12,6 @@ export function configureGardenHighlightSelection<
 	mediator: FusionMediator<TData, TContext>
 ) {
 	mediator.selectionService.selectedNodes$.subscribe((val) => {
-		gardenController.selectedNodes.setValue(val);
+		gardenController.selectedNodes.setValue(val.map(({ id }) => id));
 	});
 }
