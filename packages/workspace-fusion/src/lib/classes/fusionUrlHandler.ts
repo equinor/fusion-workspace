@@ -25,9 +25,12 @@ export function configureUrlWithHistory<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >(mediator: FusionMediator<TData, TContext>, history: BrowserHistory, getIdentifier: GetIdentifier<TData>) {
-	history.listen(() => {
+	const unsub = history.listen(() => {
 		mediator.urlService.url = new URL(window.location.href);
 	});
+
+	mediator.onUnMount(() => unsub());
+
 	mediator.clickService.click$.subscribe(({ item }) => {
 		const id = getIdentifier(item);
 		mediator.selectionService.selectedNodes = [id];
