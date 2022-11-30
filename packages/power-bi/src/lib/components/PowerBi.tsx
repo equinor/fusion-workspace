@@ -56,6 +56,9 @@ export const LoadedReport = ({ controller }: LoadedReportProps) => {
 const PowerBiWrapper = styled.div.attrs({
 	className: 'pbiEmbed',
 })`
+	height: 100%;
+	width: 100%;
+
 	.pbiEmbed {
 		height: 100%;
 		width: 100%;

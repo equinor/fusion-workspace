@@ -16,5 +16,13 @@ export function GardenWorkspaceHeader<
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>
 >({ controller }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
-	return <WorkspaceHeader />;
+	return (
+		<WorkspaceHeader>
+			{/* TODO: Add actions to more_vertical menu */}
+			{/* <StyledDivider />
+			<TabButton isActive={false}>
+				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
+			</TabButton> */}
+		</WorkspaceHeader>
+	);
 }

@@ -1,10 +1,15 @@
 import { Filter } from '@equinor/workspace-filter';
+import { ReactNode } from 'react';
 import { ActionBar } from './ActionBar';
 
-export function WorkspaceHeader() {
+type TabNavigationProps = {
+	children?: ReactNode;
+};
+
+export function WorkspaceHeader(props: TabNavigationProps) {
 	return (
 		<div>
-			<ActionBar />
+			<ActionBar children={props.children} />
 			<Filter />
 		</div>
 	);

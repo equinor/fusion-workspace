@@ -6,5 +6,13 @@ type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
 };
 
 export function GridHeader<TData extends Record<PropertyKey, unknown>>({ controller }: GridHeaderProps<TData>) {
-	return <WorkspaceHeader />;
+	return (
+		<WorkspaceHeader>
+			{/* TODO: Add actions to more_vertical menu */}
+			{/* <StyledDivider />
+			<TabButton isActive={false}>
+				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
+			</TabButton> */}
+		</WorkspaceHeader>
+	);
 }
