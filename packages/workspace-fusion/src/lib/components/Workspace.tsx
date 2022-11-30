@@ -1,37 +1,9 @@
 import { useRef } from 'react';
 import { useEffectOnce, Workspace as WorkspaceView } from '@equinor/workspace-react';
-import { CustomTab, WorkspaceConfig, WorkspaceConfiguration } from '../types';
-import { DataSourceConfig } from '../integrations/data-source';
-import { FilterConfig } from '../integrations/filter';
-import { GardenConfig } from '../integrations/garden';
-import { GridConfig } from '../integrations/grid';
-import { StatusBarConfig } from '../integrations/status-bar';
-import { SidesheetConfig } from '../integrations/sidesheet';
-import { FusionPowerBiConfig, PowerBiConfig } from '../integrations/power-bi';
+import { WorkspaceConfiguration, WorkspaceProps } from '../types';
+
 import { didOptionsChange } from '../utils/optionsChanged/didOptionsChange';
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
-import { OnWorkspaceReadyEvent } from '../types/event';
-
-export type WorkspaceProps<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
-> = {
-	gardenOptions?: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
-	gridOptions?: GridConfig<TData>;
-	filterOptions?: FilterConfig<TData>;
-	dataOptions?: DataSourceConfig<TData>;
-	statusBarOptions?: StatusBarConfig<TData>;
-	sidesheetOptions?: SidesheetConfig<TData>;
-	workspaceOptions: WorkspaceConfig<TData>;
-	customTabs?: CustomTab[];
-	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData, TContext>) => void;
-	fusionPowerBiOptions?: FusionPowerBiConfig;
-	powerBiOptions?: PowerBiConfig;
-	contextOptions?: (filteredData: TData[]) => TContext;
-	//TODO: Modules?
-};
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,

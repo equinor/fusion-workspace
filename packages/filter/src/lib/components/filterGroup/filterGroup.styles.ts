@@ -32,11 +32,11 @@ export const StyledVerticalLine = styled.div`
 	background-color: ${tokens.colors.ui.background__medium.hex};
 `;
 
-export const StyledSearchHolder = styled.div`
-	padding-right: 0.5em;
-	padding-left: 0.5em;
-	padding-top: 0.8em;
-	padding-bottom: calc(8px + 0.8em);
+export const StyledSearchHolder = styled.div<{ className: string }>`
+	.${({ className }) => className} > div {
+		background: none;
+		box-shadow: none;
+	}
 `;
 
 export const StyledMenuWrapper = styled.div`

@@ -1,20 +1,25 @@
 import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import { WorkspaceProps } from '../components/Workspace';
 import history from 'history/browser';
 import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
-import { WorkspaceConfiguration, FusionMediator, WorkspaceTabNames, FusionWorkspaceError } from '../types';
-import { addDataSource } from './dataSource';
-import { addFilter } from './filter';
+import {
+	WorkspaceConfiguration,
+	FusionMediator,
+	WorkspaceTabNames,
+	FusionWorkspaceError,
+	WorkspaceProps,
+} from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
-import { addGarden } from './garden';
-import { addGrid } from './grid';
-import { addPowerBi } from './powerBI/addPowerBi';
-import { addSidesheet } from './sidesheet';
-import { addStatusBar } from './statusBar';
 import { addViewController } from './viewController';
-import { addFusionPowerBi } from './powerBI/addFusionPowerBi';
 import { addCustomTabs } from './customTab';
 import { addContext } from './context';
+
+import { addFilter } from '../integrations/filter';
+import { addStatusBar } from '../integrations/status-bar';
+import { addFusionPowerBi, addPowerBi } from '../integrations/power-bi';
+import { addGarden } from '../integrations/garden';
+import { addSidesheet } from '../integrations/sidesheet';
+import { addDataSource } from '../integrations/data-source';
+import { addGrid } from '../integrations/grid';
 
 export function createConfigurationObject<
 	TData extends Record<PropertyKey, unknown>,

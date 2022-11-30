@@ -6,6 +6,9 @@ export const StyledDefaultPackage = styled.div<{ isSelected: boolean; depth: num
 	align-items: center;
 	flex-direction: row;
 	gap: 2em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	background-color: ${({ bgColor }) => bgColor};
 	width: ${({ depth }) => (depth > 0 ? `${100 - depth * 3}%` : '97%')};
 	font-size: 14px;

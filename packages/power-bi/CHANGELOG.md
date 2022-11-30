@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.1.0...@equinor/workspace-powerbi@0.1.1) (2022-11-29)
+
+### Bug Fixes
+
+-   :bug: fix powerbi css height width issue ([#201](https://github.com/equinor/fusion-workspace/issues/201)) ([d882597](https://github.com/equinor/fusion-workspace/commit/d88259751a76f343c94ee81d4475b6dfa2f2b714))
+
 ## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.0.6...@equinor/workspace-powerbi@0.1.0) (2022-11-18)
 
 ### Features

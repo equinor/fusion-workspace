@@ -1,6 +1,5 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { WorkspaceProps } from '../../components/Workspace';
-import { FusionMediator, FusionWorkspaceError, WorkspaceTabNames } from '../../types';
+import { FusionMediator, FusionWorkspaceError, WorkspaceProps, WorkspaceTabNames } from '../../types';
 
 export function addContext<
 	TData extends Record<PropertyKey, unknown>,
