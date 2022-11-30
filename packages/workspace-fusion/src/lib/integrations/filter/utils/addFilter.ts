@@ -22,9 +22,7 @@ export function addFilter<
 		return;
 	}
 
-	const filterController = new ReactFilterController<TData>();
-
-	filterController.addGroups(config.filterGroups);
+	const filterController = new ReactFilterController<TData>(config.filterGroups);
 
 	addFilterContext(viewController, filterController);
 	configureOnDataChange(mediator, filterController);

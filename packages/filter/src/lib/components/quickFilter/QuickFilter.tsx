@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
 	StyledCompactFilterWrapper,
@@ -17,6 +17,7 @@ import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
 import { useFilterContext } from '../../hooks';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
+import { useIsActiveFilters } from '../../hooks/useIsActiveFilters';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -26,25 +27,22 @@ interface QuickFilterProps<T> {
 }
 
 export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element {
-	const { groups } = useFilterContext();
+	const { filterConfiguration } = useFilterContext();
 	const { setIsFilterExpanded } = useFilterContext();
 	const isFilterExpanded = useIsFilterExpanded();
 
 	const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
-	const {
-		valueFormatters,
-		filterStateController: { filterState, getInactiveGroupValues, clearActiveFilters },
-	} = controller;
+	const { getInactiveGroupValues, clearActiveFilters, currentFilterState$ } = controller;
 
 	const handleExpandFilterGroup = (groupName: string) =>
 		filterGroupOpen === groupName ? setFilterGroupOpen(null) : setFilterGroupOpen(groupName);
 
-	const quickFilterGroups = groups?.filter(({ isQuickFilter }) => isQuickFilter).map(({ name }) => name);
+	const quickFilterGroups = filterConfiguration?.filter(({ isQuickFilter }) => isQuickFilter).map(({ name }) => name);
 
-	const filterGroups = valueFormatters.map(({ name }) => name);
+	const filterGroups = filterConfiguration.map(({ name }) => name);
 
 	const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(
-		groups.filter((s) => !s.defaultHidden).map((s) => s.name)
+		filterConfiguration.filter((s) => !s.defaultHidden).map((s) => s.name)
 	);
 
 	const toggleFilterIsExpanded = () => {
@@ -53,10 +51,12 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 	};
 
 	const calculateHiddenFiltersApplied = () =>
-		groups.reduce(
+		filterConfiguration.reduce(
 			(acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
 			0
 		);
+
+	const hasActiveFilters = useIsActiveFilters();
 
 	return (
 		<StyledWrapper>
@@ -92,7 +92,7 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 							)}
 
 							<StyledButton onClick={() => clearActiveFilters()}>
-								<FilterClearIcon isDisabled={!filterState.length} />
+								<FilterClearIcon isDisabled={!hasActiveFilters} />
 							</StyledButton>
 
 							<StyledButton onClick={toggleFilterIsExpanded}>

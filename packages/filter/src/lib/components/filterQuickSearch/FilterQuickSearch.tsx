@@ -9,7 +9,7 @@ export type SearchMode = 'id/desc' | 'all';
 export const FilterQuickSearch = (): JSX.Element => {
 	const [searchText, setSearchText] = useState<string | undefined>();
 
-	const { clearSearch, search, valueFormatters } = useFilterContext();
+	const { setSearch, clearSearch, filterConfiguration } = useFilterContext();
 
 	const searchOptions = [];
 
@@ -30,11 +30,11 @@ export const FilterQuickSearch = (): JSX.Element => {
 		if (value === '') {
 			clearSearch();
 		} else {
-			search({
+			setSearch({
 				searchValue: value,
 				searchIn: 'FilteredData',
 				type: 'includes',
-				valueFormatters: searchMode === 'all' ? [...valueFormatters, ...searchOptions] : searchOptions,
+				valueFormatters: searchMode === 'all' ? [...filterConfiguration, ...searchOptions] : searchOptions,
 			});
 		}
 	}

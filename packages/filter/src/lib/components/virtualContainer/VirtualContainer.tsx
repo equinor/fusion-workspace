@@ -16,7 +16,7 @@ interface VirtualContainerProps {
 }
 
 export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
-	const { valueFormatters, groups: filterOptions } = useFilterContext();
+	const { filterConfiguration } = useFilterContext();
 
 	const groupsMatchingSearch = useMemo(
 		() =>
@@ -31,7 +31,7 @@ export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualCont
 
 	const parentRef = useRef<HTMLDivElement | null>(null);
 
-	const valueFormatter = valueFormatters.find(({ name }) => name === filterGroup.name)?.valueFormatter;
+	const valueFormatter = filterConfiguration.find(({ name }) => name === filterGroup.name)?.valueFormatter;
 
 	const rowVirtualizer = useVirtual({
 		parentRef,
@@ -56,7 +56,7 @@ export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualCont
 							filterItem={convertFromBlank(groupsMatchingSearch[virtualRow.index])}
 							filterGroup={filterGroup}
 							CustomRender={
-								filterOptions?.find(({ name }) => name === filterGroup.name)?.customValueRender
+								filterConfiguration?.find(({ name }) => name === filterGroup.name)?.customValueRender
 							}
 						/>
 					);

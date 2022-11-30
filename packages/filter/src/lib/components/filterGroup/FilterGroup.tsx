@@ -7,7 +7,7 @@ import { FilterValueType } from '../../types';
 import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
 import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
-import { useFilterGroups } from '../../hooks';
+import { useFilterGroups, useFilterState } from '../../hooks';
 import styled from 'styled-components';
 
 interface FilterGroupProps {
@@ -18,19 +18,12 @@ interface FilterGroupProps {
 export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.Element => {
 	const ref = useRef<HTMLDivElement>(null);
 	const groups = useFilterGroups();
-	const { groups: configuration } = useFilterContext();
+	const { filterConfiguration } = useFilterContext();
 
-	const {
-		filterStateController: {
-			changeFilterItem,
-			checkValueIsInactive,
-			filterState,
-			getInactiveGroupValues,
-			markAllValuesActive,
-			setFilterState,
-		},
-		getGroupValues,
-	} = useFilterContext();
+	const { changeFilterItem, checkValueIsInactive, getInactiveGroupValues, markAllValuesActive, getGroupValues } =
+		useFilterContext();
+
+	const { filterState, setFilterState } = useFilterState();
 
 	const handleFilterItemLabelClick = (val: FilterValueType) =>
 		setFilterState([
@@ -50,7 +43,8 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
 	const checkedValues = values.filter((value) => !getInactiveGroupValues(name).includes(value));
 
 	const customRender =
-		configuration.find((s) => s.name === name)?.customValueRender ?? ((v) => <>{v?.toString() ?? '(Blank)'}</>);
+		filterConfiguration.find((s) => s.name === name)?.customValueRender ??
+		((v) => <>{v?.toString() ?? '(Blank)'}</>);
 
 	if (values.length === 0) return <></>;
 	return (

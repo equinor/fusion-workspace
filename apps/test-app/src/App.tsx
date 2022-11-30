@@ -42,13 +42,16 @@ const filterOptions: FilterConfig<S> = {
 	filterGroups: [
 		{ name: 'id', valueFormatter: (s) => s.id },
 		{ name: 'age', valueFormatter: (s) => s.age, isQuickFilter: true },
+		{ name: 'context', valueFormatter: (s) => s.contextId, isQuickFilter: true },
 	],
 };
 const contextOptions = (data: S[]) => ({ length: data.length });
 const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
 
 const getItems = (contextId: string) => [
-	{ age: 2, id: '123', contextId },
+	{ age: 2, id: '123', contextId: 'zzz' },
+	{ age: 2, id: '123', contextId: '123' },
+	{ age: 2, id: '123', contextId: 'aba' },
 	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },

@@ -17,9 +17,7 @@ interface FilterGroupeComponentProps {
 }
 
 export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps) => {
-	const {
-		filterStateController: { getInactiveGroupValues, filterState, markAllValuesActive, setFilterState },
-	} = useFilterContext();
+	const { getInactiveGroupValues, currentFilterState$, setFilterState, markAllValuesActive } = useFilterContext();
 
 	const [filterSearchValue, setFilterSearchValue] = useState('');
 	const [searchActive, setSearchActive] = useState(false);
@@ -49,7 +47,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 	function handleOnKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
 		if (e.key === 'Enter') {
 			setFilterState([
-				...filterState.filter((s) => s.name !== filterGroup.name),
+				...(currentFilterState$.value ?? []).filter((s) => s.name !== filterGroup.name),
 				{
 					name: filterGroup.name,
 					values: filterGroup.values.filter(

@@ -24,13 +24,11 @@ export const ExpandedFilterItem = ({
 	valueFormatter,
 	CustomRender = (value) => <>{sanitizeFilterItemName(value)}</>,
 }: ExpandedFilterItemValueProps): JSX.Element => {
-	const {
-		filterStateController: { changeFilterItem, checkValueIsInactive, setFilterState, filterState },
-		getCountForFilterValue,
-	} = useFilterContext();
+	const { changeFilterItem, checkValueIsInactive, setFilterState, currentFilterState$, getCountForFilterValue } =
+		useFilterContext();
 	function uncheckAllButThisValue() {
 		setFilterState([
-			...filterState.filter((s) => s.name !== filterGroup.name),
+			...(currentFilterState$.value ?? []).filter((s) => s.name !== filterGroup.name),
 			{ name: filterGroup.name, values: [...filterGroup.values.filter((s) => s !== filterItem)] },
 		]);
 	}

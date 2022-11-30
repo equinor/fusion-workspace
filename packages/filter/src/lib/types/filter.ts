@@ -9,7 +9,7 @@ export type FilterOptions<T> = FilterConfiguration<T>[];
 export interface FilterConfiguration<T> {
 	name: string;
 	/** Takes in an item and returns the filter value */
-	valueFormatter: (item: T) => FilterValueType | FilterValueType[];
+	valueFormatter: ValueFormatterFunction<T>;
 	/** Should the filter be active in the pane on mount */
 	/**
 	 * Insert a list of values to be default filtered

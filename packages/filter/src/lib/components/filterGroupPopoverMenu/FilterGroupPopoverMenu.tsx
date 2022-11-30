@@ -97,7 +97,7 @@ export const FilterGroupPopoverMenu = ({
 							filterValue={value}
 							handleFilterItemClick={() => handleFilterItemClick(value)}
 							handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
-							isChecked={isChecked(value)}
+							groupName={groupName}
 							count={getCountForFilterValue(groupName, value)}
 						/>
 					))}

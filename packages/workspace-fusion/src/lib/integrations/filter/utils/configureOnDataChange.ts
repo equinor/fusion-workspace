@@ -6,13 +6,16 @@ export function configureOnDataChange<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >(mediator: FusionMediator<TData, TContext>, filterController: ReactFilterController<TData>) {
-	filterController.onFilteredDataChanged((newData) => {
-		mediator.dataService.filteredData = newData;
+	filterController.filteredData$.subscribe((data) => {
+		mediator.dataService.filteredData = data;
 	});
-	mediator.dataService.data && filterController.setData(mediator.dataService.data);
-	filterController.init();
+
+	if (mediator.dataService.data && mediator.dataService.data.length) {
+		filterController.data$.next(mediator.dataService.data);
+	}
+
 	mediator.dataService.data$.subscribe((data) => {
-		filterController.setData(data ?? []);
-		filterController.init();
+		if (!data) return;
+		filterController.data$.next(data);
 	});
 }

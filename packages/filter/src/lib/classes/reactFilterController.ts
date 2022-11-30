@@ -1,6 +1,6 @@
-import { FilterConfiguration, ValueFormatterFilter } from '../types';
+import { BehaviorSubject } from 'rxjs';
+import { FilterConfiguration } from '../types';
 import { FilterController } from './filterController';
-import { Observable, OnchangeCallback } from './observable';
 
 /**
  * React filter controller extends filter controller
@@ -8,43 +8,30 @@ import { Observable, OnchangeCallback } from './observable';
  * e.g custom rendering of items
  */
 export class ReactFilterController<TData> extends FilterController<TData> {
-	constructor(groups?: FilterConfiguration<TData>[]) {
+	constructor(configuration: FilterConfiguration<TData>[]) {
 		super();
-		groups && this.addGroups(groups);
-		const filterExpanded = new Observable(this.isFilterExpanded);
-		this.onFilterExpandedChange = filterExpanded.onchange;
-		this.setIsFilterExpanded = filterExpanded.setValue;
-		filterExpanded.onchange((val) => {
-			this.isFilterExpanded = val;
-		});
+		this.filterConfiguration = configuration;
 	}
+
+	private filterExpanded = new BehaviorSubject(false);
 
 	/**
 	 * Is the filter in "quick mode" or "advanced mode"
 	 */
-	isFilterExpanded = false;
+	getIsFilterExpanded = () => this.filterExpanded.value;
 
 	/**
 	 * Expands or collapses the filter
 	 */
-	setIsFilterExpanded: (value: boolean) => void;
+	setIsFilterExpanded = (value: boolean) => this.filterExpanded.next(value);
 
 	/**
 	 * Register a function to be called upon when filter expands or collapses
 	 */
-	onFilterExpandedChange: (callback: OnchangeCallback<boolean>) => () => void;
+	filterExpanded$ = this.filterExpanded.asObservable();
 
 	/**
 	 * Filter configuration groups
 	 */
-	groups: FilterConfiguration<TData>[] = [];
-
-	/**
-	 * Add filter configuration groups
-	 */
-	addGroups = (groups: FilterConfiguration<TData>[]) => {
-		const valueFormatters = groups.map((s): ValueFormatterFilter<TData> => ({ ...s }));
-		this.addValueFormatters(valueFormatters);
-		this.groups = groups;
-	};
+	override filterConfiguration: FilterConfiguration<TData>[] = [];
 }
