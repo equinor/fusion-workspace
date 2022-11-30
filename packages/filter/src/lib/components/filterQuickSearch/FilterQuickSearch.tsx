@@ -30,7 +30,6 @@ export const FilterQuickSearch = (): JSX.Element => {
 		if (value === '') {
 			clearSearch();
 		} else {
-			console.log(valueFormatters);
 			search({
 				searchValue: value,
 				searchIn: 'FilteredData',
