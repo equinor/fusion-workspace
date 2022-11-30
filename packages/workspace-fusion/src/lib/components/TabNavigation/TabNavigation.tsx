@@ -3,22 +3,19 @@ import { more_vertical } from '@equinor/eds-icons';
 Icon.add({ more_vertical });
 import { tokens } from '@equinor/eds-tokens';
 import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
-const StyledDivider = styled.hr`
-	width: 1px;
-	height: auto;
-	align-self: stretch;
-	background: ${tokens.colors.ui.background__medium.hex};
-	border: none;
-`;
+type TabNavigationProps = {
+	children?: ReactNode;
+};
 
-export function TabNavigation() {
+export function TabNavigation({ children }: TabNavigationProps) {
 	const { tabController } = useControllerContext();
 	const activeTab = useActiveTab();
 	return (
-		<TabButtonList>
+		<TabButtonList id="fusion_workspace_tab_navigation">
 			{tabController.tabs.map((tab) => (
 				<TabButton
 					title={tab.name}
@@ -29,10 +26,7 @@ export function TabNavigation() {
 					<tab.TabIcon />
 				</TabButton>
 			))}
-			<StyledDivider />
-			<TabButton isActive={false}>
-				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
-			</TabButton>
+			{children}
 		</TabButtonList>
 	);
 }
