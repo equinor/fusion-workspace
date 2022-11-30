@@ -59,7 +59,7 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 		);
 
 	return (
-		<StyledWrapper>
+		<StyledWrapper id="filter_root">
 			<StyledCompactFilterWrapper>
 				<StyledSearchLine>
 					<StyledLeftSection>

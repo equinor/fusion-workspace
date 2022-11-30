@@ -14,7 +14,7 @@ export function Workspace<TTabNames extends string, TError>({ controller }: Work
 	useSetFallbackTab(controller);
 	useMounted(controller);
 	return (
-		<WorkspaceWrapper>
+		<WorkspaceWrapper id="workspace_root">
 			<ContextProvider controller={controller}>
 				<ContextProviders>
 					<WorkspaceHeader />

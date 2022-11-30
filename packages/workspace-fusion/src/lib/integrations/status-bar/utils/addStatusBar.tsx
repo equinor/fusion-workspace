@@ -1,8 +1,8 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { createContext } from 'react';
-import { StatusBarWrapper } from '../../../components';
+import { StatusBarWrapper } from '../components/StatusBarWrapper';
 import { FusionMediator, WorkspaceTabNames } from '../../../types';
-import { StatusBarConfig } from '../';
+import { StatusBarConfig } from '../types/';
 
 export function addStatusBar<
 	TData extends Record<PropertyKey, unknown>,
