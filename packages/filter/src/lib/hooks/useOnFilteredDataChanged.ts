@@ -3,12 +3,12 @@ import { useFilterContext } from './useFilterContext';
 
 /** Hook for using filtered data from filter controller as state */
 export function useOnFilteredDataChanged() {
-	const { filteredData, onFilteredDataChanged } = useFilterContext();
-	const [data, setData] = useState(filteredData);
+	const { getFilteredData, filteredData$ } = useFilterContext();
+	const [data, setData] = useState(getFilteredData());
 
 	useEffect(() => {
-		const unsub = onFilteredDataChanged(setData);
-		return unsub;
+		const unsub = filteredData$.subscribe(setData);
+		return () => unsub.unsubscribe();
 	}, []);
 
 	return data;

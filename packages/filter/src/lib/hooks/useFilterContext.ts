@@ -6,17 +6,17 @@ export const FilterContext = createContext(new ReactFilterController());
 export const useFilterContext = <TData>(): ReactFilterController<TData> => {
 	const controller = useContext(FilterContext) as ReactFilterController<TData>;
 	const [filterState, setFilterState] = useState(controller.filterStateController.filterState);
-	const [filteredData, setFilteredData] = useState(controller.filteredData);
-	const [groups, setFilterGroups] = useState(controller.filterGroups);
+	const [filteredData, setFilteredData] = useState(controller.getFilteredData());
+	const [groups, setFilterGroups] = useState(controller.getFilterValues());
 
 	useEffect(() => {
-		const unsubscribeFilterValues = controller.onFilterValuesGenerated(setFilterGroups);
-		const unsubscribeFdata = controller.onFilteredDataChanged(setFilteredData);
-		const unsubscribeFilterState = controller.filterStateController.onFilterStateChange(setFilterState);
+		const subFilterValues = controller.filterValues$.subscribe(setFilterGroups);
+		const subFilteredData = controller.filteredData$.subscribe(setFilteredData);
+		const subFilterState = controller.filterStateController.onFilterStateChange(setFilterState);
 		return () => {
-			unsubscribeFdata();
-			unsubscribeFilterState();
-			unsubscribeFilterValues();
+			subFilteredData.unsubscribe();
+			subFilterState();
+			subFilterValues.unsubscribe();
 		};
 	}, []);
 

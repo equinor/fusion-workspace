@@ -4,14 +4,14 @@ import { useFilterContext } from './useFilterContext';
 
 /** Use filter groups as state */
 export function useFilterGroups() {
-	const { onFilterValuesGenerated, filterGroups } = useFilterContext();
-	const [groups, setGroups] = useState<FilterGroup[]>(filterGroups);
+	const { filterValues$, getFilterValues } = useFilterContext();
+	const [groups, setGroups] = useState<FilterGroup[]>(getFilterValues());
 
 	useEffect(() => {
-		const unsub = onFilterValuesGenerated((values) => {
+		const unsub = filterValues$.subscribe((values) => {
 			setGroups(values);
 		});
-		return unsub;
+		return () => unsub.unsubscribe();
 	}, []);
 
 	return groups;

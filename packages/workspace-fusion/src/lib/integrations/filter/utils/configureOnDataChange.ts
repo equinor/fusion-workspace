@@ -6,7 +6,7 @@ export function configureOnDataChange<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >(mediator: FusionMediator<TData, TContext>, filterController: ReactFilterController<TData>) {
-	filterController.onFilteredDataChanged((newData) => {
+	filterController.filteredData$.subscribe((newData) => {
 		mediator.dataService.filteredData = newData;
 	});
 	mediator.dataService.data && filterController.setData(mediator.dataService.data);
