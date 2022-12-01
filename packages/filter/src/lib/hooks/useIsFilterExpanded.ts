@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useFilterContext } from './useFilterContext';
 
 export function useIsFilterExpanded() {
-	const { isFilterExpanded, onFilterExpandedChange } = useFilterContext();
-	const [isExpanded, setIsExpanded] = useState(isFilterExpanded);
+	const { getIsFilterExpanded, isFilterExpanded$ } = useFilterContext();
+	const [isExpanded, setIsExpanded] = useState<boolean>(getIsFilterExpanded());
 
 	useEffect(() => {
-		const unsub = onFilterExpandedChange(setIsExpanded);
-		return unsub;
-	}, [onFilterExpandedChange]);
+		const sub = isFilterExpanded$.subscribe(setIsExpanded);
+		return () => sub.unsubscribe();
+	}, []);
 
 	return isExpanded;
 }

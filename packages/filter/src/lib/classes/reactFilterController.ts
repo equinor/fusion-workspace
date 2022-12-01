@@ -1,6 +1,7 @@
 import { FilterConfiguration, ValueFormatterFilter } from '../types';
 import { FilterController } from './filterController';
-import { Observable, OnchangeCallback } from './observable';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * React filter controller extends filter controller
@@ -11,28 +12,18 @@ export class ReactFilterController<TData> extends FilterController<TData> {
 	constructor(groups?: FilterConfiguration<TData>[]) {
 		super();
 		groups && this.addGroups(groups);
-		const filterExpanded = new Observable(this.isFilterExpanded);
-		this.onFilterExpandedChange = filterExpanded.onchange;
-		this.setIsFilterExpanded = filterExpanded.setValue;
-		filterExpanded.onchange((val) => {
-			this.isFilterExpanded = val;
-		});
 	}
 
-	/**
-	 * Is the filter in "quick mode" or "advanced mode"
-	 */
-	isFilterExpanded = false;
+	#filterExpanded$ = new BehaviorSubject(false);
+
+	isFilterExpanded$ = this.#filterExpanded$.asObservable().pipe(distinctUntilChanged());
+
+	getIsFilterExpanded = () => this.#filterExpanded$.value;
 
 	/**
 	 * Expands or collapses the filter
 	 */
-	setIsFilterExpanded: (value: boolean) => void;
-
-	/**
-	 * Register a function to be called upon when filter expands or collapses
-	 */
-	onFilterExpandedChange: (callback: OnchangeCallback<boolean>) => () => void;
+	setIsFilterExpanded = (value: boolean) => this.#filterExpanded$.next(value);
 
 	/**
 	 * Filter configuration groups

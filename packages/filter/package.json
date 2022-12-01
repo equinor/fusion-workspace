@@ -21,6 +21,7 @@
 		"@equinor/eds-tokens": "^0.7.1",
 		"react-sortablejs": "^6.1.4",
 		"react-virtual": "^2.10.4",
+		"rxjs": "^7.5.7",
 		"sortablejs": "^1.15.0",
 		"styled-components": "^5.3.5"
 	},
