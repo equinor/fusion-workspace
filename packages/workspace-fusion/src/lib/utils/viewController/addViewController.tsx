@@ -39,8 +39,34 @@ export function addViewController<
 			switchTabOnNavigation(mediator, viewController);
 		}
 	});
+	initTabOnLoad(mediator, viewController);
+	mediator.onUnMount(() => {
+		viewController.destroy();
+	});
+}
 
-	mediator.onUnMount(viewController.destroy);
+export function initTabOnLoad<
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never
+>(mediator: FusionMediator<TData, TContext>, viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
+	const abortController = new AbortController();
+
+	/**
+	 * Switch tab when document is ready
+	 * Ev listener is removed when signal is aborted
+	 */
+	window.addEventListener(
+		'load',
+		() => {
+			switchTabOnNavigation(mediator, viewController);
+		},
+		{ signal: abortController.signal }
+	);
+
+	mediator.onUnMount(() => {
+		abortController.abort();
+	});
 }
 
 /** Switches tab when url changes due to navigation event */
