@@ -18,8 +18,7 @@ export function addGarden<
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>,
-	getIdentifier: GetIdentifier<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	if (!gardenConfig) return;
 
@@ -27,7 +26,7 @@ export function addGarden<
 		{
 			...gardenConfig,
 			data: [],
-			getIdentifier,
+			getIdentifier: mediator.getIdentifier,
 			getContext: () => mediator.contextService.getContext(),
 		},
 		(destroy) => mediator.onUnMount(destroy)

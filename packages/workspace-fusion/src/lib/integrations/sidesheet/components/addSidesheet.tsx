@@ -10,11 +10,10 @@ export function addSidesheet<
 >(
 	config: SidesheetConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>,
-	getIdentifier: GetIdentifier<TData>
+	mediator: FusionMediator<TData, TContext>
 ) {
 	if (!config) return;
 	viewController.addSidesheetComponent(() => (
-		<SidesheetWrapper getIdentifier={getIdentifier} Component={config.Sidesheet} mediator={mediator} />
+		<SidesheetWrapper getIdentifier={mediator.getIdentifier} Component={config.Sidesheet} mediator={mediator} />
 	));
 }

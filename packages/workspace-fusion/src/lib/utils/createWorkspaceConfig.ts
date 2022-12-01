@@ -48,9 +48,9 @@ export function createConfigurationObject<
 	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
 	addPowerBi(props.powerBiOptions, viewController, mediator);
 	addCustomTabs(props.customTabs, viewController, mediator);
-	addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	addSidesheet(props.sidesheetOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
+	addGarden(props.gardenOptions, viewController, mediator);
+	addGrid(props.gridOptions, viewController, mediator);
+	addSidesheet(props.sidesheetOptions, viewController, mediator);
 	addStatusBar(props.statusBarOptions, viewController, mediator);
 	addFilter(props.filterOptions, viewController, mediator);
 	sortFusionTabs(viewController);
