@@ -1,5 +1,5 @@
 import { GardenController, GardenGroup } from '@equinor/workspace-garden';
-import { FusionMediator, GetIdentifier } from '../../../types';
+import { FusionMediator } from '../../../types';
 
 /** Adds clickevents from mediator on garden controller  */
 export function configureClickEvents<
