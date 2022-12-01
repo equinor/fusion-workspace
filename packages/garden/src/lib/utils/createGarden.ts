@@ -17,18 +17,13 @@ export function createGarden<
 		fieldSettings,
 		customGroupByKeys,
 	} = props;
-	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string];
-	if (verticalGroupingKeys) {
-		verticalGroupingKeys.forEach((key) => {
-			allGroupingKeys.push(key);
-		});
-	}
+	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string, ...verticalGroupingKeys];
 
 	const groupedData = groupBy({
 		arr: data,
 		keys: allGroupingKeys as (TExtendedFields | keyof TData)[],
 		fieldSettings: fieldSettings,
-		isExpanded: visuals?.collapseSubGroupsByDefault,
+		isExpanded: !visuals?.collapseSubGroupsByDefault,
 		customGroupByKeys: customGroupByKeys?.value,
 		preGroupFiltering: (s) => s,
 		depth: 0,
