@@ -14,7 +14,7 @@ export function configureClickEvents<
 	gardenController.clickEvents.onClickItem = (item) => {
 		selectionService.selectedNodes = [{ id: getIdentifier(item), item }];
 	};
-
+	//TODO: add support for multiple selections
 	// gardenController.clickEvents.onClickGroup = (group) => {
 	// 	const items = findItemsRecursively(group);
 	// 	selectionService.selectedNodes = items.map(getIdentifier);
