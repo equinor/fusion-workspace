@@ -110,6 +110,7 @@ importers:
       react-sortablejs: ^6.1.4
       react-virtual: ^2.10.4
       rxjs: ^7.5.7
+      rxjs-hooks: 0.8.0-alpha.0
       sortablejs: ^1.15.0
       styled-components: ^5.3.5
     dependencies:
@@ -119,6 +120,7 @@ importers:
       react-sortablejs: 6.1.4_pkvhgat2fktt3g4eqjjiisgkie
       react-virtual: 2.10.4_react@18.2.0
       rxjs: 7.5.7
+      rxjs-hooks: 0.8.0-alpha.0_react@18.2.0+rxjs@7.5.7
       sortablejs: 1.15.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     devDependencies:
@@ -8953,6 +8955,19 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
+  /rxjs-hooks/0.8.0-alpha.0_react@18.2.0+rxjs@7.5.7:
+    resolution: {integrity: sha512-rgHaHEJPVsEZhqjHjEMu1k/7CxxmkGaaRXOBHySaN8a1web7WGL28XUylDVDerlXj1mUkPIz/LI7GfNfeLkQVQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      rxjs: '>=7.0.0'
+    dependencies:
+      react: 18.2.0
+      rxjs: 7.5.7
+      tslib: 2.4.1
+      use-constant: 1.1.1_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
   /rxjs/7.5.7:
     resolution: {integrity: sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==}
     dependencies:
@@ -9808,6 +9823,22 @@ packages:
       querystringify: 2.2.0
       requires-port: 1.0.0
     dev: true
+
+  /use-constant/1.1.1_react@18.2.0:
+    resolution: {integrity: sha512-sy2ttlE4kuAnNbp2P6a5aTZiGYwsZojkqaGZ31yDDjIurteUS8GOcYiPGmJ3y/LHOHkdazDdVRBZPzH3RZHffA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}

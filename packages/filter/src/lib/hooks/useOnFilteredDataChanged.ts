@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useObservable } from 'rxjs-hooks';
 import { useFilterContext } from './useFilterContext';
 
 /** Hook for using filtered data from filter controller as state */
-export function useOnFilteredDataChanged() {
+export function useOnFilteredDataChanged<TData>() {
 	const { getFilteredData, filteredData$ } = useFilterContext();
-	const [data, setData] = useState(getFilteredData());
-
-	useEffect(() => {
-		const unsub = filteredData$.subscribe(setData);
-		return () => unsub.unsubscribe();
-	}, []);
-
-	return data;
+	return useObservable(() => filteredData$, getFilteredData()) as TData[];
 }

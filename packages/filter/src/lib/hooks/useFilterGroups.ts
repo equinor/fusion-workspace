@@ -1,18 +1,10 @@
-import { useEffect, useState } from 'react';
-import { FilterGroup } from '../types';
 import { useFilterContext } from './useFilterContext';
+import { useObservable } from 'rxjs-hooks';
 
 /** Use filter groups as state */
 export function useFilterGroups() {
 	const { filterValues$, getFilterValues } = useFilterContext();
-	const [groups, setGroups] = useState<FilterGroup[]>(getFilterValues());
-
-	useEffect(() => {
-		const unsub = filterValues$.subscribe((values) => {
-			setGroups(values);
-		});
-		return () => unsub.unsubscribe();
-	}, []);
+	const groups = useObservable(() => filterValues$, getFilterValues());
 
 	return groups;
 }
