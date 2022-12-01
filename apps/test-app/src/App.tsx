@@ -324,6 +324,7 @@ function App() {
 				gridOptions={gridOptions}
 				gardenOptions={gardenOptions}
 				filterOptions={filterOptions}
+				fusionPowerBiOptions={{ reportUri: '123' }}
 				sidesheetOptions={{
 					Sidesheet: (props) => {
 						console.log(props);

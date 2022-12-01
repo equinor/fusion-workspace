@@ -1,10 +1,8 @@
 import { Icon } from '@equinor/eds-core-react';
 import { more_vertical } from '@equinor/eds-icons';
 Icon.add({ more_vertical });
-import { tokens } from '@equinor/eds-tokens';
 import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
 import { ReactNode } from 'react';
-import styled from 'styled-components';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 type TabNavigationProps = {

@@ -1,5 +1,10 @@
 import { GridController } from '@equinor/workspace-ag-grid';
-import { WorkspaceHeader } from '../../../../components/Header/WorkspaceHeader';
+import { useStatusBar } from '../../../status-bar';
+import { Filter } from '@equinor/workspace-filter';
+
+import styled from 'styled-components';
+import { TabNavigation } from '../../../common/components/TabNavigation';
+import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
 
 type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;
@@ -7,12 +12,27 @@ type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
 
 export function GridHeader<TData extends Record<PropertyKey, unknown>>({ controller }: GridHeaderProps<TData>) {
 	return (
-		<WorkspaceHeader>
-			{/* TODO: Add actions to more_vertical menu */}
-			{/* <StyledDivider />
-			<TabButton isActive={false}>
-				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
-			</TabButton> */}
-		</WorkspaceHeader>
+		<StyledGridHeader>
+			<NavigationBar />
+			<Filter />
+		</StyledGridHeader>
 	);
 }
+
+const StyledGridHeader = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const NavigationBar = () => {
+	const StatusBar = useStatusBar();
+	return (
+		<StyledActionBar>
+			{StatusBar && <StatusBar />}
+
+			<TabNavigation />
+		</StyledActionBar>
+	);
+};
