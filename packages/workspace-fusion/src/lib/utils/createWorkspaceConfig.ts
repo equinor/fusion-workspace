@@ -29,7 +29,8 @@ export function createConfigurationObject<
 >(
 	props: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>
 ): WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> {
-	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator();
+	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator(props.workspaceOptions.getIdentifier);
+
 	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
 		props.workspaceOptions.defaultTab
 	);
@@ -42,14 +43,14 @@ export function createConfigurationObject<
 
 	addViewController(viewController, mediator, history);
 	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
-	configureUrlWithHistory(mediator, history, props.workspaceOptions.getIdentifier);
+	configureUrlWithHistory(mediator, history);
 	addContext(props.contextOptions, viewController, mediator);
 	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
 	addPowerBi(props.powerBiOptions, viewController, mediator);
 	addCustomTabs(props.customTabs, viewController, mediator);
-	addGarden(props.gardenOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	addGrid(props.gridOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
-	addSidesheet(props.sidesheetOptions, viewController, mediator, props.workspaceOptions.getIdentifier);
+	addGarden(props.gardenOptions, viewController, mediator);
+	addGrid(props.gridOptions, viewController, mediator);
+	addSidesheet(props.sidesheetOptions, viewController, mediator);
 	addStatusBar(props.statusBarOptions, viewController, mediator);
 	addFilter(props.filterOptions, viewController, mediator);
 	sortFusionTabs(viewController);

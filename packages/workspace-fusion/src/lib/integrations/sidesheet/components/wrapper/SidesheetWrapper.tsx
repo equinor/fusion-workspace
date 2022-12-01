@@ -1,8 +1,8 @@
 import { Icon } from '@equinor/eds-core-react';
 import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
+import { useCallback, useEffect, useState } from 'react';
 import { MediatorProvider } from '../../../../components/provider';
-import { useOnClick } from '../../../../hooks';
-import { FusionMediator, GetIdentifier } from '../../../../types';
+import { FusionMediator, GetIdentifier, WorkspaceNode } from '../../../../types';
 import { SidesheetConfig } from '../../sidesheet';
 
 interface SidesheetWrapperProps<
@@ -15,11 +15,25 @@ interface SidesheetWrapperProps<
 }
 
 Icon.add({ chevron_right, close, chevron_left });
+
 export function SidesheetWrapper<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >({ Component, mediator, getIdentifier }: SidesheetWrapperProps<TData, TContext>) {
-	const [clickEvent, clearClickEvent] = useOnClick(mediator);
+	const [clickEvent, setClickEvent] = useState<WorkspaceNode<TData> | null>(null);
+
+	useEffect(() => {
+		const sub = mediator.selectionService.selectedNodes$.subscribe((s) => {
+			setClickEvent(s[0] ?? null);
+		});
+		return () => {
+			sub.unsubscribe();
+		};
+	}, []);
+
+	const clearClickEvent = useCallback(() => {
+		mediator.selectionService.selectedNodes = [];
+	}, []);
 
 	/**
 	 * Add fusion sidesheet header here with color etc here..

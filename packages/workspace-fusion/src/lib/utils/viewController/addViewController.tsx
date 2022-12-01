@@ -29,7 +29,7 @@ export function addViewController<
 	/** Sync user settings when active tab changes */
 	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
 	viewController.tabController.onActiveTabChanged((tab) => {
-		updateQueryParams([`tab=${tab.toLowerCase()}`], mediator, history);
+		updateQueryParams([['tab', tab.toLowerCase()]], mediator, history);
 	});
 
 	/** Switch tab if somebody presses the navigation buttons in browser */

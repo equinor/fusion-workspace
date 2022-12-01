@@ -8,7 +8,12 @@ import { WorkspaceOnClick } from './event';
 export type FusionMediator<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
-> = WorkspaceReactMediator<TData, WorkspaceOnClick<TData>, FusionWorkspaceError, TContext, FusionBookmark<TData>>;
+> = WorkspaceReactMediator<TData, WorkspaceNode<TData>, FusionWorkspaceError, TContext, FusionBookmark<TData>>;
+
+export type WorkspaceNode<TData> = {
+	id: string;
+	item?: TData;
+};
 
 export type FusionWorkspaceError = {
 	code: number;
