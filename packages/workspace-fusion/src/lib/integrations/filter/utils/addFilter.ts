@@ -12,7 +12,7 @@ export function addFilter<
 >(
 	config: FilterConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!config) {
 		mediator.dataService.data$.subscribe((val) => {

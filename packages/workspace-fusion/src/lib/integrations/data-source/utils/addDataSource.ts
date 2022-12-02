@@ -6,7 +6,7 @@ import { createFetchFunction } from './createFetchFunction';
 export function addDataSource<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
->(dataFetch: DataSourceConfig<TData> | undefined, mediator: FusionMediator<TData, TContext>) {
+>(dataFetch: DataSourceConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, any>) {
 	if (!dataFetch) return;
 	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
 	const fetchFunction = createFetchFunction(dataFetch, mediator);

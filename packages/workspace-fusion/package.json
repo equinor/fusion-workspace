@@ -59,6 +59,7 @@
 		"@equinor/eds-tokens": "0.9.0",
 		"@equinor/fusion-framework": "^4.3.1",
 		"@equinor/workspace-ag-grid": "workspace:^0.3.2",
+		"@equinor/workspace-core": "workspace:^0.0.8",
 		"@equinor/workspace-data-source": "workspace:^0.1.0",
 		"@equinor/workspace-filter": "workspace:^0.0.9",
 		"@equinor/workspace-garden": "workspace:^0.5.3",

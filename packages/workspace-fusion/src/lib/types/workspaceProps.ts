@@ -7,11 +7,16 @@ import { WorkspaceSidesheetProps } from '../integrations/sidesheet';
 import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { CustomTab, WorkspaceConfig } from '../types';
 import { OnWorkspaceReadyEvent } from '../types/event';
+import { BaseEvent } from '@equinor/workspace-core';
 
-type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>, TContext extends Record<PropertyKey, unknown>> = {
+type WorkspaceBaseProps<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent<string> = never
+> = {
 	workspaceOptions: WorkspaceConfig<TData>;
 	customTabs?: CustomTab[];
-	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData, TContext>) => void;
+	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData, TContext, TCustomSidesheetEvents>) => void;
 	contextOptions?: (filteredData: TData[]) => TContext;
 	//TODO: Modules?
 };
@@ -19,13 +24,14 @@ type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>, TContext ext
 export type WorkspaceProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent<string> = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
-> = WorkspaceBaseProps<TData, TContext> &
+> = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &
 	WorkspaceGardenProps<TData, TContext, TExtendedFields, TCustomGroupByKeys> &
 	WorkspaceGridProps<TData> &
 	WorkspaceFilterProps<TData> &
 	WorkspaceDataSourceProps<TData> &
 	WorkspaceStatusBarProps<TData> &
-	WorkspaceSidesheetProps<TData> &
+	WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
 	WorkspacePowerBiProps;

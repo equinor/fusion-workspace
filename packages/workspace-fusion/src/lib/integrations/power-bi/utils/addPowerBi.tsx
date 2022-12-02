@@ -12,7 +12,7 @@ export function addPowerBi<
 >(
 	powerBiConfig: PowerBiConfig | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!powerBiConfig) return;
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));

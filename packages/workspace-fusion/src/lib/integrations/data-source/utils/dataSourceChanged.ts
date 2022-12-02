@@ -2,6 +2,7 @@ import { createFetchFunction } from './createFetchFunction';
 import { FusionMediator } from '../../../types';
 import { FetchController } from '@equinor/workspace-data-source';
 import { DataSourceConfig, WorkspaceDataSourceProps } from '../';
+import { BaseEvent } from '@equinor/workspace-core';
 
 /**
  * Refetch data if data source options changed
@@ -9,12 +10,13 @@ import { DataSourceConfig, WorkspaceDataSourceProps } from '../';
  */
 export function didDataSourceOptionsChange<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent<string> = never
 >(
 	newDataOptions: WorkspaceDataSourceProps<TData>,
 	oldDataOptions: DataSourceConfig<TData> | undefined,
 	dataSourceController: FetchController<TData> | undefined,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!dataSourceController) return;
 
@@ -31,11 +33,12 @@ export function didDataSourceOptionsChange<
  */
 function handleDataSourceChanged<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent<string> = never
 >(
 	dataSourceController: FetchController<TData>,
 	dataOptions: DataSourceConfig<TData>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	dataSourceController.setFetch(createFetchFunction(dataOptions, mediator));
 	dataSourceController.reset();

@@ -10,7 +10,7 @@ export function addFusionPowerBi<
 >(
 	fusionPowerBiOptions: FusionPowerBiConfig | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!fusionPowerBiOptions) return;
 	const reportUri = fusionPowerBiOptions.reportUri;

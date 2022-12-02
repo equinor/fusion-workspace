@@ -8,7 +8,7 @@ export function addCustomTabs<
 >(
 	customTabs: CustomTab[] | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!customTabs) return;
 	customTabs.forEach((tab) => addCustomTab(tab, viewController, mediator));

@@ -27,7 +27,7 @@ export function updateQueryParams<
 export function configureUrlWithHistory<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
+>(mediator: FusionMediator<TData, TContext, any>, history: BrowserHistory) {
 	const unsub = history.listen(() => {
 		mediator.urlService.url = new URL(window.location.href);
 	});

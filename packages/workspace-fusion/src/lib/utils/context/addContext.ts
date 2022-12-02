@@ -7,7 +7,7 @@ export function addContext<
 >(
 	contextOptions: WorkspaceProps<TData, TContext>['contextOptions'] | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!contextOptions) return;
 

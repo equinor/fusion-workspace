@@ -10,7 +10,7 @@ export function addViewController<
 	TContext extends Record<PropertyKey, unknown> = never
 >(
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData, TContext>,
+	mediator: FusionMediator<TData, TContext, any>,
 	history: BrowserHistory
 ) {
 	viewController.ErrorComponent = ({ error }) => <DumpsterFireDialog text={error.detail} buttons={[]} />;

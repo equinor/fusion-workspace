@@ -7,6 +7,7 @@ import { FusionWorkspaceError, FusionMediator } from './fusionController';
 import { WorkspaceOnClick } from './event';
 import { WorkspaceTabNames } from './tabs';
 import { WorkspaceProps } from './workspaceProps';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
@@ -43,6 +44,7 @@ export type AppConfig<TabNames extends string> = {
 export type WorkspaceConfiguration<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent<string> = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
@@ -50,8 +52,8 @@ export type WorkspaceConfiguration<
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
 	gridController?: GridController<TData>;
 	workspaceConfig: WorkspaceConfig<TData>;
-	mediator: FusionMediator<TData, TContext>;
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 	filterController?: FilterController<TData>;
 	dataSourceController?: FetchController<TData>;
-	rawOptions: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>;
+	rawOptions: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>;
 };

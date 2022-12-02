@@ -17,7 +17,7 @@ export function addGrid<
 >(
 	gridConfig: GridConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!gridConfig) return;
 	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, mediator.onUnMount);

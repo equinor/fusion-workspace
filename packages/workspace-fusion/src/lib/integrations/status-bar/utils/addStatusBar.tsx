@@ -11,7 +11,7 @@ export function addStatusBar<
 >(
 	config: StatusBarConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, any>
 ) {
 	if (!config) return;
 	const StatusBarProvider = ({ children }) => (
