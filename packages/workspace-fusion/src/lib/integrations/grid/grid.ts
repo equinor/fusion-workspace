@@ -16,5 +16,5 @@ export type { ColDef, ColumnState, GetIdentifier, GridConfig, GridController, Gr
 
 type GridConfig<T> = {
 	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context'>;
+	gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
 };
