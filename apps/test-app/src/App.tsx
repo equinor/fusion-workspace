@@ -27,7 +27,6 @@ const gridOptions: GridConfig<S> = {
 		{ field: 'contextId' },
 		{ field: 'age' },
 	],
-	gridOptions: { pagination: true, paginationPageSize: 100 },
 };
 
 const gardenOptions: GardenConfig<S> = {
