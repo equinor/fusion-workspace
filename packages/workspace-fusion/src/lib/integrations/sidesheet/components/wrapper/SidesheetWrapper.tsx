@@ -1,59 +1,60 @@
-import { Icon } from '@equinor/eds-core-react';
-import { chevron_right, close, chevron_left } from '@equinor/eds-icons';
-import { useCallback, useEffect, useState } from 'react';
-import { MediatorProvider } from '../../../../components/provider';
-import { FusionMediator, GetIdentifier, WorkspaceNode } from '../../../../types';
+import { BaseEvent } from '@equinor/workspace-core';
+import { FusionMediator, FusionEvents } from '../../../../types';
+import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
+import { useState, useEffect, useCallback } from 'react';
 import { SidesheetConfig } from '../../sidesheet';
 
-interface SidesheetWrapperProps<
+type SidesheetWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
-> {
-	Component: SidesheetConfig<TData>['Sidesheet'];
-	mediator: FusionMediator<TData, TContext>;
-	getIdentifier: GetIdentifier<TData>;
-}
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent<string> = never
+> = {
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
+	config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
+};
 
-Icon.add({ chevron_right, close, chevron_left });
-
-export function SidesheetWrapper<
+export const SidesheetWrapper = <
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->({ Component, mediator, getIdentifier }: SidesheetWrapperProps<TData, TContext>) {
-	const [clickEvent, setClickEvent] = useState<WorkspaceNode<TData> | null>(null);
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent<string> = never
+>({
+	config,
+	mediator,
+}: SidesheetWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
+	const [currEv, setCurrEv] = useState<IsNeverType<
+		TCustomSidesheetEvents,
+		FusionEvents<TData>,
+		TCustomSidesheetEvents | FusionEvents<TData>
+	> | null>(null);
+
+	const handleSetter = useCallback(
+		(
+			ev: IsNeverType<
+				TCustomSidesheetEvents,
+				FusionEvents<TData>,
+				TCustomSidesheetEvents | FusionEvents<TData>
+			> | null
+		) => {
+			if (isSelectionEvent(currEv) && !isSelectionEvent(ev)) {
+				mediator.selectionService.selectedNodes = [];
+			}
+			setCurrEv(ev);
+		},
+		[currEv]
+	);
 
 	useEffect(() => {
-		const sub = mediator.selectionService.selectedNodes$.subscribe((s) => {
-			setClickEvent(s[0] ?? null);
-		});
-		return () => {
-			sub.unsubscribe();
-		};
-	}, []);
+		const sub = mediator.sidesheetService.subscribeAll(handleSetter);
+		return () => sub();
+	}, [handleSetter]);
 
-	const clearClickEvent = useCallback(() => {
-		mediator.selectionService.selectedNodes = [];
-	}, []);
-
-	/**
-	 * Add fusion sidesheet header here with color etc here..
-	 */
-
-	if (!clickEvent?.item) {
-		return null;
+	if (!currEv) {
+		return <></>;
 	}
 
-	//TODO: Introduce url loading of sidesheets
-	return (
-		<div>
-			<MediatorProvider mediator={mediator}>
-				{/* TODO: add invalidate */}
-				<Component
-					id={getIdentifier(clickEvent.item)}
-					item={clickEvent.item}
-					controller={{ close: clearClickEvent }}
-				/>
-			</MediatorProvider>
-		</div>
-	);
-}
+	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
+};
+const key: FusionEvents<unknown>['type'] = 'details_sidesheet';
+
+const isSelectionEvent = <T extends FusionEvents<unknown>>(obj: FusionEvents<unknown> | unknown): obj is T =>
+	typeof obj === 'object' && obj?.['type'] === key;

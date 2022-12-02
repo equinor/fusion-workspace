@@ -7,8 +7,5 @@ export type WorkspaceSidesheetProps<
 	TContext extends Record<PropertyKey, unknown>,
 	TCustomSidesheetEvents extends BaseEvent<string>
 > = {
-	sidesheetOptions?: SidesheetConfig<TData>;
-	Sidesheet?: (
-		ev: Parameters<FusionMediator<TData, TContext, TCustomSidesheetEvents>['sidesheetService']['sendEvent']>[0]
-	) => JSX.Element;
+	sidesheetOptions?: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
 };

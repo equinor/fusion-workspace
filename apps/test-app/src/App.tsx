@@ -62,7 +62,7 @@ const getItems = (contextId: string) => [
 ];
 
 function App() {
-	const workspaceApi = useRef<null | FusionMediator<S, { length: number }>>(null);
+	const workspaceApi = useRef<null | FusionMediator<S, { length: number }, MyTypes>>(null);
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
@@ -80,6 +80,32 @@ function App() {
 
 	return (
 		<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+			<button onClick={() => workspaceApi.current?.sidesheetService.sendEvent({ type: 'admin' })}>
+				open Admin
+			</button>
+			<button
+				onClick={() =>
+					workspaceApi.current?.sidesheetService.sendEvent({ type: 'custom2', props: { id: '123' } })
+				}
+			>
+				Open custom2
+			</button>
+			<button
+				onClick={() => {
+					if (workspaceApi.current && workspaceApi.current.dataService.filteredData) {
+						const { filteredData } = workspaceApi.current.dataService;
+						workspaceApi.current?.sidesheetService.sendEvent({
+							type: 'details_sidesheet',
+							props: {
+								id: filteredData[0].id ?? '2',
+								item: filteredData[0],
+							},
+						});
+					}
+				}}
+			>
+				Open details
+			</button>
 			<Workspace
 				onWorkspaceReady={(ev) => {
 					workspaceApi.current = ev.api;
@@ -90,11 +116,7 @@ function App() {
 				gridOptions={gridOptions}
 				gardenOptions={gardenOptions}
 				filterOptions={filterOptions}
-				Sidesheet={(ev) => {
-					console.log(ev);
-
-					return <></>;
-				}}
+				sidesheetOptions={sidesheet}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
 				}}
@@ -104,3 +126,62 @@ function App() {
 }
 
 export default App;
+
+const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
+	Sidesheet: (test) => {
+		console.log(test);
+		const { controller, ev } = test;
+
+		switch (ev.type) {
+			case 'admin':
+				return (
+					<div style={{ width: '200px' }}>
+						Admin sidesheet {JSON.stringify(ev)}
+						<button onClick={() => controller.close()}>close</button>
+					</div>
+				);
+			case 'custom2':
+				return (
+					<div>
+						Custom 2{JSON.stringify(ev)}
+						<button onClick={() => controller.close()}>close</button>
+					</div>
+				);
+			case 'details_sidesheet':
+				return (
+					<div style={{ width: '200px' }}>
+						<span>Details Sidesheet</span>
+						<button onClick={() => controller.close()}>close</button>
+						<div>{JSON.stringify(ev)}</div>
+					</div>
+				);
+
+			default:
+				return <div>Fallback sidesheet</div>;
+		}
+	},
+};
+
+type Admin = {
+	type: 'admin';
+};
+
+type Custom2 = {
+	type: 'custom2';
+	props: { id: string };
+};
+
+type MyTypes = Admin | Custom2;
+
+{
+	/* <Workspace<{ id: string }, {}, MyTypes>
+	onWorkspaceReady={(ev) => {
+		ev.api.sidesheetService.sendEvent({ type: 'details_sidesheet', props: { id: '123', item: { id: '123' } } });
+		ev.api.sidesheetService.sendEvent({ type: 'admin' });
+	}}
+	workspaceOptions={{ appKey: '', getIdentifier: () => '' }}
+	sidesheetOptions={{
+		
+	}}
+/>; */
+}

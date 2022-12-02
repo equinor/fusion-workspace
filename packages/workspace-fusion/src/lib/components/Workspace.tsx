@@ -35,21 +35,3 @@ export function Workspace<
 
 	return <WorkspaceView controller={configuration.current.viewController} />;
 }
-
-<Workspace<{ id: string }, {}, { type: 'create' }>
-	onWorkspaceReady={(ev) => {
-		ev.api.sidesheetService.sendEvent({ type: 'details_sidesheet', props: { id: '123', item: { id: '123' } } });
-		ev.api.sidesheetService.sendEvent({ type: 'create' });
-	}}
-	workspaceOptions={{ appKey: '', getIdentifier: () => '' }}
-	Sidesheet={(ev) => {
-		if (ev.type === 'details_sidesheet') {
-			ev.props.id;
-		}
-		if (ev.type === 'create') {
-			ev;
-		}
-
-		return <></>;
-	}}
-/>;

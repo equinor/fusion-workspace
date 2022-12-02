@@ -12,19 +12,11 @@ export function addSidesheet<
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent<string> = never
 >(
-	Config:
-		| ((
-				ev: IsNeverType<
-					TCustomSidesheetEvents,
-					FusionEvents<TData>,
-					TCustomSidesheetEvents | FusionEvents<TData>
-				>
-		  ) => JSX.Element)
-		| undefined,
+	config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	if (!Config) return;
+	if (!config) return;
 
 	mediator.selectionService.selectedNodes$.subscribe((val) => {
 		const node = val[0];
@@ -33,25 +25,6 @@ export function addSidesheet<
 		const ev: FusionEvents<TData> = { type: 'details_sidesheet', props: { id: node.id, item: node.item } };
 		mediator.sidesheetService.sendEvent(ev);
 	});
-	viewController.addSidesheetComponent(() => {
-		const [ev, setEv] = useState<IsNeverType<
-			TCustomSidesheetEvents,
-			FusionEvents<TData>,
-			TCustomSidesheetEvents | FusionEvents<TData>
-		> | null>(null);
 
-		useEffect(() => {
-			const sub = mediator.sidesheetService.subscribeAll(setEv);
-			return () => sub();
-		}, []);
-		if (!ev) {
-			return <></>;
-		}
-
-		return <Config {...(ev as any)} />;
-	});
-
-	// viewController.addSidesheetComponent(() => (
-	// 	<SidesheetWrapper getIdentifier={mediator.getIdentifier} Component={Config.Sidesheet} mediator={mediator} />
-	// ));
+	viewController.addSidesheetComponent(() => <SidesheetWrapper config={config} mediator={mediator} />);
 }

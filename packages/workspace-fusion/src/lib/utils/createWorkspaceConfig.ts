@@ -60,7 +60,7 @@ export function createConfigurationObject<
 	addCustomTabs(props.customTabs, viewController, mediator);
 	addGarden(props.gardenOptions, viewController, mediator);
 	addGrid(props.gridOptions, viewController, mediator);
-	addSidesheet(props.Sidesheet, viewController, mediator);
+	addSidesheet(props.sidesheetOptions, viewController, mediator);
 	addStatusBar(props.statusBarOptions, viewController, mediator);
 	addFilter(props.filterOptions, viewController, mediator);
 	sortFusionTabs(viewController);
