@@ -5,7 +5,7 @@ export function useFilteredData<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 >({ dataService }: FusionMediator<TData, TContext>) {
-	const [data, setData] = useState<TData[]>(dataService.filteredData ?? []);
+	const [data, setData] = useState<TData[] | undefined>(dataService.filteredData);
 
 	useEffect(() => {
 		const subscription = dataService.filteredData$.subscribe((newData) => {
