@@ -10,6 +10,8 @@ export function setConfigOnController<
 	gridController: GridController<TData, TContext>,
 	mediator: FusionMediator<TData, TContext>
 ) {
+	gridController.gridOptions = { ...gridConfig.gridOptions, pagination: true, paginationAutoPageSize: true };
+
 	if (gridConfig.gridOptions) {
 		gridController.gridOptions = gridConfig.gridOptions;
 	}
