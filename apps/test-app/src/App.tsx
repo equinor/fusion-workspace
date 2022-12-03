@@ -171,4 +171,3 @@ type Custom2 = {
 };
 
 type MyTypes = Admin | Custom2;
-
