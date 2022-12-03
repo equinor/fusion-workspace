@@ -1,5 +1,11 @@
+import { Filter } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
-import { WorkspaceHeader } from '../../../../components/Header/WorkspaceHeader';
+import { useControllerContext } from '@equinor/workspace-react';
+
+import { useStatusBar } from '../../../status-bar';
+import styled from 'styled-components';
+import { TabNavigation } from '../../../common/components/TabNavigation';
+import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
 
 type GardenWorkspaceHeaderProps<
 	TData extends Record<PropertyKey, unknown>,
@@ -17,12 +23,28 @@ export function GardenWorkspaceHeader<
 	TContext extends Record<PropertyKey, unknown>
 >({ controller }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
 	return (
-		<WorkspaceHeader>
-			{/* TODO: Add actions to more_vertical menu */}
-			{/* <StyledDivider />
-			<TabButton isActive={false}>
-				<Icon name="more_vertical" color={tokens.colors.interactive.primary__resting.hex} />
-			</TabButton> */}
-		</WorkspaceHeader>
+		<StyledGardenHeader>
+			<NavigationBar />
+			<Filter />
+		</StyledGardenHeader>
 	);
 }
+
+const StyledGardenHeader = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const NavigationBar = () => {
+	const StatusBar = useStatusBar();
+
+	return (
+		<StyledActionBar>
+			{StatusBar && <StatusBar />}
+
+			<TabNavigation />
+		</StyledActionBar>
+	);
+};

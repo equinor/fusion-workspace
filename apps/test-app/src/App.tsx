@@ -27,7 +27,6 @@ const gridOptions: GridConfig<S> = {
 		{ field: 'contextId' },
 		{ field: 'age' },
 	],
-	gridOptions: { pagination: true, paginationPageSize: 100 },
 };
 
 const gardenOptions: GardenConfig<S> = {
@@ -173,15 +172,3 @@ type Custom2 = {
 
 type MyTypes = Admin | Custom2;
 
-{
-	/* <Workspace<{ id: string }, {}, MyTypes>
-	onWorkspaceReady={(ev) => {
-		ev.api.sidesheetService.sendEvent({ type: 'details_sidesheet', props: { id: '123', item: { id: '123' } } });
-		ev.api.sidesheetService.sendEvent({ type: 'admin' });
-	}}
-	workspaceOptions={{ appKey: '', getIdentifier: () => '' }}
-	sidesheetOptions={{
-		
-	}}
-/>; */
-}
