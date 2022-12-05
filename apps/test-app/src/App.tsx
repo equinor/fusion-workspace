@@ -1,13 +1,10 @@
 import Workspace, { FusionMediator, WorkspaceConfig } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { memo, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
-import { DataSourceConfig } from '@equinor/workspace-fusion/data-source';
-import { microsoft_excel } from '@equinor/eds-icons';
-import { Button } from '@equinor/eds-core-react';
 
 type S = {
 	id: string;
@@ -89,6 +86,9 @@ function App() {
 			>
 				Open custom2
 			</button>
+			<button onClick={() => workspaceApi.current?.sidesheetService.sendEvent({ type: 'create_sidesheet' })}>
+				Open create
+			</button>
 			<button
 				onClick={() => {
 					if (workspaceApi.current && workspaceApi.current.dataService.filteredData) {
@@ -127,8 +127,14 @@ function App() {
 export default App;
 
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
+	// CreateSidesheet: () => {
+	// 	return <div style={{ width: '300px' }}>Am create sideshet</div>;
+	// },
+	// DetailsSidesheet: () => {
+	// 	return <div style={{ width: '300px' }}>am details</div>;
+	// },
+
 	Sidesheet: (test) => {
-		console.log(test);
 		const { controller, ev } = test;
 
 		switch (ev.type) {
@@ -154,9 +160,9 @@ const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
 						<div>{JSON.stringify(ev)}</div>
 					</div>
 				);
-
-			default:
-				return <div>Fallback sidesheet</div>;
+			case 'create_sidesheet': {
+				return <div>create sidesheet</div>;
+			}
 		}
 	},
 };

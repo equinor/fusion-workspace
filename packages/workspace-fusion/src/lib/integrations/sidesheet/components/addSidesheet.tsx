@@ -1,10 +1,9 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { IsNeverType } from '../../../types/typescriptUtils/isNeverType';
-import { useEffect, useState } from 'react';
-import { WorkspaceSidesheets, FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
-import { SidesheetConfig } from '../sidesheet';
-import { SidesheetWrapper } from './wrapper';
+import { WorkspaceSidesheets, FusionMediator, WorkspaceTabNames } from '../../../types';
+import { isSidesheetAdvanced, isSidesheetSimple, SidesheetConfig } from '../sidesheet';
+import { SidesheetAdvancedWrapper } from './wrapper';
+import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
 
 export function addSidesheet<
 	TData extends Record<PropertyKey, unknown>,
@@ -16,7 +15,7 @@ export function addSidesheet<
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	if (!config) return;
+	if (!config || Object.keys(config).length === 0) return;
 
 	mediator.selectionService.selectedNodes$.subscribe((val) => {
 		const node = val[0];
@@ -26,5 +25,12 @@ export function addSidesheet<
 		mediator.sidesheetService.sendEvent(ev);
 	});
 
-	viewController.addSidesheetComponent(() => <SidesheetWrapper config={config} mediator={mediator} />);
+	if (isSidesheetAdvanced(config)) {
+		viewController.addSidesheetComponent(() => <SidesheetAdvancedWrapper config={config} mediator={mediator} />);
+		return;
+	}
+	if (isSidesheetSimple(config)) {
+		viewController.addSidesheetComponent(() => <SidesheetSimpleWrapper config={config} mediator={mediator} />);
+		return;
+	}
 }

@@ -2,25 +2,25 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
-import { SidesheetConfig } from '../../sidesheet';
+import { SidesheetAdvanced } from '../../sidesheet';
 
-type SidesheetWrapperProps<
+type SidesheetAdvancedWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent<string> = never
 > = {
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
-	config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
+	config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
 };
 
-export const SidesheetWrapper = <
+export const SidesheetAdvancedWrapper = <
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent<string> = never
 >({
 	config,
 	mediator,
-}: SidesheetWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
+}: SidesheetAdvancedWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
 	const [currEv, setCurrEv] = useState<IsNeverType<
 		TCustomSidesheetEvents,
 		WorkspaceSidesheets<TData>,
@@ -48,12 +48,11 @@ export const SidesheetWrapper = <
 		return () => sub();
 	}, [handleSetter]);
 
-	if (!currEv) return null;
+	if (!currEv || !config.Sidesheet) return null;
 
 	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
 };
-const key: WorkspaceSidesheets<unknown>['type'] = 'details_sidesheet';
+const key: WorkspaceSidesheets<any>['type'] = 'details_sidesheet';
 
-const isSelectionEvent = <T extends WorkspaceSidesheets<unknown>>(
-	obj: WorkspaceSidesheets<unknown> | unknown
-): obj is T => typeof obj === 'object' && obj?.['type'] === key;
+const isSelectionEvent = <T extends WorkspaceSidesheets<any>>(obj: WorkspaceSidesheets<any> | unknown): obj is T =>
+	typeof obj === 'object' && obj?.['type'] === key;

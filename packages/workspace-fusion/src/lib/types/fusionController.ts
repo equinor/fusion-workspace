@@ -2,7 +2,7 @@ import { WorkspaceReactMediator } from '@equinor/workspace-react';
 import { BaseEvent } from '@equinor/workspace-core';
 import { FusionBookmark } from './fusionBookmark';
 import { IsNeverType } from './typescriptUtils/isNeverType';
-import { DetailSidesheetEvent } from '../integrations/sidesheet';
+import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/sidesheet';
 
 /**
  * Workspace controller for fusion with some predefined types
@@ -24,7 +24,9 @@ export type FusionMediator<
 	FusionBookmark<TData>
 >;
 
-export type WorkspaceSidesheets<TData> = DetailSidesheetEvent<TData>;
+export type WorkspaceSidesheets<TData extends Record<PropertyKey, unknown>> =
+	| DetailSidesheetEvent<TData>
+	| CreateSidesheetEvent;
 
 export type WorkspaceNode<TData> = {
 	id: string;
