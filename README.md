@@ -14,3 +14,7 @@ Go to the root folder and run the following commands:
 
 -   pnpm install
 -   pnpm build
+
+## Running test apps
+
+Test apps are run from the packages build folders. This ensures the experience is 1-1 as if you installed the package from npm. When making changes to the packages folder remember to build the packages so the changes are reflected in your test app.
