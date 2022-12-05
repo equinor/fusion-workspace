@@ -9,6 +9,7 @@ export type OnWorkspaceReadyEvent<
 	api: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 };
 
+//TODO: deprecate
 export interface WorkspaceOnClick<TData> {
 	item: TData;
 }

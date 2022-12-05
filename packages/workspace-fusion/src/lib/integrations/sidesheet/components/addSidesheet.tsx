@@ -2,7 +2,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { IsNeverType } from '../../../types/typescriptUtils/isNeverType';
 import { useEffect, useState } from 'react';
-import { FusionEvents, FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
+import { WorkspaceSidesheets, FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
 import { SidesheetConfig } from '../sidesheet';
 import { SidesheetWrapper } from './wrapper';
 
@@ -22,7 +22,7 @@ export function addSidesheet<
 		const node = val[0];
 		if (!node) return;
 
-		const ev: FusionEvents<TData> = { type: 'details_sidesheet', props: { id: node.id, item: node.item } };
+		const ev: WorkspaceSidesheets<TData> = { type: 'details_sidesheet', props: { id: node.id, item: node.item } };
 		mediator.sidesheetService.sendEvent(ev);
 	});
 

@@ -1,5 +1,5 @@
 import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator, FusionEvents } from '../../../../types';
+import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
 import { SidesheetConfig } from '../../sidesheet';
@@ -23,16 +23,16 @@ export const SidesheetWrapper = <
 }: SidesheetWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
 	const [currEv, setCurrEv] = useState<IsNeverType<
 		TCustomSidesheetEvents,
-		FusionEvents<TData>,
-		TCustomSidesheetEvents | FusionEvents<TData>
+		WorkspaceSidesheets<TData>,
+		TCustomSidesheetEvents | WorkspaceSidesheets<TData>
 	> | null>(null);
 
 	const handleSetter = useCallback(
 		(
 			ev: IsNeverType<
 				TCustomSidesheetEvents,
-				FusionEvents<TData>,
-				TCustomSidesheetEvents | FusionEvents<TData>
+				WorkspaceSidesheets<TData>,
+				TCustomSidesheetEvents | WorkspaceSidesheets<TData>
 			> | null
 		) => {
 			if (isSelectionEvent(currEv) && !isSelectionEvent(ev)) {
@@ -52,7 +52,8 @@ export const SidesheetWrapper = <
 
 	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
 };
-const key: FusionEvents<unknown>['type'] = 'details_sidesheet';
+const key: WorkspaceSidesheets<unknown>['type'] = 'details_sidesheet';
 
-const isSelectionEvent = <T extends FusionEvents<unknown>>(obj: FusionEvents<unknown> | unknown): obj is T =>
-	typeof obj === 'object' && obj?.['type'] === key;
+const isSelectionEvent = <T extends WorkspaceSidesheets<unknown>>(
+	obj: WorkspaceSidesheets<unknown> | unknown
+): obj is T => typeof obj === 'object' && obj?.['type'] === key;
