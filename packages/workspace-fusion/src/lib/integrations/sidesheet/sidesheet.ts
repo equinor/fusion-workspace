@@ -16,13 +16,8 @@ export const DetailsSidesheetConfigKey: keyof SidesheetSimple<any> = 'DetailsSid
 export const SidesheetConfigKey: keyof SidesheetAdvanced<any, any, any> = 'Sidesheet';
 export const CreateSidesheetConfigKey: keyof SidesheetSimple<any> = 'CreateSidesheet';
 
-export const isSidesheetAdvanced = (obj: Record<PropertyKey, unknown>): obj is SidesheetAdvanced<any, any, any> =>
-	Object.hasOwn(obj, SidesheetConfigKey);
-
-export const isSidesheetSimple = (obj: Record<PropertyKey, unknown>): obj is SidesheetSimple<any> =>
-	Object.hasOwn(obj, DetailsSidesheetConfigKey) || Object.hasOwn(obj, CreateSidesheetConfigKey);
-
 export type SidesheetSimple<TData extends Record<PropertyKey, unknown>> = {
+	type: 'simple';
 	DetailsSidesheet?: (props: DetailsSidesheetProps<TData>) => JSX.Element;
 	CreateSidesheet?: () => JSX.Element;
 };
@@ -32,6 +27,7 @@ export type SidesheetAdvanced<
 	TContext extends Record<PropertyKey, unknown>,
 	TCustomSidesheetEvents extends BaseEvent
 > = {
+	type: 'advanced';
 	Sidesheet?: (props: SidesheetProps<TData, TContext, TCustomSidesheetEvents>) => JSX.Element;
 };
 

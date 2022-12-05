@@ -1,7 +1,7 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { WorkspaceSidesheets, FusionMediator, WorkspaceTabNames } from '../../../types';
-import { isSidesheetAdvanced, isSidesheetSimple, SidesheetConfig } from '../sidesheet';
+import { SidesheetConfig } from '../sidesheet';
 import { SidesheetAdvancedWrapper } from './wrapper';
 import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
 
@@ -25,11 +25,11 @@ export function addSidesheet<
 		mediator.sidesheetService.sendEvent(ev);
 	});
 
-	if (isSidesheetAdvanced(config)) {
+	if (config.type === 'advanced') {
 		viewController.addSidesheetComponent(() => <SidesheetAdvancedWrapper config={config} mediator={mediator} />);
 		return;
 	}
-	if (isSidesheetSimple(config)) {
+	if (config.type === 'simple') {
 		viewController.addSidesheetComponent(() => <SidesheetSimpleWrapper config={config} mediator={mediator} />);
 		return;
 	}
