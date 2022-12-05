@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.3...@equinor/workspace-garden@0.5.4) (2022-12-05)
+
+### Bug Fixes
+
+-   :bug: collapseSubgroupsByDefault opposite ([#228](https://github.com/equinor/fusion-workspace/issues/228)) ([25e80a2](https://github.com/equinor/fusion-workspace/commit/25e80a2122f47bfe5bb9dd3982d2ea60f76a1bcf))
+
 ## [0.5.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.2...@equinor/workspace-garden@0.5.3) (2022-11-30)
 
 ### Bug Fixes
