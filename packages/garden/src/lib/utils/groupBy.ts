@@ -1,13 +1,6 @@
 import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-const lookupGroup = <T extends Record<PropertyKey, unknown>>(
-	acc: GardenGroups<T>,
-	valueKey: string
-): GardenGroup<T> | undefined => {
-	return acc.find((x) => x.value === valueKey);
-};
-
 type GroupByArgs<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
@@ -21,12 +14,14 @@ type GroupByArgs<
 	customGroupByKeys?: TCustomGroupByKeys;
 	depth: number;
 };
-/**
- * Here's what the groupBy function is doing:
- * 1. It takes in an array of objects, and a list of keys to group by.
- * 2. It groups the array by the first key in the list.
- * 3. It then recursively calls itself, passing in the grouped array, and the remaining keys in the list.
- */
+
+const lookupGroup = <T extends Record<PropertyKey, unknown>>(
+	acc: GardenGroups<T>,
+	valueKey: string
+): GardenGroup<T> | undefined => {
+	return acc.find((x) => x.value === valueKey);
+};
+
 export function groupBy<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
