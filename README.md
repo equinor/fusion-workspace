@@ -25,13 +25,13 @@ Allowed cross imports
 
 `package => can import from`
 
--   ag-grid => [observable-proxy, workspace-core]
--   data-source => [observable-proxy, workspace-core]
--   filter => [observable-proxy, workspace-core]
--   garden => [observable-proxy, workspace-core]
--   observable-proxy => NONE
--   power-bi => [observable-proxy, workspace-core]
--   sidesheet => [observable-proxy, workspace-core]
--   workspace-core => [observable-proxy]
--   workspace-fusion => All, except fusion-modules
--   workspace-react => [observable-proxy, workspace-core]
+-   `ag-grid` => [`observable-proxy`, `workspace-core`]
+-   `data-source` => [`observable-proxy`, `workspace-core`]
+-   `filter` => [`observable-proxy`, `workspace-core`]
+-   `garden` => [`observable-proxy`, `workspace-core`]
+-   `observable-proxy` => NONE
+-   `power-bi` => [`observable-proxy`, `workspace-core`]
+-   `sidesheet` => [`observable-proxy`, `workspace-core`]
+-   `workspace-core` => [`observable-proxy`]
+-   `workspace-fusion` => ALL, except `workspace-fusion-modules`
+-   `workspace-react` => [`observable-proxy`, `workspace-core`]
