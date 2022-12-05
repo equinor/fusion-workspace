@@ -48,9 +48,7 @@ export const SidesheetWrapper = <
 		return () => sub();
 	}, [handleSetter]);
 
-	if (!currEv) {
-		return <></>;
-	}
+	if (!currEv) return null;
 
 	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
 };
