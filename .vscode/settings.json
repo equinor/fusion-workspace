@@ -1,3 +1,8 @@
 {
-	"conventionalCommits.scopes": ["Workspace-react", "all", "garden"]
+	"conventionalCommits.scopes": ["Workspace-react", "all", "garden"],
+	"markdownlint.config": {
+		"MD033": {
+			"allowed_elements": ["a", "p", "img"]
+		}
+	}
 }
