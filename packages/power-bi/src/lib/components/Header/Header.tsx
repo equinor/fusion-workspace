@@ -1,9 +1,15 @@
-import { Icon, Search } from '@equinor/eds-core-react';
+import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useState } from 'react';
+import styled from 'styled-components';
 import { FilterClearIcon } from '../../icons';
 import { FilterController } from '../Filter/Filter';
 import { Case, Switch } from '../switch/Switch';
-import { StyledContainer, StyledSearchButton, StyledTitle } from './header.styles';
+import { StyledContainer, StyledTitle } from './header.styles';
+
+const StyledSearchButton = styled(Button)`
+	width: 36px;
+	height: 36px;
+`;
 
 type HeaderProps = {
 	title: string;
