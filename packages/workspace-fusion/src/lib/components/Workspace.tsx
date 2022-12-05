@@ -4,6 +4,7 @@ import { WorkspaceConfiguration, WorkspaceProps } from '../types';
 
 import { didOptionsChange } from '../utils/optionsChanged/didOptionsChange';
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
+import { createWorkspaceController } from 'lib/utils/createWorkspaceController';
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
@@ -27,7 +28,7 @@ export function Workspace<
 	 */
 	useEffectOnce(() => {
 		if (props.onWorkspaceReady) {
-			props.onWorkspaceReady({ api: configuration.current.mediator });
+			props.onWorkspaceReady({ api: createWorkspaceController(configuration.current.mediator) });
 		}
 	});
 

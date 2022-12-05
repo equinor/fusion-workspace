@@ -1,10 +1,10 @@
-import { FusionMediator } from './fusionController';
+import { WorkspaceController } from './fusionController';
 
 export type OnWorkspaceReadyEvent<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
 > = {
-	api: FusionMediator<TData, TContext>;
+	api: WorkspaceController<TData, TContext>;
 };
 
 export interface WorkspaceOnClick<TData> {
