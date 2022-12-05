@@ -189,7 +189,8 @@ importers:
       '@equinor/eds-core-react': ^0.20.4
       '@equinor/eds-icons': ^0.15.0
       '@equinor/eds-tokens': ^0.7.1
-      '@types/react': '>= 16.8.0'
+      '@types/react': ^18.0.13
+      '@types/react-dom': ^18.0.8
       '@types/sortablejs': '1'
       '@types/styled-components': ^5.1.26
       powerbi-client: ^2.21.1
@@ -212,6 +213,7 @@ importers:
       sortablejs: 1.15.0
     devDependencies:
       '@types/react': 18.0.13
+      '@types/react-dom': 18.0.8
       '@types/sortablejs': 1.15.0
       '@types/styled-components': 5.1.26
       react: 18.2.0
