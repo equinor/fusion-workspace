@@ -4,7 +4,7 @@ import { WorkspaceConfiguration, WorkspaceProps } from '../types';
 
 import { didOptionsChange } from '../utils/optionsChanged/didOptionsChange';
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
-import { createWorkspaceController } from 'lib/utils/createWorkspaceController';
+import { createWorkspaceController } from '../utils/createWorkspaceController';
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
