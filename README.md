@@ -12,5 +12,5 @@ After cloning this repo there is a few steps to make sure you're ready to run th
 
 Go to the root folder and run the following commands:
 
-- pnpm install
-- pnpm build
+-   pnpm install
+-   pnpm build
