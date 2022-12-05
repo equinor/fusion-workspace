@@ -1,3 +1,3 @@
-export type BaseEvent<TType extends string> = {
-	type: TType;
+export type BaseEvent = {
+	type: string;
 };

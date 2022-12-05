@@ -4,7 +4,7 @@ import { FusionMediator } from './fusionController';
 export type OnWorkspaceReadyEvent<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
 	api: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 };

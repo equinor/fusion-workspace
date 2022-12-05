@@ -12,7 +12,7 @@ import {
 type SidesheetSimpleWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 	config: SidesheetSimple<TData>;
@@ -21,7 +21,7 @@ type SidesheetSimpleWrapperProps<
 export const SidesheetSimpleWrapper = <
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 >({
 	config,
 	mediator,

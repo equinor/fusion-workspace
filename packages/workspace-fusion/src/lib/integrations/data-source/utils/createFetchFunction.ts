@@ -10,7 +10,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 export function createFetchFunction<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	options: DataSourceConfig<TData>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>

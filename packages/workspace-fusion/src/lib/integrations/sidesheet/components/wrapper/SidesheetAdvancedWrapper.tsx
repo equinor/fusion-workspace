@@ -7,7 +7,7 @@ import { SidesheetAdvanced } from '../../sidesheet';
 type SidesheetAdvancedWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 	config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
@@ -16,7 +16,7 @@ type SidesheetAdvancedWrapperProps<
 export const SidesheetAdvancedWrapper = <
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 >({
 	config,
 	mediator,

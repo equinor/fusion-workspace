@@ -3,7 +3,7 @@ import { BaseEvent, ObjectType, Observable, OnchangeCallback, WorkspaceMediator 
 export class WorkspaceReactMediator<
 	TData,
 	TNode,
-	TSidesheetEvents extends BaseEvent<string>,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>,
 	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>

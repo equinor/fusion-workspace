@@ -11,7 +11,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 export function didDataSourceOptionsChange<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	newDataOptions: WorkspaceDataSourceProps<TData>,
 	oldDataOptions: DataSourceConfig<TData> | undefined,
@@ -34,7 +34,7 @@ export function didDataSourceOptionsChange<
 function handleDataSourceChanged<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	dataSourceController: FetchController<TData>,
 	dataOptions: DataSourceConfig<TData>,

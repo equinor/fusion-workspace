@@ -9,7 +9,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never,
+	TCustomSidesheetEvents extends BaseEvent = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {

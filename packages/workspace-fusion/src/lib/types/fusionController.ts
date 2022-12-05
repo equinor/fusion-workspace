@@ -10,7 +10,7 @@ import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/side
 export type FusionMediator<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 > = WorkspaceReactMediator<
 	TData,
 	WorkspaceNode<TData>,

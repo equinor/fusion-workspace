@@ -5,7 +5,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 export function didOptionsChange<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent<string> = never,
+	TCustomSidesheetEvents extends BaseEvent = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(

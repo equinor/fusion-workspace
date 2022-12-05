@@ -12,7 +12,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 type WorkspaceBaseProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent<string> = never
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
 	workspaceOptions: WorkspaceConfig<TData>;
 	customTabs?: CustomTab[];
@@ -24,7 +24,7 @@ type WorkspaceBaseProps<
 export type WorkspaceProps<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent<string> = never,
+	TCustomSidesheetEvents extends BaseEvent = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &

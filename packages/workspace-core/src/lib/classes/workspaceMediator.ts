@@ -17,7 +17,7 @@ import {
 export class WorkspaceMediator<
 	TData,
 	TNode,
-	TSidesheetEvents extends BaseEvent<string>,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
