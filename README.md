@@ -18,3 +18,18 @@ Go to the root folder and run the following commands:
 ## Running test apps
 
 Test apps are run from the packages build folders. This ensures the experience is 1-1 as if you installed the package from npm. When making changes to the packages folder remember to build the packages so the changes are reflected in your test app.
+
+## Packages cross imports
+
+Allowed cross imports
+
+-   ag-grid => [observable-proxy, workspace-core]
+-   data-source => [observable-proxy, workspace-core]
+-   filter => [observable-proxy, workspace-core]
+-   garden => [observable-proxy, workspace-core]
+-   observable-proxy => NONE
+-   power-bi => [observable-proxy, workspace-core]
+-   sidesheet => [observable-proxy, workspace-core]
+-   workspace-core => [observable-proxy]
+-   workspace-fusion => All, except fusion-modules
+-   workspace-react => [observable-proxy, workspace-core]
