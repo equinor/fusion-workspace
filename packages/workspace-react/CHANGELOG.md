@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.2.3...@equinor/workspace-react@0.3.0) (2022-12-05)
+
+### Features
+
+-   :sparkles: divider powerbi tab ([#230](https://github.com/equinor/fusion-workspace/issues/230)) ([df75a7a](https://github.com/equinor/fusion-workspace/commit/df75a7a30d533207b199e9e463fa38bfd9cae849))
+
+### Bug Fixes
+
+-   :bug: remove item from url ([#223](https://github.com/equinor/fusion-workspace/issues/223)) ([036ce27](https://github.com/equinor/fusion-workspace/commit/036ce27fb9a30a2c24118564293c768f19837ca9))
+-   :bug: workspace header width overflow ([#221](https://github.com/equinor/fusion-workspace/issues/221)) ([48d93dd](https://github.com/equinor/fusion-workspace/commit/48d93ddca4af01b195c1eaefb5d75b446c0dabb1))
+
 ## [0.2.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.2.2...@equinor/workspace-react@0.2.3) (2022-11-30)
 
 **Note:** Version bump only for package @equinor/workspace-react

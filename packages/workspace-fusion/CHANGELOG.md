@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.8.5...@equinor/workspace-fusion@0.9.0) (2022-12-05)
+
+### Features
+
+-   :sparkles: ag grid pagination by default ([#227](https://github.com/equinor/fusion-workspace/issues/227)) ([10a87f0](https://github.com/equinor/fusion-workspace/commit/10a87f01aa63867e5a1055b99dcde807deff54c4))
+-   :sparkles: divider powerbi tab ([#230](https://github.com/equinor/fusion-workspace/issues/230)) ([df75a7a](https://github.com/equinor/fusion-workspace/commit/df75a7a30d533207b199e9e463fa38bfd9cae849))
+
+### Bug Fixes
+
+-   :bug: loading default tab when query param is present ([#234](https://github.com/equinor/fusion-workspace/issues/234)) ([ced6818](https://github.com/equinor/fusion-workspace/commit/ced6818fe00d5dc175d100f51022c65b1c049e8b))
+-   :bug: remove item from url ([#223](https://github.com/equinor/fusion-workspace/issues/223)) ([036ce27](https://github.com/equinor/fusion-workspace/commit/036ce27fb9a30a2c24118564293c768f19837ca9))
+-   :bug: status bar showing n/a when data undefined ([#229](https://github.com/equinor/fusion-workspace/issues/229)) ([b6c872b](https://github.com/equinor/fusion-workspace/commit/b6c872b48a2bc810d793b4c6ffd45d40082e4d8c))
+
 ## [0.8.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.8.4...@equinor/workspace-fusion@0.8.5) (2022-11-30)
 
 ### Bug Fixes
