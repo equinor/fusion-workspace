@@ -127,44 +127,46 @@ function App() {
 export default App;
 
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
-	// CreateSidesheet: () => {
-	// 	return <div style={{ width: '300px' }}>Am create sideshet</div>;
-	// },
-	// DetailsSidesheet: () => {
-	// 	return <div style={{ width: '300px' }}>am details</div>;
-	// },
-
-	Sidesheet: (test) => {
-		const { controller, ev } = test;
-
-		switch (ev.type) {
-			case 'admin':
-				return (
-					<div style={{ width: '200px' }}>
-						Admin sidesheet {JSON.stringify(ev)}
-						<button onClick={() => controller.close()}>close</button>
-					</div>
-				);
-			case 'custom2':
-				return (
-					<div>
-						Custom 2{JSON.stringify(ev)}
-						<button onClick={() => controller.close()}>close</button>
-					</div>
-				);
-			case 'details_sidesheet':
-				return (
-					<div style={{ width: '200px' }}>
-						<span>Details Sidesheet</span>
-						<button onClick={() => controller.close()}>close</button>
-						<div>{JSON.stringify(ev)}</div>
-					</div>
-				);
-			case 'create_sidesheet': {
-				return <div>create sidesheet</div>;
-			}
-		}
+	type: 'simple',
+	CreateSidesheet: () => {
+		return <div style={{ width: '300px' }}>Am create sideshet</div>;
 	},
+	DetailsSidesheet: () => {
+		return <div style={{ width: '300px' }}>am details</div>;
+	},
+
+	//type: "advanced"
+	// Sidesheet: (test) => {
+	// 	const { controller, ev } = test;
+
+	// 	switch (ev.type) {
+	// 		case 'admin':
+	// 			return (
+	// 				<div style={{ width: '200px' }}>
+	// 					Admin sidesheet {JSON.stringify(ev)}
+	// 					<button onClick={() => controller.close()}>close</button>
+	// 				</div>
+	// 			);
+	// 		case 'custom2':
+	// 			return (
+	// 				<div>
+	// 					Custom 2{JSON.stringify(ev)}
+	// 					<button onClick={() => controller.close()}>close</button>
+	// 				</div>
+	// 			);
+	// 		case 'details_sidesheet':
+	// 			return (
+	// 				<div style={{ width: '200px' }}>
+	// 					<span>Details Sidesheet</span>
+	// 					<button onClick={() => controller.close()}>close</button>
+	// 					<div>{JSON.stringify(ev)}</div>
+	// 				</div>
+	// 			);
+	// 		case 'create_sidesheet': {
+	// 			return <div>create sidesheet</div>;
+	// 		}
+	// 	}
+	// },
 };
 
 type Admin = {
