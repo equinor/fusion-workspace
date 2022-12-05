@@ -23,6 +23,8 @@ Test apps are run from the packages build folders. This ensures the experience i
 
 Allowed cross imports
 
+`package => can import from`
+
 -   ag-grid => [observable-proxy, workspace-core]
 -   data-source => [observable-proxy, workspace-core]
 -   filter => [observable-proxy, workspace-core]
