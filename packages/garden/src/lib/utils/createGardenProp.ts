@@ -22,7 +22,10 @@ export const createGardenProp = <
 	useCurrentGroupingKeys: () => valueToState(controller.grouping),
 	useCustomGroupByKeys: () => [
 		controller.customGroupByKeys ? valueToState(controller.customGroupByKeys) : undefined,
-		(keys) => controller.customGroupByKeys && controller.customGroupByKeys?.setValue(keys),
+		(keys) => {
+			if (!controller.customGroupByKeys?.setValue) throw new Error('Failed to set custom group by keys');
+			controller.customGroupByKeys?.setValue(keys);
+		},
 	],
 	useData: () => valueToState(controller.data),
 	useGroups: () => valueToState(controller.groups),
