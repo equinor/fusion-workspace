@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GardenController } from '../classes';
 import { BaseRecordObject } from '../types';
 import { useReactiveValue } from './useReactiveValue';
@@ -8,5 +9,12 @@ export function useData<
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys>,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >(controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
-	return useReactiveValue(controller.data);
+	const [data, setData] = useState(controller.getData());
+
+	useEffect(() => {
+		const sub = controller.data$.subscribe(setData);
+		return () => sub.unsubscribe();
+	}, []);
+
+	return data;
 }
