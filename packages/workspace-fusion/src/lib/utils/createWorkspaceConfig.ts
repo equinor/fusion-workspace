@@ -20,21 +20,31 @@ import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
 import { addDataSource } from '../integrations/data-source';
 import { addGrid } from '../integrations/grid';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function createConfigurationObject<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(
-	props: WorkspaceProps<TData, TContext, TExtendedFields, TCustomGroupByKeys>
-): WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> {
-	const mediator: FusionMediator<TData, TContext> = new WorkspaceReactMediator(props.workspaceOptions.getIdentifier);
+	props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
+): WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys> {
+	const mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents> = new WorkspaceReactMediator(
+		props.workspaceOptions.getIdentifier
+	);
 
 	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
 		props.workspaceOptions.defaultTab
 	);
-	const configuration: WorkspaceConfiguration<TData, TContext, TExtendedFields, TCustomGroupByKeys> = {
+	const configuration: WorkspaceConfiguration<
+		TData,
+		TContext,
+		TCustomSidesheetEvents,
+		TExtendedFields,
+		TCustomGroupByKeys
+	> = {
 		mediator,
 		viewController,
 		workspaceConfig: props.workspaceOptions,

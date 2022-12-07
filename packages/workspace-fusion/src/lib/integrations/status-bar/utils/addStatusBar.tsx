@@ -3,15 +3,17 @@ import { createContext } from 'react';
 import { StatusBarWrapper } from '../components/StatusBarWrapper';
 import { FusionMediator, WorkspaceTabNames } from '../../../types';
 import { StatusBarConfig } from '../types/';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function addStatusBar<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	config: StatusBarConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!config) return;
 	const StatusBarProvider = ({ children }) => (

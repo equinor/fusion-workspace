@@ -212,7 +212,7 @@ importers:
       react-virtual: 2.10.4_react@18.2.0
       sortablejs: 1.15.0
     devDependencies:
-      '@types/react': 18.0.13
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       '@types/sortablejs': 1.15.0
       '@types/styled-components': 5.1.26
@@ -301,6 +301,7 @@ importers:
       '@equinor/eds-tokens': 0.9.0
       '@equinor/fusion-framework': ^4.3.1
       '@equinor/workspace-ag-grid': workspace:^0.3.3
+      '@equinor/workspace-core': workspace:^0.0.9
       '@equinor/workspace-data-source': workspace:^0.1.1
       '@equinor/workspace-filter': workspace:^0.0.9
       '@equinor/workspace-garden': workspace:^0.5.4
@@ -324,6 +325,7 @@ importers:
       '@equinor/eds-tokens': 0.9.0
       '@equinor/fusion-framework': 4.3.1_fan5qbzahqtxlm5dzefqlqx5ia
       '@equinor/workspace-ag-grid': link:../ag-grid
+      '@equinor/workspace-core': link:../workspace-core
       '@equinor/workspace-data-source': link:../data-source
       '@equinor/workspace-filter': link:../filter
       '@equinor/workspace-garden': link:../garden

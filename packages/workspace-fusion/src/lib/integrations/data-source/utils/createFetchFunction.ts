@@ -1,6 +1,7 @@
 import { FetchData } from '@equinor/workspace-data-source';
 import { FusionMediator } from '../../../types';
 import { DataSourceConfig } from '../';
+import { BaseEvent } from '@equinor/workspace-core';
 
 /**
  * Transforms configuration object to data source controller fetch method
@@ -8,8 +9,12 @@ import { DataSourceConfig } from '../';
  */
 export function createFetchFunction<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(options: DataSourceConfig<TData>, mediator: FusionMediator<TData, TContext>): FetchData<TData> {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(
+	options: DataSourceConfig<TData>,
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+): FetchData<TData> {
 	const fetch = async () => {
 		try {
 			const response = await options.getResponseAsync();

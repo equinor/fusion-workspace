@@ -1,3 +1,4 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController, GardenGroup } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../../types';
 
@@ -6,10 +7,11 @@ export function configureClickEvents<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	{ selectionService, getIdentifier }: FusionMediator<TData, TContext>
+	{ selectionService, getIdentifier }: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	gardenController.clickEvents.onClickItem = (item) => {
 		selectionService.selectedNodes = [{ id: getIdentifier(item), item }];

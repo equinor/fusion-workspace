@@ -61,6 +61,7 @@
 		"@equinor/workspace-ag-grid": "workspace:^0.3.3",
 		"@equinor/workspace-data-source": "workspace:^0.1.1",
 		"@equinor/workspace-filter": "workspace:^0.0.9",
+		"@equinor/workspace-core": "workspace:^0.0.9",
 		"@equinor/workspace-garden": "workspace:^0.5.4",
 		"@equinor/workspace-powerbi": "workspace:^0.1.2",
 		"@equinor/workspace-react": "workspace:^0.3.0",
