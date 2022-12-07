@@ -31,7 +31,7 @@ const NullFunc = () => void 0;
 export class GardenController<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/** The nodes that is currently selected */
