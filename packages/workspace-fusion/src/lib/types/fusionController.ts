@@ -1,13 +1,32 @@
 import { WorkspaceReactMediator } from '@equinor/workspace-react';
+import { BaseEvent } from '@equinor/workspace-core';
 import { FusionBookmark } from './fusionBookmark';
+import { IsNeverType } from './typescriptUtils/isNeverType';
+import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/sidesheet';
 
 /**
  * Workspace controller for fusion with some predefined types
  */
 export type FusionMediator<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
-> = WorkspaceReactMediator<TData, WorkspaceNode<TData>, FusionWorkspaceError, TContext, FusionBookmark<TData>>;
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+> = WorkspaceReactMediator<
+	TData,
+	WorkspaceNode<TData>,
+	IsNeverType<
+		TCustomSidesheetEvents,
+		WorkspaceSidesheets<TData>,
+		TCustomSidesheetEvents | WorkspaceSidesheets<TData>
+	>,
+	FusionWorkspaceError,
+	TContext,
+	FusionBookmark<TData>
+>;
+
+export type WorkspaceSidesheets<TData extends Record<PropertyKey, unknown>> =
+	| DetailSidesheetEvent<TData>
+	| CreateSidesheetEvent;
 
 export type WorkspaceNode<TData> = {
 	id: string;
@@ -23,7 +42,8 @@ export type FusionWorkspaceError = {
 /** API for manipulating the workspace */
 export type WorkspaceController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
 	/**
 	 * Sets the data supplied to the workspace
@@ -41,4 +61,6 @@ export type WorkspaceController<
 	 * Will be overwritten if contextOptions are supplied
 	 */
 	setContext: (newContext: (filteredData: TData[]) => TContext) => void;
+
+	api: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 };

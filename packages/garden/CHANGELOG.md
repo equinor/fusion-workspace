@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.4...@equinor/workspace-garden@0.5.5) (2022-12-07)
+
+**Note:** Version bump only for package @equinor/workspace-garden
+
 ## [0.5.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.3...@equinor/workspace-garden@0.5.4) (2022-12-05)
 
 ### Bug Fixes

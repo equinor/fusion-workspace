@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-garden",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -19,13 +19,13 @@
 		"@equinor/eds-core-react": "^0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
 		"@equinor/eds-tokens": "0.9.0",
-		"react-virtual": "^2.10.4",
-		"styled-components": "^5.3.6"
+		"react-virtual": "^2.10.4"
 	},
 	"peerDependencies": {
 		"react": ">= 16.8.0",
 		"react-dom": ">= 16.8.0",
-		"react-is": ">= 16.8.0"
+		"react-is": ">= 16.8.0",
+		"styled-components": "^5.3.6"
 	},
 	"devDependencies": {
 		"@types/jest": "27.4.1",
@@ -34,7 +34,8 @@
 		"@types/styled-components": "^5.1.26",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0"
+		"react-is": "^18.2.0",
+		"styled-components": "^5.3.6"
 	},
 	"repository": {
 		"type": "git",

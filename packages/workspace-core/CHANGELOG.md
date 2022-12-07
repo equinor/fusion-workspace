@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.9...@equinor/workspace-core@0.1.0) (2022-12-07)
+
+### ⚠ BREAKING CHANGES
+
+-   sidesheet options
+
+### Features
+
+-   support multiple sidesheets ([#238](https://github.com/equinor/fusion-workspace/issues/238)) ([18d37f0](https://github.com/equinor/fusion-workspace/commit/18d37f0eceae896d1c4647395b4cc8bb37065300))
+
 ## [0.0.9](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-core@0.0.8...@equinor/workspace-core@0.0.9) (2022-12-05)
 
 ### Bug Fixes

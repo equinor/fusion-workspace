@@ -1,4 +1,5 @@
-import { ObjectType } from '../types';
+import { createEventService } from '../utils/services/eventService';
+import { ObjectType, BaseEvent } from '../types';
 import {
 	createErrorService,
 	createDataService,
@@ -16,6 +17,7 @@ import {
 export class WorkspaceMediator<
 	TData,
 	TNode,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
 	TContext extends Record<PropertyKey, unknown> = never
@@ -40,6 +42,8 @@ export class WorkspaceMediator<
 	urlService = createUrlService(this.#appendDestructor);
 
 	selectionService = createSelectionService<TNode>(this.#appendDestructor);
+
+	sidesheetService = createEventService<TSidesheetEvents>(this.#appendDestructor);
 
 	dataService = createDataService<TData>(this.#appendDestructor);
 

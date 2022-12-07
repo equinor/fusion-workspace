@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-data-source",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -16,7 +16,7 @@
 		"dist"
 	],
 	"dependencies": {
-		"@equinor/workspace-core": "workspace:^0.0.9"
+		"@equinor/workspace-core": "workspace:^0.1.0"
 	},
 	"repository": {
 		"type": "git",

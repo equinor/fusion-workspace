@@ -1,3 +1,4 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator, GardenBookmark } from '../../../types';
 
@@ -6,10 +7,11 @@ export function configureBookmarkService<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
+	TContext extends Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
 	mediator.bookmarkService.apply$.subscribe(

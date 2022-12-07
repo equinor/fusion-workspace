@@ -4,19 +4,22 @@ import { sync_off } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
+import { BaseEvent } from '@equinor/workspace-core';
 Icon.add({ sync_off });
 
 type NoDataSplashScreenProps<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	mediator: FusionMediator<TData, TContext>;
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 	children: ReactNode;
 };
 export function NoDataSplashScreen<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->({ children, mediator }: NoDataSplashScreenProps<TData, TContext>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>({ children, mediator }: NoDataSplashScreenProps<TData, TContext, TCustomSidesheetEvents>) {
 	if (mediator.dataService.data?.length === 0) {
 		return <NoData />;
 	}

@@ -1,3 +1,4 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator, WorkspaceController, FusionBookmark } from '../types';
 
 /**
@@ -5,8 +6,11 @@ import { FusionMediator, WorkspaceController, FusionBookmark } from '../types';
  */
 export function createWorkspaceController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>): WorkspaceController<TData, TContext> {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+): WorkspaceController<TData, TContext, TCustomSidesheetEvents> {
 	return {
 		setBookmark: (bookmark: FusionBookmark<TData>) => mediator.bookmarkService.apply(bookmark),
 		setContext: (cb) => mediator.contextService.setContext(cb(mediator.dataService.filteredData ?? [])),
@@ -14,5 +18,6 @@ export function createWorkspaceController<
 			mediator.dataService.data = data;
 		},
 		setError: (error) => mediator.errorService.error(error),
+		api: mediator,
 	};
 }
