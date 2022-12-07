@@ -3,14 +3,16 @@ import { Action, BrowserHistory } from 'history';
 import { DumpsterFireDialog } from '../../components/ErrorComponent';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
+import { BaseEvent } from '@equinor/workspace-core';
 
 /** Configure a view controller with the mediator */
 export function addViewController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>,
-	mediator: FusionMediator<TData, TContext, any>,
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
 	history: BrowserHistory
 ) {
 	viewController.ErrorComponent = ({ error }) => <DumpsterFireDialog text={error.detail} buttons={[]} />;
@@ -48,8 +50,12 @@ export function addViewController<
 export function initTabOnLoad<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>, viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
+) {
 	const abortController = new AbortController();
 
 	/**
@@ -73,8 +79,12 @@ export function initTabOnLoad<
 export function switchTabOnNavigation<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>, viewController: WorkspaceViewController<WorkspaceTabNames, TError>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
+	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
+) {
 	const tab = mediator.urlService.url.searchParams.get('tab');
 	if (tab) {
 		viewController.tabController.setActiveTab(tab as WorkspaceTabNames);

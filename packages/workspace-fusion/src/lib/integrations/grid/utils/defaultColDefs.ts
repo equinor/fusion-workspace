@@ -1,4 +1,5 @@
 import { ColDef } from '@equinor/workspace-ag-grid';
+import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator } from '../../../types';
 
 /**
@@ -18,8 +19,12 @@ export function applyDefaultColumnDefinitions<TData extends Record<PropertyKey, 
  */
 export function applyWorkspaceClickToCells<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(colDefs: ColDef<TData>[], { selectionService, getIdentifier }: FusionMediator<TData, TContext>): ColDef<TData>[] {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(
+	colDefs: ColDef<TData>[],
+	{ selectionService, getIdentifier }: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+): ColDef<TData>[] {
 	return colDefs.map((colDef) => ({
 		onCellClicked: (ev) => {
 			if (!ev.data) return;

@@ -1,11 +1,13 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { ReactFilterController } from '@equinor/workspace-filter';
 import { FusionMediator } from '../../../types';
 
 /** Sync data changes between filter controller and dataservice */
 export function configureOnDataChange<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext>, filterController: ReactFilterController<TData>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, filterController: ReactFilterController<TData>) {
 	filterController.onFilteredDataChanged((newData) => {
 		mediator.dataService.filteredData = newData;
 	});

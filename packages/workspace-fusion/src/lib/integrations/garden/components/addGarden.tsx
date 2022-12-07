@@ -8,17 +8,19 @@ import { configureClickEvents } from '../utils/configureClickEvents';
 import { configureDataChange } from '../utils/configureDataChange';
 import { configureGardenHighlightSelection } from '../utils/configureHighlight';
 import { GardenWrapper } from './wrapper/GardenWrapper';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedGardenFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
+	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext, any>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!gardenConfig) return;
 

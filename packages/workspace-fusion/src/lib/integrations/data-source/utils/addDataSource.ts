@@ -2,11 +2,13 @@ import { FetchController } from '@equinor/workspace-data-source';
 import { FusionMediator } from '../../../types';
 import { DataSourceConfig } from '../';
 import { createFetchFunction } from './createFetchFunction';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function addDataSource<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(dataFetch: DataSourceConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, any>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(dataFetch: DataSourceConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
 	if (!dataFetch) return;
 	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
 	const fetchFunction = createFetchFunction(dataFetch, mediator);

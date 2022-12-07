@@ -9,15 +9,17 @@ import { GridHeader } from './workspaceHeader';
 import { setConfigOnController } from '../utils/setConfigOnController';
 import { GridConfig } from '../';
 import { GridWrapper } from './wrapper';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function addGrid<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gridConfig: GridConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext, any>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!gridConfig) return;
 	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, mediator.onUnMount);

@@ -1,5 +1,6 @@
 import { FusionMediator, GetIdentifier } from '../types';
 import { BrowserHistory } from 'history';
+import { BaseEvent } from '@equinor/workspace-core';
 
 /** A union type of the workspace query parameters */
 type QueryParamTopic = 'item' | 'tab';
@@ -11,8 +12,9 @@ type QueryParam = [QueryParamTopic, string | undefined];
  */
 export function updateQueryParams<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(val: QueryParam[], mediator: FusionMediator<TData, TContext>, history: BrowserHistory) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(val: QueryParam[], mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, history: BrowserHistory) {
 	val.forEach((val) => {
 		const [topic, value] = val;
 		if (!value) {
@@ -26,8 +28,9 @@ export function updateQueryParams<
 
 export function configureUrlWithHistory<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(mediator: FusionMediator<TData, TContext, any>, history: BrowserHistory) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, history: BrowserHistory) {
 	const unsub = history.listen(() => {
 		mediator.urlService.url = new URL(window.location.href);
 	});

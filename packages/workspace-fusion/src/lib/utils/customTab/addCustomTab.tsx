@@ -1,3 +1,4 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { CustomTabWrapper } from '../../components';
 import { CustomTab, FusionMediator, WorkspaceTabNames } from '../../types';
@@ -5,11 +6,12 @@ import { CustomTab, FusionMediator, WorkspaceTabNames } from '../../types';
 export async function addCustomTab<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	tab: CustomTab,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (tab.predicate && !(await tab.predicate())) return;
 	viewController.tabController.tabs.push({
