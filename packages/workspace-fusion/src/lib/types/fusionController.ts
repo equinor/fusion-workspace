@@ -62,5 +62,13 @@ export type WorkspaceController<
 	 */
 	setContext: (newContext: (filteredData: TData[]) => TContext) => void;
 
+	openSidesheet: (
+		ev: IsNeverType<
+			TCustomSidesheetEvents,
+			WorkspaceSidesheets<TData>,
+			TCustomSidesheetEvents | WorkspaceSidesheets<TData>
+		>
+	) => void;
+
 	api: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 };

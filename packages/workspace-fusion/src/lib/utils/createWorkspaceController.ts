@@ -19,5 +19,6 @@ export function createWorkspaceController<
 		},
 		setError: (error) => mediator.errorService.error(error),
 		api: mediator,
+		openSidesheet: (ev) => mediator.sidesheetService.sendEvent(ev),
 	};
 }
