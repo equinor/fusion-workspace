@@ -19,15 +19,16 @@
 		"@equinor/eds-core-react": "^0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
 		"@equinor/eds-tokens": "0.9.0",
-		"react-virtual": "^2.10.4",
-		"styled-components": "^5.3.6"
+		"react-virtual": "^2.10.4"
 	},
 	"peerDependencies": {
+		"styled-components": "^5.3.6",
 		"react": ">= 16.8.0",
 		"react-dom": ">= 16.8.0",
 		"react-is": ">= 16.8.0"
 	},
 	"devDependencies": {
+		"styled-components": "^5.3.6",
 		"@types/jest": "27.4.1",
 		"@types/react": ">= 16.8.0",
 		"@types/react-dom": "^18.0.8",

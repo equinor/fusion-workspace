@@ -1,4 +1,3 @@
-import { Button } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
@@ -20,9 +19,4 @@ export const StyledContainer = styled.div`
 export const StyledTitle = styled.div<{ hasActiveFilters: boolean }>`
 	font-weight: ${({ hasActiveFilters }) => (hasActiveFilters ? '700' : '400')};
 	margin-right: 2rem;
-`;
-
-export const StyledSearchButton = styled(Button)`
-	width: 36px;
-	height: 36px;
 `;
