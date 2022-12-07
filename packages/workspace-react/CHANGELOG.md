@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.3.0...@equinor/workspace-react@0.4.0) (2022-12-07)
+
+### ⚠ BREAKING CHANGES
+
+-   sidesheet options
+
+### Features
+
+-   support multiple sidesheets ([#238](https://github.com/equinor/fusion-workspace/issues/238)) ([18d37f0](https://github.com/equinor/fusion-workspace/commit/18d37f0eceae896d1c4647395b4cc8bb37065300))
+
 ## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.2.3...@equinor/workspace-react@0.3.0) (2022-12-05)
 
 ### Features
