@@ -1,12 +1,13 @@
-import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@equinor/workspace-core';
+import { BaseEvent, ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@equinor/workspace-core';
 
 export class WorkspaceReactMediator<
 	TData,
 	TNode,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>,
 	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>
-> extends WorkspaceMediator<TData, TNode, TError, TBookmarkState, TContext> {
+> extends WorkspaceMediator<TData, TNode, TSidesheetEvents, TError, TBookmarkState, TContext> {
 	/**
 	 * Callback that returns an instance of itself
 	 * Helpful when chaining

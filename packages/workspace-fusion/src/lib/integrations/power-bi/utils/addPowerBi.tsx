@@ -4,15 +4,17 @@ import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator } from '../../../types';
 import { PowerBiConfig } from '../';
+import { BaseEvent } from '@equinor/workspace-core';
 
 export function addPowerBi<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	powerBiConfig: PowerBiConfig | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!powerBiConfig) return;
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));

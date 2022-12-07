@@ -1,3 +1,4 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { ReactFilterController } from '@equinor/workspace-filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { FilterConfig } from '../';
@@ -8,11 +9,12 @@ import { configureOnDataChange } from './configureOnDataChange';
 export function addFilter<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	config: FilterConfig<TData> | undefined,
 	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!config) {
 		mediator.dataService.data$.subscribe((val) => {
