@@ -28,9 +28,7 @@ export function addPowerBi<
 		ignoreLoading: true,
 	});
 
-	mediator.onMount(() => {
-		controller.getConfig && controller.getConfig(controller.reportUri);
-	});
+	controller.getConfig && controller.getConfig(controller.reportUri);
 }
 
 async function embedInfo(config: PowerBiConfig): Promise<IReportEmbedConfiguration> {

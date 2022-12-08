@@ -72,10 +72,7 @@ const createWorkspaceController = (client: HttpClientMsal) => {
 			})
 			.addSidesheet(sidesheetOptions)
 			.addGarden(gardenConfig)
-			.addMiddleware((mediator) => {
-				mediator.onMount(() => console.log('App mounted'));
-				mediator.onUnMount(() => console.log('App unmounted'));
-			})
+
 			.addStatusBarItems(statusBar)
 			.addModules([IndexedDbModule])
 	);

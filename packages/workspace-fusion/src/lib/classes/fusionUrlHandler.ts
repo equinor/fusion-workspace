@@ -35,7 +35,7 @@ export function configureUrlWithHistory<
 		mediator.urlService.url = new URL(window.location.href);
 	});
 
-	mediator.onUnMount(() => unsub());
+	mediator.onDestroy(() => unsub());
 
 	mediator.selectionService.selectedNodes$.subscribe((nodes) => {
 		const [id] = nodes.map((s) => s.id);

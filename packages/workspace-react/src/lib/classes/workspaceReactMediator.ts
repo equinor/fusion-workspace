@@ -23,14 +23,6 @@ export class WorkspaceReactMediator<
 
 	onIsLoadingChange: (callback: OnchangeCallback<boolean>) => () => void;
 
-	onMount: (callback: () => void) => () => void;
-
-	onUnMount: (callback: () => void) => () => void;
-
-	setMount: () => void;
-
-	setUnmount: () => void;
-
 	getIdentifier: (item: TData) => string;
 
 	constructor(getIdentifier: (item: TData) => string) {
@@ -43,17 +35,5 @@ export class WorkspaceReactMediator<
 		});
 		this.setIsLoading = isLoading.setValue;
 		this.onIsLoadingChange = isLoading.onchange;
-
-		const mounted = new Observable(false);
-		this.onMount = mounted.onchange;
-
-		this.setMount = () => mounted.setValue(!mounted.value);
-
-		const unMounted = new Observable(false);
-		this.onUnMount = unMounted.onchange;
-		this.setUnmount = () => unMounted.setValue(!mounted.value);
-
-		/** Destroys itself if it unmounts */
-		this.onUnMount(this.destroy);
 	}
 }

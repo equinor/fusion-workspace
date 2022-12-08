@@ -1,6 +1,5 @@
 import { useSetFallbackTab } from '../hooks/useSetFallbackTab';
 import { WorkspaceViewController } from '../classes/workspaceViewController';
-import { useMounted } from '../hooks/useMounted';
 import { ContextProvider } from './ContextProvider';
 import { ContextProviders } from './contextProviders/ContextProviders';
 import { WorkspaceWrapper } from './workspace.styles';
@@ -12,7 +11,6 @@ export interface WorkspaceProps<TTabName extends string, TError> {
 
 export function Workspace<TTabNames extends string, TError>({ controller }: WorkspaceProps<TTabNames, TError>) {
 	useSetFallbackTab(controller);
-	useMounted(controller);
 	return (
 		<WorkspaceWrapper id="workspace_root">
 			<ContextProvider controller={controller}>

@@ -10,7 +10,7 @@ export function addDataSource<
 	TCustomSidesheetEvents extends BaseEvent = never
 >(dataFetch: DataSourceConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
 	if (!dataFetch) return;
-	const { onMount, onUnMount, dataService, setIsLoading } = mediator;
+	const { dataService, setIsLoading } = mediator;
 	const fetchFunction = createFetchFunction(dataFetch, mediator);
 
 	const dataSourceController = new FetchController<TData>(fetchFunction);
@@ -20,9 +20,8 @@ export function addDataSource<
 	});
 	dataSourceController.onIsLoadingChanged(setIsLoading);
 
-	onMount(dataSourceController.getDataAsync);
-	onUnMount(dataSourceController.abort);
-	onUnMount(dataSourceController.destroy);
+	dataSourceController.getDataAsync();
 
+	//Mediator ondestroy
 	return dataSourceController;
 }

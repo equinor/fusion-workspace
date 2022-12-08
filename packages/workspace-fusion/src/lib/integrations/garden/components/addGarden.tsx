@@ -31,7 +31,7 @@ export function addGarden<
 			getIdentifier: mediator.getIdentifier,
 			getContext: () => mediator.contextService.getContext(),
 		},
-		(destroy) => mediator.onUnMount(destroy)
+		(destroy) => mediator.onDestroy(destroy)
 	);
 
 	configureDataChange(gardenController, mediator);

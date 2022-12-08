@@ -31,6 +31,9 @@ export function Workspace<
 		if (props.onWorkspaceReady) {
 			props.onWorkspaceReady({ api: configuration.current.mediator });
 		}
+		return () => {
+			configuration.current.mediator.destroy();
+		};
 	});
 
 	return <WorkspaceView controller={configuration.current.viewController} />;

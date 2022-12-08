@@ -8,6 +8,7 @@ import {
 	createUrlService,
 	createContextService,
 } from '../utils';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * Class to act as a mediator in the workspace
@@ -51,8 +52,16 @@ export class WorkspaceMediator<
 
 	contextService = createContextService<TContext>(this.#appendDestructor);
 
+	#lifeCycleService = new BehaviorSubject<undefined>(undefined);
+
+	/** Will destroy when observable completes */
+	onDestroy = (cb: () => void) => {
+		this.#lifeCycleService.subscribe({ complete: () => cb() });
+	};
+
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {
+		this.#lifeCycleService.complete();
 		this.#destructors.forEach((destroy) => destroy());
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];

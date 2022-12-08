@@ -110,6 +110,8 @@ export class FetchController<TData> {
 	onIsFetchingChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	destroy = () => {
+		this.abort();
+
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];

@@ -60,6 +60,7 @@ const getItems = (contextId: string) => [
 function App() {
 	const workspaceApi = useRef<null | FusionMediator<S, { length: number }, MyTypes>>(null);
 	const [contextId, setContextId] = useState('abc');
+	const [shouldRender, setShouldRender] = useState(true);
 
 	const getResponseAsync = useCallback(async () => {
 		return new Promise<Response>((res) =>
@@ -74,8 +75,19 @@ function App() {
 		);
 	}, [contextId]);
 
+	if (!shouldRender) {
+		return (
+			<>
+				<button onClick={() => console.log(workspaceApi.current)}>Log api</button>
+				<button onClick={() => setShouldRender(true)}>Render</button>
+			</>
+		);
+	}
+
 	return (
 		<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+			<button onClick={() => console.log(workspaceApi.current)}>Log api</button>
+			<button onClick={() => setShouldRender(false)}>unmount</button>
 			<button onClick={() => workspaceApi.current?.sidesheetService.sendEvent({ type: 'admin' })}>
 				open Admin
 			</button>

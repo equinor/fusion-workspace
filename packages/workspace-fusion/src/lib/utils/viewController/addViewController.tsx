@@ -16,7 +16,6 @@ export function addViewController<
 	history: BrowserHistory
 ) {
 	viewController.ErrorComponent = ({ error }) => <DumpsterFireDialog text={error.detail} buttons={[]} />;
-	viewController.isMounted.onchange((mounted) => (mounted ? mediator.setMount() : mediator.setUnmount()));
 
 	mediator.errorService.error$.subscribe(viewController.setError);
 
@@ -42,9 +41,7 @@ export function addViewController<
 		}
 	});
 	initTabOnLoad(mediator, viewController);
-	mediator.onUnMount(() => {
-		viewController.destroy();
-	});
+	mediator.onDestroy(() => viewController.destroy());
 }
 
 export function initTabOnLoad<
@@ -70,9 +67,7 @@ export function initTabOnLoad<
 		{ signal: abortController.signal }
 	);
 
-	mediator.onUnMount(() => {
-		abortController.abort();
-	});
+	mediator.onDestroy(() => abortController.abort());
 }
 
 /** Switches tab when url changes due to navigation event */
