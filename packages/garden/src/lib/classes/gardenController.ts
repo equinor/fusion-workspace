@@ -17,6 +17,7 @@ import {
 } from '../types';
 import { createGarden, defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
+import { BehaviorSubject } from 'rxjs';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 
@@ -34,6 +35,8 @@ export class GardenController<
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
 	TContext extends Record<PropertyKey, unknown> = never
 > {
+	colorAssistMode$ = new BehaviorSubject<boolean>(false);
+
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
 

@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
@@ -51,6 +51,7 @@ export const GardenItemContainer = <
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
+		colorAssistMode$,
 		getIdentifier,
 	} = controller;
 
@@ -59,6 +60,13 @@ export const GardenItemContainer = <
 	const selectedIds = useSelected();
 
 	const expand = useExpand();
+
+	const [colorAssistMode, setColorAssistMode] = useState<boolean>(colorAssistMode$.value);
+
+	useEffect(() => {
+		const sub = colorAssistMode$.subscribe(setColorAssistMode);
+		return () => sub.unsubscribe();
+	}, []);
 
 	const CustomSubGroup = props?.customSubGroup;
 
@@ -91,6 +99,7 @@ export const GardenItemContainer = <
 							/>
 						) : (
 							<PackageChild
+								colorAssistMode={colorAssistMode}
 								columnExpanded={
 									expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false
 								}

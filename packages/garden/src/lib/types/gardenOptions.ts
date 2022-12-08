@@ -18,6 +18,7 @@ export interface CustomItemView<
 	parentRef: MutableRefObject<HTMLDivElement | null>;
 	depth?: number;
 	width?: number;
+	colorAssistMode: boolean;
 }
 
 export interface CustomGroupView<TData extends Record<PropertyKey, unknown>> {
