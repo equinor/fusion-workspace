@@ -1,4 +1,4 @@
-import { useData } from 'lib/hooks';
+import { useData } from '../hooks';
 import { GardenController } from '../classes';
 import { GardenProp } from '../types/gardenProp';
 import { valueToState } from './valueToState';
