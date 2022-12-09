@@ -131,8 +131,8 @@ const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
 	CreateSidesheet: () => {
 		return <div style={{ width: '300px' }}>Am create sideshet</div>;
 	},
-	DetailsSidesheet: () => {
-		return <div style={{ width: '300px' }}>am details</div>;
+	DetailsSidesheet: (props) => {
+		return <div style={{ width: '300px' }}>am details {props.id}</div>;
 	},
 
 	//type: "advanced"
