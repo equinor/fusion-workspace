@@ -1,3 +1,4 @@
+import { useData } from '../hooks';
 import { GardenController } from '../classes';
 import { GardenProp } from '../types/gardenProp';
 import { valueToState } from './valueToState';
@@ -20,6 +21,7 @@ export const createGardenProp = <
 	getIdentifier: controller.getIdentifier,
 	useContext: () => controller.context,
 	useCurrentGroupingKeys: () => valueToState(controller.grouping),
+	useData: () => useData(controller),
 	useCustomGroupByKeys: () => [
 		controller.customGroupByKeys ? valueToState(controller.customGroupByKeys) : undefined,
 		(keys) => {
@@ -27,7 +29,6 @@ export const createGardenProp = <
 			controller.customGroupByKeys?.setValue(keys);
 		},
 	],
-	useData: () => valueToState(controller.data),
 	useGroups: () => valueToState(controller.groups),
 	useSelectedNodes: () => [valueToState(controller.selectedNodes), controller.selectedNodes.setValue],
 	getDescription: (item: TData) => (controller.visuals.getDescription ? controller.visuals.getDescription(item) : ''),
