@@ -1,13 +1,7 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { useState, useEffect, useCallback } from 'react';
-import {
-	CreateSidesheetConfigKey,
-	createSidesheetEventKey,
-	detailSidesheetEventKey,
-	DetailsSidesheetConfigKey,
-	SidesheetSimple,
-} from '../../sidesheet';
+import { createSidesheetEventKey, detailSidesheetEventKey, SidesheetSimple } from '../../sidesheet';
 
 type SidesheetSimpleWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
@@ -57,7 +51,7 @@ export const SidesheetSimpleWrapper = <
 				warnRenderUndefined('create sidesheet');
 				return null;
 			}
-			return <config.CreateSidesheet />;
+			return <config.CreateSidesheet controller={{ close }} />;
 		}
 
 		case 'details_sidesheet': {
@@ -65,7 +59,7 @@ export const SidesheetSimpleWrapper = <
 				warnRenderUndefined('details sidesheet');
 				return null;
 			}
-			return <config.DetailsSidesheet id={currEv.props.id} item={currEv.props.item} />;
+			return <config.DetailsSidesheet id={currEv.props.id} item={currEv.props.item} controller={{ close }} />;
 		}
 	}
 };
