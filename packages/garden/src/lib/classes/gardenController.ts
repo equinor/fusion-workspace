@@ -35,6 +35,8 @@ export class GardenController<
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = never
 > {
+	colorAssistMode$ = new BehaviorSubject<boolean>(false);
+
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
 
