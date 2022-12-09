@@ -16,10 +16,12 @@ export const DetailsSidesheetConfigKey: keyof SidesheetSimple<any> = 'DetailsSid
 export const SidesheetConfigKey: keyof SidesheetAdvanced<any, any, any> = 'Sidesheet';
 export const CreateSidesheetConfigKey: keyof SidesheetSimple<any> = 'CreateSidesheet';
 
+export type SimpleProps<T extends Record<PropertyKey, unknown> = {}> = T & { controller: Controller };
+
 export type SidesheetSimple<TData extends Record<PropertyKey, unknown>> = {
 	type: 'simple';
-	DetailsSidesheet?: (props: DetailsSidesheetProps<TData>) => JSX.Element;
-	CreateSidesheet?: () => JSX.Element;
+	DetailsSidesheet?: (props: SimpleProps<DetailsSidesheetProps<TData>>) => JSX.Element;
+	CreateSidesheet?: (props: SimpleProps) => JSX.Element;
 };
 
 export type SidesheetAdvanced<
