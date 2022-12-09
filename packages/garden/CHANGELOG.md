@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.6.0...@equinor/workspace-garden@0.7.0) (2022-12-09)
+
+### Features
+
+-   :sparkles: add color assist mode to garden items ([#247](https://github.com/equinor/fusion-workspace/issues/247)) ([afd365f](https://github.com/equinor/fusion-workspace/commit/afd365f8e2eadf011852b5bf13425a74bab59acd))
+
 ## [0.6.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.5...@equinor/workspace-garden@0.6.0) (2022-12-09)
 
 ### Features
