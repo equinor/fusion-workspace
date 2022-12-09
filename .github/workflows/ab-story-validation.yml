@@ -5,6 +5,8 @@ name: ab-story-validation
 on:
     pull_request:
         types: [opened, edited, reopened]
+        branches-ignore:    
+          - 'chore/*'
 
 jobs:
     ab-storyid:

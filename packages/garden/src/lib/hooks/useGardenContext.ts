@@ -10,5 +10,5 @@ export const useGardenContext = <
 >() => {
 	const context = useContext(GardenContext);
 	if (!context) throw new Error('Garden context invoked out of bounds');
-	return context as GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+	return context as unknown as GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 };
