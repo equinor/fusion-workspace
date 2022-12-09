@@ -30,8 +30,8 @@ const NullFunc = () => void 0;
  */
 export class GardenController<
 	TData extends Record<PropertyKey, unknown>,
-	ExtendedFields extends string = never,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
 	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/** The nodes that is currently selected */
@@ -46,7 +46,7 @@ export class GardenController<
 	/** Grouping keys for garden */
 	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
 
-	fieldSettings: FieldSettings<TData, ExtendedFields, TCustomGroupByKeys> = {};
+	fieldSettings: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys> = {};
 
 	/** Function that takes in an item and returns the string to be shown on the garden package */
 	getDisplayName: GetDisplayName<TData>;
@@ -55,13 +55,13 @@ export class GardenController<
 	getIdentifier: GetIdentifier<TData>;
 
 	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {
+	clickEvents: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
 		onClickGroup: NullFunc,
 		onClickItem: NullFunc,
 	};
 
 	/** Override visuals and components for garden */
-	visuals: Visuals<TData, ExtendedFields, TCustomGroupByKeys> = {
+	visuals: Visuals<TData, TExtendedFields, TCustomGroupByKeys> = {
 		getItemColor: () => defaultItemColor,
 		calculateItemWidth: () => 300,
 	};
@@ -70,9 +70,9 @@ export class GardenController<
 	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
 	/** Override default view */
-	customViews: CustomVirtualViews<TData, ExtendedFields, TCustomGroupByKeys, TContext> = {
+	customViews: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
 		customItemView: DefaultGardenItem as React.MemoExoticComponent<
-			(args: CustomItemView<TData, ExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
+			(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
 		>,
 		customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
 		customHeaderView: DefaultHeaderView as React.MemoExoticComponent<
@@ -107,7 +107,7 @@ export class GardenController<
 			customViews,
 			visuals,
 			intercepters,
-		}: GardenConfig<TData, ExtendedFields, TCustomGroupByKeys, TContext>,
+		}: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 		getDestructor: (destroy: () => void) => void
 	) {
 		if (intercepters?.postGroupSorting) {
@@ -190,7 +190,7 @@ export class GardenController<
 	};
 
 	/** Function for sorting groups after they have been grouped */
-	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | ExtendedFields)[]): GardenGroups<TData> =>
+	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | TExtendedFields)[]): GardenGroups<TData> =>
 		groups;
 
 	#destroy = () => {
