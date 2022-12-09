@@ -22,7 +22,7 @@ export type GardenProp<
 	/** Will rerender when context changes */
 	useContext: () => TContext | undefined;
 	/** Will re-render when keys change */
-	useCustomGroupByKeys: () => TCustomGroupByKeys | undefined;
+	useCustomGroupByKeys: () => [keys: TCustomGroupByKeys | undefined, setKeys: (newKeys: TCustomGroupByKeys) => void];
 	getDescription: (item: TData) => string | undefined;
 	getItemColor: (item: TData) => string | undefined;
 };
