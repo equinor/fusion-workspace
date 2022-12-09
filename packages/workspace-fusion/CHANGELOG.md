@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.10.0...@equinor/workspace-fusion@0.10.1) (2022-12-09)
+
+### Bug Fixes
+
+-   :bug: add controller to simple sidesheet ([#253](https://github.com/equinor/fusion-workspace/issues/253)) ([f6416c5](https://github.com/equinor/fusion-workspace/commit/f6416c56af76e992e0e420609d072175186796b1))
+-   :bug: fix mandatory generics in sidesheet config ([#252](https://github.com/equinor/fusion-workspace/issues/252)) ([c4c0e0d](https://github.com/equinor/fusion-workspace/commit/c4c0e0d5cb8e81852ca7f58c78066ef05d63793a))
+
 ## [0.10.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.9.0...@equinor/workspace-fusion@0.10.0) (2022-12-07)
 
 ### ⚠ BREAKING CHANGES
