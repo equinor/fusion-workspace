@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.5...@equinor/workspace-garden@0.6.0) (2022-12-09)
+
+### Features
+
+-   :sparkles: expose set custom group by keys ([#243](https://github.com/equinor/fusion-workspace/issues/243)) ([2eae0cc](https://github.com/equinor/fusion-workspace/commit/2eae0cc4f1b59d7a57d371bfc6ba7e94d9853513))
+
 ## [0.5.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.5.4...@equinor/workspace-garden@0.5.5) (2022-12-07)
 
 **Note:** Version bump only for package @equinor/workspace-garden
