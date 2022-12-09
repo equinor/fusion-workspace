@@ -8,18 +8,20 @@ export type Controller = {
 
 export type SidesheetConfig<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 > = SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents> | SidesheetSimple<TData>;
 
 export const DetailsSidesheetConfigKey: keyof SidesheetSimple<any> = 'DetailsSidesheet';
 export const SidesheetConfigKey: keyof SidesheetAdvanced<any, any, any> = 'Sidesheet';
 export const CreateSidesheetConfigKey: keyof SidesheetSimple<any> = 'CreateSidesheet';
 
+export type SimpleProps<T extends Record<PropertyKey, unknown> = {}> = T & { controller: Controller };
+
 export type SidesheetSimple<TData extends Record<PropertyKey, unknown>> = {
 	type: 'simple';
-	DetailsSidesheet?: (props: DetailsSidesheetProps<TData>) => JSX.Element;
-	CreateSidesheet?: () => JSX.Element;
+	DetailsSidesheet?: (props: SimpleProps<DetailsSidesheetProps<TData>>) => JSX.Element;
+	CreateSidesheet?: (props: SimpleProps) => JSX.Element;
 };
 
 export type SidesheetAdvanced<
