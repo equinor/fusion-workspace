@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-status-bar",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -18,11 +18,11 @@
 	"peerDependencies": {
 		"react": ">= 16.8.0",
 		"react-dom": ">= 16.8.0",
-		"react-is": ">= 16.8.0"
+		"react-is": ">= 16.8.0",
+		"styled-components": "^5.3.6"
 	},
 	"dependencies": {
-		"@equinor/eds-tokens": "^0.9.0",
-		"styled-components": "^5.3.6"
+		"@equinor/eds-tokens": "^0.9.0"
 	},
 	"devDependencies": {
 		"@types/react": ">= 16.8.0",
@@ -30,7 +30,8 @@
 		"@types/styled-components": "^5.1.26",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0"
+		"react-is": "^18.2.0",
+		"styled-components": "^5.3.6"
 	},
 	"repository": {
 		"type": "git",

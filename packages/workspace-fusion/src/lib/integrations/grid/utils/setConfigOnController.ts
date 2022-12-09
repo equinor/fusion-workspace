@@ -1,14 +1,16 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { GridConfig, GridController, ColDef } from '../';
 import { FusionMediator } from '../../../types';
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function setConfigOnController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gridConfig: GridConfig<TData>,
 	gridController: GridController<TData, TContext>,
-	mediator: FusionMediator<TData, TContext>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	gridController.gridOptions = { ...gridConfig.gridOptions, pagination: true, paginationAutoPageSize: true };
 
@@ -27,7 +29,8 @@ export function setConfigOnController<
  */
 function prepareColumnDefintions<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never
->(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData, TContext>) {
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(columnDefs: ColDef<TData>[], mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
 	return applyDefaultColumnDefinitions(applyWorkspaceClickToCells(columnDefs, mediator));
 }

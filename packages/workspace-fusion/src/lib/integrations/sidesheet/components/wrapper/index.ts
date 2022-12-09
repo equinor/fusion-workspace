@@ -1,1 +1,1 @@
-export * from './SidesheetWrapper';
+export * from './SidesheetAdvancedWrapper';
