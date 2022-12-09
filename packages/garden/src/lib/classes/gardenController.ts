@@ -40,8 +40,13 @@ export class GardenController<
 	/** The nodes that is currently selected */
 	selectedNodes = new ReactiveValue<string[]>([]);
 
-	/** The data used for creating garden groups */
-	data = new ReactiveValue<TData[]>([]);
+	#data$ = new BehaviorSubject<TData[]>([]);
+
+	getData = () => this.#data$.getValue();
+
+	setData = (newData: TData[]) => this.#data$.next(newData);
+
+	data$ = this.#data$.asObservable();
 
 	/** The garden groups */
 	groups = new ReactiveValue<GardenGroups<TData>>([]);
@@ -119,7 +124,7 @@ export class GardenController<
 
 		this.getIdentifier = getIdentifier;
 		this.getDisplayName = getDisplayName;
-		this.data.value = data;
+		this.setData(data);
 		this.fieldSettings = fieldSettings ?? {};
 		this.clickEvents = clickEvents ?? {};
 
@@ -137,15 +142,14 @@ export class GardenController<
 			this.#getContext = getContext;
 			//init
 			this.updateContext(data);
-			this.data.onChange(this.updateContext);
+			this.data$.subscribe(this.updateContext);
 		}
 
 		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
 		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
 
 		this.groupData();
-
-		this.data.onChange(this.groupData);
+		this.#data$.subscribe(this.groupData);
 		getDestructor(this.#destroy);
 	}
 
@@ -188,7 +192,7 @@ export class GardenController<
 	 * Return the id of the node to be selected, id must match the items objectidentifier.
 	 */
 	setHighlightedNode = (nodeIdOrCallback: (string | null) | FindNodeCallback<TData>) => {
-		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.data.value) : nodeIdOrCallback;
+		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.getData()) : nodeIdOrCallback;
 		this.selectedNodes.setValue(val ? [val] : []);
 	};
 

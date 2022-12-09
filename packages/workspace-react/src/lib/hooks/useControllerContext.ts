@@ -1,4 +1,4 @@
-import { WorkspaceViewController } from 'lib/classes';
+import { WorkspaceViewController } from '../classes';
 import { useContext } from 'react';
 import { ControllerContext } from '../context/controllerContext';
 

@@ -12,7 +12,7 @@ export function createGarden<
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
-		data: { value: data },
+		getData,
 		visuals,
 		fieldSettings,
 		customGroupByKeys,
@@ -20,7 +20,7 @@ export function createGarden<
 	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string, ...verticalGroupingKeys];
 
 	const groupedData = groupBy({
-		arr: data,
+		arr: getData(),
 		keys: allGroupingKeys as (TExtendedFields | keyof TData)[],
 		fieldSettings: fieldSettings,
 		isExpanded: !visuals?.collapseSubGroupsByDefault,

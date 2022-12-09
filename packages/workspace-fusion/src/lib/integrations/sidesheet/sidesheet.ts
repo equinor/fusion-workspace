@@ -8,8 +8,8 @@ export type Controller = {
 
 export type SidesheetConfig<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
 > = SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents> | SidesheetSimple<TData>;
 
 export const DetailsSidesheetConfigKey: keyof SidesheetSimple<any> = 'DetailsSidesheet';
