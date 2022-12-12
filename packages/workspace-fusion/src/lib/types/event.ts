@@ -7,7 +7,7 @@ export type OnWorkspaceReadyEvent<
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	api: WorkspaceController<TData, TContext, TCustomSidesheetEvents>;
+	api: WorkspaceController<TData, TCustomSidesheetEvents, TContext>;
 };
 
 //TODO: deprecate

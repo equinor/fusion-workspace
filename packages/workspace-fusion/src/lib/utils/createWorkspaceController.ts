@@ -10,7 +10,7 @@ export function createWorkspaceController<
 	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-): WorkspaceController<TData, TContext, TCustomSidesheetEvents> {
+): WorkspaceController<TData, TCustomSidesheetEvents, TContext> {
 	return {
 		setBookmark: (bookmark: FusionBookmark<TData>) => mediator.bookmarkService.apply(bookmark),
 		setContext: (cb) => mediator.contextService.setContext(cb(mediator.dataService.filteredData ?? [])),

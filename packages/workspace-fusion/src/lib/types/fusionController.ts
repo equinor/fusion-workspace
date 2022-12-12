@@ -42,8 +42,8 @@ export type FusionWorkspaceError = {
 /** API for manipulating the workspace */
 export type WorkspaceController<
 	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
+	TCustomSidesheetEvents extends BaseEvent = never,
+	TContext extends Record<PropertyKey, unknown> = never
 > = {
 	/**
 	 * Sets the data supplied to the workspace
