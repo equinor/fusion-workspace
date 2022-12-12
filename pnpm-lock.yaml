@@ -140,12 +140,14 @@ importers:
             react-dom: ^18.2.0
             react-is: ^18.2.0
             react-virtual: ^2.10.4
+            rxjs: ^7.5.7
             styled-components: ^5.3.6
         dependencies:
             '@equinor/eds-core-react': 0.26.0_maey765qzsqrp6bbazpxj7endy
             '@equinor/eds-icons': 0.15.0
             '@equinor/eds-tokens': 0.9.0
             react-virtual: 2.10.4_react@18.2.0
+            rxjs: 7.5.7
         devDependencies:
             '@types/jest': 27.4.1
             '@types/react': 18.0.25
@@ -303,9 +305,9 @@ importers:
             '@equinor/workspace-core': workspace:^0.1.0
             '@equinor/workspace-data-source': workspace:^0.1.2
             '@equinor/workspace-filter': workspace:^0.0.10
-            '@equinor/workspace-garden': workspace:^0.5.5
+            '@equinor/workspace-garden': workspace:^0.7.0
             '@equinor/workspace-powerbi': workspace:^0.1.3
-            '@equinor/workspace-react': workspace:^0.4.0
+            '@equinor/workspace-react': workspace:^0.4.1
             '@equinor/workspace-sidesheet': workspace:^0.1.1
             '@equinor/workspace-status-bar': workspace:^0.0.10
             '@types/jest': 27.4.1
@@ -349,8 +351,8 @@ importers:
             '@equinor/eds-core-react': 0.26.0
             '@equinor/eds-tokens': 0.9.0
             '@equinor/workspace-ag-grid': workspace:^0.3.4
-            '@equinor/workspace-fusion': workspace:^0.10.0
-            '@equinor/workspace-garden': workspace:^0.5.5
+            '@equinor/workspace-fusion': workspace:^0.10.2
+            '@equinor/workspace-garden': workspace:^0.7.0
             history: ^5.3.0
             idb: ^7.1.1
             react: ^18.2.0
@@ -505,14 +507,14 @@ packages:
         dependencies:
             '@ampproject/remapping': 2.2.0
             '@babel/code-frame': 7.18.6
-            '@babel/generator': 7.20.2
+            '@babel/generator': 7.20.5
             '@babel/helper-compilation-targets': 7.20.0_@babel+core@7.20.2
             '@babel/helper-module-transforms': 7.20.2
             '@babel/helpers': 7.20.1
-            '@babel/parser': 7.20.2
+            '@babel/parser': 7.20.5
             '@babel/template': 7.18.10
-            '@babel/traverse': 7.20.1
-            '@babel/types': 7.20.2
+            '@babel/traverse': 7.20.5
+            '@babel/types': 7.20.5
             convert-source-map: 1.9.0
             debug: 4.3.4
             gensync: 1.0.0-beta.2
@@ -528,7 +530,18 @@ packages:
             }
         engines: { node: '>=6.9.0' }
         dependencies:
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
+            '@jridgewell/gen-mapping': 0.3.2
+            jsesc: 2.5.2
+
+    /@babel/generator/7.20.5:
+        resolution:
+            {
+                integrity: sha512-jl7JY2Ykn9S0yj4DQP82sYvPU+T3g0HFcWTqDLqiuA9tGRNIj9VfbtXGAYTTkyNEnQk1jkMGOdYka8aG/lulCA==,
+            }
+        engines: { node: '>=6.9.0' }
+        dependencies:
+            '@babel/types': 7.20.5
             '@jridgewell/gen-mapping': 0.3.2
             jsesc: 2.5.2
 
@@ -720,8 +733,8 @@ packages:
         engines: { node: '>=6.9.0' }
         dependencies:
             '@babel/template': 7.18.10
-            '@babel/traverse': 7.20.1
-            '@babel/types': 7.20.2
+            '@babel/traverse': 7.20.5
+            '@babel/types': 7.20.5
         transitivePeerDependencies:
             - supports-color
 
@@ -744,7 +757,17 @@ packages:
         engines: { node: '>=6.0.0' }
         hasBin: true
         dependencies:
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
+
+    /@babel/parser/7.20.5:
+        resolution:
+            {
+                integrity: sha512-r27t/cy/m9uKLXQNWWebeCUHgnAZq0CpG1OwKRxzJMP1vpSU4bSIK2hq+/cp0bQxetkXx38n09rNu8jVkcK/zA==,
+            }
+        engines: { node: '>=6.0.0' }
+        hasBin: true
+        dependencies:
+            '@babel/types': 7.20.5
 
     /@babel/plugin-syntax-async-generators/7.8.4:
         resolution:
@@ -1130,7 +1153,7 @@ packages:
         dependencies:
             '@babel/code-frame': 7.18.6
             '@babel/parser': 7.20.2
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
 
     /@babel/traverse/7.20.1:
         resolution:
@@ -1172,10 +1195,41 @@ packages:
         transitivePeerDependencies:
             - supports-color
 
+    /@babel/traverse/7.20.5:
+        resolution:
+            {
+                integrity: sha512-WM5ZNN3JITQIq9tFZaw1ojLU3WgWdtkxnhM1AegMS+PvHjkM5IXjmYEGY7yukz5XS4sJyEf2VzWjI8uAavhxBQ==,
+            }
+        engines: { node: '>=6.9.0' }
+        dependencies:
+            '@babel/code-frame': 7.18.6
+            '@babel/generator': 7.20.5
+            '@babel/helper-environment-visitor': 7.18.9
+            '@babel/helper-function-name': 7.19.0
+            '@babel/helper-hoist-variables': 7.18.6
+            '@babel/helper-split-export-declaration': 7.18.6
+            '@babel/parser': 7.20.5
+            '@babel/types': 7.20.5
+            debug: 4.3.4
+            globals: 11.12.0
+        transitivePeerDependencies:
+            - supports-color
+
     /@babel/types/7.20.2:
         resolution:
             {
                 integrity: sha512-FnnvsNWgZCr232sqtXggapvlkk/tuwR/qhGzcmxI0GXLCjmPYQPzio2FbdlWuY6y1sHFfQKk+rRbUZ9VStQMog==,
+            }
+        engines: { node: '>=6.9.0' }
+        dependencies:
+            '@babel/helper-string-parser': 7.19.4
+            '@babel/helper-validator-identifier': 7.19.1
+            to-fast-properties: 2.0.0
+
+    /@babel/types/7.20.5:
+        resolution:
+            {
+                integrity: sha512-c9fst/h2/dcF7H+MJKZ2T0KjEQ8hY/BNnDk/H3XY8C4Aw/eWQXWn/lWntHF9ooUBnGmEvbfGrTgLWc+um0YDUg==,
             }
         engines: { node: '>=6.9.0' }
         dependencies:
@@ -3889,6 +3943,7 @@ packages:
             {
                 integrity: sha512-RpmQdHVo8hCEHDVpO39zToS9jOhR6nw+/lQAzRNq9ErrGV9IeHM71XCn68svVl/euFeVW6BWX4p35gkhbOcSIQ==,
             }
+        deprecated: Breaks compatibility with ES5, use v1.8.5
         dependencies:
             type-detect: 4.0.8
         dev: true
@@ -3961,8 +4016,8 @@ packages:
                 integrity: sha512-WEOTgRsbYkvA/KCsDwVEGkd7WAr1e3g31VHQ8zy5gul/V1qKullU/BU5I68X5v7V3GnB9eotmom4v5a5gjxorw==,
             }
         dependencies:
-            '@babel/parser': 7.20.2
-            '@babel/types': 7.20.2
+            '@babel/parser': 7.20.5
+            '@babel/types': 7.20.5
             '@types/babel__generator': 7.6.4
             '@types/babel__template': 7.4.1
             '@types/babel__traverse': 7.18.2
@@ -3973,7 +4028,7 @@ packages:
                 integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==,
             }
         dependencies:
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
 
     /@types/babel__template/7.4.1:
         resolution:
@@ -3981,8 +4036,8 @@ packages:
                 integrity: sha512-azBFKemX6kMg5Io+/rdGT0dkGreboUVR0Cdm3fz9QJWpaQGJRQXl7C+6hOTCZcMll7KFyEQpgbYI2lHdsS4U7g==,
             }
         dependencies:
-            '@babel/parser': 7.20.2
-            '@babel/types': 7.20.2
+            '@babel/parser': 7.20.5
+            '@babel/types': 7.20.5
 
     /@types/babel__traverse/7.18.2:
         resolution:
@@ -3990,7 +4045,7 @@ packages:
                 integrity: sha512-FcFaxOr2V5KZCviw1TnutEMVUVsGt4D2hP1TAfXZAMKuHYW3xQhe3jTxNPWutgCJ3/X1c5yX8ZoGVEItxKbwBg==,
             }
         dependencies:
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
 
     /@types/graceful-fs/4.1.5:
         resolution:
@@ -4979,7 +5034,7 @@ packages:
         engines: { node: ^14.15.0 || ^16.10.0 || >=18.0.0 }
         dependencies:
             '@babel/template': 7.18.10
-            '@babel/types': 7.20.2
+            '@babel/types': 7.20.5
             '@types/babel__core': 7.1.19
             '@types/babel__traverse': 7.18.2
 
@@ -8286,7 +8341,7 @@ packages:
         engines: { node: '>=8' }
         dependencies:
             '@babel/core': 7.20.2
-            '@babel/parser': 7.20.2
+            '@babel/parser': 7.20.5
             '@istanbuljs/schema': 0.1.3
             istanbul-lib-coverage: 3.2.0
             semver: 6.3.0

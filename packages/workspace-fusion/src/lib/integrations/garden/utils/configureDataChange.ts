@@ -13,5 +13,9 @@ export function configureDataChange<
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 	{ dataService }: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	dataService.filteredData$.subscribe((newData) => newData && gardenController.data.setValue(newData));
+	dataService.filteredData$.subscribe((newData) => {
+		if (newData) {
+			gardenController.setData(newData);
+		}
+	});
 }
