@@ -16,8 +16,8 @@
 		"dist"
 	],
 	"dependencies": {
-		"@equinor/eds-core-react": "^0.20.4",
-		"@equinor/eds-icons": "^0.15.0",
+		"@equinor/eds-core-react": "0.27.0",
+		"@equinor/eds-icons": "0.17.0",
 		"@equinor/eds-tokens": "^0.7.1",
 		"react-sortablejs": "^6.1.4",
 		"react-virtual": "^2.10.4",
