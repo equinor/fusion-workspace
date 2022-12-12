@@ -1,3 +1,4 @@
+import { WorkspaceController } from './fusionController';
 import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator } from './fusionController';
 
@@ -6,7 +7,7 @@ export type OnWorkspaceReadyEvent<
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	api: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
+	api: WorkspaceController<TData, TCustomSidesheetEvents, TContext>;
 };
 
 //TODO: deprecate

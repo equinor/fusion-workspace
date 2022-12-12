@@ -1,4 +1,4 @@
-import Workspace, { FusionMediator, WorkspaceConfig } from '@equinor/workspace-fusion';
+import Workspace, { FusionMediator, WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
 import { useCallback, useRef, useState } from 'react';
@@ -58,7 +58,7 @@ const getItems = (contextId: string) => [
 ];
 
 function App() {
-	const workspaceApi = useRef<null | FusionMediator<S, { length: number }, MyTypes>>(null);
+	const workspaceApi = useRef<WorkspaceController<S, { length: number }, MyTypes> | null>(null);
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
@@ -76,34 +76,12 @@ function App() {
 
 	return (
 		<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
-			<button onClick={() => workspaceApi.current?.sidesheetService.sendEvent({ type: 'admin' })}>
-				open Admin
-			</button>
-			<button
-				onClick={() =>
-					workspaceApi.current?.sidesheetService.sendEvent({ type: 'custom2', props: { id: '123' } })
-				}
-			>
+			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'admin' })}>open Admin</button>
+			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'custom2', props: { id: '123' } })}>
 				Open custom2
 			</button>
-			<button onClick={() => workspaceApi.current?.sidesheetService.sendEvent({ type: 'create_sidesheet' })}>
+			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'create_sidesheet' })}>
 				Open create
-			</button>
-			<button
-				onClick={() => {
-					if (workspaceApi.current && workspaceApi.current.dataService.filteredData) {
-						const { filteredData } = workspaceApi.current.dataService;
-						workspaceApi.current?.sidesheetService.sendEvent({
-							type: 'details_sidesheet',
-							props: {
-								id: filteredData[0].id ?? '2',
-								item: filteredData[0],
-							},
-						});
-					}
-				}}
-			>
-				Open details
 			</button>
 			<Workspace
 				onWorkspaceReady={(ev) => {
