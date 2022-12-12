@@ -51,7 +51,7 @@ export const SidesheetSimpleWrapper = <
 				warnRenderUndefined('create sidesheet');
 				return null;
 			}
-			return <config.CreateSidesheet controller={{ close }} />;
+			return <config.CreateSidesheet controller={{ close: () => handleSetter(null) }} />;
 		}
 
 		case 'details_sidesheet': {
@@ -59,7 +59,13 @@ export const SidesheetSimpleWrapper = <
 				warnRenderUndefined('details sidesheet');
 				return null;
 			}
-			return <config.DetailsSidesheet id={currEv.props.id} item={currEv.props.item} controller={{ close }} />;
+			return (
+				<config.DetailsSidesheet
+					id={currEv.props.id}
+					item={currEv.props.item}
+					controller={{ close: () => handleSetter(null) }}
+				/>
+			);
 		}
 	}
 };
