@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.10.2...@equinor/workspace-fusion@0.11.0) (2022-12-12)
+
+### Features
+
+-   :sparkles: add workspace mediator dto ([#242](https://github.com/equinor/fusion-workspace/issues/242)) ([e0ba8f5](https://github.com/equinor/fusion-workspace/commit/e0ba8f58c782308418727d5ed99c8ee939412979))
+
 ## [0.10.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.10.1...@equinor/workspace-fusion@0.10.2) (2022-12-09)
 
 **Note:** Version bump only for package @equinor/workspace-fusion

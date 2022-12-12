@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-react",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -25,7 +25,7 @@
 		"@equinor/eds-core-react": "^0.27.0",
 		"@equinor/eds-icons": "^0.17.0",
 		"@equinor/eds-tokens": "^0.9.0",
-		"@equinor/workspace-core": "workspace:^0.1.0"
+		"@equinor/workspace-core": "workspace:^0.1.1"
 	},
 	"devDependencies": {
 		"@types/jest": "27.4.1",
