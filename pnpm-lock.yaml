@@ -97,8 +97,8 @@ importers:
 
   packages/filter:
     specifiers:
-      '@equinor/eds-core-react': 0.27.0
-      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-core-react': ^0.20.4
+      '@equinor/eds-icons': ^0.15.0
       '@equinor/eds-tokens': ^0.7.1
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
@@ -112,8 +112,8 @@ importers:
       sortablejs: ^1.15.0
       styled-components: ^5.3.5
     dependencies:
-      '@equinor/eds-core-react': 0.27.0_maey765qzsqrp6bbazpxj7endy
-      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-core-react': 0.20.4_2zpt4ilzykmne4yndyzrqd4gdm
+      '@equinor/eds-icons': 0.15.0
       '@equinor/eds-tokens': 0.7.1
       react-sortablejs: 6.1.4_pkvhgat2fktt3g4eqjjiisgkie
       react-virtual: 2.10.4_react@18.2.0
@@ -1213,6 +1213,26 @@ packages:
   /@emotion/unitless/0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
 
+  /@equinor/eds-core-react/0.20.4_2zpt4ilzykmne4yndyzrqd4gdm:
+    resolution: {integrity: sha512-bDSX+vn4zd8KA+T1Od3e65EfYRHMGTnVdKO4H4DCe4VaVoIywjk4HO+7bI/LDAAOqM3ynfzBKxpUpw0mdmqQMg==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+      styled-components: '>=4.2'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@equinor/eds-icons': 0.11.0
+      '@equinor/eds-tokens': 0.7.1
+      '@equinor/eds-utils': 0.2.3_2zpt4ilzykmne4yndyzrqd4gdm
+      '@popperjs/core': 2.9.2
+      downshift: 6.1.12_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-fast-compare: 3.2.0
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+    dev: false
+
   /@equinor/eds-core-react/0.26.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-LHzZ6KACh/M2PM6w8OjcohKN77xEtyOb5bpxzMuLPcM7hUK3F0WIdLCBTrwhaz8c/HuzvwqAsX1yLPufw+qRpA==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -1326,6 +1346,11 @@ packages:
       - supports-color
     dev: false
 
+  /@equinor/eds-icons/0.11.0:
+    resolution: {integrity: sha512-KNyq/2HN88oDTRUpBUJpq5FFYroS8YthpKaQP75ncGBC3iAsuN7VkpmfTorlMDGYTDZa62FLHTCTqBRXuPd32A==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    dev: false
+
   /@equinor/eds-icons/0.15.0:
     resolution: {integrity: sha512-4vGsMHB6+RXvJjVka+dbWLr+0q5tLSlhBSrtstsj1Q0bgQPmj6hIMF+eHK5brkZGJ6d1K1RXYgiUOP2LguGL4Q==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -1349,6 +1374,23 @@ packages:
   /@equinor/eds-tokens/0.9.0:
     resolution: {integrity: sha512-7FLqrH13dRc/q+wxHzZrIGkV35XMYIGojjkqLIbIeM0AwijSE1PETKqLauNf8VtMZPevt/2Hr9dV2a2NpEORQw==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
+    dev: false
+
+  /@equinor/eds-utils/0.2.3_2zpt4ilzykmne4yndyzrqd4gdm:
+    resolution: {integrity: sha512-5IpoxmfUbGDpxqQ/wf8KQue3iaXPe7e//Rn9mqySDFS4lhb3iYU4oH6baGrUbiGaRbd/aVXHSKhQs7n8biGjug==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+      styled-components: '>=4.2'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@equinor/eds-tokens': 0.7.1
+      '@popperjs/core': 2.11.5
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-popper: 2.3.0_ili5ylfne7i3hkfpsanzgkfu6m
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     dev: false
 
   /@equinor/eds-utils/0.7.0_2zpt4ilzykmne4yndyzrqd4gdm:
@@ -3126,8 +3168,16 @@ packages:
       typescript: 4.7.4
     dev: true
 
+  /@popperjs/core/2.11.5:
+    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+    dev: false
+
   /@popperjs/core/2.11.6:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+    dev: false
+
+  /@popperjs/core/2.9.2:
+    resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
     dev: false
 
   /@reach/observe-rect/1.2.0:
@@ -8675,6 +8725,20 @@ packages:
 
   /react-is/18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+
+  /react-popper/2.3.0_ili5ylfne7i3hkfpsanzgkfu6m:
+    resolution: {integrity: sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==}
+    peerDependencies:
+      '@popperjs/core': ^2.0.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: ^16.8.0 || ^17 || ^18
+    dependencies:
+      '@popperjs/core': 2.11.5
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-fast-compare: 3.2.0
+      warning: 4.0.3
+    dev: false
 
   /react-popper/2.3.0_r6q5zrenym2zg7je7hgi674bti:
     resolution: {integrity: sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==}
