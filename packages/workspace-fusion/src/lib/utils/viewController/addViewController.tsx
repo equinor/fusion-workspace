@@ -1,9 +1,10 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { Action, BrowserHistory } from 'history';
+import { BrowserHistory } from 'history';
 import { DumpsterFireDialog } from '../../components/ErrorComponent';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 import { BaseEvent } from '@equinor/workspace-core';
+import { useTabNavigation } from './hooks/useTabNavigation';
 
 /** Configure a view controller with the mediator */
 export function addViewController<
@@ -35,60 +36,17 @@ export function addViewController<
 	});
 
 	/** Switch tab if somebody presses the navigation buttons in browser */
-	history.listen(({ action }) => {
-		if (action === Action.Pop) {
-			//Navigation back or forward;
-			switchTabOnNavigation(mediator, viewController);
-		}
+	viewController.addProvider({
+		name: 'History pop',
+		Component: ({ children }) => {
+			useTabNavigation({ history, mediator: mediator, viewController });
+			return <>{children}</>;
+		},
 	});
-	initTabOnLoad(mediator, viewController);
+
 	mediator.onUnMount(() => {
 		viewController.destroy();
 	});
-}
-
-export function initTabOnLoad<
-	TData extends Record<PropertyKey, unknown>,
-	TError,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
->(
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
-) {
-	const abortController = new AbortController();
-
-	/**
-	 * Switch tab when document is ready
-	 * Ev listener is removed when signal is aborted
-	 */
-	window.addEventListener(
-		'load',
-		() => {
-			switchTabOnNavigation(mediator, viewController);
-		},
-		{ signal: abortController.signal }
-	);
-
-	mediator.onUnMount(() => {
-		abortController.abort();
-	});
-}
-
-/** Switches tab when url changes due to navigation event */
-export function switchTabOnNavigation<
-	TData extends Record<PropertyKey, unknown>,
-	TError,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
->(
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
-) {
-	const tab = mediator.urlService.url.searchParams.get('tab');
-	if (tab) {
-		viewController.tabController.setActiveTab(tab as WorkspaceTabNames);
-	}
 }
 
 /** Applies a fusion bookmark to the view controller */
