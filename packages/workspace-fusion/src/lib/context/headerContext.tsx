@@ -4,14 +4,18 @@ import { createContext, ReactNode, useContext } from 'react';
 type WorkspaceHeaderComponents = {
 	analyticsTabs: Tab<string>[];
 	viewTabs: Tab<string>[];
-	BookmarksIcon: null | (() => JSX.Element);
-	CreateIcon: null | (() => JSX.Element);
+	icons: HeaderIcon[];
+};
+
+type HeaderIcon = {
+	name: string;
+	Icon: () => JSX.Element;
+	placement: 'left' | 'right';
 };
 
 const defaultState: WorkspaceHeaderComponents = {
 	analyticsTabs: [],
-	BookmarksIcon: null,
-	CreateIcon: null,
+	icons: [],
 	viewTabs: [],
 };
 

@@ -4,16 +4,21 @@ import { TabButtonDivider, TabButtonList, TabButton } from '../../../components/
 import { useWorkspaceHeaderComponents } from '../../../context/headerContext';
 
 export const TabNavigation = () => {
-	const { BookmarksIcon, CreateIcon, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
+	const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
 
 	const { tabController } = useControllerContext<WorkspaceTabNames, unknown>();
+
+	const leftIcons = icons.filter((s) => s.placement === 'left');
+	const rightIcons = icons.filter((s) => s.placement === 'right');
 
 	const activeTab = useActiveTab();
 	return (
 		<TabButtonList>
-			{CreateIcon && (
+			{!!leftIcons.length && (
 				<>
-					<CreateIcon />
+					{leftIcons.map(({ Icon }) => (
+						<Icon />
+					))}
 					<TabButtonDivider />
 				</>
 			)}
@@ -47,7 +52,13 @@ export const TabNavigation = () => {
 				</>
 			)}
 
-			{BookmarksIcon && <BookmarksIcon />}
+			{!!rightIcons.length && (
+				<>
+					{rightIcons.map(({ Icon }) => (
+						<Icon />
+					))}
+				</>
+			)}
 		</TabButtonList>
 	);
 };
