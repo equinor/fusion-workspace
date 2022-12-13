@@ -4,6 +4,7 @@ import { DumpsterFireDialog } from '../../components/ErrorComponent';
 import { updateQueryParams } from '../../classes/fusionUrlHandler';
 import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
 import { BaseEvent } from '@equinor/workspace-core';
+import { RootHeaderContext } from '../../context';
 
 /** Configure a view controller with the mediator */
 export function addViewController<
@@ -45,6 +46,7 @@ export function addViewController<
 	mediator.onUnMount(() => {
 		viewController.destroy();
 	});
+	viewController.addProvider({ name: 'Header context root', Component: RootHeaderContext });
 }
 
 export function initTabOnLoad<

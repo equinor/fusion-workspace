@@ -63,6 +63,9 @@ export function createConfigurationObject<
 	addSidesheet(props.sidesheetOptions, viewController, mediator);
 	addStatusBar(props.statusBarOptions, viewController, mediator);
 	addFilter(props.filterOptions, viewController, mediator);
+
+	props.modules && props.modules.forEach((s) => s.setup(mediator, props.workspaceOptions.appKey, viewController));
+
 	sortFusionTabs(viewController);
 
 	return configuration;

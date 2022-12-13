@@ -5,6 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
+import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
 
 type S = {
 	id: string;
@@ -58,7 +59,7 @@ const getItems = (contextId: string) => [
 ];
 
 function App() {
-	const workspaceApi = useRef<WorkspaceController<S, { length: number }, MyTypes> | null>(null);
+	const workspaceApi = useRef<WorkspaceController<S, MyTypes, { length: number }> | null>(null);
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
@@ -97,6 +98,19 @@ function App() {
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
 				}}
+				modules={[
+					BookmarksModule({
+						getBookmark: async (id, signal?) => {
+							console.log('Bookmark id', id);
+							return {
+								garden: {
+									groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },
+									selectedNodes: [],
+								},
+							};
+						},
+					}),
+				]}
 			/>
 		</div>
 	);

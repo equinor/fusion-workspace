@@ -1,1 +1,1 @@
-export { IndexedDbModule } from './indexedDbModule';
+export { BookmarksModule } from './fusionBookmarks/module';
