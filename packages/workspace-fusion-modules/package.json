@@ -18,12 +18,12 @@
 	"typesVersions": {
 		">=4.2": {
 			"bookmarks": [
-				"dist/types/lib/modules/fusionBookmarks/module"
+				"dist/types/lib/modules/fusionBookmarks/index"
 			]
 		}
 	},
 	"exports": {
-		"./bookmarks": "./dist/esm/lib/modules/fusionBookmarks/module.js"
+		"./bookmarks": "./dist/esm/lib/modules/fusionBookmarks/index.js"
 	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.26.0",

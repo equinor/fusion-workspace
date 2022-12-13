@@ -64,6 +64,7 @@ export function createConfigurationObject<
 	addStatusBar(props.statusBarOptions, viewController, mediator);
 	addFilter(props.filterOptions, viewController, mediator);
 
+	//Consider entry hooks  "pre" | "post"
 	props.modules && props.modules.forEach((s) => s.setup(mediator, props.workspaceOptions.appKey, viewController));
 
 	sortFusionTabs(viewController);

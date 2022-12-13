@@ -1,17 +1,10 @@
 import { FusionBookmark, FusionMediator, WorkspaceViewController } from '@equinor/workspace-fusion';
-import { HeaderContext, useHeaderContext } from '@equinor/workspace-fusion';
-import { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { CircularProgress } from '@equinor/eds-core-react';
-import { useRef } from 'react';
+import { HeaderContext, useWorkspaceHeaderComponents } from '@equinor/workspace-fusion';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import { Icon } from '@equinor/eds-core-react';
-import { bookmarks } from '@equinor/eds-icons';
-import { tokens } from '@equinor/eds-tokens';
+import { BookmarksHook, HeaderIcon } from './components';
 
-Icon.add({ bookmarks });
-
-type BookmarksModuleConfig = {
+export type BookmarksModuleConfig = {
 	searchParam?: string;
 	getBookmark: (id: string, signal?: AbortSignal) => Promise<FusionBookmark<any>>;
 };
@@ -32,7 +25,7 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 			viewController.addProvider({
 				name: 'Bookmark lifecycle',
 				Component: ({ children }) => {
-					const context = useHeaderContext();
+					const context = useWorkspaceHeaderComponents();
 
 					return (
 						<QueryClientProvider client={queryClient}>
@@ -52,70 +45,3 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 		},
 	};
 }
-
-const HeaderIcon = () => {
-	return (
-		<div
-			style={{
-				height: '48px',
-				width: '48px',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				cursor: 'pointer',
-			}}
-		>
-			<Icon name="bookmarks" color={tokens.colors.interactive.primary__resting.hex} />
-		</div>
-	);
-};
-
-type BookmarksHookProps = {
-	children: ReactNode;
-	mediator: FusionMediator<any, any, any>;
-} & Required<BookmarksModuleConfig>;
-
-const BookmarksHook = ({ children, mediator, searchParam, getBookmark }: BookmarksHookProps) => {
-	const consumed = useRef(false);
-	const bookmarkId = new URLSearchParams(window.location.search).get(searchParam);
-
-	const { isLoading } = useQuery({
-		enabled: !!bookmarkId,
-		queryKey: ['bookmarks', bookmarkId],
-		refetchOnWindowFocus: false,
-		queryFn: async ({ signal }) => {
-			if (!bookmarkId || consumed.current) return;
-			consumed.current = true;
-
-			const bm = await getBookmark(bookmarkId, signal);
-			if (bm) {
-				mediator.bookmarkService.apply(bm);
-			}
-			return bm;
-		},
-	});
-
-	if (isLoading) {
-		<LoadingWrapper />;
-	}
-
-	return <>{children}</>;
-};
-
-const LoadingWrapper = () => {
-	return (
-		<div
-			style={{
-				height: '100%',
-				width: '100%',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				flexDirection: 'column',
-			}}
-		>
-			<CircularProgress size={48} />
-			<p>Loading bookmark...</p>
-		</div>
-	);
-};

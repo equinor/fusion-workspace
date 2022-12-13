@@ -1,10 +1,10 @@
 import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../../../types';
 import { TabButtonDivider, TabButtonList, TabButton } from '../../../components/Header';
-import { useHeaderContext } from '../../../context/headerContext';
+import { useWorkspaceHeaderComponents } from '../../../context/headerContext';
 
 export const TabNavigation = () => {
-	const { BookmarksIcon, CreateIcon, analyticsTabs, viewTabs } = useHeaderContext();
+	const { BookmarksIcon, CreateIcon, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
 
 	const { tabController } = useControllerContext<WorkspaceTabNames, unknown>();
 

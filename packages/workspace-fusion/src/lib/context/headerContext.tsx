@@ -17,7 +17,7 @@ const defaultState: WorkspaceHeaderComponents = {
 
 export const HeaderContext = createContext<WorkspaceHeaderComponents>(defaultState);
 
-export const useHeaderContext = () => useContext(HeaderContext);
+export const useWorkspaceHeaderComponents = () => useContext(HeaderContext);
 
 type RootProps = {
 	children: ReactNode;
