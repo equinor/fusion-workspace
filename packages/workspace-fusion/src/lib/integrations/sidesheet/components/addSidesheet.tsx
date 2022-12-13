@@ -25,11 +25,11 @@ export function addSidesheet<
 		mediator.sidesheetService.sendEvent(ev);
 	});
 
-	if (config.type === 'advanced') {
+	if (config.type === 'custom') {
 		viewController.addSidesheetComponent(() => <SidesheetAdvancedWrapper config={config} mediator={mediator} />);
 		return;
 	}
-	if (config.type === 'simple') {
+	if (config.type === 'default') {
 		viewController.addSidesheetComponent(() => <SidesheetSimpleWrapper config={config} mediator={mediator} />);
 		return;
 	}
