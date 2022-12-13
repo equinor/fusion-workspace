@@ -100,7 +100,7 @@ function App() {
 				}}
 				modules={[
 					BookmarksModule({
-						getBookmark: async (id, signal?) => {
+						getBookmark: async (id, signal) => {
 							return {
 								garden: {
 									groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },

@@ -19,9 +19,9 @@ const defaultState: WorkspaceHeaderComponents = {
 	viewTabs: [],
 };
 
-export const HeaderContext = createContext<WorkspaceHeaderComponents>(defaultState);
+export const WorkspaceHeaderComponents = createContext<WorkspaceHeaderComponents>(defaultState);
 
-export const useWorkspaceHeaderComponents = () => useContext(HeaderContext);
+export const useWorkspaceHeaderComponents = () => useContext(WorkspaceHeaderComponents);
 
 type RootProps = {
 	children: ReactNode;
@@ -36,7 +36,7 @@ export const RootHeaderContext = ({ children }: RootProps) => {
 
 	const viewTabs = tabs.filter((s) => s.name !== 'powerbi');
 	return (
-		<HeaderContext.Provider
+		<WorkspaceHeaderComponents.Provider
 			value={{
 				...defaultState,
 				analyticsTabs: analyticsTabs,
@@ -44,6 +44,6 @@ export const RootHeaderContext = ({ children }: RootProps) => {
 			}}
 		>
 			{children}
-		</HeaderContext.Provider>
+		</WorkspaceHeaderComponents.Provider>
 	);
 };

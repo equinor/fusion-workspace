@@ -1,7 +1,7 @@
 import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../../../types';
 import { TabButtonDivider, TabButtonList, TabButton } from '../../../components/Header';
-import { useWorkspaceHeaderComponents } from '../../../context/headerContext';
+import { useWorkspaceHeaderComponents } from '../../../context/WorkspaceHeaderComponents';
 
 export const TabNavigation = () => {
 	const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();

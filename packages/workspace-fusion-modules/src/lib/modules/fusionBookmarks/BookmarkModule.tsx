@@ -1,5 +1,5 @@
 import { FusionBookmark, FusionMediator, WorkspaceViewController } from '@equinor/workspace-fusion';
-import { HeaderContext, useWorkspaceHeaderComponents } from '@equinor/workspace-fusion';
+import { WorkspaceHeaderComponents, useWorkspaceHeaderComponents } from '@equinor/workspace-fusion';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { BookmarkLoader, HeaderIcon } from './components';
@@ -32,7 +32,7 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 					return (
 						<QueryClientProvider client={queryClient}>
 							{/* Injects icon into workspace header */}
-							<HeaderContext.Provider
+							<WorkspaceHeaderComponents.Provider
 								value={{
 									...context,
 									icons: [
@@ -49,7 +49,7 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 								>
 									{children}
 								</BookmarkLoader>
-							</HeaderContext.Provider>
+							</WorkspaceHeaderComponents.Provider>
 						</QueryClientProvider>
 					);
 				},

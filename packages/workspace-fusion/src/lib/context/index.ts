@@ -1,1 +1,1 @@
-export * from './headerContext';
+export * from './WorkspaceHeaderComponents';
