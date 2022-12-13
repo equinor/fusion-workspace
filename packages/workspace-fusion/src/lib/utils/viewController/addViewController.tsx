@@ -1,10 +1,10 @@
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { BrowserHistory } from 'history';
 import { DumpsterFireDialog } from '../../components/ErrorComponent';
-import { updateQueryParams } from '../../classes/fusionUrlHandler';
-import { WorkspaceTabNames, FusionMediator, ViewBookmark, FusionBookmark, FusionWorkspaceError } from '../../types';
+import { WorkspaceTabNames, FusionMediator, FusionBookmark, FusionWorkspaceError } from '../../types';
 import { BaseEvent } from '@equinor/workspace-core';
-import { useTabNavigation } from './hooks/useTabNavigation';
+import { useBookmarkState, useTabNavigation, useUpdateQueryParamsOnTabChange } from './hooks';
+import { injectHook } from './injectHook';
 
 /** Configure a view controller with the mediator */
 export function addViewController<
@@ -24,37 +24,31 @@ export function addViewController<
 	/** Sync loading state */
 	mediator.onIsLoadingChange(viewController.viewState.setIsLoading);
 
-	/** Bookmarks */
-	mediator.bookmarkService.apply$.subscribe(
-		(state) => state?.view && applyViewStateBookmark(state.view, viewController)
-	);
 	mediator.bookmarkService.registerCapture(() => captureBookmark(viewController));
 	/** Sync user settings when active tab changes */
 	viewController.tabController.onActiveTabChanged(mediator.bookmarkService.capture);
-	viewController.tabController.onActiveTabChanged((tab) => {
-		updateQueryParams([['tab', tab.toLowerCase()]], mediator, history);
+
+	injectHook({
+		viewController,
+		effects: () => useTabNavigation({ history, mediator, viewController }),
+		name: 'History pop',
 	});
 
-	/** Switch tab if somebody presses the navigation buttons in browser */
-	viewController.addProvider({
-		name: 'History pop',
-		Component: ({ children }) => {
-			useTabNavigation({ history, mediator: mediator, viewController });
-			return <>{children}</>;
-		},
+	injectHook({
+		viewController,
+		effects: () => useBookmarkState({ mediator, viewController }),
+		name: 'View bookmark',
+	});
+
+	injectHook({
+		viewController,
+		effects: () => useUpdateQueryParamsOnTabChange({ history, mediator, viewController }),
+		name: 'Query param tab change',
 	});
 
 	mediator.onUnMount(() => {
 		viewController.destroy();
 	});
-}
-
-/** Applies a fusion bookmark to the view controller */
-function applyViewStateBookmark<TError>(
-	viewBookmark: ViewBookmark,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>
-) {
-	viewController.tabController.setActiveTab(viewBookmark.activeTab as WorkspaceTabNames);
 }
 
 /** Captures the view state of the view controller */
