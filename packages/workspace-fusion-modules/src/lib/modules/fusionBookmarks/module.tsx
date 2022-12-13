@@ -29,7 +29,9 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 
 					return (
 						<QueryClientProvider client={queryClient}>
+							{/* Injects icon into workspace header */}
 							<HeaderContext.Provider value={{ ...context, BookmarksIcon: HeaderIcon }}>
+								{/* Halts the component while applying a bookmark from url */}
 								<BookmarksHook
 									getBookmark={config.getBookmark}
 									searchParam={config?.searchParam ?? 'bookmarkId'}
