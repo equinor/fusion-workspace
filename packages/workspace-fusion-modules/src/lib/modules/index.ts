@@ -1,1 +1,1 @@
-export { BookmarksModule } from './fusionBookmarks/module';
+export { BookmarksModule } from './fusionBookmarks/BookmarkModule';

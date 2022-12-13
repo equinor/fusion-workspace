@@ -1,2 +1,2 @@
 export * from './HeaderIcon';
-export * from './ApplyFromUrl';
+export * from './BookmarkLoader';

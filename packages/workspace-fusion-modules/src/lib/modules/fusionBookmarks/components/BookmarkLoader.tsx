@@ -1,15 +1,15 @@
 import { FusionMediator } from '@equinor/workspace-fusion';
 import { ReactNode, useRef } from 'react';
-import { BookmarksModuleConfig } from '../module';
+import { BookmarksModuleConfig } from '../BookmarkModule';
 import { useQuery } from 'react-query';
 import { LoadingWrapper } from './LoadingWrapper';
 
-type BookmarksHookProps = {
+type BookmarkLoaderProps = {
 	children: ReactNode;
 	mediator: FusionMediator<any, any, any>;
 } & Required<BookmarksModuleConfig>;
 
-export const BookmarksHook = ({ children, mediator, searchParam, getBookmark }: BookmarksHookProps) => {
+export const BookmarkLoader = ({ children, mediator, searchParam, getBookmark }: BookmarkLoaderProps) => {
 	const consumed = useRef(false);
 	const bookmarkId = new URLSearchParams(window.location.search).get(searchParam);
 
