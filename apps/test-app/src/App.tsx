@@ -101,7 +101,6 @@ function App() {
 				modules={[
 					BookmarksModule({
 						getBookmark: async (id, signal?) => {
-							console.log('Bookmark id', id);
 							return {
 								garden: {
 									groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },
