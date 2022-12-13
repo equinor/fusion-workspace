@@ -1,8 +1,9 @@
 import { FusionMediator } from '@equinor/workspace-fusion';
-import { ReactNode, useRef } from 'react';
+import { ReactNode } from 'react';
 import { BookmarksModuleConfig } from '../BookmarkModule';
-import { useQuery } from 'react-query';
 import { LoadingWrapper } from './LoadingWrapper';
+import { useApplyBookmark } from '../hooks';
+import { Fragment } from 'react';
 
 type BookmarkLoaderProps = {
 	children: ReactNode;
@@ -10,28 +11,11 @@ type BookmarkLoaderProps = {
 } & Required<BookmarksModuleConfig>;
 
 export const BookmarkLoader = ({ children, mediator, searchParam, getBookmark }: BookmarkLoaderProps) => {
-	const consumed = useRef(false);
-	const bookmarkId = new URLSearchParams(window.location.search).get(searchParam);
-
-	const { isLoading } = useQuery({
-		enabled: !!bookmarkId,
-		queryKey: ['bookmarks', bookmarkId],
-		refetchOnWindowFocus: false,
-		queryFn: async ({ signal }) => {
-			if (!bookmarkId || consumed.current) return;
-			consumed.current = true;
-
-			const bm = await getBookmark(bookmarkId, signal);
-			if (bm) {
-				mediator.bookmarkService.apply(bm);
-			}
-			return bm;
-		},
-	});
+	const isLoading = useApplyBookmark({ getBookmark, searchParam }, mediator);
 
 	if (isLoading) {
 		<LoadingWrapper />;
 	}
 
-	return <>{children}</>;
+	return <Fragment>{children}</Fragment>;
 };
