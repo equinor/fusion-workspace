@@ -2,11 +2,13 @@ import { Button } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const StyledTitle = styled.h4<{ hasFilters: boolean }>`
+export const StyledTitle = styled.h4`
 	margin: 0.2rem;
 	white-space: nowrap;
+	text-transform: capitalize;
 	font-size: 14px;
-	font-weight: ${({ hasFilters }) => (hasFilters ? '700' : '400')};
+	font-weight: 700;
+	padding: 0 0.5rem;
 `;
 
 export const StyledWrapper = styled.div`
@@ -61,8 +63,8 @@ export const StyledFilterHeaderGroup = styled.div<{ isActive: boolean }>`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 50px;
-	min-height: 50px;
+	height: 48px;
+	min-height: 48px;
 	box-sizing: border-box;
 	border-bottom: ${({ isActive }) =>
 		`2px solid ${
@@ -71,8 +73,6 @@ export const StyledFilterHeaderGroup = styled.div<{ isActive: boolean }>`
 
 	color: ${({ isActive }) =>
 		isActive ? tokens.colors.interactive.primary__resting.hex : tokens.colors.text.static_icons__default.hex};
-
-	margin-bottom: 5px;
 `;
 
 export const StyledSearchButton = styled(Button)`

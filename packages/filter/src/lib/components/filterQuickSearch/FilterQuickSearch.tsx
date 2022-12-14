@@ -13,7 +13,7 @@ export const FilterQuickSearch = (): JSX.Element => {
 
 	const searchOptions = [];
 
-	const [searchMode, setSearchMode] = useState<SearchMode>('id/desc');
+	const [searchMode, setSearchMode] = useState<SearchMode>(searchOptions.length ? 'id/desc' : 'all');
 
 	function handleClear(e) {
 		if (!e.isTrusted) {
@@ -40,12 +40,15 @@ export const FilterQuickSearch = (): JSX.Element => {
 	}
 	return (
 		<>
-			<SearchPickerDropdown
-				menuItems={[
-					{ title: 'All', onCLick: () => setSearchMode('all') },
-					{ title: 'ID and title (default) ', onCLick: () => setSearchMode('id/desc') },
-				]}
-			/>
+			{!!searchOptions.length && (
+				<SearchPickerDropdown
+					menuItems={[
+						{ title: 'All', onCLick: () => setSearchMode('all') },
+						{ title: 'ID and title (default) ', onCLick: () => setSearchMode('id/desc') },
+					]}
+				/>
+			)}
+
 			<EdsSearch
 				hasValue={Boolean(searchText)}
 				size={200}

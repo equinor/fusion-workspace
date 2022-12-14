@@ -1,46 +1,44 @@
-import { FusionMediator } from '../types';
+import { FusionMediator, GetIdentifier } from '../types';
 import { BrowserHistory } from 'history';
+import { BaseEvent } from '@equinor/workspace-core';
 
 /** A union type of the workspace query parameters */
 type QueryParamTopic = 'item' | 'tab';
 
-/** Defines the type for the query parameter */
-export type QueryParam = `${QueryParamTopic}=${string}`;
+type QueryParam = [QueryParamTopic, string | undefined];
 
 /**
  * Function for patching query parameters without manipulating the other query parameters
  */
-export function updateQueryParams<TData>(val: QueryParam[], mediator: FusionMediator<TData>, history: BrowserHistory) {
-	/** Remove all topics from existing url that you want to replace */
-	const existingQueryParams = mediator.urlService.url.queryParams.filter((queryParam) =>
-		patchQueryParams(queryParam, val)
-	);
-
-	const newQueryParams = [...existingQueryParams, ...val].sort();
-
-	/** Dont update url if nothing changed */
-	if (arrayToQueryParam(mediator.urlService.url.queryParams) === arrayToQueryParam(newQueryParams)) return;
-
-	history.push(`?${arrayToQueryParam(newQueryParams)}`);
-}
-
-export function configureUrlWithHistory<TData>(mediator: FusionMediator<TData>, history: BrowserHistory) {
-	history.listen(({ location }) => {
-		mediator.urlService.setUrl(`${window.location.href}${location.search}`);
+export function updateQueryParams<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(val: QueryParam[], mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, history: BrowserHistory) {
+	val.forEach((val) => {
+		const [topic, value] = val;
+		if (!value) {
+			mediator.urlService.url.searchParams.delete(topic);
+		} else {
+			mediator.urlService.url.searchParams.set(topic, value);
+		}
 	});
+	history.push(mediator.urlService.url.toString());
 }
 
-function arrayToQueryParam(args: string[]) {
-	return args
-		.map((s) => `${s}`)
-		.toString()
-		.replace(',', '&');
-}
+export function configureUrlWithHistory<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>(mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, history: BrowserHistory) {
+	const unsub = history.listen(() => {
+		mediator.urlService.url = new URL(window.location.href);
+	});
 
-/**
- * Returns false if the query param exists in the query params array
- * @returns boolean
- */
-function patchQueryParams(queryParam: string, newQueryParams: QueryParam[]) {
-	return !newQueryParams.map((s) => s.split('=')[0]).includes(queryParam.split('=')[0]);
+	mediator.onUnMount(() => unsub());
+
+	mediator.selectionService.selectedNodes$.subscribe((nodes) => {
+		const [id] = nodes.map((s) => s.id);
+		updateQueryParams([['item', id]], mediator, history);
+	});
 }

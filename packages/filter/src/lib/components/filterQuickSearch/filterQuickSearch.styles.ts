@@ -5,4 +5,7 @@ import styled from 'styled-components';
 
 export const EdsSearch = styled(Search)<{ hasValue: boolean }>`
 	border: ${({ hasValue }) => (hasValue ? `1px solid ${tokens.colors.interactive.primary__resting.hex}` : 'none')};
+	> div {
+		box-shadow: none;
+	}
 `;

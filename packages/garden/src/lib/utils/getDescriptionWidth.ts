@@ -1,10 +1,12 @@
 import { GardenItem, GardenItemWithDepth } from '../types';
 
-type PackageWithDescription<T> = T & {
+type PackageWithDescription<T extends Record<PropertyKey, unknown>> = T & {
 	description: string;
 };
 /** Type guard for a package object checking whether or not it contains a description property */
-function packageHasDescription<T>(packageObj: T): packageObj is PackageWithDescription<T> {
+function packageHasDescription<T extends Record<PropertyKey, unknown>>(
+	packageObj: T
+): packageObj is PackageWithDescription<T> {
 	if (
 		(packageObj as PackageWithDescription<T>)?.description !== undefined &&
 		(packageObj as PackageWithDescription<T>).description !== null
@@ -14,7 +16,9 @@ function packageHasDescription<T>(packageObj: T): packageObj is PackageWithDescr
 		return false;
 	}
 }
-export function columnDataIsWithDepth<T>(packageObj: GardenItem<T>[]): packageObj is GardenItemWithDepth<T>[] {
+export function columnDataIsWithDepth<T extends Record<PropertyKey, unknown>>(
+	packageObj: GardenItem<T>[]
+): packageObj is GardenItemWithDepth<T>[] {
 	if ((packageObj[0] as GardenItemWithDepth<T>)?.item !== undefined) {
 		return true;
 	} else {
@@ -22,7 +26,10 @@ export function columnDataIsWithDepth<T>(packageObj: GardenItem<T>[]): packageOb
 	}
 }
 
-const getTextLengthToBeDisplayed = <T>(gardenItem: T, customDescription?: (item: T) => string) => {
+const getTextLengthToBeDisplayed = <T extends Record<PropertyKey, unknown>>(
+	gardenItem: T,
+	customDescription?: (item: T) => string
+) => {
 	if (customDescription) {
 		return customDescription(gardenItem);
 	} else {
@@ -33,7 +40,7 @@ const getTextLengthToBeDisplayed = <T>(gardenItem: T, customDescription?: (item:
  * @param columnData One column from the garden
  * @returns Longest description string
  */
-export const getLongestDescription = <T>(
+export const getLongestDescription = <T extends Record<PropertyKey, unknown>>(
 	columnData: GardenItem<T>[],
 	customDescription?: (item: T | GardenItem<T>) => string
 ): string => {
@@ -60,7 +67,7 @@ export const getLongestDescription = <T>(
  * @param columnData One column from the garden
  * @returns A calculated width based on string length and font
  */
-export const getDescriptionWidth = <T>(
+export const getDescriptionWidth = <T extends Record<PropertyKey, unknown>>(
 	columnData: GardenItem<T>[] | null,
 	customDescription?: (item: T | GardenItem<T>) => string
 ): number => {

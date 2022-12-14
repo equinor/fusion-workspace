@@ -1,8 +1,8 @@
-export type GardenGroup<T> = {
-	groupKey: keyof T;
+export type GardenGroup<TData extends Record<PropertyKey, unknown>> = {
+	groupKey: keyof TData;
 	value: string;
-	subGroups: GardenGroups<T>;
-	items: T[];
+	subGroups: GardenGroups<TData>;
+	items: TData[];
 	isExpanded: boolean;
 	count: number;
 	subGroupCount: number;
@@ -10,8 +10,8 @@ export type GardenGroup<T> = {
 	depth: number;
 };
 
-export type GardenGroups<T> = GardenGroup<T>[];
+export type GardenGroups<TData extends Record<PropertyKey, unknown>> = GardenGroup<TData>[];
 
-export interface GroupDescriptionFunc<T> {
-	(data: T, groupingKey: string): string;
+export interface GroupDescriptionFunc<TData> {
+	(data: TData, groupingKey: string): string;
 }

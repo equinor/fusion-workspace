@@ -1,37 +1,40 @@
 import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
 import { PreGroupByFiltering } from '../types';
 
-interface GroupByArgs<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> {
+type GroupByArgs<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = {
 	arr: TData[];
-	keys: string[];
-	groupDescriptionFunc?: GroupDescriptionFunc<TData>;
-	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
+	keys: (keyof TData | TExtendedFields)[];
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	isExpanded?: boolean;
 	preGroupFiltering: PreGroupByFiltering<TData>;
 	customGroupByKeys?: TCustomGroupByKeys;
 	depth: number;
-}
+};
 
-const lookupGroup = <T>(acc: GardenGroups<T>, valueKey: string): GardenGroup<T> | undefined => {
+const lookupGroup = <T extends Record<PropertyKey, unknown>>(
+	acc: GardenGroups<T>,
+	valueKey: string
+): GardenGroup<T> | undefined => {
 	return acc.find((x) => x.value === valueKey);
 };
 
 export function groupBy<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
 >({
 	arr,
 	keys,
 	customGroupByKeys,
 	fieldSettings,
-	groupDescriptionFunc = () => '',
 	isExpanded,
 	preGroupFiltering,
 	depth,
-}: GroupByArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
+}: GroupByArgs<TData, TExtendedFields, TCustomGroupByKeys>): GardenGroups<TData> {
 	const key = (keys[0] && keys[0].toString()) || undefined;
 	if (!key) return [];
 	if (!arr || arr.length === 0) return [];
@@ -45,7 +48,7 @@ export function groupBy<
 		gardengroups = groupByArray({
 			arr: arr,
 			preGroupFiltering: preGroupFiltering,
-			key: key,
+			key: key as keyof TData | TExtendedFields,
 			fieldSettings: fieldSettings,
 			isExpanded: depth === 0 ? true : isExpanded,
 		});
@@ -53,7 +56,7 @@ export function groupBy<
 		gardengroups = preGroupFiltering(arr, key).reduce((acc, item) => {
 			const itemKeys: string[] | string = fieldSetting?.getKey
 				? fieldSetting.getKey(item, fieldSetting?.key || key, customGroupByKeys)
-				: item[key];
+				: (item[key] as string);
 
 			const itemKeysArray = Array.isArray(itemKeys) ? itemKeys : [itemKeys];
 			itemKeysArray.forEach((valueKey: string) => {
@@ -72,7 +75,6 @@ export function groupBy<
 						isExpanded: Boolean(depth === 0 ? true : isExpanded),
 						items: [item],
 						subGroups: [],
-						description: groupDescriptionFunc(item, key),
 						subGroupCount: 0,
 						depth: depth,
 					});
@@ -91,7 +93,6 @@ export function groupBy<
 		gardengroups[index].subGroups = groupBy({
 			arr: gardengroups[index].items,
 			keys: nextKeys,
-			groupDescriptionFunc: groupDescriptionFunc,
 			fieldSettings: fieldSettings,
 			isExpanded: isExpanded,
 			customGroupByKeys: customGroupByKeys,
@@ -109,19 +110,21 @@ export function groupBy<
 	return gardengroups;
 }
 
-interface GroupByArrayArgs<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
-> {
+type GroupByArrayArgs<
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+> = {
 	arr: TData[];
-	key: keyof TData | string;
+	key: keyof TData | TExtendedFields;
 	preGroupFiltering: (arr: TData[], groupByKey: string) => TData[];
-	fieldSettings?: FieldSettings<TData, TCustomGroupByKeys, string>;
+	fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
 	isExpanded?: boolean;
-}
+};
 
 function groupByArray<
-	TData,
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
 	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
 >({
 	arr,
@@ -129,15 +132,15 @@ function groupByArray<
 	preGroupFiltering,
 	fieldSettings,
 	isExpanded,
-}: GroupByArrayArgs<TData, TCustomGroupByKeys>): GardenGroups<TData> {
+}: GroupByArrayArgs<TData, TExtendedFields, TCustomGroupByKeys>): GardenGroups<TData> {
 	const fieldSetting = fieldSettings?.[key];
 	const childKey = fieldSetting?.key;
 
 	/** List of all unique identifiers in child array of all arr entries  */
 	const groupNames = preGroupFiltering(arr, key as string).reduce((prev, curr) => {
-		const childArray = curr[key as string]
-			.map((nestedObject: Record<string, unknown> | string | number) =>
-				typeof nestedObject === 'object' ? nestedObject[childKey as string] : nestedObject
+		const childArray = (curr[key as string] as Array<Record<PropertyKey, unknown> | string | number>)
+			.map((nestedObject: Record<string, unknown> | string | number): string | number =>
+				typeof nestedObject === 'object' ? (nestedObject[childKey as string] as string | number) : nestedObject
 			)
 			.filter((v: string | number, i: number, a: Array<string | number>) => a.indexOf(v) === i) as Array<
 			number | string
@@ -158,7 +161,7 @@ function groupByArray<
 			isExpanded: Boolean(isExpanded),
 			subGroups: [],
 			value: groupName as string,
-			count: 0,
+			count: parentsContainingChildren.length,
 			items: parentsContainingChildren,
 			subGroupCount: 0,
 			depth: 0,
@@ -166,14 +169,14 @@ function groupByArray<
 	});
 
 	/** Makes a group for the items with an empty array */
-	const blanks = arr.filter((item) => item[key as string].length === 0);
+	const blanks = arr.filter((item) => (item[key as string] as Array<unknown>).length === 0);
 
 	if (blanks.length > 0) {
 		groups.push({
 			groupKey: key as keyof TData,
 			isExpanded: Boolean(isExpanded),
 			subGroups: [],
-			count: 0,
+			count: blanks.length,
 			value: '(Blank)',
 			items: blanks,
 			subGroupCount: 0,
@@ -184,6 +187,6 @@ function groupByArray<
 	return groups;
 }
 
-function getChildArray<T>(item: T, key: string) {
+function getChildArray<T extends Record<PropertyKey, unknown>>(item: T, key: string) {
 	return item[key as keyof T] as unknown as Array<Record<string, unknown>>;
 }

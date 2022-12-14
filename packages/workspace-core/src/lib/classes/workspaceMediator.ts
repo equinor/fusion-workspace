@@ -1,12 +1,13 @@
-import { ObjectType } from '../types';
+import { createEventService } from '../utils/services/eventService';
+import { ObjectType, BaseEvent } from '../types';
 import {
-	createClickService,
 	createErrorService,
 	createDataService,
 	createSelectionService,
 	createBookmarksService,
+	createUrlService,
+	createContextService,
 } from '../utils';
-import { URLService } from './urlService/urlService';
 
 /**
  * Class to act as a mediator in the workspace
@@ -15,9 +16,11 @@ import { URLService } from './urlService/urlService';
  */
 export class WorkspaceMediator<
 	TData,
-	TOnClick extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+	TNode,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
-	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>
+	TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
+	TContext extends Record<PropertyKey, unknown> = never
 > {
 	/**
 	 * Callback that returns an instance of itself
@@ -28,20 +31,29 @@ export class WorkspaceMediator<
 		return this;
 	};
 
-	bookmarkService = createBookmarksService<TBookmarkState>();
+	#destructors = new Array<VoidFunction>();
 
-	urlService = new URLService();
+	#appendDestructor = (destructor: VoidFunction) => {
+		this.#destructors.push(destructor);
+	};
 
-	selectionService = createSelectionService();
+	bookmarkService = createBookmarksService<TBookmarkState>(this.#appendDestructor);
 
-	dataService = createDataService<TData>();
+	urlService = createUrlService(this.#appendDestructor);
 
-	clickService = createClickService<TOnClick>();
+	selectionService = createSelectionService<TNode>(this.#appendDestructor);
 
-	errorService = createErrorService<TError>();
+	sidesheetService = createEventService<TSidesheetEvents>(this.#appendDestructor);
+
+	dataService = createDataService<TData>(this.#appendDestructor);
+
+	errorService = createErrorService<TError>(this.#appendDestructor);
+
+	contextService = createContextService<TContext>(this.#appendDestructor);
 
 	/** Call this function when mediator should be destroyed */
 	destroy = () => {
+		this.#destructors.forEach((destroy) => destroy());
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
 			delete this[key];

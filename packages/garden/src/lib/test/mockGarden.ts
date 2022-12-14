@@ -1,15 +1,15 @@
 import { GardenConfig } from '../types';
 
-export interface MockInterface {
+export type MockInterface = {
 	id: string;
 	name: string;
-}
+};
 
-export const defaultGardenConfig: GardenConfig<MockInterface, any, any, unknown> = {
+export const defaultGardenConfig: GardenConfig<MockInterface, any, any, Record<PropertyKey, unknown>> = {
 	data: [],
 	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-	nodeLabelCallback: (s) => s.name,
-	objectIdentifier: 'id',
+	getDisplayName: (s) => s.name,
+	getIdentifier: (s) => s.id,
 	clickEvents: {},
 	customGroupByKeys: {},
 	fieldSettings: {},

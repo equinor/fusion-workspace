@@ -1,3 +1,3 @@
-export { SidesheetController } from './classes';
+export * from './hooks';
+export * from './utils';
 export * from './types';
-export { useSidesheetItem, useSidesheet, useSidesheetState } from './hooks';

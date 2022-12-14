@@ -12,13 +12,14 @@ export const StyledLeftSection = styled.div`
 	align-items: center;
 	padding-left: 16px;
 	gap: 0.5em;
+	max-width: 450px;
 `;
 
 export const StyledRightSection = styled.div`
 	display: flex;
 	gap: 2em;
 	align-items: center;
-	padding-right: 2px;
+	padding-right: 0.5rem;
 `;
 
 export const StyledSearchLine = styled.div`

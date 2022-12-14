@@ -12,16 +12,24 @@ import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer'
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
 
-type VirtualGardenProps<T> = {
+type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
 	width?: number;
-	handleOnItemClick: (item: T) => void;
+	handleOnItemClick: (item: TData) => void;
 };
 
-export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenProps<T>): JSX.Element => {
+export const VirtualGarden = <
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown>
+>({
+	width,
+	handleOnItemClick,
+}: VirtualGardenProps<TData>): JSX.Element => {
 	const parentRef = useRef<HTMLDivElement | null>(null);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const garden = useGardenGroups();
+	const garden = useGardenGroups<TData>();
 	const {
 		grouping: {
 			value: { horizontalGroupingAccessor: gardenKey },
@@ -29,7 +37,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 		visuals: { rowHeight, highlightHorizontalColumn },
 		customViews: { customGroupView, customItemView },
 		customGroupByKeys,
-	} = useGardenContext();
+	} = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 
 	const refresh = useRefresh();
 
@@ -64,7 +72,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 	const packageChild = customItemView ?? undefined;
 
 	const handleExpand = useCallback(
-		<T,>(subGroup: GardenGroup<T>): void => {
+		<T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
 			subGroup.isExpanded = !subGroup.isExpanded;
 
 			refresh();
@@ -74,7 +82,7 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 	const highlightedColumn = useMemo(
 		() =>
 			highlightHorizontalColumn
-				? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value ?? {})
+				? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value)
 				: undefined,
 		[highlightHorizontalColumn, gardenKey, customGroupByKeys]
 	);
@@ -96,15 +104,15 @@ export const VirtualGarden = <T,>({ width, handleOnItemClick }: VirtualGardenPro
 			<HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
 			{columnVirtualizer.virtualItems.map((virtualColumn) => {
 				const currentColumn = garden[virtualColumn.index];
-				const columnItems = getGardenItems<T>(currentColumn as GardenGroup<T>, true);
+				const columnItems = getGardenItems<TData>(currentColumn, true);
 
 				return (
 					<Fragment key={virtualColumn.index}>
 						<GardenItemContainer
 							rowVirtualizer={rowVirtualizer}
 							items={columnItems}
-							packageChild={packageChild as CustomVirtualViews<T>['customItemView']}
-							customSubGroup={customGroupView as CustomVirtualViews<T>['customGroupView']}
+							packageChild={packageChild}
+							customSubGroup={customGroupView}
 							handleExpand={handleExpand}
 							itemWidth={width}
 							handleOnClick={handleOnItemClick}

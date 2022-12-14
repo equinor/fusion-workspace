@@ -8,5 +8,5 @@ export const StyledActionBar = styled.div`
 	justify-content: space-between;
 	border-bottom: 2px solid ${tokens.colors.ui.background__medium.hex};
 	height: 45px;
-	padding: 0 1em;
+	width: 100%;
 `;

@@ -1,9 +1,8 @@
 import { useFilterContext } from '../hooks';
 import { QuickFilter } from './quickFilter/QuickFilter';
-import { playlist_add, search, drag_handle } from '@equinor/eds-icons';
+import { playlist_add, search, drag_handle, chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
-Icon.add({ playlist_add, search, drag_handle });
-
+Icon.add({ playlist_add, search, drag_handle, chevron_down, chevron_up });
 /**
  * CC filter used in workspace
  * Requires being wrapped in FilterContextProvider

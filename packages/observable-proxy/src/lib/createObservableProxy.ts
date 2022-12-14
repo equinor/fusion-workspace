@@ -11,7 +11,6 @@ function createSubjects<T extends Record<PropertyKey, unknown>>(obj: T) {
 		subjects.set(`${key}$`, subject);
 		object[`${key}$`] = subject.asObservable();
 	});
-
 	return {
 		subjects,
 		object,

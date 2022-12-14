@@ -1,12 +1,13 @@
-import { ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@workspace/workspace-core';
+import { BaseEvent, ObjectType, Observable, OnchangeCallback, WorkspaceMediator } from '@equinor/workspace-core';
 
 export class WorkspaceReactMediator<
 	TData,
-	TOnClick extends ObjectType<TOnClick> = ObjectType<unknown>,
+	TNode,
+	TSidesheetEvents extends BaseEvent,
 	TError extends ObjectType<TError> = ObjectType<unknown>,
 	TContext extends ObjectType<TContext> = ObjectType<unknown>,
 	TBookmarkState extends ObjectType<TBookmarkState> = ObjectType<unknown>
-> extends WorkspaceMediator<TData, TOnClick, TError, TBookmarkState> {
+> extends WorkspaceMediator<TData, TNode, TSidesheetEvents, TError, TBookmarkState, TContext> {
 	/**
 	 * Callback that returns an instance of itself
 	 * Helpful when chaining
@@ -15,12 +16,6 @@ export class WorkspaceReactMediator<
 		cb(this);
 		return this;
 	};
-
-	isSidesheetOpen = false;
-
-	setIsSidesheetOpen: (value: boolean) => void;
-
-	onSidesheetStateChange: (callback: OnchangeCallback<boolean>) => () => void;
 
 	isLoading = false;
 
@@ -36,21 +31,18 @@ export class WorkspaceReactMediator<
 
 	setUnmount: () => void;
 
-	constructor() {
+	getIdentifier: (item: TData) => string;
+
+	constructor(getIdentifier: (item: TData) => string) {
 		super();
+		this.getIdentifier = getIdentifier;
+
 		const isLoading = new Observable(this.isLoading);
 		isLoading.onchange((val) => {
 			this.isLoading = val;
 		});
 		this.setIsLoading = isLoading.setValue;
 		this.onIsLoadingChange = isLoading.onchange;
-
-		const isSidesheetOpen = new Observable(this.isSidesheetOpen);
-		isSidesheetOpen.onchange((val) => {
-			this.isSidesheetOpen = val;
-		});
-		this.setIsSidesheetOpen = isSidesheetOpen.setValue;
-		this.onSidesheetStateChange = isSidesheetOpen.onchange;
 
 		const mounted = new Observable(false);
 		this.onMount = mounted.onchange;
@@ -60,5 +52,8 @@ export class WorkspaceReactMediator<
 		const unMounted = new Observable(false);
 		this.onUnMount = unMounted.onchange;
 		this.setUnmount = () => unMounted.setValue(!mounted.value);
+
+		/** Destroys itself if it unmounts */
+		this.onUnMount(this.destroy);
 	}
 }

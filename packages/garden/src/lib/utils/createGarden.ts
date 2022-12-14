@@ -3,32 +3,27 @@ import { BaseRecordObject, GardenGroups } from '../types';
 import { groupBy } from '../utils/groupBy';
 
 export function createGarden<
-	TData,
-	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>,
-	TContext = unknown
->(props: GardenController<TData, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
+	TData extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+	TContext extends Record<PropertyKey, unknown> = never
+>(props: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>): GardenGroups<TData> {
 	const {
 		grouping: {
 			value: { horizontalGroupingAccessor, verticalGroupingKeys },
 		},
-		data: { value: data },
+		getData,
 		visuals,
 		fieldSettings,
 		customGroupByKeys,
 	} = props;
-	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string];
-	if (verticalGroupingKeys) {
-		verticalGroupingKeys.forEach((key) => {
-			allGroupingKeys.push(key);
-		});
-	}
+	const allGroupingKeys: string[] = [horizontalGroupingAccessor as string, ...verticalGroupingKeys];
 
 	const groupedData = groupBy({
-		arr: data,
-		keys: allGroupingKeys,
-		groupDescriptionFunc: visuals?.getGroupDescriptionFunc,
+		arr: getData(),
+		keys: allGroupingKeys as (TExtendedFields | keyof TData)[],
 		fieldSettings: fieldSettings,
-		isExpanded: visuals?.collapseSubGroupsByDefault,
+		isExpanded: !visuals?.collapseSubGroupsByDefault,
 		customGroupByKeys: customGroupByKeys?.value,
 		preGroupFiltering: (s) => s,
 		depth: 0,

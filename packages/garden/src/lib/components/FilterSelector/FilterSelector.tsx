@@ -1,19 +1,32 @@
 import { SingleSelect } from '@equinor/eds-core-react';
+import { createGardenProp } from '../../utils/createGardenProp';
 import { Fragment, useCallback, useMemo } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
 import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
-const getFieldSettingsKeyFromLabel = <T,>(label: string, fieldSettings: FieldSettings<T, string>) =>
-	Object.keys(fieldSettings).find((k) => fieldSettings[k]?.label === label) || label;
+const getFieldSettingsKeyFromLabel = <
+	T extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+>(
+	label: string,
+	fieldSettings: FieldSettings<T, TExtendedFields, TCustomGroupByKeys>
+) => Object.keys(fieldSettings).find((k) => fieldSettings[k]?.label === label) || label;
 
-const getFieldSettingsLabelFromKey = <T,>(key: string, fieldSettings: FieldSettings<T, string>) =>
-	fieldSettings?.[key]?.label || key;
+const getFieldSettingsLabelFromKey = <
+	T extends Record<PropertyKey, unknown>,
+	TExtendedFields extends string = never,
+	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+>(
+	key: string,
+	fieldSettings: FieldSettings<T, TExtendedFields, TCustomGroupByKeys>
+) => fieldSettings?.[key]?.label || key;
 
 export function FilterSelector(): JSX.Element | null {
-	const { setHorizontalGroupingAccessor, setVerticalGroupingKeys, customViews, data, fieldSettings } =
-		useGardenContext();
+	const controller = useGardenContext();
+	const { setHorizontalGroupingAccessor, setVerticalGroupingKeys, customViews, getData, fieldSettings } = controller;
 
 	const { gardenKey, groupByKeys } = useGroupingKeys();
 
@@ -32,8 +45,8 @@ export function FilterSelector(): JSX.Element | null {
 		() =>
 			fieldSettings && Object.keys(fieldSettings).length
 				? Object.keys(fieldSettings)
-				: Object.keys(data?.value[0] as Record<string, unknown>),
-		[fieldSettings, data.value]
+				: Object.keys(getData()[0] as Record<string, unknown>),
+		[fieldSettings, getData]
 	);
 
 	const filterGroupKey = useCallback(
@@ -43,14 +56,14 @@ export function FilterSelector(): JSX.Element | null {
 
 	const groupingOptions = useMemo(
 		(): string[] =>
-			data.value.length
+			getData().length
 				? allOptions
 						.filter(filterGroupKey)
 						.map((groupKey) => fieldSettings?.[groupKey]?.label || groupKey)
 						.sort()
 				: [],
 
-		[data, fieldSettings, filterGroupKey, allOptions]
+		[getData, fieldSettings, filterGroupKey, allOptions]
 	);
 
 	const handleExistingSelectionChange = useCallback(
@@ -79,11 +92,11 @@ export function FilterSelector(): JSX.Element | null {
 		},
 		[fieldSettings, setGardenKey]
 	);
-	if (!data) return null;
+	if (!getData()) return null;
 
 	return (
 		<StyledSelectRowWrapper>
-			{CustomGroupByView && <CustomGroupByView />}
+			{CustomGroupByView && <CustomGroupByView controller={createGardenProp(controller)} />}
 
 			<StyledSeparator> Group by </StyledSeparator>
 

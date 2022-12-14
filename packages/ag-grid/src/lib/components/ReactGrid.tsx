@@ -1,5 +1,7 @@
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { useMemo } from 'react';
+import { useEffectOnce } from '../hooks/useEffectOnce';
+import { GridController } from '../types';
+import { useState } from 'react';
 import { createGridController } from '../utils';
 import { Grid } from './Grid';
 
@@ -24,13 +26,38 @@ export function ReactGrid<TData extends Record<PropertyKey, unknown>>({
 	colDefs,
 	gridOptions,
 }: ReactGridProps<TData>) {
-	const controller = useMemo(() => {
-		const cont = createGridController(() => '');
-		cont.columnDefs = colDefs;
-		cont.rowData = rowData;
-		cont.gridOptions = gridOptions;
-		return cont;
-	}, [colDefs, gridOptions, rowData]);
+	const [controller, setController] = useState<null | GridController<TData>>(null);
+
+	useEffectOnce(() => {
+		let teardown: VoidFunction | null = null;
+		const contr = createGridController<TData, {}>(
+			() => '',
+			(destroy) => {
+				teardown = () => destroy();
+			}
+		);
+		contr.columnDefs = colDefs;
+		contr.rowData = rowData;
+		contr.gridOptions = gridOptions;
+		setController(contr);
+
+		return () => {
+			if (teardown) {
+				teardown();
+			}
+		};
+	});
+
+	if (!controller) return null;
+	if (controller.rowData !== rowData) {
+		controller.rowData = rowData;
+	}
+	if (controller.gridOptions !== gridOptions) {
+		controller.gridOptions = gridOptions;
+	}
+	if (controller.columnDefs !== colDefs) {
+		controller.columnDefs = colDefs;
+	}
 
 	return <Grid controller={controller} height={height} />;
 }

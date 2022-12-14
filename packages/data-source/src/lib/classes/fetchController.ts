@@ -1,8 +1,20 @@
-import { Observable, OnchangeCallback } from '@workspace/workspace-core';
+import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 import { FetchData } from '../types';
 
 export class FetchController<TData> {
 	private fetch: FetchData<TData>;
+
+	setFetch = (fetch: FetchData<TData>) => {
+		this.fetch = fetch;
+	};
+
+	reset = () => {
+		this.data = undefined;
+		this.currAbort = undefined;
+		this.dataPromise = undefined;
+		this.isLoading = false;
+		this.isFetching = false;
+	};
 
 	/** Returns true if it aborted an api call */
 	abort = (): boolean => {
@@ -17,6 +29,7 @@ export class FetchController<TData> {
 
 	constructor(fetch: FetchData<TData>) {
 		this.fetch = fetch;
+
 		const fetching = new Observable<boolean>(this.isFetching, (a, b) => a === b);
 		this.onIsFetchingChanged = fetching.onchange;
 		this.setIsFetching = fetching.setValue;

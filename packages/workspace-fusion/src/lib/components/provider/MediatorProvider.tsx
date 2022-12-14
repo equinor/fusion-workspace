@@ -1,15 +1,32 @@
+import { BaseEvent } from '@equinor/workspace-core';
 import { createContext, ReactNode } from 'react';
 import { useMediatorAsState } from '../../hooks';
 import { FusionMediator } from '../../types';
 
-interface MediatorProviderProps<TData, TError> {
+type MediatorProviderProps<
+	TData extends Record<PropertyKey, unknown>,
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+> = {
 	children: ReactNode;
-	mediator: FusionMediator<TData, TError>;
-}
-export const MediatorProvider = <TData, TError>({ children, mediator }: MediatorProviderProps<TData, TError>) => (
-	<MediatorContext.Provider value={useMediatorAsState(mediator) as FusionMediator<unknown, unknown>}>
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
+};
+export const MediatorProvider = <
+	TData extends Record<PropertyKey, unknown>,
+	TError,
+	TContext extends Record<PropertyKey, unknown> = never,
+	TCustomSidesheetEvents extends BaseEvent = never
+>({
+	children,
+	mediator,
+}: MediatorProviderProps<TData, TContext, TCustomSidesheetEvents>) => (
+	<MediatorContext.Provider
+		value={useMediatorAsState(mediator as unknown as FusionMediator<Record<PropertyKey, unknown>, never>)}
+	>
 		{children}
 	</MediatorContext.Provider>
 );
 
-export const MediatorContext = createContext<FusionMediator<unknown, unknown>>({} as FusionMediator<unknown, unknown>);
+export const MediatorContext = createContext<FusionMediator<Record<PropertyKey, unknown>>>(
+	{} as FusionMediator<Record<PropertyKey, unknown>>
+);
