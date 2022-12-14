@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.11.0...@equinor/workspace-fusion@0.12.0) (2022-12-14)
+
+### Features
+
+-   :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
+
+### Bug Fixes
+
+-   :bug: sidesheet close ([#256](https://github.com/equinor/fusion-workspace/issues/256)) ([52851f5](https://github.com/equinor/fusion-workspace/commit/52851f5a130a6d0e03f467638e8e289092b5af73))
+
 ## [0.11.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.10.2...@equinor/workspace-fusion@0.11.0) (2022-12-12)
 
 ### Features

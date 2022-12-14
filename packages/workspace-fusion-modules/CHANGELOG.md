@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.1.19...@equinor/workspace-fusion-modules@0.2.0) (2022-12-14)
+
+### Features
+
+-   :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
+
 ## [0.1.19](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.1.18...@equinor/workspace-fusion-modules@0.1.19) (2022-12-12)
 
 **Note:** Version bump only for package @equinor/workspace-fusion-modules
