@@ -17,6 +17,7 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	Sidesheet: (() => JSX.Element) | undefined;
 
 	addProvider = (provider: Provider) => {
+		this.providers.filter((s) => s.name !== provider.name);
 		this.providers.push(provider);
 	};
 

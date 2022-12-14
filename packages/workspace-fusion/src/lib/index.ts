@@ -1,3 +1,4 @@
 export * from './types';
+export * from './context';
 export { useWorkspace } from './hooks';
-export { Workspace } from './components';
+export { Workspace, TabButton, TabButtonDivider } from './components';
