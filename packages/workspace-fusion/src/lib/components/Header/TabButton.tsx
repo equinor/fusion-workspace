@@ -8,6 +8,7 @@ export const TabButton = styled.button<{ isActive: boolean }>`
 	border: none;
 	background: none;
 	position: relative;
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
