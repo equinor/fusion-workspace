@@ -6,6 +6,7 @@ import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 type S = {
 	id: string;
@@ -58,6 +59,8 @@ const getItems = (contextId: string) => [
 	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
 ];
 
+const client = new QueryClient();
+
 function App() {
 	const workspaceApi = useRef<WorkspaceController<S, MyTypes, { length: number }> | null>(null);
 	const [contextId, setContextId] = useState('abc');
@@ -77,43 +80,45 @@ function App() {
 	}, [contextId]);
 
 	return (
-		<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'admin' })}>open Admin</button>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'custom2', props: { id: '123' } })}>
-				Open custom2
-			</button>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'create_sidesheet' })}>
-				Open create
-			</button>
-			<Workspace
-				onWorkspaceReady={(ev) => {
-					workspaceApi.current = ev.api;
-				}}
-				contextOptions={contextOptions}
-				statusBarOptions={statusBarOptions}
-				workspaceOptions={options}
-				gridOptions={gridOptions}
-				gardenOptions={gardenOptions}
-				filterOptions={filterOptions}
-				sidesheetOptions={sidesheet}
-				dataOptions={{
-					getResponseAsync: getResponseAsync,
-					queryKey: ['Workspace', contextId],
-				}}
-				modules={[
-					BookmarksModule({
-						getBookmark: async (id, signal) => {
-							return {
-								garden: {
-									groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },
-									selectedNodes: [],
-								},
-							};
-						},
-					}),
-				]}
-			/>
-		</div>
+		<QueryClientProvider client={client}>
+			<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+				<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'admin' })}>open Admin</button>
+				<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'custom2', props: { id: '123' } })}>
+					Open custom2
+				</button>
+				<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'create_sidesheet' })}>
+					Open create
+				</button>
+				<Workspace
+					onWorkspaceReady={(ev) => {
+						workspaceApi.current = ev.api;
+					}}
+					contextOptions={contextOptions}
+					statusBarOptions={statusBarOptions}
+					workspaceOptions={options}
+					gridOptions={gridOptions}
+					gardenOptions={gardenOptions}
+					filterOptions={filterOptions}
+					sidesheetOptions={sidesheet}
+					dataOptions={{
+						getResponseAsync: getResponseAsync,
+						queryKey: ['Workspace', contextId],
+					}}
+					modules={[
+						BookmarksModule({
+							getBookmark: async (id, signal) => {
+								return {
+									garden: {
+										groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },
+										selectedNodes: [],
+									},
+								};
+							},
+						}),
+					]}
+				/>
+			</div>
+		</QueryClientProvider>
 	);
 }
 
@@ -124,8 +129,13 @@ const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
 	CreateSidesheet: () => {
 		return <div style={{ width: '300px' }}>Am create sideshet</div>;
 	},
-	DetailsSidesheet: () => {
-		return <div style={{ width: '300px' }}>am details</div>;
+	DetailsSidesheet: (props) => {
+		return (
+			<div style={{ width: '300px' }}>
+				am details
+				<button onClick={() => props.controller.invalidate && props.controller.invalidate()}>Invalidate</button>
+			</div>
+		);
 	},
 
 	//type: "advanced"
