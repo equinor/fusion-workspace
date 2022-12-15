@@ -90,9 +90,6 @@ function App() {
 					Open create
 				</button>
 				<Workspace
-					onWorkspaceReady={(ev) => {
-						workspaceApi.current = ev.api;
-					}}
 					contextOptions={contextOptions}
 					statusBarOptions={statusBarOptions}
 					workspaceOptions={options}
