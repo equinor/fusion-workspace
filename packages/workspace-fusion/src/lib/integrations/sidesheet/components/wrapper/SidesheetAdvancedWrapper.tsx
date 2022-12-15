@@ -3,6 +3,8 @@ import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
 import { SidesheetAdvanced } from '../../sidesheet';
+import { useQueryContext } from 'lib/integrations/data-source';
+import { useQueryClient } from 'react-query';
 
 type SidesheetAdvancedWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
@@ -27,6 +29,9 @@ export const SidesheetAdvancedWrapper = <
 		TCustomSidesheetEvents | WorkspaceSidesheets<TData>
 	> | null>(null);
 
+	const { queryKey } = useQueryContext();
+	const queryClient = useQueryClient();
+
 	const handleSetter = useCallback(
 		(
 			ev: IsNeverType<
@@ -50,7 +55,17 @@ export const SidesheetAdvancedWrapper = <
 
 	if (!currEv || !config.Sidesheet) return null;
 
-	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
+	return (
+		<config.Sidesheet
+			ev={currEv}
+			controller={{
+				close: () => handleSetter(null),
+				invalidate: () => {
+					queryClient.invalidateQueries({ queryKey: queryKey });
+				},
+			}}
+		/>
+	);
 };
 const key: WorkspaceSidesheets<any>['type'] = 'details_sidesheet';
 

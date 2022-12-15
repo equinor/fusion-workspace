@@ -2,6 +2,8 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { useState, useEffect, useCallback } from 'react';
 import { createSidesheetEventKey, detailSidesheetEventKey, SidesheetSimple } from '../../sidesheet';
+import { useQueryContext } from '../../../../integrations/data-source';
+import { useQueryClient } from 'react-query';
 
 type SidesheetSimpleWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
@@ -21,6 +23,9 @@ export const SidesheetSimpleWrapper = <
 	mediator,
 }: SidesheetSimpleWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
 	const [currEv, setCurrEv] = useState<WorkspaceSidesheets<TData> | null>(null);
+
+	const { queryKey } = useQueryContext();
+	const queryClient = useQueryClient();
 
 	const handleSetter = useCallback(
 		(ev: WorkspaceSidesheets<TData> | null) => {
@@ -63,7 +68,12 @@ export const SidesheetSimpleWrapper = <
 				<config.DetailsSidesheet
 					id={currEv.props.id}
 					item={currEv.props.item}
-					controller={{ close: () => handleSetter(null) }}
+					controller={{
+						close: () => handleSetter(null),
+						invalidate: () => {
+							queryClient.invalidateQueries({ queryKey: queryKey });
+						},
+					}}
 				/>
 			);
 		}
