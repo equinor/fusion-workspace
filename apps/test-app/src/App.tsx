@@ -1,4 +1,4 @@
-import Workspace, { FusionMediator, WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
+import Workspace, { WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
 import { useCallback, useRef, useState } from 'react';
@@ -63,6 +63,7 @@ function App() {
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = useCallback(async () => {
+		console.log('Look ma im a function');
 		return new Promise<Response>((res) =>
 			setTimeout(
 				() =>
@@ -97,6 +98,7 @@ function App() {
 				sidesheetOptions={sidesheet}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
+					queryKey: ['Workspace', contextId],
 				}}
 				modules={[
 					BookmarksModule({
@@ -118,7 +120,7 @@ function App() {
 export default App;
 
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
-	type: 'simple',
+	type: 'default',
 	CreateSidesheet: () => {
 		return <div style={{ width: '300px' }}>Am create sideshet</div>;
 	},

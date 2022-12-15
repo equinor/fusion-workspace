@@ -1,4 +1,4 @@
-import { DataSourceConfig } from '../data-source';
+import { DataSourceConfig } from '.';
 
 export type WorkspaceDataSourceProps<TData extends Record<PropertyKey, unknown>> = {
 	dataOptions?: DataSourceConfig<TData>;
