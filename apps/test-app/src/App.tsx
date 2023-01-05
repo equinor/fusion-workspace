@@ -6,6 +6,7 @@ import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
+import { useInlet } from '@equinor/workspace-render-up';
 
 type S = {
 	id: string;
@@ -94,6 +95,7 @@ function App() {
 				gridOptions={gridOptions}
 				gardenOptions={gardenOptions}
 				filterOptions={filterOptions}
+				customTabs={[{ Component: Test, name: 'Test', TabIcon: () => <div>Test</div> }]}
 				sidesheetOptions={sidesheet}
 				dataOptions={{
 					getResponseAsync: getResponseAsync,
@@ -115,15 +117,21 @@ function App() {
 	);
 }
 
+function Test() {
+	return <div>test</div>;
+}
+
 export default App;
 
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
-	type: 'simple',
+	type: 'default',
 	CreateSidesheet: () => {
-		return <div style={{ width: '300px' }}>Am create sideshet</div>;
+		useInlet('lets_get_weird', () => <div>Hello there</div>);
+		return <div style={{ width: '2300px' }}>Am create sideshet</div>;
 	},
-	DetailsSidesheet: () => {
-		return <div style={{ width: '300px' }}>am details</div>;
+	DetailsSidesheet: (props) => {
+		useInlet('view_settings', () => <div onClick={() => props.controller.close()}>Hijack</div>);
+		return <div style={{ width: '2300px' }}>am details</div>;
 	},
 
 	//type: "advanced"

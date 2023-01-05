@@ -1,7 +1,12 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController, Garden } from '@equinor/workspace-garden';
+import { useWorkspaceComponents } from '../../../../hooks/useWorkspaceComponents';
 import { NoDataSplashScreen } from '../../../../components/NoDataSplashScreen';
 import { FusionMediator } from '../../../../types';
+import { Icon } from '@equinor/eds-core-react';
+import { settings } from '@equinor/eds-icons';
+
+Icon.add({ settings });
 
 type GardenWrapperProps<
 	TData extends Record<PropertyKey, unknown>,
@@ -26,6 +31,7 @@ export const GardenWrapper = <
 	controller,
 	mediator,
 }: GardenWrapperProps<TData, TExtendedGardenFields, TCustomGroupByKeys, TError, TContext, TCustomSidesheetEvents>) => {
+	// useWorkspaceComponents('view_settings', () => <Icon name="settings" />);
 	return (
 		<NoDataSplashScreen mediator={mediator}>
 			<Garden controller={controller} />

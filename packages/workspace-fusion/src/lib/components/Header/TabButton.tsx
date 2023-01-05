@@ -2,7 +2,10 @@ import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 import { Divider } from '../divider/Divider';
 
-export const TabButton = styled.button<{ isActive: boolean }>`
+type TabButtonProps = {
+	isActive: boolean;
+};
+export const TabButton = styled.button<TabButtonProps>`
 	height: 48px;
 	width: 48px;
 	border: none;

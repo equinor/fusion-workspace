@@ -1,14 +1,15 @@
 import { GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
-import { GardenConfig, GardenWorkspaceHeader } from '../';
+import { GardenConfig } from '../';
 import { GardenIcon } from '../icons/GardenIcon';
-import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
+import { FusionMediator, WorkspaceTabNames } from '../../../types';
 import { configureBookmarkService } from '../utils/configureBookmarkService';
 import { configureClickEvents } from '../utils/configureClickEvents';
 import { configureDataChange } from '../utils/configureDataChange';
 import { configureGardenHighlightSelection } from '../utils/configureHighlight';
 import { GardenWrapper } from './wrapper/GardenWrapper';
 import { BaseEvent } from '@equinor/workspace-core';
+import { WorkspaceHeader } from '../../../components/Header/WorkspaceHeader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
@@ -43,6 +44,6 @@ export function addGarden<
 		Component: () => <GardenWrapper controller={gardenController} mediator={mediator} />,
 		name: 'garden',
 		TabIcon: GardenIcon,
-		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+		CustomHeader: () => <WorkspaceHeader />,
 	});
 }

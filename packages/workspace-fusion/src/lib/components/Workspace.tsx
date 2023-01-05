@@ -1,11 +1,20 @@
-import { useRef } from 'react';
+import { PropsWithChildren, useRef } from 'react';
 import { useEffectOnce, Workspace as WorkspaceView } from '@equinor/workspace-react';
 import { WorkspaceConfiguration, WorkspaceProps } from '../types';
+import { NodeStoreProvider } from '@equinor/workspace-render-up';
 
 import { didOptionsChange } from '../utils/optionsChanged/didOptionsChange';
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { createWorkspaceController } from '../utils/createWorkspaceController';
 import { BaseEvent } from '@equinor/workspace-core';
+import { useStatusBar } from '../integrations/status-bar';
+import { Filter } from '@equinor/workspace-filter';
+import { useWorkspaceComponents } from '../hooks/useWorkspaceComponents';
+import { Icon } from '@equinor/eds-core-react';
+import { add } from '@equinor/eds-icons';
+import { tokens } from '@equinor/eds-tokens';
+
+Icon.add({ add });
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
@@ -34,5 +43,60 @@ export function Workspace<
 		}
 	});
 
-	return <WorkspaceView controller={configuration.current.viewController} />;
+	return (
+		<NodeStoreProvider>
+			<CreateSidesheetHandler props={props}>
+				<WorkspaceView controller={configuration.current.viewController} />;
+			</CreateSidesheetHandler>
+		</NodeStoreProvider>
+	);
+}
+
+function CreateSidesheetHandler({ children, props }: PropsWithChildren<{ props: any }>) {
+	useCreateButton(props);
+	return <>{children}</>;
+}
+
+const useCreateButton = (props: any) =>
+	useWorkspaceComponents('create_button', () => {
+		switch (props.sidesheetOptions?.type) {
+			case 'custom': {
+				//Determine if create is active?
+				return null;
+			}
+
+			case 'default': {
+				if (props.sidesheetOptions.CreateSidesheet) {
+					return <Icon name="add" color={tokens.colors.interactive.primary__resting.hex} />;
+				}
+				return null;
+			}
+
+			default: {
+				return null;
+			}
+		}
+	});
+
+export const componentStore = {
+	filter: {
+		renderKey: 'filter',
+		fallback: <Filter />,
+	},
+	header_left: {
+		renderKey: 'header_left',
+		fallback: <StatusBar />,
+	},
+	view_settings: {
+		renderKey: 'view_settings',
+	},
+	create_button: {
+		renderKey: 'create_button',
+	},
+};
+
+function StatusBar() {
+	const StatusBar = useStatusBar();
+	if (!StatusBar) return null;
+	return <StatusBar />;
 }

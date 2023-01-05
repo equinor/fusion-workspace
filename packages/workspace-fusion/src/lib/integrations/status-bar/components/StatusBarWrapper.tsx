@@ -1,7 +1,7 @@
 import { StatusBar } from '@equinor/workspace-status-bar';
 
 import { FusionMediator } from '../../../types';
-import { StatusBarConfig } from '..';
+import { StatusBarConfig, useStatusBar } from '..';
 import { useFilteredData } from '../../../hooks/useFilteredData';
 import { BaseEvent } from '@equinor/workspace-core';
 

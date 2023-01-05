@@ -14,6 +14,7 @@ export function Filter() {
 }
 /**
  * Ensures the component is wrapped in the correct context
+ * //TODO: merge into useFilterContext
  */
 function useEnsureContext() {
 	const context = useFilterContext();
