@@ -2,6 +2,7 @@ import { useActiveTab, useControllerContext } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../../../types';
 import { TabButtonDivider, TabButtonList, TabButton } from '../../../components/Header';
 import { useWorkspaceHeaderComponents } from '../../../context/WorkspaceHeaderComponents';
+import { Fragment } from 'react';
 
 export const TabNavigation = () => {
 	const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
@@ -16,8 +17,10 @@ export const TabNavigation = () => {
 		<TabButtonList>
 			{!!leftIcons.length && (
 				<>
-					{leftIcons.map(({ Icon }) => (
-						<Icon />
+					{leftIcons.map(({ Icon, name }) => (
+						<Fragment key={name}>
+							<Icon />
+						</Fragment>
 					))}
 					<TabButtonDivider />
 				</>
@@ -28,6 +31,7 @@ export const TabNavigation = () => {
 					{analyticsTabs.map((s) => (
 						<TabButton
 							isActive={s.name === activeTab?.name}
+							key={s.name}
 							onClick={() => tabController.setActiveTab(s.name as WorkspaceTabNames)}
 						>
 							<s.TabIcon />
@@ -54,8 +58,10 @@ export const TabNavigation = () => {
 
 			{!!rightIcons.length && (
 				<>
-					{rightIcons.map(({ Icon }) => (
-						<Icon />
+					{rightIcons.map(({ Icon, name }) => (
+						<Fragment key={name}>
+							<Icon />
+						</Fragment>
 					))}
 				</>
 			)}
