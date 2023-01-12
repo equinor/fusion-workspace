@@ -1,5 +1,4 @@
 import { GridController } from '@equinor/workspace-ag-grid';
-import { FetchController } from '@equinor/workspace-data-source';
 import { FilterController } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
 import { WorkspaceViewController } from '@equinor/workspace-react';
@@ -54,6 +53,5 @@ export type WorkspaceConfiguration<
 	workspaceConfig: WorkspaceConfig<TData>;
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
 	filterController?: FilterController<TData>;
-	dataSourceController?: FetchController<TData>;
 	rawOptions: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>;
 };

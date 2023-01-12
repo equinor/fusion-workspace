@@ -1,6 +1,6 @@
 import { FusionBookmark, FusionMediator, WorkspaceViewController } from '@equinor/workspace-fusion';
 import { WorkspaceHeaderComponents, useWorkspaceHeaderComponents } from '@equinor/workspace-fusion';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 import { BookmarkLoader, HeaderIcon } from './components';
 
@@ -15,8 +15,6 @@ const moduleName = 'bookmarks';
  * Will load bookmarks from url
  */
 export function BookmarksModule(config: BookmarksModuleConfig) {
-	const queryClient = new QueryClient();
-
 	return {
 		name: moduleName,
 		setup: (
@@ -28,9 +26,9 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 				name: 'Bookmark lifecycle',
 				Component: ({ children }) => {
 					const context = useWorkspaceHeaderComponents();
-
+					const queryClient = useQueryClient();
 					return (
-						<QueryClientProvider client={queryClient}>
+						<QueryClientProvider client={queryClient} contextSharing={true}>
 							{/* Injects icon into workspace header */}
 							<WorkspaceHeaderComponents.Provider
 								value={{

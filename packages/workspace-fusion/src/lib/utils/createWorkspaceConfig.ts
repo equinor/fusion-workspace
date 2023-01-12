@@ -1,4 +1,4 @@
-import { WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider, WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
 import history from 'history/browser';
 import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
 import {
@@ -18,7 +18,6 @@ import { addStatusBar } from '../integrations/status-bar';
 import { addFusionPowerBi, addPowerBi } from '../integrations/power-bi';
 import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
-import { addDataSource } from '../integrations/data-source';
 import { addGrid } from '../integrations/grid';
 import { BaseEvent } from '@equinor/workspace-core';
 
@@ -29,15 +28,10 @@ export function createConfigurationObject<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(
-	props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
+	props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>,
+	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>,
+	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>
 ): WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys> {
-	const mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents> = new WorkspaceReactMediator(
-		props.workspaceOptions.getIdentifier
-	);
-
-	const viewController = new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(
-		props.workspaceOptions.defaultTab
-	);
 	const configuration: WorkspaceConfiguration<
 		TData,
 		TContext,
@@ -52,7 +46,6 @@ export function createConfigurationObject<
 	};
 
 	addViewController(viewController, mediator, history);
-	configuration.dataSourceController = addDataSource(props.dataOptions, mediator);
 	configureUrlWithHistory(mediator, history);
 	addContext(props.contextOptions, viewController, mediator);
 	addFusionPowerBi(props.fusionPowerBiOptions, viewController, mediator);
