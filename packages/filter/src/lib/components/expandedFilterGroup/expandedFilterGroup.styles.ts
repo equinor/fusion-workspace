@@ -9,6 +9,9 @@ export const StyledTitle = styled.h4`
 	font-size: 14px;
 	font-weight: 700;
 	padding: 0 0.5rem;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 `;
 
 export const StyledWrapper = styled.div`
