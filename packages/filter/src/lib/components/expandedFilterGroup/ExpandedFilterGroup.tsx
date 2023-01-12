@@ -85,7 +85,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
 							<StyledTitle onClick={() => isSearchable && handleSearchButtonClick()}>
 								{filterGroup.name}
 							</StyledTitle>
-							<div>
+							<div style={{ display: 'flex' }}>
 								{isSearchable && (
 									<StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
 										<Icon name={'search'} id={'search'} />
