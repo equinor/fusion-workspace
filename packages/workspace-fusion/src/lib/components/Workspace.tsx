@@ -50,7 +50,7 @@ export function Workspace<
 
 	return (
 		<QueryClientProvider client={client}>
-			<DataSourceProvider config={props.dataOptions}>
+			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
 				<WorkspaceView controller={configuration.viewController} />
 			</DataSourceProvider>
 		</QueryClientProvider>

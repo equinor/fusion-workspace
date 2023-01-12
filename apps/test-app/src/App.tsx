@@ -100,6 +100,7 @@ function App() {
 					dataOptions={{
 						getResponseAsync: getResponseAsync,
 						queryKey: ['Workspace', contextId],
+						initialData: [{ age: 178, contextId: '123', id: '123' }],
 					}}
 					modules={[
 						BookmarksModule({
