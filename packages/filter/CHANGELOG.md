@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.10...@equinor/workspace-filter@0.0.11) (2023-01-12)
+
+### Bug Fixes
+
+-   :bug: fix icon overflow ([#270](https://github.com/equinor/fusion-workspace/issues/270)) ([9dcc6dc](https://github.com/equinor/fusion-workspace/commit/9dcc6dccb336fb3d02a8c68f5c3b845dea7b766d))
+
 ## [0.0.10](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.9...@equinor/workspace-filter@0.0.10) (2022-12-07)
 
 **Note:** Version bump only for package @equinor/workspace-filter
