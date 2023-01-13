@@ -1,4 +1,4 @@
-import { FusionMediator, GetIdentifier } from '../types';
+import { FusionMediator } from '../types';
 import { BrowserHistory } from 'history';
 import { BaseEvent } from '@equinor/workspace-core';
 
@@ -23,7 +23,7 @@ export function updateQueryParams<
 			mediator.urlService.url.searchParams.set(topic, value);
 		}
 	});
-	history.push(mediator.urlService.url.toString());
+	history.replace(mediator.urlService.url.toString());
 }
 
 export function configureUrlWithHistory<
