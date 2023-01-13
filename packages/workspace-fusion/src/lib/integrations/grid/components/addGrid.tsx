@@ -22,13 +22,11 @@ export function addGrid<
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!gridConfig) return;
-	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, mediator.onUnMount);
+	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, () => void 0);
 
 	const sub = mediator.contextService.context$.subscribe((s) => {
 		gridController.context = s;
 	});
-
-	mediator.onUnMount(() => sub.unsubscribe());
 
 	setConfigOnController(gridConfig, gridController, mediator);
 	configureHighlightSelection(gridController, mediator);

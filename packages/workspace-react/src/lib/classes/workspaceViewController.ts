@@ -51,8 +51,6 @@ export class WorkspaceViewController<TTabNames extends string, TError> {
 	/** Function for refetching data */
 	refetchData?: () => Promise<void> | null;
 
-	isMounted = new Observable(false, (a, b) => a === b);
-
 	destroy = () => {
 		for (const key in this) {
 			this[key] = null as unknown as this[Extract<keyof this, string>];
