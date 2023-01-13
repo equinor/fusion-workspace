@@ -85,13 +85,6 @@ export function FilterSelector(): JSX.Element | null {
 					selectedOption={getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)}
 					handleSelectedItemChange={(changes) => handleGardenKeyChange(changes.selectedItem)}
 				/>
-				{/* <SingleSelect
-					key={gardenKey.toString()}
-					items={groupingOptions}
-					label={''}
-					selectedOption={getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)}
-					handleSelectedItemChange={(changes) => handleGardenKeyChange(changes.selectedItem)}
-				/> */}
 			</StyledSelectOneWrapper>
 			<StyledSeparator>then</StyledSeparator>
 
