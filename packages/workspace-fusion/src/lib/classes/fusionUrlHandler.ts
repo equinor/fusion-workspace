@@ -35,8 +35,6 @@ export function configureUrlWithHistory<
 		mediator.urlService.url = new URL(window.location.href);
 	});
 
-	mediator.onUnMount(() => unsub());
-
 	mediator.selectionService.selectedNodes$.subscribe((nodes) => {
 		const [id] = nodes.map((s) => s.id);
 		updateQueryParams([['item', id]], mediator, history);

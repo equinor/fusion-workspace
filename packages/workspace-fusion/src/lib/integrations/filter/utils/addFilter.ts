@@ -30,5 +30,4 @@ export function addFilter<
 
 	addFilterContext(viewController, filterController);
 	configureOnDataChange(mediator, filterController);
-	mediator.onUnMount(filterController.destroy);
 }
