@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.13.0...@equinor/workspace-fusion@0.13.1) (2023-01-13)
+
+**Note:** Version bump only for package @equinor/workspace-fusion
+
 ## [0.13.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.12.0...@equinor/workspace-fusion@0.13.0) (2023-01-12)
 
 ### Features
