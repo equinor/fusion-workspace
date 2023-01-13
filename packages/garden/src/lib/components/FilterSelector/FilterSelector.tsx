@@ -90,7 +90,7 @@ export function FilterSelector(): JSX.Element | null {
 
 			{groupByKeys.sort().map((groupByKey, index) => {
 				return (
-					<Fragment key={index}>
+					<Fragment key={groupByKey}>
 						<StyledSelectOneWrapper>
 							<SingleSelect
 								key={groupByKey.toString()}
