@@ -1,6 +1,6 @@
-import { SingleSelect, Autocomplete } from '@equinor/eds-core-react';
+import { SingleSelect } from '@equinor/eds-core-react';
 import { createGardenProp } from '../../utils/createGardenProp';
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
