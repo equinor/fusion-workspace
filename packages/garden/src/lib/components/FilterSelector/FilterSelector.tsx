@@ -1,10 +1,10 @@
 import { SingleSelect } from '@equinor/eds-core-react';
 import { createGardenProp } from '../../utils/createGardenProp';
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
-import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
+import { StyledSelect, StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
 const getFieldSettingsKeyFromLabel = <
 	T extends Record<PropertyKey, unknown>,
@@ -32,66 +32,43 @@ export function FilterSelector(): JSX.Element | null {
 
 	const CustomGroupByView = customViews?.customGroupByView;
 
-	const setGroupKeys = useCallback((items: string[]) => {
-		setVerticalGroupingKeys(items);
-	}, []);
+	const setGroupKeys = (items: string[]) => setVerticalGroupingKeys(items);
 
-	const setGardenKey = useCallback((key: string) => {
+	const setGardenKey = (key: string) => {
 		setHorizontalGroupingAccessor(key);
 		setVerticalGroupingKeys([]);
-	}, []);
+	};
 
-	const allOptions = useMemo(
-		() =>
-			fieldSettings && Object.keys(fieldSettings).length
-				? Object.keys(fieldSettings)
-				: Object.keys(getData()[0] as Record<string, unknown>),
-		[fieldSettings, getData]
-	);
+	const allOptions =
+		fieldSettings && Object.keys(fieldSettings).length
+			? Object.keys(fieldSettings)
+			: Object.keys(getData()[0] as Record<string, unknown>);
 
-	const filterGroupKey = useCallback(
-		(groupKey: string) => !(groupKey === gardenKey || groupByKeys.includes(groupKey)),
-		[gardenKey, groupByKeys]
-	);
+	const filterGroupKey = (groupKey: string) => !(groupKey === gardenKey || groupByKeys.includes(groupKey));
 
-	const groupingOptions = useMemo(
-		(): string[] =>
-			getData().length
-				? allOptions
-						.filter(filterGroupKey)
-						.map((groupKey) => fieldSettings?.[groupKey]?.label || groupKey)
-						.sort()
-				: [],
+	const groupingOptions = getData().length
+		? allOptions
+				.filter(filterGroupKey)
+				.map((groupKey) => fieldSettings?.[groupKey]?.label || groupKey)
+				.sort()
+		: [];
 
-		[getData, fieldSettings, filterGroupKey, allOptions]
-	);
+	const handleExistingSelectionChange = (newValue: string | null | undefined, index: number) => {
+		const newGroupByKeys = [...groupByKeys] as string[];
+		newValue == null
+			? newGroupByKeys.splice(index, 1)
+			: (newGroupByKeys[index] = getFieldSettingsKeyFromLabel(newValue, fieldSettings) || newValue);
 
-	const handleExistingSelectionChange = useCallback(
-		(newValue: string | null | undefined, index: number) => {
-			const newGroupByKeys = [...groupByKeys] as string[];
-			newValue == null
-				? newGroupByKeys.splice(index, 1)
-				: (newGroupByKeys[index] = getFieldSettingsKeyFromLabel(newValue, fieldSettings) || newValue);
+		setGroupKeys(newGroupByKeys);
+	};
 
-			setGroupKeys(newGroupByKeys);
-		},
-		[fieldSettings, groupByKeys, setGroupKeys]
-	);
+	const addItemToGroupKeys = (newValue: string | null | undefined) =>
+		newValue && setGroupKeys([...(groupByKeys as string[]), getFieldSettingsKeyFromLabel(newValue, fieldSettings)]);
 
-	const addItemToGroupKeys = useCallback(
-		(newValue: string | null | undefined) =>
-			newValue &&
-			setGroupKeys([...(groupByKeys as string[]), getFieldSettingsKeyFromLabel(newValue, fieldSettings)]),
-		[fieldSettings, groupByKeys, setGroupKeys]
-	);
-
-	const handleGardenKeyChange = useCallback(
-		(newValue: string | null | undefined) => {
-			const keyFromLabel = newValue && getFieldSettingsKeyFromLabel(newValue, fieldSettings);
-			keyFromLabel && setGardenKey(keyFromLabel);
-		},
-		[fieldSettings, setGardenKey]
-	);
+	const handleGardenKeyChange = (newValue: string | null | undefined) => {
+		const keyFromLabel = newValue && getFieldSettingsKeyFromLabel(newValue, fieldSettings);
+		keyFromLabel && setGardenKey(keyFromLabel);
+	};
 	if (!getData()) return null;
 
 	return (
@@ -101,7 +78,7 @@ export function FilterSelector(): JSX.Element | null {
 			<StyledSeparator> Group by </StyledSeparator>
 
 			<StyledSelectOneWrapper>
-				<SingleSelect
+				<StyledSelect
 					key={gardenKey.toString()}
 					items={groupingOptions}
 					label={''}
@@ -113,7 +90,7 @@ export function FilterSelector(): JSX.Element | null {
 
 			{groupByKeys.sort().map((groupByKey, index) => {
 				return (
-					<Fragment key={index}>
+					<Fragment key={groupByKey}>
 						<StyledSelectOneWrapper>
 							<SingleSelect
 								key={groupByKey.toString()}
