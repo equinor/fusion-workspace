@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.3.0...@equinor/workspace-fusion-modules@0.3.1) (2023-01-13)
+
+**Note:** Version bump only for package @equinor/workspace-fusion-modules
+
+## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.2.0...@equinor/workspace-fusion-modules@0.3.0) (2023-01-12)
+
+### Features
+
+-   :sparkles: replace fetch controller ([#261](https://github.com/equinor/fusion-workspace/issues/261)) ([07eb76a](https://github.com/equinor/fusion-workspace/commit/07eb76ac79fcdf4dcff73dfd22956f20bfdf0c0b))
+
 ## [0.2.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.1.19...@equinor/workspace-fusion-modules@0.2.0) (2022-12-14)
 
 ### Features

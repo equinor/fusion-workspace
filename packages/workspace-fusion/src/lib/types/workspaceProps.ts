@@ -6,7 +6,6 @@ import { WorkspaceStatusBarProps } from '../integrations/status-bar';
 import { WorkspaceSidesheetProps } from '../integrations/sidesheet';
 import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { CustomTab, FusionWorkspaceModule, WorkspaceConfig } from '../types';
-import { OnWorkspaceReadyEvent } from '../types/event';
 import { BaseEvent } from '@equinor/workspace-core';
 
 type WorkspaceBaseProps<
@@ -16,7 +15,6 @@ type WorkspaceBaseProps<
 > = {
 	workspaceOptions: WorkspaceConfig<TData>;
 	customTabs?: CustomTab[];
-	onWorkspaceReady?: (ev: OnWorkspaceReadyEvent<TData, TContext, TCustomSidesheetEvents>) => void;
 	contextOptions?: (filteredData: TData[]) => TContext;
 	modules?: FusionWorkspaceModule<TData>[];
 	//TODO: Modules?
