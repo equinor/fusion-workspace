@@ -1,3 +1,4 @@
+import { SingleSelect, SingleSelectProps } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 
 export const StyledSelectRowWrapper = styled.div`
@@ -12,4 +13,10 @@ export const StyledSeparator = styled.p`
 
 export const StyledSelectOneWrapper = styled.div`
 	width: 250px;
+`;
+
+export const StyledSelect: (p: SingleSelectProps) => JSX.Element = styled(SingleSelect)`
+	> div > button[title='clear'] {
+		display: none;
+	}
 `;

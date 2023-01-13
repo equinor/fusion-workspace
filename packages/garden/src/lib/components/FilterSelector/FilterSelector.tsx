@@ -1,10 +1,10 @@
-import { SingleSelect } from '@equinor/eds-core-react';
+import { SingleSelect, Autocomplete } from '@equinor/eds-core-react';
 import { createGardenProp } from '../../utils/createGardenProp';
 import { Fragment, useCallback, useMemo } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
-import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
+import { StyledSelect, StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
 const getFieldSettingsKeyFromLabel = <
 	T extends Record<PropertyKey, unknown>,
@@ -78,13 +78,20 @@ export function FilterSelector(): JSX.Element | null {
 			<StyledSeparator> Group by </StyledSeparator>
 
 			<StyledSelectOneWrapper>
-				<SingleSelect
+				<StyledSelect
 					key={gardenKey.toString()}
 					items={groupingOptions}
 					label={''}
 					selectedOption={getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)}
 					handleSelectedItemChange={(changes) => handleGardenKeyChange(changes.selectedItem)}
 				/>
+				{/* <SingleSelect
+					key={gardenKey.toString()}
+					items={groupingOptions}
+					label={''}
+					selectedOption={getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)}
+					handleSelectedItemChange={(changes) => handleGardenKeyChange(changes.selectedItem)}
+				/> */}
 			</StyledSelectOneWrapper>
 			<StyledSeparator>then</StyledSeparator>
 
