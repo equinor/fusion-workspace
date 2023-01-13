@@ -1,4 +1,4 @@
-export interface Tab<TabName extends string> {
+export interface Tab<TabName extends string = string> {
 	name: TabName;
 	Component: () => JSX.Element;
 	CustomHeader?: () => JSX.Element;

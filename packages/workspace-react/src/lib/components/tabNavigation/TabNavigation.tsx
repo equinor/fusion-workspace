@@ -1,4 +1,4 @@
-import { useActiveTab, useControllerContext } from '../../hooks';
+import { useTabContext } from '../Workspace';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 /**
@@ -6,10 +6,11 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  * Allows for switching of tabs
  */
 export function TabNavigation() {
-	const {
-		tabController: { tabs, setActiveTab },
-	} = useControllerContext();
-	const activeTab = useActiveTab();
+	const { activeTab, setActiveTab, tabs } = useTabContext((s) => ({
+		tabs: s.tabs,
+		activeTab: s.activeTab,
+		setActiveTab: s.setActiveTab,
+	}));
 
 	if (tabs.length <= 1) return null;
 	return (

@@ -1,4 +1,4 @@
-import { Tab, useControllerContext } from '@equinor/workspace-react';
+import { Tab, useTabs } from '@equinor/workspace-react';
 import { createContext, ReactNode, useContext } from 'react';
 
 type WorkspaceHeaderComponents = {
@@ -28,9 +28,7 @@ type RootProps = {
 };
 
 export const RootHeaderContext = ({ children }: RootProps) => {
-	const {
-		tabController: { tabs },
-	} = useControllerContext();
+	const tabs = useTabs();
 
 	const analyticsTabs = tabs.filter((s) => s.name === 'powerbi');
 

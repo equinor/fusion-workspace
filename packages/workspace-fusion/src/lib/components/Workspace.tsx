@@ -11,8 +11,8 @@ import {
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
-import { DataSourceProvider } from '../integrations/data-source';
-import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
+import { DataSourceProvider, useQueryContext } from '../integrations/data-source';
+import { QueryClient, QueryClientProvider, useQueryClient, useQuery } from 'react-query';
 
 /** Only gets called once */
 const useStable = <T,>(val: T) => {
@@ -51,8 +51,34 @@ export function Workspace<
 	return (
 		<QueryClientProvider client={client}>
 			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
-				<WorkspaceView controller={configuration.viewController} />
+				<WorkspaceWrapper
+					Sidesheet={configuration.viewController.Sidesheet}
+					providers={configuration.viewController.providers}
+					defaultTab={props.workspaceOptions.defaultTab}
+					tabs={configuration.viewController.tabController.tabs}
+				/>
 			</DataSourceProvider>
 		</QueryClientProvider>
+	);
+}
+
+type Props = {
+	providers: any;
+	defaultTab: any;
+	tabs: any[];
+	Sidesheet: any;
+};
+
+function WorkspaceWrapper({ defaultTab, providers, tabs, Sidesheet }: Props) {
+	const { isLoading } = useQuery(useQueryContext());
+
+	return (
+		<WorkspaceView
+			isLoading={isLoading}
+			providers={providers}
+			tabs={tabs}
+			Sidesheet={Sidesheet}
+			defaultTab={defaultTab}
+		/>
 	);
 }
