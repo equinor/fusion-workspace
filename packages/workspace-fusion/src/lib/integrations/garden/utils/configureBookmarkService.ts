@@ -3,7 +3,7 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator, GardenBookmark } from '../../../types';
 
 /** Configures the mediators bookmarkservice to work with the garden controller */
-export function configureBookmarkService<
+export function useBookmarkService<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
@@ -13,11 +13,17 @@ export function configureBookmarkService<
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
-	mediator.bookmarkService.apply$.subscribe(
-		(state) => state?.garden && applyFusionBookmark(state.garden, gardenController)
-	);
-	gardenController.grouping.onChange(mediator.bookmarkService.capture);
+	return () => {
+		mediator.bookmarkService.registerCapture(() => ({ garden: captureGardenBookmark(gardenController) }));
+
+		gardenController.grouping.onChange(mediator.bookmarkService.capture);
+		const sub = mediator.bookmarkService.apply$.subscribe(
+			(state) => state?.garden && applyFusionBookmark(state.garden, gardenController)
+		);
+		return () => {
+			sub.unsubscribe();
+		};
+	};
 }
 
 /**Applies a fusion bookmark to garden */

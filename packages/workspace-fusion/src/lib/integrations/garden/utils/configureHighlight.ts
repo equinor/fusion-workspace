@@ -3,7 +3,7 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../../types';
 
 /** Configures gardencontroller to highlight nodes when mediator selection changes */
-export function configureGardenHighlightSelection<
+export function useGardenHighlightSelection<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
@@ -13,7 +13,12 @@ export function configureGardenHighlightSelection<
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	mediator.selectionService.selectedNodes$.subscribe((val) => {
-		gardenController.selectedNodes.setValue(val.map(({ id }) => id));
-	});
+	return () => {
+		const sub = mediator.selectionService.selectedNodes$.subscribe((val) => {
+			gardenController.selectedNodes.setValue(val.map(({ id }) => id));
+		});
+		return () => {
+			sub.unsubscribe();
+		};
+	};
 }

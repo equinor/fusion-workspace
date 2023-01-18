@@ -8,8 +8,13 @@ export function configureDataChange<
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
 >(gridController: GridController<TData, TContext>, mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
-	mediator.dataService.filteredData$.subscribe((data) => {
-		if (!data) return;
-		gridController.rowData = data;
-	});
+	return () => {
+		const sub = mediator.dataService.filteredData$.subscribe((data) => {
+			if (!data) return;
+			gridController.rowData = data;
+		});
+		return () => {
+			sub.unsubscribe();
+		};
+	};
 }

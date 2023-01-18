@@ -1,12 +1,6 @@
 import { useState } from 'react';
-import { Workspace as WorkspaceView, WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import {
-	FusionMediator,
-	FusionWorkspaceError,
-	WorkspaceConfiguration,
-	WorkspaceProps,
-	WorkspaceTabNames,
-} from '../types';
+import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
+import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
 
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
@@ -37,25 +31,22 @@ export function Workspace<
 	const mediator = useStable<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
 		new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
 	);
-	const viewController = useStable(
-		new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(props.workspaceOptions.defaultTab)
-	);
 
 	const maybeClient = useCheckParentClient();
 	const client = useStable(maybeClient ?? new QueryClient());
 
 	const configuration = useStable<
 		WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
-	>(createConfigurationObject(props, mediator, viewController));
+	>(createConfigurationObject(props, mediator));
 
 	return (
 		<QueryClientProvider client={client}>
 			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
 				<WorkspaceWrapper
-					Sidesheet={configuration.viewController.Sidesheet}
-					providers={configuration.viewController.providers}
+					Sidesheet={configuration.Sidesheet}
+					providers={configuration.providers}
 					defaultTab={props.workspaceOptions.defaultTab}
-					tabs={configuration.viewController.tabController.tabs}
+					tabs={configuration.tabs}
 				/>
 			</DataSourceProvider>
 		</QueryClientProvider>

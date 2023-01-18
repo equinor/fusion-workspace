@@ -116,7 +116,7 @@ export class GardenController<
 			visuals,
 			intercepters,
 		}: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-		getDestructor: (destroy: () => void) => void
+		getDestructor?: (destroy: () => void) => void
 	) {
 		if (intercepters?.postGroupSorting) {
 			this.postGroupSorting = intercepters.postGroupSorting;
@@ -150,7 +150,7 @@ export class GardenController<
 
 		this.groupData();
 		this.#data$.subscribe(this.groupData);
-		getDestructor(this.#destroy);
+		getDestructor && getDestructor(this.#destroy);
 	}
 
 	/**

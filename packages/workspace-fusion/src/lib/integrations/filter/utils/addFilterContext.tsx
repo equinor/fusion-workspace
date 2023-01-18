@@ -1,26 +1,27 @@
 import { ReactFilterController, FilterContextProvider } from '@equinor/workspace-filter';
-import { WorkspaceViewController } from '@equinor/workspace-react';
 import { useQueryContext } from '../../../integrations/data-source';
 import { useQuery } from 'react-query';
-import { WorkspaceTabNames } from '../../../types';
+import { FusionMediator } from 'lib/types';
+import { useEffect } from 'react';
 
 export const FUSION_FILTER_PROVIDER_NAME = 'filter';
 
 /**
  * Wraps workspace in filter context
  */
-export function addFilterContext<TData, TError>(
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	filterController: ReactFilterController<TData>
+export function makeFilterProvider<TData, TError>(
+	filterController: ReactFilterController<TData>,
+	mediator: FusionMediator<any, any, any>
 ) {
 	const FilterProvider = ({ children }) => {
 		useSyncFilterProvider(filterController as any);
+		useEffect(useFilterControllerSync(filterController, mediator), [mediator]);
 		return <FilterContextProvider controller={filterController}>{children}</FilterContextProvider>;
 	};
-	viewController.addProvider({
+	return {
 		Component: FilterProvider,
 		name: FUSION_FILTER_PROVIDER_NAME,
-	});
+	};
 }
 
 function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>) {
@@ -33,4 +34,25 @@ function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>)
 			filterControlLer.init();
 		},
 	});
+}
+
+function useFilterControllerSync(
+	filterController: ReactFilterController<any>,
+	mediator: FusionMediator<any, any, any>
+) {
+	return () => {
+		const unsub = filterController.onFilteredDataChanged((newData) => {
+			mediator.dataService.filteredData = newData;
+		});
+		mediator.dataService.data && filterController.setData(mediator.dataService.data);
+		filterController.init();
+		const sub = mediator.dataService.data$.subscribe((data) => {
+			filterController.setData(data ?? []);
+			filterController.init();
+		});
+		return () => {
+			unsub();
+			sub.unsubscribe();
+		};
+	};
 }
