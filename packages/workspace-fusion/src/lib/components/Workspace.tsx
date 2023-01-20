@@ -5,8 +5,8 @@ import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
-import { DataSourceProvider, useQueryContext } from '../integrations/data-source';
-import { QueryClient, QueryClientProvider, useQueryClient, useQuery } from 'react-query';
+import { DataSourceProvider } from '../integrations/data-source';
+import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 /** Only gets called once */
 const useStable = <T,>(val: T) => {
@@ -42,7 +42,7 @@ export function Workspace<
 	return (
 		<QueryClientProvider client={client}>
 			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
-				<WorkspaceWrapper
+				<WorkspaceView
 					Sidesheet={configuration.Sidesheet}
 					providers={configuration.providers}
 					defaultTab={props.workspaceOptions.defaultTab}
@@ -50,26 +50,5 @@ export function Workspace<
 				/>
 			</DataSourceProvider>
 		</QueryClientProvider>
-	);
-}
-
-type Props = {
-	providers: any;
-	defaultTab: any;
-	tabs: any[];
-	Sidesheet: any;
-};
-
-function WorkspaceWrapper({ defaultTab, providers, tabs, Sidesheet }: Props) {
-	const { isLoading } = useQuery(useQueryContext());
-
-	return (
-		<WorkspaceView
-			isLoading={isLoading}
-			providers={providers}
-			tabs={tabs}
-			Sidesheet={Sidesheet}
-			defaultTab={defaultTab}
-		/>
 	);
 }

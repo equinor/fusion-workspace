@@ -7,6 +7,9 @@ export function prepareConfig(
 	return {
 		queryKey: config?.queryKey ?? ['Workspace'],
 		initialData: config?.initialData,
+		retry: 0,
+		useErrorBoundary: true,
+		suspense: true,
 		queryFn: ({ signal }) => {
 			const fetch = config ? createFetchFunction(config) : defaultFetchFunction;
 			return fetch(signal);

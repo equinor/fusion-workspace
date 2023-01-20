@@ -10,6 +10,7 @@ import { useGardenHighlightSelection } from '../utils/configureHighlight';
 import { GardenWrapper } from './wrapper/GardenWrapper';
 import { BaseEvent } from '@equinor/workspace-core';
 import { useEffect } from 'react';
+import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
@@ -47,7 +48,11 @@ export function addGarden<
 	return {
 		provider,
 		tab: {
-			Component: () => <GardenWrapper controller={gardenController} mediator={mediator} />,
+			Component: () => (
+				<DataLoader>
+					<GardenWrapper controller={gardenController} mediator={mediator} />
+				</DataLoader>
+			),
 			name: 'garden',
 			TabIcon: GardenIcon,
 			CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,

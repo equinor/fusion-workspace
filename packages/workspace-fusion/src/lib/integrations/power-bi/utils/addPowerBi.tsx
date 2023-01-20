@@ -22,7 +22,6 @@ export function addPowerBi<
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
 		name: 'powerbi',
 		TabIcon: () => <PowerBiIcon />,
-		ignoreLoading: true,
 	};
 }
 

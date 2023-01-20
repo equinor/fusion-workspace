@@ -27,13 +27,16 @@ export function makeFilterProvider<TData, TError>(
 function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>) {
 	const ctx = useQueryContext();
 
-	useQuery({
+	const { data } = useQuery({
 		...ctx,
-		onSuccess(data) {
-			filterControlLer.setData(data as unknown[]);
-			filterControlLer.init();
-		},
+		useErrorBoundary: false,
+		suspense: false,
 	});
+
+	useEffect(() => {
+		filterControlLer.setData(data as unknown[]);
+		filterControlLer.init();
+	}, [data]);
 }
 
 function useFilterControllerSync(

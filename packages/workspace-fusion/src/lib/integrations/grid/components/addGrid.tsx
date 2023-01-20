@@ -1,7 +1,7 @@
-import { Provider, WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider } from '@equinor/workspace-react';
 import { createGridController, GridController } from '@equinor/workspace-ag-grid';
 import { GridIcon } from '../icons/GridIcon';
-import { FusionMediator, WorkspaceTabNames } from '../../../types';
+import { FusionMediator } from '../../../types';
 import { useBookmarkService } from '../utils/configureBookmark';
 import { configureDataChange as useDataChange } from '../utils/configureDataChange';
 import { useHighlightSelection } from '../utils/configureHighlightSelection';
@@ -11,6 +11,7 @@ import { GridConfig } from '../';
 import { GridWrapper } from './wrapper';
 import { BaseEvent } from '@equinor/workspace-core';
 import { useEffect } from 'react';
+import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
 
 export function addGrid<
 	TData extends Record<PropertyKey, unknown>,
@@ -37,7 +38,11 @@ export function addGrid<
 	return {
 		provider,
 		tab: {
-			Component: () => <GridWrapper controller={gridController} mediator={mediator} />,
+			Component: () => (
+				<DataLoader>
+					<GridWrapper controller={gridController} mediator={mediator} />
+				</DataLoader>
+			),
 			name: 'grid',
 			TabIcon: GridIcon,
 			CustomHeader: () => <GridHeader controller={gridController} />,

@@ -1,15 +1,8 @@
-import { Provider, Tab, WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider, Tab } from '@equinor/workspace-react';
 import history from 'history/browser';
 import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
-import {
-	WorkspaceConfiguration,
-	FusionMediator,
-	WorkspaceTabNames,
-	FusionWorkspaceError,
-	WorkspaceProps,
-} from '../types';
+import { WorkspaceConfiguration, FusionMediator, WorkspaceProps } from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
-import { addViewController } from './viewController';
 import { addCustomTabs } from './customTab';
 import { addContext } from './context';
 
@@ -20,6 +13,7 @@ import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
 import { addGrid } from '../integrations/grid';
 import { BaseEvent } from '@equinor/workspace-core';
+import { RootHeaderContext } from '../context';
 
 export function createConfigurationObject<
 	TData extends Record<PropertyKey, unknown>,
@@ -47,6 +41,8 @@ export function createConfigurationObject<
 	// addViewController(viewController, mediator, history);
 	//@deprecated
 	pushProvider(configureUrlWithHistory(mediator, history));
+
+	pushProvider({ name: 'Header', Component: RootHeaderContext });
 	pushProvider(addContext(props.contextOptions, mediator));
 	pushTab(addFusionPowerBi(props.fusionPowerBiOptions));
 	pushTab(addPowerBi(props.powerBiOptions));
@@ -71,11 +67,6 @@ export function createConfigurationObject<
 	// props.modules && props.modules.forEach((s) => s.setup(mediator, props.workspaceOptions.appKey, viewController));
 
 	sortFusionTabs(tabs);
-
-	// Sidesheet={configuration.viewController.Sidesheet}
-	// 				providers={configuration.viewController.providers}
-	// 				defaultTab={props.workspaceOptions.defaultTab}
-	// 				tabs={configuration.viewController.tabController.tabs}
 
 	console.log(tabs, providers);
 

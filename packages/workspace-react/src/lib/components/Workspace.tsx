@@ -6,11 +6,10 @@ import { Provider, Tab } from '../types';
 import { createContext, useContext, useState } from 'react';
 import { createStore, StoreApi, useStore } from 'zustand';
 
-export interface WorkspaceProps<TTabName extends string, TError> {
+export interface WorkspaceProps {
 	defaultTab?: string;
 	tabs: Tab[];
 	Sidesheet?: () => JSX.Element;
-	isLoading: boolean;
 	providers: Provider[];
 }
 
@@ -31,13 +30,7 @@ export type TabController = {
 	setTabs: (tabs: Tab[]) => void;
 };
 
-export function Workspace<TTabNames extends string, TError>({
-	tabs,
-	defaultTab,
-	Sidesheet = () => <></>,
-	isLoading,
-	providers,
-}: WorkspaceProps<TTabNames, TError>) {
+export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers }: WorkspaceProps) {
 	const [tabController] = useState(createTabController({ defaultTab, tabs }));
 
 	return (
@@ -45,7 +38,7 @@ export function Workspace<TTabNames extends string, TError>({
 			<TabProvider.Provider value={tabController}>
 				<ContextProviders providers={providers}>
 					<WorkspaceHeader />
-					<WorkspaceBody isLoading={isLoading}>
+					<WorkspaceBody>
 						<Sidesheet />
 					</WorkspaceBody>
 				</ContextProviders>
@@ -61,7 +54,7 @@ type CtorArgs = {
 function createTabController({ defaultTab, tabs }: CtorArgs): StoreApi<TabController> {
 	const activeTab = tabs.find((s) => s.name === defaultTab);
 	if (!activeTab) {
-		throw new Error('123');
+		throw new Error('No active tab');
 	}
 
 	const store = createStore<TabController>((set, get) => ({

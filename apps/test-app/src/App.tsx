@@ -67,7 +67,7 @@ function App() {
 
 	const getResponseAsync = useCallback(async () => {
 		console.log('Look ma im a function');
-		return new Promise<Response>((res) =>
+		return new Promise<Response>((res, rej) =>
 			setTimeout(
 				() =>
 					res({
@@ -100,7 +100,7 @@ function App() {
 					dataOptions={{
 						getResponseAsync: getResponseAsync,
 						queryKey: ['Workspace', contextId],
-						// initialData: [{ age: 178, contextId: '123', id: '123' }],
+						initialData: [{ age: 178, contextId: '123', id: '123' }],
 					}}
 					modules={[
 						BookmarksModule({
