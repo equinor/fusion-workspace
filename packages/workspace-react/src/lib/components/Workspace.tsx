@@ -3,14 +3,19 @@ import { WorkspaceWrapper } from './workspace.styles';
 import { WorkspaceBody } from './workspaceBody';
 import { WorkspaceHeader } from './WorkspaceHeader';
 import { Provider, Tab } from '../types';
-import { createContext, useContext, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { createStore, StoreApi, useStore } from 'zustand';
+
+type WorkspaceEvents = {
+	onTabChange?: (newTab: Tab) => void;
+};
 
 export interface WorkspaceProps {
 	defaultTab?: string;
 	tabs: Tab[];
 	Sidesheet?: () => JSX.Element;
 	providers: Provider[];
+	events?: WorkspaceEvents;
 }
 
 const TabProvider = createContext<StoreApi<TabController> | null>(null);
@@ -30,22 +35,35 @@ export type TabController = {
 	setTabs: (tabs: Tab[]) => void;
 };
 
-export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers }: WorkspaceProps) {
+export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers, events }: WorkspaceProps) {
 	const [tabController] = useState(createTabController({ defaultTab, tabs }));
 
 	return (
 		<WorkspaceWrapper id="workspace_root">
-			<TabProvider.Provider value={tabController}>
-				<ContextProviders providers={providers}>
-					<WorkspaceHeader />
-					<WorkspaceBody>
-						<Sidesheet />
-					</WorkspaceBody>
-				</ContextProviders>
+			<TabProvider.Provider key={'tab_controller'} value={tabController}>
+				<EventHandler {...events}>
+					<ContextProviders providers={providers}>
+						<WorkspaceHeader />
+						<WorkspaceBody>
+							<Sidesheet />
+						</WorkspaceBody>
+					</ContextProviders>
+				</EventHandler>
 			</TabProvider.Provider>
 		</WorkspaceWrapper>
 	);
 }
+
+const EventHandler = (props: PropsWithChildren<WorkspaceEvents>) => {
+	const tab = useTabContext((s) => s.activeTab);
+
+	useEffect(() => {
+		if (!props.onTabChange) return;
+		props.onTabChange(tab);
+	}, [tab]);
+
+	return <>{props.children}</>;
+};
 
 type CtorArgs = {
 	defaultTab?: string;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
 
@@ -7,6 +7,9 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
+import { updateQueryParams } from '../classes/fusionUrlHandler';
+import history from 'history/browser';
+import { BrowserHistory } from 'history';
 
 /** Only gets called once */
 const useStable = <T,>(val: T) => {
@@ -37,6 +40,8 @@ export function Workspace<
 
 	const configuration = useStable<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
 
+	useCleanupQueryParams(mediator, history);
+
 	return (
 		<QueryClientProvider client={client}>
 			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
@@ -45,8 +50,26 @@ export function Workspace<
 					providers={configuration.providers}
 					defaultTab={props.workspaceOptions.defaultTab}
 					tabs={configuration.tabs}
+					events={{
+						onTabChange: (newTab) => {
+							updateQueryParams([['tab', newTab.name]], mediator, history);
+						},
+					}}
 				/>
 			</DataSourceProvider>
 		</QueryClientProvider>
 	);
 }
+
+export const useCleanupQueryParams = (mediator: FusionMediator<any, any, any>, history: BrowserHistory) =>
+	useEffect(
+		() => () =>
+			updateQueryParams(
+				[
+					['item', undefined],
+					['tab', undefined],
+				],
+				mediator,
+				history
+			)
+	);
