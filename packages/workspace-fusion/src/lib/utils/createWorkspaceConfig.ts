@@ -68,8 +68,6 @@ export function createConfigurationObject<
 
 	sortFusionTabs(tabs);
 
-	console.log(tabs, providers);
-
 	return {
 		providers: providers,
 		tabs: tabs,
