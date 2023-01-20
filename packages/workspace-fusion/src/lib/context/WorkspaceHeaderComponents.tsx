@@ -34,8 +34,6 @@ export const RootHeaderContext = ({ children }: RootProps) => {
 
 	const viewTabs = tabs.filter((s) => s.name !== 'powerbi');
 
-	console.log(viewTabs);
-
 	return (
 		<WorkspaceHeaderComponents.Provider
 			value={{
