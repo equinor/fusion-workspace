@@ -11,9 +11,7 @@ import { useQueryContext } from '../context';
  * I wrap the tab in suspense and error boundary then I hook into the api call being made to read loading/error state
  */
 function Query({ children }: PropsWithChildren) {
-	const query = useQueryContext();
-	useQuery(query);
-
+	useQuery(useQueryContext());
 	return <>{children}</>;
 }
 
