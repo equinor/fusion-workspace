@@ -7,7 +7,7 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
-import { updateQueryParams } from '../classes/fusionUrlHandler';
+import { fusionQueryParams, updateQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 import { BrowserHistory } from 'history';
 
@@ -65,10 +65,7 @@ export const useCleanupQueryParams = (mediator: FusionMediator<any, any, any>, h
 	useEffect(
 		() => () =>
 			updateQueryParams(
-				[
-					['item', undefined],
-					['tab', undefined],
-				],
+				fusionQueryParams.map((param) => [param, undefined]),
 				mediator,
 				history
 			)

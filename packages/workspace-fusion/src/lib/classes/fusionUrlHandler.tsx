@@ -4,8 +4,11 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { Provider } from '@equinor/workspace-react';
 import { useEffect } from 'react';
 
+//TODO: Move this out of classes
+
+export const fusionQueryParams = ['item', 'tab'] as const;
 /** A union type of the workspace query parameters */
-type QueryParamTopic = 'item' | 'tab';
+type QueryParamTopic = typeof fusionQueryParams[number];
 
 type QueryParam = [QueryParamTopic, string | undefined];
 
