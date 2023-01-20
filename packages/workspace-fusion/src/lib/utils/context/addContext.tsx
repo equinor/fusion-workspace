@@ -23,7 +23,7 @@ export function addContext<
 				return () => {
 					sub.unsubscribe();
 				};
-			}, []);
+			}, [mediator]);
 
 			return <Fragment>{children}</Fragment>;
 		},
