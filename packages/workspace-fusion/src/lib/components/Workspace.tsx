@@ -61,6 +61,9 @@ export function Workspace<
 	);
 }
 
+/**
+ * Cleans up all query params used by fusion workspace when unmounting
+ */
 export const useCleanupQueryParams = (mediator: FusionMediator<any, any, any>, history: BrowserHistory) =>
 	useEffect(
 		() => () =>
