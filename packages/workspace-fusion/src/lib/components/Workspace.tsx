@@ -13,11 +13,11 @@ const useStable = <T,>(val: T) => {
 	return useState(() => val)[0];
 };
 
-function useCheckParentClient(): QueryClient | undefined {
+function useCheckParentClient(): QueryClient {
 	try {
 		return useQueryClient();
 	} catch {
-		return;
+		return new QueryClient();
 	}
 }
 
@@ -33,11 +33,9 @@ export function Workspace<
 	);
 
 	const maybeClient = useCheckParentClient();
-	const client = useStable(maybeClient ?? new QueryClient());
+	const client = useStable(maybeClient);
 
-	const configuration = useStable<
-		WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
-	>(createConfigurationObject(props, mediator));
+	const configuration = useStable<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
 
 	return (
 		<QueryClientProvider client={client}>

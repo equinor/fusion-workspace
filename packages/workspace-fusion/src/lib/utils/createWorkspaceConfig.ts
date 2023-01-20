@@ -24,7 +24,7 @@ export function createConfigurationObject<
 >(
 	props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-): WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys> {
+): WorkspaceConfiguration {
 	const tabs: Tab[] = [];
 	const providers: Provider[] = [];
 

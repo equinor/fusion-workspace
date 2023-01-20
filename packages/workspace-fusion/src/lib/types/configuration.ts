@@ -1,12 +1,6 @@
-import { GridController } from '@equinor/workspace-ag-grid';
-import { FilterController } from '@equinor/workspace-filter';
-import { GardenController } from '@equinor/workspace-garden';
-import { Provider, Tab, WorkspaceViewController } from '@equinor/workspace-react';
-import { FusionWorkspaceError, FusionMediator } from './fusionController';
+import { Provider, Tab } from '@equinor/workspace-react';
 import { WorkspaceOnClick } from './event';
 import { WorkspaceTabNames } from './tabs';
-import { WorkspaceProps } from './workspaceProps';
-import { BaseEvent } from '@equinor/workspace-core';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
@@ -35,13 +29,7 @@ export type AppConfig<TabNames extends string> = {
 	defaultTab: TabNames;
 };
 
-export type WorkspaceConfiguration<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent = never,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
-> = {
+export type WorkspaceConfiguration = {
 	Sidesheet?: () => JSX.Element;
 	providers: Provider[];
 	tabs: Tab[];
