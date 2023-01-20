@@ -5,6 +5,11 @@ import { QueryErrorResetBoundary, useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useQueryContext } from '../context';
 
+/**
+ * The filterprovider fetches the actual data
+ * But we want the tab to show the loading/error state
+ * I wrap the tab in suspense and error boundary then I hook into the api call being made to read loading/error state
+ */
 function Query({ children }: PropsWithChildren) {
 	const query = useQueryContext();
 	useQuery(query);
@@ -26,15 +31,21 @@ export const DataLoader = ({ children }: PropsWithChildren) => {
 
 const ErrorComponent = ({ error, resetErrorBoundary }: FallbackProps) => (
 	<StyledCentering>
-		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
+		<ContentWrapper>
 			<div>Failed to load data!</div>
 			<Button variant="outlined" onClick={() => resetErrorBoundary()}>
 				Retry
 			</Button>
 			<pre>{JSON.stringify(error)}</pre>
-		</div>
+		</ContentWrapper>
 	</StyledCentering>
 );
+
+const ContentWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+`;
 
 const StyledCentering = styled.div`
 	display: flex;
