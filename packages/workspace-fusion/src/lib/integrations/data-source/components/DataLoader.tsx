@@ -36,7 +36,7 @@ const ErrorComponent = ({ error, resetErrorBoundary }: FallbackProps) => (
 			<Button variant="outlined" onClick={() => resetErrorBoundary()}>
 				Retry
 			</Button>
-			<pre>{JSON.stringify(error)}</pre>
+			<pre>{JSON.stringify(error, undefined, 4)}</pre>
 		</ContentWrapper>
 	</StyledCentering>
 );
