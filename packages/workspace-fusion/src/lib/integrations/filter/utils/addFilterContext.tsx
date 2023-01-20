@@ -15,7 +15,7 @@ export function makeFilterProvider<TData, TError>(
 ) {
 	const FilterProvider = ({ children }) => {
 		useSyncFilterProvider(filterController as any);
-		useEffect(useFilterControllerSync(filterController, mediator), [mediator]);
+		useEffect(filterControllerSyncEffect(filterController, mediator), [mediator]);
 		return <FilterContextProvider controller={filterController}>{children}</FilterContextProvider>;
 	};
 	return {
@@ -41,7 +41,7 @@ function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>)
 	}, [data]);
 }
 
-function useFilterControllerSync(
+function filterControllerSyncEffect(
 	filterController: ReactFilterController<any>,
 	mediator: FusionMediator<any, any, any>
 ) {
