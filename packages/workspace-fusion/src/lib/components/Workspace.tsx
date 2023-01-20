@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
 
@@ -7,15 +7,15 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
-import { fusionQueryParams, updateQueryParams } from '../classes/fusionUrlHandler';
+import { updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
-import { BrowserHistory } from 'history';
 
 /** Only gets called once */
 const useStable = <T,>(val: T) => {
 	return useState(() => val)[0];
 };
 
+/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
 function useCheckParentClient(): QueryClient {
 	try {
 		return useQueryClient();
@@ -60,16 +60,3 @@ export function Workspace<
 		</QueryClientProvider>
 	);
 }
-
-/**
- * Cleans up all query params used by fusion workspace when unmounting
- */
-export const useCleanupQueryParams = (mediator: FusionMediator<any, any, any>, history: BrowserHistory) =>
-	useEffect(
-		() => () =>
-			updateQueryParams(
-				fusionQueryParams.map((param) => [param, undefined]),
-				mediator,
-				history
-			)
-	);
