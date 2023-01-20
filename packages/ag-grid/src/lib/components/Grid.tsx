@@ -68,27 +68,3 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
 		</StyledGridWrapper>
 	);
 }
-
-const sideBar: SideBarDef = {
-	hiddenByDefault: false,
-	position: 'right',
-	toolPanels: [
-		{
-			id: 'columns',
-			labelDefault: 'Columns',
-			labelKey: 'columns',
-			iconKey: 'columns',
-			toolPanel: 'agColumnsToolPanel',
-			toolPanelParams: {
-				suppressRowGroups: true,
-				suppressValues: true,
-				suppressPivots: true,
-				suppressPivotMode: true,
-				suppressColumnFilter: true,
-				suppressColumnSelectAll: true,
-				suppressColumnExpandAll: true,
-			},
-		},
-	],
-	defaultToolPanel: 'columns',
-};
