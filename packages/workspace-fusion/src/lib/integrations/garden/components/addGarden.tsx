@@ -3,10 +3,10 @@ import { Provider, Tab } from '@equinor/workspace-react';
 import { GardenConfig, GardenWorkspaceHeader } from '../';
 import { GardenIcon } from '../icons/GardenIcon';
 import { FusionMediator } from '../../../types';
-import { useBookmarkService } from '../utils/configureBookmarkService';
+import { bookmarkEffect } from '../utils/configureBookmarkService';
 import { configureClickEvents } from '../utils/configureClickEvents';
-import { useOnDataChanged } from '../utils/configureDataChange';
-import { useGardenHighlightSelection } from '../utils/configureHighlight';
+import { onDataChangedEffect } from '../utils/configureDataChange';
+import { highlightEffect } from '../utils/configureHighlight';
 import { GardenWrapper } from './wrapper/GardenWrapper';
 import { BaseEvent } from '@equinor/workspace-core';
 import { useEffect } from 'react';
@@ -36,9 +36,9 @@ export function addGarden<
 
 	const provider: Provider = {
 		Component: ({ children }) => {
-			useEffect(useOnDataChanged(gardenController, mediator), [mediator]);
-			useEffect(useGardenHighlightSelection(gardenController, mediator), [mediator]);
-			useEffect(useBookmarkService(gardenController, mediator), [mediator]);
+			useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
+			useEffect(highlightEffect(gardenController, mediator), [mediator]);
+			useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
 
 			return <>{children}</>;
 		},

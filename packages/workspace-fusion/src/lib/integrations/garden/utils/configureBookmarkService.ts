@@ -3,7 +3,7 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator, GardenBookmark } from '../../../types';
 
 /** Configures the mediators bookmarkservice to work with the garden controller */
-export function useBookmarkService<
+export function bookmarkEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,

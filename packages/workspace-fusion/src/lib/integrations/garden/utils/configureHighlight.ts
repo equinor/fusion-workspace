@@ -3,7 +3,7 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../../types';
 
 /** Configures gardencontroller to highlight nodes when mediator selection changes */
-export function useGardenHighlightSelection<
+export function highlightEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
