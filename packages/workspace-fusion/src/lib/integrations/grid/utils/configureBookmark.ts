@@ -3,7 +3,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator, GridBookmark } from '../../../types';
 import { snapshotGridState } from './snapShotGridState';
 
-export function useBookmarkService<
+export function bookmarkServiceEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
 	TCustomSidesheetEvents extends BaseEvent = never

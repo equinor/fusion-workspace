@@ -10,19 +10,7 @@ import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 import { updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 
-/** Only gets called once */
-const useStable = <T,>(val: T) => {
-	return useState(() => val)[0];
-};
-
-/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
-function useCheckParentClient(): QueryClient {
-	try {
-		return useQueryClient();
-	} catch {
-		return new QueryClient();
-	}
-}
+const client = new QueryClient();
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
@@ -31,14 +19,13 @@ export function Workspace<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
-	const mediator = useStable<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
+	const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
 		new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
 	);
 
-	const maybeClient = useCheckParentClient();
-	const client = useStable(maybeClient);
+	const client = useCheckParentClient();
 
-	const configuration = useStable<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
+	const [configuration] = useState<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
 
 	useCleanupQueryParams(mediator, history);
 
@@ -59,4 +46,13 @@ export function Workspace<
 			</DataSourceProvider>
 		</QueryClientProvider>
 	);
+}
+
+/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
+function useCheckParentClient(): QueryClient {
+	try {
+		return useQueryClient();
+	} catch {
+		return client;
+	}
 }

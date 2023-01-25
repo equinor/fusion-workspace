@@ -1,10 +1,10 @@
 import { Provider } from '@equinor/workspace-react';
-import { createGridController, GridController } from '@equinor/workspace-ag-grid';
+import { createGridController } from '@equinor/workspace-ag-grid';
 import { GridIcon } from '../icons/GridIcon';
 import { FusionMediator } from '../../../types';
-import { useBookmarkService } from '../utils/configureBookmark';
-import { configureDataChange as useDataChange } from '../utils/configureDataChange';
-import { useHighlightSelection } from '../utils/configureHighlightSelection';
+import { bookmarkServiceEffect } from '../utils/configureBookmark';
+import { dataChangeEffect } from '../utils/configureDataChange';
+import { highlightSelectionEffect } from '../utils/configureHighlightSelection';
 import { GridHeader } from './workspaceHeader';
 import { setConfigOnController } from '../utils/setConfigOnController';
 import { GridConfig } from '../';
@@ -12,6 +12,7 @@ import { GridWrapper } from './wrapper';
 import { BaseEvent } from '@equinor/workspace-core';
 import { useEffect } from 'react';
 import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
+import { useContextService } from '../hooks/useContextService';
 
 export function addGrid<
 	TData extends Record<PropertyKey, unknown>,
@@ -26,10 +27,10 @@ export function addGrid<
 
 	const provider: Provider = {
 		Component: ({ children }) => {
-			useEffect(useContextService(mediator, gridController), [mediator]);
-			useEffect(useBookmarkService(gridController, mediator), [mediator]);
-			useEffect(useDataChange(gridController, mediator), [mediator]);
-			useEffect(useHighlightSelection(gridController, mediator), [mediator]);
+			useContextService(mediator, gridController);
+			useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
+			useEffect(dataChangeEffect(gridController, mediator), [mediator]);
+			useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
 			return <>{children}</>;
 		},
 		name: 'grid-sync',
@@ -47,16 +48,5 @@ export function addGrid<
 			TabIcon: GridIcon,
 			CustomHeader: () => <GridHeader controller={gridController} />,
 		},
-	};
-}
-
-function useContextService(mediator: FusionMediator<any, any, any>, gridController: GridController<any, any>) {
-	return () => {
-		const sub = mediator.contextService.context$.subscribe((s) => {
-			gridController.context = s;
-		});
-		return () => {
-			return sub.unsubscribe();
-		};
 	};
 }

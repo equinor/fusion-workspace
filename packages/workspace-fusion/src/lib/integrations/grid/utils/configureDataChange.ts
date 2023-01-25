@@ -3,7 +3,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator } from '../../../types';
 
 /**Update data on gridController whenever filtered data on mediator changes */
-export function configureDataChange<
+export function dataChangeEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
