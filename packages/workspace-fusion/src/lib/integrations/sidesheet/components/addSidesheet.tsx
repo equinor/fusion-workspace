@@ -52,7 +52,7 @@ function Wrapper({ children, mediator }: Props) {
 		return () => {
 			sub.unsubscribe();
 		};
-	});
+	}, [mediator]);
 
 	return <>{children}</>;
 }
