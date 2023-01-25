@@ -72,7 +72,7 @@ function App() {
 		return new Promise<Response>((res, rej) =>
 			setTimeout(
 				() =>
-					res({
+					rej({
 						status: 200,
 						json: async () => getItems(contextId),
 					} as Response),
@@ -113,7 +113,7 @@ function App() {
 							dataOptions={{
 								getResponseAsync: getResponseAsync,
 								queryKey: ['Workspace', contextId],
-								initialData: [{ age: 178, contextId: '123', id: '123' }],
+								// initialData: [{ age: 178, contextId: '123', id: '123' }],
 							}}
 							modules={[
 								BookmarksModule({

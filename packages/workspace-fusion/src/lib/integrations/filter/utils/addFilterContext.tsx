@@ -1,7 +1,7 @@
 import { ReactFilterController, FilterContextProvider } from '@equinor/workspace-filter';
 import { useQueryContext } from '../../../integrations/data-source';
 import { useQuery } from 'react-query';
-import { FusionMediator } from 'lib/types';
+import { FusionMediator } from '../../../types';
 import { useEffect } from 'react';
 
 export const FUSION_FILTER_PROVIDER_NAME = 'filter';
