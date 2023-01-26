@@ -3,7 +3,7 @@ import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { useState, useEffect, useCallback } from 'react';
 import { createSidesheetEventKey, detailSidesheetEventKey, SidesheetSimple } from '../../sidesheet';
 import { useQueryContext } from '../../../../integrations/data-source';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 type SidesheetSimpleWrapperProps<
 	TData extends Record<PropertyKey, unknown>,

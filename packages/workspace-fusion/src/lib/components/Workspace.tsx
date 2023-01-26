@@ -12,7 +12,7 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
-import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 
 /** Only gets called once */
 const useStable = <T,>(val: T) => {

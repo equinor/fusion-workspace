@@ -1,7 +1,7 @@
 import { ReactFilterController, FilterContextProvider } from '@equinor/workspace-filter';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { useQueryContext } from '../../../integrations/data-source';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { WorkspaceTabNames } from '../../../types';
 
 export const FUSION_FILTER_PROVIDER_NAME = 'filter';

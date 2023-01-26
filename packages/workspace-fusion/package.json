@@ -66,10 +66,10 @@
 		"@equinor/workspace-react": "workspace:^0.5.1",
 		"@equinor/workspace-sidesheet": "workspace:^0.1.2",
 		"@equinor/workspace-status-bar": "workspace:^0.0.10",
+		"@tanstack/react-query": "^4.23.0",
 		"@types/react": ">= 16.8.0",
 		"@types/react-dom": "^18.0.8",
 		"history": "^5.3.0",
-		"react-query": "^3.39.2",
 		"rxjs": "^7.6.0"
 	},
 	"peerDependencies": {

@@ -1,6 +1,6 @@
 import { FusionMediator } from '../../../types';
 import { ReactNode, createContext, useContext, useEffect } from 'react';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { DataSourceConfig } from '../types';
 import { prepareConfig } from '../utils/prepareConfig';
 
