@@ -1,10 +1,10 @@
-import { IReportEmbedConfiguration, Page, Report } from 'powerbi-client';
+import { Page, Report } from 'powerbi-client';
 import { ICustomEvent } from 'service';
 import { Callback, OnchangeCallback } from '../types';
-import { GetPowerBiEmbedConfig } from '../types/embedConfig';
 import { Filter } from '../types/filter';
 import { Observable } from './observable';
 
+//TODO: @deprecate, use some sort of event hub to communicate the loaded report instead
 export class PowerBiController {
 	activePage?: Page;
 
@@ -12,38 +12,11 @@ export class PowerBiController {
 
 	onActivePageChanged: (callback: OnchangeCallback<Page>) => () => void;
 
-	reportUri: string;
-
 	filter?: Filter[];
-
-	config?: IReportEmbedConfiguration;
-
-	getConfig?: GetPowerBiEmbedConfig;
-
-	isReady = false;
-
-	setIsReady: (value: boolean) => void;
-
-	onIsReadyChanged: (callback: OnchangeCallback<boolean>) => () => void;
 
 	private cb: Callback<Report>[] = [];
 
-	constructor(reportUri: string, getConfig: GetPowerBiEmbedConfig) {
-		this.reportUri = reportUri;
-		this.getConfig = async (uri) => {
-			this.setIsReady(false);
-			const config = await getConfig(uri);
-			this.config = config;
-			this.setIsReady(true);
-			return config;
-		};
-		const { onchange, setValue } = new Observable(this.isReady);
-		this.setIsReady = setValue;
-		this.onIsReadyChanged = onchange;
-		onchange((val) => {
-			this.isReady = val;
-		});
-
+	constructor() {
 		const page = new Observable<Page>();
 		this.onActivePageChanged = page.onchange;
 		this.setActivePage = page.setValue;
