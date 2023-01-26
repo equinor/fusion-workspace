@@ -8,7 +8,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { FusionPowerBiToken } from '../types';
 import { LoadedReport } from './loadedReport/LoadedReport';
 import { ErrorComponent } from './error/ErrorComponent';
-import { PowerBiController } from 'lib/classes';
+import { PowerBiController } from '../classes';
 Icon.add({ chevron_down, chevron_up });
 
 export interface PowerBiProps {
@@ -32,38 +32,33 @@ export const PowerBi = (props: PowerBiProps) => {
 	);
 };
 
-function generateRefetchInterval(data: FusionPowerBiToken | undefined) {
-	if (!data) {
-		return minutesToMs(2);
-	}
-	return new Date(data['expirationUtc']).getTime() - new Date().getTime();
-}
-
 export function Report({ getEmbedInfo, getToken, reportUri, controller }: PowerBiProps) {
-	const {
-		data: token,
-		isLoading: tokenLoading,
-		error,
-	} = useQuery([reportUri, 'token'], ({ signal }) => getToken(reportUri, signal), {
+	const { data: token, isLoading: tokenLoading } = useQuery({
+		queryKey: [reportUri, 'token'],
+		queryFn: ({ signal }) => getToken(reportUri, signal),
 		refetchInterval: generateRefetchInterval,
 		suspense: true,
 		useErrorBoundary: true,
+		refetchOnWindowFocus: true,
 	});
 
-	const { data: embed, isLoading: embedLoading } = useQuery([reportUri, 'embed'], {
+	const { data: embed } = useQuery({
+		queryKey: [reportUri, 'embed'],
 		queryFn: ({ signal }) => getEmbedInfo(reportUri, token!.token, signal),
 		enabled: !tokenLoading,
 		suspense: true,
 		useErrorBoundary: true,
+		refetchOnWindowFocus: true,
 	});
 
-	if (tokenLoading || embedLoading) return <Loading />;
-
-	if (!embed || error) {
-		return <>uh-oh</>;
+	if (!embed) {
+		throw new Error('No embed');
 	}
 
 	return <LoadedReport config={embed} onReportReady={controller.reportReady} />;
 }
 
 const minutesToMs = (minutes: number) => minutes * 60 * 1000;
+
+const generateRefetchInterval = (data: FusionPowerBiToken | undefined) =>
+	data ? new Date(data.expirationUtc).getTime() - new Date().getTime() : minutesToMs(2);
