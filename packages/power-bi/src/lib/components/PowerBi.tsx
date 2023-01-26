@@ -48,9 +48,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 		queryKey: [reportUri, 'embed', filters],
 		queryFn: async ({ signal }) => {
 			const info = await getEmbedInfo(reportUri, token!.token, signal);
-			const res = await embedInfo(info, token!.token, filters);
-			console.log('config', res);
-			return res;
+			return embedInfo(info, token!.token, filters);
 		},
 		enabled: !tokenLoading,
 		suspense: true,
