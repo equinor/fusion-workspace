@@ -14,6 +14,7 @@ import {
 	FusionPBIError,
 	FusionPowerBiToken,
 	GetPowerBiEmbedConfig,
+	IBasicFilter,
 	IReportEmbedConfiguration,
 	OnchangeCallback,
 	PowerBiController,
@@ -43,6 +44,8 @@ export type {
 	FusionPowerBiToken,
 	FusionEmbedConfig,
 	PowerBiConfig,
+	FilterConfig,
+	EmbedConfiguration,
 };
 
 /**
@@ -52,8 +55,17 @@ export type {
 type FusionPowerBiConfig = {
 	reportUri: string;
 };
+
+type FilterConfig = Pick<IBasicFilter, 'target' | 'values'>;
+
+type EmbedConfiguration = {
+	embedUrl: string;
+	reportId: string;
+};
+
 type PowerBiConfig = {
 	reportUri: string;
-	getEmbed: (reportUri: string, token: string, signal?: AbortSignal) => Promise<IReportEmbedConfiguration>;
+	getEmbed: (reportUri: string, token: string, signal?: AbortSignal) => Promise<EmbedConfiguration>;
 	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
+	filters?: FilterConfig;
 };

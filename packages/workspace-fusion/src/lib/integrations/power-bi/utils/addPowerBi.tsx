@@ -1,9 +1,9 @@
-import { PowerBI, PowerBiController, IReportEmbedConfiguration, FusionEmbedConfig } from '@equinor/workspace-powerbi';
+import { PowerBI, PowerBiController, IBasicFilter } from '@equinor/workspace-powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
 import { WorkspaceTabNames, FusionMediator } from '../../../types';
-import { PowerBiConfig } from '../';
+import { FilterConfig, PowerBiConfig } from '../';
 import { BaseEvent } from '@equinor/workspace-core';
 
 export function addPowerBi<
@@ -28,6 +28,7 @@ export function addPowerBi<
 				getToken={powerBiConfig.getToken}
 				getEmbedInfo={powerBiConfig.getEmbed}
 				reportUri={powerBiConfig.reportUri}
+				filters={createBasicFilter(powerBiConfig.filters)}
 			/>
 		),
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
@@ -35,27 +36,15 @@ export function addPowerBi<
 		TabIcon: () => <PowerBiIcon />,
 		ignoreLoading: true,
 	});
-
-	// controller.getConfig && controller.getConfig(controller.reportUri);
 }
 
-export async function embedInfo(embedConfig: FusionEmbedConfig, token: string): Promise<IReportEmbedConfiguration> {
+function createBasicFilter(filters: FilterConfig | undefined): undefined | IBasicFilter {
+	if (!filters) return undefined;
 	return {
-		accessToken: token,
-		embedUrl: embedConfig.embedUrl,
-		id: embedConfig.reportId,
-		settings: {
-			panes: {
-				filters: {
-					expanded: false,
-					visible: false,
-				},
-				pageNavigation: {
-					visible: false,
-				},
-			},
-		},
-		type: 'report',
-		tokenType: 1,
+		$schema: 'http://powerbi.com/product/schema#basic',
+		target: filters.target,
+		filterType: 1,
+		operator: 'In',
+		values: filters.values,
 	};
 }

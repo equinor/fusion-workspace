@@ -1,20 +1,22 @@
 import { Suspense } from 'react';
-import { IReportEmbedConfiguration } from 'powerbi-client';
 import { Loading } from './loading';
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
 import { useQuery, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
-import { FusionPowerBiToken } from '../types';
+import { FusionEmbedConfig, FusionPowerBiToken } from '../types';
 import { LoadedReport } from './loadedReport/LoadedReport';
 import { ErrorComponent } from './error/ErrorComponent';
 import { PowerBiController } from '../classes';
+import { IBasicFilter, IReportEmbedConfiguration } from 'index';
+
 Icon.add({ chevron_down, chevron_up });
 
 export interface PowerBiProps {
 	reportUri: string;
 	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
-	getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<IReportEmbedConfiguration>;
+	getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
+	filters?: IBasicFilter;
 	controller: PowerBiController;
 }
 
@@ -32,7 +34,7 @@ export const PowerBi = (props: PowerBiProps) => {
 	);
 };
 
-export function Report({ getEmbedInfo, getToken, reportUri, controller }: PowerBiProps) {
+export function Report({ getEmbedInfo, getToken, reportUri, controller, filters }: PowerBiProps) {
 	const { data: token, isLoading: tokenLoading } = useQuery({
 		queryKey: [reportUri, 'token'],
 		queryFn: ({ signal }) => getToken(reportUri, signal),
@@ -43,12 +45,16 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller }: PowerB
 	});
 
 	const { data: embed } = useQuery({
-		queryKey: [reportUri, 'embed'],
-		queryFn: ({ signal }) => getEmbedInfo(reportUri, token!.token, signal),
+		queryKey: [reportUri, 'embed', filters],
+		queryFn: async ({ signal }) => {
+			const info = await getEmbedInfo(reportUri, token!.token, signal);
+			const res = await embedInfo(info, token!.token, filters);
+			console.log('config', res);
+			return res;
+		},
 		enabled: !tokenLoading,
 		suspense: true,
 		useErrorBoundary: true,
-		refetchOnWindowFocus: true,
 	});
 
 	if (!embed) {
@@ -62,3 +68,29 @@ const minutesToMs = (minutes: number) => minutes * 60 * 1000;
 
 const generateRefetchInterval = (data: FusionPowerBiToken | undefined) =>
 	data ? new Date(data.expirationUtc).getTime() - new Date().getTime() : minutesToMs(2);
+
+export async function embedInfo(
+	embedConfig: FusionEmbedConfig,
+	token: string,
+	filters?: IBasicFilter
+): Promise<IReportEmbedConfiguration> {
+	return {
+		accessToken: token,
+		embedUrl: embedConfig.embedUrl,
+		id: embedConfig.reportId,
+		settings: {
+			panes: {
+				filters: {
+					expanded: false,
+					visible: false,
+				},
+				pageNavigation: {
+					visible: false,
+				},
+			},
+		},
+		type: 'report',
+		tokenType: 1,
+		filters: filters ? [filters] : undefined,
+	};
+}
