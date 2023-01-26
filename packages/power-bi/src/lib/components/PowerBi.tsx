@@ -1,72 +1,69 @@
-import { PowerBIEmbed } from 'powerbi-client-react';
-import { PowerBiController } from '../classes';
-import { useRef } from 'react';
-import { Report } from 'powerbi-client';
+import { Suspense } from 'react';
+import { IReportEmbedConfiguration } from 'powerbi-client';
 import { Loading } from './loading';
-import { useIsReady } from '../hooks';
-import { useResizeObserver } from '../hooks/useResizeObserver';
-import { StyledReportContainer, StyledReportRoot } from './powerbi.styles';
-import styled from 'styled-components';
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
+import { useQuery, QueryErrorResetBoundary } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
+import { FusionPowerBiToken } from '../types';
+import { LoadedReport } from './loadedReport/LoadedReport';
+import { ErrorComponent } from './error/ErrorComponent';
+import { PowerBiController } from 'lib/classes';
 Icon.add({ chevron_down, chevron_up });
-interface PowerBiProps {
+
+export interface PowerBiProps {
+	reportUri: string;
+	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
+	getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<IReportEmbedConfiguration>;
 	controller: PowerBiController;
 }
-export function PowerBI({ controller }: PowerBiProps) {
-	const isReady = useIsReady(controller);
 
-	if (!isReady) return <Loading />;
-
-	return <LoadedReport controller={controller} />;
-}
-
-interface LoadedReportProps {
-	controller: PowerBiController;
-}
-export const LoadedReport = ({ controller }: LoadedReportProps) => {
-	const ref = useRef<HTMLDivElement | null>(null);
-	const [width] = useResizeObserver(ref);
-	if (!controller.config) throw new Error('IsReady is true but embed config is undefined');
-	/**
-	 * TODO: Hooks for applying state while mounted
-	 */
-
+export const PowerBi = (props: PowerBiProps) => {
 	return (
-		<StyledReportRoot ref={ref}>
-			<StyledReportContainer>
-				<div style={{ height: `${0.41 * width}px` }}>
-					<PowerBiWrapper>
-						<PowerBIEmbed
-							cssClassName="pbiEmbed"
-							embedConfig={controller.config}
-							getEmbeddedComponent={(embed) => {
-								embed.on('loaded', () => {
-									controller.reportReady(embed as Report);
-								});
-							}}
-						/>
-					</PowerBiWrapper>
-				</div>
-			</StyledReportContainer>
-		</StyledReportRoot>
+		<Suspense fallback={<Loading />}>
+			<QueryErrorResetBoundary>
+				{({ reset }) => (
+					<ErrorBoundary onReset={reset} fallbackRender={ErrorComponent}>
+						<Report {...props} />
+					</ErrorBoundary>
+				)}
+			</QueryErrorResetBoundary>
+		</Suspense>
 	);
 };
 
-const PowerBiWrapper = styled.div.attrs({
-	className: 'pbiEmbed',
-})`
-	height: 100%;
-	width: 100%;
+function generateRefetchInterval(data: FusionPowerBiToken | undefined) {
+	if (!data) {
+		return minutesToMs(2);
+	}
+	return new Date(data['expirationUtc']).getTime() - new Date().getTime();
+}
 
-	.pbiEmbed {
-		height: 100%;
-		width: 100%;
+export function Report({ getEmbedInfo, getToken, reportUri, controller }: PowerBiProps) {
+	const {
+		data: token,
+		isLoading: tokenLoading,
+		error,
+	} = useQuery([reportUri, 'token'], ({ signal }) => getToken(reportUri, signal), {
+		refetchInterval: generateRefetchInterval,
+		suspense: true,
+		useErrorBoundary: true,
+	});
+
+	const { data: embed, isLoading: embedLoading } = useQuery([reportUri, 'embed'], {
+		queryFn: ({ signal }) => getEmbedInfo(reportUri, token!.token, signal),
+		enabled: !tokenLoading,
+		suspense: true,
+		useErrorBoundary: true,
+	});
+
+	if (tokenLoading || embedLoading) return <Loading />;
+
+	if (!embed || error) {
+		return <>uh-oh</>;
 	}
 
-	.pbiEmbed > iframe {
-		border: 0;
-		width: 100%;
-		height: 100%;
-	}
-`;
+	return <LoadedReport config={embed} onReportReady={controller.reportReady} />;
+}
+
+const minutesToMs = (minutes: number) => minutes * 60 * 1000;

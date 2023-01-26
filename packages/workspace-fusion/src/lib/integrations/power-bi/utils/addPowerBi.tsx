@@ -1,4 +1,4 @@
-import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/workspace-powerbi';
+import { PowerBI, PowerBiController, IReportEmbedConfiguration, FusionEmbedConfig } from '@equinor/workspace-powerbi';
 import { WorkspaceViewController } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
@@ -17,24 +17,29 @@ export function addPowerBi<
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	if (!powerBiConfig) return;
-	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
+
+	const controller = new PowerBiController();
 
 	//TODO:  Bookmark service config
 	viewController.tabController.addTab({
-		Component: () => <PowerBI controller={controller} />,
+		Component: () => (
+			<PowerBI
+				controller={controller}
+				getToken={powerBiConfig.getToken}
+				getEmbedInfo={powerBiConfig.getEmbed}
+				reportUri={powerBiConfig.reportUri}
+			/>
+		),
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
 		name: 'powerbi',
 		TabIcon: () => <PowerBiIcon />,
 		ignoreLoading: true,
 	});
 
-	controller.getConfig && controller.getConfig(controller.reportUri);
+	// controller.getConfig && controller.getConfig(controller.reportUri);
 }
 
-async function embedInfo(config: PowerBiConfig): Promise<IReportEmbedConfiguration> {
-	const { embedConfig } = await config.getConfig(config.reportUri);
-	const { token } = await config.getToken(config.reportUri);
-
+export async function embedInfo(embedConfig: FusionEmbedConfig, token: string): Promise<IReportEmbedConfiguration> {
 	return {
 		accessToken: token,
 		embedUrl: embedConfig.embedUrl,

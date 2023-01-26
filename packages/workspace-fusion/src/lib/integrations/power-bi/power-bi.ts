@@ -10,7 +10,9 @@ import {
 	CompareFunc,
 	ContextErrorType,
 	Filter,
+	FusionEmbedConfig,
 	FusionPBIError,
+	FusionPowerBiToken,
 	GetPowerBiEmbedConfig,
 	IReportEmbedConfiguration,
 	OnchangeCallback,
@@ -38,7 +40,8 @@ export type {
 	SlicerData,
 	SlicerFilter,
 	FusionPowerBiConfig,
-	PowerBiToken,
+	FusionPowerBiToken,
+	FusionEmbedConfig,
 	PowerBiConfig,
 };
 
@@ -49,11 +52,8 @@ export type {
 type FusionPowerBiConfig = {
 	reportUri: string;
 };
-type PowerBiToken = {
-	token: string;
-};
 type PowerBiConfig = {
 	reportUri: string;
-	getConfig: (reportUri: string) => Promise<any>;
-	getToken: (reportUri: string) => Promise<PowerBiToken>;
+	getEmbed: (reportUri: string, token: string, signal?: AbortSignal) => Promise<IReportEmbedConfiguration>;
+	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
 };

@@ -18,5 +18,5 @@ export function addFusionPowerBi<
 	const reportUri = fusionPowerBiOptions.reportUri;
 	const getConfig = () => FusionPowerBiConfigurator.getEmbedInfo(reportUri);
 	const getToken = () => FusionPowerBiConfigurator.getToken(reportUri);
-	addPowerBi({ getConfig, getToken, reportUri }, viewController, mediator);
+	addPowerBi({ getEmbed: getConfig, getToken, reportUri }, viewController, mediator);
 }
