@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { StyledReportRoot, StyledReportContainer } from '../powerbi.styles';
 
+const defaultAspectRatio = 0.41;
+
 interface LoadedReportProps {
 	config: IReportEmbedConfiguration;
 	onReportReady?: (rep: Report) => void;
@@ -39,7 +41,7 @@ export const LoadedReport = ({ config, onReportReady }: LoadedReportProps) => {
 };
 
 const StyledAspectRatio = styled.div<{ width: number }>`
-	height: ${({ width }) => `${0.41 * width}px`};
+	height: ${({ width }) => `${defaultAspectRatio * width}px`};
 `;
 
 const PowerBiWrapper = styled.div.attrs({
