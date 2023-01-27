@@ -1,31 +1,16 @@
 import { useState } from 'react';
-import { Workspace as WorkspaceView, WorkspaceReactMediator, WorkspaceViewController } from '@equinor/workspace-react';
-import {
-	FusionMediator,
-	FusionWorkspaceError,
-	WorkspaceConfiguration,
-	WorkspaceProps,
-	WorkspaceTabNames,
-} from '../types';
+import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
+import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
 
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
+import { updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
+import history from 'history/browser';
 
-/** Only gets called once */
-const useStable = <T,>(val: T) => {
-	return useState(() => val)[0];
-};
-
-function useCheckParentClient(): QueryClient | undefined {
-	try {
-		return useQueryClient();
-	} catch {
-		return;
-	}
-}
+const client = new QueryClient();
 
 export function Workspace<
 	TData extends Record<PropertyKey, unknown>,
@@ -34,25 +19,40 @@ export function Workspace<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
-	const mediator = useStable<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
+	const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
 		new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
 	);
-	const viewController = useStable(
-		new WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>(props.workspaceOptions.defaultTab)
-	);
 
-	const maybeClient = useCheckParentClient();
-	const client = useStable(maybeClient ?? new QueryClient());
+	const client = useCheckParentClient();
 
-	const configuration = useStable<
-		WorkspaceConfiguration<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
-	>(createConfigurationObject(props, mediator, viewController));
+	const [configuration] = useState<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
+
+	useCleanupQueryParams(mediator, history);
 
 	return (
 		<QueryClientProvider client={client}>
 			<DataSourceProvider mediator={mediator as any} config={props.dataOptions}>
-				<WorkspaceView controller={configuration.viewController} />
+				<WorkspaceView
+					Sidesheet={configuration.Sidesheet}
+					providers={configuration.providers}
+					defaultTab={props.workspaceOptions.defaultTab}
+					tabs={configuration.tabs}
+					events={{
+						onTabChange: (newTab) => {
+							updateQueryParams([['tab', newTab.name]], mediator, history);
+						},
+					}}
+				/>
 			</DataSourceProvider>
 		</QueryClientProvider>
 	);
+}
+
+/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
+function useCheckParentClient(): QueryClient {
+	try {
+		return useQueryClient();
+	} catch {
+		return client;
+	}
 }

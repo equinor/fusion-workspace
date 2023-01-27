@@ -1,1 +1,0 @@
-export { AppNameHeader } from './AppNameHeader';

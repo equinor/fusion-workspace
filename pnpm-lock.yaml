@@ -313,6 +313,7 @@ importers:
       history: ^5.3.0
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-error-boundary: ^3.1.4
       react-is: ^18.2.0
       rxjs: ^7.6.0
       styled-components: ^5.3.6
@@ -333,6 +334,7 @@ importers:
       '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       history: 5.3.0
+      react-error-boundary: 3.1.4_react@18.2.0
       rxjs: 7.6.0
     devDependencies:
       '@types/jest': 27.4.1
@@ -376,11 +378,13 @@ importers:
       react-dom: ^18.2.0
       react-is: ^18.2.0
       styled-components: ^5.3.6
+      zustand: ^4.3.1
     dependencies:
       '@equinor/eds-core-react': 0.27.0_vjnypufdujrjelvl5gfeyrdu3e
       '@equinor/eds-icons': 0.17.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-core': link:../workspace-core
+      zustand: 4.3.2_react@18.2.0
     devDependencies:
       '@types/jest': 27.4.1
       '@types/react': 18.0.13
@@ -10340,3 +10344,19 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zustand/4.3.2_react@18.2.0:
+    resolution: {integrity: sha512-rd4haDmlwMTVWVqwvgy00ny8rtti/klRoZjFbL/MAcDnmD5qSw/RZc+Vddstdv90M5Lv6RPgWvm1Hivyn0QgJw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false

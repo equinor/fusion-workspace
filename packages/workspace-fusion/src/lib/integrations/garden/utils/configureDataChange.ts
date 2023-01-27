@@ -3,7 +3,7 @@ import { GardenController } from '@equinor/workspace-garden';
 import { FusionMediator } from '../../../types';
 
 /** Updates data on gardencontroller whenever filtered data on mediator changes */
-export function configureDataChange<
+export function onDataChangedEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
@@ -13,9 +13,12 @@ export function configureDataChange<
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
 	{ dataService }: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
-	dataService.filteredData$.subscribe((newData) => {
-		if (newData) {
-			gardenController.setData(newData);
-		}
-	});
+	return () => {
+		const sub = dataService.filteredData$.subscribe((newData) => {
+			if (newData) {
+				gardenController.setData(newData);
+			}
+		});
+		return () => sub.unsubscribe();
+	};
 }

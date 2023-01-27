@@ -1,21 +1,17 @@
-import { useControllerContext } from '../../hooks';
-import { WorkspaceErrorBoundary } from '../ErrorBoundary/WorkspaceErrorBoundary';
+import { ReactNode } from 'react';
 
-import { WorkspaceDataLoader } from '../workspaceDataLoader';
 import { WorkspaceTab } from '../workspaceTab';
 import { StyledWorkspaceBody } from './workspaceBody.styles';
 
-export function WorkspaceBody() {
-	const { Sidesheet } = useControllerContext();
+type WorkspaceBodyProps = {
+	children: ReactNode;
+};
 
+export function WorkspaceBody({ children }: WorkspaceBodyProps) {
 	return (
 		<StyledWorkspaceBody id={'workspace_body'}>
-			<WorkspaceDataLoader>
-				<WorkspaceErrorBoundary>
-					<WorkspaceTab />
-				</WorkspaceErrorBoundary>
-			</WorkspaceDataLoader>
-			{Sidesheet && <Sidesheet />}
+			<WorkspaceTab />
+			{children}
 		</StyledWorkspaceBody>
 	);
 }
