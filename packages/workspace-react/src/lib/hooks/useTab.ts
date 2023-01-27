@@ -1,4 +1,4 @@
-import { TabController, TabProvider } from 'lib/components/Workspace';
+import { TabController, TabProvider } from '../components/Workspace';
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
