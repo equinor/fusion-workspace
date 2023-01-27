@@ -71,7 +71,7 @@ export function createConfigurationObject<
 	return {
 		providers: providers,
 		tabs: tabs,
-		defaultTab: props.workspaceOptions.defaultTab,
+		defaultTab: props.workspaceOptions.defaultTab ?? tabs[0].name,
 		Sidesheet: Sidesheet,
 	};
 }
