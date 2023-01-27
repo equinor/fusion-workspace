@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { IBasicFilter } from 'index';
 import { FusionPowerBiToken, FusionEmbedConfig } from '../../types';
-import { IReportEmbedConfiguration } from 'powerbi-client';
+import { IReportEmbedConfiguration, Report as ReportInstance } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
+import { useEffect, useRef } from 'react';
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters }: PowerBiProps) {
+	const report = useRef<null | ReportInstance>(null);
+
 	const { data: token, isLoading: tokenLoading } = useQuery({
 		queryKey: [reportUri, 'token'],
 		queryFn: ({ signal }) => getToken(reportUri, signal),
@@ -16,7 +19,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 	});
 
 	const { data: embed } = useQuery({
-		queryKey: [reportUri, 'embed', filters],
+		queryKey: [reportUri, 'embed'],
 		queryFn: async ({ signal }) => {
 			const { embedUrl, reportId } = await getEmbedInfo(reportUri, token!.token, signal);
 			return generateEmbedConfig({ embedUrl, reportId }, token!.token, filters);
@@ -26,11 +29,24 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 		useErrorBoundary: true,
 	});
 
+	useEffect(() => {
+		if (!filters || !report.current) return;
+		report.current.setFilters([filters]);
+	}, filters?.values);
+
 	if (!embed) {
 		throw new Error('No embed');
 	}
 
-	return <LoadedReport config={embed} onReportReady={controller.reportReady} />;
+	return (
+		<LoadedReport
+			config={embed}
+			onReportReady={(rep) => {
+				report.current = rep;
+				controller.reportReady(rep);
+			}}
+		/>
+	);
 }
 
 const minutesToMs = (minutes: number) => minutes * 60 * 1000;
