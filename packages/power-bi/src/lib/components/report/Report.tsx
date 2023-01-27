@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { IBasicFilter } from 'index';
 import { FusionPowerBiToken, FusionEmbedConfig } from '../../types';
-import { IReportEmbedConfiguration, Report as ReportInstance } from 'powerbi-client';
+
+import { IReportEmbedConfiguration } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
-import { useEffect, useRef } from 'react';
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters }: PowerBiProps) {
-	const report = useRef<null | ReportInstance>(null);
-
 	const { data: token, isLoading: tokenLoading } = useQuery({
 		queryKey: [reportUri, 'token'],
 		queryFn: ({ signal }) => getToken(reportUri, signal),
@@ -29,11 +27,6 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 		useErrorBoundary: true,
 	});
 
-	useEffect(() => {
-		if (!filters || !report.current) return;
-		report.current.setFilters([filters]);
-	}, filters?.values);
-
 	if (!embed) {
 		throw new Error('No embed');
 	}
@@ -42,7 +35,9 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 		<LoadedReport
 			config={embed}
 			onReportReady={(rep) => {
-				report.current = rep;
+				if (filters) {
+					rep.setFilters([filters]);
+				}
 				controller.reportReady(rep);
 			}}
 		/>

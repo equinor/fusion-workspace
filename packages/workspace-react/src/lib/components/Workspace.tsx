@@ -3,7 +3,7 @@ import { WorkspaceWrapper } from './workspace.styles';
 import { WorkspaceBody } from './workspaceBody';
 import { WorkspaceHeader } from './WorkspaceHeader';
 import { Provider, Tab } from '../types';
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { StoreApi } from 'zustand';
 import { createTabController } from '../utils/tabController';
 import { useTabContext } from '../hooks/useTab';
@@ -30,7 +30,16 @@ export type TabController = {
 };
 
 export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers, events }: WorkspaceProps) {
-	const [tabController] = useState(createTabController({ defaultTab, tabs }));
+	const tabController = useMemo(
+		() => createTabController({ defaultTab, tabs }),
+		[
+			defaultTab,
+			tabs
+				.map((s) => s.name)
+				.sort()
+				.toString(),
+		]
+	);
 
 	return (
 		<WorkspaceWrapper id="workspace_root">

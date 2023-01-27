@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
-import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
+import { FusionMediator, WorkspaceProps } from '../types';
 
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
@@ -25,7 +25,8 @@ export function Workspace<
 
 	const client = useCheckParentClient();
 
-	const [configuration] = useState<WorkspaceConfiguration>(createConfigurationObject(props, mediator));
+	//Probably make one for each?
+	const configuration = useMemo(() => createConfigurationObject(props, mediator), [props]);
 
 	useCleanupQueryParams(mediator, history);
 
@@ -35,7 +36,7 @@ export function Workspace<
 				<WorkspaceView
 					Sidesheet={configuration.Sidesheet}
 					providers={configuration.providers}
-					defaultTab={props.workspaceOptions.defaultTab}
+					defaultTab={configuration.defaultTab}
 					tabs={configuration.tabs}
 					events={{
 						onTabChange: (newTab) => {
