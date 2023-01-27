@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.13.2...@equinor/workspace-fusion@0.14.0) (2023-01-27)
+
+### Features
+
+-   :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
+
 ## [0.13.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.13.1...@equinor/workspace-fusion@0.13.2) (2023-01-18)
 
 **Note:** Version bump only for package @equinor/workspace-fusion

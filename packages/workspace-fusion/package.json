@@ -1,6 +1,6 @@
 {
 	"name": "@equinor/workspace-fusion",
-	"version": "0.13.2",
+	"version": "0.14.0",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -61,9 +61,9 @@
 		"@equinor/workspace-ag-grid": "workspace:^0.3.5",
 		"@equinor/workspace-core": "workspace:^0.1.1",
 		"@equinor/workspace-filter": "workspace:^0.0.11",
-		"@equinor/workspace-garden": "workspace:^0.7.2",
-		"@equinor/workspace-powerbi": "workspace:^0.1.4",
-		"@equinor/workspace-react": "workspace:^0.5.1",
+		"@equinor/workspace-garden": "workspace:^0.7.3",
+		"@equinor/workspace-powerbi": "workspace:^0.2.0",
+		"@equinor/workspace-react": "workspace:^0.6.0",
 		"@equinor/workspace-sidesheet": "workspace:^0.1.2",
 		"@equinor/workspace-status-bar": "workspace:^0.0.10",
 		"@tanstack/react-query": "^4.23.0",

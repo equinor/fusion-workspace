@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.5.1...@equinor/workspace-react@0.6.0) (2023-01-27)
+
+### Features
+
+-   :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
+
 ## [0.5.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.5.0...@equinor/workspace-react@0.5.1) (2023-01-18)
 
 **Note:** Version bump only for package @equinor/workspace-react
