@@ -1,6 +1,6 @@
 import { ReactFilterController, FilterContextProvider } from '@equinor/workspace-filter';
 import { useQueryContext } from '../../../integrations/data-source';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { FusionMediator } from '../../../types';
 import { useEffect } from 'react';
 

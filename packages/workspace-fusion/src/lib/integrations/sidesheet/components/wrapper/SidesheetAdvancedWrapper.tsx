@@ -4,7 +4,7 @@ import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
 import { SidesheetAdvanced } from '../../sidesheet';
 import { useQueryContext } from '../../../../integrations/data-source';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 type SidesheetAdvancedWrapperProps<
 	TData extends Record<PropertyKey, unknown>,

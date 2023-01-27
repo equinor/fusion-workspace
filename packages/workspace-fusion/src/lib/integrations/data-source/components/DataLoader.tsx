@@ -1,7 +1,7 @@
 import { WorkspaceError } from '../../../components/error/ErrorComponent';
 import { PropsWithChildren } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { QueryErrorResetBoundary, useQuery } from 'react-query';
+import { QueryErrorResetBoundary, useQuery } from '@tanstack/react-query';
 import { useQueryContext } from '../context';
 
 /**

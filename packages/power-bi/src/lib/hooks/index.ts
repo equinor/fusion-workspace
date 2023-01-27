@@ -1,1 +1,1 @@
-export { useIsReady } from './useIsReady';
+export { useResizeObserver } from './useResizeObserver';

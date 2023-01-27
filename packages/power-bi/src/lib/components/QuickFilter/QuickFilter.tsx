@@ -17,7 +17,7 @@ interface PowerBIQuickFilterProps {
 
 const FilterBar = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	gap: 2em;
 	align-items: center;
 `;
@@ -60,7 +60,7 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
 			{!isFilterExpanded && (
 				<StyledCompactFilterWrapper>
 					<FilterBar>
-						<>
+						<div style={{ display: 'flex', width: '100%', gap: '2em' }}>
 							{slicerFilters.map((s, i) => {
 								i < 9 && shownFilters.push(s.type);
 								return (
@@ -77,20 +77,18 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
 									)
 								);
 							})}
-							<OtherFiltersAppliedInfo
-								activeFilters={calculateHiddenFilters(shownFilters, activeFilters)}
+						</div>
+						<OtherFiltersAppliedInfo activeFilters={calculateHiddenFilters(shownFilters, activeFilters)} />
+						<FilterButtonContainer>
+							<FilterClearIcon
+								isDisabled={!isAnyFiltersActive()}
+								onClick={async () => await resetFilter()}
 							/>
-							<FilterButtonContainer>
-								<FilterClearIcon
-									isDisabled={!isAnyFiltersActive()}
-									onClick={async () => await resetFilter()}
-								/>
 
-								<div onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
-									{isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-								</div>
-							</FilterButtonContainer>
-						</>
+							<div onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
+								{isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
+							</div>
+						</FilterButtonContainer>
 					</FilterBar>
 				</StyledCompactFilterWrapper>
 			)}
@@ -102,6 +100,8 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
 const FilterButtonContainer = styled.div`
 	display: flex;
 	align-items: center;
+	height: 48px;
+	width: 96px;
 `;
 
 const FilterWrapper = styled.div`

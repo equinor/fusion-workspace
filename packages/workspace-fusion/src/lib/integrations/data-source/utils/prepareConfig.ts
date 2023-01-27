@@ -1,4 +1,4 @@
-import { UseQueryOptions } from 'react-query';
+import { UseQueryOptions } from '@tanstack/react-query';
 import { createFetchFunction, DataSourceConfig } from '..';
 
 export function prepareConfig(
