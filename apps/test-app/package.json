@@ -12,13 +12,13 @@
 		"@equinor/eds-core-react": "^0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
 		"@equinor/workspace-ag-grid": "workspace:^0.3.5",
-		"@equinor/workspace-fusion": "workspace:0.12.0",
-		"@equinor/workspace-fusion-modules": "workspace:^0.2.0",
+		"@equinor/workspace-fusion": "workspace:0.13.2",
+		"@equinor/workspace-fusion-modules": "workspace:^0.3.2",
 		"@equinor/workspace-sidesheet": "workspace:^0.1.2",
+		"@tanstack/react-query": "^4.23.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",
-		"react-query": "^3.39.2",
 		"sortablejs": "^1.15.0"
 	},
 	"devDependencies": {
