@@ -1,17 +1,15 @@
 import { ReactNode, Fragment } from 'react';
-import { useControllerContext } from '../../hooks';
 import { Provider } from '../../types';
 
 interface WorkspaceProvidersProps {
 	children: ReactNode;
+	providers: Provider[];
 }
 
 /**
  * Will recursively nest the providers you give it
  */
-export function ContextProviders({ children }: WorkspaceProvidersProps) {
-	const { providers } = useControllerContext();
-
+export function ContextProviders({ children, providers }: WorkspaceProvidersProps) {
 	return (
 		<>{providers.length > 0 ? <ProviderHandler providers={providers} children={children} /> : <>{children}</>}</>
 	);

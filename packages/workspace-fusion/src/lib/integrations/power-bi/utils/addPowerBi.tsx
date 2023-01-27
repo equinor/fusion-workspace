@@ -1,8 +1,7 @@
 import { PowerBI, PowerBiController, IReportEmbedConfiguration } from '@equinor/workspace-powerbi';
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { Tab } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
-import { WorkspaceTabNames, FusionMediator } from '../../../types';
 import { PowerBiConfig } from '../';
 import { BaseEvent } from '@equinor/workspace-core';
 
@@ -11,24 +10,19 @@ export function addPowerBi<
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
->(
-	powerBiConfig: PowerBiConfig | undefined,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-) {
+>(powerBiConfig: PowerBiConfig | undefined): undefined | Tab {
 	if (!powerBiConfig) return;
 	const controller = new PowerBiController(powerBiConfig.reportUri, async () => embedInfo(powerBiConfig));
 
 	//TODO:  Bookmark service config
-	viewController.tabController.addTab({
+
+	controller.getConfig && controller.getConfig(controller.reportUri);
+	return {
 		Component: () => <PowerBI controller={controller} />,
 		CustomHeader: () => <PowerBiHeader controller={controller} />,
 		name: 'powerbi',
 		TabIcon: () => <PowerBiIcon />,
-		ignoreLoading: true,
-	});
-
-	controller.getConfig && controller.getConfig(controller.reportUri);
+	};
 }
 
 async function embedInfo(config: PowerBiConfig): Promise<IReportEmbedConfiguration> {

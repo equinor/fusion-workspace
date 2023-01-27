@@ -1,42 +1,52 @@
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider } from '@equinor/workspace-react';
 import { createGridController } from '@equinor/workspace-ag-grid';
 import { GridIcon } from '../icons/GridIcon';
-import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
-import { configureBookmark } from '../utils/configureBookmark';
-import { configureDataChange } from '../utils/configureDataChange';
-import { configureHighlightSelection } from '../utils/configureHighlightSelection';
+import { FusionMediator } from '../../../types';
+import { bookmarkServiceEffect } from '../utils/configureBookmark';
+import { dataChangeEffect } from '../utils/configureDataChange';
+import { highlightSelectionEffect } from '../utils/configureHighlightSelection';
 import { GridHeader } from './workspaceHeader';
 import { setConfigOnController } from '../utils/setConfigOnController';
 import { GridConfig } from '../';
 import { GridWrapper } from './wrapper';
 import { BaseEvent } from '@equinor/workspace-core';
+import { useEffect } from 'react';
+import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
+import { useContextService } from '../hooks/useContextService';
 
 export function addGrid<
 	TData extends Record<PropertyKey, unknown>,
 	TError,
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
->(
-	gridConfig: GridConfig<TData> | undefined,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-) {
+>(gridConfig: GridConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
 	if (!gridConfig) return;
 	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, () => void 0);
 
-	const sub = mediator.contextService.context$.subscribe((s) => {
-		gridController.context = s;
-	});
-
 	setConfigOnController(gridConfig, gridController, mediator);
-	configureHighlightSelection(gridController, mediator);
-	configureDataChange(gridController, mediator);
-	configureBookmark(gridController, mediator);
 
-	viewController.tabController.addTab({
-		Component: () => <GridWrapper controller={gridController} mediator={mediator} />,
-		name: 'grid',
-		TabIcon: GridIcon,
-		CustomHeader: () => <GridHeader controller={gridController} />,
-	});
+	const provider: Provider = {
+		Component: ({ children }) => {
+			useContextService(mediator, gridController);
+			useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
+			useEffect(dataChangeEffect(gridController, mediator), [mediator]);
+			useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
+			return <>{children}</>;
+		},
+		name: 'grid-sync',
+	};
+
+	return {
+		provider,
+		tab: {
+			Component: () => (
+				<DataLoader>
+					<GridWrapper controller={gridController} mediator={mediator} />
+				</DataLoader>
+			),
+			name: 'grid',
+			TabIcon: GridIcon,
+			CustomHeader: () => <GridHeader controller={gridController} />,
+		},
+	};
 }

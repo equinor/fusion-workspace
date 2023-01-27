@@ -1,6 +1,5 @@
 import { Filter } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
-import { useControllerContext } from '@equinor/workspace-react';
 
 import { useStatusBar } from '../../../status-bar';
 import styled from 'styled-components';

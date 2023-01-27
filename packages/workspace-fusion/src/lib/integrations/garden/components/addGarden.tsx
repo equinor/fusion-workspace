@@ -1,14 +1,16 @@
 import { GardenController } from '@equinor/workspace-garden';
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider, Tab } from '@equinor/workspace-react';
 import { GardenConfig, GardenWorkspaceHeader } from '../';
 import { GardenIcon } from '../icons/GardenIcon';
-import { FusionMediator, GetIdentifier, WorkspaceTabNames } from '../../../types';
-import { configureBookmarkService } from '../utils/configureBookmarkService';
+import { FusionMediator } from '../../../types';
+import { bookmarkEffect } from '../utils/configureBookmarkService';
 import { configureClickEvents } from '../utils/configureClickEvents';
-import { configureDataChange } from '../utils/configureDataChange';
-import { configureGardenHighlightSelection } from '../utils/configureHighlight';
+import { onDataChangedEffect } from '../utils/configureDataChange';
+import { highlightEffect } from '../utils/configureHighlight';
 import { GardenWrapper } from './wrapper/GardenWrapper';
 import { BaseEvent } from '@equinor/workspace-core';
+import { useEffect } from 'react';
+import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
 
 export function addGarden<
 	TData extends Record<PropertyKey, unknown>,
@@ -19,30 +21,41 @@ export function addGarden<
 	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
-	viewController: WorkspaceViewController<WorkspaceTabNames, TError>,
 	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-) {
+): { provider: Provider; tab: Tab } | undefined {
 	if (!gardenConfig) return;
 
-	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>(
-		{
-			...gardenConfig,
-			data: [],
-			getIdentifier: mediator.getIdentifier,
-			getContext: () => mediator.contextService.getContext(),
-		},
-		(destroy) => void 0
-	);
-
-	configureDataChange(gardenController, mediator);
-	configureClickEvents(gardenController, mediator);
-	configureGardenHighlightSelection(gardenController, mediator);
-	configureBookmarkService(gardenController, mediator);
-
-	viewController.tabController.addTab({
-		Component: () => <GardenWrapper controller={gardenController} mediator={mediator} />,
-		name: 'garden',
-		TabIcon: GardenIcon,
-		CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>({
+		...gardenConfig,
+		data: [],
+		getIdentifier: mediator.getIdentifier,
+		getContext: () => mediator.contextService.getContext(),
 	});
+
+	configureClickEvents(gardenController, mediator);
+
+	const provider: Provider = {
+		Component: ({ children }) => {
+			useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
+			useEffect(highlightEffect(gardenController, mediator), [mediator]);
+			useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
+
+			return <>{children}</>;
+		},
+		name: 'garden-sync',
+	};
+
+	return {
+		provider,
+		tab: {
+			Component: () => (
+				<DataLoader>
+					<GardenWrapper controller={gardenController} mediator={mediator} />
+				</DataLoader>
+			),
+			name: 'garden',
+			TabIcon: GardenIcon,
+			CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+		},
+	};
 }

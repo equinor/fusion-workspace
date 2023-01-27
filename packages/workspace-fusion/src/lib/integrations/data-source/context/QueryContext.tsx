@@ -1,6 +1,6 @@
 import { FusionMediator } from '../../../types';
-import { ReactNode, createContext, useContext, useEffect } from 'react';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { ReactNode, createContext, useContext } from 'react';
+import { UseQueryOptions } from 'react-query';
 import { DataSourceConfig } from '../types';
 import { prepareConfig } from '../utils/prepareConfig';
 
@@ -12,13 +12,6 @@ type DataSourceProviderProps = {
 };
 export const DataSourceProvider = ({ children, config, mediator }: DataSourceProviderProps) => {
 	const query = prepareConfig(config);
-	const { data, isLoading } = useQuery(query);
-
-	useEffect(() => {
-		mediator.setIsLoading(isLoading);
-		mediator.dataService.data = data as any[];
-	}, [data, isLoading]);
-
 	return <QueryContext.Provider value={query}>{children}</QueryContext.Provider>;
 };
 
