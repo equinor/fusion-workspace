@@ -35,7 +35,7 @@ export function Workspace<
 				<WorkspaceView
 					Sidesheet={configuration.Sidesheet}
 					providers={configuration.providers}
-					defaultTab={props.workspaceOptions.defaultTab}
+					defaultTab={configuration.defaultTab}
 					tabs={configuration.tabs}
 					events={{
 						onTabChange: (newTab) => {
