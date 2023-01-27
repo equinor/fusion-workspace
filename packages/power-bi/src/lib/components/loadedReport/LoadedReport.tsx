@@ -18,7 +18,7 @@ export const LoadedReport = ({ config, onReportReady }: LoadedReportProps) => {
 	 */
 
 	return (
-		<StyledReportRoot ref={ref}>
+		<StyledReportRoot id={'reportRoot'} ref={ref}>
 			<StyledReportContainer>
 				<StyledAspectRatio width={width}>
 					<PowerBiWrapper>

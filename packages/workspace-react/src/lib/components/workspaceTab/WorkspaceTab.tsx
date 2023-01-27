@@ -28,5 +28,4 @@ const StyledWorkspaceTabContent = styled.div`
 	left: 0;
 	right: 0;
 	bottom: 0;
-	padding: 1rem 1rem 0 1rem;
 `;
