@@ -1,5 +1,4 @@
 import { BaseEvent } from '@equinor/workspace-core';
-import { WorkspaceViewController } from '@equinor/workspace-react';
 import { ReactNode, useEffect } from 'react';
 import { WorkspaceSidesheets, FusionMediator, WorkspaceTabNames } from '../../../types';
 import { SidesheetConfig } from '../sidesheet';

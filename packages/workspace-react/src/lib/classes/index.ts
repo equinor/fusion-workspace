@@ -1,2 +1,2 @@
-export { WorkspaceViewController } from './workspaceViewController';
 export { WorkspaceReactMediator } from './workspaceReactMediator';
+export { WorkspaceViewController } from './workspaceViewController';

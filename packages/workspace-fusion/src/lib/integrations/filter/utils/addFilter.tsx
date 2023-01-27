@@ -1,9 +1,9 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { ReactFilterController } from '@equinor/workspace-filter';
-import { Provider, WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider } from '@equinor/workspace-react';
 import { useEffect } from 'react';
 import { FilterConfig } from '..';
-import { WorkspaceTabNames, FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../types';
 import { makeFilterProvider } from './addFilterContext';
 
 export function addFilter<
