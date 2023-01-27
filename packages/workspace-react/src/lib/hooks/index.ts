@@ -1,1 +1,1 @@
-export { useActiveTab, useSetActiveTab, useTabs } from './useTab';
+export { useActiveTab, useSetActiveTab, useTabs, useTabContext } from './useTab';

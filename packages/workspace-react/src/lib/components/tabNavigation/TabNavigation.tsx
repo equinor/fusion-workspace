@@ -1,4 +1,4 @@
-import { useTabContext } from '../Workspace';
+import { useTabContext } from '../../hooks';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 /**

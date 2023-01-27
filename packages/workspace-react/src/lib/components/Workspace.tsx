@@ -3,8 +3,10 @@ import { WorkspaceWrapper } from './workspace.styles';
 import { WorkspaceBody } from './workspaceBody';
 import { WorkspaceHeader } from './WorkspaceHeader';
 import { Provider, Tab } from '../types';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { createStore, StoreApi, useStore } from 'zustand';
+import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { StoreApi } from 'zustand';
+import { createTabController } from '../utils/tabController';
+import { useTabContext } from '../hooks/useTab';
 
 type WorkspaceEvents = {
 	onTabChange?: (newTab: Tab) => void;
@@ -18,15 +20,7 @@ export interface WorkspaceProps {
 	events?: WorkspaceEvents;
 }
 
-const TabProvider = createContext<StoreApi<TabController> | null>(null);
-
-export const useTabContext = <U,>(selector: (s: TabController) => U): U => {
-	const storeApi = useContext(TabProvider);
-	if (!storeApi) {
-		throw new Error('TabContext out of bounds');
-	}
-	return useStore(storeApi, selector);
-};
+export const TabProvider = createContext<StoreApi<TabController> | null>(null);
 
 export type TabController = {
 	activeTab: Tab<string>;
@@ -64,32 +58,3 @@ const EventHandler = (props: PropsWithChildren<WorkspaceEvents>) => {
 
 	return <>{props.children}</>;
 };
-
-type CtorArgs = {
-	defaultTab?: string;
-	tabs: Tab[];
-};
-function createTabController({ defaultTab, tabs }: CtorArgs): StoreApi<TabController> {
-	const activeTab = tabs.find((s) => s.name === defaultTab);
-	if (!activeTab) {
-		throw new Error('No active tab');
-	}
-
-	const store = createStore<TabController>((set, get) => ({
-		activeTab,
-		setActiveTab: (name: string) => {
-			const newActiveTab = get().tabs.find((s) => s.name === name);
-			if (!newActiveTab) {
-				throw new Error('Failed to set activeTab');
-			}
-			//queryParam patch
-			set({ activeTab: newActiveTab });
-		},
-		tabs,
-		setTabs: (tabs: Tab[]) => {
-			set({ tabs });
-		},
-	}));
-
-	return store;
-}
