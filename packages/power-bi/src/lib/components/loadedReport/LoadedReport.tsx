@@ -20,7 +20,7 @@ export const LoadedReport = ({ config, onReportReady }: LoadedReportProps) => {
 	return (
 		<StyledReportRoot ref={ref}>
 			<StyledReportContainer>
-				<div style={{ height: `${0.41 * width}px` }}>
+				<StyledAspectRatio width={width}>
 					<PowerBiWrapper>
 						<PowerBIEmbed
 							cssClassName="pbiEmbed"
@@ -32,11 +32,15 @@ export const LoadedReport = ({ config, onReportReady }: LoadedReportProps) => {
 							}}
 						/>
 					</PowerBiWrapper>
-				</div>
+				</StyledAspectRatio>
 			</StyledReportContainer>
 		</StyledReportRoot>
 	);
 };
+
+const StyledAspectRatio = styled.div<{ width: number }>`
+	height: ${({ width }) => `${0.41 * width}px`};
+`;
 
 const PowerBiWrapper = styled.div.attrs({
 	className: 'pbiEmbed',
