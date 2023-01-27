@@ -47,8 +47,8 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 	const { data: embed } = useQuery({
 		queryKey: [reportUri, 'embed', filters],
 		queryFn: async ({ signal }) => {
-			const info = await getEmbedInfo(reportUri, token!.token, signal);
-			return embedInfo(info, token!.token, filters);
+			const { embedUrl, reportId } = await getEmbedInfo(reportUri, token!.token, signal);
+			return generateEmbedConfig({ embedUrl, reportId }, token!.token, filters);
 		},
 		enabled: !tokenLoading,
 		suspense: true,
@@ -67,28 +67,30 @@ const minutesToMs = (minutes: number) => minutes * 60 * 1000;
 const generateRefetchInterval = (data: FusionPowerBiToken | undefined) =>
 	data ? new Date(data.expirationUtc).getTime() - new Date().getTime() : minutesToMs(2);
 
-export async function embedInfo(
+const generateEmbedConfig = (
 	embedConfig: FusionEmbedConfig,
 	token: string,
 	filters?: IBasicFilter
-): Promise<IReportEmbedConfiguration> {
-	return {
-		accessToken: token,
-		embedUrl: embedConfig.embedUrl,
-		id: embedConfig.reportId,
-		settings: {
-			panes: {
-				filters: {
-					expanded: false,
-					visible: false,
-				},
-				pageNavigation: {
-					visible: false,
-				},
+): IReportEmbedConfiguration => ({
+	...defaultEmbedConfiguration,
+	accessToken: token,
+	embedUrl: embedConfig.embedUrl,
+	id: embedConfig.reportId,
+	filters: filters ? [filters] : undefined,
+});
+
+const defaultEmbedConfiguration: IReportEmbedConfiguration = {
+	settings: {
+		panes: {
+			filters: {
+				expanded: false,
+				visible: false,
+			},
+			pageNavigation: {
+				visible: false,
 			},
 		},
-		type: 'report',
-		tokenType: 1,
-		filters: filters ? [filters] : undefined,
-	};
-}
+	},
+	type: 'report',
+	tokenType: 1,
+};
