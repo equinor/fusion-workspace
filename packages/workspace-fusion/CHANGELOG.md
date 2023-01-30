@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.14.3...@equinor/workspace-fusion@0.15.0) (2023-01-30)
+
+### Features
+
+-   :sparkles: make getResponseAsync optional ([#288](https://github.com/equinor/fusion-workspace/issues/288)) ([2911100](https://github.com/equinor/fusion-workspace/commit/291110099f23eb381f704891836c9fc0795ec35a))
+
 ## [0.14.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.14.2...@equinor/workspace-fusion@0.14.3) (2023-01-30)
 
 **Note:** Version bump only for package @equinor/workspace-fusion
