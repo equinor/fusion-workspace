@@ -40,20 +40,11 @@ export type {
 	PowerBiFilterItem,
 	SlicerData,
 	SlicerFilter,
-	FusionPowerBiConfig,
 	FusionPowerBiToken,
 	FusionEmbedConfig,
 	PowerBiConfig,
 	FilterConfig,
 	EmbedConfiguration,
-};
-
-/**
- * Configuration for adding a fusion power bi client
- * Requires client configured for fusion reports api
- */
-type FusionPowerBiConfig = {
-	reportUri: string;
 };
 
 type FilterConfig = Pick<IBasicFilter, 'target' | 'values'>;

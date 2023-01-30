@@ -1,1 +1,0 @@
-export { FusionPowerBiConfigurator } from './fusionPowerBiConfig';

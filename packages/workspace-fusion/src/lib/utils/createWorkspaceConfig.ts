@@ -8,7 +8,7 @@ import { addContext } from './context';
 
 import { addFilter } from '../integrations/filter';
 import { addStatusBar } from '../integrations/status-bar';
-import { addFusionPowerBi, addPowerBi } from '../integrations/power-bi';
+import { addPowerBi } from '../integrations/power-bi';
 import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
 import { addGrid } from '../integrations/grid';
@@ -37,14 +37,12 @@ export function createConfigurationObject<
 		if (!e) return;
 		providers.push(e);
 	};
-	//@deprecated
-	// addViewController(viewController, mediator, history);
-	//@deprecated
+
 	pushProvider(configureUrlWithHistory(mediator, history));
 
 	pushProvider({ name: 'Header', Component: RootHeaderContext });
 	pushProvider(addContext(props.contextOptions, mediator));
-	pushTab(addFusionPowerBi(props.fusionPowerBiOptions));
+
 	pushTab(addPowerBi(props.powerBiOptions));
 
 	tabs.concat(addCustomTabs(props.customTabs, mediator));
