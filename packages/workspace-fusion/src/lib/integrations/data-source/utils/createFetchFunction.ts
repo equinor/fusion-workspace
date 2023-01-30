@@ -7,9 +7,10 @@ import { DataSourceConfig, FetchData } from '../';
 export function createFetchFunction<TData extends Record<PropertyKey, unknown>>(
 	options?: DataSourceConfig<TData>
 ): FetchData<TData> {
+	const fetchFunction = options?.getResponseAsync;
+	if (!fetchFunction) return async () => defaultFetchFunction(options?.initialData);
 	return async () => {
-		if (!options || !options.getResponseAsync) return defaultFetchFunction(options?.initialData);
-		const response = await options.getResponseAsync!();
+		const response = await fetchFunction();
 		const data = await (options.responseParser ? options.responseParser(response) : response.json());
 		return data;
 	};
