@@ -17,7 +17,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
 	});
 
 	const { data: embed } = useQuery({
-		queryKey: [reportUri, 'embed'],
+		queryKey: [reportUri, 'embed', ...(filters?.values ?? [])],
 		queryFn: async ({ signal }) => {
 			const { embedUrl, reportId } = await getEmbedInfo(reportUri, token!.token, signal);
 			return generateEmbedConfig({ embedUrl, reportId }, token!.token, filters);
