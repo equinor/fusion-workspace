@@ -11,7 +11,7 @@ type DataSourceConfig<TData> = {
 	initialData?: TData[];
 
 	/** Function for getting response object from server */
-	getResponseAsync: (signal?: AbortSignal) => Promise<Response>;
+	getResponseAsync?: (signal?: AbortSignal) => Promise<Response>;
 	/**
 	 * Function for parsing response
 	 * Can be omitted if all you do is .json();
