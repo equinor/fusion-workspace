@@ -30,16 +30,7 @@ export type TabController = {
 };
 
 export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers, events }: WorkspaceProps) {
-	const tabController = useMemo(
-		() => createTabController({ defaultTab, tabs }),
-		[
-			defaultTab,
-			tabs
-				.map((s) => s.name)
-				.sort()
-				.toString(),
-		]
-	);
+	const tabController = useMemo(() => createTabController({ defaultTab, tabs }), [defaultTab, tabs]);
 
 	return (
 		<WorkspaceWrapper id="workspace_root">
