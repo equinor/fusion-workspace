@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.1...@equinor/workspace-react@0.6.2) (2023-01-30)
+
+### Bug Fixes
+
+-   :bug: hotfix pbi context switch ([bb449ee](https://github.com/equinor/fusion-workspace/commit/bb449ee0fc3bebdc5ac200be06143b81ad87cd4b))
+
 ## [0.6.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.0...@equinor/workspace-react@0.6.1) (2023-01-27)
 
 **Note:** Version bump only for package @equinor/workspace-react
