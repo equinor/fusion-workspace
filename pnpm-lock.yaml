@@ -329,13 +329,13 @@ importers:
       '@equinor/workspace-sidesheet': link:../sidesheet
       '@equinor/workspace-status-bar': link:../status-bar
       '@tanstack/react-query': 4.23.0_biqbaboplfbrettd7655fr4n2y
+      '@types/react-dom': 18.0.8
       history: 5.3.0
       react-error-boundary: 3.1.4_react@18.2.0
       rxjs: 7.6.0
     devDependencies:
       '@types/jest': 27.4.1
       '@types/react': 18.0.25
-      '@types/react-dom': 18.0.8
       '@types/styled-components': 5.1.26
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -3248,7 +3248,6 @@ packages:
     resolution: {integrity: sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==}
     dependencies:
       '@types/react': 18.0.25
-    dev: true
 
   /@types/react/18.0.13:
     resolution: {integrity: sha512-psqptIYQxGUFuGYwP3KCFVtPTkMpIcrqFmtKblWEUQhLuYLpHBwJkXhjp6eHfDM5IbyskY4x7qQpLedEsPkHlA==}
