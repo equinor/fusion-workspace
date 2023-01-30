@@ -26,7 +26,7 @@ export function Workspace<
 	const client = useCheckParentClient();
 
 	//Probably make one for each?
-	const configuration = useMemo(() => createConfigurationObject(props, mediator), [props]);
+	const configuration = createConfigurationObject(props, mediator);
 
 	useCleanupQueryParams(mediator, history);
 
