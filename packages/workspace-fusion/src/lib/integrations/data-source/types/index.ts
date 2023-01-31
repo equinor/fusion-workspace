@@ -8,8 +8,8 @@ type DataSourceConfig<TData> = {
 	/** Used to control query invalidation.
 	 *
 	 * Defaults to ["Workspace"]
-	 *
-	 * ```TS
+	 * @example
+	 * ```TSX
 	 * 	const contextId = useContext();
 	 * <Workspace
 	 * {...}
