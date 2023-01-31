@@ -8,9 +8,14 @@ import { useEffect } from 'react';
 
 export const fusionQueryParams = ['item', 'tab'] as const;
 /** A union type of the workspace query parameters */
-type QueryParamTopic = (typeof fusionQueryParams)[number];
+type QueryParamTopic = typeof fusionQueryParams[number];
 
 type QueryParam = [QueryParamTopic, string | undefined];
+
+export function tryGetTabFromUrl() {
+	const [_, tab] = fusionQueryParams;
+	return new URL(window.location.toString()).searchParams.get(tab);
+}
 
 /**
  * Function for patching query parameters without manipulating the other query parameters
