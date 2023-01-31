@@ -40,7 +40,7 @@ export function Workspace<
 					tabs={configuration.tabs}
 					events={{
 						onTabChange: (newTab) => {
-							updateQueryParams([['tab', newTab.name]], mediator, history);
+							updateQueryParams([['tab', newTab]], mediator, history);
 						},
 					}}
 				/>

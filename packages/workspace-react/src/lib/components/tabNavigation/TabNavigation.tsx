@@ -1,4 +1,4 @@
-import { useTabContext } from '../../hooks';
+import { useTabContext, useTabs } from '../../hooks';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 /**
@@ -6,18 +6,19 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  * Allows for switching of tabs
  */
 export function TabNavigation() {
-	const { activeTab, setActiveTab, tabs } = useTabContext((s) => ({
-		tabs: s.tabs,
+	const { activeTab, setActiveTab } = useTabContext((s) => ({
 		activeTab: s.activeTab,
 		setActiveTab: s.setActiveTab,
 	}));
+
+	const tabs = useTabs();
 
 	if (tabs.length <= 1) return null;
 	return (
 		<TabButtonList>
 			{tabs.map(({ name, TabIcon }) => (
 				<TabButton
-					isActive={name === activeTab?.name}
+					isActive={name === activeTab}
 					onClick={() => {
 						setActiveTab(name);
 					}}

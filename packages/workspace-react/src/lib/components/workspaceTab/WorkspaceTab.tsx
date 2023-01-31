@@ -1,4 +1,4 @@
-import { useActiveTab } from '../../hooks';
+import { useActiveTab, useTabs } from '../../hooks';
 import styled from 'styled-components';
 import { Suspense } from 'react';
 import { CircularProgress } from '@equinor/eds-core-react';
@@ -21,9 +21,10 @@ const StyledCentering = styled.div`
  * Renders the current active workspace tab
  */
 export function WorkspaceTab() {
-	const tab = useActiveTab();
-	if (!tab) return null;
-	const { Component } = tab;
+	const activeTab = useActiveTab();
+
+	if (!activeTab) return null;
+	const { Component } = activeTab;
 	return (
 		<StyledWorkspaceTab id="workspace_tab_wrapper">
 			<StyledWorkspaceTabContent id="workspace_tab_content">

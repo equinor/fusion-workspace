@@ -72,7 +72,7 @@ function App() {
 		return new Promise<Response>((res, rej) =>
 			setTimeout(
 				() =>
-					rej({
+					res({
 						status: 200,
 						json: async () => getItems(contextId),
 					} as Response),
