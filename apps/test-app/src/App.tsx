@@ -1,13 +1,14 @@
 import Workspace, { WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useReducer, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Button } from '@equinor/eds-core-react';
+import { Button, Checkbox } from '@equinor/eds-core-react';
+import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
 
 type S = {
 	id: string;
@@ -62,74 +63,111 @@ const getItems = (contextId: string) => [
 
 const client = new QueryClient();
 
+const reducer = (
+	state: Debugger,
+	action: { type: 'RESPONSE' | 'RENDER' | 'GRID' | 'GARDEN' | 'POWERBI' }
+): Debugger => {
+	switch (action.type) {
+		case 'RESPONSE':
+			return { ...state, shouldFailDataset: !state.shouldFailDataset };
+		case 'RENDER':
+			return { ...state, shouldRender: !state.shouldRender };
+
+		case 'GRID':
+			return {
+				...state,
+				tabs: state.tabs.includes('grid') ? state.tabs.filter((s) => s !== 'grid') : [...state.tabs, 'grid'],
+			};
+		case 'GARDEN':
+			return {
+				...state,
+				tabs: state.tabs.includes('garden')
+					? state.tabs.filter((s) => s !== 'garden')
+					: [...state.tabs, 'garden'],
+			};
+		case 'POWERBI':
+			return {
+				...state,
+				tabs: state.tabs.includes('powerbi')
+					? state.tabs.filter((s) => s !== 'powerbi')
+					: [...state.tabs, 'powerbi'],
+			};
+
+		default:
+			return state;
+	}
+};
+
+type Debugger = {
+	shouldRender: boolean;
+	shouldFailDataset: boolean;
+	tabs: ('grid' | 'garden' | 'powerbi')[];
+};
+
+const initial: Debugger = {
+	shouldFailDataset: true,
+	shouldRender: true,
+	tabs: ['grid', 'garden', 'powerbi'],
+};
+
 function App() {
+	const [{ shouldFailDataset, shouldRender, tabs }, dispatch] = useReducer(reducer, initial);
 	const workspaceApi = useRef<WorkspaceController<S, MyTypes, { length: number }> | null>(null);
 	const [contextId, setContextId] = useState('abc');
-	const [shouldRender, setShouldRender] = useState(true);
 
-	const getResponseAsync = useCallback(async () => {
-		console.log('Look ma im a function');
-		return new Promise<Response>((res, rej) =>
+	const getResponseAsync = async () =>
+		new Promise<Response>((res, rej) =>
 			setTimeout(
 				() =>
-					rej({
-						status: 200,
-						json: async () => getItems(contextId),
-					} as Response),
+					shouldFailDataset
+						? rej({ status: 400 })
+						: res({
+								status: 200,
+								json: async () => getItems(contextId),
+						  } as Response),
 				2000
 			)
 		);
-	}, [contextId]);
 
 	return (
 		<QueryClientProvider client={client}>
 			<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
-				<Button color={shouldRender ? 'danger' : 'primary'} onClick={() => setShouldRender((s) => !s)}>
+				<Button color={shouldRender ? 'danger' : 'primary'} onClick={() => dispatch({ type: 'RENDER' })}>
 					{shouldRender ? 'Unmount' : 'Mount'}
 				</Button>
+				<Button
+					color={!shouldFailDataset ? 'danger' : 'primary'}
+					onClick={() => dispatch({ type: 'RESPONSE' })}
+				>
+					{shouldFailDataset ? 'success_dataset' : 'Fail_dataset'}
+				</Button>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					<Checkbox onChange={(e) => dispatch({ type: 'GRID' })} checked={tabs.includes('grid')} /> Grid
+				</div>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					<Checkbox onChange={(e) => dispatch({ type: 'GARDEN' })} checked={tabs.includes('garden')} /> Garden
+				</div>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					<Checkbox onChange={(e) => dispatch({ type: 'POWERBI' })} checked={tabs.includes('powerbi')} />{' '}
+					Powerbi
+				</div>
+
 				{shouldRender && (
 					<>
-						<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'admin' })}>
-							open Admin
-						</button>
-						<button
-							onClick={() =>
-								workspaceApi.current?.openSidesheet({ type: 'custom2', props: { id: '123' } })
-							}
-						>
-							Open custom2
-						</button>
-						<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'create_sidesheet' })}>
-							Open create
-						</button>
 						<Workspace
 							contextOptions={contextOptions}
 							statusBarOptions={statusBarOptions}
 							workspaceOptions={options}
-							gridOptions={gridOptions}
-							gardenOptions={gardenOptions}
+							gridOptions={tabs.includes('grid') ? gridOptions : undefined}
+							gardenOptions={tabs.includes('garden') ? gardenOptions : undefined}
 							filterOptions={filterOptions}
 							sidesheetOptions={sidesheet}
+							powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
 							dataOptions={{
 								getResponseAsync: getResponseAsync,
-								queryKey: ['Workspace', contextId],
+								queryKey: ['Workspace', shouldFailDataset ? 'true' : 'false'],
 								// initialData: [{ age: 178, contextId: '123', id: '123' }],
 							}}
-							modules={[
-								BookmarksModule({
-									getBookmark: async (id, signal) => {
-										return {
-											garden: {
-												groupingKeys: {
-													horizontalGroupingAccessor: 'age',
-													verticalGroupingKeys: [],
-												},
-												selectedNodes: [],
-											},
-										};
-									},
-								}),
-							]}
 						/>
 					</>
 				)}
@@ -137,6 +175,19 @@ function App() {
 		</QueryClientProvider>
 	);
 }
+
+const powerbiOptions: PowerBiConfig = {
+	getEmbed: async () => {
+		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+	},
+	getMDErrorMessage: async () => {
+		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+	},
+	getToken: async () => {
+		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+	},
+	reportUri: 'unknown',
+};
 
 export default App;
 
