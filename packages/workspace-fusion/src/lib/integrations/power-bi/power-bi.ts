@@ -58,5 +58,6 @@ type PowerBiConfig = {
 	reportUri: string;
 	getEmbed: (reportUri: string, token: string, signal?: AbortSignal) => Promise<EmbedConfiguration>;
 	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
+	getErrorMessage: (reportUri: string, signal?: AbortSignal) => Promise<string>;
 	filters?: FilterConfig;
 };

@@ -18,6 +18,7 @@ export function addPowerBi<
 	return {
 		Component: () => (
 			<PowerBI
+				getErrorMessage={powerBiConfig.getErrorMessage}
 				controller={controller}
 				getToken={powerBiConfig.getToken}
 				getEmbedInfo={powerBiConfig.getEmbed}

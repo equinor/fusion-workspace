@@ -16,6 +16,7 @@ export interface PowerBiProps {
 	reportUri: string;
 	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
 	getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
+	getErrorMessage: (reportUri: string) => Promise<string>;
 	filters?: IBasicFilter;
 	controller: PowerBiController;
 }
@@ -25,7 +26,16 @@ export const PowerBi = (props: PowerBiProps) => {
 		<Suspense fallback={<Loading />}>
 			<QueryErrorResetBoundary>
 				{({ reset }) => (
-					<ErrorBoundary onReset={reset} fallbackRender={ErrorComponent}>
+					<ErrorBoundary
+						onReset={reset}
+						fallbackRender={(e) => (
+							<ErrorComponent
+								{...e}
+								getErrorMessage={props.getErrorMessage}
+								reportUri={props.reportUri}
+							/>
+						)}
+					>
 						<Report {...props} />
 					</ErrorBoundary>
 				)}
