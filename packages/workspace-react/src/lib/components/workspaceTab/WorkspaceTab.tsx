@@ -1,4 +1,4 @@
-import { useActiveTab, useTabs } from '../../hooks';
+import { useActiveTab } from '../../hooks';
 import styled from 'styled-components';
 import { Suspense } from 'react';
 import { CircularProgress } from '@equinor/eds-core-react';
