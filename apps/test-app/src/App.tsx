@@ -109,18 +109,6 @@ function App() {
 							gridOptions={gridOptions}
 							gardenOptions={gardenOptions}
 							filterOptions={filterOptions}
-							powerBiOptions={{
-								getEmbed: async () => ({
-									embedUrl:
-										'https://app.powerbi.com/reportEmbed?reportId=4b6a3f7e-7a4a-48f4-aa09-c162cb858fa9&groupId=bc434a80-6a54-41da-96e0-d9ff43e1cb0f&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLU5PUlRILUVVUk9QRS1ILVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7Im1vZGVybkVtYmVkIjp0cnVlLCJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwic2tpcFF1ZXJ5RGF0YVNhYVNFbWJlZCI6dHJ1ZSwic2tpcFF1ZXJ5RGF0YVBhYVNFbWJlZCI6dHJ1ZSwic2tpcFF1ZXJ5RGF0YUV4cG9ydFRvIjp0cnVlfX0%3d',
-									reportId: '4b6a3f7e-7a4a-48f4-aa09-c162cb858fa9',
-								}),
-								getErrorMessage: async () => RLSError,
-								getToken: async () => {
-									throw Error('Failed', { cause: new Response(undefined, { status: 200 }) });
-								},
-								reportUri: 'Handover-analytics',
-							}}
 							sidesheetOptions={sidesheet}
 							dataOptions={{
 								getResponseAsync: getResponseAsync,
@@ -210,21 +198,3 @@ type Custom2 = {
 };
 
 type MyTypes = Admin | Custom2;
-
-const RLSError = `## Row-Level security requirements:
-
-
-*Your user type is **"Consultant"***
-
-
-### Username (filter) would have been provided if: 
-*Your user profile matched **Any** of the following requirement(s):* 
-- User type: (**PermanentEmployee or ExtHire or Consultant**) 
-- At least one of the following project base positions: (**Economic Analyst** or **Financial Controller** or **Project Control Manager** or **Project Director** or **Project Manager D&W** or **Project Manager Facilities** or **Project Manager Operation** or **Project Manager Petech** or **SURF manager** or **Project Procurement Manager (PPM)** or **Quality and Risk Manager** or **Technical Manager** or **Commercial manager** or **SSU and Authority Manager**) 
-
-
-### Your generated effective identity used as row-level security argument:
-
-
-
-`;
