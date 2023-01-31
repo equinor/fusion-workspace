@@ -11,6 +11,7 @@ import {
 	RequirementsWrapper,
 } from './reportErrorMessageStyles';
 import { useQuery } from '@tanstack/react-query';
+import { Loading } from '../loading';
 
 Icon.add({ warning_outlined });
 
@@ -22,7 +23,22 @@ interface ReportErrorMessageProps {
 const { Item, Header, Panel } = Accordion;
 
 export const ReportErrorMessage = ({ getErrorMessage, reportUri }: ReportErrorMessageProps) => {
-	const { data: message } = useQuery([reportUri], ({ signal }) => getErrorMessage(reportUri, signal));
+	const {
+		data: message,
+		isLoading,
+		error,
+	} = useQuery([reportUri], ({ signal }) => getErrorMessage(reportUri, signal), {
+		useErrorBoundary: false,
+		suspense: false,
+	});
+
+	if (isLoading) {
+		return <Loading />;
+	}
+
+	if (error) {
+		return <div>Failed to load error message</div>;
+	}
 
 	return (
 		<ErrorWrapper>
