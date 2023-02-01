@@ -180,7 +180,7 @@ const powerbiOptions: PowerBiConfig = {
 	getEmbed: async () => {
 		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
 	},
-	getMDErrorMessage: async () => {
+	getErrorMessage: async () => {
 		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
 	},
 	getToken: async () => {
