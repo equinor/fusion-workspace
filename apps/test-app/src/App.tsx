@@ -7,7 +7,7 @@ import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Button, Checkbox } from '@equinor/eds-core-react';
+import { Button, Checkbox, Popover } from '@equinor/eds-core-react';
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
 
 type S = {
@@ -187,6 +187,12 @@ const powerbiOptions: PowerBiConfig = {
 		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
 	},
 	reportUri: 'unknown',
+	ReportMetaData: ({ reportUri }) => (
+		<>
+			<Popover.Header>{reportUri}</Popover.Header>
+			<Popover.Content>Last updated: {new Date().toLocaleDateString()}</Popover.Content>
+		</>
+	),
 };
 
 export default App;

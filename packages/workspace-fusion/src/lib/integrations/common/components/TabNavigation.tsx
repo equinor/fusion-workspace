@@ -19,7 +19,9 @@ export const TabNavigation = () => {
 				<>
 					{leftIcons.map(({ Icon, name }) => (
 						<Fragment key={name}>
-							<Icon />
+							<TabButton isActive={false}>
+								<Icon />
+							</TabButton>
 						</Fragment>
 					))}
 					<TabButtonDivider />
@@ -60,7 +62,9 @@ export const TabNavigation = () => {
 				<>
 					{rightIcons.map(({ Icon, name }) => (
 						<Fragment key={name}>
-							<Icon />
+							<TabButton isActive={false}>
+								<Icon />
+							</TabButton>
 						</Fragment>
 					))}
 				</>
