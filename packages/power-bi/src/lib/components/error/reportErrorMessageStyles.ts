@@ -2,12 +2,12 @@ import { Accordion, Card } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const Heading = styled.h1`
+export const StyledHeading = styled.h1`
 	color: ${tokens.colors.text.static_icons__tertiary.rgba};
 	margin-bottom: 0;
 `;
 
-export const ErrorWrapper = styled.div`
+export const StyledErrorWrapper = styled.div`
 	padding-top: 3rem;
 	display: flex;
 	flex-direction: column;
@@ -19,23 +19,23 @@ export const ErrorWrapper = styled.div`
 	overflow: auto;
 `;
 
-export const HeadingWrapper = styled.div`
+export const StyledHeadingWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 `;
 
-export const AccordionWrapper = styled(Accordion)`
+export const StyledAccordionWrapper = styled(Accordion)`
 	margin: 1rem;
 	width: 40%;
 `;
 
-export const RequirementsWrapper = styled.div`
+export const StyledRequirementsWrapper = styled.div`
 	max-height: 500px;
 	overflow: auto;
 `;
 
-export const ErrorCard = styled(Card)`
+export const StyledErrorCard = styled(Card)`
 	margin-top: 2rem;
 	width: 40%;
 `;

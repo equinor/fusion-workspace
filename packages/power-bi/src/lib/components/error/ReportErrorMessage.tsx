@@ -3,12 +3,12 @@ import { tokens } from '@equinor/eds-tokens';
 import Markdown from 'markdown-to-jsx';
 import { warning_outlined } from '@equinor/eds-icons';
 import {
-	AccordionWrapper,
-	ErrorCard,
-	ErrorWrapper,
-	Heading,
-	HeadingWrapper,
-	RequirementsWrapper,
+	StyledAccordionWrapper,
+	StyledErrorCard,
+	StyledErrorWrapper,
+	StyledHeading,
+	StyledHeadingWrapper,
+	StyledRequirementsWrapper,
 } from './reportErrorMessageStyles';
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '../loading';
@@ -41,22 +41,22 @@ export const ReportErrorMessage = ({ getErrorMessage, reportUri }: ReportErrorMe
 	}
 
 	return (
-		<ErrorWrapper>
-			<HeadingWrapper>
+		<StyledErrorWrapper>
+			<StyledHeadingWrapper>
 				<Icon name={'warning_outlined'} color={tokens.colors.interactive.warning__resting.rgba} size={48} />
-				<Heading>No access</Heading>
-			</HeadingWrapper>
-			<ErrorCard></ErrorCard>
+				<StyledHeading>No access</StyledHeading>
+			</StyledHeadingWrapper>
+			<StyledErrorCard></StyledErrorCard>
 
-			<AccordionWrapper>
+			<StyledAccordionWrapper>
 				<Item>
 					<Panel>
-						<RequirementsWrapper>
+						<StyledRequirementsWrapper>
 							<Markdown>{message ?? ''}</Markdown>
-						</RequirementsWrapper>
+						</StyledRequirementsWrapper>
 					</Panel>
 				</Item>
-			</AccordionWrapper>
-		</ErrorWrapper>
+			</StyledAccordionWrapper>
+		</StyledErrorWrapper>
 	);
 };
