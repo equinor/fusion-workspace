@@ -20,6 +20,7 @@
 		"@equinor/eds-icons": "^0.17.0",
 		"@equinor/eds-tokens": "^0.9.0",
 		"@tanstack/react-query": "^4.23.0",
+		"markdown-to-jsx": "^7.1.8",
 		"powerbi-client": "^2.21.1",
 		"powerbi-client-react": "^1.3.5",
 		"react-error-boundary": "^3.1.4",
