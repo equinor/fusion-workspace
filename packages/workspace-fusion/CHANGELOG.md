@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.15.3...@equinor/workspace-fusion@0.15.4) (2023-02-01)
+
+### Bug Fixes
+
+-   :bug: fix no data splash screen not showing ([#292](https://github.com/equinor/fusion-workspace/issues/292)) ([38f7df5](https://github.com/equinor/fusion-workspace/commit/38f7df57a70aee1f171f809340b3ec27896b093c))
+
 ## [0.15.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.15.2...@equinor/workspace-fusion@0.15.3) (2023-02-01)
 
 **Note:** Version bump only for package @equinor/workspace-fusion

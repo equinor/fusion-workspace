@@ -5,6 +5,8 @@ import { Icon } from '@equinor/eds-core-react';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
 import { BaseEvent } from '@equinor/workspace-core';
+import { useQueryContext } from '../integrations/data-source';
+import { useQuery } from '@tanstack/react-query';
 Icon.add({ sync_off });
 
 type NoDataSplashScreenProps<
@@ -20,7 +22,9 @@ export function NoDataSplashScreen<
 	TContext extends Record<PropertyKey, unknown> = never,
 	TCustomSidesheetEvents extends BaseEvent = never
 >({ children, mediator }: NoDataSplashScreenProps<TData, TContext, TCustomSidesheetEvents>) {
-	if (mediator.dataService.data?.length === 0) {
+	const { data } = useQuery(useQueryContext());
+
+	if (Array.isArray(data) && data.length === 0) {
 		return <NoData />;
 	}
 
