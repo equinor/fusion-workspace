@@ -4,13 +4,14 @@ import { CircularProgress, Popover, Icon } from '@equinor/eds-core-react';
 import { ReactNode, useState, useRef, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
+import styled from 'styled-components';
 Icon.add({ info_circle });
 
 type MetaPopupProps = {
 	children: ReactNode;
 	anchor: HTMLElement;
 };
-export const MetaPopup = ({ children, anchor }: MetaPopupProps) => {
+export const PowerBiPopover = ({ children, anchor }: MetaPopupProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const pRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,7 +39,15 @@ export const MetaPopup = ({ children, anchor }: MetaPopupProps) => {
 };
 
 const Loading = () => (
-	<div style={{ height: '400px', width: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+	<StyledLoading>
 		<CircularProgress />
-	</div>
+	</StyledLoading>
 );
+
+const StyledLoading = styled.div`
+	height: 400px;
+	width: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;

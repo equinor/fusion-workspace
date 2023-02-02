@@ -5,7 +5,7 @@ import { PowerBiIcon } from '../icons/PowerBiIcon';
 import { FilterConfig, PowerBiConfig } from '../';
 import { HeaderIcon, useWorkspaceHeaderComponents } from '../../../context';
 import { useEffect } from 'react';
-import { MetaPopup } from '../components/PowerBiPopover';
+import { PowerBiPopover } from '../components/PowerBiPopover';
 
 export function addPowerBi(powerBiConfig: PowerBiConfig | undefined): undefined | Tab {
 	if (!powerBiConfig) return;
@@ -40,9 +40,9 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 
 			const icon: HeaderIcon = {
 				Icon: ({ anchor }) => (
-					<MetaPopup anchor={anchor}>
+					<PowerBiPopover anchor={anchor}>
 						<ReportMetaData reportUri={powerBiConfig.reportUri} />
-					</MetaPopup>
+					</PowerBiPopover>
 				),
 				name: 'report_metadata',
 				placement: 'left',
