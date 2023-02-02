@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.16.1...@equinor/workspace-fusion@0.16.2) (2023-02-02)
+
+### Bug Fixes
+
+-   :bug: fix powerbi popover close ([#299](https://github.com/equinor/fusion-workspace/issues/299)) ([bebb55e](https://github.com/equinor/fusion-workspace/commit/bebb55efa245782b4ccd0a42d38e52ce2b642a20))
+
 ## [0.16.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.16.0...@equinor/workspace-fusion@0.16.1) (2023-02-02)
 
 ### Bug Fixes
