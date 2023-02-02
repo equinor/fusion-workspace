@@ -40,9 +40,11 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 
 			const icon: HeaderIcon = {
 				Icon: ({ anchor }) => (
-					<PowerBiPopover anchor={anchor}>
-						<ReportMetaData reportUri={powerBiConfig.reportUri} />
-					</PowerBiPopover>
+					<PowerBiPopover
+						reportUri={powerBiConfig.reportUri}
+						anchor={anchor}
+						ReportMetaData={ReportMetaData}
+					/>
 				),
 				name: 'report_metadata',
 				placement: 'left',
