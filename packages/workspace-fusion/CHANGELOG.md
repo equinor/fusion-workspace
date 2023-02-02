@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.15.4...@equinor/workspace-fusion@0.16.0) (2023-02-02)
+
+### Features
+
+-   :sparkles: add popover to powerbi ([#293](https://github.com/equinor/fusion-workspace/issues/293)) ([de5de6a](https://github.com/equinor/fusion-workspace/commit/de5de6a1032fcec2d6e72e1604eb1301d31d82ae))
+
 ## [0.15.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.15.3...@equinor/workspace-fusion@0.15.4) (2023-02-01)
 
 ### Bug Fixes
