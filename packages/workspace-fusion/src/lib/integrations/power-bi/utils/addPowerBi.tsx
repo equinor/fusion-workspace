@@ -45,8 +45,8 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 			const { ReportMetaData } = powerBiConfig;
 
 			const icon: HeaderIcon = {
-				Icon: () => (
-					<MetaPopup>
+				Icon: ({ anchor }) => (
+					<MetaPopup anchor={anchor}>
 						<ReportMetaData reportUri={powerBiConfig.reportUri} />
 					</MetaPopup>
 				),
@@ -76,8 +76,9 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 
 type MetaPopupProps = {
 	children: ReactNode;
+	anchor: HTMLElement;
 };
-const MetaPopup = ({ children }: MetaPopupProps) => {
+const MetaPopup = ({ children, anchor }: MetaPopupProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const pRef = useRef<HTMLDivElement | null>(null);
 
@@ -98,7 +99,7 @@ const MetaPopup = ({ children }: MetaPopupProps) => {
 							<Suspense fallback={<Loading />}>{children}</Suspense>
 						</ErrorBoundary>
 					</Popover>,
-					document.getElementById('root')!
+					anchor
 				)}
 		</>
 	);

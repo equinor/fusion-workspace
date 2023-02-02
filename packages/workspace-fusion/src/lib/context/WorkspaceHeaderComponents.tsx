@@ -1,5 +1,5 @@
 import { Tab, useTabs } from '@equinor/workspace-react';
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useRef, useState } from 'react';
 
 type WorkspaceHeaderComponents = {
 	analyticsTabs: Tab<string>[];
@@ -8,9 +8,13 @@ type WorkspaceHeaderComponents = {
 	setIcons: (icons: HeaderIcon[] | ((icons: HeaderIcon[]) => HeaderIcon[])) => void;
 };
 
+type HeaderIconProps = {
+	anchor: HTMLElement;
+};
+
 export type HeaderIcon = {
 	name: string;
-	Icon: () => JSX.Element;
+	Icon: (props: HeaderIconProps) => JSX.Element;
 	placement: 'left' | 'right';
 };
 

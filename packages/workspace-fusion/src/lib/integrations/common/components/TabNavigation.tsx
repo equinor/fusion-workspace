@@ -2,10 +2,11 @@ import { useActiveTab, useSetActiveTab } from '@equinor/workspace-react';
 import { WorkspaceTabNames } from '../../../types';
 import { TabButtonDivider, TabButtonList, TabButton } from '../../../components/Header';
 import { useWorkspaceHeaderComponents } from '../../../context/WorkspaceHeaderComponents';
-import { Fragment } from 'react';
+import { Fragment, MutableRefObject, useRef } from 'react';
 
 export const TabNavigation = () => {
 	const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
+	const pRef = useRef<HTMLElement | null>(null);
 
 	const setActiveTab = useSetActiveTab();
 
@@ -14,13 +15,13 @@ export const TabNavigation = () => {
 
 	const activeTab = useActiveTab();
 	return (
-		<TabButtonList>
+		<TabButtonList ref={pRef as MutableRefObject<HTMLDivElement>} id="button_list">
 			{!!leftIcons.length && (
 				<>
 					{leftIcons.map(({ Icon, name }) => (
 						<Fragment key={name}>
 							<TabButton isActive={false}>
-								<Icon />
+								<Icon anchor={pRef.current!} />
 							</TabButton>
 						</Fragment>
 					))}
@@ -63,7 +64,7 @@ export const TabNavigation = () => {
 					{rightIcons.map(({ Icon, name }) => (
 						<Fragment key={name}>
 							<TabButton isActive={false}>
-								<Icon />
+								<Icon anchor={pRef.current!} />
 							</TabButton>
 						</Fragment>
 					))}
