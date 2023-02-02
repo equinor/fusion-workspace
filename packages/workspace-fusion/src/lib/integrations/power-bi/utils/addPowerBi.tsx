@@ -38,7 +38,7 @@ function createBasicFilter(filters: FilterConfig | undefined): undefined | IBasi
 }
 
 const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiController }) => {
-	const { icons, setIcons } = useWorkspaceHeaderComponents();
+	const { setIcons } = useWorkspaceHeaderComponents();
 
 	useEffect(() => {
 		if (powerBiConfig.ReportMetaData) {
