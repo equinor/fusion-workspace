@@ -76,4 +76,5 @@ type PowerBiConfig = {
 export type ReportMetaDataProps = {
 	reportUri: string;
 	anchor: HTMLElement;
+	close: VoidFunction;
 };
