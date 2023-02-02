@@ -1,15 +1,16 @@
 import { PowerBI, PowerBiController, IBasicFilter } from '@equinor/workspace-powerbi';
 import { Tab } from '@equinor/workspace-react';
-import { Icon, Popover } from '@equinor/eds-core-react';
+import { CircularProgress, Icon, Popover } from '@equinor/eds-core-react';
 import { info_circle } from '@equinor/eds-icons';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
 import { FilterConfig, PowerBiConfig } from '../';
 import { BaseEvent } from '@equinor/workspace-core';
 import { HeaderIcon, useWorkspaceHeaderComponents } from '../../../context';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, Suspense, useEffect, useRef, useState } from 'react';
 import { tokens } from '@equinor/eds-tokens';
 import { createPortal } from 'react-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 Icon.add({ info_circle });
 
 export function addPowerBi(powerBiConfig: PowerBiConfig | undefined): undefined | Tab {
@@ -92,10 +93,19 @@ const MetaPopup = ({ children }: MetaPopupProps) => {
 			{open &&
 				createPortal(
 					<Popover placement="bottom" anchorEl={pRef.current} open={open}>
-						{children}
+						{/* TODO: Parse error */}
+						<ErrorBoundary FallbackComponent={() => <div>Failed to load report info</div>}>
+							<Suspense fallback={<Loading />}>{children}</Suspense>
+						</ErrorBoundary>
 					</Popover>,
 					document.getElementById('root')!
 				)}
 		</>
 	);
 };
+
+const Loading = () => (
+	<div style={{ height: '400px', width: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+		<CircularProgress />
+	</div>
+);
