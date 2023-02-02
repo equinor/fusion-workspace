@@ -1,15 +1,20 @@
 import { Tab, useTabs } from '@equinor/workspace-react';
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useRef, useState } from 'react';
 
 type WorkspaceHeaderComponents = {
 	analyticsTabs: Tab<string>[];
 	viewTabs: Tab<string>[];
 	icons: HeaderIcon[];
+	setIcons: (icons: HeaderIcon[] | ((icons: HeaderIcon[]) => HeaderIcon[])) => void;
 };
 
-type HeaderIcon = {
+type HeaderIconProps = {
+	anchor: HTMLElement;
+};
+
+export type HeaderIcon = {
 	name: string;
-	Icon: () => JSX.Element;
+	Icon: (props: HeaderIconProps) => JSX.Element;
 	placement: 'left' | 'right';
 };
 
@@ -17,6 +22,7 @@ const defaultState: WorkspaceHeaderComponents = {
 	analyticsTabs: [],
 	icons: [],
 	viewTabs: [],
+	setIcons: () => void 0,
 };
 
 export const WorkspaceHeaderComponents = createContext<WorkspaceHeaderComponents>(defaultState);
@@ -28,6 +34,7 @@ type RootProps = {
 };
 
 export const RootHeaderContext = ({ children }: RootProps) => {
+	const [icons, setIcons] = useState<HeaderIcon[]>([]);
 	const tabs = useTabs();
 
 	const analyticsTabs = tabs.filter((s) => s.name === 'powerbi');
@@ -40,6 +47,8 @@ export const RootHeaderContext = ({ children }: RootProps) => {
 				...defaultState,
 				analyticsTabs: analyticsTabs,
 				viewTabs: viewTabs,
+				setIcons,
+				icons,
 			}}
 		>
 			{children}

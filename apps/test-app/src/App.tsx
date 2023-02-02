@@ -1,11 +1,10 @@
 import Workspace, { WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { useCallback, useReducer, useRef, useState } from 'react';
+import { useReducer, useRef, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
-import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Button, Checkbox } from '@equinor/eds-core-react';
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
@@ -112,7 +111,6 @@ const initial: Debugger = {
 
 function App() {
 	const [{ shouldFailDataset, shouldRender, tabs }, dispatch] = useReducer(reducer, initial);
-	const workspaceApi = useRef<WorkspaceController<S, MyTypes, { length: number }> | null>(null);
 	const [contextId, setContextId] = useState('abc');
 
 	const getResponseAsync = async () =>
@@ -176,6 +174,11 @@ function App() {
 	);
 }
 
+const Meta = () => {
+	throw new Promise((res, rej) => setTimeout(res, 5000));
+	throw new Error('Rip...');
+};
+
 const powerbiOptions: PowerBiConfig = {
 	getEmbed: async () => {
 		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
@@ -187,6 +190,7 @@ const powerbiOptions: PowerBiConfig = {
 		throw new Error('', { cause: new Response(undefined, { status: 403 }) });
 	},
 	reportUri: 'unknown',
+	ReportMetaData: Meta,
 };
 
 export default App;

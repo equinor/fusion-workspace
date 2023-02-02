@@ -70,4 +70,9 @@ type PowerBiConfig = {
 	 */
 	getErrorMessage: (reportUri: string, signal?: AbortSignal) => Promise<string>;
 	filters?: FilterConfig;
+	ReportMetaData?: (props: ReportMetaDataProps) => JSX.Element;
+};
+
+export type ReportMetaDataProps = {
+	reportUri: string;
 };
