@@ -78,7 +78,7 @@ type MetaPopupProps = {
 	children: ReactNode;
 };
 const MetaPopup = ({ children }: MetaPopupProps) => {
-	const [open, setOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const pRef = useRef<HTMLDivElement | null>(null);
 
 	return (
@@ -86,13 +86,13 @@ const MetaPopup = ({ children }: MetaPopupProps) => {
 			<div ref={pRef}>
 				<Icon
 					color={tokens.colors.text.static_icons__tertiary.hex}
-					onClick={() => setOpen((s) => !s)}
+					onClick={() => setIsOpen((s) => !s)}
 					name={info_circle.name}
 				/>
 			</div>
-			{open &&
+			{isOpen &&
 				createPortal(
-					<Popover placement="bottom" anchorEl={pRef.current} open={open}>
+					<Popover placement="bottom" anchorEl={pRef.current} open={isOpen}>
 						{/* TODO: Parse error */}
 						<ErrorBoundary FallbackComponent={() => <div>Failed to load report info</div>}>
 							<Suspense fallback={<Loading />}>{children}</Suspense>
