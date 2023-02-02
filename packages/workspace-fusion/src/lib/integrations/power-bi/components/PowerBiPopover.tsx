@@ -34,7 +34,11 @@ export const PowerBiPopover = ({ ReportMetaData, anchor, reportUri }: MetaPopupP
 						FallbackComponent={() => (pRef.current ? <FallbackComponent anchorEl={pRef.current} /> : null)}
 					>
 						<Suspense fallback={<LoadingWrapper anchorEl={pRef.current} />}>
-							<ReportMetaData anchor={pRef.current} reportUri={reportUri} />
+							<ReportMetaData
+								close={() => setIsOpen(false)}
+								anchor={pRef.current}
+								reportUri={reportUri}
+							/>
 						</Suspense>
 					</ErrorBoundary>,
 					anchor
