@@ -121,8 +121,8 @@ importers:
 
   packages/garden:
     specifiers:
-      '@equinor/eds-core-react': 0.26.0
-      '@equinor/eds-icons': ^0.17.0
+      '@equinor/eds-core-react': 0.28.0
+      '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': 0.9.0
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
@@ -132,14 +132,14 @@ importers:
       react-dom: ^18.2.0
       react-is: ^18.2.0
       react-virtual: ^2.10.4
-      rxjs: ^7.5.7
+      rxjs: ^7.8.0
       styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.26.0_maey765qzsqrp6bbazpxj7endy
-      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
+      '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
       react-virtual: 2.10.4_react@18.2.0
-      rxjs: 7.5.7
+      rxjs: 7.8.0
     devDependencies:
       '@types/jest': 27.4.1
       '@types/react': 18.0.25
@@ -1224,29 +1224,6 @@ packages:
       downshift: 6.1.12_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - supports-color
-    dev: false
-
-  /@equinor/eds-core-react/0.26.0_maey765qzsqrp6bbazpxj7endy:
-    resolution: {integrity: sha512-LHzZ6KACh/M2PM6w8OjcohKN77xEtyOb5bpxzMuLPcM7hUK3F0WIdLCBTrwhaz8c/HuzvwqAsX1yLPufw+qRpA==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.1
-      '@equinor/eds-icons': 0.15.0
-      '@equinor/eds-tokens': 0.9.0
-      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
-      '@floating-ui/react-dom-interactions': 0.10.3_2zx2umvpluuhvlq44va5bta2da
-      downshift: 6.1.12_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/react'
@@ -9044,6 +9021,7 @@ packages:
     resolution: {integrity: sha512-z9MzKh/UcOqB3i20H6rtrlaE/CgjLOvheWK/9ILrbhROGTweAi1BaFsTT9FbwZi5Trr1qNRs+MXkhmR06awzQA==}
     dependencies:
       tslib: 2.4.1
+    dev: true
 
   /rxjs/7.6.0:
     resolution: {integrity: sha512-DDa7d8TFNUalGC9VqXvQ1euWNN7sc63TrUCuM9J998+ViviahMIjKSOU7rfcgFOF+FCD71BhDRv4hrFz+ImDLQ==}
