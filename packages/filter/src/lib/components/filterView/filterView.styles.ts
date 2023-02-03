@@ -1,4 +1,4 @@
-import { Button } from '@equinor/eds-core-react';
+import { Button, ButtonProps } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
@@ -80,11 +80,11 @@ export const StyledSelectBar = styled.div`
 	border-right: 2px solid ${tokens.colors.ui.background__medium.rgba};
 `;
 
-export const StyledAddButton = styled(Button)`
+export const StyledAddButton: (props: ButtonProps) => JSX.Element = styled(Button)`
 	width: 36px;
 	height: 36px;
 `;
-export const StyledSearchButton = styled(Button)`
+export const StyledSearchButton: (props: ButtonProps) => JSX.Element = styled(Button)`
 	width: 36px;
 	height: 36px;
 `;

@@ -55,7 +55,7 @@ importers:
       '@ag-grid-community/core': ^29.0.0
       '@ag-grid-enterprise/column-tool-panel': 29.0.0
       '@equinor/eds-tokens': ^0.9.0
-      '@equinor/workspace-observable-proxy': workspace:latest
+      '@equinor/workspace-observable-proxy': workspace:^0.2.1
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
       '@types/react-dom': ^18.0.8
@@ -88,12 +88,12 @@ importers:
 
   packages/filter:
     specifiers:
-      '@equinor/eds-core-react': ^0.20.4
-      '@equinor/eds-icons': ^0.15.0
-      '@equinor/eds-tokens': ^0.7.1
+      '@equinor/eds-core-react': ^0.28.0
+      '@equinor/eds-icons': ^0.18.0
+      '@equinor/eds-tokens': ^0.9.0
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
-      '@types/sortablejs': '1'
+      '@types/sortablejs': ^1.15.0
       '@types/styled-components': ^5.1.26
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -101,11 +101,11 @@ importers:
       react-sortablejs: ^6.1.4
       react-virtual: ^2.10.4
       sortablejs: ^1.15.0
-      styled-components: ^5.3.5
+      styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.20.4_2zpt4ilzykmne4yndyzrqd4gdm
-      '@equinor/eds-icons': 0.15.0
-      '@equinor/eds-tokens': 0.7.1
+      '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
+      '@equinor/eds-icons': 0.18.0
+      '@equinor/eds-tokens': 0.9.0
       react-sortablejs: 6.1.4_pkvhgat2fktt3g4eqjjiisgkie
       react-virtual: 2.10.4_react@18.2.0
       sortablejs: 1.15.0
@@ -1204,26 +1204,6 @@ packages:
   /@emotion/unitless/0.7.5:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
 
-  /@equinor/eds-core-react/0.20.4_2zpt4ilzykmne4yndyzrqd4gdm:
-    resolution: {integrity: sha512-bDSX+vn4zd8KA+T1Od3e65EfYRHMGTnVdKO4H4DCe4VaVoIywjk4HO+7bI/LDAAOqM3ynfzBKxpUpw0mdmqQMg==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.1
-      '@equinor/eds-icons': 0.11.0
-      '@equinor/eds-tokens': 0.7.1
-      '@equinor/eds-utils': 0.2.3_2zpt4ilzykmne4yndyzrqd4gdm
-      '@popperjs/core': 2.9.2
-      downshift: 6.1.12_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-fast-compare: 3.2.0
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
-    dev: false
-
   /@equinor/eds-core-react/0.26.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-LHzZ6KACh/M2PM6w8OjcohKN77xEtyOb5bpxzMuLPcM7hUK3F0WIdLCBTrwhaz8c/HuzvwqAsX1yLPufw+qRpA==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -1337,9 +1317,28 @@ packages:
       - supports-color
     dev: false
 
-  /@equinor/eds-icons/0.11.0:
-    resolution: {integrity: sha512-KNyq/2HN88oDTRUpBUJpq5FFYroS8YthpKaQP75ncGBC3iAsuN7VkpmfTorlMDGYTDZa62FLHTCTqBRXuPd32A==}
+  /@equinor/eds-core-react/0.28.0_maey765qzsqrp6bbazpxj7endy:
+    resolution: {integrity: sha512-hCIgjjPa4c6lEKE9vfb7zrV1eFHrrPcsTRr6cdTzt5JHyu+hAlHx+mk7nUPn9yDN+2dGV8xQBIKrCeDuX1w5eQ==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+      styled-components: '>=4.2'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-tokens': 0.9.0
+      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
+      '@floating-ui/react-dom-interactions': 0.10.3_2zx2umvpluuhvlq44va5bta2da
+      '@tanstack/react-virtual': 3.0.0-beta.30_react@18.2.0
+      downshift: 7.2.0_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - supports-color
     dev: false
 
   /@equinor/eds-icons/0.15.0:
@@ -1357,31 +1356,14 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/eds-tokens/0.7.1:
-    resolution: {integrity: sha512-1IRJzf0Vf9t7MeG/NI9AmSi9YddyQc8ev5fax5IYSNLggE88X8EuYej52BMpJ6IJc7oEVvCQPC7JYD2XeyYJ1Q==}
+  /@equinor/eds-icons/0.18.0:
+    resolution: {integrity: sha512-2M0XaNp5r2lIIN5bOfhE3/i/utiURDCC06WXVj/3H2H3ZUNgcYjYnU4tr2BJHRi5/ruH6z1UxWwYTB0hUZCrGQ==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
   /@equinor/eds-tokens/0.9.0:
     resolution: {integrity: sha512-7FLqrH13dRc/q+wxHzZrIGkV35XMYIGojjkqLIbIeM0AwijSE1PETKqLauNf8VtMZPevt/2Hr9dV2a2NpEORQw==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
-    dev: false
-
-  /@equinor/eds-utils/0.2.3_2zpt4ilzykmne4yndyzrqd4gdm:
-    resolution: {integrity: sha512-5IpoxmfUbGDpxqQ/wf8KQue3iaXPe7e//Rn9mqySDFS4lhb3iYU4oH6baGrUbiGaRbd/aVXHSKhQs7n8biGjug==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.1
-      '@equinor/eds-tokens': 0.7.1
-      '@popperjs/core': 2.11.5
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-popper: 2.3.0_ili5ylfne7i3hkfpsanzgkfu6m
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
     dev: false
 
   /@equinor/eds-utils/0.7.0_2zpt4ilzykmne4yndyzrqd4gdm:
@@ -3065,16 +3047,8 @@ packages:
       typescript: 4.7.4
     dev: true
 
-  /@popperjs/core/2.11.5:
-    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
-    dev: false
-
   /@popperjs/core/2.11.6:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
-    dev: false
-
-  /@popperjs/core/2.9.2:
-    resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
     dev: false
 
   /@reach/observe-rect/1.2.0:
@@ -3123,6 +3097,19 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-virtual/3.0.0-beta.30_react@18.2.0:
+    resolution: {integrity: sha512-Sn1SSbSjDwb++jVOtgiQ/OHFMdcXFg8Qx02/cn0eq9xxHIhm/SqrKDpywIeydgNdOsdfBomOfxm/4gqTLrY1gg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.0.0-beta.30
+      react: 18.2.0
+    dev: false
+
+  /@tanstack/virtual-core/3.0.0-beta.30:
+    resolution: {integrity: sha512-fewNoKiJeG5v0T4jg7UO99G+hUYDHig6AkiIeqvC1O2zEw96MlzR6DXw91aqxcsIPSVp83IPsgNa7su8yZWldw==}
     dev: false
 
   /@tootallnate/once/1.1.2:
@@ -4369,6 +4356,10 @@ packages:
     resolution: {integrity: sha512-j4dx+Fb0URmzbwwMUrhqWM2BEWHdFGx+qZ9qqASHRPqvTYdqvWnHg0H1hIbcyLnvgnoNAVMlwkepyqM3DaIFUg==}
     dev: false
 
+  /compute-scroll-into-view/2.0.4:
+    resolution: {integrity: sha512-y/ZA3BGnxoM/QHHQ2Uy49CLtnWPbt4tTPpEEZiEmmiWBFKjej7nEyH8Ryz54jH0MLXflUYA3Er2zUxPSJu5R+g==}
+    dev: false
+
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -4813,6 +4804,19 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.1
       compute-scroll-into-view: 1.0.17
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-is: 17.0.2
+      tslib: 2.4.1
+    dev: false
+
+  /downshift/7.2.0_react@18.2.0:
+    resolution: {integrity: sha512-dEn1Sshe7iTelUhmdbmiJhtIiwIBxBV8p15PuvEBh0qZcHXZnEt0geuCIIkCL4+ooaKRuLE0Wc+Fz9SwWuBIyg==}
+    peerDependencies:
+      react: '>=16.12.0'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      compute-scroll-into-view: 2.0.4
       prop-types: 15.8.1
       react: 18.2.0
       react-is: 17.0.2
@@ -8700,20 +8704,6 @@ packages:
 
   /react-is/18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
-
-  /react-popper/2.3.0_ili5ylfne7i3hkfpsanzgkfu6m:
-    resolution: {integrity: sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==}
-    peerDependencies:
-      '@popperjs/core': ^2.0.0
-      react: ^16.8.0 || ^17 || ^18
-      react-dom: ^16.8.0 || ^17 || ^18
-    dependencies:
-      '@popperjs/core': 2.11.5
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-fast-compare: 3.2.0
-      warning: 4.0.3
-    dev: false
 
   /react-popper/2.3.0_r6q5zrenym2zg7je7hgi674bti:
     resolution: {integrity: sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==}
