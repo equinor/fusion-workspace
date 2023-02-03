@@ -29,7 +29,7 @@ export const TabNavigation = () => {
 							)}
 						</>
 					))}
-					<TabButtonDivider />
+					{(!!analyticsTabs.length || !!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
 				</>
 			)}
 
@@ -44,7 +44,7 @@ export const TabNavigation = () => {
 							<s.TabIcon />
 						</TabButton>
 					))}
-					<TabButtonDivider />
+					{(!!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
 				</>
 			)}
 
@@ -59,7 +59,7 @@ export const TabNavigation = () => {
 							<TabIcon />
 						</TabButton>
 					))}
-					<TabButtonDivider />
+					{!!rightIcons.length && <TabButtonDivider />}
 				</>
 			)}
 
