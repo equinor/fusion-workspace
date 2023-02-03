@@ -13,18 +13,9 @@ export function createTabController({ defaultTab, tabs }: TabControllerArgs): St
 	}
 
 	const store = createStore<TabController>((set, get) => ({
-		activeTab,
+		activeTab: activeTab.name,
 		setActiveTab: (name: string) => {
-			const newActiveTab = get().tabs.find((s) => s.name === name);
-			if (!newActiveTab) {
-				throw new Error('Failed to set activeTab');
-			}
-			//queryParam patch
-			set({ activeTab: newActiveTab });
-		},
-		tabs,
-		setTabs: (tabs: Tab[]) => {
-			set({ tabs });
+			set({ activeTab: name });
 		},
 	}));
 

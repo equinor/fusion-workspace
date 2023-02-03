@@ -1,4 +1,4 @@
-import { TabController, TabProvider } from '../components/Workspace';
+import { TabController, TabProvider, TabsProvider } from '../components/Workspace';
 import { useContext } from 'react';
 import { useStore } from 'zustand';
 
@@ -10,6 +10,17 @@ export const useTabContext = <U>(selector: (s: TabController) => U): U => {
 	return useStore(storeApi, selector);
 };
 
-export const useTabs = () => useTabContext((s) => s.tabs);
+export const useTabsContext = () => {
+	const context = useContext(TabsProvider);
+	if (!context) {
+		throw new Error('TabsProvider out of bounds');
+	}
+	return context;
+};
+
+export const useTabs = () => useTabsContext();
 export const useSetActiveTab = () => useTabContext((s) => s.setActiveTab);
-export const useActiveTab = () => useTabContext((s) => s.activeTab);
+export const useActiveTab = () => {
+	const tabName = useTabContext((s) => s.activeTab);
+	return useTabs().find((s) => s.name === tabName);
+};

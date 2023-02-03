@@ -1,7 +1,7 @@
-import Workspace, { WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
+import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { useReducer, useRef, useState } from 'react';
+import { useReducer, useState } from 'react';
 import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import { FilterConfig } from '@equinor/workspace-fusion/filter';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';

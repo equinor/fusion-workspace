@@ -7,7 +7,7 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
+import { tryGetTabFromUrl, updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 
 const client = new QueryClient();
@@ -36,11 +36,13 @@ export function Workspace<
 				<WorkspaceView
 					Sidesheet={configuration.Sidesheet}
 					providers={configuration.providers}
-					defaultTab={configuration.defaultTab}
+					defaultTab={
+						configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab
+					}
 					tabs={configuration.tabs}
 					events={{
 						onTabChange: (newTab) => {
-							updateQueryParams([['tab', newTab.name]], mediator, history);
+							updateQueryParams([['tab', newTab]], mediator, history);
 						},
 					}}
 				/>
