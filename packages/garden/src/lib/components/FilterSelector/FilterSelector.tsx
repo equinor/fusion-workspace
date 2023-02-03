@@ -83,6 +83,8 @@ export function FilterSelector(): JSX.Element | null {
 					options={groupingOptions}
 					label={''}
 					hideClearButton
+					//TODO: ...EDS check if fixed
+					onFocus={(e) => e.preventDefault()}
 					multiple={false}
 					selectedOptions={[getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)]}
 					onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
@@ -98,6 +100,8 @@ export function FilterSelector(): JSX.Element | null {
 								key={groupByKey.toString()}
 								options={groupingOptions}
 								label={''}
+								//TODO: ...EDS check if fixed
+								onFocus={(e) => e.preventDefault()}
 								selectedOptions={[getFieldSettingsLabelFromKey(groupByKey.toString(), fieldSettings)]}
 								onChange={(e) => console.log(e)}
 								onOptionsChange={(changes) =>
@@ -116,6 +120,7 @@ export function FilterSelector(): JSX.Element | null {
 						options={groupingOptions}
 						label={''}
 						selectedOptions={['']}
+						onFocus={(e) => e.preventDefault()}
 						onOptionsChange={(changes) => addItemToGroupKeys(changes.selectedItems[0])}
 					/>
 				</StyledSelectOneWrapper>
