@@ -1,5 +1,5 @@
 ---
-title: 'PowerBi only (Draft)'
+title: 'PowerBi only'
 description: 'Lorem ipsum dolor sit amet - 2'
 ---
 
