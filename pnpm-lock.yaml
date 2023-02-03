@@ -367,8 +367,8 @@ importers:
 
   packages/workspace-react:
     specifiers:
-      '@equinor/eds-core-react': ^0.27.0
-      '@equinor/eds-icons': ^0.17.0
+      '@equinor/eds-core-react': ^0.28.0
+      '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': ^0.9.0
       '@equinor/workspace-core': workspace:^0.1.1
       '@types/jest': 27.4.1
@@ -378,10 +378,10 @@ importers:
       react-dom: ^18.2.0
       react-is: ^18.2.0
       styled-components: ^5.3.6
-      zustand: ^4.3.1
+      zustand: ^4.3.2
     dependencies:
-      '@equinor/eds-core-react': 0.27.0_vjnypufdujrjelvl5gfeyrdu3e
-      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-core-react': 0.28.0_vjnypufdujrjelvl5gfeyrdu3e
+      '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-core': link:../workspace-core
       zustand: 4.3.2_react@18.2.0
@@ -1294,29 +1294,6 @@ packages:
       - supports-color
     dev: false
 
-  /@equinor/eds-core-react/0.27.0_vjnypufdujrjelvl5gfeyrdu3e:
-    resolution: {integrity: sha512-mbcc0B7fZLxWT0De6bI+DFUQUJ+y1M8zEtVFQDwLu9++n8+8odwNbTN/TsT/97VP5cea0xmtZpHRFA6ix4oCnw==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.1
-      '@equinor/eds-icons': 0.16.0
-      '@equinor/eds-tokens': 0.9.0
-      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
-      '@floating-ui/react-dom-interactions': 0.10.3_ocvlaah2275pzedeuxsmtxxp2y
-      downshift: 7.0.4_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - supports-color
-    dev: false
-
   /@equinor/eds-core-react/0.28.0_maey765qzsqrp6bbazpxj7endy:
     resolution: {integrity: sha512-hCIgjjPa4c6lEKE9vfb7zrV1eFHrrPcsTRr6cdTzt5JHyu+hAlHx+mk7nUPn9yDN+2dGV8xQBIKrCeDuX1w5eQ==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -1330,6 +1307,30 @@ packages:
       '@equinor/eds-tokens': 0.9.0
       '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
       '@floating-ui/react-dom-interactions': 0.10.3_2zx2umvpluuhvlq44va5bta2da
+      '@tanstack/react-virtual': 3.0.0-beta.30_react@18.2.0
+      downshift: 7.2.0_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - supports-color
+    dev: false
+
+  /@equinor/eds-core-react/0.28.0_vjnypufdujrjelvl5gfeyrdu3e:
+    resolution: {integrity: sha512-hCIgjjPa4c6lEKE9vfb7zrV1eFHrrPcsTRr6cdTzt5JHyu+hAlHx+mk7nUPn9yDN+2dGV8xQBIKrCeDuX1w5eQ==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+      styled-components: '>=4.2'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-tokens': 0.9.0
+      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
+      '@floating-ui/react-dom-interactions': 0.10.3_ocvlaah2275pzedeuxsmtxxp2y
       '@tanstack/react-virtual': 3.0.0-beta.30_react@18.2.0
       downshift: 7.2.0_react@18.2.0
       react: 18.2.0
