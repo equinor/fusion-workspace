@@ -20,6 +20,7 @@ const FilterBar = styled.div`
 	justify-content: space-between;
 	gap: 2em;
 	align-items: center;
+	margin: 0 0 0 15px;
 `;
 const InfoChip = styled(Chip)`
 	background-color: ${tokens.colors.ui.background__info.hex};
