@@ -179,16 +179,16 @@ importers:
 
   packages/power-bi:
     specifiers:
-      '@equinor/eds-core-react': ^0.27.0
-      '@equinor/eds-icons': ^0.17.0
+      '@equinor/eds-core-react': ^0.28.0
+      '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': ^0.9.0
-      '@tanstack/react-query': ^4.23.0
+      '@tanstack/react-query': ^4.24.4
       '@types/react': ^18.0.13
       '@types/react-dom': ^18.0.8
       '@types/sortablejs': '1'
       '@types/styled-components': ^5.1.26
-      markdown-to-jsx: ^7.1.8
-      powerbi-client: ^2.21.1
+      markdown-to-jsx: ^7.1.9
+      powerbi-client: ^2.22.2
       powerbi-client-react: ^1.3.5
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -196,15 +196,15 @@ importers:
       react-is: ^18.2.0
       react-sortablejs: ^6.1.4
       react-virtual: ^2.10.4
-      sortablejs: '1'
-      styled-components: ^5.3.5
+      sortablejs: ^1.15.0
+      styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.27.0_maey765qzsqrp6bbazpxj7endy
-      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
+      '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
-      '@tanstack/react-query': 4.23.0_biqbaboplfbrettd7655fr4n2y
-      markdown-to-jsx: 7.1.8_react@18.2.0
-      powerbi-client: 2.22.0
+      '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
+      markdown-to-jsx: 7.1.9_react@18.2.0
+      powerbi-client: 2.22.2
       powerbi-client-react: 1.3.5_react@18.2.0
       react-error-boundary: 3.1.4_react@18.2.0
       react-sortablejs: 6.1.4_pkvhgat2fktt3g4eqjjiisgkie
@@ -481,6 +481,7 @@ packages:
       '@babel/types': 7.20.5
       '@jridgewell/gen-mapping': 0.3.2
       jsesc: 2.5.2
+    dev: true
 
   /@babel/generator/7.20.5:
     resolution: {integrity: sha512-jl7JY2Ykn9S0yj4DQP82sYvPU+T3g0HFcWTqDLqiuA9tGRNIj9VfbtXGAYTTkyNEnQk1jkMGOdYka8aG/lulCA==}
@@ -643,6 +644,7 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.20.5
+    dev: true
 
   /@babel/parser/7.20.5:
     resolution: {integrity: sha512-r27t/cy/m9uKLXQNWWebeCUHgnAZq0CpG1OwKRxzJMP1vpSU4bSIK2hq+/cp0bQxetkXx38n09rNu8jVkcK/zA==}
@@ -959,23 +961,6 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/traverse/7.20.1_supports-color@5.5.0:
-    resolution: {integrity: sha512-d3tN8fkVJwFLkHkBN479SOsw4DMZnz8cdbL/gvuDuzy3TS6Nfw80HuQqhw1pITbIruHyh7d1fMA47kWzmcUEGA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/code-frame': 7.18.6
-      '@babel/generator': 7.20.2
-      '@babel/helper-environment-visitor': 7.18.9
-      '@babel/helper-function-name': 7.19.0
-      '@babel/helper-hoist-variables': 7.18.6
-      '@babel/helper-split-export-declaration': 7.18.6
-      '@babel/parser': 7.20.2
-      '@babel/types': 7.20.2
-      debug: 4.3.4_supports-color@5.5.0
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
-
   /@babel/traverse/7.20.5:
     resolution: {integrity: sha512-WM5ZNN3JITQIq9tFZaw1ojLU3WgWdtkxnhM1AegMS+PvHjkM5IXjmYEGY7yukz5XS4sJyEf2VzWjI8uAavhxBQ==}
     engines: {node: '>=6.9.0'}
@@ -993,6 +978,23 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@babel/traverse/7.20.5_supports-color@5.5.0:
+    resolution: {integrity: sha512-WM5ZNN3JITQIq9tFZaw1ojLU3WgWdtkxnhM1AegMS+PvHjkM5IXjmYEGY7yukz5XS4sJyEf2VzWjI8uAavhxBQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/code-frame': 7.18.6
+      '@babel/generator': 7.20.5
+      '@babel/helper-environment-visitor': 7.18.9
+      '@babel/helper-function-name': 7.19.0
+      '@babel/helper-hoist-variables': 7.18.6
+      '@babel/helper-split-export-declaration': 7.18.6
+      '@babel/parser': 7.20.5
+      '@babel/types': 7.20.7
+      debug: 4.3.4_supports-color@5.5.0
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   /@babel/types/7.20.2:
     resolution: {integrity: sha512-FnnvsNWgZCr232sqtXggapvlkk/tuwR/qhGzcmxI0GXLCjmPYQPzio2FbdlWuY6y1sHFfQKk+rRbUZ9VStQMog==}
     engines: {node: '>=6.9.0'}
@@ -1000,6 +1002,7 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: true
 
   /@babel/types/7.20.5:
     resolution: {integrity: sha512-c9fst/h2/dcF7H+MJKZ2T0KjEQ8hY/BNnDk/H3XY8C4Aw/eWQXWn/lWntHF9ooUBnGmEvbfGrTgLWc+um0YDUg==}
@@ -1008,6 +1011,7 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: true
 
   /@babel/types/7.20.7:
     resolution: {integrity: sha512-69OnhBxSSgK0OzTJai4kyPDiKTIe3j+ctaHdIGVbRahTLAT7L3R9oeXHC2aVSuGYt3cVnoAMDmOCgJ2yaiLMvg==}
@@ -3082,6 +3086,10 @@ packages:
     resolution: {integrity: sha512-t79CMwlbBnj+yL82tEcmRN93bL4U3pae2ota4t5NN2z3cIeWw74pzdWrKRwOfTvLcd+b30tC+ciDlfYOKFPGUw==}
     dev: false
 
+  /@tanstack/query-core/4.24.4:
+    resolution: {integrity: sha512-9dqjv9eeB6VHN7lD3cLo16ZAjfjCsdXetSAD5+VyKqLUvcKTL0CklGQRJu+bWzdrS69R6Ea4UZo8obHYZnG6aA==}
+    dev: false
+
   /@tanstack/react-query/4.23.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-cfQsrecZQjYYueiow4WcK8ItokXJnv+b2OrK8Lf5kF7lM9uCo1ilyygFB8wo4MfxchUBVM6Cs8wq4Ed7fouwkA==}
     peerDependencies:
@@ -3095,6 +3103,24 @@ packages:
         optional: true
     dependencies:
       '@tanstack/query-core': 4.22.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-query/4.24.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-RpaS/3T/a3pHuZJbIAzAYRu+1nkp+/enr9hfRXDS/mojwx567UiMksoqW4wUFWlwIvWTXyhot2nbIipTKEg55Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.24.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -7611,8 +7637,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /markdown-to-jsx/7.1.8_react@18.2.0:
-    resolution: {integrity: sha512-rRSa1aFmFnpDRFAhv5vIkWM4nPaoB9vnzIjuIKa1wGupfn2hdCNeaQHKpu4/muoc8n8J7yowjTP2oncA4/Rbgg==}
+  /markdown-to-jsx/7.1.9_react@18.2.0:
+    resolution: {integrity: sha512-x4STVIKIJR0mGgZIZ5RyAeQD7FEZd5tS8m/htbcVGlex32J+hlSLj+ExrHCxP6nRKF1EKbcO7i6WhC1GtOpBlA==}
     engines: {node: '>= 10'}
     peerDependencies:
       react: '>= 0.14.0'
@@ -8512,21 +8538,21 @@ packages:
       react: '>= 16'
     dependencies:
       lodash.isequal: 4.5.0
-      powerbi-client: 2.22.0
+      powerbi-client: 2.22.2
       react: 18.2.0
     dev: false
 
-  /powerbi-client/2.22.0:
-    resolution: {integrity: sha512-jQVYvF5n8Clhh4zvCtQeHw2rKiYJjcfYfE1dGO3vTmr9DZIH5DJpdJfP2QsylsqIZbyi7I2Nb24dDOsrHxsZZA==}
+  /powerbi-client/2.22.2:
+    resolution: {integrity: sha512-NPVdTzaxOPgY9wfPPi8nvAcbHI3qyRkv82NCPO+AdpnoMglC0yONoEcb+x0a0Qf/XcsutXBbLwS+fgKGHFEOxw==}
     dependencies:
       http-post-message: 0.2.3
-      powerbi-models: 1.12.1
+      powerbi-models: 1.12.3
       powerbi-router: 0.1.5
       window-post-message-proxy: 0.2.6
     dev: false
 
-  /powerbi-models/1.12.1:
-    resolution: {integrity: sha512-ucG7nd1gP14I26S/pXyoTiN7DfE0y1lmKyFwrS0WMumt/y3MUQwt4y0kA2jSmmmxqCquUQ2a5SHgnzy6D0cmSg==}
+  /powerbi-models/1.12.3:
+    resolution: {integrity: sha512-p7k1EiJZeDqdsxula6oGLgThn7JE2Hl1AYcN5WCCWLyKwqTH1nnDQb75vBv/sFbqZn5rlGENtxoqStErXfKoDA==}
     dev: false
 
   /powerbi-router/0.1.5:
@@ -9415,7 +9441,7 @@ packages:
       react-is: '>= 16.8.0'
     dependencies:
       '@babel/helper-module-imports': 7.18.6
-      '@babel/traverse': 7.20.1_supports-color@5.5.0
+      '@babel/traverse': 7.20.5_supports-color@5.5.0
       '@emotion/is-prop-valid': 1.2.0
       '@emotion/stylis': 0.8.5
       '@emotion/unitless': 0.7.5
