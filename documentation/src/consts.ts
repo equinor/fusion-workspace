@@ -1,5 +1,5 @@
 export const SITE = {
-	title: 'Documentation',
+	title: 'Workspace Docs',
 	description: 'Fusion workspace documentation.',
 	defaultLanguage: 'en-us',
 } as const;
