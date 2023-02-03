@@ -8,9 +8,10 @@ import { prepareConfig } from '../utils/prepareConfig';
 type DataSourceProviderProps = {
 	children: ReactNode;
 	config?: DataSourceConfig<Record<PropertyKey, unknown>>;
+	appKey: string;
 };
-export const DataSourceProvider = ({ children, config }: DataSourceProviderProps) => {
-	const query = prepareConfig(config);
+export const DataSourceProvider = ({ children, config, appKey }: DataSourceProviderProps) => {
+	const query = prepareConfig(config, appKey);
 	return <QueryContext.Provider value={query}>{children}</QueryContext.Provider>;
 };
 

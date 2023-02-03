@@ -32,7 +32,7 @@ export function Workspace<
 
 	return (
 		<QueryClientProvider client={client}>
-			<DataSourceProvider config={props.dataOptions}>
+			<DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
 				<WorkspaceView
 					Sidesheet={configuration.Sidesheet}
 					providers={configuration.providers}
