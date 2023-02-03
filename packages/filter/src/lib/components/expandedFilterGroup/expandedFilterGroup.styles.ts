@@ -1,4 +1,4 @@
-import { Button } from '@equinor/eds-core-react';
+import { Button, ButtonProps } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
@@ -78,7 +78,7 @@ export const StyledFilterHeaderGroup = styled.div<{ isActive: boolean }>`
 		isActive ? tokens.colors.interactive.primary__resting.hex : tokens.colors.text.static_icons__default.hex};
 `;
 
-export const StyledSearchButton = styled(Button)`
+export const StyledSearchButton: (props: ButtonProps) => JSX.Element = styled(Button)`
 	width: 36px;
 	height: 36px;
 `;
