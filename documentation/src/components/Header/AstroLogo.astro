@@ -5,15 +5,5 @@ type Props = {
 const { size } = Astro.props;
 ---
 
-<svg class="logo" width={size} height={size} viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<style>
-		#flame {
-			fill: var(--theme-text-accent);
-		}
-
-		#a {
-			fill: var(--theme-text-accent);
-		}
-	</style>
-	<title>Logo</title>
-</svg>
+<!-- Needed to adjust width to make the icon look normal -->
+<img width={size + 30} height={size} src="/fusion.png" />
