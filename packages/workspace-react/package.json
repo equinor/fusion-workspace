@@ -22,11 +22,11 @@
 		"styled-components": "^5.3.6"
 	},
 	"dependencies": {
-		"@equinor/eds-core-react": "^0.27.0",
-		"@equinor/eds-icons": "^0.17.0",
+		"@equinor/eds-core-react": "^0.28.0",
+		"@equinor/eds-icons": "^0.18.0",
 		"@equinor/eds-tokens": "^0.9.0",
 		"@equinor/workspace-core": "workspace:^0.1.1",
-		"zustand": "^4.3.1"
+		"zustand": "^4.3.2"
 	},
 	"devDependencies": {
 		"@types/jest": "27.4.1",

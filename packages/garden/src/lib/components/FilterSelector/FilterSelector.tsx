@@ -1,10 +1,10 @@
-import { SingleSelect } from '@equinor/eds-core-react';
+import { Autocomplete } from '@equinor/eds-core-react';
 import { createGardenProp } from '../../utils/createGardenProp';
 import { Fragment } from 'react';
 import { useGardenContext } from '../../hooks';
 import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { FieldSettings } from '../../types';
-import { StyledSelect, StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
+import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
 const getFieldSettingsKeyFromLabel = <
 	T extends Record<PropertyKey, unknown>,
@@ -78,12 +78,16 @@ export function FilterSelector(): JSX.Element | null {
 			<StyledSeparator> Group by </StyledSeparator>
 
 			<StyledSelectOneWrapper>
-				<StyledSelect
+				<Autocomplete
 					key={gardenKey.toString()}
-					items={groupingOptions}
+					options={groupingOptions}
 					label={''}
-					selectedOption={getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)}
-					handleSelectedItemChange={(changes) => handleGardenKeyChange(changes.selectedItem)}
+					hideClearButton
+					//TODO: ...EDS check if fixed
+					onFocus={(e) => e.preventDefault()}
+					multiple={false}
+					selectedOptions={[getFieldSettingsLabelFromKey(gardenKey.toString(), fieldSettings)]}
+					onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
 				/>
 			</StyledSelectOneWrapper>
 			<StyledSeparator>then</StyledSeparator>
@@ -92,14 +96,17 @@ export function FilterSelector(): JSX.Element | null {
 				return (
 					<Fragment key={groupByKey}>
 						<StyledSelectOneWrapper>
-							<SingleSelect
+							<Autocomplete
 								key={groupByKey.toString()}
-								items={groupingOptions || []}
+								options={groupingOptions}
 								label={''}
-								selectedOption={getFieldSettingsLabelFromKey(groupByKey.toString(), fieldSettings)}
-								handleSelectedItemChange={(changes) => {
-									handleExistingSelectionChange(changes.selectedItem, index);
-								}}
+								//TODO: ...EDS check if fixed
+								onFocus={(e) => e.preventDefault()}
+								selectedOptions={[getFieldSettingsLabelFromKey(groupByKey.toString(), fieldSettings)]}
+								onChange={(e) => console.log(e)}
+								onOptionsChange={(changes) =>
+									handleExistingSelectionChange(changes.selectedItems[0], index)
+								}
 							/>
 						</StyledSelectOneWrapper>
 						<StyledSeparator>then</StyledSeparator>
@@ -108,14 +115,13 @@ export function FilterSelector(): JSX.Element | null {
 			})}
 			{groupingOptions && groupingOptions.length > 0 && (
 				<StyledSelectOneWrapper>
-					<SingleSelect
+					<Autocomplete
 						key={'EmptyGroupBySelector'}
-						items={groupingOptions}
+						options={groupingOptions}
 						label={''}
-						selectedOption=""
-						handleSelectedItemChange={(changes) => {
-							addItemToGroupKeys(changes.selectedItem);
-						}}
+						selectedOptions={['']}
+						onFocus={(e) => e.preventDefault()}
+						onOptionsChange={(changes) => addItemToGroupKeys(changes.selectedItems[0])}
 					/>
 				</StyledSelectOneWrapper>
 			)}

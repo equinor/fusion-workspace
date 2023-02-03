@@ -16,11 +16,11 @@
 		"dist"
 	],
 	"dependencies": {
-		"@equinor/eds-core-react": "0.26.0",
-		"@equinor/eds-icons": "^0.17.0",
+		"@equinor/eds-core-react": "0.28.0",
+		"@equinor/eds-icons": "^0.18.0",
 		"@equinor/eds-tokens": "0.9.0",
 		"react-virtual": "^2.10.4",
-		"rxjs": "^7.5.7"
+		"rxjs": "^7.8.0"
 	},
 	"peerDependencies": {
 		"react": ">= 16.8.0",
