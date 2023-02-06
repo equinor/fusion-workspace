@@ -7,7 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 const LazyWorkspace = lazy<(props: WorkspaceProps<any, any, any, any, any>) => JSX.Element>(async () => {
 	const url = new URL('/@equinor/workspace-fusion', 'https://unpkg.com');
-	return (await import(url.toString())).default;
+	return await import(url.toString());
 });
 
 export function Workspace<

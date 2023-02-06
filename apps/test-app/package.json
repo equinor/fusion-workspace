@@ -12,14 +12,13 @@
 		"@equinor/eds-core-react": "^0.26.0",
 		"@equinor/eds-icons": "^0.15.0",
 		"@equinor/workspace-ag-grid": "workspace:latest",
+		"@equinor/workspace-dynamic": "workspace:^0.0.0",
 		"@equinor/workspace-fusion": "workspace:latest",
 		"@equinor/workspace-fusion-modules": "workspace:latest",
 		"@equinor/workspace-sidesheet": "workspace:latest",
 		"@tanstack/react-query": "^4.23.0",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0",
-		"sortablejs": "^1.15.0"
+		"sortablejs": "^1.15.0",
+		"vite-plugin-environment": "^1.1.3"
 	},
 	"devDependencies": {
 		"@types/react": "^18.0.25",
@@ -27,6 +26,14 @@
 		"@types/sortablejs": "^1.15.0",
 		"@vitejs/plugin-react": "^2.2.0",
 		"typescript": "^4.8.4",
-		"vite": "^3.2.5"
+		"vite": "^3.2.5",
+		"react": "^18.2.0",
+		"react-is": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"peerDependencies": {
+		"react-is": "^18.2.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	}
 }
