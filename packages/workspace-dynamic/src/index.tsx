@@ -6,8 +6,9 @@ export { WorkspaceTypes };
 import { ErrorBoundary } from 'react-error-boundary';
 
 const LazyWorkspace = lazy<(props: WorkspaceProps<any, any, any, any, any>) => JSX.Element>(async () => {
-	const url = new URL('/@equinor/workspace-fusion', 'https://unpkg.com');
-	return await import(url.toString());
+	const url = new URL('/@equinor/workspace-fusion@0.16.6', 'https://unpkg.com');
+
+	return await import(url.toString() /* @vite-ignore */);
 });
 
 export function Workspace<
