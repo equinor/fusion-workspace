@@ -293,6 +293,29 @@ importers:
       ts-node: 10.9.1_cbe7ovvae6zqfnmtgctpgpys54
       typescript: 4.8.4
 
+  packages/workspace-dynamic:
+    specifiers:
+      '@equinor/workspace-fusion': workspace:^0.16.4
+      '@types/react': ^18.0.25
+      '@types/styled-components': ^5.1.26
+      '@vitejs/plugin-react': ^3.1.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-error-boundary: ^3.1.4
+      react-is: ^18.2.0
+      vite: ^4.1.1
+    dependencies:
+      react-error-boundary: 3.1.4_react@18.2.0
+    devDependencies:
+      '@equinor/workspace-fusion': link:../workspace-fusion
+      '@types/react': 18.0.25
+      '@types/styled-components': 5.1.26
+      '@vitejs/plugin-react': 3.1.0_vite@4.1.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-is: 18.2.0
+      vite: 4.1.1
+
   packages/workspace-fusion:
     specifiers:
       '@equinor/eds-core-react': 0.27.0
@@ -590,7 +613,7 @@ packages:
     resolution: {integrity: sha512-WAwHBINyrpqywkUH0nTnNgI5ina5TFn85HKS0pbPDfxFfhyR/aNQEn4hGi1P1JyT//I0t4OgXUlofzWILRvS5w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/template': 7.18.10
+      '@babel/template': 7.20.7
       '@babel/types': 7.20.7
 
   /@babel/helper-hoist-variables/7.18.6:
@@ -726,7 +749,6 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.20.7
-    dev: true
 
   /@babel/parser/7.20.2:
     resolution: {integrity: sha512-afk318kh2uKbo7BEj2QtEi8HVCGrwHUffrYDy7dgVcSa2j9lY3LDjPzcyGdpX7xgm35aWqvciZJ4WKmdF/SxYg==}
@@ -1060,7 +1082,6 @@ packages:
       '@babel/code-frame': 7.18.6
       '@babel/parser': 7.20.15
       '@babel/types': 7.20.7
-    dev: true
 
   /@babel/traverse/7.20.1:
     resolution: {integrity: sha512-d3tN8fkVJwFLkHkBN479SOsw4DMZnz8cdbL/gvuDuzy3TS6Nfw80HuQqhw1pITbIruHyh7d1fMA47kWzmcUEGA==}
