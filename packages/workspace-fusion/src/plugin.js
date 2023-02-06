@@ -15,4 +15,4 @@ export const WorkspaceVitePlugin = () =>
 			},
 		],
 	});
-export default WorkspaceVitePlugin
+export default WorkspaceVitePlugin;
