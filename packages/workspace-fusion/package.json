@@ -5,16 +5,19 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "tsc -b",
+		"build:prod": "vite build && tsc -b",
 		"lint": "eslint --ext .ts,.tsx"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"module": "dist/esm/index.js",
+	"main": "dist/workspace.js",
 	"types": "dist/types/index.d.ts",
 	"files": [
 		"dist"
 	],
+	"unpkg": "dist/workspace.js",
 	"typesVersions": {
 		">=4.2": {
 			".": [
@@ -81,10 +84,12 @@
 		"@types/jest": "27.4.1",
 		"@types/react": "^18.0.25",
 		"@types/styled-components": "^5.1.26",
+		"@vitejs/plugin-react": "^3.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-is": "^18.2.0",
-		"styled-components": "^5.3.6"
+		"styled-components": "^5.3.6",
+		"vite": "^4.1.1"
 	},
 	"repository": {
 		"type": "git",
