@@ -4,6 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "pnpm -r build",
+		"build:prod": "pnpm -r build:prod",
 		"lint": "pnpm -r lint",
 		"shipit": "pnpm build && lerna version && pnpm publish -r",
 		"lint:staged": "lint-staged"

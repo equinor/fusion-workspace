@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "tsc -b",
+		"build:prod": "tsc -b",
 		"lint": "eslint --ext .ts,.tsx"
 	},
 	"publishConfig": {
