@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 export { WorkspaceViewController };
 
 export { Workspace };
+export default Workspace;
 
 import { createRoot } from 'react-dom/client';
 
