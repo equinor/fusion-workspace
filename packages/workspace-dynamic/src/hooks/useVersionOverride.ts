@@ -6,13 +6,20 @@ export function useVersionOverride() {
 	const [key, setKey] = useState(DEFAULT_PATH);
 
 	useEffect(() => {
-		window.addEventListener('message', (e) => {
-			if (typeof e.data === 'object' && e.data !== null) {
-				if (e.data['wsPath']) {
-					setKey(e.data.wsPath);
+		const controller = new AbortController();
+
+		window.addEventListener(
+			'message',
+			(e) => {
+				if (typeof e.data === 'object' && e.data !== null) {
+					if (e.data['wsPath']) {
+						setKey(e.data.wsPath);
+					}
 				}
-			}
-		});
+			},
+			{ signal: controller.signal }
+		);
+		return () => controller.abort();
 	}, []);
 	return key;
 }
