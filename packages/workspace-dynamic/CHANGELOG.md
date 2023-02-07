@@ -1,0 +1,10 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 0.1.0 (2023-02-07)
+
+### Features
+
+-   ✨workspace-dynamic ([#317](https://github.com/equinor/fusion-workspace/issues/317)) ([f53e16d](https://github.com/equinor/fusion-workspace/commit/f53e16dae70fb7b317ba875da93733e6ea1f69d3)), closes [#2](https://github.com/equinor/fusion-workspace/issues/2)
