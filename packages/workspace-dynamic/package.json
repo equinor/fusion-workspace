@@ -12,7 +12,6 @@
 		"access": "public"
 	},
 	"module": "dist/esm/index.js",
-	"main": "dist/workspace.js",
 	"types": "dist/types/index.d.ts",
 	"files": [
 		"dist"

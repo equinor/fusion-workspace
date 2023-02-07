@@ -7,17 +7,17 @@ import { useVersionOverride } from './hooks/useVersionOverride';
 import { InnerLoader } from './components/InnerLoader';
 
 //danger bundle
-import { WorkspaceVitePlugin } from '@equinor/workspace-fusion';
+import type { WorkspaceVitePlugin } from '@equinor/workspace-fusion';
 export { WorkspaceVitePlugin };
 
 export const Workspace = <
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
-	// TCustomSidesheetEvents extends BaseEvent = never,
+	TCustomSidesheetEvents extends WorkspaceConfig.BaseEvent = never,
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(
-	props: WorkspaceConfig.WorkspaceProps<TData, TContext, never, TExtendedFields, TCustomGroupByKeys>
+	props: WorkspaceConfig.WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>
 ) => {
 	const loadPath = useVersionOverride();
 
