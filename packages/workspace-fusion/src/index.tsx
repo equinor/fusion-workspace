@@ -4,6 +4,9 @@ import { WorkspaceViewController } from '@equinor/workspace-react';
 import ReactDOM from 'react-dom';
 export { WorkspaceViewController };
 
+import { WorkspaceVitePlugin } from './plugin';
+export { WorkspaceVitePlugin };
+
 export { Workspace };
 export default Workspace;
 

@@ -1,6 +1,6 @@
 import { Plugin } from 'vite-plugin-cdn-import';
 
-export const WorkspaceVitePlugin = () =>
+export const WorkspaceVitePlugin = (): ReturnType<typeof Plugin> =>
 	Plugin({
 		modules: [
 			{
@@ -15,4 +15,4 @@ export const WorkspaceVitePlugin = () =>
 			},
 		],
 	});
-export default WorkspaceVitePlugin
+export default WorkspaceVitePlugin;
