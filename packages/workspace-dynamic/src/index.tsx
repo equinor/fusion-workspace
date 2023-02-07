@@ -6,6 +6,10 @@ import { Center } from './components/Center';
 import { useVersionOverride } from './hooks/useVersionOverride';
 import { InnerLoader } from './components/InnerLoader';
 
+//danger bundle
+import { WorkspaceVitePlugin } from '@equinor/workspace-fusion';
+export { WorkspaceVitePlugin };
+
 export const Workspace = <
 	TData extends Record<PropertyKey, unknown>,
 	TContext extends Record<PropertyKey, unknown>,
