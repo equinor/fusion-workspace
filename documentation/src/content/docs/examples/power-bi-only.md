@@ -16,7 +16,7 @@ The following example will have the following functionality configured.
 
 ### Configuration
 
-```js
+```tsx
 import { Workspace } from '@equinor/workspace-fusion'
 import { PowerBiConfig, EmbedConfiguration, FusionPowerBiToken } from '@equinor/workspace-fusion/power-bi';
 
