@@ -1,5 +1,5 @@
 {
-  "name": "@example/docs",
+  "name": "@equinor/workspace-docs",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:prod": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
