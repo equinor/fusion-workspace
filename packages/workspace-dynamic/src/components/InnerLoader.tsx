@@ -1,5 +1,4 @@
 import type * as WorkspaceConfig from '@equinor/workspace-fusion';
-import { useQuery } from '@tanstack/react-query';
 import { lazy } from 'react';
 
 const DEFAULT_PATH = 'https://unpkg.com/@equinor/workspace-fusion';
