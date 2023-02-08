@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.3...@equinor/workspace-react@0.6.4) (2023-02-06)
+
+**Note:** Version bump only for package @equinor/workspace-react
+
 ## [0.6.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.2...@equinor/workspace-react@0.6.3) (2023-02-03)
 
 **Note:** Version bump only for package @equinor/workspace-react

@@ -1,4 +1,4 @@
-import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
+// import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
 import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
 import { useReducer, useState } from 'react';

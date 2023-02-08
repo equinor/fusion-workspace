@@ -1,11 +1,12 @@
 {
 	"name": "@equinor/workspace-ag-grid",
-	"version": "0.3.5",
+	"version": "0.3.6",
 	"type": "module",
 	"private": false,
 	"license": "MIT",
 	"scripts": {
 		"build": "tsc -b",
+		"build:prod": "tsc -b",
 		"lint": "eslint --ext .ts,.tsx"
 	},
 	"module": "dist/esm/index.js",
@@ -21,7 +22,7 @@
 		"@ag-grid-community/core": "^29.0.0",
 		"@ag-grid-enterprise/column-tool-panel": "29.0.0",
 		"@equinor/eds-tokens": "^0.9.0",
-		"@equinor/workspace-observable-proxy": "workspace:^0.2.1",
+		"@equinor/workspace-observable-proxy": "workspace:^0.2.2",
 		"ag-grid-community": "29.0.0",
 		"ag-grid-enterprise": "29.0.0",
 		"ag-grid-react": "^29.0.0"

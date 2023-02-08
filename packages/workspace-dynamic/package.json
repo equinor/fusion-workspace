@@ -1,6 +1,6 @@
 {
-	"name": "@equinor/workspace-fusion-modules",
-	"version": "0.3.20",
+	"name": "@equinor/workspace-dynamic",
+	"version": "0.1.2",
 	"type": "module",
 	"license": "MIT",
 	"scripts": {
@@ -16,22 +16,10 @@
 	"files": [
 		"dist"
 	],
-	"typesVersions": {
-		">=4.2": {
-			"bookmarks": [
-				"dist/types/lib/modules/fusionBookmarks/index"
-			]
-		}
-	},
-	"exports": {
-		"./bookmarks": "./dist/esm/lib/modules/fusionBookmarks/index.js"
-	},
 	"dependencies": {
-		"@equinor/eds-core-react": "0.26.0",
-		"@equinor/eds-icons": "^0.17.0",
-		"@equinor/eds-tokens": "0.9.0",
-		"@equinor/workspace-fusion": "workspace:^0.17.1",
-		"react-query": "^3.39.2"
+		"@equinor/eds-core-react": "^0.29.1",
+		"@tanstack/react-query": "^4.24.4",
+		"react-error-boundary": "^3.1.4"
 	},
 	"peerDependencies": {
 		"react": ">= 16.8.0",
@@ -39,14 +27,16 @@
 		"react-is": ">= 16.8.0"
 	},
 	"devDependencies": {
+		"@equinor/workspace-fusion": "workspace:^0.17.1",
+		"@types/react": "^18.0.25",
+		"@types/react-dom": "^18.0.8",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0"
+		"react-dom": "^18.2.0"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/equinor/fusion-workspace.git",
-		"directory": "packages/workspace-fusion-modules"
+		"directory": "packages/workspace-fusion"
 	},
 	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
