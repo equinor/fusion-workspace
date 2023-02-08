@@ -1,6 +1,9 @@
 import type * as WorkspaceConfig from '@equinor/workspace-fusion';
-import { useQuery } from '@tanstack/react-query';
-import { useRef, useEffect } from 'react';
+import { lazy } from 'react';
+
+const DEFAULT_PATH = 'https://unpkg.com/@equinor/workspace-fusion';
+
+const WS = lazy(async () => await import(DEFAULT_PATH));
 
 export function InnerLoader<
 	TData extends Record<PropertyKey, unknown>,
@@ -19,30 +22,5 @@ export function InnerLoader<
 		loadPath: string;
 	}
 ) {
-	const { data: bundle } = useQuery(
-		['workspace', props.loadPath],
-		async () => {
-			const bundle = await import(props.loadPath /* @vite-ignore */);
-			return { default: bundle.dynamic };
-		},
-		{
-			staleTime: 0,
-			cacheTime: 0,
-			refetchOnWindowFocus: false,
-			suspense: true,
-			useErrorBoundary: true,
-		}
-	);
-
-	const pRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (!bundle) return;
-		const { teardown, render } = bundle.default(pRef.current!, props);
-		return () => {
-			teardown;
-		};
-	}, [bundle]);
-
-	return <div id={`Workspace entry`} style={{ height: '100%' }} ref={pRef} />;
+	return <WS {...props} />;
 }

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Loading } from './loading';
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 import { FusionEmbedConfig, FusionPowerBiToken } from '../types';
 import { ErrorComponent } from './error/ErrorComponent';
@@ -21,25 +21,29 @@ export interface PowerBiProps {
 	controller: PowerBiController;
 }
 
+const client = new QueryClient();
+
 export const PowerBi = (props: PowerBiProps) => {
 	return (
-		<Suspense fallback={<Loading />}>
-			<QueryErrorResetBoundary>
-				{({ reset }) => (
-					<ErrorBoundary
-						onReset={reset}
-						fallbackRender={(e) => (
-							<ErrorComponent
-								{...e}
-								getErrorMessage={props.getErrorMessage}
-								reportUri={props.reportUri}
-							/>
-						)}
-					>
-						<Report {...props} />
-					</ErrorBoundary>
-				)}
-			</QueryErrorResetBoundary>
-		</Suspense>
+		<QueryClientProvider client={client}>
+			<Suspense fallback={<Loading />}>
+				<QueryErrorResetBoundary>
+					{({ reset }) => (
+						<ErrorBoundary
+							onReset={reset}
+							fallbackRender={(e) => (
+								<ErrorComponent
+									{...e}
+									getErrorMessage={props.getErrorMessage}
+									reportUri={props.reportUri}
+								/>
+							)}
+						>
+							<Report {...props} />
+						</ErrorBoundary>
+					)}
+				</QueryErrorResetBoundary>
+			</Suspense>
+		</QueryClientProvider>
 	);
 };
