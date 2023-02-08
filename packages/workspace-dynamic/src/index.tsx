@@ -7,10 +7,6 @@ import { useVersionOverride } from './hooks/useVersionOverride';
 import { InnerLoader } from './components/InnerLoader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-//danger bundle
-import type { WorkspaceVitePlugin } from '@equinor/workspace-fusion';
-export { WorkspaceVitePlugin };
-
 const client = new QueryClient();
 
 export const Workspace = <
