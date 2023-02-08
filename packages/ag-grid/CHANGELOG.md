@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.6...@equinor/workspace-ag-grid@0.3.7) (2023-02-08)
+
+**Note:** Version bump only for package @equinor/workspace-ag-grid
+
 ## [0.3.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.5...@equinor/workspace-ag-grid@0.3.6) (2023-02-06)
 
 **Note:** Version bump only for package @equinor/workspace-ag-grid

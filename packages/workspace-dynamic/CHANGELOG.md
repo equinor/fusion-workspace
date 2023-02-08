@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-dynamic@0.1.2...@equinor/workspace-dynamic@0.1.3) (2023-02-08)
+
+**Note:** Version bump only for package @equinor/workspace-dynamic
+
 ## [0.1.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-dynamic@0.1.1...@equinor/workspace-dynamic@0.1.2) (2023-02-08)
 
 **Note:** Version bump only for package @equinor/workspace-dynamic
