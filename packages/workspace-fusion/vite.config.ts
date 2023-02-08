@@ -1,13 +1,19 @@
 import { defineConfig } from 'vite';
-import EnvironmentPlugin from 'vite-plugin-environment';
 import { WorkspaceVitePlugin } from './src/plugin';
-import { Plugin } from 'vite-plugin-cdn-import';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [EnvironmentPlugin({ NODE_ENV: 'production' }), WorkspaceVitePlugin()],
+	plugins: [WorkspaceVitePlugin()],
 	appType: 'custom',
 	build: {
+		rollupOptions: {
+			plugins: [
+				injectProcessEnv({
+					NODE_ENV: 'production',
+				}),
+			],
+		},
 		outDir: 'dist',
 		lib: {
 			entry: './src/index.tsx',
