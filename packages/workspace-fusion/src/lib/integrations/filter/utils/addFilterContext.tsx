@@ -34,10 +34,7 @@ function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>)
 	});
 
 	useEffect(() => {
-		console.log('new data', data);
-
 		if (data) {
-			console.log('making new filters', data);
 			filterControlLer.setData(data as unknown[]);
 			filterControlLer.init();
 		}

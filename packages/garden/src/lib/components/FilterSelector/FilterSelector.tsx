@@ -103,7 +103,6 @@ export function FilterSelector(): JSX.Element | null {
 								//TODO: ...EDS check if fixed
 								onFocus={(e) => e.preventDefault()}
 								selectedOptions={[getFieldSettingsLabelFromKey(groupByKey.toString(), fieldSettings)]}
-								onChange={(e) => console.log(e)}
 								onOptionsChange={(changes) =>
 									handleExistingSelectionChange(changes.selectedItems[0], index)
 								}
