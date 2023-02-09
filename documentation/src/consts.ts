@@ -2,7 +2,6 @@ export const SITE = {
 	title: 'Fusion workspace docs',
 	description: 'Fusion workspace documentation.',
 	defaultLanguage: 'en-us',
-	base: 'fusion-workspace/',
 } as const;
 
 export const OPEN_GRAPH = {
