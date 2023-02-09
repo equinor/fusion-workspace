@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Workspace, WorkspaceConfig } from '@equinor/workspace-dynamic';
+import { Workspace } from '@equinor/workspace-fusion';
 
 const client = new QueryClient();
 
