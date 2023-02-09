@@ -3,7 +3,6 @@ import { SITE } from '../../consts';
 import AstroLogo from './AstroLogo.astro';
 import SkipToContent from './SkipToContent.astro';
 import SidebarToggle from './SidebarToggle';
-import Search from './Search';
 import MoreMenu from '../RightSidebar/MoreMenu.astro';
 
 type Props = {
@@ -24,9 +23,6 @@ type Props = {
 			</a>
 		</div>
 		<div style="flex-grow: 1;"></div>
-		<div class="search-item">
-			<Search client:idle />
-		</div>
 	</nav>
 	<MoreMenu editHref="" />
 </header>

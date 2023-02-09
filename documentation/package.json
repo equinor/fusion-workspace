@@ -1,6 +1,5 @@
 {
   "name": "@equinor/workspace-docs",
-  "type": "module",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,17 +12,21 @@
   },
   "dependencies": {
     "@algolia/client-search": "^4.13.1",
+    "@astrojs/mdx": "^0.16.0",
     "@astrojs/preact": "^2.0.2",
     "@astrojs/react": "^2.0.2",
     "@docsearch/css": "^3.3.3",
     "@docsearch/react": "^3.3.3",
+    "@equinor/workspace-fusion": "0.15.0",
+    "@types/node": "^18.0.0",
     "astro": "^2.0.8",
     "preact": "^10.12.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "html-escaper": "^3.0.3",

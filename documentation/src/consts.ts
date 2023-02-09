@@ -1,5 +1,5 @@
 export const SITE = {
-	title: 'Workspace Docs',
+	title: 'Fusion workspace docs',
 	description: 'Fusion workspace documentation.',
 	defaultLanguage: 'en-us',
 } as const;
@@ -36,5 +36,18 @@ export const SIDEBAR: Sidebar = {
 		{ text: 'PowerBi only', link: 'examples/power-bi-only' },
 		{ text: 'Simple', link: 'examples/simple' },
 		{ text: 'Advanced', link: 'examples/advanced' },
+	],
+	References: [
+		{ text: 'Introduction', link: 'reference/introduction' },
+		{ text: 'Technical specification', link: 'reference/spec/spec' },
+		{ text: 'App loading', link: 'reference/spec/apploading' },
+		{ text: 'Workspace core', link: 'reference/workspace-core/introduction' },
+		{ text: 'Workspace mediator', link: 'reference/workspace-core/mediator' },
+		{ text: 'Observable', link: 'reference/workspace-core/observable' },
+		{ text: 'Services', link: 'reference/workspace-core/services' },
+		{ text: 'Controller', link: 'reference/workspace-fusion/controller' },
+		{ text: 'Framework', link: 'reference/workspace-fusion/framework' },
+		{ text: 'Widgets', link: 'reference/workspace-react/widgets' },
+		{ text: 'React wrapper', link: 'reference/workspace-react/wrapper' },
 	],
 };
