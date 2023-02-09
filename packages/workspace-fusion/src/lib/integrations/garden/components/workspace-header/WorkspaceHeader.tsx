@@ -41,7 +41,7 @@ const NavigationBar = () => {
 
 	return (
 		<StyledActionBar>
-			{StatusBar && <StatusBar />}
+			<div>{StatusBar && <StatusBar />}</div>
 
 			<TabNavigation />
 		</StyledActionBar>

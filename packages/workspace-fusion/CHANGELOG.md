@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.2...@equinor/workspace-fusion@0.17.3) (2023-02-09)
+
+### Bug Fixes
+
+-   :bug: fix tab placement ([#322](https://github.com/equinor/fusion-workspace/issues/322)) ([188cccd](https://github.com/equinor/fusion-workspace/commit/188cccd51651c45f3ca94e6c6a6c71ae07ec73a4))
+
 ## [0.17.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.1...@equinor/workspace-fusion@0.17.2) (2023-02-08)
 
 **Note:** Version bump only for package @equinor/workspace-fusion
