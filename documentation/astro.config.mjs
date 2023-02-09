@@ -13,5 +13,6 @@ export default defineConfig({
 		react(),
 		mdx(),
 	],
+  outDir: "../dist",
 	site: `https://astro.build`,
 });
