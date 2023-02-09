@@ -14,8 +14,8 @@ export function makeFilterProvider<TData, TError>(
 	mediator: FusionMediator<any, any, any>
 ) {
 	const FilterProvider = ({ children }) => {
-		useSyncFilterProvider(filterController as any);
 		useEffect(filterControllerSyncEffect(filterController, mediator), [mediator]);
+		useSyncFilterProvider(filterController as any);
 		return <FilterContextProvider controller={filterController}>{children}</FilterContextProvider>;
 	};
 	return {
@@ -49,15 +49,8 @@ function filterControllerSyncEffect(
 		const unsub = filterController.onFilteredDataChanged((newData) => {
 			mediator.dataService.filteredData = newData;
 		});
-		mediator.dataService.data && filterController.setData(mediator.dataService.data);
-		filterController.init();
-		const sub = mediator.dataService.data$.subscribe((data) => {
-			filterController.setData(data ?? []);
-			filterController.init();
-		});
 		return () => {
 			unsub();
-			sub.unsubscribe();
 		};
 	};
 }

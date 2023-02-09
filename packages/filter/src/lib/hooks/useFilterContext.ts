@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ReactFilterController } from '../classes/reactFilterController';
 
-export const FilterContext = createContext(new ReactFilterController());
+export const FilterContext = createContext<null | ReactFilterController<any>>(null);
 
 export const useFilterContext = <TData>(): ReactFilterController<TData> => {
 	const controller = useContext(FilterContext) as ReactFilterController<TData>;
