@@ -30,7 +30,7 @@ const NavigationBar = () => {
 	const StatusBar = useStatusBar();
 	return (
 		<StyledActionBar>
-			{StatusBar && <StatusBar />}
+			<div>{StatusBar && <StatusBar />}</div>
 
 			<TabNavigation />
 		</StyledActionBar>
