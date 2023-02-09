@@ -1,8 +1,8 @@
-import { Checkbox } from '@equinor/eds-core-react';
+import { Checkbox, CheckboxProps } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
-export const StyledAllCheckbox = styled(Checkbox)`
+export const StyledAllCheckbox: (props: CheckboxProps) => JSX.Element = styled(Checkbox)`
 	padding-left: 0.5rem !important;
 `;
 

@@ -1,5 +1,6 @@
-import { Accordion, Card } from '@equinor/eds-core-react';
+import { Accordion, AccordionProps, Card, CardProps } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
+import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 export const StyledHeading = styled.h1`
@@ -25,7 +26,7 @@ export const StyledHeadingWrapper = styled.div`
 	align-items: center;
 `;
 
-export const StyledAccordionWrapper = styled(Accordion)`
+export const StyledAccordionWrapper: (props: PropsWithChildren<AccordionProps>) => JSX.Element = styled(Accordion)`
 	margin: 1rem;
 	width: 40%;
 `;
@@ -35,7 +36,7 @@ export const StyledRequirementsWrapper = styled.div`
 	overflow: auto;
 `;
 
-export const StyledErrorCard = styled(Card)`
+export const StyledErrorCard: (props: CardProps) => JSX.Element = styled(Card)`
 	margin-top: 2rem;
 	width: 40%;
 `;
