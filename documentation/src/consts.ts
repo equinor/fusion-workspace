@@ -2,6 +2,7 @@ export const SITE = {
 	title: 'Fusion workspace docs',
 	description: 'Fusion workspace documentation.',
 	defaultLanguage: 'en-us',
+	base: 'fusion-workspace/',
 } as const;
 
 export const OPEN_GRAPH = {
@@ -24,16 +25,16 @@ export const ALGOLIA = {
 export type Sidebar = Record<string, { text: string; link: string }[]>;
 export const SIDEBAR: Sidebar = {
 	Configuration: [
-		{ text: 'Introduction', link: 'introduction' },
-		{ text: 'Data', link: 'config/data-options' },
-		{ text: 'Grid', link: 'config/grid-options' },
-		{ text: 'Garden', link: 'config/garden-options' },
-		{ text: 'PowerBi', link: 'config/powerbi-options' },
-		{ text: 'Filter', link: 'config/filter-options' },
-		{ text: 'Context', link: 'config/context-options' },
+		{ text: 'Introduction', link: `introduction` },
+		{ text: 'Data', link: `config/data-options` },
+		{ text: 'Grid', link: `config/grid-options` },
+		{ text: 'Garden', link: `config/garden-options` },
+		{ text: 'PowerBi', link: `config/powerbi-options` },
+		{ text: 'Filter', link: `config/filter-options` },
+		{ text: 'Context', link: `/context-options` },
 	],
 	Examples: [
-		{ text: 'PowerBi only', link: 'examples/power-bi-only' },
+		{ text: 'PowerBi only', link: `examples/power-bi-only` },
 		{ text: 'Simple', link: 'examples/simple' },
 		{ text: 'Advanced', link: 'examples/advanced' },
 	],
