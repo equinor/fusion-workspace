@@ -37,6 +37,7 @@ export const SIDEBAR: Sidebar = {
 		{ text: 'Simple', link: 'examples/simple' },
 		{ text: 'Advanced', link: 'examples/advanced' },
 	],
+	Concepts: [{ text: 'Boundaries', link: 'concepts/boundaries' }],
 	References: [
 		{ text: 'Introduction', link: 'reference/introduction' },
 		{ text: 'Technical specification', link: 'reference/spec/spec' },

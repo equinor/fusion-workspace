@@ -1,0 +1,30 @@
+---
+title: 'Boundaries'
+description: 'A section about suspense and error boundaries'
+---
+
+## Suspsense and error boundaries
+
+Boundaries are heavily used throughout the workspace package.
+Every custom component passed from the config will be wrapped with a suspense and error boundary.
+
+### Suspense
+
+If a [promise](https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise) is thrown the suspense boundary will render a fallback component while the promise is in the state `pending`.
+For most of the cases our fallback component will be the `CircularProgess` from [EDS](https://eds.equinor.com).
+
+### Error boundary
+
+React supports error boundaries but do not provide any native component for using it.
+For our implementation we chose the package [react-error-boundary](https://www.npmjs.com/package/react-error-boundary).
+Just as with suspense an error boundary is triggered using a thrown promise in a component. The difference is the error boundary triggers when the promise changes its state to `rejected`.
+
+### Taking control
+
+If the default suspense and error boundaries does not satisfy your needs, wrap your components in your own suspense and error boundary.
+
+### References
+
+1. [React-error-boundary(react docs)](https://reactjs.org/docs/error-boundaries.html)
+2. [React-error-boundary(npm)](https://www.npmjs.com/package/react-error-boundary)
+3. [Suspense](https://beta.reactjs.org/reference/react/Suspense)
