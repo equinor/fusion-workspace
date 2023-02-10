@@ -1,0 +1,69 @@
+---
+title: 'Boundaries'
+description: 'A section about suspense and error boundaries'
+---
+
+## Suspense and error boundaries
+
+Boundaries are heavily used throughout the workspace package.
+Some components passed as part of the workspace configuration will be wrapped in suspense and error boundary.
+Components like sidesheet and custom garden components.
+
+`Throwing promises is an experimental features, the only stable usage of suspense boundaries are for lazy loading components using the inbuilt react lazy function.`
+
+```tsx
+//Will trigger suspense boundary while loading
+const Component = lazy(() => import('./lazyComponent'));
+
+/**
+ * @example
+ */
+function App() {
+	return (
+		<Suspense fallback={Loading...}>
+			<Component />
+		</Suspense>
+	);
+}
+```
+
+### Suspense
+
+If a [promise](https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise) is thrown the suspense boundary will render a fallback component while the promise is in the state `pending`.
+For most of the cases our fallback component will be the `CircularProgress` from [EDS](https://eds.equinor.com).
+
+### Error boundary
+
+React supports error boundaries but do not provide any native component for using it.
+For our implementation we chose the package [react-error-boundary](https://www.npmjs.com/package/react-error-boundary).
+Just as with suspense an error boundary is triggered using a thrown promise in a component. The difference is the error boundary triggers when the promise changes its state to `rejected`.
+
+### Taking control
+
+If the default suspense and error boundaries do not satisfy your needs, wrap your components in your own suspense and error boundary.
+
+```tsx
+/**
+ * @example - Example using lazy loading of components
+ */
+
+const Component = lazy(() => import("./Component"))
+
+//Pass this one to the workspace config
+//I.E garden config CustomItemView
+function YourWrapper() {
+	return (
+		<ErrorBoundary>
+			<Suspense fallback={Loading....}>
+				<Component />
+			</Suspense>
+		</ErrorBoundary>
+	);
+}
+```
+
+### References
+
+1. [React-error-boundary(react docs)](https://reactjs.org/docs/error-boundaries.html)
+2. [React-error-boundary(npm)](https://www.npmjs.com/package/react-error-boundary)
+3. [Suspense(react docs)](https://beta.reactjs.org/reference/react/Suspense)
