@@ -5,8 +5,6 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://equinor.github.io/fusion-workspace",
-	base: "/fusion-workspace/",
 	integrations: [
 		preact(),
 		// Enable React for the Algolia search component.
@@ -14,5 +12,6 @@ export default defineConfig({
 		mdx(),
 	],
   	outDir: "../dist",
-	site: `https://astro.build`,
+	base: "/fusion/workspace",
+	site: `https://equinor.github.io`,
 });
