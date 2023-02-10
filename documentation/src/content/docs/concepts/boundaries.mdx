@@ -19,7 +19,7 @@ const Component = lazy(async () => await import('./lazyComponent'));
  */
 function App() {
 	return (
-		<Suspense>
+		<Suspense fallback={Loading...}>
 			<Component />
 		</Suspense>
 	);
@@ -49,6 +49,7 @@ If the default suspense and error boundaries do not satisfy your needs, wrap you
 const Component = lazy(() => await import("./Component"))
 
 //Pass this one to the workspace config
+//I.E garden config CustomItemView
 function YourWrapper() {
 	return (
 		<ErrorBoundary>
