@@ -8,6 +8,24 @@ description: 'A section about suspense and error boundaries'
 Boundaries are heavily used throughout the workspace package.
 Every custom component passed from the config will be wrapped with a suspense and error boundary.
 
+`Throwing promises is an experimental features, the only stable usage of suspense boundaries are for lazy loading components using the inbuilt react lazy function.`
+
+```tsx
+//Will trigger suspense boundary while loading
+const Component = lazy(async () => await import('./lazyComponent'));
+
+/**
+ * @example
+ */
+function App() {
+	return (
+		<Suspense>
+			<Component />
+		</Suspense>
+	);
+}
+```
+
 ### Suspense
 
 If a [promise](https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise) is thrown the suspense boundary will render a fallback component while the promise is in the state `pending`.
@@ -21,7 +39,26 @@ Just as with suspense an error boundary is triggered using a thrown promise in a
 
 ### Taking control
 
-If the default suspense and error boundaries does not satisfy your needs, wrap your components in your own suspense and error boundary.
+If the default suspense and error boundaries do not satisfy your needs, wrap your components in your own suspense and error boundary.
+
+```tsx
+/**
+ * @example - Example using lazy loading of components
+ */
+
+const Component = lazy(() => await import("./Component"))
+
+//Pass this one to the workspace config
+function YourWrapper() {
+	return (
+		<ErrorBoundary>
+			<Suspense fallback={Loading....}>
+				<Component />
+			</Suspense>
+		</ErrorBoundary>
+	);
+}
+```
 
 ### References
 
