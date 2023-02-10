@@ -13,7 +13,7 @@ Components like sidesheet and custom garden components.
 
 ```tsx
 //Will trigger suspense boundary while loading
-const Component = lazy(async () => await import('./lazyComponent'));
+const Component = lazy(() => import('./lazyComponent'));
 
 /**
  * @example
@@ -47,7 +47,7 @@ If the default suspense and error boundaries do not satisfy your needs, wrap you
  * @example - Example using lazy loading of components
  */
 
-const Component = lazy(() => await import("./Component"))
+const Component = lazy(() => import("./Component"))
 
 //Pass this one to the workspace config
 //I.E garden config CustomItemView
