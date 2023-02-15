@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
+- :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
 
 ## [0.0.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-sidesheet@0.0.5...@equinor/workspace-sidesheet@0.0.6) (2022-11-10)
 
@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   fix empty dist ([150d3fd](https://github.com/equinor/fusion-workspace/commit/150d3fd028e9995b10885a396849e13a1262b6b2))
+- fix empty dist ([150d3fd](https://github.com/equinor/fusion-workspace/commit/150d3fd028e9995b10885a396849e13a1262b6b2))
 
 ## [0.0.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-sidesheet@0.0.2...@equinor/workspace-sidesheet@0.0.3) (2022-11-07)
 

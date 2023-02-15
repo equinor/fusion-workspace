@@ -10,22 +10,22 @@ import { useQueryContext } from '../context';
  * I wrap the tab in suspense and error boundary then I hook into the api call being made to read loading/error state
  */
 function Query({ children }: PropsWithChildren) {
-	useQuery(useQueryContext());
-	return <>{children}</>;
+  useQuery(useQueryContext());
+  return <>{children}</>;
 }
 
 export const DataLoader = ({ children }: PropsWithChildren) => {
-	return (
-		<QueryErrorResetBoundary>
-			{({ reset }) => (
-				<ErrorBoundary onReset={reset} fallbackRender={ErrorComponent}>
-					<Query>{children}</Query>
-				</ErrorBoundary>
-			)}
-		</QueryErrorResetBoundary>
-	);
+  return (
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onReset={reset} fallbackRender={ErrorComponent}>
+          <Query>{children}</Query>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
+  );
 };
 
 const ErrorComponent = ({ error, resetErrorBoundary }: FallbackProps) => (
-	<WorkspaceError title={'Uh-oh'} type={'Error'} error={error} />
+  <WorkspaceError title={'Uh-oh'} type={'Error'} error={error} />
 );

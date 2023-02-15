@@ -6,6 +6,6 @@ export type OnchangeCallback<TValue> = (newValue: TValue, oldValue?: TValue) => 
 
 /** Stores the callback under a numbered id as functions cant be uniquely identified */
 export interface Callback<TValue> {
-	id: number;
-	callback: OnchangeCallback<TValue>;
+  id: number;
+  callback: OnchangeCallback<TValue>;
 }

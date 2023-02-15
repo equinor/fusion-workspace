@@ -13,49 +13,49 @@ import { useEffect } from 'react';
 import { DataLoader } from '../../../integrations/data-source/components/DataLoader';
 
 export function addGarden<
-	TData extends Record<PropertyKey, unknown>,
-	TExtendedGardenFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TExtendedGardenFields extends string = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+  TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
+  TCustomSidesheetEvents extends BaseEvent = never
 >(
-	gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+  gardenConfig: GardenConfig<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext> | undefined,
+  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ): { provider: Provider; tab: Tab } | undefined {
-	if (!gardenConfig) return;
+  if (!gardenConfig) return;
 
-	const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>({
-		...gardenConfig,
-		data: [],
-		getIdentifier: mediator.getIdentifier,
-		getContext: () => mediator.contextService.getContext(),
-	});
+  const gardenController = new GardenController<TData, TExtendedGardenFields, TCustomGroupByKeys, TContext>({
+    ...gardenConfig,
+    data: [],
+    getIdentifier: mediator.getIdentifier,
+    getContext: () => mediator.contextService.getContext(),
+  });
 
-	configureClickEvents(gardenController, mediator);
+  configureClickEvents(gardenController, mediator);
 
-	const provider: Provider = {
-		Component: ({ children }) => {
-			useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
-			useEffect(highlightEffect(gardenController, mediator), [mediator]);
-			useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
+  const provider: Provider = {
+    Component: ({ children }) => {
+      useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
+      useEffect(highlightEffect(gardenController, mediator), [mediator]);
+      useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
 
-			return <>{children}</>;
-		},
-		name: 'garden-sync',
-	};
+      return <>{children}</>;
+    },
+    name: 'garden-sync',
+  };
 
-	return {
-		provider,
-		tab: {
-			Component: () => (
-				<DataLoader>
-					<GardenWrapper controller={gardenController} mediator={mediator} />
-				</DataLoader>
-			),
-			name: 'garden',
-			TabIcon: GardenIcon,
-			CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
-		},
-	};
+  return {
+    provider,
+    tab: {
+      Component: () => (
+        <DataLoader>
+          <GardenWrapper controller={gardenController} mediator={mediator} />
+        </DataLoader>
+      ),
+      name: 'garden',
+      TabIcon: GardenIcon,
+      CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+    },
+  };
 }

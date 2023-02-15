@@ -5,79 +5,79 @@ import { useWorkspaceHeaderComponents } from '../../../context/WorkspaceHeaderCo
 import { Fragment, MutableRefObject, useRef } from 'react';
 
 export const TabNavigation = () => {
-	const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
-	const pRef = useRef<HTMLElement | null>(null);
+  const { icons, analyticsTabs, viewTabs } = useWorkspaceHeaderComponents();
+  const pRef = useRef<HTMLElement | null>(null);
 
-	const setActiveTab = useSetActiveTab();
+  const setActiveTab = useSetActiveTab();
 
-	const leftIcons = icons.filter((s) => s.placement === 'left');
-	const rightIcons = icons.filter((s) => s.placement === 'right');
+  const leftIcons = icons.filter((s) => s.placement === 'left');
+  const rightIcons = icons.filter((s) => s.placement === 'right');
 
-	const activeTab = useActiveTab();
-	return (
-		<TabButtonList ref={pRef as MutableRefObject<HTMLDivElement>} id="button_list">
-			{!!leftIcons.length && (
-				<>
-					{leftIcons.map(({ Icon, name }) => (
-						<>
-							{pRef.current && (
-								<Fragment key={name}>
-									<TabButton isActive={false}>
-										<Icon anchor={pRef.current} />
-									</TabButton>
-								</Fragment>
-							)}
-						</>
-					))}
-					{(!!analyticsTabs.length || !!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
-				</>
-			)}
+  const activeTab = useActiveTab();
+  return (
+    <TabButtonList ref={pRef as MutableRefObject<HTMLDivElement>} id="button_list">
+      {!!leftIcons.length && (
+        <>
+          {leftIcons.map(({ Icon, name }) => (
+            <>
+              {pRef.current && (
+                <Fragment key={name}>
+                  <TabButton isActive={false}>
+                    <Icon anchor={pRef.current} />
+                  </TabButton>
+                </Fragment>
+              )}
+            </>
+          ))}
+          {(!!analyticsTabs.length || !!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
+        </>
+      )}
 
-			{!!analyticsTabs.length && (
-				<>
-					{analyticsTabs.map((s) => (
-						<TabButton
-							isActive={s.name === activeTab?.name}
-							key={s.name}
-							onClick={() => setActiveTab(s.name as WorkspaceTabNames)}
-						>
-							<s.TabIcon />
-						</TabButton>
-					))}
-					{(!!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
-				</>
-			)}
+      {!!analyticsTabs.length && (
+        <>
+          {analyticsTabs.map((s) => (
+            <TabButton
+              isActive={s.name === activeTab?.name}
+              key={s.name}
+              onClick={() => setActiveTab(s.name as WorkspaceTabNames)}
+            >
+              <s.TabIcon />
+            </TabButton>
+          ))}
+          {(!!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
+        </>
+      )}
 
-			{!!viewTabs.length && (
-				<>
-					{viewTabs.map(({ name, TabIcon }) => (
-						<TabButton
-							isActive={activeTab?.name === name}
-							key={name}
-							onClick={() => setActiveTab(name as WorkspaceTabNames)}
-						>
-							<TabIcon />
-						</TabButton>
-					))}
-					{!!rightIcons.length && <TabButtonDivider />}
-				</>
-			)}
+      {!!viewTabs.length && (
+        <>
+          {viewTabs.map(({ name, TabIcon }) => (
+            <TabButton
+              isActive={activeTab?.name === name}
+              key={name}
+              onClick={() => setActiveTab(name as WorkspaceTabNames)}
+            >
+              <TabIcon />
+            </TabButton>
+          ))}
+          {!!rightIcons.length && <TabButtonDivider />}
+        </>
+      )}
 
-			{!!rightIcons.length && (
-				<>
-					{rightIcons.map(({ Icon, name }) => (
-						<>
-							{pRef.current && (
-								<Fragment key={name}>
-									<TabButton isActive={false}>
-										<Icon anchor={pRef.current} />
-									</TabButton>
-								</Fragment>
-							)}
-						</>
-					))}
-				</>
-			)}
-		</TabButtonList>
-	);
+      {!!rightIcons.length && (
+        <>
+          {rightIcons.map(({ Icon, name }) => (
+            <>
+              {pRef.current && (
+                <Fragment key={name}>
+                  <TabButton isActive={false}>
+                    <Icon anchor={pRef.current} />
+                  </TabButton>
+                </Fragment>
+              )}
+            </>
+          ))}
+        </>
+      )}
+    </TabButtonList>
+  );
 };

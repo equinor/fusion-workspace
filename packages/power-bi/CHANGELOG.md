@@ -31,7 +31,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
+- :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
 
 ## [0.1.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.1.3...@equinor/workspace-powerbi@0.1.4) (2022-12-12)
 
@@ -45,19 +45,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   :bug: powerbi height issue ([#218](https://github.com/equinor/fusion-workspace/issues/218)) ([091e10b](https://github.com/equinor/fusion-workspace/commit/091e10b4425693a080b56c44ddab72b405fffbee))
+- :bug: powerbi height issue ([#218](https://github.com/equinor/fusion-workspace/issues/218)) ([091e10b](https://github.com/equinor/fusion-workspace/commit/091e10b4425693a080b56c44ddab72b405fffbee))
 
 ## [0.1.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.1.0...@equinor/workspace-powerbi@0.1.1) (2022-11-29)
 
 ### Bug Fixes
 
--   :bug: fix powerbi css height width issue ([#201](https://github.com/equinor/fusion-workspace/issues/201)) ([d882597](https://github.com/equinor/fusion-workspace/commit/d88259751a76f343c94ee81d4475b6dfa2f2b714))
+- :bug: fix powerbi css height width issue ([#201](https://github.com/equinor/fusion-workspace/issues/201)) ([d882597](https://github.com/equinor/fusion-workspace/commit/d88259751a76f343c94ee81d4475b6dfa2f2b714))
 
 ## [0.1.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.0.6...@equinor/workspace-powerbi@0.1.0) (2022-11-18)
 
 ### Features
 
--   :sparkles: reactify workspace-fusion setup ([#186](https://github.com/equinor/fusion-workspace/issues/186)) ([5e3d318](https://github.com/equinor/fusion-workspace/commit/5e3d318c8193271fbddeab261ce26e4827eb6321))
+- :sparkles: reactify workspace-fusion setup ([#186](https://github.com/equinor/fusion-workspace/issues/186)) ([5e3d318](https://github.com/equinor/fusion-workspace/commit/5e3d318c8193271fbddeab261ce26e4827eb6321))
 
 ## [0.0.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.0.5...@equinor/workspace-powerbi@0.0.6) (2022-11-10)
 
@@ -67,13 +67,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   :bug: fix icons crashing fusion-workspace ([#156](https://github.com/equinor/fusion-workspace/issues/156)) ([1e856ef](https://github.com/equinor/fusion-workspace/commit/1e856efabad89c791864f5b389163469e3e3b7f5))
+- :bug: fix icons crashing fusion-workspace ([#156](https://github.com/equinor/fusion-workspace/issues/156)) ([1e856ef](https://github.com/equinor/fusion-workspace/commit/1e856efabad89c791864f5b389163469e3e3b7f5))
 
 ## [0.0.4](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.0.3...@equinor/workspace-powerbi@0.0.4) (2022-11-07)
 
 ### Bug Fixes
 
--   trigger release ([#149](https://github.com/equinor/fusion-workspace/issues/149)) ([3a0a25f](https://github.com/equinor/fusion-workspace/commit/3a0a25fc280438dd75dad428e7480eaf6d5328e3))
+- trigger release ([#149](https://github.com/equinor/fusion-workspace/issues/149)) ([3a0a25f](https://github.com/equinor/fusion-workspace/commit/3a0a25fc280438dd75dad428e7480eaf6d5328e3))
 
 ## [0.0.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.0.2...@equinor/workspace-powerbi@0.0.3) (2022-11-07)
 

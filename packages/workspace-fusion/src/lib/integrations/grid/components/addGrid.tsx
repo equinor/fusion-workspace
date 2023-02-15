@@ -15,38 +15,38 @@ import { DataLoader } from '../../../integrations/data-source/components/DataLoa
 import { useContextService } from '../hooks/useContextService';
 
 export function addGrid<
-	TData extends Record<PropertyKey, unknown>,
-	TError,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TError,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never
 >(gridConfig: GridConfig<TData> | undefined, mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>) {
-	if (!gridConfig) return;
-	const gridController = createGridController<TData, TContext>(mediator.getIdentifier, () => void 0);
+  if (!gridConfig) return;
+  const gridController = createGridController<TData, TContext>(mediator.getIdentifier, () => void 0);
 
-	setConfigOnController(gridConfig, gridController, mediator);
+  setConfigOnController(gridConfig, gridController, mediator);
 
-	const provider: Provider = {
-		Component: ({ children }) => {
-			useContextService(mediator, gridController);
-			useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
-			useEffect(dataChangeEffect(gridController, mediator), [mediator]);
-			useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
-			return <>{children}</>;
-		},
-		name: 'grid-sync',
-	};
+  const provider: Provider = {
+    Component: ({ children }) => {
+      useContextService(mediator, gridController);
+      useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
+      useEffect(dataChangeEffect(gridController, mediator), [mediator]);
+      useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
+      return <>{children}</>;
+    },
+    name: 'grid-sync',
+  };
 
-	return {
-		provider,
-		tab: {
-			Component: () => (
-				<DataLoader>
-					<GridWrapper controller={gridController} mediator={mediator} />
-				</DataLoader>
-			),
-			name: 'grid',
-			TabIcon: GridIcon,
-			CustomHeader: () => <GridHeader controller={gridController} />,
-		},
-	};
+  return {
+    provider,
+    tab: {
+      Component: () => (
+        <DataLoader>
+          <GridWrapper controller={gridController} mediator={mediator} />
+        </DataLoader>
+      ),
+      name: 'grid',
+      TabIcon: GridIcon,
+      CustomHeader: () => <GridHeader controller={gridController} />,
+    },
+  };
 }

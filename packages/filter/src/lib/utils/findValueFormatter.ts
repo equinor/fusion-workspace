@@ -8,8 +8,8 @@ import { ValueFormatterFilter, ValueFormatterFunction } from '../types';
  * @returns
  */
 export function findValueFormatter<T>(
-	name: string,
-	valueFormatters: ValueFormatterFilter<T>[]
+  name: string,
+  valueFormatters: ValueFormatterFilter<T>[]
 ): ValueFormatterFunction<T> | undefined {
-	return valueFormatters.find((formatter) => formatter.name === name)?.valueFormatter;
+  return valueFormatters.find((formatter) => formatter.name === name)?.valueFormatter;
 }

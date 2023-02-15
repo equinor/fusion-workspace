@@ -10,30 +10,30 @@ type CaptureFunc<TState> = () => Partial<TState>;
  */
 
 export function createBookmarksService<TBookmarkState extends Record<PropertyKey, unknown>>(destroy: ServiceCtor) {
-	const captureCallbacks: CaptureFunc<TBookmarkState>[] = [];
-	const capture$ = new Subject<TBookmarkState>();
-	const capture = () => capture$.next(getBookmarkState());
-	const apply$ = new Subject<TBookmarkState>();
-	const apply = (state: TBookmarkState) => apply$.next(state);
-	const registerCapture = (cb: CaptureFunc<TBookmarkState>) => {
-		captureCallbacks.push(cb);
-	};
+  const captureCallbacks: CaptureFunc<TBookmarkState>[] = [];
+  const capture$ = new Subject<TBookmarkState>();
+  const capture = () => capture$.next(getBookmarkState());
+  const apply$ = new Subject<TBookmarkState>();
+  const apply = (state: TBookmarkState) => apply$.next(state);
+  const registerCapture = (cb: CaptureFunc<TBookmarkState>) => {
+    captureCallbacks.push(cb);
+  };
 
-	/** Pass destructor to caller function */
-	destroy(() => {
-		capture$.complete();
-		apply$.complete();
-	});
+  /** Pass destructor to caller function */
+  destroy(() => {
+    capture$.complete();
+    apply$.complete();
+  });
 
-	const getBookmarkState = () =>
-		// eslint-disable-next-line no-return-assign
-		captureCallbacks.reduce((state, callback) => (state = { ...state, ...callback() }), {} as TBookmarkState);
+  const getBookmarkState = () =>
+    // eslint-disable-next-line no-return-assign
+    captureCallbacks.reduce((state, callback) => (state = { ...state, ...callback() }), {} as TBookmarkState);
 
-	return {
-		capture,
-		capture$: capture$.asObservable(),
-		apply,
-		apply$: apply$.asObservable(),
-		registerCapture,
-	};
+  return {
+    capture,
+    capture$: capture$.asObservable(),
+    apply,
+    apply$: apply$.asObservable(),
+    registerCapture,
+  };
 }

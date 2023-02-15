@@ -7,43 +7,43 @@ import { TabNavigation } from '../../../common/components/TabNavigation';
 import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
 
 type GardenWorkspaceHeaderProps<
-	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
+  TData extends Record<PropertyKey, unknown>,
+  TExtendedFields extends string,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 > = {
-	controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
 };
 
 export function GardenWorkspaceHeader<
-	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
+  TData extends Record<PropertyKey, unknown>,
+  TExtendedFields extends string,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 >({ controller }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
-	return (
-		<StyledGardenHeader>
-			<NavigationBar />
-			<Filter />
-		</StyledGardenHeader>
-	);
+  return (
+    <StyledGardenHeader>
+      <NavigationBar />
+      <Filter />
+    </StyledGardenHeader>
+  );
 }
 
 const StyledGardenHeader = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const NavigationBar = () => {
-	const StatusBar = useStatusBar();
+  const StatusBar = useStatusBar();
 
-	return (
-		<StyledActionBar>
-			<div>{StatusBar && <StatusBar />}</div>
+  return (
+    <StyledActionBar>
+      <div>{StatusBar && <StatusBar />}</div>
 
-			<TabNavigation />
-		</StyledActionBar>
-	);
+      <TabNavigation />
+    </StyledActionBar>
+  );
 };

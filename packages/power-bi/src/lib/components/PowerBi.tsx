@@ -13,37 +13,33 @@ import { Report } from './report/Report';
 Icon.add({ chevron_down, chevron_up });
 
 export interface PowerBiProps {
-	reportUri: string;
-	getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
-	getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
-	getErrorMessage: (reportUri: string) => Promise<string>;
-	filters?: IBasicFilter;
-	controller: PowerBiController;
+  reportUri: string;
+  getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
+  getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
+  getErrorMessage: (reportUri: string) => Promise<string>;
+  filters?: IBasicFilter;
+  controller: PowerBiController;
 }
 
 const client = new QueryClient();
 
 export const PowerBi = (props: PowerBiProps) => {
-	return (
-		<QueryClientProvider client={client}>
-			<Suspense fallback={<Loading />}>
-				<QueryErrorResetBoundary>
-					{({ reset }) => (
-						<ErrorBoundary
-							onReset={reset}
-							fallbackRender={(e) => (
-								<ErrorComponent
-									{...e}
-									getErrorMessage={props.getErrorMessage}
-									reportUri={props.reportUri}
-								/>
-							)}
-						>
-							<Report {...props} />
-						</ErrorBoundary>
-					)}
-				</QueryErrorResetBoundary>
-			</Suspense>
-		</QueryClientProvider>
-	);
+  return (
+    <QueryClientProvider client={client}>
+      <Suspense fallback={<Loading />}>
+        <QueryErrorResetBoundary>
+          {({ reset }) => (
+            <ErrorBoundary
+              onReset={reset}
+              fallbackRender={(e) => (
+                <ErrorComponent {...e} getErrorMessage={props.getErrorMessage} reportUri={props.reportUri} />
+              )}
+            >
+              <Report {...props} />
+            </ErrorBoundary>
+          )}
+        </QueryErrorResetBoundary>
+      </Suspense>
+    </QueryClientProvider>
+  );
 };

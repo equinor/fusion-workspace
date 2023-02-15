@@ -3,27 +3,27 @@ import { useGardenContext } from './useGardenContext';
 import { useGardenGroups } from './useGardenGroups';
 
 export function useItemWidths() {
-	const [widths, setWidths] = useState<number[]>([]);
-	const groups = useGardenGroups();
+  const [widths, setWidths] = useState<number[]>([]);
+  const groups = useGardenGroups();
 
-	const amountOfColumns = useMemo(() => groups.length, [groups]);
+  const amountOfColumns = useMemo(() => groups.length, [groups]);
 
-	const {
-		visuals: { calculateItemWidth },
-		grouping: {
-			value: { horizontalGroupingAccessor },
-		},
-		customGroupByKeys,
-	} = useGardenContext();
+  const {
+    visuals: { calculateItemWidth },
+    grouping: {
+      value: { horizontalGroupingAccessor },
+    },
+    customGroupByKeys,
+  } = useGardenContext();
 
-	useEffect(() => {
-		if (groups && amountOfColumns > 0) {
-			const width = calculateItemWidth
-				? calculateItemWidth(groups, horizontalGroupingAccessor, customGroupByKeys?.value)
-				: 300;
-			setWidths(new Array(amountOfColumns).fill(width));
-		}
-	}, [amountOfColumns, groups, calculateItemWidth, customGroupByKeys, horizontalGroupingAccessor]);
+  useEffect(() => {
+    if (groups && amountOfColumns > 0) {
+      const width = calculateItemWidth
+        ? calculateItemWidth(groups, horizontalGroupingAccessor, customGroupByKeys?.value)
+        : 300;
+      setWidths(new Array(amountOfColumns).fill(width));
+    }
+  }, [amountOfColumns, groups, calculateItemWidth, customGroupByKeys, horizontalGroupingAccessor]);
 
-	return widths;
+  return widths;
 }

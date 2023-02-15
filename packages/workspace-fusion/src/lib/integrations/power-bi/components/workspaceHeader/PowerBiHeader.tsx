@@ -4,17 +4,17 @@ import { TabNavigation } from '../../../common/components/TabNavigation';
 import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
 
 type PowerBiHeaderProps = {
-	controller: PowerBiController;
+  controller: PowerBiController;
 };
 
 export function PowerBiHeader({ controller }: PowerBiHeaderProps) {
-	return (
-		<div>
-			<StyledActionBar>
-				<PageNavigation controller={controller} />
-				<TabNavigation />
-			</StyledActionBar>
-			<FusionPowerBiFilter controller={controller} />
-		</div>
-	);
+  return (
+    <div>
+      <StyledActionBar>
+        <PageNavigation controller={controller} />
+        <TabNavigation />
+      </StyledActionBar>
+      <FusionPowerBiFilter controller={controller} />
+    </div>
+  );
 }
