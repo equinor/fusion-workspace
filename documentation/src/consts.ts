@@ -40,6 +40,7 @@ export const SIDEBAR: Sidebar = {
 	Advanced: [
 		{ text: 'Boundaries', link: 'concepts/boundaries' },
 		{ text: 'Dynamic import (CDN)', link: 'concepts/dynamic' },
+		{ text: 'Sidesheet', link: 'concepts/sidesheet' },
 	],
 	References: [
 		{ text: 'Introduction', link: 'reference/introduction' },
