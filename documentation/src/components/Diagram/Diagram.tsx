@@ -1,7 +1,8 @@
 import React from 'react';
+import { Mermaid } from 'react-mermaid3';
 
 export function Dig(props: { chart: string }) {
-  return <div></div>;
+  return <Mermaid chart={props.chart} />;
 }
 
 export default Dig;
