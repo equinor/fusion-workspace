@@ -2,10 +2,10 @@
 title: Services
 category: Workspace Core
 tags:
-    - selection
-    - single
-    - multi
-    - service
+  - selection
+  - single
+  - multi
+  - service
 ---
 
 import Diagram from '../../../../components/Diagram/Diagram';
@@ -16,8 +16,8 @@ The `dataService` is one of the main buildingbloks of the `WorkspaceMediator` ha
 Then data is set all callbacks registered on `onDataChange` will be called. to set data use the `setData` method. this is the same for `filteredData` with `setFilteredData` and `onFilterDataChange`.
 
 <Diagram
-	client:only="react"
-	chart={`sequenceDiagram
+  client:only="react"
+  chart={`sequenceDiagram
     participant Workspace Mediator
     participant Garden Controller
     participant DataSource
@@ -45,15 +45,15 @@ const mediator = new WorkspaceMediator();
 const dataSourceController = new DataSourceController(); // External controller
 const filterController = new FilterController(); // External controller
 dataSourceController.data.onChange((data) => {
-	mediator.dataService.setData(data);
+  mediator.dataService.setData(data);
 });
 dataSourceController.fetch();
 mediator.dataService.data$.subscribe((data) => {
-	filterController.setData(data);
-	filterController.filter();
+  filterController.setData(data);
+  filterController.filter();
 });
 filterController.onFilteredDataChange((data) => {
-	mediator.filteredData = data;
+  mediator.filteredData = data;
 });
 ```
 
@@ -75,20 +75,20 @@ The `clickService` is responsible for capturing the click of one or more items i
 mediator.click({ item: item });
 mediator.click$.subscribe((ev) => console.log(ev));
 export function applyWorkspaceClickToCells<TData, TError>(
-	colDefs: ColDef<TData>[],
-	{ clickService }: FusionMediator<TData, TError>
+  colDefs: ColDef<TData>[],
+  { clickService }: FusionMediator<TData, TError>
 ) {
-	return colDefs.map((colDef) => ({
-		onCellClicked: (ev) => clickService.click({ item: ev.data }),
-		...colDef,
-	}));
+  return colDefs.map((colDef) => ({
+    onCellClicked: (ev) => clickService.click({ item: ev.data }),
+    ...colDef,
+  }));
 }
 ```
 
 ```ts
 mediator.clickService.click$.subscribe((ev) => {
-	sc.setItem(ev.item);
-	mediator.setIsSidesheetOpen(true);
+  sc.setItem(ev.item);
+  mediator.setIsSidesheetOpen(true);
 });
 ```
 
@@ -112,8 +112,8 @@ the url in the Location object is base url, meaning all characters before `?` a 
 
 ```ts
 interface Location {
-	queryParams: string[];
-	url: string;
+  queryParams: string[];
+  url: string;
 }
 ```
 
@@ -125,21 +125,21 @@ There is an example how its done using fusion garden.
 
 ```ts
 export function configureGardenBookmarkService<TData, TError, TCustomGroupByKeys, TCustomState, TContext>(
-	gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
-	mediator: FusionMediator<TData, TError>
+  gardenController: GardenController<TData, TCustomGroupByKeys, TCustomState, TContext>,
+  mediator: FusionMediator<TData, TError>
 ) {
-	mediator.bookmarkService.registerCapture(() => ({
-		garden: {
-			groupingKeys: gardenController.grouping.value,
-			selectedNodes: gardenController.selectedNodes.value,
-		},
-	}));
-	mediator.bookmarkService.onApply((state) => {
-		if (state?.garden) {
-			gardenController.grouping.setValue(bookmark.groupingKeys);
-			gardenController.selectedNodes.setValue(bookmark.selectedNodes);
-		}
-	});
-	gardenController.grouping.onChange(mediator.bookmarkService.capture);
+  mediator.bookmarkService.registerCapture(() => ({
+    garden: {
+      groupingKeys: gardenController.grouping.value,
+      selectedNodes: gardenController.selectedNodes.value,
+    },
+  }));
+  mediator.bookmarkService.onApply((state) => {
+    if (state?.garden) {
+      gardenController.grouping.setValue(bookmark.groupingKeys);
+      gardenController.selectedNodes.setValue(bookmark.selectedNodes);
+    }
+  });
+  gardenController.grouping.onChange(mediator.bookmarkService.capture);
 }
 ```

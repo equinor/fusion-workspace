@@ -2,7 +2,7 @@
 title: Fusion Workspace
 category: Fusion Workspace
 tags:
-    - project
+  - project
 ---
 
 Composed of mulitiple libraries that combined allows for development of fusion workspace apps. Core functionality is one data set displayed in different user perspectives. This is achieved by data handling, tab navigation, and allowing you to react around page change / config change and data changes.
