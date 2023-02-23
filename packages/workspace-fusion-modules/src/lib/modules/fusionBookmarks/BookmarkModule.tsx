@@ -35,7 +35,7 @@ export function BookmarksModule(config: BookmarksModuleConfig) {
 									...context,
 									icons: [
 										...context.icons.filter((s) => s.name !== moduleName),
-										{ name: moduleName, Icon: HeaderIcon, placement: 'right' },
+										{ name: moduleName, Icon: HeaderIcon, placement: 'right', type: 'button' },
 									],
 								}}
 							>
