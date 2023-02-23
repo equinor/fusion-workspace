@@ -36,6 +36,7 @@ const pbi: PowerBiConfig = {
         return res.json();
     },
     getErrorMessage: async (): Promise<string> => "Oops something went wrong",
+    getClassification: async (reportUri: string, signal) => fetch(`reportinfo/${reportUri}`, {signal}).text();
 }
 
 function App() {
