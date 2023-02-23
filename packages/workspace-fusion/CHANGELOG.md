@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.3...@equinor/workspace-fusion@0.18.0) (2023-02-23)
+
+### Features
+
+-   :sparkles: powerbi classification ([e23914d](https://github.com/equinor/fusion-workspace/commit/e23914d65e58569eaf2a65c368c36faa835ca88d))
+
 ## [0.17.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.2...@equinor/workspace-fusion@0.17.3) (2023-02-09)
 
 ### Bug Fixes
