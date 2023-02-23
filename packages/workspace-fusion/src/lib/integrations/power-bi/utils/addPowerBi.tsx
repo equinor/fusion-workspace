@@ -2,10 +2,11 @@ import { PowerBI, PowerBiController, IBasicFilter } from '@equinor/workspace-pow
 import { Tab } from '@equinor/workspace-react';
 import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
 import { PowerBiIcon } from '../icons/PowerBiIcon';
-import { FilterConfig, PowerBiConfig } from '../';
+import { FilterConfig, PowerBiConfig, ReportMetaDataProps } from '../';
 import { HeaderIcon, useWorkspaceHeaderComponents } from '../../../context';
 import { useEffect } from 'react';
 import { PowerBiPopover } from '../components/PowerBiPopover';
+import { useQuery } from '@tanstack/react-query';
 
 export function addPowerBi(powerBiConfig: PowerBiConfig | undefined): undefined | Tab {
 	if (!powerBiConfig) return;
@@ -34,29 +35,33 @@ function createBasicFilter(filters: FilterConfig | undefined): undefined | IBasi
 const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiController }) => {
 	const { setIcons } = useWorkspaceHeaderComponents();
 
+	const { data } = useQuery(
+		[powerBiConfig.reportUri, 'classification'],
+		({ signal }) => {
+			if (powerBiConfig.getClassification) {
+				return powerBiConfig.getClassification(powerBiConfig.reportUri, signal);
+			}
+			return null;
+		},
+		{ enabled: !!powerBiConfig.getClassification }
+	);
+
 	useEffect(() => {
-		if (powerBiConfig.ReportMetaData) {
-			const { ReportMetaData } = powerBiConfig;
+		const classification: HeaderIcon = classificationIcon(data ?? '');
 
-			const icon: HeaderIcon = {
-				Icon: ({ anchor }) => (
-					<PowerBiPopover
-						reportUri={powerBiConfig.reportUri}
-						anchor={anchor}
-						ReportMetaData={ReportMetaData}
-					/>
-				),
-				name: 'report_metadata',
-				placement: 'left',
-			};
+		const reportMeta: HeaderIcon | null = powerBiConfig.ReportMetaData
+			? reportMetaButton(powerBiConfig.ReportMetaData, powerBiConfig.reportUri)
+			: null;
 
-			setIcons((icons) => [...icons, icon]);
-			return () => {
-				setIcons((i) => i.filter((s) => s.name !== 'report_metadata'));
-			};
-		}
-		return;
-	}, [powerBiConfig.ReportMetaData]);
+		setIcons((icons) =>
+			reportMeta !== null ? [classification, reportMeta, ...icons] : [classification, ...icons]
+		);
+
+		return () => {
+			const icons = [classification.name, reportMeta?.name];
+			setIcons((i) => i.filter((ics) => !icons.includes(ics.name)));
+		};
+	}, [powerBiConfig.ReportMetaData, data]);
 
 	return (
 		<PowerBI
@@ -69,3 +74,17 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 		/>
 	);
 };
+
+const classificationIcon = (classification: string): HeaderIcon => ({
+	Icon: () => <>{classification}</>,
+	name: 'report_classification',
+	placement: 'left',
+	type: 'text',
+});
+
+const reportMetaButton = (Comp: (props: ReportMetaDataProps) => JSX.Element, reportUri: string): HeaderIcon => ({
+	type: 'button',
+	name: 'report_metadata',
+	placement: 'left',
+	Icon: ({ anchor }) => <PowerBiPopover reportUri={reportUri} anchor={anchor} ReportMetaData={Comp} />,
+});
