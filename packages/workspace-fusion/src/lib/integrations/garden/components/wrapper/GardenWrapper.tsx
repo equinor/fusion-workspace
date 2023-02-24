@@ -27,7 +27,7 @@ export const GardenWrapper = <
 	mediator,
 }: GardenWrapperProps<TData, TExtendedGardenFields, TCustomGroupByKeys, TError, TContext, TCustomSidesheetEvents>) => {
 	return (
-		<div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%', padding: '1rem 1rem 0rem 1rem' }}>
+		<div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
 			<NoDataSplashScreen mediator={mediator}>
 				<Garden controller={controller} />
 			</NoDataSplashScreen>
