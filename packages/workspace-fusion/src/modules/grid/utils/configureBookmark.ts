@@ -1,6 +1,6 @@
 import { GridController } from '@equinor/workspace-ag-grid';
 import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator, GridBookmark } from '../../../types';
+import { FusionMediator, GridBookmark } from '../../../lib/types';
 import { snapshotGridState } from './snapShotGridState';
 
 export function bookmarkServiceEffect<

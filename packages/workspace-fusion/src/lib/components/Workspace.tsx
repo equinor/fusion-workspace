@@ -19,6 +19,7 @@ export function Workspace<
 	TExtendedFields extends string = never,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
+	console.log(props);
 	const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
 		new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
 	);

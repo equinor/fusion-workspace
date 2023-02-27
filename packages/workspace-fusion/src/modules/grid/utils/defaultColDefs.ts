@@ -1,6 +1,6 @@
 import { ColDef } from '@equinor/workspace-ag-grid';
 import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../lib';
 
 /**
  * Applies a set of default column definition parameters.

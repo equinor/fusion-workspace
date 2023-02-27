@@ -1,5 +1,5 @@
 import { GridController } from '@equinor/workspace-ag-grid';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../lib';
 import { useEffect } from 'react';
 
 export const useContextService = (mediator: FusionMediator<any, any, any>, gridController: GridController<any, any>) =>

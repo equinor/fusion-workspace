@@ -1,6 +1,8 @@
+import { GridController, ColDef } from '@equinor/workspace-ag-grid';
 import { BaseEvent } from '@equinor/workspace-core';
-import { GridConfig, GridController, ColDef } from '../';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../lib';
+import { GridConfig } from '../../../lib/integrations/grid';
+
 import { applyDefaultColumnDefinitions, applyWorkspaceClickToCells } from './defaultColDefs';
 
 export function setConfigOnController<

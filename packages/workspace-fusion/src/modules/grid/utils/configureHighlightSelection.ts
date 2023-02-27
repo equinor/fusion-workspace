@@ -1,6 +1,6 @@
 import { GridController } from '@equinor/workspace-ag-grid';
 import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../lib/types';
 
 export function highlightSelectionEffect<
 	TData extends Record<PropertyKey, unknown>,
