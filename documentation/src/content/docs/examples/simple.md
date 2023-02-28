@@ -23,6 +23,8 @@ import { Workspace } from '@equinor/workspace-fusion'
 import { GridConfig } from '@equinor/workspace-fusion/grid'
 import { GardenConfig } from '@equinor/workspace-fusion/garden'
 import { DataConfig } from '@equinor/workspace-fusion/data-source'
+import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { gridModule } from '@equinor/workspace-fusion/grid-module';
 
 type Person = {
     name: string;
@@ -68,6 +70,7 @@ function App() {
             dataOptions={dataOptions}
             gridOptions={gridOptions}
             gardenOptions={gardenOptions}
+            modules={[gardenModule, gridModule]}
         />;
     )
 }

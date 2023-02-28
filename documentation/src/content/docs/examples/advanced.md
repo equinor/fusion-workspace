@@ -28,6 +28,9 @@ import { DataConfig } from '@equinor/workspace-fusion/data-source'
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet'
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
 import { FilterConfig } from '@equinor/workspace-fusion/filter'
+import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
+import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { gridModule } from '@equinor/workspace-fusion/grid-module';
 
 type Person = {
     name: string;
@@ -67,6 +70,8 @@ function App() {
             dataOptions={dataOptions}
             gridOptions={gridOptions}
             gardenOptions={gardenOptions}
+            modules={[powerBiModule, gardenModule, gridModule]}
+            sidesheetOptions={sidesheet}
         />;
     )
 }

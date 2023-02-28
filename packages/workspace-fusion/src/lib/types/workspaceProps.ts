@@ -16,8 +16,7 @@ type WorkspaceBaseProps<
 	workspaceOptions: WorkspaceConfig<TData>;
 	customTabs?: CustomTab[];
 	contextOptions?: (filteredData: TData[]) => TContext;
-	modules?: FusionWorkspaceModule<TData>[];
-	//TODO: Modules?
+	modules?: FusionWorkspaceModule[];
 };
 
 export type WorkspaceProps<
