@@ -19,6 +19,7 @@ The following example will have the following functionality configured.
 ```tsx
 import { Workspace } from '@equinor/workspace-fusion'
 import { PowerBiConfig, EmbedConfiguration, FusionPowerBiToken } from '@equinor/workspace-fusion/power-bi';
+import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
 
 const pbi: PowerBiConfig = {
     getEmbed: async (reportUri: string, _token: string, signal?: AbortSignal): Promise<EmbedConfiguration> => {
@@ -46,6 +47,7 @@ function App() {
                 appKey: 'powerbi workspace',
                 getIdentifier: () => '',
             }}
+            modules={[powerBiModule]}
             powerBiOptions={pbi}
         />;
     )
