@@ -226,8 +226,8 @@ importers:
       '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': ^0.9.0
       '@tanstack/react-query': ^4.24.4
-      '@types/react': ^18.0.13
-      '@types/react-dom': ^18.0.8
+      '@types/react': ^18.0.28
+      '@types/react-dom': ^18.0.11
       '@types/sortablejs': '1'
       '@types/styled-components': ^5.1.26
       markdown-to-jsx: ^7.1.9
@@ -242,7 +242,7 @@ importers:
       sortablejs: ^1.15.0
       styled-components: ^5.3.6
     dependencies:
-      '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
+      '@equinor/eds-core-react': 0.28.0_du7yz5f23cngwv65h7jru7qe7y
       '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
       '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
@@ -254,8 +254,8 @@ importers:
       react-virtual: 2.10.4_react@18.2.0
       sortablejs: 1.15.0
     devDependencies:
-      '@types/react': 18.0.25
-      '@types/react-dom': 18.0.8
+      '@types/react': 18.0.28
+      '@types/react-dom': 18.0.11
       '@types/sortablejs': 1.15.0
       '@types/styled-components': 5.1.26
       react: 18.2.0
@@ -1843,6 +1843,30 @@ packages:
       - supports-color
     dev: false
 
+  /@equinor/eds-core-react/0.28.0_du7yz5f23cngwv65h7jru7qe7y:
+    resolution: {integrity: sha512-hCIgjjPa4c6lEKE9vfb7zrV1eFHrrPcsTRr6cdTzt5JHyu+hAlHx+mk7nUPn9yDN+2dGV8xQBIKrCeDuX1w5eQ==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+      styled-components: '>=4.2'
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@equinor/eds-icons': 0.17.0
+      '@equinor/eds-tokens': 0.9.0
+      '@equinor/eds-utils': 0.7.0_2zpt4ilzykmne4yndyzrqd4gdm
+      '@floating-ui/react-dom-interactions': 0.10.3_zula6vjvt3wdocc4mwcxqa6nzi
+      '@tanstack/react-virtual': 3.0.0-beta.30_react@18.2.0
+      downshift: 7.2.0_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - supports-color
+    dev: false
+
   /@equinor/eds-core-react/0.28.0_maey765qzsqrp6bbazpxj7endy:
     resolution: {integrity: sha512-hCIgjjPa4c6lEKE9vfb7zrV1eFHrrPcsTRr6cdTzt5JHyu+hAlHx+mk7nUPn9yDN+2dGV8xQBIKrCeDuX1w5eQ==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -2496,6 +2520,21 @@ packages:
     dependencies:
       '@floating-ui/react-dom': 1.2.2_biqbaboplfbrettd7655fr4n2y
       aria-hidden: 1.2.1_wlff343ihbuq5ksmlrv2tytkq4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
+  /@floating-ui/react-dom-interactions/0.10.3_zula6vjvt3wdocc4mwcxqa6nzi:
+    resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
+    deprecated: Package renamed to @floating-ui/react
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@floating-ui/react-dom': 1.2.2_biqbaboplfbrettd7655fr4n2y
+      aria-hidden: 1.2.1_pmekkgnqduwlme35zpnqhenc34
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
@@ -4351,7 +4390,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.0.25
+      '@types/react': 18.0.28
       hoist-non-react-statics: 3.3.2
     dev: true
 
@@ -4446,10 +4485,16 @@ packages:
     dependencies:
       '@types/react': 18.0.27
 
+  /@types/react-dom/18.0.11:
+    resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
+    dependencies:
+      '@types/react': 18.0.28
+    dev: true
+
   /@types/react-dom/18.0.8:
     resolution: {integrity: sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==}
     dependencies:
-      '@types/react': 18.0.27
+      '@types/react': 18.0.28
 
   /@types/react/18.0.13:
     resolution: {integrity: sha512-psqptIYQxGUFuGYwP3KCFVtPTkMpIcrqFmtKblWEUQhLuYLpHBwJkXhjp6eHfDM5IbyskY4x7qQpLedEsPkHlA==}
@@ -4467,6 +4512,13 @@ packages:
 
   /@types/react/18.0.27:
     resolution: {integrity: sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.1
+
+  /@types/react/18.0.28:
+    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -4490,7 +4542,7 @@ packages:
     resolution: {integrity: sha512-KuKJ9Z6xb93uJiIyxo/+ksS7yLjS1KzG6iv5i78dhVg/X3u5t1H7juRWqVmodIdz6wGVaIApo1u01kmFRdJHVw==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.0.25
+      '@types/react': 18.0.28
       csstype: 3.1.1
     dev: true
 
@@ -4933,6 +4985,21 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.0.25
+      react: 18.2.0
+      tslib: 2.4.1
+    dev: false
+
+  /aria-hidden/1.2.1_pmekkgnqduwlme35zpnqhenc34:
+    resolution: {integrity: sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
+      react: ^16.9.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.0.28
       react: 18.2.0
       tslib: 2.4.1
     dev: false
