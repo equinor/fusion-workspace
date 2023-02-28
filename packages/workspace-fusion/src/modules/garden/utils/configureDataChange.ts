@@ -1,6 +1,6 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController } from '@equinor/workspace-garden';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../lib';
 
 /** Updates data on gardencontroller whenever filtered data on mediator changes */
 export function onDataChangedEffect<

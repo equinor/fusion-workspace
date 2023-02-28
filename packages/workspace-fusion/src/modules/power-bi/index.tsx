@@ -1,25 +1,30 @@
-import { PowerBI, PowerBiController, IBasicFilter } from '@equinor/workspace-powerbi';
-import { Tab } from '@equinor/workspace-react';
-import { PowerBiHeader } from '../components/workspaceHeader/PowerBiHeader';
-import { PowerBiIcon } from '../icons/PowerBiIcon';
-import { FilterConfig, PowerBiConfig, ReportMetaDataProps } from '../';
-import { HeaderIcon, useWorkspaceHeaderComponents } from '../../../context';
-import { useEffect } from 'react';
-import { PowerBiPopover } from '../components/PowerBiPopover';
+import { IBasicFilter, PowerBI, PowerBiController } from '@equinor/workspace-powerbi';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { FusionWorkspaceModule, useWorkspaceHeaderComponents, HeaderIcon } from '../../lib';
+import { FilterConfig, PowerBiConfig, ReportMetaDataProps } from '../../lib/integrations/power-bi';
+import { PowerBiHeader } from './components';
+import { PowerBiPopover } from './components/PowerBiPopover';
+import { PowerBiIcon } from './icons/PowerBiIcon';
 
-export function addPowerBi(powerBiConfig: PowerBiConfig | undefined): undefined | Tab {
-	if (!powerBiConfig) return;
+export const powerBiModule: FusionWorkspaceModule = {
+	name: 'power-bi',
+	setup: (props, _mediator) => {
+		const powerBiConfig = props.powerBiOptions;
+		if (!powerBiConfig) return;
 
-	const controller = new PowerBiController();
-
-	return {
-		Component: () => <PowerBiWrapper {...powerBiConfig} controller={controller} />,
-		CustomHeader: () => <PowerBiHeader controller={controller} />,
-		name: 'powerbi',
-		TabIcon: () => <PowerBiIcon />,
-	};
-}
+		const controller = new PowerBiController();
+		return {
+			tab: {
+				Component: () => <PowerBiWrapper {...powerBiConfig} controller={controller} />,
+				CustomHeader: () => <PowerBiHeader controller={controller} />,
+				name: 'powerbi',
+				TabIcon: () => <PowerBiIcon />,
+			},
+			provider: { name: 'Power-Bi', Component: ({ children }) => <>{children}</> },
+		};
+	},
+};
 
 function createBasicFilter(filters: FilterConfig | undefined): undefined | IBasicFilter {
 	if (!filters) return undefined;

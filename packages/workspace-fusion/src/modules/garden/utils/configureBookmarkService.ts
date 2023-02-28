@@ -1,6 +1,6 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController } from '@equinor/workspace-garden';
-import { FusionMediator, GardenBookmark } from '../../../types';
+import { FusionMediator, GardenBookmark } from '../../../lib';
 
 /** Configures the mediators bookmarkservice to work with the garden controller */
 export function bookmarkEffect<

@@ -1,7 +1,7 @@
 import { PageNavigation, PowerBiController } from '@equinor/workspace-powerbi';
+import { StyledActionBar } from '../../../../lib/components/Header/actionBar.styles';
+import { TabNavigation } from '../../../../lib/integrations/common/components/TabNavigation';
 import { FusionPowerBiFilter } from '../FusionPowerBIFilter';
-import { TabNavigation } from '../../../common/components/TabNavigation';
-import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
 
 type PowerBiHeaderProps = {
 	controller: PowerBiController;

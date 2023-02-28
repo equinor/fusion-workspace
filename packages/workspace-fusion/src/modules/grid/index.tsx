@@ -10,15 +10,14 @@ import { bookmarkServiceEffect } from './utils/configureBookmark';
 import { dataChangeEffect } from './utils/configureDataChange';
 import { highlightSelectionEffect } from './utils/configureHighlightSelection';
 import { setConfigOnController } from './utils/setConfigOnController';
-import { WorkspaceProps } from '../../lib';
-
-type ModuleSetup = () => { provider: Provider; tab: Tab<string> } | undefined;
+import { FusionWorkspaceModule } from '../../lib';
 
 /**
  * Adds the module to the workspace
  */
-export const gridModule = {
-	setup: (props: WorkspaceProps<any, any, any, any, any>, mediator: any): ReturnType<ModuleSetup> => {
+export const gridModule: FusionWorkspaceModule = {
+	name: 'AG-grid',
+	setup: (props, mediator) => {
 		const gridConfig = props.gridOptions;
 		if (!gridConfig) return;
 		const gridController = createGridController<any, any>(mediator.getIdentifier, () => void 0);
@@ -50,7 +49,6 @@ export const gridModule = {
 			},
 		};
 	},
-	name: 'AG-GRID',
 };
 
 export default gridModule;

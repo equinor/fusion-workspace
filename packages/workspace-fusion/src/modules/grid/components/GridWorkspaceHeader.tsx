@@ -1,10 +1,9 @@
 import { GridController } from '@equinor/workspace-ag-grid';
 import { Filter } from '@equinor/workspace-filter';
 import styled from 'styled-components';
-
-import { TabNavigation } from '../../../lib/components/TabNavigation';
 import { useStatusBar } from '../../../lib/integrations/status-bar/hooks/useStatusBar';
 import { StyledActionBar } from '../../../lib/components/Header/actionBar.styles';
+import { TabNavigation } from '../../../lib/integrations/common/components/TabNavigation';
 
 type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
 	controller: GridController<TData>;

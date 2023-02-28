@@ -8,8 +8,6 @@ import { addContext } from './context';
 
 import { addFilter } from '../integrations/filter';
 import { addStatusBar } from '../integrations/status-bar';
-import { addPowerBi } from '../integrations/power-bi';
-import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
 import { BaseEvent } from '@equinor/workspace-core';
 import { RootHeaderContext } from '../context';
@@ -42,19 +40,14 @@ export function createConfigurationObject<
 	pushProvider({ name: 'Header', Component: RootHeaderContext });
 	pushProvider(addContext(props.contextOptions, mediator));
 
-	pushTab(addPowerBi(props.powerBiOptions));
-
 	tabs.concat(addCustomTabs(props.customTabs, mediator));
-
-	const garden = addGarden(props.gardenOptions, mediator);
-	pushProvider(garden?.provider);
-	pushTab(garden?.tab);
 
 	props.modules &&
 		props.modules.forEach((module) => {
-			const { provider, tab } = module.setup(props, mediator);
-			pushProvider(provider);
-			pushTab(tab);
+			const config = module.setup(props, mediator);
+			if(!config) return
+			pushProvider(config.provider);
+			pushTab(config.tab);
 		});
 
 	pushProvider(addStatusBar(props.statusBarOptions, mediator));

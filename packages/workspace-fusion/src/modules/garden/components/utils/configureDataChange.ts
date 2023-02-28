@@ -1,9 +1,9 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController } from '@equinor/workspace-garden';
-import { FusionMediator } from '../../../types';
+import { FusionMediator } from '../../../../lib';
 
-/** Configures gardencontroller to highlight nodes when mediator selection changes */
-export function highlightEffect<
+/** Updates data on gardencontroller whenever filtered data on mediator changes */
+export function onDataChangedEffect<
 	TData extends Record<PropertyKey, unknown>,
 	TExtendedFields extends string,
 	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
@@ -11,14 +11,14 @@ export function highlightEffect<
 	TCustomSidesheetEvents extends BaseEvent = never
 >(
 	gardenController: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+	{ dataService }: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ) {
 	return () => {
-		const sub = mediator.selectionService.selectedNodes$.subscribe((val) => {
-			gardenController.selectedNodes.setValue(val.map(({ id }) => id));
+		const sub = dataService.filteredData$.subscribe((newData) => {
+			if (newData) {
+				gardenController.setData(newData);
+			}
 		});
-		return () => {
-			sub.unsubscribe();
-		};
+		return () => sub.unsubscribe();
 	};
 }

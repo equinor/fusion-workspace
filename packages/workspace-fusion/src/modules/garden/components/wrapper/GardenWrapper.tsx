@@ -1,7 +1,7 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { GardenController, Garden } from '@equinor/workspace-garden';
-import { NoDataSplashScreen } from '../../../../components/NoDataSplashScreen';
-import { FusionMediator } from '../../../../types';
+import { FusionMediator } from '../../../../lib';
+import { NoDataSplashScreen } from '../../../../lib/components/NoDataSplashScreen';
 
 type GardenWrapperProps<
 	TData extends Record<PropertyKey, unknown>,

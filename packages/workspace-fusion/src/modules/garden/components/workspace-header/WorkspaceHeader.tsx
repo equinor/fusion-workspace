@@ -1,10 +1,9 @@
 import { Filter } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
-
-import { useStatusBar } from '../../../status-bar';
 import styled from 'styled-components';
-import { TabNavigation } from '../../../common/components/TabNavigation';
-import { StyledActionBar } from '../../../../components/Header/actionBar.styles';
+import { StyledActionBar } from '../../../../lib/components/Header/actionBar.styles';
+import { TabNavigation } from '../../../../lib/integrations/common/components/TabNavigation';
+import { useStatusBar } from '../../../../lib/integrations/status-bar';
 
 type GardenWorkspaceHeaderProps<
 	TData extends Record<PropertyKey, unknown>,

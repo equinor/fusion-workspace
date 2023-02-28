@@ -46,6 +46,12 @@
 			],
 			"grid-module": [
 				"dist/types/modules/grid/index"
+			],
+			"power-bi-module": [
+				"dist/types/modules/power-bi/index"
+			],
+			"garden-module": [
+				"dist/types/modules/garden/index"
 			]
 		}
 	},
@@ -58,7 +64,9 @@
 		"./grid": "./dist/esm/lib/integrations/grid/index.js",
 		"./data-source": "./dist/esm/lib/integrations/data-source/index.js",
 		"./sidesheet": "./dist/esm/lib/integrations/sidesheet/index.js",
-		"./grid-module": "./dist/esm/modules/grid/index.js"
+		"./grid-module": "./dist/esm/modules/grid/index.js",
+		"./power-bi-module": "./dist/esm/modules/power-bi/index.js",
+		"./garden-module": "./dist/esm/modules/garden/index.js"
 	},
 	"dependencies": {
 		"@equinor/eds-core-react": "0.27.0",
