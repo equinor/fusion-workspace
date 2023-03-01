@@ -31,6 +31,7 @@ export const SIDEBAR: Sidebar = {
 		{ text: 'PowerBi', link: `config/powerbi-options` },
 		{ text: 'Filter', link: `config/filter-options` },
 		{ text: 'Context', link: `config/context-options` },
+		{ text: 'Modules', link: `config/modules-options` },
 	],
 	Examples: [
 		{ text: 'PowerBi only', link: `examples/power-bi-only` },
