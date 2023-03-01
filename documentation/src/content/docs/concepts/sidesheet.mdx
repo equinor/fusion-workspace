@@ -1,0 +1,43 @@
+---
+title: 'Sidesheet (custom)'
+description: 'A section about dynamically loading workspace fusion from CDN'
+---
+
+## Sidesheets
+
+By default workspace allows for two sidesheets, create and details sidesheet.
+If however you would want more sidesheets than that you can pass in `type: custom` to the config.
+This will effectively enable you to accept any sidesheet event yourself and choose the right sidesheet.
+
+```ts
+export declare type SidesheetAdvanced<
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>,
+  TCustomSidesheetEvents extends BaseEvent
+> = {
+  type: 'custom';
+  hasCreateSidesheet?: boolean;
+  Sidesheet?: (props: SidesheetProps<TData, TContext, TCustomSidesheetEvents>) => JSX.Element;
+};
+```
+
+```tsx
+import { AdminSidesheet, CreateSidesheet, DetailsSidesheet, CustomSidesheet } from './Sidesheets';
+
+const config = {
+  type: 'custom',
+  Sidesheet: ({ controller, ev }) => {
+    const onClose = () => controller.close();
+    switch (ev.type) {
+      case 'admin':
+        return <AdminSidesheet onClose={onClose} />;
+      case 'custom':
+        return <CustomSidesheet onClose={onClose} />;
+      case 'details_sidesheet':
+        return <DetailsSidesheet onClose={onClose} />;
+      case 'create_sidesheet':
+        return <CreateSidesheet onClose={onClose} />;
+    }
+  },
+};
+```

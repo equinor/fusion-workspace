@@ -6,27 +6,27 @@ import { TabButton, TabButtonList } from './tabNavigation.styles';
  * Allows for switching of tabs
  */
 export function TabNavigation() {
-	const { activeTab, setActiveTab } = useTabContext((s) => ({
-		activeTab: s.activeTab,
-		setActiveTab: s.setActiveTab,
-	}));
+  const { activeTab, setActiveTab } = useTabContext((s) => ({
+    activeTab: s.activeTab,
+    setActiveTab: s.setActiveTab,
+  }));
 
-	const tabs = useTabs();
+  const tabs = useTabs();
 
-	if (tabs.length <= 1) return null;
-	return (
-		<TabButtonList>
-			{tabs.map(({ name, TabIcon }) => (
-				<TabButton
-					isActive={name === activeTab}
-					onClick={() => {
-						setActiveTab(name);
-					}}
-					key={name}
-				>
-					<TabIcon />
-				</TabButton>
-			))}
-		</TabButtonList>
-	);
+  if (tabs.length <= 1) return null;
+  return (
+    <TabButtonList>
+      {tabs.map(({ name, TabIcon }) => (
+        <TabButton
+          isActive={name === activeTab}
+          onClick={() => {
+            setActiveTab(name);
+          }}
+          key={name}
+        >
+          <TabIcon />
+        </TabButton>
+      ))}
+    </TabButtonList>
+  );
 }

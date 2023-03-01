@@ -2,9 +2,9 @@
 title: Workspace Widgets
 category: workspace-react
 tags:
-    - side-sheet
-    - widget
-    - details
+  - side-sheet
+  - widget
+  - details
 ---
 
 ## Fusion Widgets
@@ -14,11 +14,11 @@ A widget wil be treated as an app the only thing separating a widget from app i 
 
 ### How
 
--   Api proxy på Verdaccio
--   Noe kan gå
+- Api proxy på Verdaccio
+- Noe kan gå
 
 ### Purposed
 
--   Npm
--   Verdaccio
--   Api
+- Npm
+- Verdaccio
+- Api

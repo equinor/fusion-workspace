@@ -9,27 +9,27 @@ import { CustomTab, FusionWorkspaceModule, WorkspaceConfig } from '../types';
 import { BaseEvent } from '@equinor/workspace-core';
 
 type WorkspaceBaseProps<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>,
+  TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	workspaceOptions: WorkspaceConfig<TData>;
-	customTabs?: CustomTab[];
-	contextOptions?: (filteredData: TData[]) => TContext;
-	modules?: FusionWorkspaceModule[];
+  workspaceOptions: WorkspaceConfig<TData>;
+  customTabs?: CustomTab[];
+  contextOptions?: (filteredData: TData[]) => TContext;
+  modules?: FusionWorkspaceModule[];
 };
 
 export type WorkspaceProps<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent = never,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>,
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TExtendedFields extends string = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &
-	WorkspaceGardenProps<TData, TContext, TExtendedFields, TCustomGroupByKeys> &
-	WorkspaceGridProps<TData> &
-	WorkspaceFilterProps<TData> &
-	WorkspaceDataSourceProps<TData> &
-	WorkspaceStatusBarProps<TData> &
-	WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
-	WorkspacePowerBiProps;
+  WorkspaceGardenProps<TData, TContext, TExtendedFields, TCustomGroupByKeys> &
+  WorkspaceGridProps<TData> &
+  WorkspaceFilterProps<TData> &
+  WorkspaceDataSourceProps<TData> &
+  WorkspaceStatusBarProps<TData> &
+  WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
+  WorkspacePowerBiProps;

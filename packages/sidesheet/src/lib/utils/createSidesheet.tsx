@@ -5,14 +5,14 @@ import { mountSidesheetFrame } from '../components/SidesheetFrame';
 import { Frame } from '../types';
 
 export type SidesheetProps<TProps> = {
-	frame?: Frame;
-	el: HTMLDivElement;
-	props: TProps;
+  frame?: Frame;
+  el: HTMLDivElement;
+  props: TProps;
 };
 
 type ComponentProps<TProps> = {
-	frame: Frame;
-	props: TProps;
+  frame: Frame;
+  props: TProps;
 };
 
 /**
@@ -21,54 +21,54 @@ type ComponentProps<TProps> = {
  * @returns teardown function
  */
 export const createWidget = <TProps,>(
-	Comp: (props: ComponentProps<TProps>) => JSX.Element,
-	resizeOptions?: { defaultWidth?: number }
+  Comp: (props: ComponentProps<TProps>) => JSX.Element,
+  resizeOptions?: { defaultWidth?: number }
 ) => ({
-	render: (props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth),
-	Component: (props: TProps) => (
-		<ComponentLoader Comp={Comp} props={props} defaultWidth={resizeOptions?.defaultWidth} />
-	),
+  render: (props: SidesheetProps<TProps>) => render(props, Comp, resizeOptions?.defaultWidth),
+  Component: (props: TProps) => (
+    <ComponentLoader Comp={Comp} props={props} defaultWidth={resizeOptions?.defaultWidth} />
+  ),
 });
 
 type ComponentLoaderProps<TProps> = {
-	props: TProps;
-	Comp: (props: ComponentProps<TProps>) => JSX.Element;
-	defaultWidth?: number;
+  props: TProps;
+  Comp: (props: ComponentProps<TProps>) => JSX.Element;
+  defaultWidth?: number;
 };
 
 function ComponentLoader<TProps>(props: ComponentLoaderProps<TProps>) {
-	return (
-		<ResizeWrapper minWidth={20} defaultWidth={props.defaultWidth}>
-			<props.Comp props={props.props} frame={{} as any} />
-		</ResizeWrapper>
-	);
+  return (
+    <ResizeWrapper minWidth={20} defaultWidth={props.defaultWidth}>
+      <props.Comp props={props.props} frame={{} as any} />
+    </ResizeWrapper>
+  );
 }
 
 async function render<TProps>(
-	props: SidesheetProps<TProps>,
-	Comp: (props: ComponentProps<TProps>) => JSX.Element,
-	defaultWidth?: number
+  props: SidesheetProps<TProps>,
+  Comp: (props: ComponentProps<TProps>) => JSX.Element,
+  defaultWidth?: number
 ) {
-	let root: undefined | Root;
-	const renderComp = (el: HTMLDivElement, frame: Frame) => {
-		if (!root) {
-			root = createRoot(el);
-		}
+  let root: undefined | Root;
+  const renderComp = (el: HTMLDivElement, frame: Frame) => {
+    if (!root) {
+      root = createRoot(el);
+    }
 
-		root.render(
-			<ResizeWrapper minWidth={20} defaultWidth={defaultWidth}>
-				<Comp props={props.props} frame={frame} />
-			</ResizeWrapper>
-		);
+    root.render(
+      <ResizeWrapper minWidth={20} defaultWidth={defaultWidth}>
+        <Comp props={props.props} frame={frame} />
+      </ResizeWrapper>
+    );
 
-		return () => root!.unmount();
-	};
+    return () => root!.unmount();
+  };
 
-	if (props.frame?.replace) {
-		return await props.frame.replace(renderComp);
-	}
-	return mountSidesheetFrame({
-		el: props.el,
-		component: renderComp,
-	});
+  if (props.frame?.replace) {
+    return await props.frame.replace(renderComp);
+  }
+  return mountSidesheetFrame({
+    el: props.el,
+    component: renderComp,
+  });
 }

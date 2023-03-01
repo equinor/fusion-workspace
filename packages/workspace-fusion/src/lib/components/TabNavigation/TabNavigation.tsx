@@ -6,26 +6,26 @@ import { ReactNode } from 'react';
 import { TabButton, TabButtonList } from './tabNavigation.styles';
 
 type TabNavigationProps = {
-	children?: ReactNode;
+  children?: ReactNode;
 };
 
 export function TabNavigation({ children }: TabNavigationProps) {
-	const set = useSetActiveTab();
-	const activeTab = useActiveTab();
-	const tabs = useTabs();
-	return (
-		<TabButtonList id="fusion_workspace_tab_navigation">
-			{tabs.map((tab) => (
-				<TabButton
-					title={tab.name}
-					key={tab.name}
-					isActive={activeTab?.name === tab.name}
-					onClick={() => set(tab.name)}
-				>
-					<tab.TabIcon />
-				</TabButton>
-			))}
-			{children}
-		</TabButtonList>
-	);
+  const set = useSetActiveTab();
+  const activeTab = useActiveTab();
+  const tabs = useTabs();
+  return (
+    <TabButtonList id="fusion_workspace_tab_navigation">
+      {tabs.map((tab) => (
+        <TabButton
+          title={tab.name}
+          key={tab.name}
+          isActive={activeTab?.name === tab.name}
+          onClick={() => set(tab.name)}
+        >
+          <tab.TabIcon />
+        </TabButton>
+      ))}
+      {children}
+    </TabButtonList>
+  );
 }

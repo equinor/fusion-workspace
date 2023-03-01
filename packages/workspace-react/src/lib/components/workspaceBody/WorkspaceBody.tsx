@@ -4,14 +4,14 @@ import { WorkspaceTab } from '../workspaceTab';
 import { StyledWorkspaceBody } from './workspaceBody.styles';
 
 type WorkspaceBodyProps = {
-	children: ReactNode;
+  children: ReactNode;
 };
 
 export function WorkspaceBody({ children }: WorkspaceBodyProps) {
-	return (
-		<StyledWorkspaceBody id={'workspace_body'}>
-			<WorkspaceTab />
-			{children}
-		</StyledWorkspaceBody>
-	);
+  return (
+    <StyledWorkspaceBody id={'workspace_body'}>
+      <WorkspaceTab />
+      {children}
+    </StyledWorkspaceBody>
+  );
 }

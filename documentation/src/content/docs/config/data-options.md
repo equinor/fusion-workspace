@@ -47,8 +47,8 @@ const responseParser = (res) => res.json();
 
 //do this
 const responseParser = async (res) => {
-	const data = await res.json();
-	return data.map((s) => s.id * 2);
+  const data = await res.json();
+  return data.map((s) => s.id * 2);
 };
 ```
 

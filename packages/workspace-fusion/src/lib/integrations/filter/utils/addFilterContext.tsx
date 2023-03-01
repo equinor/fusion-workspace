@@ -10,47 +10,47 @@ export const FUSION_FILTER_PROVIDER_NAME = 'filter';
  * Wraps workspace in filter context
  */
 export function makeFilterProvider<TData, TError>(
-	filterController: ReactFilterController<TData>,
-	mediator: FusionMediator<any, any, any>
+  filterController: ReactFilterController<TData>,
+  mediator: FusionMediator<any, any, any>
 ) {
-	const FilterProvider = ({ children }) => {
-		useEffect(filterControllerSyncEffect(filterController, mediator), [mediator]);
-		useSyncFilterProvider(filterController as any);
-		return <FilterContextProvider controller={filterController}>{children}</FilterContextProvider>;
-	};
-	return {
-		Component: FilterProvider,
-		name: FUSION_FILTER_PROVIDER_NAME,
-	};
+  const FilterProvider = ({ children }) => {
+    useEffect(filterControllerSyncEffect(filterController, mediator), [mediator]);
+    useSyncFilterProvider(filterController as any);
+    return <FilterContextProvider controller={filterController}>{children}</FilterContextProvider>;
+  };
+  return {
+    Component: FilterProvider,
+    name: FUSION_FILTER_PROVIDER_NAME,
+  };
 }
 
 function useSyncFilterProvider(filterControlLer: ReactFilterController<unknown>) {
-	const ctx = useQueryContext();
+  const ctx = useQueryContext();
 
-	const { data } = useQuery({
-		...ctx,
-		useErrorBoundary: false,
-		suspense: false,
-	});
+  const { data } = useQuery({
+    ...ctx,
+    useErrorBoundary: false,
+    suspense: false,
+  });
 
-	useEffect(() => {
-		if (data) {
-			filterControlLer.setData(data as unknown[]);
-			filterControlLer.init();
-		}
-	}, [data]);
+  useEffect(() => {
+    if (data) {
+      filterControlLer.setData(data as unknown[]);
+      filterControlLer.init();
+    }
+  }, [data]);
 }
 
 function filterControllerSyncEffect(
-	filterController: ReactFilterController<any>,
-	mediator: FusionMediator<any, any, any>
+  filterController: ReactFilterController<any>,
+  mediator: FusionMediator<any, any, any>
 ) {
-	return () => {
-		const unsub = filterController.onFilteredDataChanged((newData) => {
-			mediator.dataService.filteredData = newData;
-		});
-		return () => {
-			unsub();
-		};
-	};
+  return () => {
+    const unsub = filterController.onFilteredDataChanged((newData) => {
+      mediator.dataService.filteredData = newData;
+    });
+    return () => {
+      unsub();
+    };
+  };
 }

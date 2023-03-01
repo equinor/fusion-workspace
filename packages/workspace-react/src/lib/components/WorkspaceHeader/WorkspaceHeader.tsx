@@ -3,18 +3,18 @@ import { ActionBar } from '../ActionBar';
 import styled from 'styled-components';
 
 export function WorkspaceHeader() {
-	const tab = useActiveTab();
+  const tab = useActiveTab();
 
-	if (!tab || !tab.CustomHeader) return <ActionBar />;
+  if (!tab || !tab.CustomHeader) return <ActionBar />;
 
-	return (
-		<StyledWorkspaceHeader id="workspace_header_wrapper">
-			<tab.CustomHeader />
-		</StyledWorkspaceHeader>
-	);
+  return (
+    <StyledWorkspaceHeader id="workspace_header_wrapper">
+      <tab.CustomHeader />
+    </StyledWorkspaceHeader>
+  );
 }
 
 const StyledWorkspaceHeader = styled.div`
-	padding-top: 24px;
-	overflow: hidden;
+  padding-top: 24px;
+  overflow: hidden;
 `;

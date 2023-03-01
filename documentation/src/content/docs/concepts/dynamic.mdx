@@ -17,13 +17,13 @@ To make this work your bundle and the workspace bundle must use the same instanc
 
 ```tsx
 <html>
-	<head>
-		<script src="https://unpkg.com/react@18/umd/react.production.min.js" />
-		<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" />
-	</head>
-	<body>
-		<div id="root" />
-	</body>
+  <head>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" />
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" />
+  </head>
+  <body>
+    <div id="root" />
+  </body>
 </html>
 ```
 
@@ -37,22 +37,22 @@ import { defineConfig } from 'vite';
 import { Plugin } from 'vite-plugin-cdn-import';
 
 export default defineConfig({
-	plugins: [
-		Plugin({
-			modules: [
-				{
-					name: 'react',
-					var: 'React',
-					path: `https://unpkg.com/react@18/umd/react.production.min.js`,
-				},
-				{
-					name: 'react-dom',
-					var: 'ReactDOM',
-					path: `https://unpkg.com/react-dom@18/umd/react-dom.production.min.js`,
-				},
-			],
-		}),
-	],
+  plugins: [
+    Plugin({
+      modules: [
+        {
+          name: 'react',
+          var: 'React',
+          path: `https://unpkg.com/react@18/umd/react.production.min.js`,
+        },
+        {
+          name: 'react-dom',
+          var: 'ReactDOM',
+          path: `https://unpkg.com/react-dom@18/umd/react-dom.production.min.js`,
+        },
+      ],
+    }),
+  ],
 });
 ```
 

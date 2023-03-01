@@ -2,9 +2,9 @@
 title: Workspace Core
 category: Project
 tags:
-    - core
-    - mediator
-    - controller
+  - core
+  - mediator
+  - controller
 ---
 
 import Diagram from '../../../../components/Diagram/Diagram';
@@ -16,8 +16,8 @@ The workspace mediator is a common hub for all workspace related controllers, wr
 The intended use of the mediator is shown in fig.1 The two controllers and communicating through the mediator updating the data fields.
 
 <Diagram
-	client:only="react"
-	chart={`graph LR
+  client:only="react"
+  chart={`graph LR
     classDef mediator fill:#006699,stroke:none,text-align:left,color:#fff;
     classDef config fill:#008899,stroke:none,color:#fff;
     classDef middleware fill:#997766,stroke:none,color:#fff;
@@ -49,9 +49,9 @@ The intended use of the mediator is shown in fig.1 The two controllers and commu
 ```ts
 import { WorkspaceMediator } from '@equinor/workspace-core';
 class ReactWorkspaceMediator extends WorkspaceMediator {
-	constructor() {
-		super();
-	}
-	// React Workspace Mediator implementations
+  constructor() {
+    super();
+  }
+  // React Workspace Mediator implementations
 }
 ```

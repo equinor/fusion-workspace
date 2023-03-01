@@ -4,37 +4,37 @@
  */
 
 import {
-	FilterConfiguration,
-	FilterController,
-	FilterGroup,
-	FilterItemCount,
-	FilterSearchActive,
-	FilterValueType,
-	ReactFilterController,
-	SearchDataSet,
-	SearchMode,
-	SearchType,
-	ValueFormatterFilter,
-	ValueFormatterFunction,
+  FilterConfiguration,
+  FilterController,
+  FilterGroup,
+  FilterItemCount,
+  FilterSearchActive,
+  FilterValueType,
+  ReactFilterController,
+  SearchDataSet,
+  SearchMode,
+  SearchType,
+  ValueFormatterFilter,
+  ValueFormatterFunction,
 } from '@equinor/workspace-filter';
 
 /** Fusion workspace filter config */
 type FilterConfig<T extends Record<PropertyKey, unknown>> = {
-	filterGroups: FilterConfiguration<T>[];
+  filterGroups: FilterConfiguration<T>[];
 };
 
 export type {
-	FilterConfiguration,
-	FilterController,
-	FilterGroup,
-	FilterItemCount,
-	FilterConfig,
-	FilterSearchActive,
-	FilterValueType,
-	ReactFilterController,
-	SearchDataSet,
-	SearchMode,
-	SearchType,
-	ValueFormatterFilter,
-	ValueFormatterFunction,
+  FilterConfiguration,
+  FilterController,
+  FilterGroup,
+  FilterItemCount,
+  FilterConfig,
+  FilterSearchActive,
+  FilterValueType,
+  ReactFilterController,
+  SearchDataSet,
+  SearchMode,
+  SearchType,
+  ValueFormatterFilter,
+  ValueFormatterFunction,
 };
