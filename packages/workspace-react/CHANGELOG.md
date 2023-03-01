@@ -15,7 +15,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   :bug: hotfix pbi context switch ([bb449ee](https://github.com/equinor/fusion-workspace/commit/bb449ee0fc3bebdc5ac200be06143b81ad87cd4b))
+- :bug: hotfix pbi context switch ([bb449ee](https://github.com/equinor/fusion-workspace/commit/bb449ee0fc3bebdc5ac200be06143b81ad87cd4b))
 
 ## [0.6.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.0...@equinor/workspace-react@0.6.1) (2023-01-27)
 
@@ -25,7 +25,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
+- :sparkles: powerbi refetch token ([#282](https://github.com/equinor/fusion-workspace/issues/282)) ([86261b6](https://github.com/equinor/fusion-workspace/commit/86261b648994164cdae2915ac6637aa377ce32c5))
 
 ## [0.5.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.5.0...@equinor/workspace-react@0.5.1) (2023-01-18)
 
@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
+- :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
 
 ## [0.4.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.4.1...@equinor/workspace-react@0.4.2) (2022-12-12)
 
@@ -49,22 +49,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### ⚠ BREAKING CHANGES
 
--   sidesheet options
+- sidesheet options
 
 ### Features
 
--   support multiple sidesheets ([#238](https://github.com/equinor/fusion-workspace/issues/238)) ([18d37f0](https://github.com/equinor/fusion-workspace/commit/18d37f0eceae896d1c4647395b4cc8bb37065300))
+- support multiple sidesheets ([#238](https://github.com/equinor/fusion-workspace/issues/238)) ([18d37f0](https://github.com/equinor/fusion-workspace/commit/18d37f0eceae896d1c4647395b4cc8bb37065300))
 
 ## [0.3.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.2.3...@equinor/workspace-react@0.3.0) (2022-12-05)
 
 ### Features
 
--   :sparkles: divider powerbi tab ([#230](https://github.com/equinor/fusion-workspace/issues/230)) ([df75a7a](https://github.com/equinor/fusion-workspace/commit/df75a7a30d533207b199e9e463fa38bfd9cae849))
+- :sparkles: divider powerbi tab ([#230](https://github.com/equinor/fusion-workspace/issues/230)) ([df75a7a](https://github.com/equinor/fusion-workspace/commit/df75a7a30d533207b199e9e463fa38bfd9cae849))
 
 ### Bug Fixes
 
--   :bug: remove item from url ([#223](https://github.com/equinor/fusion-workspace/issues/223)) ([036ce27](https://github.com/equinor/fusion-workspace/commit/036ce27fb9a30a2c24118564293c768f19837ca9))
--   :bug: workspace header width overflow ([#221](https://github.com/equinor/fusion-workspace/issues/221)) ([48d93dd](https://github.com/equinor/fusion-workspace/commit/48d93ddca4af01b195c1eaefb5d75b446c0dabb1))
+- :bug: remove item from url ([#223](https://github.com/equinor/fusion-workspace/issues/223)) ([036ce27](https://github.com/equinor/fusion-workspace/commit/036ce27fb9a30a2c24118564293c768f19837ca9))
+- :bug: workspace header width overflow ([#221](https://github.com/equinor/fusion-workspace/issues/221)) ([48d93dd](https://github.com/equinor/fusion-workspace/commit/48d93ddca4af01b195c1eaefb5d75b446c0dabb1))
 
 ## [0.2.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.2.2...@equinor/workspace-react@0.2.3) (2022-11-30)
 
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: reactify workspace-fusion setup ([#186](https://github.com/equinor/fusion-workspace/issues/186)) ([5e3d318](https://github.com/equinor/fusion-workspace/commit/5e3d318c8193271fbddeab261ce26e4827eb6321))
+- :sparkles: reactify workspace-fusion setup ([#186](https://github.com/equinor/fusion-workspace/issues/186)) ([5e3d318](https://github.com/equinor/fusion-workspace/commit/5e3d318c8193271fbddeab261ce26e4827eb6321))
 
 ## [0.1.1](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.1.0...@equinor/workspace-react@0.1.1) (2022-11-16)
 
@@ -92,7 +92,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
+- :technologist: poc dynamic widget loading with self replacing ([#169](https://github.com/equinor/fusion-workspace/issues/169)) ([8a83a8a](https://github.com/equinor/fusion-workspace/commit/8a83a8a38a67e9aa976e242bf341d1f193e9c618))
 
 ## [0.0.8](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.7...@equinor/workspace-react@0.0.8) (2022-11-10)
 
@@ -102,14 +102,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   :bug: set fallback tab if none set (workspace-react) ([#159](https://github.com/equinor/fusion-workspace/issues/159)) ([074f04c](https://github.com/equinor/fusion-workspace/commit/074f04cb36d7e34c72ffbc802049aec94224cee0))
--   **Workspace-react:** :bug: fix relative import breaking package ([#162](https://github.com/equinor/fusion-workspace/issues/162)) ([0e8230e](https://github.com/equinor/fusion-workspace/commit/0e8230e9e030c606582eb3cd69285e06c8b20755))
+- :bug: set fallback tab if none set (workspace-react) ([#159](https://github.com/equinor/fusion-workspace/issues/159)) ([074f04c](https://github.com/equinor/fusion-workspace/commit/074f04cb36d7e34c72ffbc802049aec94224cee0))
+- **Workspace-react:** :bug: fix relative import breaking package ([#162](https://github.com/equinor/fusion-workspace/issues/162)) ([0e8230e](https://github.com/equinor/fusion-workspace/commit/0e8230e9e030c606582eb3cd69285e06c8b20755))
 
 ## [0.0.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.5...@equinor/workspace-react@0.0.6) (2022-11-09)
 
 ### Bug Fixes
 
--   :bug: set fallback tab if none set (workspace-react) ([#159](https://github.com/equinor/fusion-workspace/issues/159)) ([074f04c](https://github.com/equinor/fusion-workspace/commit/074f04cb36d7e34c72ffbc802049aec94224cee0))
+- :bug: set fallback tab if none set (workspace-react) ([#159](https://github.com/equinor/fusion-workspace/issues/159)) ([074f04c](https://github.com/equinor/fusion-workspace/commit/074f04cb36d7e34c72ffbc802049aec94224cee0))
 
 ## [0.0.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.4...@equinor/workspace-react@0.0.5) (2022-11-07)
 
@@ -119,7 +119,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   trigger release ([#149](https://github.com/equinor/fusion-workspace/issues/149)) ([3a0a25f](https://github.com/equinor/fusion-workspace/commit/3a0a25fc280438dd75dad428e7480eaf6d5328e3))
+- trigger release ([#149](https://github.com/equinor/fusion-workspace/issues/149)) ([3a0a25f](https://github.com/equinor/fusion-workspace/commit/3a0a25fc280438dd75dad428e7480eaf6d5328e3))
 
 ## [0.0.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.0.2...@equinor/workspace-react@0.0.3) (2022-11-07)
 

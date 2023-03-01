@@ -1,65 +1,65 @@
 import {
-	aggregation,
-	arrows,
-	asc,
-	cancel,
-	chart,
-	checkboxCheckedSvg,
-	checkboxIndeterminate,
-	checkboxUnchecked,
-	colorPicker,
-	columns,
-	contracted,
-	copy,
-	cross,
-	csv,
-	desc,
-	excel,
-	expanded,
-	eye,
-	eyeSlash,
-	filter,
-	first,
-	grip,
-	group,
-	last,
-	left,
-	linked,
-	loading,
-	maximize,
-	menu,
-	minimize,
-	next,
-	none,
-	notAllowed,
-	paste,
-	pin,
-	pivot,
-	previous,
-	right,
-	save,
-	smallDown,
-	smallLeft,
-	smallRight,
-	smallUp,
-	tick,
-	treeClosed,
-	treeIndeterminate,
-	treeOpen,
-	unlinked,
+  aggregation,
+  arrows,
+  asc,
+  cancel,
+  chart,
+  checkboxCheckedSvg,
+  checkboxIndeterminate,
+  checkboxUnchecked,
+  colorPicker,
+  columns,
+  contracted,
+  copy,
+  cross,
+  csv,
+  desc,
+  excel,
+  expanded,
+  eye,
+  eyeSlash,
+  filter,
+  first,
+  grip,
+  group,
+  last,
+  left,
+  linked,
+  loading,
+  maximize,
+  menu,
+  minimize,
+  next,
+  none,
+  notAllowed,
+  paste,
+  pin,
+  pivot,
+  previous,
+  right,
+  save,
+  smallDown,
+  smallLeft,
+  smallRight,
+  smallUp,
+  tick,
+  treeClosed,
+  treeIndeterminate,
+  treeOpen,
+  unlinked,
 } from '../../icons';
 
 function parseIcon(value: string) {
-	return `data:image/svg+xml,${encodeURIComponent(value)}`;
+  return `data:image/svg+xml,${encodeURIComponent(value)}`;
 }
 
 function injectIcon(value: string) {
-	const css = `content: url("${parseIcon(value)}");
+  const css = `content: url("${parseIcon(value)}");
   color: transparent;
   height: 20px;
   width: 20px;`;
 
-	return css.replace(/\n/g, '');
+  return css.replace(/\n/g, '');
 }
 
 export const agIcons = `.ag-theme-material .ag-icon-aggregation {
@@ -212,8 +212,8 @@ export const agIcons = `.ag-theme-material .ag-icon-aggregation {
   }
   .ag-theme-material .ag-checkbox-input-wrapper.ag-indeterminate {
     background: transparent url(data:image/svg+xml,${encodeURIComponent(
-		checkboxIndeterminate
-	)}) center/contain no-repeat;
+      checkboxIndeterminate
+    )}) center/contain no-repeat;
     color: transparent;
   }
   .ag-theme-material .ag-checkbox-input-wrapper  {

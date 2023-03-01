@@ -2,9 +2,9 @@
 title: Fusion Workspace Framework
 category: workspace-fusion-spec
 tags:
-    - framework
-    - mediator
-    - fusion
+  - framework
+  - mediator
+  - fusion
 ---
 
 import Diagram from '../../../../components/Diagram/Diagram';
@@ -13,30 +13,30 @@ Fusion workspace framework, speeding up the development of workspace apps. Allow
 
 Views will include
 
--   Grid View (Ag Grids)
--   Table View (React table)
--   Garden View
--   Power-Bi View
+- Grid View (Ag Grids)
+- Table View (React table)
+- Garden View
+- Power-Bi View
 
 Possible future Views
 
--   Tree View (Core component in garden view)
--   Gantt View (New Functionality / view)
--   Analytics View (New Functionality / view)
+- Tree View (Core component in garden view)
+- Gantt View (New Functionality / view)
+- Analytics View (New Functionality / view)
 
 ```ts
 function workspaceSetup(ws: FusionWorkspaceFramework) {
-	ws.addDataSource(() => ({
-		dataSource: async (signal?: AbortSignal): Promise<Response> => {
-			const famClient = ws.fusion.httpClient('fam');
-			const { facilityId } = ws.fusion.context;
-			return await famClient.fetch(`api/${facilityId}/tags`);
-		},
-	}))
-		.addTableOptions(tableConfig)
-		.addGardenOptions(gardenConfig)
-		.addStatusItems(statusBarConfig)
-		.addFilterOptions(filterConfig);
+  ws.addDataSource(() => ({
+    dataSource: async (signal?: AbortSignal): Promise<Response> => {
+      const famClient = ws.fusion.httpClient('fam');
+      const { facilityId } = ws.fusion.context;
+      return await famClient.fetch(`api/${facilityId}/tags`);
+    },
+  }))
+    .addTableOptions(tableConfig)
+    .addGardenOptions(gardenConfig)
+    .addStatusItems(statusBarConfig)
+    .addFilterOptions(filterConfig);
 }
 ```
 
@@ -48,8 +48,8 @@ return <Workspace {...workspaceConfig} />;
 ## How it works
 
 <Diagram
-	client:only="react"
-	chart={`flowchart LR
+  client:only="react"
+  chart={`flowchart LR
     classDef default fill:#0000,stroke:#333,stroke-width:4px,stroke-dasharray: 5 5,text-align:left,color:#fff;
     classDef framework fill:#006699,stroke:none,text-align:left;
     classDef app fill:#006699,stroke:none,text-align:left;

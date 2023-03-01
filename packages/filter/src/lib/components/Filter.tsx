@@ -9,9 +9,9 @@ Icon.add({ playlist_add, search, drag_handle, chevron_down, chevron_up });
  * Requires being wrapped in FilterContextProvider
  */
 export function Filter() {
-	const controller = useContext(FilterContext);
-	if (!controller) {
-		return null;
-	}
-	return <QuickFilter controller={controller} />;
+  const controller = useContext(FilterContext);
+  if (!controller) {
+    return null;
+  }
+  return <QuickFilter controller={controller} />;
 }

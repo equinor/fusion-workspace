@@ -9,9 +9,9 @@ import configure from './lib/components/FusionFramework';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-	<React.StrictMode>
-		<Framework configure={configure} fallback={<StarProgress />}>
-			<FusionApp />
-		</Framework>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Framework configure={configure} fallback={<StarProgress />}>
+      <FusionApp />
+    </Framework>
+  </React.StrictMode>
 );

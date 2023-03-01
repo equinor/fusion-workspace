@@ -13,63 +13,63 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { RootHeaderContext } from '../context';
 
 export function createConfigurationObject<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TExtendedFields extends string = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(
-	props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>,
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+  props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>,
+  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
 ): WorkspaceConfiguration {
-	const tabs: Tab[] = [];
-	const providers: Provider[] = [];
+  const tabs: Tab[] = [];
+  const providers: Provider[] = [];
 
-	const pushTab = (e: Tab | undefined) => {
-		if (!e) return;
-		tabs.push(e);
-	};
+  const pushTab = (e: Tab | undefined) => {
+    if (!e) return;
+    tabs.push(e);
+  };
 
-	const pushProvider = (e: Provider | undefined) => {
-		if (!e) return;
-		providers.push(e);
-	};
+  const pushProvider = (e: Provider | undefined) => {
+    if (!e) return;
+    providers.push(e);
+  };
 
-	pushProvider(configureUrlWithHistory(mediator, history));
+  pushProvider(configureUrlWithHistory(mediator, history));
 
-	pushProvider({ name: 'Header', Component: RootHeaderContext });
-	pushProvider(addContext(props.contextOptions, mediator));
+  pushProvider({ name: 'Header', Component: RootHeaderContext });
+  pushProvider(addContext(props.contextOptions, mediator));
 
-	tabs.concat(addCustomTabs(props.customTabs, mediator));
+  tabs.concat(addCustomTabs(props.customTabs, mediator));
 
-	props.modules &&
-		props.modules.forEach((module) => {
-			const config = module.setup(props, mediator);
-			if(!config) return
-			pushProvider(config.provider);
-			pushTab(config.tab);
-		});
+  props.modules &&
+    props.modules.forEach((module) => {
+      const config = module.setup(props, mediator);
+      if (!config) return;
+      pushProvider(config.provider);
+      pushTab(config.tab);
+    });
 
-	pushProvider(addStatusBar(props.statusBarOptions, mediator));
+  pushProvider(addStatusBar(props.statusBarOptions, mediator));
 
-	pushProvider(addFilter(props.filterOptions, mediator));
+  pushProvider(addFilter(props.filterOptions, mediator));
 
-	const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
+  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
 
-	sortFusionTabs(tabs);
+  sortFusionTabs(tabs);
 
-	return {
-		providers: providers,
-		tabs: tabs,
-		defaultTab: resolveDefaultTab(props.workspaceOptions.defaultTab, tabs),
-		Sidesheet: Sidesheet,
-	};
+  return {
+    providers: providers,
+    tabs: tabs,
+    defaultTab: resolveDefaultTab(props.workspaceOptions.defaultTab, tabs),
+    Sidesheet: Sidesheet,
+  };
 }
 
 function resolveDefaultTab(defaultTab: string | undefined, tabs: Tab<string>[]) {
-	if (!!tabs.find((s) => s.name === defaultTab)) {
-		return defaultTab;
-	}
+  if (!!tabs.find((s) => s.name === defaultTab)) {
+    return defaultTab;
+  }
 
-	return tabs[0].name;
+  return tabs[0].name;
 }

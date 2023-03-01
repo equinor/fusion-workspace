@@ -7,12 +7,12 @@ import { concat } from './concat';
  * @returns cleanup function
  */
 export function injectAgStyles(): VoidFunction {
-	const style = document.createElement('style');
-	style.textContent = concat(agStyles, genericStyles);
-	style.id = 'ag-theme-material';
-	document.head.append(style);
+  const style = document.createElement('style');
+  style.textContent = concat(agStyles, genericStyles);
+  style.id = 'ag-theme-material';
+  document.head.append(style);
 
-	return () => {
-		style.remove();
-	};
+  return () => {
+    style.remove();
+  };
 }

@@ -9,74 +9,74 @@ import { customTab, gridOptions, RenderStatus, sidesheetOptions, statusBar } fro
 import { gardenConfig } from './gardenConfig';
 
 export function HandoverApp() {
-	const client = useHttpClient('portal');
+  const client = useHttpClient('portal');
 
-	const controller = useMemo(() => {
-		return createWorkspaceController(client);
-	}, []);
-	return null;
-	return <Workspace controller={controller} />;
+  const controller = useMemo(() => {
+    return createWorkspaceController(client);
+  }, []);
+  return null;
+  return <Workspace controller={controller} />;
 }
 
 const createWorkspaceController = (client: HttpClientMsal) => {
-	return createFusionWorkspace<Handover>({ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo }, (builder) =>
-		builder
-			.addDataSource({
-				getResponseAsync: async (signal) =>
-					await client.fetch(
-						'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
-						{ signal }
-					),
-			})
-			// .addFusionPowerBI({ reportUri: 'pp-work-preparation' })
-			.addFilter([
-				{
-					name: 'Comm status',
-					valueFormatter: (pkg) => pkg.commpkgStatus,
-					isQuickFilter: true,
-					customValueRender: RenderStatus,
-				},
-				{ name: 'Comm ', valueFormatter: (pkg) => pkg.commpkgNo },
-				{
-					name: 'MC status',
-					valueFormatter: (pkg) => pkg.mcStatus,
-					isQuickFilter: true,
-					customValueRender: RenderStatus,
-				},
-				{
-					name: 'Discipline',
-					valueFormatter: (pkg) => pkg.mcDisciplineCodes,
-					isQuickFilter: true,
-				},
-				{
-					name: 'Responsible',
-					valueFormatter: (pkg) => pkg.responsible,
-				},
-				{
-					name: 'System',
-					valueFormatter: (pkg) => pkg.system,
-				},
-			])
-			.addGrid(gridOptions)
-			.addCustomTab(customTab)
-			.addCustomTab({
-				Component: () => <div>Admin page</div>,
-				name: 'Admin',
-				TabIcon: () => <div>Admin</div>,
-				predicate: async () => new Promise((res) => setTimeout(() => res(true), 5000)),
-			})
-			.addConfig({
-				appColor: 'purple',
-				appKey: 'Handover',
-				defaultTab: 'grid',
-			})
-			.addSidesheet(sidesheetOptions)
-			.addGarden(gardenConfig)
-			.addMiddleware((mediator) => {
-				mediator.onMount(() => console.log('App mounted'));
-				mediator.onUnMount(() => console.log('App unmounted'));
-			})
-			.addStatusBarItems(statusBar)
-			.addModules([IndexedDbModule])
-	);
+  return createFusionWorkspace<Handover>({ appKey: 'Handover', getIdentifier: (item) => item.commpkgNo }, (builder) =>
+    builder
+      .addDataSource({
+        getResponseAsync: async (signal) =>
+          await client.fetch(
+            'https://pro-s-dataproxy-ci.azurewebsites.net/api/contexts/94dd5f4d-17f1-4312-bf75-ad75f4d9572c/handover',
+            { signal }
+          ),
+      })
+      // .addFusionPowerBI({ reportUri: 'pp-work-preparation' })
+      .addFilter([
+        {
+          name: 'Comm status',
+          valueFormatter: (pkg) => pkg.commpkgStatus,
+          isQuickFilter: true,
+          customValueRender: RenderStatus,
+        },
+        { name: 'Comm ', valueFormatter: (pkg) => pkg.commpkgNo },
+        {
+          name: 'MC status',
+          valueFormatter: (pkg) => pkg.mcStatus,
+          isQuickFilter: true,
+          customValueRender: RenderStatus,
+        },
+        {
+          name: 'Discipline',
+          valueFormatter: (pkg) => pkg.mcDisciplineCodes,
+          isQuickFilter: true,
+        },
+        {
+          name: 'Responsible',
+          valueFormatter: (pkg) => pkg.responsible,
+        },
+        {
+          name: 'System',
+          valueFormatter: (pkg) => pkg.system,
+        },
+      ])
+      .addGrid(gridOptions)
+      .addCustomTab(customTab)
+      .addCustomTab({
+        Component: () => <div>Admin page</div>,
+        name: 'Admin',
+        TabIcon: () => <div>Admin</div>,
+        predicate: async () => new Promise((res) => setTimeout(() => res(true), 5000)),
+      })
+      .addConfig({
+        appColor: 'purple',
+        appKey: 'Handover',
+        defaultTab: 'grid',
+      })
+      .addSidesheet(sidesheetOptions)
+      .addGarden(gardenConfig)
+      .addMiddleware((mediator) => {
+        mediator.onMount(() => console.log('App mounted'));
+        mediator.onUnMount(() => console.log('App unmounted'));
+      })
+      .addStatusBarItems(statusBar)
+      .addModules([IndexedDbModule])
+  );
 };

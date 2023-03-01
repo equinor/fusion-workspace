@@ -4,17 +4,17 @@
  */
 
 import {
-	ColDef,
-	ColumnState,
-	GetIdentifier,
-	GridController,
-	GridOptions,
-	ICellRendererProps,
+  ColDef,
+  ColumnState,
+  GetIdentifier,
+  GridController,
+  GridOptions,
+  ICellRendererProps,
 } from '@equinor/workspace-ag-grid';
 
 export type { ColDef, ColumnState, GetIdentifier, GridConfig, GridController, GridOptions, ICellRendererProps };
 
 type GridConfig<T> = {
-	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
+  columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
+  gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
 };

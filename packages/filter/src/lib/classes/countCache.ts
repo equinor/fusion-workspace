@@ -4,17 +4,17 @@
  * Checkbox runs counting on the fly and will commit the count to the cache
  */
 export class CountCache {
-	countValues = new Map<string, number>();
+  countValues = new Map<string, number>();
 
-	clear = () => {
-		this.countValues = new Map();
-	};
+  clear = () => {
+    this.countValues = new Map();
+  };
 
-	addCount = (name: string, count: number) => {
-		this.countValues.set(name, count);
-	};
+  addCount = (name: string, count: number) => {
+    this.countValues.set(name, count);
+  };
 
-	getCount = (name: string) => {
-		return this.countValues.get(name);
-	};
+  getCount = (name: string) => {
+    return this.countValues.get(name);
+  };
 }

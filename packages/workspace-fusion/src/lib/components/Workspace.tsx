@@ -13,49 +13,47 @@ import history from 'history/browser';
 const client = new QueryClient();
 
 export function Workspace<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TExtendedFields extends string = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
-	const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
-		new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
-	);
+  const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
+    new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
+  );
 
-	const client = useCheckParentClient();
+  const client = useCheckParentClient();
 
-	//Probably make one for each?
-	const configuration = createConfigurationObject(props, mediator);
+  //Probably make one for each?
+  const configuration = createConfigurationObject(props, mediator);
 
-	useCleanupQueryParams(mediator, history);
+  useCleanupQueryParams(mediator, history);
 
-	return (
-		<QueryClientProvider client={client}>
-			<DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
-				<WorkspaceView
-					Sidesheet={configuration.Sidesheet}
-					providers={configuration.providers}
-					defaultTab={
-						configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab
-					}
-					tabs={configuration.tabs}
-					events={{
-						onTabChange: (newTab) => {
-							updateQueryParams([['tab', newTab]], mediator, history);
-						},
-					}}
-				/>
-			</DataSourceProvider>
-		</QueryClientProvider>
-	);
+  return (
+    <QueryClientProvider client={client}>
+      <DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
+        <WorkspaceView
+          Sidesheet={configuration.Sidesheet}
+          providers={configuration.providers}
+          defaultTab={configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab}
+          tabs={configuration.tabs}
+          events={{
+            onTabChange: (newTab) => {
+              updateQueryParams([['tab', newTab]], mediator, history);
+            },
+          }}
+        />
+      </DataSourceProvider>
+    </QueryClientProvider>
+  );
 }
 
 /** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
 function useCheckParentClient(): QueryClient {
-	try {
-		return useQueryClient();
-	} catch {
-		return client;
-	}
+  try {
+    return useQueryClient();
+  } catch {
+    return client;
+  }
 }

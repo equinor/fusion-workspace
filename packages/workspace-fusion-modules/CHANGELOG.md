@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.3.22...@equinor/workspace-fusion-modules@0.5.0) (2023-02-28)
+
+### Features
+
+-   :sparkles: powerbi classification ([#333](https://github.com/equinor/fusion-workspace/issues/333)) ([2c3732a](https://github.com/equinor/fusion-workspace/commit/2c3732a44ea055e027a29b3b4fe06e55fbea1487))
+
 ## [0.4.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.3.22...@equinor/workspace-fusion-modules@0.4.0) (2023-02-23)
 
 ### Features
@@ -101,13 +107,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: replace fetch controller ([#261](https://github.com/equinor/fusion-workspace/issues/261)) ([07eb76a](https://github.com/equinor/fusion-workspace/commit/07eb76ac79fcdf4dcff73dfd22956f20bfdf0c0b))
+- :sparkles: replace fetch controller ([#261](https://github.com/equinor/fusion-workspace/issues/261)) ([07eb76a](https://github.com/equinor/fusion-workspace/commit/07eb76ac79fcdf4dcff73dfd22956f20bfdf0c0b))
 
 ## [0.2.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.1.19...@equinor/workspace-fusion-modules@0.2.0) (2022-12-14)
 
 ### Features
 
--   :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
+- :sparkles: Load bookmarks from url ([#257](https://github.com/equinor/fusion-workspace/issues/257)) ([fc94a98](https://github.com/equinor/fusion-workspace/commit/fc94a98215d7c2fda86cea91ff3bebfcf3e7a81d))
 
 ## [0.1.19](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.1.18...@equinor/workspace-fusion-modules@0.1.19) (2022-12-12)
 
@@ -189,7 +195,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   :sparkles: export integration types from workspace-fusion ([#165](https://github.com/equinor/fusion-workspace/issues/165)) ([9fe9389](https://github.com/equinor/fusion-workspace/commit/9fe9389a0b6ead5393ada9c8218383e7f3407440))
+- :sparkles: export integration types from workspace-fusion ([#165](https://github.com/equinor/fusion-workspace/issues/165)) ([9fe9389](https://github.com/equinor/fusion-workspace/commit/9fe9389a0b6ead5393ada9c8218383e7f3407440))
 
 ## [0.0.13](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.0.12...@equinor/workspace-fusion-modules@0.0.13) (2022-11-09)
 
@@ -223,7 +229,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   fix empty dist ([150d3fd](https://github.com/equinor/fusion-workspace/commit/150d3fd028e9995b10885a396849e13a1262b6b2))
+- fix empty dist ([150d3fd](https://github.com/equinor/fusion-workspace/commit/150d3fd028e9995b10885a396849e13a1262b6b2))
 
 ## [0.0.5](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion-modules@0.0.4...@equinor/workspace-fusion-modules@0.0.5) (2022-11-07)
 

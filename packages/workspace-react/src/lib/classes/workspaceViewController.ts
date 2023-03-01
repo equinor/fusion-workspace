@@ -4,61 +4,61 @@ import { StateController } from './stateController';
 import { TabController } from './tabController';
 
 export class WorkspaceViewController<TTabNames extends string, TError> {
-	appKey?: string;
+  appKey?: string;
 
-	appColor?: string;
+  appColor?: string;
 
-	viewState = new StateController();
+  viewState = new StateController();
 
-	tabController = new TabController<TTabNames>();
+  tabController = new TabController<TTabNames>();
 
-	providers: Provider[] = [];
+  providers: Provider[] = [];
 
-	Sidesheet: (() => JSX.Element) | undefined;
+  Sidesheet: (() => JSX.Element) | undefined;
 
-	addProvider = (provider: Provider) => {
-		this.providers.filter((s) => s.name !== provider.name);
-		this.providers.push(provider);
-	};
+  addProvider = (provider: Provider) => {
+    this.providers.filter((s) => s.name !== provider.name);
+    this.providers.push(provider);
+  };
 
-	addSidesheetComponent = (comp: () => JSX.Element) => {
-		this.Sidesheet = comp;
-	};
+  addSidesheetComponent = (comp: () => JSX.Element) => {
+    this.Sidesheet = comp;
+  };
 
-	constructor(defaultTab?: TTabNames) {
-		const error = new Observable<TError | undefined>(undefined);
-		this.setError = error.setValue;
-		this.onError = error.onchange;
+  constructor(defaultTab?: TTabNames) {
+    const error = new Observable<TError | undefined>(undefined);
+    this.setError = error.setValue;
+    this.onError = error.onchange;
 
-		if (defaultTab) {
-			this.tabController.setActiveTab(defaultTab);
-		}
+    if (defaultTab) {
+      this.tabController.setActiveTab(defaultTab);
+    }
 
-		error.onchange((val) => {
-			this.error = val;
-		});
-	}
+    error.onchange((val) => {
+      this.error = val;
+    });
+  }
 
-	error?: TError;
+  error?: TError;
 
-	setError: (value: TError | undefined) => void;
+  setError: (value: TError | undefined) => void;
 
-	onError: (callback: OnchangeCallback<TError | undefined>) => () => void;
+  onError: (callback: OnchangeCallback<TError | undefined>) => () => void;
 
-	/** Component for handling errors */
-	ErrorComponent?: (error: ErrorProps<TError>) => JSX.Element;
+  /** Component for handling errors */
+  ErrorComponent?: (error: ErrorProps<TError>) => JSX.Element;
 
-	/** Function for refetching data */
-	refetchData?: () => Promise<void> | null;
+  /** Function for refetching data */
+  refetchData?: () => Promise<void> | null;
 
-	destroy = () => {
-		for (const key in this) {
-			this[key] = null as unknown as this[Extract<keyof this, string>];
-			delete this[key];
-		}
-	};
+  destroy = () => {
+    for (const key in this) {
+      this[key] = null as unknown as this[Extract<keyof this, string>];
+      delete this[key];
+    }
+  };
 }
 
 type ErrorProps<TError> = {
-	error: TError;
+  error: TError;
 };

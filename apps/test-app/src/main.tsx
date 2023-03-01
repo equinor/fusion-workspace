@@ -7,11 +7,11 @@ import App from './App';
 const client = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<QueryClientProvider client={client}>
-			<div style={{ height: '100vh' }}>
-				<App />
-			</div>
-		</QueryClientProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <QueryClientProvider client={client}>
+      <div style={{ height: '100vh' }}>
+        <App />
+      </div>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
