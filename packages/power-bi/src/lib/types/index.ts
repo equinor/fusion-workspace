@@ -5,6 +5,6 @@ export * from './observable';
 export * from './slicer';
 
 export type FusionPowerBiToken = {
-	token: string;
-	expirationUtc: string;
+  token: string;
+  expirationUtc: string;
 };

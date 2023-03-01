@@ -13,115 +13,113 @@ import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
 
 type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
-	width?: number;
-	handleOnItemClick: (item: TData) => void;
+  width?: number;
+  handleOnItemClick: (item: TData) => void;
 };
 
 export const VirtualGarden = <
-	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>
+  TData extends Record<PropertyKey, unknown>,
+  TExtendedFields extends string,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 >({
-	width,
-	handleOnItemClick,
+  width,
+  handleOnItemClick,
 }: VirtualGardenProps<TData>): JSX.Element => {
-	const parentRef = useRef<HTMLDivElement | null>(null);
-	const containerRef = useRef<HTMLDivElement | null>(null);
+  const parentRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const garden = useGardenGroups<TData>();
-	const {
-		grouping: {
-			value: { horizontalGroupingAccessor: gardenKey },
-		},
-		visuals: { rowHeight, highlightHorizontalColumn },
-		customViews: { customGroupView, customItemView },
-		customGroupByKeys,
-	} = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
+  const garden = useGardenGroups<TData>();
+  const {
+    grouping: {
+      value: { horizontalGroupingAccessor: gardenKey },
+    },
+    visuals: { rowHeight, highlightHorizontalColumn },
+    customViews: { customGroupView, customItemView },
+    customGroupByKeys,
+  } = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 
-	const refresh = useRefresh();
+  const refresh = useRefresh();
 
-	const { isScrolling, scrollOffsetFn } = useVirtualScrolling(parentRef);
-	const { widths: contextWidths } = useExpand();
+  const { isScrolling, scrollOffsetFn } = useVirtualScrolling(parentRef);
+  const { widths: contextWidths } = useExpand();
 
-	const columnCount = useMemo(() => garden.length, [garden]);
-	const rowCount = useMemo(() => getRowCount(garden), [garden]);
+  const columnCount = useMemo(() => garden.length, [garden]);
+  const rowCount = useMemo(() => getRowCount(garden), [garden]);
 
-	const rowVirtualizer = useVirtual({
-		size: rowCount,
-		parentRef,
-		estimateSize: useCallback(() => rowHeight || 40, [rowHeight]),
-		paddingStart: 40,
-		// overscan: 2,
-	});
-	const columnVirtualizer = useVirtual({
-		horizontal: true,
-		size: columnCount,
-		parentRef,
-		estimateSize: useCallback(
-			(index) => contextWidths[index],
+  const rowVirtualizer = useVirtual({
+    size: rowCount,
+    parentRef,
+    estimateSize: useCallback(() => rowHeight || 40, [rowHeight]),
+    paddingStart: 40,
+    // overscan: 2,
+  });
+  const columnVirtualizer = useVirtual({
+    horizontal: true,
+    size: columnCount,
+    parentRef,
+    estimateSize: useCallback(
+      (index) => contextWidths[index],
 
-			[contextWidths]
-		),
-		keyExtractor: useCallback((index) => index, [contextWidths]),
-		scrollOffsetFn,
-		useObserver: useCallback(() => ({ height: 0, width: window.innerWidth }), []),
-		overscan: 3,
-	});
+      [contextWidths]
+    ),
+    keyExtractor: useCallback((index) => index, [contextWidths]),
+    scrollOffsetFn,
+    useObserver: useCallback(() => ({ height: 0, width: window.innerWidth }), []),
+    overscan: 3,
+  });
 
-	const packageChild = customItemView ?? undefined;
+  const packageChild = customItemView ?? undefined;
 
-	const handleExpand = useCallback(
-		<T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
-			subGroup.isExpanded = !subGroup.isExpanded;
+  const handleExpand = useCallback(
+    <T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
+      subGroup.isExpanded = !subGroup.isExpanded;
 
-			refresh();
-		},
-		[refresh]
-	);
-	const highlightedColumn = useMemo(
-		() =>
-			highlightHorizontalColumn
-				? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value)
-				: undefined,
-		[highlightHorizontalColumn, gardenKey, customGroupByKeys]
-	);
-	useLayoutEffect(() => {
-		if (highlightedColumn) {
-			const scrollIndex = garden.findIndex((column) => column.value === highlightedColumn);
-			scrollIndex !== -1 && columnVirtualizer.scrollToIndex(scrollIndex, { align: 'center' });
-		}
-	}, [garden, columnVirtualizer.scrollToIndex, highlightedColumn]);
+      refresh();
+    },
+    [refresh]
+  );
+  const highlightedColumn = useMemo(
+    () =>
+      highlightHorizontalColumn ? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value) : undefined,
+    [highlightHorizontalColumn, gardenKey, customGroupByKeys]
+  );
+  useLayoutEffect(() => {
+    if (highlightedColumn) {
+      const scrollIndex = garden.findIndex((column) => column.value === highlightedColumn);
+      scrollIndex !== -1 && columnVirtualizer.scrollToIndex(scrollIndex, { align: 'center' });
+    }
+  }, [garden, columnVirtualizer.scrollToIndex, highlightedColumn]);
 
-	return (
-		<Layout
-			rowTotalSize={rowVirtualizer.totalSize}
-			columnTotalSize={columnVirtualizer.totalSize}
-			parentRef={parentRef}
-			containerRef={containerRef}
-			isScrolling={isScrolling}
-		>
-			<HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
-			{columnVirtualizer.virtualItems.map((virtualColumn) => {
-				const currentColumn = garden[virtualColumn.index];
-				const columnItems = getGardenItems<TData>(currentColumn, true);
+  return (
+    <Layout
+      rowTotalSize={rowVirtualizer.totalSize}
+      columnTotalSize={columnVirtualizer.totalSize}
+      parentRef={parentRef}
+      containerRef={containerRef}
+      isScrolling={isScrolling}
+    >
+      <HeaderContainer highlightedColumn={highlightedColumn} columnVirtualizer={columnVirtualizer} />
+      {columnVirtualizer.virtualItems.map((virtualColumn) => {
+        const currentColumn = garden[virtualColumn.index];
+        const columnItems = getGardenItems<TData>(currentColumn, true);
 
-				return (
-					<Fragment key={virtualColumn.index}>
-						<GardenItemContainer
-							rowVirtualizer={rowVirtualizer}
-							items={columnItems}
-							packageChild={packageChild}
-							customSubGroup={customGroupView}
-							handleExpand={handleExpand}
-							itemWidth={width}
-							handleOnClick={handleOnItemClick}
-							parentRef={containerRef}
-							virtualColumn={virtualColumn}
-						/>
-					</Fragment>
-				);
-			})}
-		</Layout>
-	);
+        return (
+          <Fragment key={virtualColumn.index}>
+            <GardenItemContainer
+              rowVirtualizer={rowVirtualizer}
+              items={columnItems}
+              packageChild={packageChild}
+              customSubGroup={customGroupView}
+              handleExpand={handleExpand}
+              itemWidth={width}
+              handleOnClick={handleOnItemClick}
+              parentRef={containerRef}
+              virtualColumn={virtualColumn}
+            />
+          </Fragment>
+        );
+      })}
+    </Layout>
+  );
 };

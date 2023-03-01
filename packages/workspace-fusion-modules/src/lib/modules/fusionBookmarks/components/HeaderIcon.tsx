@@ -6,9 +6,9 @@ import { TabButton } from '@equinor/workspace-fusion';
 Icon.add({ bookmarks });
 
 export const HeaderIcon = () => {
-	return (
-		<TabButton isActive={false}>
-			<Icon name="bookmarks" color={tokens.colors.interactive.primary__resting.hex} />
-		</TabButton>
-	);
+  return (
+    <TabButton isActive={false}>
+      <Icon name="bookmarks" color={tokens.colors.interactive.primary__resting.hex} />
+    </TabButton>
+  );
 };

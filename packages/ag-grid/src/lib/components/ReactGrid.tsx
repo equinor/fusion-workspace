@@ -6,14 +6,14 @@ import { createGridController } from '../utils';
 import { Grid } from './Grid';
 
 type ReactGridProps<TData extends Record<PropertyKey, unknown>> = {
-	/**Height of the Grid */
-	height: number;
-	/**Data for the grid */
-	rowData: TData[];
-	/**Columns */
-	colDefs: ColDef<TData>[];
-	/**Options */
-	gridOptions?: GridOptions<TData>;
+  /**Height of the Grid */
+  height: number;
+  /**Data for the grid */
+  rowData: TData[];
+  /**Columns */
+  colDefs: ColDef<TData>[];
+  /**Options */
+  gridOptions?: GridOptions<TData>;
 };
 
 /**
@@ -21,43 +21,43 @@ type ReactGridProps<TData extends Record<PropertyKey, unknown>> = {
  * For more advanced use, use the Grid component
  */
 export function ReactGrid<TData extends Record<PropertyKey, unknown>>({
-	height,
-	rowData,
-	colDefs,
-	gridOptions,
+  height,
+  rowData,
+  colDefs,
+  gridOptions,
 }: ReactGridProps<TData>) {
-	const [controller, setController] = useState<null | GridController<TData>>(null);
+  const [controller, setController] = useState<null | GridController<TData>>(null);
 
-	useEffectOnce(() => {
-		let teardown: VoidFunction | null = null;
-		const contr = createGridController<TData, {}>(
-			() => '',
-			(destroy) => {
-				teardown = () => destroy();
-			}
-		);
-		contr.columnDefs = colDefs;
-		contr.rowData = rowData;
-		contr.gridOptions = gridOptions;
-		setController(contr);
+  useEffectOnce(() => {
+    let teardown: VoidFunction | null = null;
+    const contr = createGridController<TData, {}>(
+      () => '',
+      (destroy) => {
+        teardown = () => destroy();
+      }
+    );
+    contr.columnDefs = colDefs;
+    contr.rowData = rowData;
+    contr.gridOptions = gridOptions;
+    setController(contr);
 
-		return () => {
-			if (teardown) {
-				teardown();
-			}
-		};
-	});
+    return () => {
+      if (teardown) {
+        teardown();
+      }
+    };
+  });
 
-	if (!controller) return null;
-	if (controller.rowData !== rowData) {
-		controller.rowData = rowData;
-	}
-	if (controller.gridOptions !== gridOptions) {
-		controller.gridOptions = gridOptions;
-	}
-	if (controller.columnDefs !== colDefs) {
-		controller.columnDefs = colDefs;
-	}
+  if (!controller) return null;
+  if (controller.rowData !== rowData) {
+    controller.rowData = rowData;
+  }
+  if (controller.gridOptions !== gridOptions) {
+    controller.gridOptions = gridOptions;
+  }
+  if (controller.columnDefs !== colDefs) {
+    controller.columnDefs = colDefs;
+  }
 
-	return <Grid controller={controller} height={height} />;
+  return <Grid controller={controller} height={height} />;
 }

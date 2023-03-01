@@ -3,9 +3,9 @@ import { FusionMediator } from '../../../types';
 import { SidesheetConfig } from '../sidesheet';
 
 export type WorkspaceSidesheetProps<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>,
+  TCustomSidesheetEvents extends BaseEvent
 > = {
-	sidesheetOptions?: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
+  sidesheetOptions?: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
 };

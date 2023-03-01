@@ -4,9 +4,8 @@ import { render as ScopeChangeSidesheet, ScopeChangeProps } from './ScopeChangeS
 import { render as WorkorderSidesheet, WorkOrderProps } from './WorkorderSidesheet';
 
 export const sidesheets = {
-	handover: (props: HandoverProps) => (el: HTMLDivElement, frame: Frame) => HandoverSidesheet({ el, props, frame }),
-	workorder: (props: WorkOrderProps) => (el: HTMLDivElement, frame: Frame) =>
-		WorkorderSidesheet({ el, props, frame }),
-	scopechange: (props: ScopeChangeProps) => (el: HTMLDivElement, frame: Frame) =>
-		ScopeChangeSidesheet({ el, props, frame }),
+  handover: (props: HandoverProps) => (el: HTMLDivElement, frame: Frame) => HandoverSidesheet({ el, props, frame }),
+  workorder: (props: WorkOrderProps) => (el: HTMLDivElement, frame: Frame) => WorkorderSidesheet({ el, props, frame }),
+  scopechange: (props: ScopeChangeProps) => (el: HTMLDivElement, frame: Frame) =>
+    ScopeChangeSidesheet({ el, props, frame }),
 };

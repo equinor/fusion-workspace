@@ -3,8 +3,11 @@ import { FusionMediator } from './fusionController';
 import { WorkspaceProps } from './workspaceProps';
 
 export type FusionWorkspaceModule = {
-	name: string;
-	setup: ModuleSetup
+  name: string;
+  setup: ModuleSetup;
 };
 
-export type ModuleSetup = (props: WorkspaceProps<any, any, any, any, any>, mediator: FusionMediator<any, any, any>) => { provider: Provider; tab: Tab<string> } | undefined;
+export type ModuleSetup = (
+  props: WorkspaceProps<any, any, any, any, any>,
+  mediator: FusionMediator<any, any, any>
+) => { provider: Provider; tab: Tab<string> } | undefined;
