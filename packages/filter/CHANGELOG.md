@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.13...@equinor/workspace-filter@0.0.15) (2023-02-28)
+
+**Note:** Version bump only for package @equinor/workspace-filter
+
+## [0.0.14](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.13...@equinor/workspace-filter@0.0.14) (2023-02-23)
+
+**Note:** Version bump only for package @equinor/workspace-filter
+
 ## [0.0.13](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.12...@equinor/workspace-filter@0.0.13) (2023-02-09)
 
 **Note:** Version bump only for package @equinor/workspace-filter

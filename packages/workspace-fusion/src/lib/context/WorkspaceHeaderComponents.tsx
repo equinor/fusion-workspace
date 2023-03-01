@@ -16,6 +16,7 @@ export type HeaderIcon = {
 	name: string;
 	Icon: (props: HeaderIconProps) => JSX.Element;
 	placement: 'left' | 'right';
+	type: 'button' | 'text';
 };
 
 const defaultState: WorkspaceHeaderComponents = {

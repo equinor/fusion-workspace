@@ -8,6 +8,8 @@ import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Button, Checkbox } from '@equinor/eds-core-react';
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
+import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion/.';
+import { gridModule } from '@equinor/workspace-fusion/grid-module';
 
 type S = {
 	id: string;
@@ -161,6 +163,7 @@ function App() {
 							filterOptions={filterOptions}
 							sidesheetOptions={sidesheet}
 							powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
+							modules={[gridModule]}
 							dataOptions={{
 								getResponseAsync: getResponseAsync,
 								queryKey: ['Workspace', shouldFailDataset ? 'true' : 'false'],

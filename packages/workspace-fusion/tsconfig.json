@@ -5,7 +5,6 @@
 		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"outDir": "dist/esm",
 		"rootDir": "src",
-		"baseUrl": "src",
 		"declarationDir": "./dist/types",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,

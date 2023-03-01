@@ -1,17 +1,14 @@
 import { Provider, Tab } from '@equinor/workspace-react';
 import history from 'history/browser';
 import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
-import { WorkspaceConfiguration, FusionMediator, WorkspaceProps } from '../types';
+import { WorkspaceConfiguration, FusionMediator, WorkspaceProps, WorkspaceTabNames } from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
 import { addCustomTabs } from './customTab';
 import { addContext } from './context';
 
 import { addFilter } from '../integrations/filter';
 import { addStatusBar } from '../integrations/status-bar';
-import { addPowerBi } from '../integrations/power-bi';
-import { addGarden } from '../integrations/garden';
 import { addSidesheet } from '../integrations/sidesheet';
-import { addGrid } from '../integrations/grid';
 import { BaseEvent } from '@equinor/workspace-core';
 import { RootHeaderContext } from '../context';
 
@@ -43,17 +40,15 @@ export function createConfigurationObject<
 	pushProvider({ name: 'Header', Component: RootHeaderContext });
 	pushProvider(addContext(props.contextOptions, mediator));
 
-	pushTab(addPowerBi(props.powerBiOptions));
-
 	tabs.concat(addCustomTabs(props.customTabs, mediator));
 
-	const garden = addGarden(props.gardenOptions, mediator);
-	pushProvider(garden?.provider);
-	pushTab(garden?.tab);
-
-	const grid = addGrid(props.gridOptions, mediator);
-	pushProvider(grid?.provider);
-	pushTab(grid?.tab);
+	props.modules &&
+		props.modules.forEach((module) => {
+			const config = module.setup(props, mediator);
+			if(!config) return
+			pushProvider(config.provider);
+			pushTab(config.tab);
+		});
 
 	pushProvider(addStatusBar(props.statusBarOptions, mediator));
 
@@ -61,15 +56,20 @@ export function createConfigurationObject<
 
 	const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
 
-	//Consider entry hooks  "pre" | "post"
-	// props.modules && props.modules.forEach((s) => s.setup(mediator, props.workspaceOptions.appKey, viewController));
-
 	sortFusionTabs(tabs);
 
 	return {
 		providers: providers,
 		tabs: tabs,
-		defaultTab: props.workspaceOptions.defaultTab ?? tabs[0].name,
+		defaultTab: resolveDefaultTab(props.workspaceOptions.defaultTab, tabs),
 		Sidesheet: Sidesheet,
 	};
+}
+
+function resolveDefaultTab(defaultTab: string | undefined, tabs: Tab<string>[]) {
+	if (!!tabs.find((s) => s.name === defaultTab)) {
+		return defaultTab;
+	}
+
+	return tabs[0].name;
 }
