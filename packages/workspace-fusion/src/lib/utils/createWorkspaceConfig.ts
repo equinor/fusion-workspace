@@ -67,9 +67,12 @@ export function createConfigurationObject<
 }
 
 function resolveDefaultTab(defaultTab: string | undefined, tabs: Tab<string>[]) {
-  if (!!tabs.find((s) => s.name === defaultTab)) {
-    return defaultTab;
+  const tabName = tabs.find((s) => s.name === defaultTab)?.name ?? !!tabs.length ? tabs?.[0].name : undefined;
+  if(typeof tabName !== "string") {
+    throw new Error(`
+    Failed to find any tabs\n
+    please make sure you added configuration module for at least one tab\n
+    check the docs: https://equinor.github.io/fusion-workspace/introduction/\n`);
   }
-
-  return tabs[0].name;
+  return tabName;
 }
