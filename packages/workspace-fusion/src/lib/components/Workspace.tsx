@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceProps } from '../types';
 
@@ -9,10 +9,34 @@ import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { tryGetTabFromUrl, updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
+import { WorkspaceBoundary } from './error';
 
 const client = new QueryClient();
 
 export function Workspace<
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TExtendedFields extends string = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
+>(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
+  return (
+    <WorkspaceBoundary>
+      <WorkspaceComponent {...props} />
+    </WorkspaceBoundary>
+  );
+}
+
+/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
+function useCheckParentClient(): QueryClient {
+  try {
+    return useQueryClient();
+  } catch {
+    return client;
+  }
+}
+
+function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
@@ -29,7 +53,6 @@ export function Workspace<
   const configuration = createConfigurationObject(props, mediator);
 
   useCleanupQueryParams(mediator, history);
-
   return (
     <QueryClientProvider client={client}>
       <DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
@@ -47,13 +70,4 @@ export function Workspace<
       </DataSourceProvider>
     </QueryClientProvider>
   );
-}
-
-/** Tries to use the surrounding queryClient if there is one, otherwise it creates a new one */
-function useCheckParentClient(): QueryClient {
-  try {
-    return useQueryClient();
-  } catch {
-    return client;
-  }
 }
