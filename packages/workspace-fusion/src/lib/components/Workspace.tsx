@@ -1,4 +1,4 @@
-import { ReactNode, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
 import { FusionMediator, WorkspaceProps } from '../types';
 
@@ -9,21 +9,9 @@ import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { tryGetTabFromUrl, updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { WorkspaceBoundary } from './error';
 
 const client = new QueryClient();
-
-type WorkspaceBoundaryProps = {
-  children: ReactNode;
-};
-
-function WorkspaceBoundary({ children }: WorkspaceBoundaryProps) {
-  return <ErrorBoundary FallbackComponent={WorkspaceError}>{children}</ErrorBoundary>;
-}
-
-function WorkspaceError({ error }: FallbackProps) {
-  return <div>Ops... {error.message}</div>;
-}
 
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
