@@ -3,22 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.19.0...@equinor/workspace-fusion@0.20.0) (2023-03-22)
+
+### Features
+
+- add error boundary ([#349](https://github.com/equinor/fusion-workspace/issues/349)) ([8204bae](https://github.com/equinor/fusion-workspace/commit/8204bae595b2a83e75474f30580ff20ee84f7ce6))
+
 ## [0.19.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.3...@equinor/workspace-fusion@0.19.0) (2023-02-28)
 
 ### Features
 
--   :sparkles: powerbi classification ([#333](https://github.com/equinor/fusion-workspace/issues/333)) ([2c3732a](https://github.com/equinor/fusion-workspace/commit/2c3732a44ea055e027a29b3b4fe06e55fbea1487))
--   export grid as module ([#335](https://github.com/equinor/fusion-workspace/issues/335)) ([2308ff3](https://github.com/equinor/fusion-workspace/commit/2308ff3b99bdd05a8b4daf195ae93c8a72aa5ff3))
+- :sparkles: powerbi classification ([#333](https://github.com/equinor/fusion-workspace/issues/333)) ([2c3732a](https://github.com/equinor/fusion-workspace/commit/2c3732a44ea055e027a29b3b4fe06e55fbea1487))
+- export grid as module ([#335](https://github.com/equinor/fusion-workspace/issues/335)) ([2308ff3](https://github.com/equinor/fusion-workspace/commit/2308ff3b99bdd05a8b4daf195ae93c8a72aa5ff3))
 
 ### Bug Fixes
 
--   :bug: baseurl ([#338](https://github.com/equinor/fusion-workspace/issues/338)) ([dc203db](https://github.com/equinor/fusion-workspace/commit/dc203dbceb9ddebd4d4eef59659c8ead6e761a87))
+- :bug: baseurl ([#338](https://github.com/equinor/fusion-workspace/issues/338)) ([dc203db](https://github.com/equinor/fusion-workspace/commit/dc203dbceb9ddebd4d4eef59659c8ead6e761a87))
 
 ## [0.18.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.3...@equinor/workspace-fusion@0.18.0) (2023-02-23)
 
 ### Features
 
--   :sparkles: powerbi classification ([#333](https://github.com/equinor/fusion-workspace/issues/333)) ([2c3732a](https://github.com/equinor/fusion-workspace/commit/2c3732a44ea055e027a29b3b4fe06e55fbea1487))
+- :sparkles: powerbi classification ([#333](https://github.com/equinor/fusion-workspace/issues/333)) ([2c3732a](https://github.com/equinor/fusion-workspace/commit/2c3732a44ea055e027a29b3b4fe06e55fbea1487))
 
 ## [0.17.3](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.17.2...@equinor/workspace-fusion@0.17.3) (2023-02-09)
 

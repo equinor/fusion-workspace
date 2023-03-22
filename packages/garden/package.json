@@ -1,48 +1,48 @@
 {
-	"name": "@equinor/workspace-garden",
-	"version": "0.7.5",
-	"type": "module",
-	"license": "MIT",
-	"scripts": {
-		"build": "tsc -b",
-		"build:prod": "tsc -b",
-		"lint": "eslint --ext .ts,.tsx"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"module": "dist/esm/index.js",
-	"types": "dist/types/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"@equinor/eds-core-react": "0.28.0",
-		"@equinor/eds-icons": "^0.18.0",
-		"@equinor/eds-tokens": "0.9.0",
-		"react-virtual": "^2.10.4",
-		"rxjs": "^7.8.0"
-	},
-	"peerDependencies": {
-		"react": ">= 16.8.0",
-		"react-dom": ">= 16.8.0",
-		"react-is": ">= 16.8.0",
-		"styled-components": "^5.3.6"
-	},
-	"devDependencies": {
-		"@types/jest": "27.4.1",
-		"@types/react": ">= 16.8.0",
-		"@types/react-dom": "^18.0.8",
-		"@types/styled-components": "^5.1.26",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0",
-		"styled-components": "^5.3.6"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/equinor/fusion-workspace.git",
-		"directory": "packages/garden"
-	},
-	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
+  "name": "@equinor/workspace-garden",
+  "version": "0.7.6",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b",
+    "build:prod": "tsc -b",
+    "lint": "eslint --ext .ts,.tsx"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@equinor/eds-core-react": "0.28.0",
+    "@equinor/eds-icons": "^0.18.0",
+    "@equinor/eds-tokens": "0.9.0",
+    "react-virtual": "^2.10.4",
+    "rxjs": "^7.8.0"
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0",
+    "react-is": ">= 16.8.0",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@types/jest": "27.4.1",
+    "@types/react": ">= 16.8.0",
+    "@types/react-dom": "^18.0.8",
+    "@types/styled-components": "^5.1.26",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "styled-components": "^5.3.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equinor/fusion-workspace.git",
+    "directory": "packages/garden"
+  },
+  "gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
