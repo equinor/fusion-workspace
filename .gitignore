@@ -4,6 +4,8 @@
 # generated types
 .astro/
 
+cc-components/
+
 *.log
 
 # compiled output
