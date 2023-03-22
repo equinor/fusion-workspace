@@ -4,7 +4,6 @@
 		"jsx": "react-jsx",
 		"outDir": "dist/esm",
 		"rootDir": "src",
-		"baseUrl": "src",
 		"declarationDir": "./dist/types",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
