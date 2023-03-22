@@ -19,6 +19,7 @@ type PackageContainerProps<
   TContext extends Record<PropertyKey, unknown>
 > = {
   virtualColumn: VirtualItem;
+  blockSqrt: number;
   rowVirtualizer: VirtualHookReturn;
   items: GardenItem<TData>[] | null;
   packageChild?: React.MemoExoticComponent<
@@ -43,6 +44,7 @@ export const GardenItemContainer = <
     rowVirtualizer,
     virtualColumn,
     getBlockCache,
+    blockSqrt,
     handleExpand,
     parentRef,
     itemWidth,
@@ -56,6 +58,7 @@ export const GardenItemContainer = <
     grouping: {
       value: { horizontalGroupingAccessor, verticalGroupingKeys },
     },
+    visuals: { rowHeight = 40 },
     colorAssistMode$,
     getIdentifier,
   } = controller;
@@ -86,26 +89,52 @@ export const GardenItemContainer = <
         // virtualColumn.index / virtualRow.index block
         // blockCache[]
         //TOOD: sqrt
-        const xIndex = Math.floor(virtualColumn.index / 3);
-        const yIndex = Math.floor(virtualRow.index / 3);
+        const blockXIndex = Math.floor(virtualColumn.index / blockSqrt);
+        const blockYIndex = Math.floor(virtualRow.index / blockSqrt);
 
         // console.log(`block index ${xIndex} - ${yIndex}`);
 
-        const { isLoading, data } = getBlockCache({ x: xIndex, y: yIndex });
-        console.log(data);
+        const { isLoading, data, error } = getBlockCache({ x: blockXIndex, y: blockYIndex });
+        // console.log(`${blockXIndex} - i${virtualColumn.index}`, data);
         if (isLoading) {
-          return <div key={virtualRow.index}>test</div>;
+          /** Skeleton loading state */
+          return (
+            <StyledPackageRoot
+              key={virtualRow.index}
+              style={{
+                transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
+                width: `${virtualColumn.size}px`,
+                height: `${virtualRow.size}px`,
+              }}
+            >
+              <SkeletonPackage height={rowHeight - 5} width={(itemWidth ?? 50) - 5} />
+            </StyledPackageRoot>
+          );
         }
 
-        if (!data) {
-          throw new Error('');
+        if (!data || error) {
+          /** Error state */
+          return (
+            <StyledPackageRoot
+              key={virtualRow.index}
+              style={{
+                transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
+                width: `${virtualColumn.size}px`,
+                height: `${virtualRow.size}px`,
+              }}
+            >
+              <div>failed to load</div>
+            </StyledPackageRoot>
+          );
         }
 
-        const group = data[virtualColumn.index];
+        const group = data[virtualColumn.index % blockSqrt];
 
         const item = (() => {
           if (!!group?.items.length || !!group?.subGroups.length) {
-            return !!group.items.length ? group.items[virtualRow.index % 3] : group.subGroups[virtualRow.index % 3];
+            return !!group.items.length
+              ? group.items[virtualRow.index % blockSqrt]
+              : group.subGroups[virtualRow.index % blockSqrt];
           }
           return null;
         })();

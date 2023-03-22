@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { Fragment, useCallback, useLayoutEffect, useMemo, useRef, useEffect } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 import { useGardenContext, useGardenGroups } from '../../hooks';
 
@@ -11,7 +11,8 @@ import { getRowCount } from '../../utils/getRowCount';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
-import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
+
+import { useQueries, UseQueryResult, useQueryClient } from '@tanstack/react-query';
 
 export type Block = {
   x: number;
@@ -30,7 +31,7 @@ type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
   handleOnItemClick: (item: TData) => void;
   //Blocksize must be a number √blockSize === Integer
   blockSize?: number;
-  getBlockAsync: (args: GetBlockRequestArgs) => GardenGroup<TData>[];
+  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<TData>[]>;
 };
 
 export const VirtualGarden = <
@@ -41,7 +42,7 @@ export const VirtualGarden = <
 >({
   width,
   handleOnItemClick,
-  blockSize = 9,
+  blockSize = 2500,
   getBlockAsync,
 }: VirtualGardenProps<TData>): JSX.Element => {
   const blockSqrt = Math.sqrt(blockSize); //√blockSize
@@ -53,6 +54,7 @@ export const VirtualGarden = <
   const {
     grouping: {
       value: { horizontalGroupingAccessor: gardenKey },
+      onChange,
     },
     visuals: { rowHeight, highlightHorizontalColumn },
     customViews: { customGroupView, customItemView },
@@ -121,19 +123,29 @@ export const VirtualGarden = <
     }
   }
 
-  // console.log('in view ', blocksInView);
+  const client = useQueryClient();
 
-  // console.log(blocksInView.map((s) => getBlockIndexes(s, blockSqrt)));
+  useEffect(() => {
+    const unsub = onChange(() => {
+      client.removeQueries({ queryKey: ['block'] });
+    });
+    return () => unsub();
+  }, [client, onChange]);
 
   const blockCache = useQueries({
     queries: blocks.map((block) => ({
-      queryKey: [`x${block.x}`, `y${block.y}`],
+      queryKey: ['block', `x${block.x}`, `y${block.y}`],
       enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
-      queryFn: async () => {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      queryFn: async (s) => {
+        const { signal } = s as { signal: AbortSignal };
+
         //fetch block with coordinates of block x and block y
         const coordinates = getBlockIndexes(block, blockSqrt);
 
-        return getBlockAsync(coordinates);
+        return getBlockAsync(coordinates, signal);
       },
     })),
   });
@@ -186,6 +198,7 @@ export const VirtualGarden = <
           return (
             <Fragment key={virtualColumn.index}>
               <GardenItemContainer
+                blockSqrt={blockSqrt}
                 rowVirtualizer={rowVirtualizer}
                 getBlockCache={findBlockCacheEntry}
                 items={columnItems}

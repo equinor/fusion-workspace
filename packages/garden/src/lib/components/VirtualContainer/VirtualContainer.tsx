@@ -6,6 +6,7 @@ import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
 import { GetBlockRequestArgs, VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const VirtualContainer = (): JSX.Element | null => {
   const garden = useGardenGroups();
@@ -27,24 +28,32 @@ export const VirtualContainer = (): JSX.Element | null => {
   }
 
   return (
-    <StyledVirtualContainer id={'garden_root'}>
-      <FilterSelector />
-      <ExpandProvider initialWidths={widths}>
-        <VirtualGarden
-          getBlockAsync={(args) => getBlockAsync(args, garden)}
-          width={widths[0]}
-          handleOnItemClick={(item) => onClickItem && onClickItem(item, controller)}
-        />
-      </ExpandProvider>
-    </StyledVirtualContainer>
+    <>
+      <ReactQueryDevtools />
+      <StyledVirtualContainer id={'garden_root'}>
+        <FilterSelector />
+        <ExpandProvider initialWidths={widths}>
+          <VirtualGarden
+            getBlockAsync={(args, signal) => getBlockAsync(args, signal, garden)}
+            width={widths[0]}
+            handleOnItemClick={(item) => onClickItem && onClickItem(item, controller)}
+          />
+        </ExpandProvider>
+      </StyledVirtualContainer>
+    </>
   );
 };
 
-function getBlockAsync(
+async function getBlockAsync(
   args: GetBlockRequestArgs,
+  signal: AbortSignal,
   garden: GardenGroups<Record<PropertyKey, unknown>>
-): GardenGroups<any> {
+): Promise<GardenGroups<any>> {
   const { xEnd, xStart, yEnd, yStart } = args;
+
+  if (yStart === 0) {
+    return new Promise((_, rej) => rej('rip'));
+  }
 
   const s = garden.slice(xStart, xEnd + 1);
 
@@ -54,7 +63,5 @@ function getBlockAsync(
     subGroups: s.subGroups.slice(yStart, yEnd + 1),
   }));
 
-  console.log(r);
-
-  return r;
+  return new Promise((res, rej) => setTimeout(() => res(r), 800));
 }
