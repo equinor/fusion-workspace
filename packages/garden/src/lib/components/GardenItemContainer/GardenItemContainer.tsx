@@ -4,9 +4,12 @@ import { useVirtual, VirtualItem } from 'react-virtual';
 import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
-import { CustomGroupView, CustomItemView, GardenItem } from '../../types';
+import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
 import { createGardenProp } from '../../utils/createGardenProp';
+import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
+import { UseQueryResult } from '@tanstack/react-query';
+import { Block } from '../VirtualGarden';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
@@ -26,6 +29,7 @@ type PackageContainerProps<
   itemWidth?: number;
   handleOnClick: (item: TData) => void;
   parentRef: MutableRefObject<HTMLDivElement | null>;
+  getBlockCache: (i: Block) => UseQueryResult<GardenGroup<TData>[], unknown>;
 };
 export const GardenItemContainer = <
   TData extends Record<PropertyKey, unknown>,
@@ -38,6 +42,7 @@ export const GardenItemContainer = <
   const {
     rowVirtualizer,
     virtualColumn,
+    getBlockCache,
     handleExpand,
     parentRef,
     itemWidth,
@@ -76,8 +81,41 @@ export const GardenItemContainer = <
   return (
     <>
       {rowVirtualizer.virtualItems.map((virtualRow) => {
-        const item = items?.[virtualRow.index];
-        if (!item) return null;
+        //which block am i?
+
+        // virtualColumn.index / virtualRow.index block
+        // blockCache[]
+        //TOOD: sqrt
+        const xIndex = Math.floor(virtualColumn.index / 3);
+        const yIndex = Math.floor(virtualRow.index / 3);
+
+        // console.log(`block index ${xIndex} - ${yIndex}`);
+
+        const { isLoading, data } = getBlockCache({ x: xIndex, y: yIndex });
+        console.log(data);
+        if (isLoading) {
+          return <div key={virtualRow.index}>test</div>;
+        }
+
+        if (!data) {
+          throw new Error('');
+        }
+
+        const group = data[virtualColumn.index];
+
+        const item = (() => {
+          if (!!group?.items.length || !!group?.subGroups.length) {
+            return !!group.items.length ? group.items[virtualRow.index % 3] : group.subGroups[virtualRow.index % 3];
+          }
+          return null;
+        })();
+
+        if (!item) {
+          return null;
+        }
+
+        // const item = items?.[virtualRow.index];
+        // console.log(item);
 
         return (
           <StyledPackageRoot
@@ -88,7 +126,9 @@ export const GardenItemContainer = <
               height: `${virtualRow.size}px`,
             }}
           >
-            {isSubGroup(item) ? (
+            <div style={{ width: '300px', height: '34px' }}>{item['age'] as any}</div>
+            {/* <SkeletonPackage width={300} height={34} /> */}
+            {/* {isSubGroup(item) ? (
               <CustomSubGroup
                 columnExpanded={item.isExpanded}
                 data={item}
@@ -98,22 +138,23 @@ export const GardenItemContainer = <
                 groupByKeys={[horizontalGroupingAccessor, ...verticalGroupingKeys]}
               />
             ) : (
-              <PackageChild
-                colorAssistMode={colorAssistMode}
-                columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
-                controller={createGardenProp(controller)}
-                data={item.item}
-                isSelected={selectedIds.includes(getIdentifier(item.item))}
-                onClick={() => {
-                  controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item.item, controller);
-                }}
-                width={itemWidth}
-                depth={item?.itemDepth}
-                rowStart={virtualRow.start}
-                columnStart={virtualColumn.start}
-                parentRef={parentRef}
-              />
-            )}
+              
+              // <PackageChild
+              //   colorAssistMode={colorAssistMode}
+              //   columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
+              //   controller={createGardenProp(controller)}
+              //   data={item.item}
+              //   isSelected={selectedIds.includes(getIdentifier(item.item))}
+              //   onClick={() => {
+              //     controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item.item, controller);
+              //   }}
+              //   width={itemWidth}
+              //   depth={item?.itemDepth}
+              //   rowStart={virtualRow.start}
+              //   columnStart={virtualColumn.start}
+              //   parentRef={parentRef}
+              // />
+            )} */}
           </StyledPackageRoot>
         );
       })}

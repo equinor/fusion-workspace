@@ -3,9 +3,12 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({ origin: "*",  }));
 
 app.get('/', (req, res, ctx) => {
+
+
+
   res.sendFile(path.join(__dirname, '../../packages/workspace-fusion/dist/workspace.js'));
 });
 

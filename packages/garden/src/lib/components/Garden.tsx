@@ -5,6 +5,7 @@ import { BaseRecordObject } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
@@ -15,7 +16,7 @@ interface GardenProps<
 }
 
 Icon.add({ chevron_down, chevron_up });
-
+const client = new QueryClient();
 export function Garden<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
@@ -25,11 +26,13 @@ export function Garden<
   //TODO:Handle no data better in garden
 
   return (
-    <GardenContext.Provider
-      value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
-    >
-      <VirtualContainer />
-    </GardenContext.Provider>
+    <QueryClientProvider client={client}>
+      <GardenContext.Provider
+        value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
+      >
+        <VirtualContainer />
+      </GardenContext.Provider>
+    </QueryClientProvider>
   );
 }
 

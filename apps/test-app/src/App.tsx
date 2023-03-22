@@ -10,6 +10,8 @@ import { Button, Checkbox } from '@equinor/eds-core-react';
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
 import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion/.';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
+import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
 
 type S = {
   id: string;
@@ -25,9 +27,9 @@ const options: WorkspaceConfig<S> = {
 
 const gridOptions: GridConfig<S> = {
   columnDefinitions: [
-    { field: 'id', valueGetter: (s) => 's.context.length' },
+    { field: 'id', valueGetter: (s) => 's.context.length', enableRowGroup: true },
     { field: 'contextId' },
-    { field: 'age' },
+    { field: 'age', aggFunc: 'avg', allowedAggFuncs: ['sum', 'avg'] },
   ],
 };
 
@@ -54,12 +56,14 @@ const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value:
 
 const getItems = (contextId: string) => [
   { age: 2, id: '123', contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-  { age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
+  { age: 3, id: '123', contextId },
+  { age: 4, id: '123', contextId },
+  { age: 5, id: '123', contextId },
+  { age: 6, id: '123', contextId },
+  { age: 7, id: '123', contextId },
+  { age: 8, id: '123', contextId },
+  { age: 9, id: '123', contextId },
+  { age: 10, id: '123', contextId },
 ];
 
 const client = new QueryClient();
@@ -155,6 +159,7 @@ function App() {
               filterOptions={filterOptions}
               sidesheetOptions={sidesheet}
               powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
+              modules={[powerBiModule, gridModule, gardenModule]}
               dataOptions={{
                 getResponseAsync: getResponseAsync,
                 queryKey: ['Workspace', shouldFailDataset ? 'true' : 'false'],
