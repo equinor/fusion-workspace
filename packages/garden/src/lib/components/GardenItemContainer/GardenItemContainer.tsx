@@ -9,7 +9,8 @@ import { useSelected } from '../../hooks/useSelected';
 import { createGardenProp } from '../../utils/createGardenProp';
 import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Block } from '../VirtualGarden';
+import { GardenBlock } from '../VirtualGarden';
+import { tokens } from '@equinor/eds-tokens';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
@@ -30,7 +31,7 @@ type PackageContainerProps<
   itemWidth?: number;
   handleOnClick: (item: TData) => void;
   parentRef: MutableRefObject<HTMLDivElement | null>;
-  getBlockCache: (i: Block) => UseQueryResult<GardenGroup<TData>[], unknown>;
+  getBlockCache: (i: GardenBlock) => UseQueryResult<GardenGroup<TData>[], unknown>;
 };
 export const GardenItemContainer = <
   TData extends Record<PropertyKey, unknown>,
@@ -54,10 +55,6 @@ export const GardenItemContainer = <
 
   const controller = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
   const {
-    clickEvents: { onClickGroup, onClickItem },
-    grouping: {
-      value: { horizontalGroupingAccessor, verticalGroupingKeys },
-    },
     visuals: { rowHeight = 40 },
     colorAssistMode$,
     getIdentifier,
@@ -84,18 +81,14 @@ export const GardenItemContainer = <
   return (
     <>
       {rowVirtualizer.virtualItems.map((virtualRow) => {
-        //which block am i?
-
-        // virtualColumn.index / virtualRow.index block
-        // blockCache[]
-        //TOOD: sqrt
+        /** Find current blocks xIndex */
         const blockXIndex = Math.floor(virtualColumn.index / blockSqrt);
+        /** Find current blocks yIndex */
         const blockYIndex = Math.floor(virtualRow.index / blockSqrt);
 
-        // console.log(`block index ${xIndex} - ${yIndex}`);
+        /** Get query entry for current block */
+        const { isLoading, data, error, refetch } = getBlockCache({ x: blockXIndex, y: blockYIndex });
 
-        const { isLoading, data, error } = getBlockCache({ x: blockXIndex, y: blockYIndex });
-        // console.log(`${blockXIndex} - i${virtualColumn.index}`, data);
         if (isLoading) {
           /** Skeleton loading state */
           return (
@@ -116,20 +109,32 @@ export const GardenItemContainer = <
           /** Error state */
           return (
             <StyledPackageRoot
+              title="Click to retry"
               key={virtualRow.index}
               style={{
                 transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
                 width: `${virtualColumn.size}px`,
                 height: `${virtualRow.size}px`,
+                cursor: 'pointer',
               }}
+              onClick={() => refetch()}
             >
-              <div>failed to load</div>
+              <div
+                style={{
+                  height: rowHeight - 5,
+                  width: (itemWidth ?? 50) - 5,
+                  background: tokens.colors.interactive.danger__resting.hex,
+                  borderRadius: '5px',
+                }}
+              />
             </StyledPackageRoot>
           );
         }
 
+        /** Index in data !== virtualColumn.index */
         const group = data[virtualColumn.index % blockSqrt];
 
+        /** Find item from group */
         const item = (() => {
           if (!!group?.items.length || !!group?.subGroups.length) {
             return !!group.items.length
@@ -140,11 +145,9 @@ export const GardenItemContainer = <
         })();
 
         if (!item) {
+          /** This can happen due to how blocks are calculated, best to just return null */
           return null;
         }
-
-        // const item = items?.[virtualRow.index];
-        // console.log(item);
 
         return (
           <StyledPackageRoot
@@ -153,10 +156,25 @@ export const GardenItemContainer = <
               transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
               width: `${virtualColumn.size}px`,
               height: `${virtualRow.size}px`,
+              cursor: 'pointer',
             }}
           >
-            <div style={{ width: '300px', height: '34px' }}>{item['age'] as any}</div>
-            {/* <SkeletonPackage width={300} height={34} /> */}
+            <PackageChild
+              colorAssistMode={colorAssistMode}
+              columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
+              controller={createGardenProp(controller)}
+              data={item as TData}
+              isSelected={selectedIds.includes(getIdentifier(item as TData))}
+              onClick={() => {
+                controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item as TData, controller);
+              }}
+              width={itemWidth}
+              depth={0}
+              rowStart={virtualRow.start}
+              columnStart={virtualColumn.start}
+              parentRef={parentRef}
+            />
+            {/* HACK: Ignore subgrouping for now */}
             {/* {isSubGroup(item) ? (
               <CustomSubGroup
                 columnExpanded={item.isExpanded}
@@ -168,21 +186,21 @@ export const GardenItemContainer = <
               />
             ) : (
               
-              // <PackageChild
-              //   colorAssistMode={colorAssistMode}
-              //   columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
-              //   controller={createGardenProp(controller)}
-              //   data={item.item}
-              //   isSelected={selectedIds.includes(getIdentifier(item.item))}
-              //   onClick={() => {
-              //     controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item.item, controller);
-              //   }}
-              //   width={itemWidth}
-              //   depth={item?.itemDepth}
-              //   rowStart={virtualRow.start}
-              //   columnStart={virtualColumn.start}
-              //   parentRef={parentRef}
-              // />
+              <PackageChild
+                colorAssistMode={colorAssistMode}
+                columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
+                controller={createGardenProp(controller)}
+                data={item.item}
+                isSelected={selectedIds.includes(getIdentifier(item.item))}
+                onClick={() => {
+                  controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item.item, controller);
+                }}
+                width={itemWidth}
+                depth={item?.itemDepth}
+                rowStart={virtualRow.start}
+                columnStart={virtualColumn.start}
+                parentRef={parentRef}
+              />
             )} */}
           </StyledPackageRoot>
         );

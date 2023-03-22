@@ -8,6 +8,7 @@ export const SkeletonPackage = styled.div<{ height: number; width: number }>`
   background-repeat: no-repeat;
   background-size: 315px 250px, 315px 180px, 100px 100px, 225px 30px;
   background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
+  border-radius: 5px;
   animation: loading 1.5s infinite;
   @keyframes loading {
     to {

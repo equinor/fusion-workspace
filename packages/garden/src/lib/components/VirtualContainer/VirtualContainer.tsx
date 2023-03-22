@@ -1,4 +1,4 @@
-import { GardenGroups } from 'lib/types';
+import { GardenGroups } from '../../types';
 import { useMemo } from 'react';
 
 import { useGardenContext, useGardenGroups, useItemWidths } from '../../hooks';
@@ -44,24 +44,36 @@ export const VirtualContainer = (): JSX.Element | null => {
   );
 };
 
+/**
+ * Configure how to get blocks
+ * @param args
+ * @param signal
+ * @param garden
+ * @returns
+ */
 async function getBlockAsync(
   args: GetBlockRequestArgs,
   signal: AbortSignal,
   garden: GardenGroups<Record<PropertyKey, unknown>>
 ): Promise<GardenGroups<any>> {
-  const { xEnd, xStart, yEnd, yStart } = args;
+  const { xEnd, xStart, yEnd, yStart, groupingKey } = args;
 
   if (yStart === 0) {
     return new Promise((_, rej) => rej('rip'));
   }
 
-  const s = garden.slice(xStart, xEnd + 1);
+  const columns = garden.slice(xStart, xEnd + 1);
 
-  const r = s.map((s) => ({
-    ...s,
-    items: s.items.slice(yStart, yEnd + 1),
-    subGroups: s.subGroups.slice(yStart, yEnd + 1),
+  const result = columns.map((column) => ({
+    ...column,
+    items: column.items.slice(yStart, yEnd + 1),
+    subGroups: column.subGroups.slice(yStart, yEnd + 1),
   }));
 
-  return new Promise((res, rej) => setTimeout(() => res(r), 800));
+  return new Promise((res) => setTimeout(() => res(result), Math.random() * 800));
 }
+
+/**
+ * Api call for fetching possible groupingKeys
+ */
+const getGroupingOptions = async () => {};
