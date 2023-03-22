@@ -1,5 +1,5 @@
-import { Fragment, useCallback, useLayoutEffect, useMemo, useRef, useEffect } from 'react';
-import { useVirtual, VirtualItem } from 'react-virtual';
+import { Fragment, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { useVirtual } from 'react-virtual';
 import { useGardenContext, useGardenGroups } from '../../hooks';
 
 import { useExpand } from '../../hooks/useExpand';
@@ -12,18 +12,26 @@ import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer'
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
 
-import { useQueries, UseQueryResult, useQueryClient } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
+import { useBlockCache } from '../../hooks/useBlockCache';
+import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
 
-export type Block = {
+export type GardenBlock = {
   x: number;
   y: number;
 };
 
 export type GetBlockRequestArgs = {
+  /**Column start */
   xStart: number;
+  /**Column end */
   xEnd: number;
+  /** Row start */
   yStart: number;
+  /** Row end */
   yEnd: number;
+  /** Grouping key */
+  groupingKey: string;
 };
 
 type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
@@ -54,7 +62,6 @@ export const VirtualGarden = <
   const {
     grouping: {
       value: { horizontalGroupingAccessor: gardenKey },
-      onChange,
     },
     visuals: { rowHeight, highlightHorizontalColumn },
     customViews: { customGroupView, customItemView },
@@ -74,7 +81,7 @@ export const VirtualGarden = <
     parentRef,
     estimateSize: useCallback(() => rowHeight || 40, [rowHeight]),
     paddingStart: 40,
-    // overscan: 2,
+    overscan: 15,
   });
   const columnVirtualizer = useVirtual({
     horizontal: true,
@@ -90,73 +97,6 @@ export const VirtualGarden = <
     useObserver: useCallback(() => ({ height: 0, width: window.innerWidth }), []),
     overscan: 3,
   });
-
-  // const totalSize = rowCount * columnCount;
-  const blocks = makeBlocks({ blockSqrt, columnCount, rowCount });
-  // console.log('allBlocks ', blocks);
-
-  const { xEnd, xStart, yEnd, yStart } = getCoordinatesInView(
-    columnVirtualizer.virtualItems,
-    rowVirtualizer.virtualItems
-  );
-
-  const xBlockStart = Math.floor(xStart / blockSqrt);
-  const xBlockEnd = Math.floor(xEnd / blockSqrt);
-  const yBlockStart = Math.floor(yStart / blockSqrt);
-  const yBlockEnd = Math.floor(yEnd / blockSqrt);
-
-  // console.log(`
-  //   xBlockStart: ${xBlockStart},
-  //   xBlockEnd: ${xBlockEnd},
-  //   yBlockStart: ${yBlockStart},
-  //   yBlockEnd: ${yBlockEnd},
-  // `);
-
-  const blocksInView: Block[] = [];
-
-  for (let x = xBlockStart; x <= xBlockEnd; x++) {
-    for (let y = yBlockStart; y <= yBlockEnd; y++) {
-      blocksInView.push({
-        x,
-        y,
-      });
-    }
-  }
-
-  const client = useQueryClient();
-
-  useEffect(() => {
-    const unsub = onChange(() => {
-      client.removeQueries({ queryKey: ['block'] });
-    });
-    return () => unsub();
-  }, [client, onChange]);
-
-  const blockCache = useQueries({
-    queries: blocks.map((block) => ({
-      queryKey: ['block', `x${block.x}`, `y${block.y}`],
-      enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      queryFn: async (s) => {
-        const { signal } = s as { signal: AbortSignal };
-
-        //fetch block with coordinates of block x and block y
-        const coordinates = getBlockIndexes(block, blockSqrt);
-
-        return getBlockAsync(coordinates, signal);
-      },
-    })),
-  });
-
-  function findBlockCacheEntry(block: Block): UseQueryResult<GardenGroup<TData>[], unknown> {
-    const index = blocks.findIndex((s) => s.x === block.x && s.y === block.y);
-    if (index === -1) throw new Error('Invalid block index');
-    return blockCache[index];
-  }
-
-  // console.log('cache', blockCache);
 
   const packageChild = customItemView ?? undefined;
 
@@ -180,6 +120,15 @@ export const VirtualGarden = <
     }
   }, [garden, columnVirtualizer.scrollToIndex, highlightedColumn]);
 
+  const blocks = makeBlocks({ blockSqrt, columnCount, rowCount });
+  const { xEnd, xStart, yEnd, yStart } = getCoordinatesInView(
+    columnVirtualizer.virtualItems,
+    rowVirtualizer.virtualItems
+  );
+
+  const blocksInView = getBlocksInView(xStart, xEnd, yStart, yEnd, blockSqrt);
+  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getBlockAsync);
+
   return (
     <>
       <Debugger blockLength={blocks.length} inViewLength={blocksInView.length} />
@@ -200,7 +149,7 @@ export const VirtualGarden = <
               <GardenItemContainer
                 blockSqrt={blockSqrt}
                 rowVirtualizer={rowVirtualizer}
-                getBlockCache={findBlockCacheEntry}
+                getBlockCache={(currBlock) => findBlockCacheEntry(currBlock, blocks, blockCache)}
                 items={columnItems}
                 packageChild={packageChild}
                 customSubGroup={customGroupView}
@@ -218,6 +167,37 @@ export const VirtualGarden = <
   );
 };
 
+function findBlockCacheEntry<TData extends Record<PropertyKey, unknown>>(
+  block: GardenBlock,
+  blocks: GardenBlock[],
+  blockCache: UseQueryResult<GardenGroup<TData>[], unknown>[]
+): UseQueryResult<GardenGroup<TData>[], unknown> {
+  const index = blocks.findIndex((s) => s.x === block.x && s.y === block.y);
+  if (index === -1) throw new Error('Invalid block index');
+  return blockCache[index];
+}
+
+/** Converts indexes to an array of blocks in view */
+function getBlocksInView(xStart: number, xEnd: number, yStart: number, yEnd: number, blockSqrt: number) {
+  const xBlockStart = Math.floor(xStart / blockSqrt);
+  const xBlockEnd = Math.floor(xEnd / blockSqrt);
+  const yBlockStart = Math.floor(yStart / blockSqrt);
+  const yBlockEnd = Math.floor(yEnd / blockSqrt);
+
+  const blocksInView: GardenBlock[] = [];
+
+  //TODO: refactor
+  for (let x = xBlockStart; x <= xBlockEnd; x++) {
+    for (let y = yBlockStart; y <= yBlockEnd; y++) {
+      blocksInView.push({
+        x,
+        y,
+      });
+    }
+  }
+  return blocksInView;
+}
+
 type DebuggerProps = {
   blockLength: number;
   inViewLength: number;
@@ -230,59 +210,4 @@ function Debugger({ blockLength, inViewLength }: DebuggerProps) {
       <div>blocks in view {inViewLength}</div>
     </div>
   );
-}
-
-type BlockArgs = {
-  rowCount: number;
-  blockSqrt: number;
-  columnCount: number;
-};
-
-/**
- * Creates an array of blocks for the total size of the area
- */
-function makeBlocks({ blockSqrt, columnCount, rowCount }: BlockArgs) {
-  const blocks: Block[] = [];
-
-  for (let i = 0; i < rowCount / blockSqrt; i++) {
-    for (let j = 0; j < columnCount / blockSqrt; j++) {
-      const block = {
-        x: j,
-        y: i,
-      };
-      blocks.push(block);
-    }
-  }
-  return blocks;
-}
-
-/**
- * Get item indexes for block
- * @param b - Block to find indexes for
- * @param sqrt - Square root of block size
- */
-function getBlockIndexes(b: Block, sqrt: number) {
-  return {
-    xStart: b.x * sqrt,
-    xEnd: b.x * sqrt + sqrt - 1,
-    yStart: b.y * sqrt,
-    yEnd: b.y * sqrt + sqrt - 1,
-  };
-}
-
-function getCoordinatesInView(xItems: VirtualItem[], yItems: VirtualItem[]) {
-  /** Start index on the x-axis  */
-  const xStart = xItems[0].index;
-  /** End index on the x-axis  */
-  const xEnd = xItems[xItems.length - 1].index;
-  /** Start index on the y-axis  */
-  const yStart = Math.min(...yItems.map((s) => s.index));
-  /** End index on the y-axis  */
-  const yEnd = Math.max(...yItems.map((s) => s.index));
-  return {
-    xStart,
-    xEnd,
-    yStart,
-    yEnd,
-  };
 }
