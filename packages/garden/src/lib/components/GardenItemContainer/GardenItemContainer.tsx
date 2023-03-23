@@ -46,11 +46,9 @@ export const GardenItemContainer = <
     virtualColumn,
     getBlockCache,
     blockSqrt,
-    handleExpand,
     parentRef,
     itemWidth,
     packageChild: PackageChild,
-    items,
   } = props;
 
   const controller = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
@@ -95,7 +93,7 @@ export const GardenItemContainer = <
             <StyledPackageRoot
               key={virtualRow.index}
               style={{
-                transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
+                translate: `${virtualColumn.start}px ${virtualRow.start}px`,
                 width: `${virtualColumn.size}px`,
                 height: `${virtualRow.size}px`,
               }}
@@ -112,7 +110,7 @@ export const GardenItemContainer = <
               title="Click to retry"
               key={virtualRow.index}
               style={{
-                transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
+                translate: `${virtualColumn.start}px ${virtualRow.start}px`,
                 width: `${virtualColumn.size}px`,
                 height: `${virtualRow.size}px`,
                 cursor: 'pointer',
@@ -153,7 +151,7 @@ export const GardenItemContainer = <
           <StyledPackageRoot
             key={virtualRow.index}
             style={{
-              transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
+              translate: `${virtualColumn.start}px ${virtualRow.start}px`,
               width: `${virtualColumn.size}px`,
               height: `${virtualRow.size}px`,
               cursor: 'pointer',

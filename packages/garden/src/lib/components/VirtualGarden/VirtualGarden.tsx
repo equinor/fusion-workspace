@@ -131,7 +131,6 @@ export const VirtualGarden = <
 
   return (
     <>
-      <Debugger blockLength={blocks.length} inViewLength={blocksInView.length} />
       <Layout
         rowTotalSize={rowVirtualizer.totalSize}
         columnTotalSize={columnVirtualizer.totalSize}
@@ -185,8 +184,6 @@ function getBlocksInView(xStart: number, xEnd: number, yStart: number, yEnd: num
   const yBlockEnd = Math.floor(yEnd / blockSqrt);
 
   const blocksInView: GardenBlock[] = [];
-
-  //TODO: refactor
   for (let x = xBlockStart; x <= xBlockEnd; x++) {
     for (let y = yBlockStart; y <= yBlockEnd; y++) {
       blocksInView.push({
@@ -198,16 +195,3 @@ function getBlocksInView(xStart: number, xEnd: number, yStart: number, yEnd: num
   return blocksInView;
 }
 
-type DebuggerProps = {
-  blockLength: number;
-  inViewLength: number;
-};
-function Debugger({ blockLength, inViewLength }: DebuggerProps) {
-  return (
-    <div style={{ position: 'absolute', background: 'white', zIndex: 2 }}>
-      <div>debug</div>
-      <div>blocks {blockLength}</div>
-      <div>blocks in view {inViewLength}</div>
-    </div>
-  );
-}
