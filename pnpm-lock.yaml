@@ -150,14 +150,14 @@ importers:
       '@ag-grid-community/core': ^29.0.0
       '@ag-grid-enterprise/column-tool-panel': 29.0.0
       '@equinor/eds-tokens': ^0.9.0
-      '@equinor/workspace-observable-proxy': workspace:^0.2.2
+      '@equinor/workspace-observable-proxy': workspace:^0.2.3
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
       '@types/react-dom': ^18.0.8
       '@types/styled-components': ^5.1.26
-      ag-grid-community: 29.0.0
-      ag-grid-enterprise: 29.0.0
-      ag-grid-react: ^29.0.0
+      ag-grid-community: 28.2.1
+      ag-grid-enterprise: 28.2.1
+      ag-grid-react: ^28.2.1
       react: ^18.2.0
       react-dom: ^18.2.0
       react-is: ^18.2.0
@@ -168,9 +168,9 @@ importers:
       '@ag-grid-enterprise/column-tool-panel': 29.0.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/workspace-observable-proxy': link:../observable-proxy
-      ag-grid-community: 29.0.0
-      ag-grid-enterprise: 29.0.0
-      ag-grid-react: 29.0.0_xuacsscfwz2hsrosypjd6msikq
+      ag-grid-community: 28.2.1
+      ag-grid-enterprise: 28.2.1
+      ag-grid-react: 28.2.1_kap55pawlsqblyi2mqg5b5ge64
     devDependencies:
       '@types/jest': 27.4.1
       '@types/react': 18.0.25
@@ -219,8 +219,6 @@ importers:
       '@equinor/eds-core-react': 0.28.0
       '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': 0.9.0
-      '@tanstack/react-query': ^4.26.1
-      '@tanstack/react-query-devtools': ^4.28.0
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
       '@types/react-dom': ^18.0.8
@@ -235,8 +233,6 @@ importers:
       '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
       '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
-      '@tanstack/react-query': 4.26.1_biqbaboplfbrettd7655fr4n2y
-      '@tanstack/react-query-devtools': 4.28.0_brdhmlf72zuns3lsk66phyptty
       react-virtual: 2.10.4_react@18.2.0
       rxjs: 7.8.0
     devDependencies:
@@ -370,7 +366,7 @@ importers:
       '@babel/core': ^7.0.0-0
       '@babel/plugin-transform-modules-commonjs': ^7.19.6
       '@babel/preset-typescript': ^7.18.6
-      '@equinor/workspace-observable-proxy': workspace:^0.2.2
+      '@equinor/workspace-observable-proxy': workspace:^0.2.3
       '@types/jest': 27.4.1
       '@types/node': ^18.11.9
       jest: ^29.2.2
@@ -395,7 +391,7 @@ importers:
   packages/workspace-dynamic:
     specifiers:
       '@equinor/eds-core-react': ^0.29.1
-      '@equinor/workspace-fusion': workspace:^0.19.0
+      '@equinor/workspace-fusion': workspace:^0.20.0
       '@tanstack/react-query': ^4.24.4
       '@types/react': ^18.0.25
       '@types/react-dom': ^18.0.8
@@ -418,14 +414,14 @@ importers:
       '@equinor/eds-core-react': 0.27.0
       '@equinor/eds-icons': ^0.17.0
       '@equinor/eds-tokens': 0.9.0
-      '@equinor/workspace-ag-grid': workspace:^0.3.7
-      '@equinor/workspace-core': workspace:^0.1.2
-      '@equinor/workspace-filter': workspace:^0.0.15
-      '@equinor/workspace-garden': workspace:^0.7.5
-      '@equinor/workspace-powerbi': workspace:^0.2.8
-      '@equinor/workspace-react': workspace:^0.6.4
-      '@equinor/workspace-sidesheet': workspace:^0.1.3
-      '@equinor/workspace-status-bar': workspace:^0.0.11
+      '@equinor/workspace-ag-grid': workspace:^0.3.8
+      '@equinor/workspace-core': workspace:^0.1.3
+      '@equinor/workspace-filter': workspace:^0.0.16
+      '@equinor/workspace-garden': workspace:^0.7.6
+      '@equinor/workspace-powerbi': workspace:^0.2.9
+      '@equinor/workspace-react': workspace:^0.6.5
+      '@equinor/workspace-sidesheet': workspace:^0.1.4
+      '@equinor/workspace-status-bar': workspace:^0.0.12
       '@tanstack/react-query': ^4.23.0
       '@types/jest': 27.4.1
       '@types/react': ^18.0.25
@@ -477,7 +473,7 @@ importers:
       '@equinor/eds-core-react': 0.26.0
       '@equinor/eds-icons': ^0.17.0
       '@equinor/eds-tokens': 0.9.0
-      '@equinor/workspace-fusion': workspace:^0.19.0
+      '@equinor/workspace-fusion': workspace:^0.20.0
       react: ^18.2.0
       react-dom: ^18.2.0
       react-is: ^18.2.0
@@ -498,7 +494,7 @@ importers:
       '@equinor/eds-core-react': ^0.28.0
       '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': ^0.9.0
-      '@equinor/workspace-core': workspace:^0.1.2
+      '@equinor/workspace-core': workspace:^0.1.3
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
       '@types/styled-components': ^5.1.26
@@ -4532,13 +4528,6 @@ packages:
       '@sinonjs/commons': 1.8.4
     dev: true
 
-  /@tanstack/match-sorter-utils/8.7.6:
-    resolution: {integrity: sha512-2AMpRiA6QivHOUiBpQAVxjiHAA68Ei23ZUMNaRJrN6omWiSFLoYrxGcT6BXtuzp0Jw4h6HZCmGGIM/gbwebO2A==}
-    engines: {node: '>=12'}
-    dependencies:
-      remove-accents: 0.4.2
-    dev: false
-
   /@tanstack/query-core/4.22.4:
     resolution: {integrity: sha512-t79CMwlbBnj+yL82tEcmRN93bL4U3pae2ota4t5NN2z3cIeWw74pzdWrKRwOfTvLcd+b30tC+ciDlfYOKFPGUw==}
     dev: false
@@ -4549,21 +4538,6 @@ packages:
 
   /@tanstack/query-core/4.26.1:
     resolution: {integrity: sha512-Zrx2pVQUP4ndnsu6+K/m8zerXSVY8QM+YSbxA1/jbBY21GeCd5oKfYl92oXPK0hPEUtoNuunIdiq0ZMqLos+Zg==}
-    dev: false
-
-  /@tanstack/react-query-devtools/4.28.0_brdhmlf72zuns3lsk66phyptty:
-    resolution: {integrity: sha512-1SnoMw1CWn8FdPEIHvlAzmMBX3heXJo11fyBtt+FzYAHj5yFC8P67Kpgi0HpLkY7SLnd6QK/7qFkpeH4AQbgZg==}
-    peerDependencies:
-      '@tanstack/react-query': 4.28.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@tanstack/match-sorter-utils': 8.7.6
-      '@tanstack/react-query': 4.26.1_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      superjson: 1.12.2
-      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /@tanstack/react-query/4.23.0_biqbaboplfbrettd7655fr4n2y:
@@ -5149,12 +5123,33 @@ packages:
     resolution: {integrity: sha512-qQLMr+8o0WC4FZGQTcJiKBVC59JylcPSrTtk6usvmIDFUOCKegapy1VHQwRbFMOFyb/inzUVqHs+eMYKDM1YeQ==}
     dev: true
 
+  /ag-grid-community/28.2.1:
+    resolution: {integrity: sha512-DMZh/xD/FqYP17qJ1M92PolTYe+hrKuEaf+A4h13O6qn2x/xZQrTRGW5DgnQLR/uLMe1XXZQPKR3UKgAlKo69A==}
+    dev: false
+
   /ag-grid-community/29.0.0:
     resolution: {integrity: sha512-onAQIqjhP1L93W5myAsfLBMBUyZPrWDb8FRulJuhjQKo8DEA4GSZ+oJHxwwLymm4biLu54zvZ+9GkTftha8gAg==}
     dev: false
 
+  /ag-grid-enterprise/28.2.1:
+    resolution: {integrity: sha512-FIqIiaMMO9m8eqfu64rZ7dOK8vQFqD+Dp9CTpSfjMtyUp4IoRE36c+mUpUGLX/bIix9LltpaUmr185nFM1Alrw==}
+    dev: false
+
   /ag-grid-enterprise/29.0.0:
     resolution: {integrity: sha512-WP0D73s5e44szR9bqjD0h66dlm6j5NO/IBEwCo48zMIUEob9a3WBT4cbBQefrka2TWevrfR14WqU/RKmITuXGw==}
+    dev: false
+
+  /ag-grid-react/28.2.1_kap55pawlsqblyi2mqg5b5ge64:
+    resolution: {integrity: sha512-3vbw+B77uWwAyiOJxQA5U+PQFRCCccUx7L5PIwrnA4Y7c1yAu8sB65hAZdBc9kuW26iltwv7asq0UzP7UAQUpg==}
+    peerDependencies:
+      ag-grid-community: ~28.2.1
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      ag-grid-community: 28.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /ag-grid-react/29.0.0_xuacsscfwz2hsrosypjd6msikq:
@@ -6410,13 +6405,6 @@ packages:
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
-    dev: false
-
-  /copy-anything/3.0.3:
-    resolution: {integrity: sha512-fpW2W/BqEzqPp29QS+MwwfisHCQZtiduTe/m8idFo0xbti9fIZ2WVhAsCv4ggFVH3AgCkVdpoOCtQC6gBrdhjw==}
-    engines: {node: '>=12.13'}
-    dependencies:
-      is-what: 4.1.8
     dev: false
 
   /core-js-pure/3.26.0:
@@ -8898,11 +8886,6 @@ packages:
     dependencies:
       call-bind: 1.0.2
     dev: true
-
-  /is-what/4.1.8:
-    resolution: {integrity: sha512-yq8gMao5upkPoGEU9LsB2P+K3Kt8Q3fQFCGyNCWOAnJAMzEXVV9drYb0TXr42TTliLLhKIBvulgAXgtLLnwzGA==}
-    engines: {node: '>=12.13'}
-    dev: false
 
   /is-wsl/2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
@@ -13299,13 +13282,6 @@ packages:
     resolution: {integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow==}
     dependencies:
       s.color: 0.0.15
-    dev: false
-
-  /superjson/1.12.2:
-    resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
-    engines: {node: '>=10'}
-    dependencies:
-      copy-anything: 3.0.3
     dev: false
 
   /supports-color/5.5.0:

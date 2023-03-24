@@ -28,7 +28,6 @@ Allowed cross imports
 `package => can import from`
 
 - `ag-grid` => [`observable-proxy`, `workspace-core`]
-- `data-source` => [`observable-proxy`, `workspace-core`]
 - `filter` => [`observable-proxy`, `workspace-core`]
 - `garden` => [`observable-proxy`, `workspace-core`]
 - `observable-proxy` => NONE
