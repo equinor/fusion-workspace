@@ -1,35 +1,51 @@
 import {
   Garden,
-  GardenController,
+  GardenClient,
   GardenGroups,
   GardenHeaderGroup,
   GardenMeta,
   GetBlockRequestArgs,
 } from '@equinor/workspace-garden';
-
-const cont = new GardenController<Item, any, any, any>({
-  getDisplayName: (i) => i.id,
-  getIdentifier: (i) => i.id,
-  initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-});
-
-cont.getDisplayName = (i) => i.id;
+import { GetHeaderBlockRequestArgs } from '@equinor/workspace-garden/dist/types/lib/components/VirtualGarden';
+import { useState } from 'react';
 
 export function GardenServer() {
+  const [mode, setMode] = useState<'server' | 'client'>('client');
   return (
-    <Garden<Item>
-      getBlockAsync={getBlockAsync}
-      getGardenMeta={getGardenMeta}
-      getHeader={getHeader}
-      getDisplayName={(i) => i.id}
-      getIdentifier={(j) => j.id}
-      initialGrouping={'age'}
-    />
+    <>
+      <button onClick={() => setMode((s) => (s === 'client' ? 'server' : 'client'))}>{mode}</button>
+      {mode === 'client' ? (
+        <GardenClient<Item>
+          data={[
+            { id: '123', age: 18 },
+            { id: '124', age: 18 },
+            { id: '124', age: 18 },
+          ]}
+          getDisplayName={(i) => i.id}
+          getIdentifier={(i) => i.id}
+          groupingDefinitions={[
+            { group: (i) => i.id, name: 'id' },
+            { group: (i) => i.age.toString(), name: 'age' },
+          ]}
+          initialGroupingKey={'id'}
+        />
+      ) : (
+        <Garden<Item>
+          getBlockAsync={getBlockAsync}
+          getGardenMeta={getGardenMeta}
+          getHeader={getHeader}
+          getDisplayName={(i) => i.id}
+          getIdentifier={(j) => j.id}
+          initialGrouping={'age'}
+        />
+      )}
+    </>
   );
 }
 
 type Item = {
   id: string;
+  age: number;
 };
 
 const getGardenMeta = async (keys: string[]): Promise<GardenMeta> => {
@@ -50,25 +66,25 @@ const getGardenMeta = async (keys: string[]): Promise<GardenMeta> => {
  * @returns
  */
 async function getBlockAsync(args: GetBlockRequestArgs, signal: AbortSignal): Promise<GardenGroups<any>> {
-  const { xEnd, xStart, yEnd, yStart, groupingKey } = args;
+  const { columnEnd, columnStart, rowEnd, rowStart, groupingKey } = args;
   console.log('Getting block');
   console.log(`
       key: ${groupingKey}
-      x: ${xStart} - ${xEnd},
-      y: ${yStart} - ${yEnd}
+      x: ${columnStart} - ${columnEnd},
+      y: ${rowStart} - ${rowEnd}
     `);
 
   return new Promise((res) =>
     setTimeout(
       () =>
         res(
-          new Array(xEnd - xStart + 1).fill(0).map((s, i) => ({
-            count: yEnd - yStart + 1,
+          new Array(columnEnd - columnStart + 1).fill(0).map((s, i) => ({
+            count: rowEnd - rowStart + 1,
             depth: 0,
             groupKey: groupingKey,
             isExpanded: false,
-            items: new Array(i === 17 && yStart > 50 ? 0 : yEnd - yStart + 1).fill(0).map((_, i) => ({
-              id: (i + yStart).toString(),
+            items: new Array(i === 17 && rowStart > 50 ? 0 : rowEnd - rowStart + 1).fill(0).map((_, i) => ({
+              id: (i + rowStart).toString(),
             })),
             subGroupCount: 0,
             subGroups: [],
@@ -81,14 +97,12 @@ async function getBlockAsync(args: GetBlockRequestArgs, signal: AbortSignal): Pr
   );
 }
 
-async function getHeader(
-  args: Pick<GetBlockRequestArgs, 'xStart' | 'xEnd' | 'groupingKey'>,
-  signal: AbortSignal
-): Promise<GardenHeaderGroup[]> {
-  const { groupingKey, xEnd, xStart } = args;
+async function getHeader(args: GetHeaderBlockRequestArgs, signal: AbortSignal): Promise<GardenHeaderGroup[]> {
+  const { groupingKey, columnEnd, columnStart } = args;
 
   console.log('getting header');
 
-  return new Array(xEnd - xStart + 1).fill(0).map((_, i) => ({ count: 0, name: (i + xStart).toString() }));
-  // const res = garden.slice(xStart, xEnd + 1).map((s) => ({ count: s.count, name: s.value }));
+  return new Array(columnEnd - columnStart + 1)
+    .fill(0)
+    .map((_, i) => ({ count: 0, name: (i + columnStart).toString() }));
 }
