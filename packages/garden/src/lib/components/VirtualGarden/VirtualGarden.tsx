@@ -19,7 +19,7 @@ export type GardenBlock = {
   y: number;
 };
 
-export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'xStart' | 'xEnd' | 'groupingKey'>;
+export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKey'>;
 
 type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
   width?: number;

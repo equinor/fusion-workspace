@@ -13,6 +13,7 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GetHeaderBlockRequestArgs } from './VirtualGarden';
 
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
@@ -22,10 +23,7 @@ interface GardenProps<
 > {
   getGardenMeta: (keys: string[]) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
-  getHeader: (
-    args: Pick<GetBlockRequestArgs, 'xStart' | 'xEnd' | 'groupingKey'>,
-    signal: AbortSignal
-  ) => Promise<GardenHeaderGroup[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
 
   getDisplayName: GetDisplayName<TData>;
   getIdentifier: GetIdentifier<TData>;

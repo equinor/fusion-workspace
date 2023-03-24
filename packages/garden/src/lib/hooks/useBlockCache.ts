@@ -45,9 +45,9 @@ export function useBlockCache<T>(
  */
 function getBlockIndexes(b: GardenBlock, sqrt: number) {
   return {
-    xStart: b.x * sqrt,
-    xEnd: b.x * sqrt + sqrt - 1,
-    yStart: b.y * sqrt,
-    yEnd: b.y * sqrt + sqrt - 1,
+    columnStart: b.x * sqrt,
+    columnEnd: b.x * sqrt + sqrt - 1,
+    rowStart: b.y * sqrt,
+    rowEnd: b.y * sqrt + sqrt - 1,
   };
 }

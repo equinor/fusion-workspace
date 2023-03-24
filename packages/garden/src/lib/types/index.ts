@@ -20,13 +20,13 @@ export type GardenMeta = {
 
 export type GetBlockRequestArgs = {
   /**Column start */
-  xStart: number;
+  columnStart: number;
   /**Column end */
-  xEnd: number;
+  columnEnd: number;
   /** Row start */
-  yStart: number;
+  rowStart: number;
   /** Row end */
-  yEnd: number;
+  rowEnd: number;
   /** Grouping key */
   groupingKey: string;
 };

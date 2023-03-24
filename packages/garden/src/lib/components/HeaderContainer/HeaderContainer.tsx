@@ -80,7 +80,7 @@ export const HeaderContainer = ({
                 transform: `translateX(${virtualColumn.start}px) translateY(0px)`,
                 backgroundColor: '#f7f7f7',
               }}
-              key={virtualColumn.index}
+              key={virtualColumn.key}
             >
               <SkeletonPackage height={35} width={200} />
             </Header>
@@ -88,7 +88,8 @@ export const HeaderContainer = ({
         }
 
         if (error || !data) {
-          return <div>rip</div>;
+          // TODO: fix
+          return <div key={virtualColumn.key}>rip</div>;
         }
 
         const header = data[virtualColumn.index % blockSqrt];
@@ -104,7 +105,7 @@ export const HeaderContainer = ({
               backgroundColor: isHighlighted ? '#007079' : '#f7f7f7',
               color: isHighlighted ? 'white' : 'black',
             }}
-            key={virtualColumn.index}
+            key={virtualColumn.key}
           >
             <HeaderChild
               header={header}

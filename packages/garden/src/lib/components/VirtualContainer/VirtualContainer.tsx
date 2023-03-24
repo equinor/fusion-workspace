@@ -3,7 +3,7 @@ import { GardenGroup, GardenHeaderGroup, GardenMeta, GetBlockRequestArgs } from 
 import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
-import { VirtualGarden } from '../VirtualGarden';
+import { GetHeaderBlockRequestArgs, VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useQuery } from '@tanstack/react-query';
@@ -11,10 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 type VirtualContainerProps = {
   getGardenMeta: (groupingKeys: string[], signal?: AbortSignal) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
-  getHeader: (
-    args: Pick<GetBlockRequestArgs, 'xStart' | 'xEnd' | 'groupingKey'>,
-    signal: AbortSignal
-  ) => Promise<GardenHeaderGroup[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
 };
 
 export const VirtualContainer = ({
