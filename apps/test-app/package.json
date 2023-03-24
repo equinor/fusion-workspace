@@ -14,6 +14,7 @@
 		"@equinor/workspace-ag-grid": "workspace:latest",
 		"@equinor/workspace-fusion": "workspace:latest",
 		"@equinor/workspace-fusion-modules": "workspace:latest",
+		"@equinor/workspace-garden": "workspace:^0.7.5",
 		"@equinor/workspace-sidesheet": "workspace:latest",
 		"@tanstack/react-query": "^4.23.0",
 		"react": "^18.2.0",

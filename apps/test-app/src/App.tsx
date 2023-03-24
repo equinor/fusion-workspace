@@ -8,7 +8,7 @@ import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Button, Checkbox } from '@equinor/eds-core-react';
 import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
-import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion/.';
+import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
@@ -54,17 +54,25 @@ const filterOptions: FilterConfig<S> = {
 const contextOptions = (data: S[]) => ({ length: data.length });
 const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
 
-const getItems = (contextId: string) => [
-  { age: 2, id: '123', contextId },
-  { age: 3, id: '123', contextId },
-  { age: 4, id: '123', contextId },
-  { age: 5, id: '123', contextId },
-  { age: 6, id: '123', contextId },
-  { age: 7, id: '123', contextId },
-  { age: 8, id: '123', contextId },
-  { age: 9, id: '123', contextId },
-  { age: 10, id: '123', contextId },
-];
+const getItems = (contextId: string) => r();
+// [
+//   { age: 2, id: '123', contextId },
+//   { age: 3, id: '123', contextId },
+//   { age: 4, id: '123', contextId },
+//   { age: 5, id: '123', contextId },
+//   { age: 6, id: '123', contextId },
+//   { age: 7, id: '123', contextId },
+//   { age: 8, id: '123', contextId },
+//   { age: 9, id: '123', contextId },
+//   { age: 10, id: '123', contextId },
+// ];
+
+const r = () =>
+  new Array(1_000_0).fill(0).map((_, i) => ({
+    age: Math.round(Math.random() * 15),
+    id: `${i}`,
+    contextId: Math.round(Math.random() * 0.6),
+  }));
 
 const client = new QueryClient();
 
@@ -106,7 +114,7 @@ type Debugger = {
 };
 
 const initial: Debugger = {
-  shouldFailDataset: true,
+  shouldFailDataset: false,
   shouldRender: true,
   tabs: ['grid', 'garden', 'powerbi'],
 };
@@ -156,7 +164,7 @@ function App() {
               workspaceOptions={options}
               gridOptions={tabs.includes('grid') ? gridOptions : undefined}
               gardenOptions={tabs.includes('garden') ? gardenOptions : undefined}
-              filterOptions={filterOptions}
+              // filterOptions={filterOptions}
               sidesheetOptions={sidesheet}
               powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
               modules={[powerBiModule, gridModule, gardenModule]}
