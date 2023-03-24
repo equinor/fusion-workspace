@@ -15,10 +15,15 @@ const GardenItem = <
   isSelected,
   depth,
 }: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => {
-  const { onClickItem, getDisplayName, getItemColor, getDescription } = controller;
+  const {
+    clickEvents: { onClickItem },
+    getDisplayName,
+    visuals: { getItemColor, getDescription },
+    getIdentifier,
+  } = controller;
 
   const { color, description, label } = useMemo(() => {
-    const label = getDisplayName(item);
+    const label = getDisplayName(item, controller as any);
     const color = (getItemColor && getItemColor(item)) ?? 'grey';
 
     const description = getDescription && getDescription(item);
@@ -33,7 +38,7 @@ const GardenItem = <
   return (
     <StyledDefaultPackage
       bgColor={color}
-      onClick={() => onClickItem && onClickItem(item)}
+      onClick={() => onClickItem && onClickItem(item, controller)}
       isSelected={isSelected}
       depth={depth ?? 0}
     >

@@ -16,8 +16,6 @@ export type GardenConfig<
   TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
-  /** Data to be used for the garden */
-  data: TData[];
   /**
    * Primary(Unique) identifier for the data
    * ```TS
@@ -55,17 +53,4 @@ export type GardenConfig<
    * ```
    */
   getContext?: (data: TData[]) => TContext;
-  intercepters?: GardenDataIntercepters<TData, TExtendedFields>;
-};
-
-export type PostGroupBySorting<TData extends Record<PropertyKey, unknown>, TExtendedFields extends string = never> = (
-  data: GardenGroups<TData>,
-  keys: (keyof TData | TExtendedFields)[]
-) => GardenGroups<TData>;
-
-export type GardenDataIntercepters<
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never
-> = {
-  postGroupSorting?: PostGroupBySorting<TData, TExtendedFields>;
 };

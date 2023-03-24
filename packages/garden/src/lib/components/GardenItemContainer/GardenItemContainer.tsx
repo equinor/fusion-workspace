@@ -1,12 +1,11 @@
 import { MutableRefObject, useEffect, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
-import { useExpand, useGardenContext, useGardenGroups } from '../../hooks';
+import { useExpand, useGardenContext } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
 import { CustomGroupView, CustomItemView, GardenGroup, GardenItem } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
-import { createGardenProp } from '../../utils/createGardenProp';
 import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { UseQueryResult } from '@tanstack/react-query';
 import { GardenBlock } from '../VirtualGarden';
@@ -22,7 +21,6 @@ type PackageContainerProps<
   virtualColumn: VirtualItem;
   blockSqrt: number;
   rowVirtualizer: VirtualHookReturn;
-  items: GardenItem<TData>[] | null;
   packageChild?: React.MemoExoticComponent<
     (args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
   >;
@@ -57,8 +55,6 @@ export const GardenItemContainer = <
     colorAssistMode$,
     getIdentifier,
   } = controller;
-
-  const groups = useGardenGroups();
 
   const selectedIds = useSelected();
 
@@ -159,8 +155,10 @@ export const GardenItemContainer = <
           >
             <PackageChild
               colorAssistMode={colorAssistMode}
-              columnExpanded={expand?.expandedColumns?.[groups[virtualColumn.index].value]?.isExpanded ?? false}
-              controller={createGardenProp(controller)}
+              //TODO: fix
+              columnExpanded={false}
+              // TODO: fix
+              controller={controller}
               data={item as TData}
               isSelected={selectedIds.includes(getIdentifier(item as TData))}
               onClick={() => {

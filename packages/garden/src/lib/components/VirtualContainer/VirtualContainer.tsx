@@ -1,22 +1,46 @@
-import { GardenGroups } from '../../types';
-import { useMemo } from 'react';
+import { GardenGroup, GardenHeaderGroup, GardenMeta, GetBlockRequestArgs } from '../../types';
 
-import { useGardenContext, useGardenGroups, useItemWidths } from '../../hooks';
+import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
-import { GetBlockRequestArgs, VirtualGarden } from '../VirtualGarden';
+import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useQuery } from '@tanstack/react-query';
 
-export const VirtualContainer = (): JSX.Element | null => {
-  const garden = useGardenGroups();
+type VirtualContainerProps = {
+  getGardenMeta: (groupingKeys: string[], signal?: AbortSignal) => Promise<GardenMeta>;
+  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
+  getHeader: (
+    args: Pick<GetBlockRequestArgs, 'xStart' | 'xEnd' | 'groupingKey'>,
+    signal: AbortSignal
+  ) => Promise<GardenHeaderGroup[]>;
+};
 
+export const VirtualContainer = ({
+  getGardenMeta,
+  getBlockAsync,
+  getHeader,
+}: VirtualContainerProps): JSX.Element | null => {
   const controller = useGardenContext();
   const {
     clickEvents: { onClickItem },
   } = controller;
-  const amountOfColumns = useMemo(() => garden.length, [garden]);
-  const widths = useItemWidths();
+
+  const keys = useGroupingKeys();
+
+  const { data } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys], {
+    refetchOnWindowFocus: false,
+    suspense: true,
+    queryFn: ({ signal }) => getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], signal),
+  });
+
+  if (!data) {
+    throw new Error('rip');
+  }
+
+  const amountOfColumns = data.columnCount;
+  const widths = useItemWidths(data.columnCount);
 
   //TODO: Handle widths = 0 better
   if (widths.length === 0 || amountOfColumns !== widths.length) {
@@ -31,49 +55,17 @@ export const VirtualContainer = (): JSX.Element | null => {
     <>
       <ReactQueryDevtools />
       <StyledVirtualContainer id={'garden_root'}>
-        <FilterSelector />
+        <FilterSelector groupingOptions={data.groupingOptions} />
         <ExpandProvider initialWidths={widths}>
           <VirtualGarden
-            getBlockAsync={(args, signal) => getBlockAsync(args, signal, garden)}
+            meta={data}
+            getBlockAsync={(args, signal) => getBlockAsync(args, signal)}
             width={widths[0]}
             handleOnItemClick={(item) => onClickItem && onClickItem(item, controller)}
+            getHeader={(args, signal) => getHeader(args, signal)}
           />
         </ExpandProvider>
       </StyledVirtualContainer>
     </>
   );
 };
-
-/**
- * Configure how to get blocks
- * @param args
- * @param signal
- * @param garden
- * @returns
- */
-async function getBlockAsync(
-  args: GetBlockRequestArgs,
-  signal: AbortSignal,
-  garden: GardenGroups<Record<PropertyKey, unknown>>
-): Promise<GardenGroups<any>> {
-  const { xEnd, xStart, yEnd, yStart, groupingKey } = args;
-
-  if (yStart === 0) {
-    return new Promise((_, rej) => rej('rip'));
-  }
-
-  const columns = garden.slice(xStart, xEnd + 1);
-
-  const result = columns.map((column) => ({
-    ...column,
-    items: column.items.slice(yStart, yEnd + 1),
-    subGroups: column.subGroups.slice(yStart, yEnd + 1),
-  }));
-
-  return new Promise((res) => setTimeout(() => res(result), Math.random() * 800));
-}
-
-/**
- * Api call for fetching possible groupingKeys
- */
-const getGroupingOptions = async () => {};

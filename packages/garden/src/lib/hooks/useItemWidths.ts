@@ -1,29 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useGardenContext } from './useGardenContext';
-import { useGardenGroups } from './useGardenGroups';
+import { useEffect, useState } from 'react';
 
-export function useItemWidths() {
+export function useItemWidths(columnCount: number) {
   const [widths, setWidths] = useState<number[]>([]);
-  const groups = useGardenGroups();
 
-  const amountOfColumns = useMemo(() => groups.length, [groups]);
+  const amountOfColumns = columnCount;
 
-  const {
-    visuals: { calculateItemWidth },
-    grouping: {
-      value: { horizontalGroupingAccessor },
-    },
-    customGroupByKeys,
-  } = useGardenContext();
-
+  /**
+   * How to calculate longest width?
+   */
   useEffect(() => {
-    if (groups && amountOfColumns > 0) {
-      const width = calculateItemWidth
-        ? calculateItemWidth(groups, horizontalGroupingAccessor, customGroupByKeys?.value)
-        : 300;
+    if (amountOfColumns > 0) {
+      const width = 300;
       setWidths(new Array(amountOfColumns).fill(width));
     }
-  }, [amountOfColumns, groups, calculateItemWidth, customGroupByKeys, horizontalGroupingAccessor]);
+  }, [amountOfColumns]);
 
   return widths;
 }

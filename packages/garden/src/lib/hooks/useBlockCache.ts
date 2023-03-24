@@ -1,20 +1,21 @@
-import { GardenBlock, GetBlockRequestArgs } from '../components/VirtualGarden';
+import { GardenBlock } from '../components/VirtualGarden';
 import { useGroupingKeys } from './useGroupingKeys';
 import { useQueries } from '@tanstack/react-query';
-import { GardenGroup } from '../types';
+import { GetBlockRequestArgs } from '../types';
 
-export function useBlockCache<TData extends Record<PropertyKey, unknown>>(
+export function useBlockCache<T>(
   blocks: GardenBlock[],
   blocksInView: GardenBlock[],
   blockSqrt: number,
-  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<TData>[]>
+  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<T[]>,
+  hash: string[]
 ) {
   const keys = useGroupingKeys();
 
   const blockCache = useQueries({
     queries: blocks.map((block) => ({
       /** Unique identifier for blocks, add state here to invalidate query onChange */
-      queryKey: [keys.gardenKey, ...keys.groupByKeys, `x${block.x}`, `y${block.y}`],
+      queryKey: [keys.gardenKey, ...keys.groupByKeys, `x${block.x}`, `y${block.y}`, ...hash],
       /** Only fetch if block is in view */
       enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
       /** Annoying default in react-query */
