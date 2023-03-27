@@ -5,7 +5,13 @@ import { useGardenContext } from '../../hooks';
 import { useExpand } from '../../hooks/useExpand';
 import { useRefresh } from '../../hooks/useRefresh';
 import { useVirtualScrolling } from '../../hooks/useVirtualScrolling';
-import { GardenGroup, GardenHeaderGroup, GardenMeta, GetBlockRequestArgs } from '../../types';
+import {
+  GardenGroup,
+  GardenHeaderGroup,
+  GardenMeta,
+  GetBlockRequestArgs,
+  GetHeaderBlockRequestArgs,
+} from '../../types';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
 import { Layout } from '../Layout/Layout';
@@ -18,8 +24,6 @@ export type GardenBlock = {
   x: number;
   y: number;
 };
-
-export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKey'>;
 
 type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
   width?: number;

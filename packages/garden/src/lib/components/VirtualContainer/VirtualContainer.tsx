@@ -1,9 +1,15 @@
-import { GardenGroup, GardenHeaderGroup, GardenMeta, GetBlockRequestArgs } from '../../types';
+import {
+  GardenGroup,
+  GardenHeaderGroup,
+  GardenMeta,
+  GetBlockRequestArgs,
+  GetHeaderBlockRequestArgs,
+} from '../../types';
 
 import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
-import { GetHeaderBlockRequestArgs, VirtualGarden } from '../VirtualGarden';
+import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useQuery } from '@tanstack/react-query';

@@ -2,23 +2,22 @@ import { Icon } from '@equinor/eds-core-react';
 import { createContext, Suspense, useMemo } from 'react';
 import { GardenController, GetIdentifier } from '../classes';
 import {
-  BaseRecordObject,
   GardenGroup,
   GardenHeaderGroup,
   GardenMeta,
   GetBlockRequestArgs,
   GetDisplayName,
+  GetHeaderBlockRequestArgs,
 } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { GetHeaderBlockRequestArgs } from './VirtualGarden';
 
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
   getGardenMeta: (keys: string[]) => Promise<GardenMeta>;
@@ -35,7 +34,7 @@ const client = new QueryClient();
 export function Garden<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({
   getBlockAsync,

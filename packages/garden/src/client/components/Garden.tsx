@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Garden,
   GardenGroup,
@@ -7,10 +7,9 @@ import {
   GardenMeta,
   GetBlockRequestArgs,
   GetDisplayName,
+  GetHeaderBlockRequestArgs,
   GetIdentifier,
-  GroupingKeys,
 } from '../../lib';
-import { GetHeaderBlockRequestArgs } from '../../lib/components/VirtualGarden';
 import { GroupingDefinition } from '../types';
 import { groupBy } from '../utils/groupBy';
 

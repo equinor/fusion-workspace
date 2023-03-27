@@ -1,5 +1,5 @@
 import { GardenController } from '../classes';
-import { BaseRecordObject, GardenGroups, GardenItem } from '.';
+import { GardenGroups } from '.';
 
 /**
  * Function for calculating the longest width of a garden column
@@ -8,13 +8,13 @@ import { BaseRecordObject, GardenGroups, GardenItem } from '.';
 export type ItemWidthCalculation<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = (garden: GardenGroups<TData>, key: keyof TData | TExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => number;
 
 export type HighlightHorizontalColumn<
   TData extends Record<PropertyKey, unknown>,
   ExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = (groupBy: keyof TData | ExtendedFields, customGroupByKeys?: TCustomGroupByKeys) => string | undefined;
 
 export type GetDescription<TData extends Record<PropertyKey, unknown>> = (item: TData) => string;

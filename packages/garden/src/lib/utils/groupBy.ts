@@ -1,10 +1,10 @@
-import { BaseRecordObject, FieldSettings, GardenGroup, GardenGroups, GroupDescriptionFunc } from '../types';
+import { FieldSettings, GardenGroup, GardenGroups } from '../types';
 import { PreGroupByFiltering } from '../types';
 
 type GroupByArgs<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
   arr: TData[];
   keys: (keyof TData | TExtendedFields)[];
@@ -25,7 +25,7 @@ const lookupGroup = <T extends Record<PropertyKey, unknown>>(
 export function groupBy<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 >({
   arr,
   keys,
@@ -113,7 +113,7 @@ export function groupBy<
 type GroupByArrayArgs<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
 > = {
   arr: TData[];
   key: keyof TData | TExtendedFields;
@@ -125,7 +125,7 @@ type GroupByArrayArgs<
 function groupByArray<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = BaseRecordObject<unknown>
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({
   arr,
   key,

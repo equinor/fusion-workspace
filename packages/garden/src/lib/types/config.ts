@@ -4,7 +4,6 @@ import {
   FieldSettings,
   OnClickEvents,
   GetDisplayName,
-  BaseRecordObject,
   CustomVirtualViews,
   Visuals,
   GardenGroups,
@@ -13,7 +12,7 @@ import {
 export type GardenConfig<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string = never,
-  TCustomGroupByKeys extends BaseRecordObject<TCustomGroupByKeys> = never,
+  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
   /**

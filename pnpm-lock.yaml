@@ -56,6 +56,7 @@ importers:
       '@equinor/workspace-ag-grid': workspace:0.3.8
       '@equinor/workspace-fusion': workspace:0.20.0
       '@equinor/workspace-fusion-modules': workspace:0.5.1
+      '@equinor/workspace-garden': workspace:^0.7.6
       '@equinor/workspace-sidesheet': workspace:0.1.4
       '@tanstack/react-query': ^4.23.0
       '@types/react': ^18.0.25
@@ -74,6 +75,7 @@ importers:
       '@equinor/workspace-ag-grid': link:../../packages/ag-grid
       '@equinor/workspace-fusion': link:../../packages/workspace-fusion
       '@equinor/workspace-fusion-modules': link:../../packages/workspace-fusion-modules
+      '@equinor/workspace-garden': link:../../packages/garden
       '@equinor/workspace-sidesheet': link:../../packages/sidesheet
       '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -206,6 +208,8 @@ importers:
       '@equinor/eds-core-react': 0.28.0
       '@equinor/eds-icons': ^0.18.0
       '@equinor/eds-tokens': 0.9.0
+      '@tanstack/react-query': ^4.28.0
+      '@tanstack/react-query-devtools': ^4.28.0
       '@types/jest': 27.4.1
       '@types/react': '>= 16.8.0'
       '@types/react-dom': ^18.0.8
@@ -220,6 +224,8 @@ importers:
       '@equinor/eds-core-react': 0.28.0_maey765qzsqrp6bbazpxj7endy
       '@equinor/eds-icons': 0.18.0
       '@equinor/eds-tokens': 0.9.0
+      '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query-devtools': 4.28.0_q4teel2yjbizrm4naiaqcdpjum
       react-virtual: 2.10.4_react@18.2.0
       rxjs: 7.8.0
     devDependencies:
@@ -4457,12 +4463,38 @@ packages:
       '@sinonjs/commons': 1.8.4
     dev: true
 
+  /@tanstack/match-sorter-utils/8.7.6:
+    resolution: {integrity: sha512-2AMpRiA6QivHOUiBpQAVxjiHAA68Ei23ZUMNaRJrN6omWiSFLoYrxGcT6BXtuzp0Jw4h6HZCmGGIM/gbwebO2A==}
+    engines: {node: '>=12'}
+    dependencies:
+      remove-accents: 0.4.2
+    dev: false
+
   /@tanstack/query-core/4.22.4:
     resolution: {integrity: sha512-t79CMwlbBnj+yL82tEcmRN93bL4U3pae2ota4t5NN2z3cIeWw74pzdWrKRwOfTvLcd+b30tC+ciDlfYOKFPGUw==}
     dev: false
 
   /@tanstack/query-core/4.24.4:
     resolution: {integrity: sha512-9dqjv9eeB6VHN7lD3cLo16ZAjfjCsdXetSAD5+VyKqLUvcKTL0CklGQRJu+bWzdrS69R6Ea4UZo8obHYZnG6aA==}
+    dev: false
+
+  /@tanstack/query-core/4.27.0:
+    resolution: {integrity: sha512-sm+QncWaPmM73IPwFlmWSKPqjdTXZeFf/7aEmWh00z7yl2FjqophPt0dE1EHW9P1giMC5rMviv7OUbSDmWzXXA==}
+    dev: false
+
+  /@tanstack/react-query-devtools/4.28.0_q4teel2yjbizrm4naiaqcdpjum:
+    resolution: {integrity: sha512-1SnoMw1CWn8FdPEIHvlAzmMBX3heXJo11fyBtt+FzYAHj5yFC8P67Kpgi0HpLkY7SLnd6QK/7qFkpeH4AQbgZg==}
+    peerDependencies:
+      '@tanstack/react-query': 4.28.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.7.6
+      '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      superjson: 1.12.2
+      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /@tanstack/react-query/4.23.0_biqbaboplfbrettd7655fr4n2y:
@@ -4496,6 +4528,24 @@ packages:
         optional: true
     dependencies:
       '@tanstack/query-core': 4.24.4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-query/4.28.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8cGBV5300RHlvYdS4ea+G1JcZIt5CIuprXYFnsWggkmGoC0b5JaqG0fIX3qwDL9PTNkKvG76NGThIWbpXivMrQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.27.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -6259,6 +6309,13 @@ packages:
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /copy-anything/3.0.3:
+    resolution: {integrity: sha512-fpW2W/BqEzqPp29QS+MwwfisHCQZtiduTe/m8idFo0xbti9fIZ2WVhAsCv4ggFVH3AgCkVdpoOCtQC6gBrdhjw==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.8
     dev: false
 
   /core-js-pure/3.26.0:
@@ -8627,6 +8684,11 @@ packages:
     dependencies:
       call-bind: 1.0.2
     dev: true
+
+  /is-what/4.1.8:
+    resolution: {integrity: sha512-yq8gMao5upkPoGEU9LsB2P+K3Kt8Q3fQFCGyNCWOAnJAMzEXVV9drYb0TXr42TTliLLhKIBvulgAXgtLLnwzGA==}
+    engines: {node: '>=12.13'}
+    dev: false
 
   /is-wsl/2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
@@ -12921,6 +12983,13 @@ packages:
     resolution: {integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow==}
     dependencies:
       s.color: 0.0.15
+    dev: false
+
+  /superjson/1.12.2:
+    resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.3
     dev: false
 
   /supports-color/5.5.0:

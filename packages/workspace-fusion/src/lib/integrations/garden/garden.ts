@@ -36,9 +36,7 @@ import {
   FindNodeCallback,
   getGardenItems,
   isSubGroup,
-  GardenDataIntercepters,
   CustomGroupViewProps,
-  PostGroupBySorting,
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
@@ -46,8 +44,6 @@ export { getGardenItems, isSubGroup };
 /**Garden types */
 export type {
   CustomGroupViewProps,
-  GardenDataIntercepters,
-  PostGroupBySorting,
   GardenProp,
   CustomGroupView,
   CustomHeaderView,

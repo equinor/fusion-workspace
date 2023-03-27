@@ -4,10 +4,10 @@ import { ActionType } from '../ExpandProvider';
 import { Header, HeaderRoot } from './headerContainer.styles';
 import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
 import { getGardenItems } from '../../utils/getGardenItems';
-import { GardenGroup, GardenHeaderGroup } from '../../types';
+import { GardenGroup, GardenHeaderGroup, GetHeaderBlockRequestArgs } from '../../types';
 import { useGardenContext } from '../../hooks';
 import { useBlockCache } from '../../hooks/useBlockCache';
-import { findBlockCacheEntry, GardenBlock, getBlocksInView, GetHeaderBlockRequestArgs } from '../VirtualGarden';
+import { findBlockCacheEntry, GardenBlock, getBlocksInView } from '../VirtualGarden';
 import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { makeBlocks } from '../../utils/gardenBlock';
 
