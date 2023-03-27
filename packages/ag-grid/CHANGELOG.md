@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.8...@equinor/workspace-ag-grid@0.4.0) (2023-03-27)
+
+### Features
+
+- :sparkles: show groupname header ag grid ([#357](https://github.com/equinor/fusion-workspace/issues/357)) ([704fe93](https://github.com/equinor/fusion-workspace/commit/704fe939856a4bc90f7ffc439c29acec93ae5a1f))
+
 ## [0.3.8](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.7...@equinor/workspace-ag-grid@0.3.8) (2023-03-22)
 
 **Note:** Version bump only for package @equinor/workspace-ag-grid
