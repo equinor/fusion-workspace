@@ -1,2 +1,2 @@
-export * from "./ErrorComponent";
-export * from "./WorkspaceBoundary";
+export * from './ErrorComponent';
+export * from './WorkspaceBoundary';
