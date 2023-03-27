@@ -68,7 +68,7 @@ export function createConfigurationObject<
 
 function resolveDefaultTab(defaultTab: string | undefined, tabs: Tab<string>[]) {
   const tabName = tabs.find((s) => s.name === defaultTab)?.name ?? !!tabs.length ? tabs?.[0].name : undefined;
-  if(typeof tabName !== "string") {
+  if (typeof tabName !== 'string') {
     throw new Error(`
     Failed to find any tabs\n
     please make sure you added configuration module for at least one tab\n

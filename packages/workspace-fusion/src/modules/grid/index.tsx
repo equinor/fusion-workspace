@@ -16,39 +16,39 @@ import { FusionWorkspaceModule } from '../../lib';
  * Adds the module to the workspace
  */
 export const gridModule: FusionWorkspaceModule = {
-	name: 'AG-grid',
-	setup: (props, mediator) => {
-		const gridConfig = props.gridOptions;
-		if (!gridConfig) return;
-		const gridController = createGridController<any, any>(mediator.getIdentifier, () => void 0);
+  name: 'AG-grid',
+  setup: (props, mediator) => {
+    const gridConfig = props.gridOptions;
+    if (!gridConfig) return;
+    const gridController = createGridController<any, any>(mediator.getIdentifier, () => void 0);
 
-		setConfigOnController(gridConfig, gridController, mediator);
+    setConfigOnController(gridConfig, gridController, mediator);
 
-		const provider: Provider = {
-			Component: ({ children }) => {
-				useContextService(mediator, gridController);
-				useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
-				useEffect(dataChangeEffect(gridController, mediator), [mediator]);
-				useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
-				return <>{children}</>;
-			},
-			name: 'grid-sync',
-		};
+    const provider: Provider = {
+      Component: ({ children }) => {
+        useContextService(mediator, gridController);
+        useEffect(bookmarkServiceEffect(gridController, mediator), [mediator]);
+        useEffect(dataChangeEffect(gridController, mediator), [mediator]);
+        useEffect(highlightSelectionEffect(gridController, mediator), [mediator]);
+        return <>{children}</>;
+      },
+      name: 'grid-sync',
+    };
 
-		return {
-			provider,
-			tab: {
-				Component: () => (
-					<DataLoader>
-						<GridWrapper controller={gridController} mediator={mediator} />
-					</DataLoader>
-				),
-				name: 'grid',
-				TabIcon: GridIcon,
-				CustomHeader: () => <GridHeader controller={gridController} />,
-			},
-		};
-	},
+    return {
+      provider,
+      tab: {
+        Component: () => (
+          <DataLoader>
+            <GridWrapper controller={gridController} mediator={mediator} />
+          </DataLoader>
+        ),
+        name: 'grid',
+        TabIcon: GridIcon,
+        CustomHeader: () => <GridHeader controller={gridController} />,
+      },
+    };
+  },
 };
 
 export default gridModule;

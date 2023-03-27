@@ -33,7 +33,8 @@
     "@types/react-dom": "^18.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-is": "^18.2.0"
+    "react-is": "^18.2.0",
+    "typescript": "^5.0.2"
   },
   "repository": {
     "type": "git",
