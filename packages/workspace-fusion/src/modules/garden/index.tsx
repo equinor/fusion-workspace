@@ -11,44 +11,44 @@ import { onDataChangedEffect } from './utils/configureDataChange';
 import { highlightEffect } from './utils/configureHighlight';
 
 export const gardenModule: FusionWorkspaceModule = {
-	name: 'garden',
-	setup: (props, mediator) => {
-		const gardenConfig = props.gardenOptions;
+  name: 'garden',
+  setup: (props, mediator) => {
+    const gardenConfig = props.gardenOptions;
 
-		if (!gardenConfig) return;
+    if (!gardenConfig) return;
 
-		const gardenController = new GardenController<any, any, any, any>({
-			...gardenConfig,
-			data: [],
-			getIdentifier: mediator.getIdentifier,
-			getContext: () => mediator.contextService.getContext(),
-		});
+    const gardenController = new GardenController<any, any, any, any>({
+      ...gardenConfig,
+      data: [],
+      getIdentifier: mediator.getIdentifier,
+      getContext: () => mediator.contextService.getContext(),
+    });
 
-		configureClickEvents(gardenController, mediator);
+    configureClickEvents(gardenController, mediator);
 
-		const provider: Provider = {
-			Component: ({ children }) => {
-				useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
-				useEffect(highlightEffect(gardenController, mediator), [mediator]);
-				useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
+    const provider: Provider = {
+      Component: ({ children }) => {
+        useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
+        useEffect(highlightEffect(gardenController, mediator), [mediator]);
+        useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
 
-				return <>{children}</>;
-			},
-			name: 'garden-sync',
-		};
+        return <>{children}</>;
+      },
+      name: 'garden-sync',
+    };
 
-		return {
-			provider,
-			tab: {
-				Component: () => (
-					<DataLoader>
-						<GardenWrapper controller={gardenController} mediator={mediator} />
-					</DataLoader>
-				),
-				name: 'garden',
-				TabIcon: GardenIcon,
-				CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
-			},
-		};
-	},
+    return {
+      provider,
+      tab: {
+        Component: () => (
+          <DataLoader>
+            <GardenWrapper controller={gardenController} mediator={mediator} />
+          </DataLoader>
+        ),
+        name: 'garden',
+        TabIcon: GardenIcon,
+        CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+      },
+    };
+  },
 };
