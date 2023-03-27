@@ -5,8 +5,8 @@ import {
   GardenHeaderGroup,
   GardenMeta,
   GetBlockRequestArgs,
+  GetHeaderBlockRequestArgs,
 } from '@equinor/workspace-garden';
-import { GetHeaderBlockRequestArgs } from '@equinor/workspace-garden/dist/types/lib/components/VirtualGarden';
 import { useState } from 'react';
 
 export function GardenServer() {

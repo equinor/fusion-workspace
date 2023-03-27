@@ -13,6 +13,9 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SplashScreen } from './splashScreen/SplashScreen';
+import { ErrorBoundary } from 'react-error-boundary';
+import { GardenError } from './error/GardenError';
 
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
@@ -56,13 +59,15 @@ export function Garden<
   );
   return (
     <QueryClientProvider client={client}>
-      <GardenContext.Provider
-        value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
-      >
-        <Suspense fallback={<div>Preparing garden...</div>}>
-          <VirtualContainer getGardenMeta={getGardenMeta} getBlockAsync={getBlockAsync} getHeader={getHeader} />
-        </Suspense>
-      </GardenContext.Provider>
+      <ErrorBoundary FallbackComponent={GardenError}>
+        <GardenContext.Provider
+          value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
+        >
+          <Suspense fallback={<SplashScreen />}>
+            <VirtualContainer getGardenMeta={getGardenMeta} getBlockAsync={getBlockAsync} getHeader={getHeader} />
+          </Suspense>
+        </GardenContext.Provider>
+      </ErrorBoundary>
     </QueryClientProvider>
   );
 }

@@ -39,7 +39,8 @@ export const VirtualContainer = ({
   });
 
   if (!data) {
-    throw new Error('rip');
+    // Will never happen when suspense is true
+    throw new Error();
   }
 
   const amountOfColumns = data.columnCount;
