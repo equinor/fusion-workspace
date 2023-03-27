@@ -53,6 +53,7 @@ export function Grid<TData extends Record<PropertyKey, unknown>>({ controller, h
     <StyledGridWrapper style={{ height }}>
       <AgGridReact
         rowHeight={32}
+        groupDisplayType={'multipleColumns'}
         headerHeight={32}
         className={themeName}
         onGridReady={(api) => {
