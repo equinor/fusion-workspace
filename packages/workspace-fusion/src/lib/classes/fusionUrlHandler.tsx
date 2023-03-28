@@ -74,18 +74,3 @@ function useHistorySync(mediator: FusionMediator<any, any, any>, history: Browse
     };
   };
 }
-
-/**
- * Cleans up all query params used by fusion workspace when unmounting
- * Unused due to compability issues with portal
- */
-export const useCleanupQueryParams = (mediator: FusionMediator<any, any, any>, history: BrowserHistory) =>
-  useEffect(
-    () => () =>
-      updateQueryParams(
-        fusionQueryParams.map((param) => [param, undefined]),
-        mediator,
-        history
-      ),
-    []
-  );
