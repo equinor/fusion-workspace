@@ -14,4 +14,4 @@ jobs:
       - uses: nrwl/nx-set-shas@v2
       - run: npm i -g pnpm@7.30.3
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm ci

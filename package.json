@@ -4,6 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "pnpm --parallel  -r build",
+		"ci": "pnpm -r build",
 		"build:prod": "pnpm -r build:prod",
 		"documentation": "pnpx astro dev --root ./documentation"
 	},
