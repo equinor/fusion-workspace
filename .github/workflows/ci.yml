@@ -12,6 +12,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: nrwl/nx-set-shas@v2
-      - run: npm i -g pnpm@8.0.0
+      - run: npm i -g pnpm@7.30.3
       - run: pnpm install
       - run: pnpm build
