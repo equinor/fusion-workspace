@@ -3,6 +3,8 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"first-time-setup": "npm i -g pnpm@8.0.0 && pnpm i && pnpm build",
 		"build": "pnpm -r build",
 		"build:prod": "pnpm -r build:prod",
 		"documentation": "pnpx astro dev --root ./documentation",
@@ -11,6 +13,7 @@
 		"lint:staged": "lint-staged"
 	},
 	"private": true,
+	"packageManager": "pnpm@8.0.0",
 	"dependencies": {
 		"tslib": "^2.3.0"
 	},
