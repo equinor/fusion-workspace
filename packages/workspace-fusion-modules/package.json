@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion-modules",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -30,7 +30,7 @@
     "@equinor/eds-core-react": "0.26.0",
     "@equinor/eds-icons": "^0.17.0",
     "@equinor/eds-tokens": "0.9.0",
-    "@equinor/workspace-fusion": "workspace:^0.20.1",
+    "@equinor/workspace-fusion": "workspace:^0.20.2",
     "react-query": "^3.39.2"
   },
   "peerDependencies": {

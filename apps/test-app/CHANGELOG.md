@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/equinor/fusion-workspace/compare/workspace-test-app@0.1.0...workspace-test-app@0.1.1) (2023-03-28)
+
+**Note:** Version bump only for package workspace-test-app
+
 ## 0.1.0 (2023-03-27)
 
 ### ⚠ BREAKING CHANGES
