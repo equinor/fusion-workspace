@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"build": "pnpm  -r build",
+		"build": "pnpm --parallel  -r build",
 		"build:prod": "pnpm -r build:prod",
 		"documentation": "pnpx astro dev --root ./documentation"
 	},
