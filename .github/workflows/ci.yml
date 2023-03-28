@@ -1,16 +1,16 @@
 name: CI
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 jobs:
-    main:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
-            - uses: nrwl/nx-set-shas@v2
-            - run: npx pnpm install
-            - run: npx pnpm build
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v2
+      - run: npx pnpm@8.0.0 install
+      - run: npx pnpm@8.0.0 build
