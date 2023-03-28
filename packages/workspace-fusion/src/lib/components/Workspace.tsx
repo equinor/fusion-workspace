@@ -7,7 +7,7 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 import { BaseEvent } from '@equinor/workspace-core';
 import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { tryGetTabFromUrl, updateQueryParams, useCleanupQueryParams } from '../classes/fusionUrlHandler';
+import { tryGetTabFromUrl, updateQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 import { WorkspaceBoundary } from './error';
 
@@ -52,7 +52,7 @@ function WorkspaceComponent<
   //Probably make one for each?
   const configuration = createConfigurationObject(props, mediator);
 
-  useCleanupQueryParams(mediator, history);
+  // useCleanupQueryParams(mediator, history);
   return (
     <QueryClientProvider client={client}>
       <DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
