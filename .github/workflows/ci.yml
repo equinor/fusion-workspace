@@ -12,7 +12,5 @@ jobs:
               with:
                   fetch-depth: 0
             - uses: nrwl/nx-set-shas@v2
-            - run: npm i -g pnpm
-            - run: npx pnpm i
-            - run: npx lerna run build
-            - run: npx lerna run test
+            - run: npx pnpm install --lockfile=false
+            - run: npx pnpm build
