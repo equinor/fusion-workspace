@@ -17,15 +17,19 @@ import { SplashScreen } from './splashScreen/SplashScreen';
 import { ErrorBoundary } from 'react-error-boundary';
 import { GardenError } from './error/GardenError';
 
+export type GardenDataSource = {
+  getGardenMeta: (keys: string[], signal: AbortSignal) => Promise<GardenMeta>;
+  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+};
+
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
-  getGardenMeta: (keys: string[]) => Promise<GardenMeta>;
-  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
-  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  dataSource: GardenDataSource;
 
   getDisplayName: GetDisplayName<TData>;
   getIdentifier: GetIdentifier<TData>;
@@ -40,9 +44,7 @@ export function Garden<
   TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({
-  getBlockAsync,
-  getGardenMeta,
-  getHeader,
+  dataSource,
   getDisplayName,
   getIdentifier,
   initialGrouping,
@@ -57,6 +59,7 @@ export function Garden<
       }),
     [initialGrouping]
   );
+  console.log(client);
   return (
     <QueryClientProvider client={client}>
       <ErrorBoundary FallbackComponent={GardenError}>
@@ -64,7 +67,7 @@ export function Garden<
           value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
         >
           <Suspense fallback={<SplashScreen />}>
-            <VirtualContainer getGardenMeta={getGardenMeta} getBlockAsync={getBlockAsync} getHeader={getHeader} />
+            <VirtualContainer dataSource={dataSource} />
           </Suspense>
         </GardenContext.Provider>
       </ErrorBoundary>

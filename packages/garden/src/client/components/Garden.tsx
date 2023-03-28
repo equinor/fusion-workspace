@@ -22,6 +22,9 @@ type GardenClientProps<TData extends Record<PropertyKey, unknown>> = {
   columnStart?: (garden: GardenGroups<any>, keys: string[]) => number;
 };
 
+/**
+ * Garden component with client side data
+ */
 export function GardenClient<TData extends Record<PropertyKey, unknown>>({
   data,
   groupingDefinitions,
@@ -69,10 +72,12 @@ export function GardenClient<TData extends Record<PropertyKey, unknown>>({
 
   return (
     <Garden
-      getBlockAsync={getBlockAsync}
+      dataSource={{
+        getBlockAsync,
+        getGardenMeta,
+        getHeader,
+      }}
       getDisplayName={getDisplayName}
-      getGardenMeta={getGardenMeta}
-      getHeader={getHeader}
       getIdentifier={getIdentifier}
       initialGrouping={initialGroupingKey}
     />

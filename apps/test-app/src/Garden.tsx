@@ -31,9 +31,11 @@ export function GardenServer() {
         />
       ) : (
         <Garden<Item>
-          getBlockAsync={getBlockAsync}
-          getGardenMeta={getGardenMeta}
-          getHeader={getHeader}
+          dataSource={{
+            getBlockAsync,
+            getGardenMeta,
+            getHeader,
+          }}
           getDisplayName={(i) => i.id}
           getIdentifier={(j) => j.id}
           initialGrouping={'age'}

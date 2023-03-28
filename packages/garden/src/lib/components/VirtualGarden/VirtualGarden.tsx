@@ -19,6 +19,7 @@ import { Layout } from '../Layout/Layout';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
+import { useScrollToColumnStart } from '../../hooks/useScrollToColumnStart';
 
 export type GardenBlock = {
   x: number;
@@ -73,12 +74,6 @@ export const VirtualGarden = <
     overscan: 15,
   });
 
-  useLayoutEffect(() => {
-    if (columnStart) {
-      columnVirtualizer.scrollToIndex(columnStart, { align: 'center' });
-    }
-  }, [columnStart]);
-
   const columnVirtualizer = useVirtual({
     horizontal: true,
     size: columnCount,
@@ -92,6 +87,8 @@ export const VirtualGarden = <
     useObserver: useCallback(() => ({ height: 0, width: window.innerWidth }), []),
     overscan: 3,
   });
+
+  useScrollToColumnStart(columnStart, columnVirtualizer);
 
   const packageChild = customItemView ?? undefined;
 
