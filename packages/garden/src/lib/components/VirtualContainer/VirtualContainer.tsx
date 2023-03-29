@@ -47,7 +47,7 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
     <>
       {/* <ReactQueryDevtools /> */}
       <StyledVirtualContainer id={'garden_root'}>
-        <FilterSelector groupingOptions={data.groupingOptions} />
+        <FilterSelector allGroupingOptions={data.allGroupingOptions} validGroupingOptions={data.validGroupingOptions} />
         <ExpandProvider initialWidths={widths}>
           <VirtualGarden
             meta={data}

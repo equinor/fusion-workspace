@@ -65,7 +65,8 @@ export function GardenClient<TData extends Record<PropertyKey, unknown>>({
     return {
       columnCount: garden.current.length,
       columnStart: columnStart ? columnStart(garden.current, keys) : null,
-      groupingOptions: groupingDefinitions.map((s) => s.name).filter((s) => !keys.includes(s)),
+      allGroupingOptions: groupingDefinitions.map((s) => s.name),
+      validGroupingOptions: groupingDefinitions.map((s) => s.name).filter((s) => !keys.includes(s)),
       rowCount: longestRow,
     };
   };

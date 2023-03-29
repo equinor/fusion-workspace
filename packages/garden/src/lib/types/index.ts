@@ -14,7 +14,8 @@ export type GardenMeta = {
   columnStart: number | null;
   columnCount: number;
   rowCount: number;
-  groupingOptions: string[];
+  allGroupingOptions: string[];
+  validGroupingOptions: string[];
 };
 
 export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKey'>;

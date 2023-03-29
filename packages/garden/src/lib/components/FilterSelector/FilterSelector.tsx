@@ -5,10 +5,11 @@ import { useGroupingKeys } from '../../hooks/useGroupingKeys';
 import { StyledSelectOneWrapper, StyledSelectRowWrapper, StyledSeparator } from './filterSelector.styles';
 
 type FilterSelectorProps = {
-  groupingOptions: string[];
+  allGroupingOptions: string[];
+  validGroupingOptions: string[];
 };
 
-export function FilterSelector({ groupingOptions }: FilterSelectorProps): JSX.Element | null {
+export function FilterSelector({ allGroupingOptions, validGroupingOptions }: FilterSelectorProps): JSX.Element | null {
   const controller = useGardenContext();
   const { setHorizontalGroupingAccessor, setVerticalGroupingKeys } = controller;
 
@@ -46,7 +47,7 @@ export function FilterSelector({ groupingOptions }: FilterSelectorProps): JSX.El
       <StyledSelectOneWrapper>
         <Autocomplete
           key={gardenKey.toString()}
-          options={[...groupingOptions, ...groupByKeys]}
+          options={[...allGroupingOptions, ...groupByKeys]}
           label={''}
           hideClearButton
           //TODO: ...EDS check if fixed
@@ -64,7 +65,7 @@ export function FilterSelector({ groupingOptions }: FilterSelectorProps): JSX.El
             <StyledSelectOneWrapper>
               <Autocomplete
                 key={groupByKey.toString()}
-                options={groupingOptions}
+                options={allGroupingOptions.filter((s) => s !== gardenKey)}
                 label={''}
                 //TODO: ...EDS check if fixed
                 onFocus={(e) => e.preventDefault()}
@@ -76,11 +77,11 @@ export function FilterSelector({ groupingOptions }: FilterSelectorProps): JSX.El
           </Fragment>
         );
       })}
-      {groupingOptions && groupingOptions.length > 0 && (
+      {validGroupingOptions && validGroupingOptions.length > 0 && (
         <StyledSelectOneWrapper>
           <Autocomplete
             key={'EmptyGroupBySelector'}
-            options={groupingOptions}
+            options={validGroupingOptions}
             label={''}
             selectedOptions={['']}
             onFocus={(e) => e.preventDefault()}
