@@ -44,7 +44,7 @@ export const VirtualGarden = <
 >({
   width,
   handleOnItemClick,
-  blockSize = 2500,
+  blockSize = 40000,
   getBlockAsync,
   meta,
   getHeader,
