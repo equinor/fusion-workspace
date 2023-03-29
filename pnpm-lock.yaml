@@ -68,6 +68,9 @@ importers:
       '@equinor/workspace-fusion-modules':
         specifier: workspace:0.5.3
         version: link:../../packages/workspace-fusion-modules
+      '@equinor/workspace-garden':
+        specifier: workspace:^
+        version: link:../../packages/garden
       '@equinor/workspace-sidesheet':
         specifier: workspace:0.1.5
         version: link:../../packages/sidesheet
