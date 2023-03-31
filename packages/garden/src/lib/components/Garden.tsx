@@ -8,6 +8,7 @@ import {
   GetBlockRequestArgs,
   GetDisplayName,
   GetHeaderBlockRequestArgs,
+  GetSubgroupItemsArgs,
 } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
@@ -21,6 +22,7 @@ export type GardenDataSource = {
   getGardenMeta: (keys: string[], signal: AbortSignal) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<any>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, signal: AbortSignal) => Promise<any[]>;
 };
 
 interface GardenProps<
@@ -59,7 +61,7 @@ export function Garden<
       }),
     [initialGrouping]
   );
-  console.log(client);
+
   return (
     <QueryClientProvider client={client}>
       <ErrorBoundary FallbackComponent={GardenError}>

@@ -10,7 +10,8 @@ const getSubGroupItems = <TData extends Record<PropertyKey, unknown>>(
 ): GardenItem<TData>[] => {
   const items: GardenItem<TData>[] = [];
   const subGroup = column.subGroups[subGroupIndex];
-  const isExpanded = subGroup.isExpanded;
+  const isExpanded = false;
+  // subGroup.isExpanded;
 
   if (includeSubGroupValue) items.push(subGroup);
 
@@ -18,7 +19,7 @@ const getSubGroupItems = <TData extends Record<PropertyKey, unknown>>(
     subGroup.items.forEach((item) => {
       items.push({
         item,
-        itemDepth: subGroup.depth,
+        itemDepth: 0,
       });
     });
   } else if (subGroup?.subGroupCount !== 0 && !isExpanded) {
@@ -32,13 +33,13 @@ const getSubGroupItems = <TData extends Record<PropertyKey, unknown>>(
 };
 
 const getGardenColumnState = <T extends Record<PropertyKey, unknown>>(column: GardenGroup<T>): ColumnStates | null => {
-  const columnHasNoItems = column.count === 0 && column.subGroupCount === 0;
+  const columnHasNoItems = column.totalItemsCount === 0 && column.subGroupCount === 0;
   if (columnHasNoItems) return 'No items';
 
   const columnHasNoSubGroups = column.items.length > 0;
   if (columnHasNoSubGroups) return 'No subgroups';
 
-  const mainColumnSubGroupIsExpanded = column.isExpanded;
+  const mainColumnSubGroupIsExpanded = false;
 
   if (!mainColumnSubGroupIsExpanded) return 'Not Expanded';
 

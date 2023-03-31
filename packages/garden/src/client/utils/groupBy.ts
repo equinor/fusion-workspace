@@ -12,15 +12,11 @@ export function groupBy<TData extends Record<PropertyKey, unknown>>(
   const groups = groupNames.map((item): GardenGroup<TData> => {
     const groupItems = data.filter((s) => definition.group(s) === item);
     return {
-      depth: 0,
-      count: groupItems.length,
-      groupKey: definition.name,
-      isExpanded: false,
+      columnName: item ?? '(Blank)',
+      totalItemsCount: groupItems.length,
       items: groupItems,
       subGroupCount: 0,
       subGroups: [],
-      value: item ?? 'null',
-      description: '',
     };
   });
 

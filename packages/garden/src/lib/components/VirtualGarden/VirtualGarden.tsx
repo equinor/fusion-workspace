@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useLayoutEffect, useRef } from 'react';
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useVirtual } from 'react-virtual';
 import { useGardenContext } from '../../hooks';
 
@@ -11,6 +11,8 @@ import {
   GardenMeta,
   GetBlockRequestArgs,
   GetHeaderBlockRequestArgs,
+  GetSubgroupItemsArgs,
+  GroupingKeys,
 } from '../../types';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
@@ -20,6 +22,76 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
 import { useScrollToColumnStart } from '../../hooks/useScrollToColumnStart';
+import { zip } from 'rxjs/operators';
+import { ReactiveValue } from '../../classes/reactiveValue';
+
+const makeHeights = (rowCount: number, columnCount: number) => new Array(columnCount).fill(0).map(() => rowCount);
+
+const useColumnHeights = (rowCount: number, columnCount: number) => {
+  const [columnheights, setColumnHeights] = useState(makeHeights(rowCount, columnCount));
+  useEffect(() => setColumnHeights(makeHeights(rowCount, columnCount)), [rowCount, columnCount]);
+  const patchCount = (i: number, newVal: number) =>
+    setColumnHeights((h) => [...h.slice(0, i), newVal, ...h.slice(i + 1)]);
+  return {
+    patchCount,
+    columnheights,
+    setColumnHeights,
+  };
+};
+
+export type Expanded = {
+  index: number;
+  count: number;
+  name: string;
+};
+
+export type ExpandedWithRange = Expanded & { range: number[] };
+
+const useExpandedSubGroups = (columnCount: number) => {
+  const [expanded, setExpanded] = useState<ExpandedWithRange[][]>(new Array(columnCount).fill(0).map(() => []));
+
+  const expandColumn = (columnIndex: number, item: Expanded) => {
+    const expandedIndexes = expanded[columnIndex];
+    const after = expandedIndexes.filter((s) => s.index > item.index);
+    const before = expandedIndexes.filter((s) => !after.includes(s));
+
+    const changes = after.map((s) => ({
+      ...s,
+      index: s.index + item.count,
+      range: new Array(s.count).fill(0).map((_, i) => i + s.index + item.count + 1),
+    }));
+
+    const res = [
+      ...before,
+      { ...item, range: new Array(item.count).fill(0).map((_, i) => i + item.index + 1) },
+      ...changes,
+    ];
+
+    setExpanded((s) => [...s.slice(0, columnIndex), res, ...s.slice(columnIndex + 1)]);
+  };
+
+  const collapseColumn = (columnIndex: number, subgroupName: string) => {
+    const expandedIndexes = expanded[columnIndex];
+    const targetIndex = expandedIndexes.findIndex((s) => s.name === subgroupName);
+    if (targetIndex === -1) {
+      throw new Error('This should never happen');
+    }
+    const actualItem = expandedIndexes[targetIndex];
+    const changess = expandedIndexes.slice(targetIndex + 1).map((s) => ({
+      ...s,
+      index: s.index - actualItem.count,
+      range: new Array(s.count).fill(0).map((_, i) => i + s.index - actualItem.count + 1),
+    }));
+    const res = [...expandedIndexes.slice(0, targetIndex), ...changess];
+    setExpanded((s) => [...s.slice(0, columnIndex), res, ...s.slice(columnIndex + 1)]);
+  };
+
+  return {
+    expandColumn,
+    collapseColumn,
+    expanded,
+  };
+};
 
 export type GardenBlock = {
   x: number;
@@ -34,6 +106,7 @@ type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
   blockSize?: number;
   getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<TData>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, signal: AbortSignal) => Promise<TData[]>;
 };
 
 export const VirtualGarden = <
@@ -48,6 +121,7 @@ export const VirtualGarden = <
   getBlockAsync,
   meta,
   getHeader,
+  getSubgroupItems,
 }: VirtualGardenProps<TData>): JSX.Element => {
   const { columnCount, columnStart, rowCount } = meta;
 
@@ -59,15 +133,24 @@ export const VirtualGarden = <
   const {
     visuals: { rowHeight },
     customViews: { customGroupView, customItemView },
+    grouping,
   } = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
 
-  const refresh = useRefresh();
+  /**
+   * Reset to block x,y when grouping changes
+   * Necessary for it not to crash
+   * Happens before columnStart scrolling
+   */
+  useResetScrollOnKeysChange(parentRef, grouping);
 
   const { isScrolling } = useVirtualScrolling(parentRef);
   const { widths: contextWidths } = useExpand();
 
+  /** Calculates a running count of the total height of each column */
+  const { columnheights, patchCount } = useColumnHeights(rowCount, columnCount);
+
   const rowVirtualizer = useVirtual({
-    size: rowCount,
+    size: Math.max(...columnheights),
     parentRef,
     estimateSize: useCallback(() => rowHeight || 40, [rowHeight]),
     paddingStart: 40,
@@ -88,31 +171,11 @@ export const VirtualGarden = <
     overscan: 3,
   });
 
+  const { collapseColumn, expandColumn, expanded } = useExpandedSubGroups(columnCount);
+
   useScrollToColumnStart(columnStart, columnVirtualizer);
 
   const packageChild = customItemView ?? undefined;
-
-  const handleExpand = useCallback(
-    <T extends Record<PropertyKey, unknown>>(subGroup: GardenGroup<T>): void => {
-      subGroup.isExpanded = !subGroup.isExpanded;
-
-      refresh();
-    },
-    [refresh]
-  );
-
-  // const highlightedColumn = useMemo(
-  //   () =>
-  //     highlightHorizontalColumn ? highlightHorizontalColumn(gardenKey.toString(), customGroupByKeys?.value) : undefined,
-  //   [highlightHorizontalColumn, gardenKey, customGroupByKeys]
-  // );
-
-  // useLayoutEffect(() => {
-  //   if (highlightedColumn) {
-  //     const scrollIndex = garden.findIndex((column) => column.value === highlightedColumn);
-  //     scrollIndex !== -1 && columnVirtualizer.scrollToIndex(scrollIndex, { align: 'center' });
-  //   }
-  // }, [garden, columnVirtualizer.scrollToIndex, highlightedColumn]);
 
   const blocks = makeBlocks({ blockSqrt, columnCount, rowCount });
   const { xEnd, xStart, yEnd, yStart } = getCoordinatesInView(
@@ -142,18 +205,24 @@ export const VirtualGarden = <
           columnVirtualizer={columnVirtualizer}
         />
         {columnVirtualizer.virtualItems.map((virtualColumn) => {
-          // const currentColumn = garden[virtualColumn.index];
-          // const columnItems = getGardenItems<TData>(currentColumn, true);
+          const updateRowCount = (newVal: number) => patchCount(virtualColumn.index, newVal);
+
+          const maxRowCount = columnheights[virtualColumn.index];
 
           return (
-            <Fragment key={virtualColumn.index}>
+            <Fragment key={virtualColumn.key}>
               <GardenItemContainer
+                getSubGroupItems={getSubgroupItems}
+                maxRowCount={maxRowCount}
+                collapseColumn={(name) => collapseColumn(virtualColumn.index, name)}
+                expandColumn={(item) => expandColumn(virtualColumn.index, item)}
+                expandedIndexes={expanded[virtualColumn.index]}
+                setUpdatedRowCount={updateRowCount}
                 blockSqrt={blockSqrt}
                 rowVirtualizer={rowVirtualizer}
                 getBlockCache={(currBlock) => findBlockCacheEntry(currBlock, blocks, blockCache)}
                 packageChild={packageChild}
                 customSubGroup={customGroupView}
-                handleExpand={handleExpand}
                 itemWidth={width}
                 handleOnClick={handleOnItemClick}
                 parentRef={containerRef}
@@ -167,13 +236,26 @@ export const VirtualGarden = <
   );
 };
 
+export function useResetScrollOnKeysChange<TData extends Record<PropertyKey, unknown>>(
+  parentRef: React.MutableRefObject<HTMLDivElement | null>,
+  grouping: ReactiveValue<GroupingKeys<TData>>
+) {
+  useLayoutEffect(() => {
+    const unsub = grouping.onChange(() => {
+      parentRef.current?.scrollTo({ left: 0, top: 0 });
+    });
+    return () => unsub();
+  }, [parentRef]);
+}
+
 export function findBlockCacheEntry<T>(
   block: GardenBlock,
   blocks: GardenBlock[],
   blockCache: UseQueryResult<T, unknown>[]
 ): UseQueryResult<T, unknown> {
   const index = blocks.findIndex((s) => s.x === block.x && s.y === block.y);
-  if (index === -1) throw new Error('Invalid block index');
+
+  if (index === -1) throw new Error(`Invalid block index; x:${block.x}, y: ${block.y}`);
   return blockCache[index];
 }
 

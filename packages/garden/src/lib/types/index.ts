@@ -18,7 +18,7 @@ export type GardenMeta = {
   validGroupingOptions: string[];
 };
 
-export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKey'>;
+export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys'>;
 
 export type GetBlockRequestArgs = {
   /**Column start */
@@ -30,7 +30,13 @@ export type GetBlockRequestArgs = {
   /** Row end */
   rowEnd: number;
   /** Grouping key */
-  groupingKey: string;
+  groupingKeys: string[];
+};
+
+export type GetSubgroupItemsArgs = {
+  groupingKeys: string[];
+  columnName: string;
+  subgroupName: string;
 };
 
 export type GardenHeaderGroup = {

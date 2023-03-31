@@ -30,7 +30,10 @@ export function useBlockCache<T>(
         //fetch block with coordinates of block x and block y
         const coordinates = getBlockIndexes(block, blockSqrt);
 
-        return getBlockAsync({ ...coordinates, groupingKey: keys.gardenKey.toString() }, signal);
+        return getBlockAsync(
+          { ...coordinates, groupingKeys: [keys.gardenKey.toString(), ...keys.groupByKeys] },
+          signal
+        );
       },
     })),
   });

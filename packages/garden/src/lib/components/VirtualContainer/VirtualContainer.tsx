@@ -22,6 +22,8 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
   const { data } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys], {
     refetchOnWindowFocus: false,
     suspense: true,
+    cacheTime: 0,
+    staleTime: 0,
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], signal ?? new AbortSignal()),
   });
@@ -50,6 +52,7 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
         <FilterSelector allGroupingOptions={data.allGroupingOptions} validGroupingOptions={data.validGroupingOptions} />
         <ExpandProvider initialWidths={widths}>
           <VirtualGarden
+            getSubgroupItems={dataSource.getSubgroupItems}
             meta={data}
             getBlockAsync={dataSource.getBlockAsync}
             width={widths[0]}

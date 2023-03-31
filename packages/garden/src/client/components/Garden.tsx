@@ -56,12 +56,15 @@ export function GardenClient<TData extends Record<PropertyKey, unknown>>({
     }));
 
   const getHeader = async ({ columnEnd, columnStart }: GetHeaderBlockRequestArgs): Promise<GardenHeaderGroup[]> =>
-    garden.current.slice(columnStart, columnEnd + 1).map((s) => ({ count: s.count, name: s.value }));
+    garden.current.slice(columnStart, columnEnd + 1).map((s) => ({ count: s.totalItemsCount, name: s.columnName }));
 
   const getGardenMeta = async (keys: string[]): Promise<GardenMeta> => {
     /** Regroup garden */
     garden.current = groupBy(data, groupingDefinitions.find((s) => s.name === keys[0])!);
-    const longestRow = garden.current.reduce((acc, curr) => (curr.count > acc ? curr.count : acc), 0);
+    const longestRow = garden.current.reduce(
+      (acc, curr) => (curr.totalItemsCount > acc ? curr.totalItemsCount : acc),
+      0
+    );
     return {
       columnCount: garden.current.length,
       columnStart: columnStart ? columnStart(garden.current, keys) : null,
@@ -74,6 +77,7 @@ export function GardenClient<TData extends Record<PropertyKey, unknown>>({
   return (
     <Garden
       dataSource={{
+        getSubgroupItems: {} as any,
         getBlockAsync,
         getGardenMeta,
         getHeader,

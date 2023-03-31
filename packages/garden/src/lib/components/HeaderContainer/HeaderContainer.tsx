@@ -53,7 +53,7 @@ export const HeaderContainer = ({
       expandColumn({
         type: ActionType.EXPAND_COLUMN,
         index,
-        key: column.value,
+        key: column.columnName,
         descriptionData: getGardenItems(column),
         customDescription: visuals.getDescription,
       });
