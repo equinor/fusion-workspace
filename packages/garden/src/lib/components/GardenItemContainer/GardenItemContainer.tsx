@@ -4,27 +4,23 @@ import { useVirtual, VirtualItem } from 'react-virtual';
 import { useExpand, useGardenContext, useGroupingKeys } from '../../hooks';
 import { isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
-import { CustomGroupView, CustomItemView, GardenGroup, GardenItem, GetSubgroupItemsArgs } from '../../types';
+import { CustomGroupView, CustomItemView, GardenGroup, GetSubgroupItemsArgs } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
-import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Expanded, ExpandedWithRange, GardenBlock } from '../VirtualGarden';
-import { tokens } from '@equinor/eds-tokens';
 import { useBlockCache } from '../../hooks/useBlockCache';
+import { ErrorPackage } from '../virtualPackages/ErrorPackage';
+import { LoadingPackageSkeleton } from '../virtualPackages/LoadingPackage';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>
 > = {
   virtualColumn: VirtualItem;
   blockSqrt: number;
   rowVirtualizer: VirtualHookReturn;
-  packageChild?: React.MemoExoticComponent<
-    (args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
-  >;
+  packageChild?: React.MemoExoticComponent<(args: CustomItemView<TData, TContext>) => JSX.Element>;
   customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
   itemWidth?: number;
   handleOnClick: (item: TData) => void;
@@ -49,11 +45,9 @@ const getOpenSubGroups = (expandedIndexes: ExpandedWithRange[], virtualColumnInd
 
 export const GardenItemContainer = <
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>
 >(
-  props: PackageContainerProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>
+  props: PackageContainerProps<TData, TContext>
 ): JSX.Element => {
   const {
     rowVirtualizer,
@@ -71,7 +65,7 @@ export const GardenItemContainer = <
     getSubGroupItems,
   } = props;
 
-  const controller = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
+  const controller = useGardenContext<TData, TContext>();
   const {
     visuals: { rowHeight = 40 },
     colorAssistMode$,
@@ -96,22 +90,9 @@ export const GardenItemContainer = <
     getOpenSubGroups(expandedIndexes, virtualColumn.index),
     1,
     async (a, signal) => {
-      /**
-       *  Make fetch request to find subgroup items using the following parameters
-       * groupingKeys: string[];
-       * columnName: string;
-       * subgroupName: string;
-       *
-       */
-
       const actualGroup = subGroupCount[a.rowStart];
-      const actualIndex = a.rowStart;
-
-      // ["DisciplineCode", "Responsible"],
-      // const columnIndex = a.columnStart;
-      // actualIndex;
-
       const { columnName, subGroupName } = actualGroup;
+
       return getSubGroupItems(
         {
           columnName: columnName,
@@ -144,14 +125,14 @@ export const GardenItemContainer = <
           return null;
         }
 
+        //offset using indexes
+        const calculatedIndex = calculateActualIndex(expandedIndexes, virtualRow.index);
+
         /** Find current blocks xIndex */
         const blockXIndex = Math.floor(virtualColumn.index / blockSqrt);
         /**
          *  Find current blocks yIndex
          */
-        const calculatedIndex = calculateActualIndex(expandedIndexes, virtualRow.index);
-
-        //offset using indexes
         const blockYIndex = Math.floor(
           (calculatedIndex.isSubgroupItem
             ? calculateActualIndex(expandedIndexes, calculatedIndex.parent.index).actualIndex
@@ -165,7 +146,7 @@ export const GardenItemContainer = <
          * Patch subgroups
          */
         if (data) {
-          const group = data[virtualColumn.index % blockSqrt];
+          const group = data[convertActualIndexToPaginatedIndex(virtualColumn.index, blockSqrt)];
           if (subGroupCount.length !== group.subGroupCount) {
             setSubGroupCount(
               new Array(group.subGroupCount).fill(0).map((_, i) => ({
@@ -180,42 +161,27 @@ export const GardenItemContainer = <
         if (isLoading) {
           /** Skeleton loading state */
           return (
-            <StyledPackageRoot
+            <LoadingPackageSkeleton
               key={virtualRow.key}
-              style={{
-                translate: `${virtualColumn.start}px ${virtualRow.start}px`,
-                width: `${virtualColumn.size}px`,
-                height: `${virtualRow.size}px`,
-              }}
-            >
-              <SkeletonPackage height={rowHeight - 5} width={(itemWidth ?? 50) - 5} />
-            </StyledPackageRoot>
+              itemWidth={itemWidth ?? 50}
+              rowHeight={rowHeight}
+              virtualColumn={virtualColumn}
+              virtualRow={virtualRow}
+            />
           );
         }
 
         if (!data || error) {
           /** Error state */
           return (
-            <StyledPackageRoot
-              title="Click to retry"
+            <ErrorPackage
               key={virtualRow.key}
-              style={{
-                translate: `${virtualColumn.start}px ${virtualRow.start}px`,
-                width: `${virtualColumn.size}px`,
-                height: `${virtualRow.size}px`,
-                cursor: 'pointer',
-              }}
-              onClick={() => refetch()}
-            >
-              <div
-                style={{
-                  height: rowHeight - 5,
-                  width: (itemWidth ?? 50) - 5,
-                  background: tokens.colors.interactive.danger__resting.hex,
-                  borderRadius: '5px',
-                }}
-              />
-            </StyledPackageRoot>
+              itemWidth={itemWidth ?? 50}
+              refetch={refetch}
+              rowHeight={rowHeight}
+              virtualColumn={virtualColumn}
+              virtualRow={virtualRow}
+            />
           );
         }
 
@@ -262,7 +228,7 @@ export const GardenItemContainer = <
 
         return (
           <StyledPackageRoot
-            key={virtualRow.index}
+            key={virtualRow.key}
             style={{
               translate: `${virtualColumn.start}px ${virtualRow.start}px`,
               width: `${virtualColumn.size}px`,
@@ -313,7 +279,7 @@ export const GardenItemContainer = <
                 data={item}
                 isSelected={selectedIds.includes(getIdentifier(item))}
                 onClick={() => {
-                  controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item, controller);
+                  controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
                 }}
                 width={itemWidth}
                 depth={0}
@@ -335,7 +301,7 @@ type SubGroupItemProps = {
   virtualColumn: any;
   rowHeight: number;
   itemWidth: number;
-  PackageChild: React.MemoExoticComponent<(args: CustomItemView<any, any, any, any>) => JSX.Element>;
+  PackageChild: React.MemoExoticComponent<(args: CustomItemView<any, any>) => JSX.Element>;
   itemIndex: number;
   parentRef: MutableRefObject<HTMLDivElement | null>;
 };
@@ -351,48 +317,31 @@ const SubGroupItem = ({
   parentRef,
 }: SubGroupItemProps) => {
   const { isLoading, error, data, refetch } = query;
-  const controller = useGardenContext<any, any, any, any>();
+  const controller = useGardenContext<any, any>();
   const { colorAssistMode$, getIdentifier } = controller;
 
   if (isLoading) {
     /** Skeleton loading state */
     return (
-      <StyledPackageRoot
-        key={virtualRow.key}
-        style={{
-          translate: `${virtualColumn.start}px ${virtualRow.start}px`,
-          width: `${virtualColumn.size}px`,
-          height: `${virtualRow.size}px`,
-        }}
-      >
-        <SkeletonPackage height={rowHeight - 5} width={(itemWidth ?? 50) - 5} />
-      </StyledPackageRoot>
+      <LoadingPackageSkeleton
+        itemWidth={itemWidth ?? 50}
+        rowHeight={rowHeight}
+        virtualColumn={virtualColumn}
+        virtualRow={virtualRow}
+      />
     );
   }
 
   if (!data || error) {
     /** Error state */
     return (
-      <StyledPackageRoot
-        title="Click to retry"
-        key={virtualRow.key}
-        style={{
-          translate: `${virtualColumn.start}px ${virtualRow.start}px`,
-          width: `${virtualColumn.size}px`,
-          height: `${virtualRow.size}px`,
-          cursor: 'pointer',
-        }}
-        onClick={() => refetch()}
-      >
-        <div
-          style={{
-            height: rowHeight - 5,
-            width: (itemWidth ?? 50) - 5,
-            background: tokens.colors.interactive.danger__resting.hex,
-            borderRadius: '5px',
-          }}
-        />
-      </StyledPackageRoot>
+      <ErrorPackage
+        itemWidth={itemWidth}
+        refetch={refetch}
+        rowHeight={rowHeight}
+        virtualColumn={virtualColumn}
+        virtualRow={virtualRow}
+      />
     );
   }
 
@@ -418,7 +367,7 @@ const SubGroupItem = ({
         isSelected={false}
         // isSelected={selectedIds.includes(getIdentifier(item))}
         onClick={() => {
-          controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item, controller);
+          controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
         }}
         width={itemWidth}
         depth={0}

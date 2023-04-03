@@ -1,18 +1,8 @@
 import { GetIdentifier } from '../classes';
-import {
-  GroupingKeys,
-  FieldSettings,
-  OnClickEvents,
-  GetDisplayName,
-  CustomVirtualViews,
-  Visuals,
-  GardenGroups,
-} from './';
+import { GroupingKeys, OnClickEvents, GetDisplayName, CustomVirtualViews, Visuals } from './';
 
 export type GardenConfig<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > = {
   /**
@@ -32,14 +22,13 @@ export type GardenConfig<
   /** The keys used for grouping when the garden loads initially */
   initialGrouping: GroupingKeys<TData>;
   /** The available keys to be used for grouping */
-  fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
-  customGroupByKeys?: TCustomGroupByKeys;
+  // fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
   /** Supply functions for handling clicks in the garden */
-  clickEvents?: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  clickEvents?: OnClickEvents<TData>;
   /** Replace built-in components with your own */
-  customViews?: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  customViews?: CustomVirtualViews<TData, TContext>;
   /** Visual details */
-  visuals?: Visuals<TData, TExtendedFields, TCustomGroupByKeys>;
+  visuals?: Visuals<TData>;
   /** Function for calculating custom state
    *
    * Will re-run everytime data changes

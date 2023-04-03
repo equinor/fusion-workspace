@@ -3,7 +3,6 @@ import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useQuery } from '@tanstack/react-query';
 import { GardenDataSource } from '../Garden';
 
@@ -56,7 +55,7 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
             meta={data}
             getBlockAsync={dataSource.getBlockAsync}
             width={widths[0]}
-            handleOnItemClick={(item) => onClickItem && onClickItem(item, controller)}
+            handleOnItemClick={(item) => onClickItem && onClickItem(item)}
             getHeader={dataSource.getHeader}
           />
         </ExpandProvider>

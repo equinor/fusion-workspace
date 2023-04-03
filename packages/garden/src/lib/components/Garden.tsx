@@ -27,8 +27,6 @@ export type GardenDataSource = {
 
 interface GardenProps<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
   dataSource: GardenDataSource;
@@ -42,19 +40,12 @@ Icon.add({ chevron_down, chevron_up });
 const client = new QueryClient();
 export function Garden<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
->({
-  dataSource,
-  getDisplayName,
-  getIdentifier,
-  initialGrouping,
-}: GardenProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>): JSX.Element | null {
+>({ dataSource, getDisplayName, getIdentifier, initialGrouping }: GardenProps<TData, TContext>): JSX.Element | null {
   //TODO:Handle no data better in garden
   const controller = useMemo(
     () =>
-      new GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>({
+      new GardenController<TData, TContext>({
         getDisplayName,
         getIdentifier,
         initialGrouping: { horizontalGroupingAccessor: initialGrouping, verticalGroupingKeys: [] },
@@ -65,9 +56,7 @@ export function Garden<
   return (
     <QueryClientProvider client={client}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContext.Provider
-          value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never, never, never>}
-        >
+        <GardenContext.Provider value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never>}>
           <Suspense fallback={<SplashScreen />}>
             <VirtualContainer dataSource={dataSource} />
           </Suspense>
@@ -77,6 +66,4 @@ export function Garden<
   );
 }
 
-export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>, never, never, never> | null>(
-  null
-);
+export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>, never> | null>(null);

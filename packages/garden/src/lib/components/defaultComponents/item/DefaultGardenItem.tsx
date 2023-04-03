@@ -5,8 +5,6 @@ import { Typography } from '@equinor/eds-core-react';
 
 const GardenItem = <
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 >({
   columnExpanded,
@@ -14,7 +12,7 @@ const GardenItem = <
   data: item,
   isSelected,
   depth,
-}: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => {
+}: CustomItemView<TData, TContext>) => {
   const {
     clickEvents: { onClickItem },
     getDisplayName,
@@ -23,7 +21,7 @@ const GardenItem = <
   } = controller;
 
   const { color, description, label } = useMemo(() => {
-    const label = getDisplayName(item, controller as any);
+    const label = getDisplayName(item);
     const color = (getItemColor && getItemColor(item)) ?? 'grey';
 
     const description = getDescription && getDescription(item);
@@ -38,7 +36,7 @@ const GardenItem = <
   return (
     <StyledDefaultPackage
       bgColor={color}
-      onClick={() => onClickItem && onClickItem(item, controller)}
+      onClick={() => onClickItem && onClickItem(item)}
       isSelected={isSelected}
       depth={depth ?? 0}
     >

@@ -1,7 +1,6 @@
 import { DefaultHeaderView, DefaultGardenItem, DefaultGroupView } from '../components/defaultComponents';
 import {
   CustomVirtualViews,
-  GardenGroups,
   GroupingKeys,
   HorizontalGroupingAccessor,
   GetDisplayName,
@@ -28,8 +27,6 @@ const NullFunc = () => void 0;
  */
 export class GardenController<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = never
 > {
   colorAssistMode$ = new BehaviorSubject<boolean>(false);
@@ -49,24 +46,23 @@ export class GardenController<
   getIdentifier: GetIdentifier<TData>;
 
   /** The click events that exists in garden */
-  clickEvents: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
+  clickEvents: OnClickEvents<TData> = {
     onClickGroup: NullFunc,
     onClickItem: NullFunc,
   };
 
   /** Override visuals and components for garden */
-  visuals: Visuals<TData, TExtendedFields, TCustomGroupByKeys> = {
+  visuals: Visuals<TData> = {
     getItemColor: () => defaultItemColor,
-    calculateItemWidth: () => 300,
   };
 
   /** Custom group by keys */
   // customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
   /** Override default view */
-  customViews: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
+  customViews: CustomVirtualViews<TData, TContext> = {
     customItemView: DefaultGardenItem as React.MemoExoticComponent<
-      (args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
+      (args: CustomItemView<TData, TContext>) => JSX.Element
     >,
     customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
     customHeaderView: DefaultHeaderView as React.MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>,
@@ -95,7 +91,7 @@ export class GardenController<
       getContext,
       customViews,
       visuals,
-    }: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
+    }: GardenConfig<TData, TContext>,
     getDestructor?: (destroy: () => void) => void
   ) {
     this.getIdentifier = getIdentifier;

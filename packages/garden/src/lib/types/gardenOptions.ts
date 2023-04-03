@@ -5,12 +5,10 @@ import { GardenProp } from './gardenProp';
 
 export interface CustomItemView<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
   data: TData;
-  controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  controller: GardenController<TData, TContext>;
   onClick: () => void;
   columnExpanded: boolean;
   isSelected: boolean;
@@ -40,18 +38,11 @@ export interface CustomHeaderView {
 
 export interface CustomVirtualViews<
   TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
   TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
 > {
-  customItemView?: MemoExoticComponent<
-    (args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
-  >;
+  customItemView?: MemoExoticComponent<(args: CustomItemView<TData, TContext>) => JSX.Element>;
   customGroupView?: MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
   customHeaderView?: MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>;
-  customGroupByView?: (
-    props: CustomGroupViewProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>
-  ) => JSX.Element;
 }
 
 export type CustomGroupViewProps<

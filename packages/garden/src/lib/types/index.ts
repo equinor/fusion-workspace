@@ -1,5 +1,4 @@
 export * from './gardenGroup';
-export * from './fieldSettings';
 export * from './gardenOptions';
 export * from './gardenItem';
 export * from './highlightedNode';

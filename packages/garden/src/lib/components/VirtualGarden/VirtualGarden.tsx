@@ -117,7 +117,7 @@ export const VirtualGarden = <
 >({
   width,
   handleOnItemClick,
-  blockSize = 40000,
+  blockSize = 22_500,
   getBlockAsync,
   meta,
   getHeader,
@@ -134,7 +134,7 @@ export const VirtualGarden = <
     visuals: { rowHeight },
     customViews: { customGroupView, customItemView },
     grouping,
-  } = useGardenContext<TData, TExtendedFields, TCustomGroupByKeys, TContext>();
+  } = useGardenContext<TData, TContext>();
 
   /**
    * Reset to block x,y when grouping changes
