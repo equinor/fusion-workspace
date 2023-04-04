@@ -13,14 +13,11 @@ import { ErrorPackage } from '../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../virtualPackages/LoadingPackage';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
-type PackageContainerProps<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>
-> = {
+type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
   virtualColumn: VirtualItem;
   blockSqrt: number;
   rowVirtualizer: VirtualHookReturn;
-  packageChild?: React.MemoExoticComponent<(args: CustomItemView<TData, TContext>) => JSX.Element>;
+  packageChild?: React.MemoExoticComponent<(args: CustomItemView<TData, any>) => JSX.Element>;
   customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
   itemWidth?: number;
   handleOnClick: (item: TData) => void;
@@ -31,7 +28,8 @@ type PackageContainerProps<
   collapseColumn: (subgroupName: string) => void;
   expandColumn: (item: Expanded) => void;
   maxRowCount: number;
-  getSubGroupItems: (args: GetSubgroupItemsArgs, signal: AbortSignal) => Promise<TData[]>;
+  getSubGroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal: AbortSignal) => Promise<TData[]>;
+  context: TContext;
 };
 
 const createSubgroupBlockCache = ({ length, virtualColumnIndex }: { length: number; virtualColumnIndex: number }) =>
@@ -43,10 +41,7 @@ const getOpenSubGroups = (expandedIndexes: ExpandedWithRange[], virtualColumnInd
     y: calculateActualIndex(expandedIndexes, s.index).actualIndex,
   }));
 
-export const GardenItemContainer = <
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>
->(
+export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, TContext = undefined>(
   props: PackageContainerProps<TData, TContext>
 ): JSX.Element => {
   const {
@@ -58,6 +53,7 @@ export const GardenItemContainer = <
     parentRef,
     itemWidth,
     collapseColumn,
+    context,
     expandColumn,
     expandedIndexes,
     packageChild: PackageChild,
@@ -85,11 +81,11 @@ export const GardenItemContainer = <
 
   const keys = useGroupingKeys();
 
-  const queries = useBlockCache<TData[]>(
+  const queries = useBlockCache<TData[], TContext>(
     createSubgroupBlockCache({ length: subGroupCount.length, virtualColumnIndex: virtualColumn.index }),
     getOpenSubGroups(expandedIndexes, virtualColumn.index),
     1,
-    async (a, signal) => {
+    async (a, context, signal) => {
       const actualGroup = subGroupCount[a.rowStart];
       const { columnName, subGroupName } = actualGroup;
 
@@ -99,9 +95,11 @@ export const GardenItemContainer = <
           groupingKeys: [keys.gardenKey.toString(), ...keys.groupByKeys],
           subgroupName: subGroupName,
         },
+        context,
         signal
       ) as any;
     },
+    context,
     ['groupName']
   );
 

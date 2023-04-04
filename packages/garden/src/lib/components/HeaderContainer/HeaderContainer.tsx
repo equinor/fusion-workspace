@@ -11,29 +11,29 @@ import { findBlockCacheEntry, GardenBlock, getBlocksInView } from '../VirtualGar
 import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { makeBlocks } from '../../utils/gardenBlock';
 
-type HeaderContainerProps = {
+type HeaderContainerProps<TContext = undefined> = {
   columnVirtualizer: { virtualItems: VirtualItem[] };
   highlightedColumn: number | undefined;
   blockSqrt: number;
   columnCount: number;
   columnStart: number;
+  context: TContext;
   columnEnd: number;
-  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
 };
-export const HeaderContainer = ({
+export const HeaderContainer = <TContext,>({
   columnVirtualizer,
   highlightedColumn,
   blockSqrt,
   columnCount,
   columnEnd,
   columnStart,
+  context,
   getHeader,
-}: HeaderContainerProps): JSX.Element => {
+}: HeaderContainerProps<TContext>): JSX.Element => {
   const blocks = makeBlocks({ blockSqrt, columnCount, rowCount: 1 });
   const blocksInView = getBlocksInView(columnStart, columnEnd, 0, 0, blockSqrt);
-  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, (args, signal) => getHeader(args, signal), [
-    'header',
-  ]);
+  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getHeader, context, ['header']);
 
   const controller = useGardenContext();
   const {

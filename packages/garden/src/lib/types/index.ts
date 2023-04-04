@@ -17,6 +17,11 @@ export type GardenMeta = {
   validGroupingOptions: string[];
 };
 
+export type GardenApi = {
+  /** Call this to refetch */
+  invalidate: () => void;
+};
+
 export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys'>;
 
 export type GetBlockRequestArgs = {

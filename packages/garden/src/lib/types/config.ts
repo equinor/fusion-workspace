@@ -1,10 +1,9 @@
 import { GetIdentifier } from '../classes';
+import { GardenDataSource } from '../components';
 import { GroupingKeys, OnClickEvents, GetDisplayName, CustomVirtualViews, Visuals } from './';
 
-export type GardenConfig<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = {
+export type GardenConfig<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
+  dataSource: GardenDataSource<TContext>;
   /**
    * Primary(Unique) identifier for the data
    * ```TS
@@ -26,7 +25,7 @@ export type GardenConfig<
   /** Supply functions for handling clicks in the garden */
   clickEvents?: OnClickEvents<TData>;
   /** Replace built-in components with your own */
-  customViews?: CustomVirtualViews<TData, TContext>;
+  customViews?: CustomVirtualViews<TData, any>;
   /** Visual details */
   visuals?: Visuals<TData>;
   /** Function for calculating custom state

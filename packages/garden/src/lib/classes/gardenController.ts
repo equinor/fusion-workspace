@@ -25,10 +25,7 @@ const NullFunc = () => void 0;
  * @typeParam Object interface for custom state
  * @typeParam Custom user context, store anything here
  */
-export class GardenController<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never
-> {
+export class GardenController<TData extends Record<PropertyKey, unknown>, TContext> {
   colorAssistMode$ = new BehaviorSubject<boolean>(false);
 
   /** The nodes that is currently selected */
@@ -60,10 +57,8 @@ export class GardenController<
   // customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
   /** Override default view */
-  customViews: CustomVirtualViews<TData, TContext> = {
-    customItemView: DefaultGardenItem as React.MemoExoticComponent<
-      (args: CustomItemView<TData, TContext>) => JSX.Element
-    >,
+  customViews: CustomVirtualViews<TData, any> = {
+    customItemView: DefaultGardenItem as React.MemoExoticComponent<(args: CustomItemView<TData, any>) => JSX.Element>,
     customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
     customHeaderView: DefaultHeaderView as React.MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>,
   };
@@ -91,7 +86,7 @@ export class GardenController<
       getContext,
       customViews,
       visuals,
-    }: GardenConfig<TData, TContext>,
+    }: GardenConfig<TData, any>,
     getDestructor?: (destroy: () => void) => void
   ) {
     this.getIdentifier = getIdentifier;

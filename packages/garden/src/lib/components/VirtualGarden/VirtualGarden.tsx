@@ -98,31 +98,33 @@ export type GardenBlock = {
   y: number;
 };
 
-type VirtualGardenProps<TData extends Record<PropertyKey, unknown>> = {
+type VirtualGardenProps<TData extends Record<PropertyKey, unknown>, TContext> = {
   width?: number;
   handleOnItemClick: (item: TData) => void;
   meta: GardenMeta;
   //Blocksize must be a number √blockSize === Integer
   blockSize?: number;
-  getBlockAsync: (args: GetBlockRequestArgs, signal: AbortSignal) => Promise<GardenGroup<TData>[]>;
-  getHeader: (args: GetHeaderBlockRequestArgs, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
-  getSubgroupItems: (args: GetSubgroupItemsArgs, signal: AbortSignal) => Promise<TData[]>;
+  getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<GardenGroup<TData>[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal: AbortSignal) => Promise<TData[]>;
+  context: TContext;
 };
 
 export const VirtualGarden = <
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>
+  TContext
 >({
   width,
   handleOnItemClick,
   blockSize = 22_500,
   getBlockAsync,
   meta,
+  context,
   getHeader,
   getSubgroupItems,
-}: VirtualGardenProps<TData>): JSX.Element => {
+}: VirtualGardenProps<TData, TContext>): JSX.Element => {
   const { columnCount, columnStart, rowCount } = meta;
 
   const blockSqrt = Math.sqrt(blockSize); //√blockSize
@@ -184,7 +186,7 @@ export const VirtualGarden = <
   );
 
   const blocksInView = getBlocksInView(xStart, xEnd, yStart, yEnd, blockSqrt);
-  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getBlockAsync, ['groups']);
+  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getBlockAsync, context, ['groups']);
 
   return (
     <>
@@ -196,6 +198,7 @@ export const VirtualGarden = <
         isScrolling={isScrolling}
       >
         <HeaderContainer
+          context={context}
           getHeader={getHeader}
           blockSqrt={blockSqrt}
           columnCount={columnCount}
@@ -212,6 +215,7 @@ export const VirtualGarden = <
           return (
             <Fragment key={virtualColumn.key}>
               <GardenItemContainer
+                context={context}
                 getSubGroupItems={getSubgroupItems}
                 maxRowCount={maxRowCount}
                 collapseColumn={(name) => collapseColumn(virtualColumn.index, name)}

@@ -6,11 +6,15 @@ import { StyledVirtualContainer } from './virtualContainer.styles';
 import { useQuery } from '@tanstack/react-query';
 import { GardenDataSource } from '../Garden';
 
-type VirtualContainerProps = {
-  dataSource: GardenDataSource;
+type VirtualContainerProps<TContext = undefined> = {
+  dataSource: GardenDataSource<TContext>;
+  context: TContext;
 };
 
-export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Element | null => {
+export const VirtualContainer = <TContext,>({
+  dataSource,
+  context,
+}: VirtualContainerProps<TContext>): JSX.Element | null => {
   const controller = useGardenContext();
   const {
     clickEvents: { onClickItem },
@@ -18,13 +22,13 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
 
   const keys = useGroupingKeys();
 
-  const { data } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys], {
+  const { data } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     cacheTime: 0,
     staleTime: 0,
     queryFn: ({ signal }) =>
-      dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], signal ?? new AbortSignal()),
+      dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], context, signal ?? new AbortSignal()),
   });
 
   if (!data) {
@@ -51,6 +55,7 @@ export const VirtualContainer = ({ dataSource }: VirtualContainerProps): JSX.Ele
         <FilterSelector allGroupingOptions={data.allGroupingOptions} validGroupingOptions={data.validGroupingOptions} />
         <ExpandProvider initialWidths={widths}>
           <VirtualGarden
+            context={context}
             getSubgroupItems={dataSource.getSubgroupItems}
             meta={data}
             getBlockAsync={dataSource.getBlockAsync}

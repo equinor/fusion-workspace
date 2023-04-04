@@ -22,15 +22,6 @@ export class WorkspaceMediator<
   TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
   TContext extends Record<PropertyKey, unknown> = never
 > {
-  /**
-   * Callback that returns an instance of itself
-   * Helpful when chaining
-   */
-  addMiddleware = (cb: (mediator: this) => void) => {
-    cb(this);
-    return this;
-  };
-
   #destructors = new Array<VoidFunction>();
 
   #appendDestructor = (destructor: VoidFunction) => {
@@ -44,8 +35,6 @@ export class WorkspaceMediator<
   selectionService = createSelectionService<TNode>(this.#appendDestructor);
 
   sidesheetService = createEventService<TSidesheetEvents>(this.#appendDestructor);
-
-  dataService = createDataService<TData>(this.#appendDestructor);
 
   errorService = createErrorService<TError>(this.#appendDestructor);
 
