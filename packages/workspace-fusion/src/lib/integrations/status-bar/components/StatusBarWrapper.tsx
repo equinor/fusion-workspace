@@ -1,9 +1,8 @@
 import { StatusBar } from '@equinor/workspace-status-bar';
 
 import { BaseEvent } from '@equinor/workspace-core';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { StatusBarConfig } from '../types/workspaceConfig';
-import { useEffect } from 'react';
 import { useFilterContext } from '@equinor/workspace-filter';
 
 type StatusBarWrapperProps<
@@ -21,14 +20,9 @@ export function StatusBarWrapper<
   TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined
 >({ config }: StatusBarWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) {
-  const { filterState } = useFilterContext();
-  const { data, isLoading } = useQuery(['kpis'], () => config(filterState));
-
-  const client = useQueryClient();
-
-  useEffect(() => {
-    client.invalidateQueries();
-  }, [filterState]);
+  const { filterState, uncheckedValues } = useFilterContext();
+  console.log(filterState, uncheckedValues);
+  const { data, isLoading } = useQuery(['kpis', filterState], () => config(filterState));
 
   if (isLoading || !data) {
     return <div></div>;
