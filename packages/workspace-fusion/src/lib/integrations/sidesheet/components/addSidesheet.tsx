@@ -10,26 +10,23 @@ export function addSidesheet<
   TError,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never
->(
-  config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined,
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-): (() => JSX.Element) | undefined {
+>(config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined): (() => JSX.Element) | undefined {
   if (!config || Object.keys(config).length === 0) return;
 
-  if (config.type === 'custom') {
-    return () => (
-      <Wrapper mediator={mediator}>
-        <SidesheetAdvancedWrapper config={config} mediator={mediator} />
-      </Wrapper>
-    );
-  }
-  if (config.type === 'default') {
-    return () => (
-      <Wrapper mediator={mediator}>
-        <SidesheetSimpleWrapper config={config} mediator={mediator} />
-      </Wrapper>
-    );
-  }
+  // if (config.type === 'custom') {
+  //   return () => (
+  //     <Wrapper mediator={mediator}>
+  //       <SidesheetAdvancedWrapper config={config} mediator={mediator} />
+  //     </Wrapper>
+  //   );
+  // }
+  // if (config.type === 'default') {
+  //   return () => (
+  //     <Wrapper mediator={mediator}>
+  //       <SidesheetSimpleWrapper config={config} mediator={mediator} />
+  //     </Wrapper>
+  //   );
+  // }
   return;
 }
 

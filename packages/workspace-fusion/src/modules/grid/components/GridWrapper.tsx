@@ -1,28 +1,31 @@
 import { useRef } from 'react';
-import { Grid, GridController } from '@equinor/workspace-ag-grid';
+import { Grid, GridController, IServerSideGetRowsParams } from '@equinor/workspace-ag-grid';
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator } from '../../../lib';
-import { NoDataSplashScreen } from '../../../lib/components/NoDataSplashScreen';
+import { GridConfig } from '../../../lib/integrations/grid';
+import { useFilterContext } from '@equinor/workspace-filter';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TFilter = undefined
 > = {
-  controller: GridController<TData>;
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
+  config: GridConfig<TData, TFilter>;
 };
 
 export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TFilter = undefined
 >({
-  controller,
-  mediator,
-}: GridWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
+  config,
+}: GridWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) => {
   const ref = useRef(null);
+
+  const { filterState } = useFilterContext();
+
   const [_, height] = useResizeObserver(ref);
 
   return (
@@ -31,9 +34,13 @@ export const GridWrapper = <
       style={{ height: '100%', width: '100%', padding: '1rem 1rem 0rem 1rem' }}
       ref={ref}
     >
-      <NoDataSplashScreen mediator={mediator}>
-        <Grid controller={controller} height={height} />
-      </NoDataSplashScreen>
+      <Grid
+        columnDefs={config.columnDefinitions}
+        gridOptions={{} as any}
+        key={JSON.stringify(filterState)}
+        getRows={(params: IServerSideGetRowsParams<any>) => config.getRows(params, filterState as TFilter)}
+        height={height}
+      />
     </div>
   );
 };

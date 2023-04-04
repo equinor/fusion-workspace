@@ -1,14 +1,11 @@
-import { useState } from 'react';
-import { Workspace as WorkspaceView, WorkspaceReactMediator } from '@equinor/workspace-react';
-import { FusionMediator, WorkspaceProps } from '../types';
+import { Workspace as WorkspaceView } from '@equinor/workspace-react';
+import { WorkspaceProps } from '../types';
 
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
-import { DataSourceProvider } from '../integrations/data-source';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { tryGetTabFromUrl, updateQueryParams } from '../classes/fusionUrlHandler';
-import history from 'history/browser';
+import { tryGetTabFromUrl } from '../classes/fusionUrlHandler';
 import { WorkspaceBoundary } from './error';
 
 const client = new QueryClient();
@@ -16,10 +13,8 @@ const client = new QueryClient();
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
->(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
+  TCustomSidesheetEvents extends BaseEvent = never
+>(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>) {
   return (
     <WorkspaceBoundary>
       <WorkspaceComponent {...props} />
@@ -39,35 +34,28 @@ function useCheckParentClient(): QueryClient {
 function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
->(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>) {
-  const [mediator] = useState<FusionMediator<TData, TContext, TCustomSidesheetEvents>>(
-    new WorkspaceReactMediator(props.workspaceOptions.getIdentifier)
-  );
-
+  TCustomSidesheetEvents extends BaseEvent = never
+>(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>) {
   const client = useCheckParentClient();
 
   //Probably make one for each?
-  const configuration = createConfigurationObject(props, mediator);
+  const configuration = createConfigurationObject(props);
 
-  // useCleanupQueryParams(mediator, history);
   return (
     <QueryClientProvider client={client}>
-      <DataSourceProvider config={props.dataOptions} appKey={props.workspaceOptions.appKey}>
-        <WorkspaceView
-          Sidesheet={configuration.Sidesheet}
-          providers={configuration.providers}
-          defaultTab={configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab}
-          tabs={configuration.tabs}
-          events={{
-            onTabChange: (newTab) => {
-              updateQueryParams([['tab', newTab]], mediator, history);
-            },
-          }}
-        />
-      </DataSourceProvider>
+      <WorkspaceView
+        Sidesheet={configuration.Sidesheet}
+        providers={configuration.providers}
+        defaultTab={configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab}
+        tabs={configuration.tabs}
+        events={
+          {
+            // onTabChange: (newTab) => {
+            //   updateQueryParams([['tab', newTab]], history);
+            // },
+          }
+        }
+      />
     </QueryClientProvider>
   );
 }

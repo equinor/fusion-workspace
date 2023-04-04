@@ -8,8 +8,6 @@ import {
   CustomHeaderView,
   CustomItemView,
   CustomVirtualViews,
-  FieldSetting,
-  FieldSettings,
   GardenConfig as OriginalGardenConfig,
   GardenController,
   GardenGroup,
@@ -20,13 +18,9 @@ import {
   GetDescription,
   GetItemColor,
   GetIdentifier,
-  GetKeyFunction,
-  GetSortFunction,
   GroupDescriptionFunc,
   GroupingKeys,
-  HighlightHorizontalColumn,
   HorizontalGroupingAccessor,
-  ItemWidthCalculation,
   GetDisplayName,
   OnClickEvents,
   OnClickGroup,
@@ -37,6 +31,12 @@ import {
   getGardenItems,
   isSubGroup,
   CustomGroupViewProps,
+  GetBlockRequestArgs,
+  GardenDataSource,
+  GardenHeaderGroup,
+  GardenMeta,
+  GetHeaderBlockRequestArgs,
+  GetSubgroupItemsArgs,
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
@@ -49,8 +49,6 @@ export type {
   CustomHeaderView,
   CustomItemView,
   CustomVirtualViews,
-  FieldSetting,
-  FieldSettings,
   GardenConfig,
   GardenController,
   GardenGroup,
@@ -60,13 +58,9 @@ export type {
   GetDescription,
   GetItemColor,
   GetIdentifier,
-  GetKeyFunction,
-  GetSortFunction,
   GroupDescriptionFunc,
   GroupingKeys,
-  HighlightHorizontalColumn,
   HorizontalGroupingAccessor,
-  ItemWidthCalculation,
   GetDisplayName,
   OnClickEvents,
   OnClickGroup,
@@ -77,12 +71,15 @@ export type {
 };
 
 /** Override remove config types that is handled internally */
-type GardenConfig<
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = Omit<
-  OriginalGardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-  'data' | 'getIdentifier' | 'clickEvents' | 'getContext'
->;
+type GardenConfig<TData extends Record<PropertyKey, unknown>, TFilter> = Omit<
+  OriginalGardenConfig<TData, TFilter>,
+  'data' | 'getIdentifier' | 'clickEvents' | 'getContext' | 'dataSource'
+> &
+  WorkspaceGardenDataSource<TFilter>;
+
+export type WorkspaceGardenDataSource<TFilter = undefined> = {
+  getGardenMeta: (keys: string[], filters: TFilter, signal?: AbortSignal) => Promise<GardenMeta>;
+  getBlockAsync: (args: GetBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, filters: TFilter, signal?: AbortSignal) => Promise<any[]>;
+};

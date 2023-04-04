@@ -1,5 +1,5 @@
-import { StatusBarConfig } from './workspaceConfig';
+import { StatusItem } from './workspaceConfig';
 
-export type WorkspaceStatusBarProps<TData extends Record<PropertyKey, unknown>> = {
-  statusBarOptions?: StatusBarConfig<TData>;
+export type WorkspaceStatusBarProps<TFilter = undefined> = {
+  statusBarOptions?: (filters: TFilter) => Promise<StatusItem[]>;
 };

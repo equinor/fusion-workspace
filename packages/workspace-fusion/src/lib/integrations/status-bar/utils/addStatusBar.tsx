@@ -9,16 +9,12 @@ export function addStatusBar<
   TData extends Record<PropertyKey, unknown>,
   TError,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
->(
-  config: StatusBarConfig<TData> | undefined,
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-): Provider | undefined {
+  TCustomSidesheetEvents extends BaseEvent = never,
+  TFilter = undefined
+>(config: StatusBarConfig<TFilter> | undefined): Provider | undefined {
   if (!config) return;
   const StatusBarProvider = ({ children }) => (
-    <StatusBarContext.Provider value={() => <StatusBarWrapper config={config} mediator={mediator} />}>
-      {children}
-    </StatusBarContext.Provider>
+    <StatusBarContext.Provider value={() => <StatusBarWrapper config={config} />}>{children}</StatusBarContext.Provider>
   );
   return {
     Component: StatusBarProvider,

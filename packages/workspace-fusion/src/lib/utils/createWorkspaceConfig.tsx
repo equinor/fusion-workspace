@@ -1,27 +1,18 @@
 import { Provider, Tab } from '@equinor/workspace-react';
-import history from 'history/browser';
-import { configureUrlWithHistory } from '../classes/fusionUrlHandler';
-import { WorkspaceConfiguration, FusionMediator, WorkspaceProps, WorkspaceTabNames } from '../types';
+import { WorkspaceConfiguration, WorkspaceProps } from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
-import { addCustomTabs } from './customTab';
-import { addContext } from './context';
 
-import { addFilter } from '../integrations/filter';
 import { addStatusBar } from '../integrations/status-bar';
 import { addSidesheet } from '../integrations/sidesheet';
 import { BaseEvent } from '@equinor/workspace-core';
 import { RootHeaderContext } from '../context';
+import { FilterContextProvider } from '@equinor/workspace-filter';
 
 export function createConfigurationObject<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
->(
-  props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>,
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
-): WorkspaceConfiguration {
+  TCustomSidesheetEvents extends BaseEvent = never
+>(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>): WorkspaceConfiguration {
   const tabs: Tab[] = [];
   const providers: Provider[] = [];
 
@@ -35,26 +26,30 @@ export function createConfigurationObject<
     providers.push(e);
   };
 
-  pushProvider(configureUrlWithHistory(mediator, history));
+  pushProvider({
+    Component: FilterContextProvider,
+    name: 'filter_context',
+  });
+
+  // pushProvider(configureUrlWithHistory(mediator, history));
 
   pushProvider({ name: 'Header', Component: RootHeaderContext });
-  pushProvider(addContext(props.contextOptions, mediator));
 
-  tabs.concat(addCustomTabs(props.customTabs, mediator));
+  // tabs.concat(addCustomTabs(props.customTabs, mediator));
 
   props.modules &&
     props.modules.forEach((module) => {
-      const config = module.setup(props, mediator);
+      const config = module.setup(props);
       if (!config) return;
       pushProvider(config.provider);
       pushTab(config.tab);
     });
 
-  pushProvider(addStatusBar(props.statusBarOptions, mediator));
+  pushProvider(addStatusBar(props.statusBarOptions));
 
-  pushProvider(addFilter(props.filterOptions, mediator));
+  // pushProvider(addFilter(props.filterOptions));
 
-  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
+  const Sidesheet = addSidesheet(props.sidesheetOptions);
 
   sortFusionTabs(tabs);
 

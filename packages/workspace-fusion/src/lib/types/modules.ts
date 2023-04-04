@@ -8,6 +8,5 @@ export type FusionWorkspaceModule = {
 };
 
 export type ModuleSetup = (
-  props: WorkspaceProps<any, any, any, any, any>,
-  mediator: FusionMediator<any, any, any>
+  props: WorkspaceProps<any, any, any>
 ) => { provider: Provider; tab: Tab<string> } | undefined;

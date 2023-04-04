@@ -9,7 +9,7 @@ import { PowerBiIcon } from './icons/PowerBiIcon';
 
 export const powerBiModule: FusionWorkspaceModule = {
   name: 'power-bi',
-  setup: (props, _mediator) => {
+  setup: (props) => {
     const powerBiConfig = props.powerBiOptions;
     if (!powerBiConfig) return;
 

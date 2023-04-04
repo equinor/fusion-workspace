@@ -1,4 +1,4 @@
-import { Filter } from '@equinor/workspace-filter';
+import { Filter, FilterDataSource } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
 import styled from 'styled-components';
 import { StyledActionBar } from '../../../../lib/components/Header/actionBar.styles';
@@ -9,21 +9,22 @@ type GardenWorkspaceHeaderProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>
+  TContext
 > = {
-  controller: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  controller: GardenController<TData, TContext>;
+  dataSource?: FilterDataSource;
 };
 
 export function GardenWorkspaceHeader<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>
->({ controller }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
+  TContext
+>({ controller, dataSource }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
   return (
     <StyledGardenHeader>
       <NavigationBar />
-      <Filter />
+      {dataSource && <Filter dataSource={dataSource} />}
     </StyledGardenHeader>
   );
 }

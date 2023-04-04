@@ -3,7 +3,7 @@ import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
 import { SidesheetAdvanced } from '../../sidesheet';
-import { useQueryContext } from '../../../../integrations/data-source';
+
 import { useQueryClient } from '@tanstack/react-query';
 
 type SidesheetAdvancedWrapperProps<
@@ -29,7 +29,6 @@ export const SidesheetAdvancedWrapper = <
     TCustomSidesheetEvents | WorkspaceSidesheets<TData>
   > | null>(null);
 
-  const { queryKey } = useQueryContext();
   const queryClient = useQueryClient();
 
   const handleSetter = useCallback(
@@ -61,7 +60,7 @@ export const SidesheetAdvancedWrapper = <
       controller={{
         close: () => handleSetter(null),
         invalidate: () => {
-          queryClient.invalidateQueries({ queryKey: queryKey });
+          // queryClient.invalidateQueries({ queryKey: queryKey });
         },
       }}
     />

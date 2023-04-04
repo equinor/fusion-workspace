@@ -1,5 +1,4 @@
-import { WorkspaceReactMediator } from '@equinor/workspace-react';
-import { BaseEvent } from '@equinor/workspace-core';
+import { BaseEvent, WorkspaceMediator } from '@equinor/workspace-core';
 import { FusionBookmark } from './fusionBookmark';
 import { IsNeverType } from './typescriptUtils/isNeverType';
 import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/sidesheet';
@@ -11,7 +10,7 @@ export type FusionMediator<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never
-> = WorkspaceReactMediator<
+> = WorkspaceMediator<
   TData,
   WorkspaceNode<TData>,
   IsNeverType<TCustomSidesheetEvents, WorkspaceSidesheets<TData>, TCustomSidesheetEvents | WorkspaceSidesheets<TData>>,
