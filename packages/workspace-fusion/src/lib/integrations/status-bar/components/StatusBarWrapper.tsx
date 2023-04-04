@@ -21,7 +21,7 @@ export function StatusBarWrapper<
   TFilter = undefined
 >({ config }: StatusBarWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) {
   const { filterState, uncheckedValues } = useFilterContext();
-  console.log(filterState, uncheckedValues);
+
   const { data, isLoading } = useQuery(['kpis', filterState], () => config(filterState));
 
   if (isLoading || !data) {
