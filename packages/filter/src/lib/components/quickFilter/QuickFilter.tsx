@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   StyledCompactFilterWrapper,
@@ -9,54 +9,87 @@ import {
 } from './quickFilter.styles';
 import { FilterGroup } from '../filterGroup';
 import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
-import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
-import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
-import { FilterController } from '../../classes';
-import { FilterView } from '../filterView/FilterView';
-import { useIsFilterExpanded } from '../../hooks/useIsFilterExpanded';
-import { useFilterContext } from '../../hooks';
+
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
-import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
+import { useQuery } from '@tanstack/react-query';
+import { FilterDataSource, FilterGroup as IFilterGroup } from '../../types';
+import { useFilterContext } from '../../context/filterContext';
 
 /**
  * How to separate controller and visual logic in this component?
  */
-interface QuickFilterProps<T> {
-  controller: FilterController<T>;
+interface QuickFilterProps {
+  dataSource: FilterDataSource;
 }
 
-export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element {
-  const { groups } = useFilterContext();
-  const { setIsFilterExpanded } = useFilterContext();
-  const isFilterExpanded = useIsFilterExpanded();
+export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
+  const { uncheckedValues, setFilterState, setUncheckedValues } = useFilterContext();
+
+  const { data: groups } = useQuery(
+    ['filter-meta'],
+    ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(signal),
+    {
+      suspense: true,
+      useErrorBoundary: true,
+    }
+  );
+
+  useEffect(() => {
+    if (!groups) return;
+    //Danger useReducer!
+    setFilterState(getServerArgs(groups, uncheckedValues));
+  }, [uncheckedValues]);
+
+  const unCheckItem = (name: string, value: string) => {
+    const target = uncheckedValues.findIndex((s) => s.name === name);
+
+    if (target !== -1) {
+      setUncheckedValues((s) => [
+        ...s.slice(0, target),
+        { name: name, values: [...s[target].values, value], isQuickFilter: false },
+        ...s.slice(target + 1),
+      ]);
+    } else {
+      setUncheckedValues((s) => [...s, { name: name, values: [value], isQuickFilter: false }]);
+    }
+  };
+
+  const checkItem = (name: string, value: string) => {
+    const target = uncheckedValues.findIndex((s) => s.name === name);
+    if (target === -1) return;
+
+    setUncheckedValues((s) => [
+      ...s.slice(0, target),
+      { name: name, values: [...s[target].values.filter((s) => s !== value)], isQuickFilter: false },
+      ...s.slice(target + 1),
+    ]);
+  };
+
+  if (!groups) {
+    throw new Error('SU');
+  }
 
   const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
-  const {
-    valueFormatters,
-    filterStateController: { filterState, getInactiveGroupValues, clearActiveFilters },
-  } = controller;
 
   const handleExpandFilterGroup = (groupName: string) =>
     filterGroupOpen === groupName ? setFilterGroupOpen(null) : setFilterGroupOpen(groupName);
 
-  const quickFilterGroups = groups?.filter(({ isQuickFilter }) => isQuickFilter).map(({ name }) => name);
+  const quickFilterGroups = groups?.filter(({ isQuickFilter }) => isQuickFilter);
 
-  const filterGroups = valueFormatters.map(({ name }) => name);
+  const filterGroups = groups.map((s) => s.name);
 
-  const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(
-    groups.filter((s) => !s.defaultHidden).map((s) => s.name)
-  );
+  const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
 
   const toggleFilterIsExpanded = () => {
-    setIsFilterExpanded(!isFilterExpanded);
+    // setIsFilterExpanded(!isFilterExpanded);
     setFilterGroupOpen(null);
   };
 
-  const calculateHiddenFiltersApplied = () =>
-    groups.reduce(
-      (acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
-      0
-    );
+  const calculateHiddenFiltersApplied = () => 0;
+  // groups.reduce(
+  //   (acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
+  //   0
+  // );
 
   return (
     <StyledWrapper id="filter_root">
@@ -66,16 +99,29 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
             <FilterQuickSearch />
           </StyledLeftSection>
           <StyledRightSection>
-            {!isFilterExpanded && (
+            {true && (
               <>
                 {quickFilterGroups.map(
                   (group, i) =>
                     i < 5 && (
                       <FilterGroup
-                        onClick={() => handleExpandFilterGroup(group)}
-                        key={group}
-                        isOpen={filterGroupOpen === group}
-                        name={group}
+                        isChecked={(item) =>
+                          !!uncheckedValues.find((s) => s.name === group.name)?.values.includes(item)
+                        }
+                        handleFilterItemClick={(item) => {
+                          const isUnchecked = uncheckedValues.find((s) => s.name === group.name)?.values.includes(item);
+                          if (isUnchecked) {
+                            console.log('checkign item');
+                            checkItem(group.name, item);
+                          } else {
+                            unCheckItem(group.name, item);
+                          }
+                        }}
+                        onClick={() => handleExpandFilterGroup(group.name)}
+                        group={group}
+                        key={group.name}
+                        isOpen={filterGroupOpen === group.name}
+                        name={group.name}
                       />
                     )
                 )}
@@ -83,7 +129,7 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
               </>
             )}
             <div style={{ display: 'flex' }}>
-              {isFilterExpanded && (
+              {/* {isFilterExpanded && (
                 <ToggleHideFilterPopover
                   allFilters={filterGroups}
                   setVisibleFilters={setVisibleFilterGroups}
@@ -97,12 +143,20 @@ export function QuickFilter<T>({ controller }: QuickFilterProps<T>): JSX.Element
 
               <StyledButton onClick={toggleFilterIsExpanded}>
                 {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-              </StyledButton>
+              </StyledButton> */}
             </div>
           </StyledRightSection>
         </StyledSearchLine>
       </StyledCompactFilterWrapper>
-      {isFilterExpanded && <FilterView visibleFilterGroups={visibleFilterGroups} />}
+      {/* {isFilterExpanded && <FilterView visibleFilterGroups={visibleFilterGroups} />} */}
     </StyledWrapper>
   );
 }
+const getServerArgs = (groups: IFilterGroup[], filterState: IFilterGroup[]) =>
+  groups.map(
+    (group): IFilterGroup => ({
+      name: group.name,
+      isQuickFilter: false,
+      values: group.values.filter((value) => !filterState.find((x) => x.name === group.name)?.values.includes(value)),
+    })
+  );

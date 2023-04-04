@@ -55,7 +55,7 @@ export class FilterStateController {
     } else {
       if (action === 'MarkActive') return;
       /** only add */
-      this.filterState.push({ name: groupName, values: [newValue] });
+      // this.filterState.push({ name: groupName, values: [newValue] });
     }
     this.setFilterState(this.filterState);
   };

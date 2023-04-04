@@ -35,7 +35,7 @@ export interface FilterConfiguration<T> {
 /**
  * Primitive types allowed as filter types.
  */
-export type FilterValueType = string | number | null;
+export type FilterValueType = string;
 
 /**
  * Function for formatting an object to a filter value
@@ -51,6 +51,7 @@ export interface ValueFormatterFilter<T> {
 export interface FilterGroup {
   name: string;
   values: FilterValueType[];
+  isQuickFilter: boolean;
 }
 
 export interface FilterItemCount {

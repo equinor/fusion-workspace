@@ -1,6 +1,6 @@
 import { Menu, Button, Search } from '@equinor/eds-core-react';
 import { useState } from 'react';
-import { useFilterContext, useFilterState } from '../../hooks';
+
 import { FilterValueType } from '../../types';
 import { FilterItemCheckbox } from '../filterItem/FilterItemCheckbox';
 import {
@@ -35,8 +35,8 @@ export const FilterGroupPopoverMenu = ({
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
 
-  const { getCountForFilterValue } = useFilterContext();
-  const { setFilterState, filterState } = useFilterState();
+  // const { getCountForFilterValue } = useFilterContext();
+  // const { setFilterState, filterState } = useFilterState();
 
   const handleInput = (e) => setSearchText(e.target.value.toString().toLowerCase());
 
@@ -49,13 +49,13 @@ export const FilterGroupPopoverMenu = ({
   const setFilterStateFromSearch = () => {
     const valuesMatchingSearch = values.filter((s) => !getValuesMatchingSearchText().includes(s));
 
-    setFilterState([
-      ...filterState.filter((s) => s.name !== groupName),
-      {
-        name: groupName,
-        values: valuesMatchingSearch,
-      },
-    ]);
+    // setFilterState([
+    //   ...filterState.filter((s) => s.name !== groupName),
+    //   {
+    //     name: groupName,
+    //     values: valuesMatchingSearch,
+    //   },
+    // ]);
     setSearchText('');
     closePopover();
   };
@@ -98,7 +98,7 @@ export const FilterGroupPopoverMenu = ({
               handleFilterItemClick={() => handleFilterItemClick(value)}
               handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
               isChecked={isChecked(value)}
-              count={getCountForFilterValue(groupName, value)}
+              count={0}
             />
           ))}
         </StyledList>

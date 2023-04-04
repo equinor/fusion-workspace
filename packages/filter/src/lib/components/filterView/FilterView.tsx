@@ -1,4 +1,3 @@
-import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterGroup } from '../../types';
 import { ExpandedFilterGroup } from '../expandedFilterGroup/ExpandedFilterGroup';
 import { StyledFilterGroups, StyledFilterGroupWrapper, StyledWrapper } from './filterView.styles';
@@ -8,11 +7,9 @@ interface FilterViewProps {
 }
 
 export const FilterView = ({ visibleFilterGroups }: FilterViewProps): JSX.Element => {
-  const { getGroupValues } = useFilterContext();
-
   return (
     <StyledWrapper>
-      <StyledFilterGroups>
+      {/* <StyledFilterGroups>
         {visibleFilterGroups
           .map(
             (groupName): FilterGroup => ({
@@ -25,7 +22,7 @@ export const FilterView = ({ visibleFilterGroups }: FilterViewProps): JSX.Elemen
               <ExpandedFilterGroup filterGroup={filterGroup} />
             </StyledFilterGroupWrapper>
           ))}
-      </StyledFilterGroups>
+      </StyledFilterGroups> */}
     </StyledWrapper>
   );
 };
