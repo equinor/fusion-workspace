@@ -6,14 +6,12 @@
 import {
   ColDef,
   ColumnState,
-  GetIdentifier,
-  GridController,
   GridOptions,
   ICellRendererProps,
   IServerSideGetRowsParams,
 } from '@equinor/workspace-ag-grid';
 
-export type { ColDef, ColumnState, GetIdentifier, GridConfig, GridController, GridOptions, ICellRendererProps };
+export type { ColDef, ColumnState, GridConfig, GridOptions, ICellRendererProps };
 
 type GridConfig<T, TFilter> = {
   columnDefinitions: [ColDef<T>, ...ColDef<T>[]];

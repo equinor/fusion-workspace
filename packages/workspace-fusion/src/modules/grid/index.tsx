@@ -1,4 +1,3 @@
-import { createGridController } from '@equinor/workspace-ag-grid';
 import { Provider } from '@equinor/workspace-react';
 import { GridHeader } from './components/GridWorkspaceHeader';
 import { GridWrapper } from './components/GridWrapper';
@@ -15,9 +14,7 @@ export const gridModule: FusionWorkspaceModule = {
   setup: (props) => {
     const gridConfig = props.gridOptions;
     if (!gridConfig) return;
-    const gridController = createGridController<any, any>(props.workspaceOptions.getIdentifier, () => void 0);
-
-    // setConfigOnController(gridConfig, gridController, mediator);
+    gridConfig.gridOptions ??= {};
 
     const provider: Provider = {
       Component: ({ children }) => {
@@ -36,7 +33,7 @@ export const gridModule: FusionWorkspaceModule = {
         Component: () => <GridWrapper<any, any, any, FilterGroup[]> config={gridConfig} />,
         name: 'grid',
         TabIcon: GridIcon,
-        CustomHeader: () => <GridHeader dataSource={props.filterOptions?.dataSource} controller={gridController} />,
+        CustomHeader: () => <GridHeader dataSource={props.filterOptions?.dataSource} />,
       },
     };
   },

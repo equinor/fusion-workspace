@@ -1,4 +1,3 @@
-import { GridController } from '@equinor/workspace-ag-grid';
 import { Filter, FilterDataSource, useFilterContext } from '@equinor/workspace-filter';
 import styled from 'styled-components';
 import { useStatusBar } from '../../../lib/integrations/status-bar/hooks/useStatusBar';
@@ -6,14 +5,10 @@ import { StyledActionBar } from '../../../lib/components/Header/actionBar.styles
 import { TabNavigation } from '../../../lib/integrations/common/components/TabNavigation';
 
 type GridHeaderProps<TData extends Record<PropertyKey, unknown>> = {
-  controller: GridController<TData>;
   dataSource?: FilterDataSource;
 };
 
-export function GridHeader<TData extends Record<PropertyKey, unknown>>({
-  controller,
-  dataSource,
-}: GridHeaderProps<TData>) {
+export function GridHeader<TData extends Record<PropertyKey, unknown>>({ dataSource }: GridHeaderProps<TData>) {
   return (
     <StyledGridHeader>
       <NavigationBar />

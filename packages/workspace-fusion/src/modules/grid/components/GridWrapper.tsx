@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Grid, GridController, IServerSideGetRowsParams } from '@equinor/workspace-ag-grid';
+import { useCallback, useEffect, useRef } from 'react';
+import { ServerGrid, IServerSideGetRowsParams } from '@equinor/workspace-ag-grid';
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { BaseEvent } from '@equinor/workspace-core';
 import { GridConfig } from '../../../lib/integrations/grid';
@@ -25,21 +25,31 @@ export const GridWrapper = <
   const ref = useRef(null);
 
   const { filterState } = useFilterContext();
+  const filterStateCopy = useRef<any>(filterState);
+
+  useEffect(() => {
+    /**
+     *  Bad practice but there is not another cleaner way
+     *  Stale state scenario
+     */
+    filterStateCopy.current = filterState;
+    config.gridOptions && config.gridOptions.api?.onFilterChanged();
+  }, [filterState]);
 
   const [_, height] = useResizeObserver(ref);
-
+  console.log(config);
   return (
     <div
       id="workspace_grid_wrapper"
       style={{ height: '100%', width: '100%', padding: '1rem 1rem 0rem 1rem' }}
       ref={ref}
     >
-      <Grid
-        columnDefs={config.columnDefinitions}
-        gridOptions={{} as any}
-        key={JSON.stringify(filterState)}
-        getRows={(params: IServerSideGetRowsParams<any>) => config.getRows(params, filterState as TFilter)}
+      <ServerGrid<TData>
+        getRows={(params) => config.getRows(params, filterStateCopy.current as TFilter)}
+        colDefs={config.columnDefinitions}
+        gridOptions={config.gridOptions}
         height={height}
+        context={filterState}
       />
     </div>
   );
