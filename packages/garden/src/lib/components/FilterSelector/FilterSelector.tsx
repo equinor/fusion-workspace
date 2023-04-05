@@ -47,7 +47,7 @@ export function FilterSelector({ allGroupingOptions, validGroupingOptions }: Fil
       <StyledSelectOneWrapper>
         <Autocomplete
           key={gardenKey.toString()}
-          options={[...allGroupingOptions, ...groupByKeys]}
+          options={allGroupingOptions}
           label={''}
           hideClearButton
           //TODO: ...EDS check if fixed
@@ -58,37 +58,16 @@ export function FilterSelector({ allGroupingOptions, validGroupingOptions }: Fil
         />
       </StyledSelectOneWrapper>
       <StyledSeparator>then</StyledSeparator>
-
-      {groupByKeys.sort().map((groupByKey, index) => {
-        return (
-          <Fragment key={groupByKey}>
-            <StyledSelectOneWrapper>
-              <Autocomplete
-                key={groupByKey.toString()}
-                options={allGroupingOptions.filter((s) => s !== gardenKey)}
-                label={''}
-                //TODO: ...EDS check if fixed
-                onFocus={(e) => e.preventDefault()}
-                selectedOptions={[groupByKey.toString()]}
-                onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0], index)}
-              />
-            </StyledSelectOneWrapper>
-            <StyledSeparator>then</StyledSeparator>
-          </Fragment>
-        );
-      })}
-      {validGroupingOptions && validGroupingOptions.length > 0 && (
-        <StyledSelectOneWrapper>
-          <Autocomplete
-            key={'EmptyGroupBySelector'}
-            options={validGroupingOptions}
-            label={''}
-            selectedOptions={['']}
-            onFocus={(e) => e.preventDefault()}
-            onOptionsChange={(changes) => addItemToGroupKeys(changes.selectedItems[0])}
-          />
-        </StyledSelectOneWrapper>
-      )}
+      <StyledSelectOneWrapper>
+        <Autocomplete
+          options={validGroupingOptions}
+          label={''}
+          //TODO: ...EDS check if fixed
+          onFocus={(e) => e.preventDefault()}
+          selectedOptions={[groupByKeys[0]]}
+          onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0], 0)}
+        />
+      </StyledSelectOneWrapper>
     </StyledSelectRowWrapper>
   );
 }

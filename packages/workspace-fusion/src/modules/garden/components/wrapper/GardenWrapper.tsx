@@ -1,6 +1,6 @@
 import { BaseEvent } from '@equinor/workspace-core';
-import { FilterGroup, useFilterContext } from '@equinor/workspace-filter';
-import { Garden, GardenApi, GardenDataSource } from '@equinor/workspace-garden';
+import { useFilterContext } from '@equinor/workspace-filter';
+import { Garden, GardenApi } from '@equinor/workspace-garden';
 import { useEffect, useState } from 'react';
 import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
@@ -30,7 +30,6 @@ export const GardenWrapper = <
   const [gardenApi, setGardenApi] = useState<null | GardenApi>(null);
 
   useEffect(() => {
-    console.log(gardenApi);
     gardenApi?.invalidate();
   }, [filterState]);
 

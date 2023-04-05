@@ -21,10 +21,6 @@ export function useBlockCache<T, TContext = undefined>(
       enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
       /** Annoying default in react-query */
       refetchOnWindowFocus: false,
-      /** Never refetch unless keys change */
-      staleTime: Infinity,
-      /** Remove from queryCache when keys change */
-      cacheTime: 0,
       queryFn: async (s) => {
         const { signal } = s as { signal: AbortSignal };
 

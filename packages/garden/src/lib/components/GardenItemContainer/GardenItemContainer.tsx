@@ -35,7 +35,7 @@ type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext 
 const createSubgroupBlockCache = ({ length, virtualColumnIndex }: { length: number; virtualColumnIndex: number }) =>
   new Array(length).fill(0).map((_, i) => ({ x: virtualColumnIndex, y: i }));
 
-const getOpenSubGroups = (expandedIndexes: ExpandedWithRange[], virtualColumnIndex) =>
+const getOpenSubGroups = (expandedIndexes: ExpandedWithRange[], virtualColumnIndex: number) =>
   expandedIndexes.map((s) => ({
     x: virtualColumnIndex,
     y: calculateActualIndex(expandedIndexes, s.index).actualIndex,
@@ -73,7 +73,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
     subGroupName: string;
     columnName: string;
   };
-  const [subGroupCount, setSubGroupCount] = useState<SubGroupState[]>([]);
+  const [subGroupCount, setSubGroupCount] = useState<number>(0);
 
   const selectedIds = useSelected();
 
@@ -82,18 +82,25 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
   const keys = useGroupingKeys();
 
   const queries = useBlockCache<TData[], TContext>(
-    createSubgroupBlockCache({ length: subGroupCount.length, virtualColumnIndex: virtualColumn.index }),
+    createSubgroupBlockCache({ length: subGroupCount, virtualColumnIndex: virtualColumn.index }),
     getOpenSubGroups(expandedIndexes, virtualColumn.index),
     1,
-    async (a, context, signal) => {
-      const actualGroup = subGroupCount[a.rowStart];
-      const { columnName, subGroupName } = actualGroup;
+    async (args, context, signal) => {
+      const { rowStart } = args;
+
+      //Match index and find record in expandedIndexes
+      const group = expandedIndexes.find(
+        (s) => calculateActualIndex(expandedIndexes, s.index).actualIndex === rowStart
+      );
+      if (!group) {
+        throw new Error('not found');
+      }
 
       return getSubGroupItems(
         {
-          columnName: columnName,
+          columnName: group.columnName,
           groupingKeys: [keys.gardenKey.toString(), ...keys.groupByKeys],
-          subgroupName: subGroupName,
+          subgroupName: group.name,
         },
         context,
         signal
@@ -145,14 +152,8 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
          */
         if (data) {
           const group = data[convertActualIndexToPaginatedIndex(virtualColumn.index, blockSqrt)];
-          if (subGroupCount.length !== group.subGroupCount) {
-            setSubGroupCount(
-              new Array(group.subGroupCount).fill(0).map((_, i) => ({
-                columnName: group.columnName,
-                subGroupName: group.subGroups[i].columnName,
-                index: i,
-              }))
-            );
+          if (subGroupCount !== group.subGroupCount) {
+            setSubGroupCount(group.subGroupCount);
           }
         }
 
@@ -253,8 +254,14 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                     /** Collapse the column to adjust all the following indices */
                     collapseColumn(item.columnName);
                   } else {
+                    const group = data[convertActualIndexToPaginatedIndex(virtualColumn.index, blockSqrt)];
                     /**add expanded column */
-                    expandColumn({ index: virtualRow.index, count: item.totalItemsCount, name: item.columnName });
+                    expandColumn({
+                      index: virtualRow.index,
+                      count: item.totalItemsCount,
+                      name: item.columnName,
+                      columnName: group.columnName,
+                    });
                     /**Update row count */
                     setUpdatedRowCount(
                       expandedIndexes.reduce((acc, curr) => acc + curr.count, 0) +

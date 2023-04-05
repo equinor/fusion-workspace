@@ -3,7 +3,6 @@ import { useVirtual } from 'react-virtual';
 import { useGardenContext } from '../../hooks';
 
 import { useExpand } from '../../hooks/useExpand';
-import { useRefresh } from '../../hooks/useRefresh';
 import { useVirtualScrolling } from '../../hooks/useVirtualScrolling';
 import {
   GardenGroup,
@@ -43,6 +42,7 @@ export type Expanded = {
   index: number;
   count: number;
   name: string;
+  columnName: string;
 };
 
 export type ExpandedWithRange = Expanded & { range: number[] };
