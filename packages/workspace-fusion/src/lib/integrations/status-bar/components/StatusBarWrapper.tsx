@@ -20,9 +20,9 @@ export function StatusBarWrapper<
   TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined
 >({ config }: StatusBarWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) {
-  const { filterState, uncheckedValues } = useFilterContext();
+  const { filterState } = useFilterContext();
 
-  const { data, isLoading } = useQuery(['kpis', filterState], () => config(filterState));
+  const { data, isLoading } = useQuery(['kpis', filterState], (a) => config(filterState, a.signal));
 
   if (isLoading || !data) {
     return <div></div>;
