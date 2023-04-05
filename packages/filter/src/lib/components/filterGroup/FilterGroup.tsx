@@ -15,6 +15,7 @@ interface FilterGroupProps {
   group: IFilterGroup;
   handleFilterItemClick: (filterItem: FilterValueType) => void;
   isChecked: (item: string) => boolean;
+  checkAll: VoidFunction;
 }
 export const FilterGroup = ({
   name,
@@ -23,6 +24,7 @@ export const FilterGroup = ({
   group,
   handleFilterItemClick,
   isChecked,
+  checkAll,
 }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,8 +45,6 @@ export const FilterGroup = ({
   // const handleFilterItemClick = (filterItem: FilterValueType) =>
   //   changeFilterItem(isChecked(filterItem) ? 'MarkActive' : 'MarkInactive', name, filterItem);
 
-  const markAllValuesActive = (name: string) => {};
-
   const isAllChecked = true;
   // const isAllChecked = getInactiveGroupValues(name).length === 0;
   const checkedValues = [''];
@@ -64,7 +64,7 @@ export const FilterGroup = ({
           handleFilterItemLabelClick={handleFilterItemLabelClick}
           handleFilterItemClick={handleFilterItemClick}
           isChecked={(value) => isChecked(value)}
-          markAllValuesActive={() => markAllValuesActive(name)}
+          markAllValuesActive={checkAll}
           closePopover={onClick}
           anchorEl={ref.current}
           values={values}

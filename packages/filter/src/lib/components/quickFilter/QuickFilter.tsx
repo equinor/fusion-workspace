@@ -35,8 +35,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   );
 
   useEffect(() => {
-    if (!groups || !uncheckedValues.length) return;
-    //Danger useReducer!
+    if (!groups) return;
 
     setFilterState(getServerArgs(groups, uncheckedValues));
   }, [uncheckedValues]);
@@ -64,6 +63,16 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
       { name: name, values: [...s[target].values.filter((s) => s !== value)], isQuickFilter: false },
       ...s.slice(target + 1),
     ]);
+  };
+
+  /**
+   * Check all in a group
+   */
+  const clearGroup = (name: string) => {
+    const target = uncheckedValues.findIndex((s) => s.name === name);
+    if (target === -1) return;
+
+    setUncheckedValues((s) => [...s.slice(0, target), ...s.slice(target + 1)]);
   };
 
   if (!groups) {
@@ -106,6 +115,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                   (group, i) =>
                     i < 5 && (
                       <FilterGroup
+                        checkAll={() => clearGroup(group.name)}
                         isChecked={(item) =>
                           !!uncheckedValues.find((s) => s.name === group.name)?.values.includes(item)
                         }
