@@ -14,8 +14,9 @@ interface FilterGroupProps {
   onClick: () => void;
   group: IFilterGroup;
   handleFilterItemClick: (filterItem: FilterValueType) => void;
-  isChecked: (item: string) => boolean;
   checkAll: VoidFunction;
+  filterItemLabelClick: (filterItem: FilterValueType) => void;
+  uncheckedValues: FilterValueType[];
 }
 export const FilterGroup = ({
   name,
@@ -23,32 +24,15 @@ export const FilterGroup = ({
   onClick,
   group,
   handleFilterItemClick,
-  isChecked,
   checkAll,
+  filterItemLabelClick,
+  uncheckedValues,
 }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
-  // const handleFilterItemLabelClick = (val: FilterValueType) =>
-  //   setFilterState([
-  //     ...filterState.filter((s) => s.name !== name),
-  //     { name: name, values: getGroupValues(name).filter((s) => s !== val) },
-  //   ]);
-
-  // const values = groups.find((s) => s.name === name)?.values ?? [];
-
-  const handleFilterItemLabelClick = (val: FilterValueType) => {};
-
-  const values = group.values;
-
-  // const isChecked = (filterValue: FilterValueType) => checkValueIsInactive(name, filterValue);
-
-  // const handleFilterItemClick = (filterItem: FilterValueType) =>
-  //   changeFilterItem(isChecked(filterItem) ? 'MarkActive' : 'MarkInactive', name, filterItem);
-
-  const isAllChecked = true;
-  // const isAllChecked = getInactiveGroupValues(name).length === 0;
-  const checkedValues = [''];
-  // const checkedValues = values.filter((value) => !getInactiveGroupValues(name).includes(value));
+  const { values } = group;
+  const isAllChecked = uncheckedValues.length === 0;
+  const checkedValues = group.values.filter((s) => !values.includes(s));
 
   const customRender = (v) => <>{v?.toString() ?? '(Blank)'}</>;
 
@@ -61,9 +45,9 @@ export const FilterGroup = ({
       </StyledFilterGroupWrapper>
       {isOpen && (
         <FilterGroupPopoverMenu
-          handleFilterItemLabelClick={handleFilterItemLabelClick}
+          handleFilterItemLabelClick={filterItemLabelClick}
           handleFilterItemClick={handleFilterItemClick}
-          isChecked={(value) => isChecked(value)}
+          isChecked={(value) => uncheckedValues.includes(value)}
           markAllValuesActive={checkAll}
           closePopover={onClick}
           anchorEl={ref.current}

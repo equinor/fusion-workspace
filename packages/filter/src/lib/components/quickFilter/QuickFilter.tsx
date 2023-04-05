@@ -14,6 +14,8 @@ import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 import { useQuery } from '@tanstack/react-query';
 import { FilterDataSource, FilterGroup as IFilterGroup } from '../../types';
 import { useFilterContext } from '../../context/filterContext';
+import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
+import { FilterClearIcon } from '../../icons';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -65,6 +67,17 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     ]);
   };
 
+  const filterItemLabelClick = (name: string, value: string) => {
+    const target = uncheckedValues.findIndex((s) => s.name === name);
+    if (target === -1) return;
+    const group = groups?.find((s) => s.name === name)!;
+    setUncheckedValues((s) => [
+      ...s.slice(0, target),
+      { name: name, values: group.values.filter((val) => val !== value), isQuickFilter: false },
+      ...s.slice(target + 1),
+    ]);
+  };
+
   /**
    * Check all in a group
    */
@@ -95,6 +108,10 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     setFilterGroupOpen(null);
   };
 
+  const clearActiveFilters = () => {
+    setUncheckedValues([]);
+  };
+
   const calculateHiddenFiltersApplied = () => 0;
   // groups.reduce(
   //   (acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
@@ -115,10 +132,9 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                   (group, i) =>
                     i < 5 && (
                       <FilterGroup
+                        filterItemLabelClick={(filterItem) => filterItemLabelClick(group.name, filterItem)}
                         checkAll={() => clearGroup(group.name)}
-                        isChecked={(item) =>
-                          !!uncheckedValues.find((s) => s.name === group.name)?.values.includes(item)
-                        }
+                        uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
                         handleFilterItemClick={(item) => {
                           const isUnchecked = uncheckedValues.find((s) => s.name === group.name)?.values.includes(item);
                           if (isUnchecked) {
@@ -146,13 +162,13 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                   setVisibleFilters={setVisibleFilterGroups}
                   visibleFilters={visibleFilterGroups}
                 />
-              )}
+              )} */}
 
               <StyledButton onClick={() => clearActiveFilters()}>
-                <FilterClearIcon isDisabled={!filterState.length} />
+                <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
               </StyledButton>
 
-              <StyledButton onClick={toggleFilterIsExpanded}>
+              {/* <StyledButton onClick={toggleFilterIsExpanded}>
                 {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
               </StyledButton> */}
             </div>
