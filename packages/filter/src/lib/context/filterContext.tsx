@@ -13,6 +13,7 @@ export const FilterContext = createContext<null | IFilterContext>(null);
 export const FilterContextProvider = ({ children }: PropsWithChildren) => {
   const [uncheckedValues, setUncheckedValues] = useState<FilterGroup[]>([]);
   const [filterState, setFilterState] = useState<FilterGroup[]>([]);
+
   return (
     <FilterContext.Provider
       value={{

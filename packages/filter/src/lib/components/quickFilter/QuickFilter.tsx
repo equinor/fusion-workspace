@@ -35,8 +35,9 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   );
 
   useEffect(() => {
-    if (!groups) return;
+    if (!groups || !uncheckedValues.length) return;
     //Danger useReducer!
+
     setFilterState(getServerArgs(groups, uncheckedValues));
   }, [uncheckedValues]);
 

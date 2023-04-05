@@ -17,9 +17,9 @@ type FilterProps = {
 
 const client = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 export function Filter({ dataSource }: FilterProps) {
-  const r = useContext(FilterContext);
+  const context = useContext(FilterContext);
 
-  if (!r) {
+  if (!context) {
     console.error('Wrap the <Filter /> component in the <FilterContextProvider />');
     return null;
   }
