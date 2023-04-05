@@ -20,6 +20,7 @@ interface FilterGroupPopoverMenuProps {
   markAllValuesActive: () => void;
   CustomRender: (value: FilterValueType) => JSX.Element;
   handleFilterItemLabelClick: (val: FilterValueType) => void;
+  setUncheckedValues: (values: FilterValueType[]) => void;
   groupName: string;
 }
 export const FilterGroupPopoverMenu = ({
@@ -31,6 +32,7 @@ export const FilterGroupPopoverMenu = ({
   anchorEl,
   values,
   CustomRender,
+  setUncheckedValues,
   groupName,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
@@ -48,14 +50,7 @@ export const FilterGroupPopoverMenu = ({
    */
   const setFilterStateFromSearch = () => {
     const valuesMatchingSearch = values.filter((s) => !getValuesMatchingSearchText().includes(s));
-
-    // setFilterState([
-    //   ...filterState.filter((s) => s.name !== groupName),
-    //   {
-    //     name: groupName,
-    //     values: valuesMatchingSearch,
-    //   },
-    // ]);
+    setUncheckedValues(valuesMatchingSearch);
     setSearchText('');
     closePopover();
   };

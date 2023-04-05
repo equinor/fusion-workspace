@@ -7,28 +7,19 @@ import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
 import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
 import styled from 'styled-components';
+import { useFilterGroup } from '../../hooks/useFilterGroup';
 
 interface FilterGroupProps {
   name: string;
   isOpen: boolean;
   onClick: () => void;
   group: IFilterGroup;
-  handleFilterItemClick: (filterItem: FilterValueType) => void;
-  checkAll: VoidFunction;
-  filterItemLabelClick: (filterItem: FilterValueType) => void;
   uncheckedValues: FilterValueType[];
 }
-export const FilterGroup = ({
-  name,
-  isOpen,
-  onClick,
-  group,
-  handleFilterItemClick,
-  checkAll,
-  filterItemLabelClick,
-  uncheckedValues,
-}: FilterGroupProps): JSX.Element => {
+export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
+
+  const { clearGroup, filterItemLabelClick, toggleItem, setGroupsUnchecked } = useFilterGroup(group);
 
   const { values } = group;
   const isAllChecked = uncheckedValues.length === 0;
@@ -45,10 +36,11 @@ export const FilterGroup = ({
       </StyledFilterGroupWrapper>
       {isOpen && (
         <FilterGroupPopoverMenu
+          setUncheckedValues={setGroupsUnchecked}
           handleFilterItemLabelClick={filterItemLabelClick}
-          handleFilterItemClick={handleFilterItemClick}
+          handleFilterItemClick={toggleItem}
           isChecked={(value) => uncheckedValues.includes(value)}
-          markAllValuesActive={checkAll}
+          markAllValuesActive={clearGroup}
           closePopover={onClick}
           anchorEl={ref.current}
           values={values}

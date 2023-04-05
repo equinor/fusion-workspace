@@ -42,52 +42,6 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     setFilterState(getServerArgs(groups, uncheckedValues));
   }, [uncheckedValues]);
 
-  const unCheckItem = (name: string, value: string) => {
-    const target = uncheckedValues.findIndex((s) => s.name === name);
-
-    if (target !== -1) {
-      setUncheckedValues((s) => [
-        ...s.slice(0, target),
-        { name: name, values: [...s[target].values, value], isQuickFilter: false },
-        ...s.slice(target + 1),
-      ]);
-    } else {
-      setUncheckedValues((s) => [...s, { name: name, values: [value], isQuickFilter: false }]);
-    }
-  };
-
-  const checkItem = (name: string, value: string) => {
-    const target = uncheckedValues.findIndex((s) => s.name === name);
-    if (target === -1) return;
-
-    setUncheckedValues((s) => [
-      ...s.slice(0, target),
-      { name: name, values: [...s[target].values.filter((s) => s !== value)], isQuickFilter: false },
-      ...s.slice(target + 1),
-    ]);
-  };
-
-  const filterItemLabelClick = (name: string, value: string) => {
-    const target = uncheckedValues.findIndex((s) => s.name === name);
-    if (target === -1) return;
-    const group = groups?.find((s) => s.name === name)!;
-    setUncheckedValues((s) => [
-      ...s.slice(0, target),
-      { name: name, values: group.values.filter((val) => val !== value), isQuickFilter: false },
-      ...s.slice(target + 1),
-    ]);
-  };
-
-  /**
-   * Check all in a group
-   */
-  const clearGroup = (name: string) => {
-    const target = uncheckedValues.findIndex((s) => s.name === name);
-    if (target === -1) return;
-
-    setUncheckedValues((s) => [...s.slice(0, target), ...s.slice(target + 1)]);
-  };
-
   if (!groups) {
     throw new Error('SU');
   }
@@ -132,18 +86,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                   (group, i) =>
                     i < 5 && (
                       <FilterGroup
-                        filterItemLabelClick={(filterItem) => filterItemLabelClick(group.name, filterItem)}
-                        checkAll={() => clearGroup(group.name)}
                         uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
-                        handleFilterItemClick={(item) => {
-                          const isUnchecked = uncheckedValues.find((s) => s.name === group.name)?.values.includes(item);
-                          if (isUnchecked) {
-                            console.log('checkign item');
-                            checkItem(group.name, item);
-                          } else {
-                            unCheckItem(group.name, item);
-                          }
-                        }}
                         onClick={() => handleExpandFilterGroup(group.name)}
                         group={group}
                         key={group.name}
