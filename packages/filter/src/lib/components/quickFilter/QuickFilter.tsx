@@ -15,7 +15,9 @@ import { useQuery } from '@tanstack/react-query';
 import { FilterDataSource, FilterGroup as IFilterGroup } from '../../types';
 import { useFilterContext } from '../../context/filterContext';
 import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
-import { FilterClearIcon } from '../../icons';
+import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
+import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
+import { FilterView } from '../filterView/FilterView';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -26,6 +28,7 @@ interface QuickFilterProps {
 
 export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   const { uncheckedValues, setFilterState, setUncheckedValues } = useFilterContext();
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const { data: groups } = useQuery(
     ['filter-meta'],
@@ -58,7 +61,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
 
   const toggleFilterIsExpanded = () => {
-    // setIsFilterExpanded(!isFilterExpanded);
+    setIsFilterExpanded(!isFilterExpanded);
     setFilterGroupOpen(null);
   };
 
@@ -99,26 +102,26 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
               </>
             )}
             <div style={{ display: 'flex' }}>
-              {/* {isFilterExpanded && (
+              {isFilterExpanded && (
                 <ToggleHideFilterPopover
                   allFilters={filterGroups}
                   setVisibleFilters={setVisibleFilterGroups}
                   visibleFilters={visibleFilterGroups}
                 />
-              )} */}
+              )}
 
               <StyledButton onClick={() => clearActiveFilters()}>
                 <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
               </StyledButton>
 
-              {/* <StyledButton onClick={toggleFilterIsExpanded}>
+              <StyledButton onClick={toggleFilterIsExpanded}>
                 {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-              </StyledButton> */}
+              </StyledButton>
             </div>
           </StyledRightSection>
         </StyledSearchLine>
       </StyledCompactFilterWrapper>
-      {/* {isFilterExpanded && <FilterView visibleFilterGroups={visibleFilterGroups} />} */}
+      {isFilterExpanded && <FilterView groups={groups.filter((s) => visibleFilterGroups.includes(s.name))} />}
     </StyledWrapper>
   );
 }

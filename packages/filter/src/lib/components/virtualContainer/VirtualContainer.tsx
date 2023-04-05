@@ -6,6 +6,7 @@ import {
   StyledVirtualFilterItemWrapper,
 } from '../expandedFilterGroup/expandedFilterGroup.styles';
 import { FilterItemValue } from '../expandedFilterItem/ExpandedFilterItem';
+import { searchByValue } from '../expandedFilterGroup/ExpandedFilterGroup';
 
 interface VirtualContainerProps {
   filterGroup: FilterGroup;
@@ -13,50 +14,35 @@ interface VirtualContainerProps {
 }
 
 export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
-  // const { valueFormatters, groups: filterOptions } = useFilterContext();
+  const groupsMatchingSearch = searchByValue(filterGroup.values, filterSearchValue);
+  const rowLength = groupsMatchingSearch.length;
+  const parentRef = useRef<HTMLDivElement | null>(null);
 
-  // const groupsMatchingSearch = useMemo(
-  //   () =>
-  //     searchByValue(
-  //       filterGroup.values.map((v) => (v !== null ? v.toString() : DEFAULT_NULL_VALUE)),
-  //       filterSearchValue
-  //     ),
-  //   [filterGroup.values, filterSearchValue]
-  // );
+  const rowVirtualizer = useVirtual({
+    parentRef,
+    size: rowLength,
+    estimateSize: useCallback(() => 20, []),
+  });
 
-  // const rowLength = useMemo(() => groupsMatchingSearch.length, [groupsMatchingSearch]);
-
-  // const parentRef = useRef<HTMLDivElement | null>(null);
-
-  // const valueFormatter = valueFormatters.find(({ name }) => name === filterGroup.name)?.valueFormatter;
-
-  // const rowVirtualizer = useVirtual({
-  //   parentRef,
-  //   size: rowLength,
-  //   estimateSize: useCallback(() => 20, []),
-  // });
-  if (true) return null;
-  // return (
-  //   <StyledVirtualFilterContainer ref={parentRef}>
-  //     <StyledVirtualFilterItemWrapper
-  //       style={{
-  //         height: `${rowVirtualizer.totalSize}px`,
-  //       }}
-  //     >
-  //       {rowVirtualizer.virtualItems.map((virtualRow) => {
-  //         return (
-  //           <FilterItemValue
-  //             valueFormatter={valueFormatter}
-  //             key={convertFromBlank(groupsMatchingSearch[virtualRow.index])}
-  //             virtualRowSize={virtualRow.size}
-  //             virtualRowStart={virtualRow.start}
-  //             filterItem={convertFromBlank(groupsMatchingSearch[virtualRow.index])}
-  //             filterGroup={filterGroup}
-  //             CustomRender={filterOptions?.find(({ name }) => name === filterGroup.name)?.customValueRender}
-  //           />
-  //         );
-  //       })}
-  //     </StyledVirtualFilterItemWrapper>
-  //   </StyledVirtualFilterContainer>
-  // );
+  return (
+    <StyledVirtualFilterContainer ref={parentRef}>
+      <StyledVirtualFilterItemWrapper
+        style={{
+          height: `${rowVirtualizer.totalSize}px`,
+        }}
+      >
+        {rowVirtualizer.virtualItems.map((virtualRow) => {
+          return (
+            <FilterItemValue
+              key={groupsMatchingSearch[virtualRow.index]}
+              virtualRowSize={virtualRow.size}
+              virtualRowStart={virtualRow.start}
+              filterItem={groupsMatchingSearch[virtualRow.index]}
+              filterGroup={filterGroup}
+            />
+          );
+        })}
+      </StyledVirtualFilterItemWrapper>
+    </StyledVirtualFilterContainer>
+  );
 };

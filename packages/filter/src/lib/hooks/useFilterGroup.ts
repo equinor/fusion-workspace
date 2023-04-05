@@ -77,9 +77,8 @@ export function useFilterGroup(group: FilterGroup) {
   return {
     clearGroup,
     filterItemLabelClick,
-    checkItem,
     toggleItem,
-    unCheckItem,
     setGroupsUnchecked,
+    inactiveGroupValues: uncheckedValues.find((s) => s.name === group.name)?.values ?? [],
   };
 }
