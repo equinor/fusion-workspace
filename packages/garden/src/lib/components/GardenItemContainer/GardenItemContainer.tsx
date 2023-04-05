@@ -284,6 +284,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                 data={item}
                 isSelected={selectedIds.includes(getIdentifier(item))}
                 onClick={() => {
+                  controller.selectedNodes.setValue([getIdentifier(item)]);
                   controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
                 }}
                 width={itemWidth}

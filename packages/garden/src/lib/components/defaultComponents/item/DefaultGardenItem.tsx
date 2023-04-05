@@ -12,12 +12,11 @@ const GardenItem = <
   data: item,
   isSelected,
   depth,
+  onClick,
 }: CustomItemView<TData, TContext>) => {
   const {
-    clickEvents: { onClickItem },
     getDisplayName,
     visuals: { getItemColor, getDescription },
-    getIdentifier,
   } = controller;
 
   const { color, description, label } = useMemo(() => {
@@ -34,12 +33,7 @@ const GardenItem = <
   }, [controller, getItemColor, getDescription, item]);
 
   return (
-    <StyledDefaultPackage
-      bgColor={color}
-      onClick={() => onClickItem && onClickItem(item)}
-      isSelected={isSelected}
-      depth={depth ?? 0}
-    >
+    <StyledDefaultPackage bgColor={color} onClick={onClick} isSelected={isSelected} depth={depth ?? 0}>
       <Typography as={'span'} title={label}>
         {label}
       </Typography>
