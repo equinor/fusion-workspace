@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { ServerGrid, IServerSideGetRowsParams } from '@equinor/workspace-ag-grid';
+import { useEffect, useRef } from 'react';
+import { ServerGrid } from '@equinor/workspace-ag-grid';
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { BaseEvent } from '@equinor/workspace-core';
 import { GridConfig } from '../../../lib/integrations/grid';
@@ -37,7 +37,7 @@ export const GridWrapper = <
   }, [filterState]);
 
   const [_, height] = useResizeObserver(ref);
-  console.log(config);
+
   return (
     <div
       id="workspace_grid_wrapper"
