@@ -25,19 +25,7 @@ export type GardenConfig<TData extends Record<PropertyKey, unknown>, TContext = 
   /** Supply functions for handling clicks in the garden */
   clickEvents?: OnClickEvents<TData>;
   /** Replace built-in components with your own */
-  customViews?: CustomVirtualViews<TData, any>;
+  customViews?: CustomVirtualViews<TData>;
   /** Visual details */
   visuals?: Visuals<TData>;
-  /** Function for calculating custom state
-   *
-   * Will re-run everytime data changes
-   * ```TS
-   *
-   * getContext: (data: MyType[]) => {
-   * return data.filter((v,i,a) => a.indexOf(i) === v).length / 2
-   * }
-   *
-   * ```
-   */
-  getContext?: (data: TData[]) => TContext;
 };

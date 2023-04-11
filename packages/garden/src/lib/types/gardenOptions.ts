@@ -1,14 +1,11 @@
 import { MemoExoticComponent, MutableRefObject } from 'react';
 import { GardenGroup, GardenHeaderGroup } from '.';
-import { GardenController } from '../classes';
-import { GardenProp } from './gardenProp';
 
-export interface CustomItemView<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> {
+export interface CustomItemView<TData extends Record<PropertyKey, unknown>> {
+  color: string;
+  displayName: string;
+  description?: string;
   data: TData;
-  controller: GardenController<TData, TContext>;
   onClick: () => void;
   columnExpanded: boolean;
   isSelected: boolean;
@@ -36,25 +33,8 @@ export interface CustomHeaderView {
   groupByKey?: string;
 }
 
-export interface CustomVirtualViews<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> {
-  customItemView?: MemoExoticComponent<(args: CustomItemView<TData, TContext>) => JSX.Element>;
+export interface CustomVirtualViews<TData extends Record<PropertyKey, unknown>> {
+  customItemView?: MemoExoticComponent<(args: CustomItemView<TData>) => JSX.Element>;
   customGroupView?: MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
   customHeaderView?: MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>;
 }
-
-export type CustomGroupViewProps<
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
-> = {
-  controller: GardenProp<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
-};
-
-export type PreGroupByFiltering<TData extends Record<PropertyKey, unknown>> = (
-  arr: TData[],
-  groupByKey: string
-) => TData[];

@@ -2,6 +2,7 @@ import { Icon } from '@equinor/eds-core-react';
 import { createContext, Suspense, useMemo } from 'react';
 import { GardenController, GetIdentifier } from '../classes';
 import {
+  CustomVirtualViews,
   GardenGroup,
   GardenHeaderGroup,
   GardenMeta,
@@ -9,6 +10,7 @@ import {
   GetDisplayName,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
+  Visuals,
 } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
@@ -31,6 +33,8 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   getDisplayName: GetDisplayName<TData>;
   getIdentifier: GetIdentifier<TData>;
   initialGrouping: string;
+  visuals?: Visuals<TData>;
+  customViews?: CustomVirtualViews<TData>;
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -41,6 +45,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   context,
   getIdentifier,
   initialGrouping,
+  customViews,
+  visuals,
 }: GardenProps<TData, TContext>): JSX.Element | null {
   //TODO:Handle no data better in garden
   const controller = useMemo(
@@ -50,6 +56,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
         getDisplayName,
         getIdentifier,
         initialGrouping: { horizontalGroupingAccessor: initialGrouping, verticalGroupingKeys: [] },
+        visuals: visuals,
+        customViews: customViews,
       }),
     [initialGrouping]
   );

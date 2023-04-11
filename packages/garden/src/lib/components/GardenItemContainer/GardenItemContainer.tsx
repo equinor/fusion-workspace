@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGroupingKeys } from '../../hooks';
-import { isSubGroup } from '../../utils';
+import { defaultItemColor, isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
 import { CustomGroupView, CustomItemView, GardenGroup, GetSubgroupItemsArgs } from '../../types';
 import { useSelected } from '../../hooks/useSelected';
@@ -18,7 +18,7 @@ type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext 
   virtualColumn: VirtualItem;
   blockSqrt: number;
   rowVirtualizer: VirtualHookReturn;
-  packageChild?: React.MemoExoticComponent<(args: CustomItemView<TData, any>) => JSX.Element>;
+  packageChild?: React.MemoExoticComponent<(args: CustomItemView<TData>) => JSX.Element>;
   customSubGroup?: React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>;
   itemWidth?: number;
   handleOnClick: (item: TData) => void;
@@ -69,18 +69,13 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
     getIdentifier,
   } = controller;
 
-  type SubGroupState = {
-    index: number;
-    subGroupName: string;
-    columnName: string;
-  };
   const [subGroupCount, setSubGroupCount] = useState<number>(0);
 
   const selectedIds = useSelected();
 
   const expand = useExpand();
 
-  const columnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
+  const isColumnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
 
   const keys = useGroupingKeys();
 
@@ -197,10 +192,15 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
           const query = queries[calculateActualIndex(expandedIndexes, flatIndex.parent.index).actualIndex];
           return (
             <SubGroupItem
+              isExpanded={isColumnExpanded}
               key={virtualRow.key}
               PackageChild={PackageChild}
               itemIndex={flatIndex.actualIndex}
               itemWidth={itemWidth ?? 50}
+              onClick={(item) => {
+                controller.selectedNodes.setValue([getIdentifier(item)]);
+                controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
+              }}
               parentRef={parentRef}
               query={query}
               rowHeight={rowHeight}
@@ -242,7 +242,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
             {/* HACK: Ignore subgrouping for now */}
             {isSubGroup(item) ? (
               <CustomSubGroup
-                columnExpanded={columnExpanded}
+                columnExpanded={isColumnExpanded}
                 data={item}
                 onClick={async () => {
                   const isAlreadyExpanded = !!expandedIndexes.find((s) => s.index === virtualRow.index);
@@ -280,11 +280,11 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
               />
             ) : (
               <PackageChild
+                displayName={controller.getDisplayName(item)}
+                description={controller.visuals?.getDescription?.(item)}
                 colorAssistMode={colorAssistMode}
-                //TODO: fix
-                columnExpanded={columnExpanded}
-                // TODO: fix
-                controller={controller}
+                columnExpanded={isColumnExpanded}
+                color={controller.visuals?.getItemColor?.(item) ?? defaultItemColor}
                 data={item}
                 isSelected={selectedIds.includes(getIdentifier(item))}
                 onClick={() => {

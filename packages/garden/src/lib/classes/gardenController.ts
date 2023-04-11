@@ -57,38 +57,20 @@ export class GardenController<TData extends Record<PropertyKey, unknown>, TConte
   // customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
   /** Override default view */
-  customViews: CustomVirtualViews<TData, any> = {
-    customItemView: DefaultGardenItem as React.MemoExoticComponent<(args: CustomItemView<TData, any>) => JSX.Element>,
+  customViews: CustomVirtualViews<TData> = {
+    customItemView: DefaultGardenItem as React.MemoExoticComponent<(args: CustomItemView<TData>) => JSX.Element>,
     customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
     customHeaderView: DefaultHeaderView as React.MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>,
   };
 
-  /**
-   * Property for holding calculated information based on data, this property will update every time data is updated
-   */
-  context?: TContext;
-
-  #getContext?: (data: TData[]) => TContext;
-
-  /** Updates the custom state if data changes */
-  private updateContext = (data: TData[]) => {
-    if (this.#getContext) {
-      this.context = this.#getContext(data);
-    }
-  };
-
-  constructor(
-    {
-      getDisplayName,
-      getIdentifier,
-      initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
-      clickEvents,
-      getContext,
-      customViews,
-      visuals,
-    }: GardenConfig<TData, any>,
-    getDestructor?: (destroy: () => void) => void
-  ) {
+  constructor({
+    getDisplayName,
+    getIdentifier,
+    initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
+    clickEvents,
+    customViews,
+    visuals,
+  }: GardenConfig<TData, any>) {
     this.getIdentifier = getIdentifier;
     this.getDisplayName = getDisplayName;
 
@@ -102,16 +84,8 @@ export class GardenController<TData extends Record<PropertyKey, unknown>, TConte
       this.customViews = { ...this.customViews, ...customViews };
     }
 
-    if (getContext) {
-      this.#getContext = getContext;
-      //init
-      /**TODO: context */
-    }
-
     this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
     this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
-
-    getDestructor && getDestructor(this.#destroy);
   }
 
   /**
@@ -141,12 +115,5 @@ export class GardenController<TData extends Record<PropertyKey, unknown>, TConte
   setHighlightedNode = (nodeIdOrCallback: string | null) => {
     const val = nodeIdOrCallback;
     this.selectedNodes.setValue(val ? [val] : []);
-  };
-
-  #destroy = () => {
-    for (const key in this) {
-      this[key] = null as unknown as this[Extract<keyof this, string>];
-      delete this[key];
-    }
   };
 }

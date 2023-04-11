@@ -1,41 +1,21 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { StyledDefaultPackage } from './defaultGardenItem.styles';
 import { CustomItemView } from '../../../types';
 import { Typography } from '@equinor/eds-core-react';
 
-const GardenItem = <
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>
->({
+const GardenItem = <TData extends Record<PropertyKey, unknown>>({
   columnExpanded,
-  controller,
-  data: item,
   isSelected,
   depth,
   onClick,
-}: CustomItemView<TData, TContext>) => {
-  const {
-    getDisplayName,
-    visuals: { getItemColor, getDescription },
-  } = controller;
-
-  const { color, description, label } = useMemo(() => {
-    const label = getDisplayName(item);
-    const color = (getItemColor && getItemColor(item)) ?? 'grey';
-
-    const description = getDescription && getDescription(item);
-
-    return {
-      label,
-      color,
-      description,
-    };
-  }, [controller, getItemColor, getDescription, item]);
-
+  color,
+  description,
+  displayName,
+}: CustomItemView<TData>) => {
   return (
     <StyledDefaultPackage bgColor={color} onClick={onClick} isSelected={isSelected} depth={depth ?? 0}>
-      <Typography as={'span'} title={label}>
-        {label}
+      <Typography as={'span'} title={displayName}>
+        {displayName}
       </Typography>
       {columnExpanded && <div>{description}</div>}
     </StyledDefaultPackage>

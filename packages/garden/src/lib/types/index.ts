@@ -7,7 +7,6 @@ export * from './callbacks';
 export * from './events';
 export * from './visuals';
 export type { GardenConfig } from './config';
-export * from './gardenProp';
 
 export type GardenMeta = {
   columnStart: number | null;

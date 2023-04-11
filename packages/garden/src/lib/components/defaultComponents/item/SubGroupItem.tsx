@@ -1,19 +1,23 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { MutableRefObject } from 'react';
-import { useGardenContext } from '../../../hooks';
+import { useGardenContext, useSelected } from '../../../hooks';
 import { CustomItemView } from '../../../types';
 import { StyledPackageRoot } from '../../GardenItemContainer/gardenItemContainer.styles';
 import { ErrorPackage } from '../../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../../virtualPackages/LoadingPackage';
+import { defaultItemColor } from '../../../utils';
+import { VirtualItem } from 'react-virtual';
 
 type SubGroupItemProps = {
   query: UseQueryResult<any[]>;
   virtualRow: any;
-  virtualColumn: any;
+  virtualColumn: VirtualItem;
+  isExpanded: boolean;
   rowHeight: number;
   itemWidth: number;
-  PackageChild: React.MemoExoticComponent<(args: CustomItemView<any, any>) => JSX.Element>;
+  PackageChild: React.MemoExoticComponent<(args: CustomItemView<any>) => JSX.Element>;
   itemIndex: number;
+  onClick: (i: any) => void;
   parentRef: MutableRefObject<HTMLDivElement | null>;
 };
 
@@ -24,12 +28,16 @@ export const SubGroupItem = ({
   itemWidth,
   rowHeight,
   PackageChild,
+  isExpanded,
+  onClick,
   itemIndex,
   parentRef,
 }: SubGroupItemProps) => {
   const { isLoading, error, data, refetch } = query;
   const controller = useGardenContext<any, any>();
   const { colorAssistMode$, getIdentifier } = controller;
+
+  const selectedIds = useSelected();
 
   if (isLoading) {
     /** Skeleton loading state */
@@ -57,6 +65,7 @@ export const SubGroupItem = ({
   }
 
   const item = data[itemIndex];
+  const color = controller.visuals?.getItemColor?.(item) ?? defaultItemColor;
 
   return (
     <StyledPackageRoot
@@ -70,16 +79,13 @@ export const SubGroupItem = ({
     >
       <PackageChild
         colorAssistMode={false}
-        //TODO: fix
-        columnExpanded={false}
-        // TODO: fix
-        controller={controller}
+        columnExpanded={isExpanded}
+        displayName={controller.getDisplayName(item)}
+        description={controller.visuals?.getDescription?.(item)}
+        color={color}
         data={item}
-        isSelected={false}
-        // isSelected={selectedIds.includes(getIdentifier(item))}
-        onClick={() => {
-          controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
-        }}
+        isSelected={selectedIds.includes(getIdentifier(item))}
+        onClick={() => onClick(item)}
         width={itemWidth}
         depth={0}
         rowStart={virtualRow.start}
