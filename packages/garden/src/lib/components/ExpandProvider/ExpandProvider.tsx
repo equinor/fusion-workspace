@@ -1,79 +1,48 @@
 import { createContext, PropsWithChildren, useReducer } from 'react';
-import { GardenItem } from '../../types';
-import { getDescriptionWidth } from '../../utils';
-type Expanded = {
-  isExpanded: boolean;
-  index: number;
-};
-type ExpandedItems = Record<string, Expanded>;
+import { defaultGardenPackageWidth } from '../../hooks';
+
 type State = {
-  expandedColumns: ExpandedItems;
+  expandedColumns: number[];
   widths: number[];
 };
 export enum ActionType {
   EXPAND_COLUMN,
 }
 
-type ExpandColumn<T extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>> = {
-  key: string;
+type ExpandColumn = {
   index: number;
-  descriptionData: GardenItem<T>[] | null;
   type: ActionType.EXPAND_COLUMN;
-  customDescription?: (item: T | GardenItem<T>) => string;
 };
 
 type Action = ExpandColumn;
 const expandReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.EXPAND_COLUMN: {
-      const width = getDescriptionWidth(action.descriptionData, action.customDescription);
-      //Edge case here: if all subgroups are collapsed, the width will be
-      // 0 since no description data. But if you expand column first and collapse
-      // all subgroups, the column wont be resized
-      if (width === 0) {
-        return state;
-      }
-      if (state.expandedColumns && state.expandedColumns[action.key]) {
-        const currWidths = [...state.widths];
-        currWidths[action.index] = state.expandedColumns[action.key].isExpanded
-          ? currWidths[action.index] - width
-          : currWidths[action.index] + width;
+      if (state.expandedColumns.findIndex((s) => s === action.index) !== -1) {
+        const newWidths = [...state.widths];
+        newWidths[action.index] = defaultGardenPackageWidth;
         return {
-          ...state,
-          expandedColumns: {
-            ...state.expandedColumns,
-            [action.key]: {
-              ...state.expandedColumns[action.key],
-              isExpanded: !state.expandedColumns[action.key].isExpanded,
-            },
-          },
-          widths: currWidths,
+          expandedColumns: state.expandedColumns.filter((s) => s !== action.index),
+          widths: newWidths,
         };
       } else {
-        const currWidths = [...state.widths];
-        currWidths[action.index] = currWidths[action.index] + width;
+        const newWidths = [...state.widths];
+        newWidths[action.index] = 500;
         return {
-          ...state,
-          expandedColumns: {
-            ...state.expandedColumns,
-            [action.key]: {
-              isExpanded: true,
-              index: action.index,
-            },
-          },
-          widths: currWidths,
+          expandedColumns: [...state.expandedColumns, action.index],
+          widths: newWidths,
         };
       }
     }
 
     default:
-      return { expandedColumns: {}, widths: [] };
+      return { expandedColumns: [], widths: [] };
   }
 };
 
 type DispatchAction = (action: Action) => void;
 const ExpandContext = createContext<State>({
-  expandedColumns: {},
+  expandedColumns: [],
   widths: [],
 });
 
@@ -90,7 +59,7 @@ const ExpandProvider = (props: PropsWithChildren<ExpandProviderProps>) => {
   const { initialWidths, children } = props;
 
   const [state, dispatch] = useReducer(expandReducer, {
-    expandedColumns: {},
+    expandedColumns: [],
     widths: initialWidths,
   });
 

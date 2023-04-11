@@ -1,4 +1,4 @@
-import { GardenGroup, GardenItem } from '../types';
+import { GardenGroup } from '../types';
 
 export const isSubGroup = <T extends Record<PropertyKey, unknown>>(
   arg: GardenGroup<T> | T | undefined
