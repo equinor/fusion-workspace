@@ -6,6 +6,8 @@ import { Suspense, useContext } from 'react';
 import { FilterDataSource } from '../types';
 import { FilterContext } from '../context/filterContext';
 import { tokens } from '@equinor/eds-tokens';
+import { ErrorBoundary } from 'react-error-boundary';
+
 Icon.add({ playlist_add, search, drag_handle, chevron_down, chevron_up });
 /**
  * CC filter used in workspace
@@ -26,14 +28,16 @@ export function Filter({ dataSource }: FilterProps) {
   }
 
   return (
-    <>
-      <Suspense
-        fallback={<div style={{ height: '48px', width: '100%', background: tokens.colors.ui.background__light.hex }} />}
-      >
+    <ErrorBoundary FallbackComponent={() => <div>Filter failed to load</div>}>
+      <Suspense fallback={<FilterLoadingFallback />}>
         <QueryClientProvider client={client}>
           <QuickFilter dataSource={dataSource} />
         </QueryClientProvider>
       </Suspense>
-    </>
+    </ErrorBoundary>
   );
+}
+
+function FilterLoadingFallback() {
+  return <div style={{ height: '48px', width: '100%', background: tokens.colors.ui.background__light.hex }} />;
 }
