@@ -1,6 +1,6 @@
+import { FilterStateGroup } from '@equinor/workspace-filter';
+import { GardenConfig } from '@equinor/workspace-fusion/garden';
 import {
-  CustomItemView,
-  Garden,
   GardenGroup,
   GardenGroups,
   GardenHeaderGroup,
@@ -9,73 +9,43 @@ import {
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
 } from '@equinor/workspace-garden';
-import { memo, useState } from 'react';
-
-const test = memo((args: CustomItemView<any>) => <div>test</div>);
-
-export function GardenServer() {
-  const [mode, setMode] = useState<'server' | 'client'>('client');
-  return (
-    <Garden<Item>
-      dataSource={{
-        getSubgroupItems: getSubgroupItems,
-        getBlockAsync,
-        getGardenMeta,
-        getHeader,
-      }}
-      getDisplayName={(i) => i.workOrderNumber}
-      getIdentifier={(j) => j.workOrderUrlId}
-      initialGrouping={'DisciplineCode'}
-    />
-  );
-}
-
-const token = '';
-
-const baseURL =
-  'https://backend-fusion-data-gateway-test.radix.equinor.com/api/contexts/fc5ffcbc-392f-4d7e-bb14-79a006579337';
-
-type Item = {
-  workOrderNumber: string;
-  workOrderUrlId: string;
-};
+import { makeRequest } from './ignore';
 
 const getSubgroupItems = async (
   { columnName, groupingKeys, subgroupName }: GetSubgroupItemsArgs,
-  signal: AbortSignal
+  filters: FilterStateGroup[],
+  signal?: AbortSignal
 ) => {
-  const res = fetch(`${baseURL}/work-orders/subgroup-items`, {
-    method: 'POST',
-    body: JSON.stringify({
+  const res = await makeRequest(
+    'work-orders/subgroup-items',
+    {
       groupingKeys: groupingKeys,
       columnName: columnName,
       subGroupName: subgroupName,
-    }),
-    headers: {
-      ['AUTHORIZATION']: token,
-      ['Content-type']: 'application/json',
+      filter: filters,
     },
-    signal,
-  });
+    signal
+  );
+
   const r = await (await res).json();
   return r;
 };
 
-const getGardenMeta = async (keys: string[], signal: AbortSignal): Promise<GardenMeta> => {
-  console.log('Garden meta fetched');
-
-  const res = fetch(`${baseURL}/work-orders/garden-meta`, {
-    method: 'POST',
-
-    body: JSON.stringify(keys),
-    headers: {
-      ['AUTHORIZATION']: token,
-      ['Content-type']: 'application/json',
+const getGardenMeta = async (
+  keys: string[],
+  filters: FilterStateGroup[],
+  signal?: AbortSignal
+): Promise<GardenMeta> => {
+  const res = await makeRequest(
+    'work-orders/garden-meta',
+    {
+      groupingKeys: keys,
+      filter: filters,
     },
-    signal,
-  });
+    signal
+  );
 
-  const meta = await (await res).json();
+  const meta = await res.json();
 
   return {
     ...meta,
@@ -91,52 +61,64 @@ const getGardenMeta = async (keys: string[], signal: AbortSignal): Promise<Garde
  * @param garden
  * @returns
  */
-async function getBlockAsync(args: GetBlockRequestArgs, signal: AbortSignal): Promise<GardenGroups<any>> {
+async function getBlockAsync(
+  args: GetBlockRequestArgs,
+  filters: FilterStateGroup[],
+  signal?: AbortSignal
+): Promise<GardenGroups<any>> {
   const { columnEnd, columnStart, rowEnd, rowStart, groupingKeys } = args;
 
-  const res = await fetch(`${baseURL}/work-orders/garden`, {
-    body: JSON.stringify({
+  const res = await makeRequest(
+    'work-orders/garden',
+    {
       columnStart,
       columnEnd,
       rowStart,
       rowEnd,
       groupingKeys: groupingKeys,
-    }),
-    headers: {
-      ['authorization']: token,
-      ['content-type']: 'application/json',
+      filter: filters,
     },
-    method: 'POST',
-  });
+    signal
+  );
 
   const data = await res.json();
-  console.log(data);
 
   return data.map(
-    (s): GardenGroup<any> => ({
+    (s: any): GardenGroup<any> => ({
       ...s,
       value: s.columnName,
     })
   );
 }
 
-async function getHeader(args: GetHeaderBlockRequestArgs, signal: AbortSignal): Promise<GardenHeaderGroup[]> {
+async function getHeader(
+  args: GetHeaderBlockRequestArgs,
+  filters: FilterStateGroup[],
+  signal?: AbortSignal
+): Promise<GardenHeaderGroup[]> {
   const { groupingKeys, columnEnd, columnStart } = args;
 
-  const res = await fetch(`${baseURL}/work-orders/garden`, {
-    body: JSON.stringify({
+  const res = await makeRequest(
+    'work-orders/garden',
+    {
       columnStart,
       columnEnd,
       rowStart: 0,
       rowEnd: 0,
       groupingKeys: groupingKeys,
-    }),
-    headers: {
-      ['authorization']: token,
-      ['content-type']: 'application/json',
+      filter: filters,
     },
-    method: 'POST',
-  });
+    signal
+  );
 
-  return (await res.json()).map((s): GardenHeaderGroup => ({ count: s.totalItemsCount, name: s.columnName }));
+  return (await res.json()).map((s: any): GardenHeaderGroup => ({ count: s.totalItemsCount, name: s.columnName }));
 }
+
+export const gardenConfig: GardenConfig<any, FilterStateGroup[]> = {
+  getBlockAsync,
+  getGardenMeta,
+  getHeader,
+  getSubgroupItems,
+  getDisplayName: (i) => i.workOrderNumber,
+  initialGrouping: { horizontalGroupingAccessor: 'DisciplineCode', verticalGroupingKeys: [] },
+};
