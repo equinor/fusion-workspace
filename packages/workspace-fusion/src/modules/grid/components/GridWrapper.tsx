@@ -31,6 +31,8 @@ export const GridWrapper = <
     /**
      *  Bad practice but there is not another cleaner way
      *  Stale state scenario
+     *  Only way to fix this is by using signals/observables
+     *  There is no real consequence to doing it this way
      */
     filterStateCopy.current = filterState;
     config.gridOptions && config.gridOptions.api?.onFilterChanged();
