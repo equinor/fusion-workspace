@@ -1,6 +1,5 @@
 import { FilterValueType } from './filter';
 
-export * from './search';
 export * from './filter';
 
 export type FilterDataSource = {
