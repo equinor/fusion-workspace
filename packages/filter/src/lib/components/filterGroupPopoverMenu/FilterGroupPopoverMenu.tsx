@@ -35,9 +35,6 @@ export const FilterGroupPopoverMenu = ({
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
 
-  // const { getCountForFilterValue } = useFilterContext();
-  // const { setFilterState, filterState } = useFilterState();
-
   const handleInput = (e) => setSearchText(e.target.value.toString().toLowerCase());
 
   const getValuesMatchingSearchText = () =>
