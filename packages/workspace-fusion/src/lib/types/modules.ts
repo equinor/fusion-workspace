@@ -1,5 +1,4 @@
 import { Provider, Tab } from '@equinor/workspace-react';
-import { FusionMediator } from './fusionController';
 import { WorkspaceProps } from './workspaceProps';
 
 export type FusionWorkspaceModule = {

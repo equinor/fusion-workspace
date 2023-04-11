@@ -29,15 +29,17 @@ export const GardenWrapper = <
   const { filterState } = useFilterContext();
   const [gardenApi, setGardenApi] = useState<null | GardenApi>(null);
 
-  useEffect(() => {
-    gardenApi?.invalidate();
-  }, [filterState]);
+  // useEffect(() => {
+  //   gardenApi?.invalidate();
+  // }, [filterState]);
 
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
       <Garden<TData, TFilter>
         dataSource={{ ...config }}
         context={filterState as TFilter}
+        customViews={config.customViews}
+        visuals={config.visuals}
         getIdentifier={getIdentifier}
         initialGrouping={config.initialGrouping.horizontalGroupingAccessor.toString()}
         getDisplayName={config.getDisplayName}

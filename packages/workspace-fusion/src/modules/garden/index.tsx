@@ -1,4 +1,4 @@
-import { FilterGroup } from '@equinor/workspace-filter';
+import { FilterGroup, FilterStateGroup } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
 import { Provider } from '@equinor/workspace-react';
 import { FusionWorkspaceModule } from '../../lib';
@@ -15,7 +15,7 @@ export const gardenModule: FusionWorkspaceModule = {
     const gardenController = new GardenController<any, FilterGroup[]>({
       ...gardenConfig,
       getIdentifier: props.workspaceOptions.getIdentifier,
-      getContext: () => ({}),
+      customViews: gardenConfig.customViews,
       dataSource: {} as any,
     });
 
@@ -30,7 +30,7 @@ export const gardenModule: FusionWorkspaceModule = {
       provider,
       tab: {
         Component: () => (
-          <GardenWrapper<any, any, any, any, FilterGroup[]>
+          <GardenWrapper<any, any, any, any, FilterStateGroup[]>
             config={gardenConfig}
             getIdentifier={props.workspaceOptions.getIdentifier}
           />

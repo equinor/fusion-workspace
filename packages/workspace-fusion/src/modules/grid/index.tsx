@@ -4,7 +4,7 @@ import { GridWrapper } from './components/GridWrapper';
 import { GridIcon } from './icons/GridIcon';
 
 import { FusionWorkspaceModule } from '../../lib';
-import { FilterGroup } from '@equinor/workspace-filter';
+import { FilterStateGroup } from '@equinor/workspace-filter';
 
 /**
  * Adds the module to the workspace
@@ -30,7 +30,7 @@ export const gridModule: FusionWorkspaceModule = {
     return {
       provider,
       tab: {
-        Component: () => <GridWrapper<any, any, any, FilterGroup[]> config={gridConfig} />,
+        Component: () => <GridWrapper<any, any, any, FilterStateGroup[]> config={gridConfig} />,
         name: 'grid',
         TabIcon: GridIcon,
         CustomHeader: () => <GridHeader dataSource={props.filterOptions?.dataSource} />,

@@ -6,7 +6,7 @@ import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { WorkspaceFilterProps } from '../integrations/filter';
 import { CustomTab, FusionWorkspaceModule, WorkspaceConfig } from '../types';
 import { BaseEvent } from '@equinor/workspace-core';
-import { FilterGroup } from '@equinor/workspace-filter';
+import { FilterStateGroup } from '@equinor/workspace-filter';
 
 type WorkspaceBaseProps<
   TData extends Record<PropertyKey, unknown>,
@@ -24,9 +24,9 @@ export type WorkspaceProps<
   TContext extends Record<PropertyKey, unknown>,
   TCustomSidesheetEvents extends BaseEvent = never
 > = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &
-  WorkspaceGardenProps<TData, TContext, FilterGroup[]> &
-  WorkspaceGridProps<TData, FilterGroup[]> &
+  WorkspaceGardenProps<TData, TContext, FilterStateGroup[]> &
+  WorkspaceGridProps<TData, FilterStateGroup[]> &
   WorkspaceFilterProps &
-  WorkspaceStatusBarProps<FilterGroup[]> &
+  WorkspaceStatusBarProps<FilterStateGroup[]> &
   WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
   WorkspacePowerBiProps;

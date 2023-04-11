@@ -13,7 +13,6 @@ import {
   GardenGroup,
   GardenGroups,
   GardenItem,
-  GardenProp,
   GardenItemWithDepth,
   GetDescription,
   GetItemColor,
@@ -25,12 +24,9 @@ import {
   OnClickEvents,
   OnClickGroup,
   OnClickItem,
-  PreGroupByFiltering,
   Visuals,
   FindNodeCallback,
-  getGardenItems,
   isSubGroup,
-  CustomGroupViewProps,
   GetBlockRequestArgs,
   GardenDataSource,
   GardenHeaderGroup,
@@ -40,11 +36,10 @@ import {
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
-export { getGardenItems, isSubGroup };
+export { isSubGroup };
 /**Garden types */
 export type {
-  CustomGroupViewProps,
-  GardenProp,
+  GardenDataSource,
   CustomGroupView,
   CustomHeaderView,
   CustomItemView,
@@ -65,7 +60,6 @@ export type {
   OnClickEvents,
   OnClickGroup,
   OnClickItem,
-  PreGroupByFiltering,
   Visuals,
   FindNodeCallback as findNodeCallback,
 };
