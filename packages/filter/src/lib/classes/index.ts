@@ -1,1 +1,0 @@
-export { ReactFilterController } from './reactFilterController';

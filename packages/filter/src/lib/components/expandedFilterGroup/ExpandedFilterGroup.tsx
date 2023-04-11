@@ -34,11 +34,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
   const hasAnyActiveFilters = Boolean(inactiveGroupValues.length);
 
   const groupsMatchingSearch = useMemo(
-    () =>
-      searchByValue(
-        filterGroup.values.map((v) => v),
-        filterSearchValue
-      ),
+    () => searchByValue(filterGroup.values, filterSearchValue),
     [filterGroup.values, filterSearchValue]
   );
 
