@@ -80,6 +80,8 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
   const expand = useExpand();
 
+  const columnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
+
   const keys = useGroupingKeys();
 
   const queries = useBlockCache<TData[], TContext>({
@@ -239,7 +241,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
             {/* HACK: Ignore subgrouping for now */}
             {isSubGroup(item) ? (
               <CustomSubGroup
-                columnExpanded={false}
+                columnExpanded={columnExpanded}
                 data={item}
                 onClick={async () => {
                   const isAlreadyExpanded = !!expandedIndexes.find((s) => s.index === virtualRow.index);
@@ -279,7 +281,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
               <PackageChild
                 colorAssistMode={colorAssistMode}
                 //TODO: fix
-                columnExpanded={false}
+                columnExpanded={columnExpanded}
                 // TODO: fix
                 controller={controller}
                 data={item}

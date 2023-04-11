@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+export const defaultGardenPackageWidth = 300;
+
 export function useItemWidths(columnCount: number) {
   const [widths, setWidths] = useState<number[]>([]);
 
@@ -8,8 +10,7 @@ export function useItemWidths(columnCount: number) {
    */
   useEffect(() => {
     if (columnCount > 0) {
-      const width = 300;
-      setWidths(new Array(columnCount).fill(width));
+      setWidths(new Array(columnCount).fill(defaultGardenPackageWidth));
     }
   }, [columnCount]);
 

@@ -3,8 +3,7 @@ import { VirtualItem } from 'react-virtual';
 import { ActionType } from '../ExpandProvider';
 import { Header, HeaderRoot } from './headerContainer.styles';
 import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
-import { getGardenItems } from '../../utils/getGardenItems';
-import { GardenGroup, GardenHeaderGroup, GetHeaderBlockRequestArgs } from '../../types';
+import { GardenHeaderGroup, GetHeaderBlockRequestArgs } from '../../types';
 import { useGardenContext } from '../../hooks';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { findBlockCacheEntry, GardenBlock, getBlocksInView } from '../VirtualGarden';
@@ -54,18 +53,14 @@ export const HeaderContainer = <TContext,>({
 
   const expandColumn = useExpandDispatch();
   const expanded = useExpand();
-
   const handleHeaderClick = useCallback(
-    (index: number, column: GardenGroup<Record<PropertyKey, unknown>>) => {
+    (index: number) => {
       expandColumn({
         type: ActionType.EXPAND_COLUMN,
         index,
-        key: column.columnName,
-        descriptionData: getGardenItems(column),
-        customDescription: visuals.getDescription,
       });
     },
-    [expandColumn, getGardenItems]
+    [expandColumn]
   );
 
   if (!HeaderChild) throw new Error('No header component registered');
@@ -73,6 +68,7 @@ export const HeaderContainer = <TContext,>({
   return (
     <HeaderRoot>
       {columnVirtualizer.virtualItems.map((virtualColumn) => {
+        const columnExpanded = !!expanded.expandedColumns.find((s) => s === virtualColumn.index);
         const blockXIndex = Math.floor(virtualColumn.index / blockSqrt);
         /** Find current blocks yIndex */
 
@@ -105,7 +101,7 @@ export const HeaderContainer = <TContext,>({
         return (
           <Header
             /**TODO: fix handle expand */
-            // onClick={() => handleHeaderClick(virtualColumn.index, header)}
+            onClick={() => handleHeaderClick(virtualColumn.index)}
             style={{
               width: `${virtualColumn.size}px`,
               transform: `translateX(${virtualColumn.start}px) translateY(0px)`,
@@ -117,7 +113,7 @@ export const HeaderContainer = <TContext,>({
             <HeaderChild
               header={header}
               columnIndex={virtualColumn.index}
-              columnIsExpanded={false}
+              columnIsExpanded={columnExpanded}
               groupByKey={groupByKey as string}
             />
           </Header>
