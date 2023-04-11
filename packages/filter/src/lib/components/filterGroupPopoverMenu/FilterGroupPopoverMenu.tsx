@@ -21,7 +21,6 @@ interface FilterGroupPopoverMenuProps {
   CustomRender: (value: FilterValueType) => JSX.Element;
   handleFilterItemLabelClick: (val: FilterValueType) => void;
   setUncheckedValues: (values: FilterValueType[]) => void;
-  groupName: string;
 }
 export const FilterGroupPopoverMenu = ({
   handleFilterItemClick,
@@ -33,7 +32,6 @@ export const FilterGroupPopoverMenu = ({
   values,
   CustomRender,
   setUncheckedValues,
-  groupName,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
 

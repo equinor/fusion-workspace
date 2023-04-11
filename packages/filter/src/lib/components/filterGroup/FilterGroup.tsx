@@ -25,7 +25,7 @@ export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: F
   const isAllChecked = uncheckedValues.length === 0;
   const checkedValues = group.values.filter((s) => !values.includes(s));
 
-  const customRender = (v) => <>{v?.toString() ?? '(Blank)'}</>;
+  const customRender = (v: FilterValueType) => <>{v}</>;
 
   if (values.length === 0) return <></>;
   return (
@@ -45,7 +45,6 @@ export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: F
           anchorEl={ref.current}
           values={values}
           CustomRender={customRender}
-          groupName={name}
         />
       )}
     </div>
