@@ -35,6 +35,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
     {
       suspense: true,
+      keepPreviousData: true,
       useErrorBoundary: true,
     }
   );

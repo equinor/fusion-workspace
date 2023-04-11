@@ -22,7 +22,9 @@ export function StatusBarWrapper<
 >({ config }: StatusBarWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) {
   const { filterState } = useFilterContext();
 
-  const { data, isLoading } = useQuery(['kpis', filterState], (a) => config(filterState, a.signal));
+  const { data, isLoading } = useQuery(['kpis', filterState], (a) => config(filterState, a.signal), {
+    keepPreviousData: true,
+  });
 
   if (isLoading || !data) {
     return <div></div>;
