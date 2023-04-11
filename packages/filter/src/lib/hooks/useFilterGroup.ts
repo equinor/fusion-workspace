@@ -57,7 +57,13 @@ export function useFilterGroup(group: FilterGroup) {
 
   const filterItemLabelClick = (value: string) => {
     const target = uncheckedValues.findIndex((s) => s.name === group.name);
-    if (target === -1) return;
+    if (target === -1) {
+      setUncheckedValues((s) => [
+        ...s,
+        { isQuickFilter: false, name: group.name, values: group.values.filter((s) => s !== value) },
+      ]);
+      return;
+    }
     setUncheckedValues((s) => [
       ...s.slice(0, target),
       { name: group.name, values: group.values.filter((val) => val !== value), isQuickFilter: false },
