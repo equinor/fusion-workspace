@@ -9,8 +9,13 @@ export type ClientGridProps<TData> = {
 };
 
 export function ClientGrid<TData>({ gridOptions, height, colDefs, rowData }: ClientGridProps<TData>) {
+  /**
+   *  Immutability does not work here
+   *  User depends on gridOptions object reference
+   */
   gridOptions ??= {};
   Object.assign(gridOptions, getClientSettings(rowData, colDefs));
+
   return <Grid height={height} gridOptions={gridOptions} />;
 }
 

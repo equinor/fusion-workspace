@@ -18,10 +18,16 @@ export type ServerGridProps<TData> = {
 type ColDef<TData> = AgGridColDef<TData>;
 
 export function ServerGrid<TData>({ getRows, height, gridOptions, colDefs, context }: ServerGridProps<TData>) {
+  /**
+   *  Immutability does not work here
+   *  User depends on gridOptions object reference
+   */
   gridOptions ??= {};
   Object.assign(gridOptions, getServerSettings({ getRows }, colDefs));
+
   return <Grid<TData> height={height} context={context} gridOptions={gridOptions} />;
 }
+
 const getServerSettings = <TData,>(dataSource: IServerSideDatasource, colDef: ColDef<TData>[]): GridOptions => ({
   serverSideDatasource: dataSource,
   serverSideInfiniteScroll: true,
