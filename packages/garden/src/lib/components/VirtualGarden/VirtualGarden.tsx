@@ -22,6 +22,8 @@ import { useBlockCache } from '../../hooks/useBlockCache';
 import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
 import { useScrollToColumnStart } from '../../hooks/useScrollToColumnStart';
 import { ReactiveValue } from '../../classes/reactiveValue';
+import { useExpandedSubGroups } from '../../hooks/useExpandSubgroups';
+import { useResetScrollOnKeysChange } from '../../hooks/useResetScrollOnKeysChange';
 
 const makeHeights = (rowCount: number, columnCount: number) => new Array(columnCount).fill(0).map(() => rowCount);
 
@@ -45,52 +47,6 @@ export type Expanded = {
 };
 
 export type ExpandedWithRange = Expanded & { range: number[] };
-
-const useExpandedSubGroups = (columnCount: number) => {
-  const [expanded, setExpanded] = useState<ExpandedWithRange[][]>(new Array(columnCount).fill(0).map(() => []));
-
-  const expandColumn = (columnIndex: number, item: Expanded) => {
-    const expandedIndexes = expanded[columnIndex];
-    const after = expandedIndexes.filter((s) => s.index > item.index);
-    const before = expandedIndexes.filter((s) => !after.includes(s));
-
-    const changes = after.map((s) => ({
-      ...s,
-      index: s.index + item.count,
-      range: new Array(s.count).fill(0).map((_, i) => i + s.index + item.count + 1),
-    }));
-
-    const res = [
-      ...before,
-      { ...item, range: new Array(item.count).fill(0).map((_, i) => i + item.index + 1) },
-      ...changes,
-    ];
-
-    setExpanded((s) => [...s.slice(0, columnIndex), res, ...s.slice(columnIndex + 1)]);
-  };
-
-  const collapseColumn = (columnIndex: number, subgroupName: string) => {
-    const expandedIndexes = expanded[columnIndex];
-    const targetIndex = expandedIndexes.findIndex((s) => s.name === subgroupName);
-    if (targetIndex === -1) {
-      throw new Error('This should never happen');
-    }
-    const actualItem = expandedIndexes[targetIndex];
-    const changess = expandedIndexes.slice(targetIndex + 1).map((s) => ({
-      ...s,
-      index: s.index - actualItem.count,
-      range: new Array(s.count).fill(0).map((_, i) => i + s.index - actualItem.count + 1),
-    }));
-    const res = [...expandedIndexes.slice(0, targetIndex), ...changess];
-    setExpanded((s) => [...s.slice(0, columnIndex), res, ...s.slice(columnIndex + 1)]);
-  };
-
-  return {
-    expandColumn,
-    collapseColumn,
-    expanded,
-  };
-};
 
 export type GardenBlock = {
   x: number;
@@ -245,18 +201,6 @@ export const VirtualGarden = <
     </>
   );
 };
-
-export function useResetScrollOnKeysChange<TData extends Record<PropertyKey, unknown>>(
-  parentRef: React.MutableRefObject<HTMLDivElement | null>,
-  grouping: ReactiveValue<GroupingKeys<TData>>
-) {
-  useLayoutEffect(() => {
-    const unsub = grouping.onChange(() => {
-      parentRef.current?.scrollTo({ left: 0, top: 0 });
-    });
-    return () => unsub();
-  }, [parentRef]);
-}
 
 export function findBlockCacheEntry<T>(
   block: GardenBlock,

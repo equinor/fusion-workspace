@@ -1,8 +1,7 @@
 import { Icon } from '@equinor/eds-core-react';
-import { createContext, Suspense, useEffect, useMemo } from 'react';
+import { createContext, Suspense, useMemo } from 'react';
 import { GardenController, GetIdentifier } from '../classes';
 import {
-  GardenApi,
   GardenGroup,
   GardenHeaderGroup,
   GardenMeta,
