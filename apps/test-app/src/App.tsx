@@ -9,7 +9,7 @@ import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
 import { gardenConfig } from './Garden';
 
 import { gridConfig } from './Grid';
-import { makeRequest } from './ignore';
+
 import { filterDataSource } from './Filter';
 import { FilterStateGroup } from '@equinor/workspace-filter';
 
@@ -29,7 +29,7 @@ const client = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFoc
 
 function App() {
   const getData = async (filters: FilterStateGroup[], signal?: AbortSignal): Promise<StatusItem[]> => {
-    const res = await makeRequest('work-orders/kpis', { filter: filters }, signal);
+    const res = {} as any;
 
     return (await res.json()).map((s: any) => ({ title: s.name, value: s.value }));
   };

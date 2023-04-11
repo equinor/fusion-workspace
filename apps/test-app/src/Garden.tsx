@@ -9,7 +9,8 @@ import {
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
 } from '@equinor/workspace-garden';
-import { makeRequest } from './ignore';
+
+const makeRequest = (...args: any) => ({} as any);
 
 const getSubgroupItems = async (
   { columnName, groupingKeys, subgroupName }: GetSubgroupItemsArgs,
