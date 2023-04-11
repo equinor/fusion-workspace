@@ -42,19 +42,19 @@ importers:
         specifier: ^0.15.0
         version: 0.15.0
       '@equinor/workspace-ag-grid':
-        specifier: workspace:0.4.0
+        specifier: workspace:^
         version: link:../../packages/ag-grid
       '@equinor/workspace-filter':
         specifier: workspace:^
         version: link:../../packages/filter
       '@equinor/workspace-fusion':
-        specifier: workspace:0.20.2
+        specifier: workspace:^
         version: link:../../packages/workspace-fusion
       '@equinor/workspace-garden':
         specifier: workspace:^
         version: link:../../packages/garden
       '@equinor/workspace-sidesheet':
-        specifier: workspace:0.1.5
+        specifier: workspace:^
         version: link:../../packages/sidesheet
       '@tanstack/react-query':
         specifier: ^4.23.0
@@ -167,7 +167,7 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@equinor/workspace-observable-proxy':
-        specifier: workspace:^0.2.4
+        specifier: workspace:^
         version: link:../observable-proxy
       ag-grid-community:
         specifier: 28.2.1
@@ -523,40 +523,6 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  packages/workspace-dynamic:
-    dependencies:
-      '@equinor/eds-core-react':
-        specifier: ^0.29.1
-        version: 0.29.1(@babel/core@7.20.12)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.6)
-      '@tanstack/react-query':
-        specifier: ^4.24.4
-        version: 4.24.4(react-dom@18.2.0)(react@18.2.0)
-      react-error-boundary:
-        specifier: ^3.1.4
-        version: 3.1.4(react@18.2.0)
-      react-is:
-        specifier: '>= 16.8.0'
-        version: 18.2.0
-    devDependencies:
-      '@equinor/workspace-fusion':
-        specifier: workspace:^0.20.2
-        version: link:../workspace-fusion
-      '@types/react':
-        specifier: ^18.0.25
-        version: 18.0.25
-      '@types/react-dom':
-        specifier: ^18.0.8
-        version: 18.0.8
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
   packages/workspace-fusion:
     dependencies:
       '@equinor/eds-core-react':
@@ -569,28 +535,28 @@ importers:
         specifier: 0.9.0
         version: 0.9.0
       '@equinor/workspace-ag-grid':
-        specifier: workspace:^0.4.0
+        specifier: workspace:^
         version: link:../ag-grid
       '@equinor/workspace-core':
-        specifier: workspace:^0.1.4
+        specifier: workspace:^
         version: link:../workspace-core
       '@equinor/workspace-filter':
-        specifier: workspace:^0.0.17
+        specifier: workspace:^
         version: link:../filter
       '@equinor/workspace-garden':
-        specifier: workspace:^0.7.7
+        specifier: workspace:^
         version: link:../garden
       '@equinor/workspace-powerbi':
-        specifier: workspace:^0.2.10
+        specifier: workspace:^
         version: link:../power-bi
       '@equinor/workspace-react':
-        specifier: workspace:^0.6.6
+        specifier: workspace:^
         version: link:../workspace-react
       '@equinor/workspace-sidesheet':
-        specifier: workspace:^0.1.5
+        specifier: workspace:^
         version: link:../sidesheet
       '@equinor/workspace-status-bar':
-        specifier: workspace:^0.0.13
+        specifier: workspace:^
         version: link:../status-bar
       '@tanstack/react-query':
         specifier: ^4.23.0
@@ -660,7 +626,7 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@equinor/workspace-core':
-        specifier: workspace:^0.1.4
+        specifier: workspace:^
         version: link:../workspace-core
       zustand:
         specifier: ^4.3.2
@@ -2027,30 +1993,6 @@ packages:
       - supports-color
     dev: false
 
-  /@equinor/eds-core-react@0.29.1(@babel/core@7.20.12)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.6):
-    resolution: {integrity: sha512-t8NyJSXC8qUdZrfJsd5au7DFCLRk+IaBpmiaxr070ajOSojF4Mdj4ELePmusZW0Rz4OxZ83/VXZww/B3w3u7jA==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    peerDependencies:
-      react: '>=16.8'
-      react-dom: '>=16.8'
-      styled-components: '>=4.2'
-    dependencies:
-      '@babel/runtime': 7.20.13
-      '@equinor/eds-icons': 0.18.0
-      '@equinor/eds-tokens': 0.9.0
-      '@equinor/eds-utils': 0.7.0(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.6)
-      '@floating-ui/react': 0.16.0(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
-      '@tanstack/react-virtual': 3.0.0-beta.30(react@18.2.0)
-      downshift: 7.2.0(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      styled-components: 5.3.6(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - supports-color
-    dev: false
-
   /@equinor/eds-icons@0.11.0:
     resolution: {integrity: sha512-KNyq/2HN88oDTRUpBUJpq5FFYroS8YthpKaQP75ncGBC3iAsuN7VkpmfTorlMDGYTDZa62FLHTCTqBRXuPd32A==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
@@ -2820,21 +2762,6 @@ packages:
       '@floating-ui/dom': 1.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@floating-ui/react@0.16.0(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-h+69TJSAY2R/k5rw+az56RzzDFc/Tg7EHn/qEgwkIVz56Zg9LlaRMMUvxkcvd+iN3CNFDLtEnDlsXnpshjsRsQ==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/react-dom': 1.2.2(react-dom@18.2.0)(react@18.2.0)
-      aria-hidden: 1.2.1(@types/react@18.0.25)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tabbable: 6.0.1
-    transitivePeerDependencies:
-      - '@types/react'
     dev: false
 
   /@humanwhocodes/config-array@0.9.5:
@@ -9014,10 +8941,6 @@ packages:
     dependencies:
       '@pkgr/utils': 2.3.1
       tslib: 2.5.0
-    dev: false
-
-  /tabbable@6.0.1:
-    resolution: {integrity: sha512-SYJSIgeyXW7EuX1ytdneO5e8jip42oHWg9xl/o3oTYhmXusZVgiA+VlPvjIN+kHii9v90AmzTZEBcsEvuAY+TA==}
     dev: false
 
   /term-size@2.2.1:
