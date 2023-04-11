@@ -12,7 +12,7 @@ import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
 
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 import { useQuery } from '@tanstack/react-query';
-import { FilterDataSource, FilterGroup as IFilterGroup } from '../../types';
+import { FilterDataSource, FilterStateGroup, FilterGroup as IFilterGroup } from '../../types';
 import { useFilterContext } from '../../context/filterContext';
 import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
 import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
@@ -27,12 +27,12 @@ interface QuickFilterProps {
 }
 
 export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
-  const { uncheckedValues, setFilterState, setUncheckedValues } = useFilterContext();
+  const { uncheckedValues, setFilterState, setUncheckedValues, filterState } = useFilterContext();
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const { data: groups } = useQuery(
-    ['filter-meta'],
-    ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(signal),
+    ['filter-meta', JSON.stringify(uncheckedValues)],
+    ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
     {
       suspense: true,
       useErrorBoundary: true,
@@ -125,11 +125,12 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     </StyledWrapper>
   );
 }
-const getServerArgs = (groups: IFilterGroup[], filterState: IFilterGroup[]) =>
+const getServerArgs = (groups: IFilterGroup[], filterState: FilterStateGroup[]) =>
   groups.map(
-    (group): IFilterGroup => ({
+    (group): FilterStateGroup => ({
       name: group.name,
-      isQuickFilter: false,
-      values: group.values.filter((value) => !filterState.find((x) => x.name === group.name)?.values.includes(value)),
+      values: group.filterItems
+        .map((s) => s.value)
+        .filter((value) => !filterState.find((x) => x.name === group.name)?.values.includes(value)),
     })
   );

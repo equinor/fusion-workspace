@@ -1,18 +1,18 @@
-import { FilterGroup } from '../types';
+import { FilterStateGroup } from '../types';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 export type IFilterContext = {
-  uncheckedValues: FilterGroup[];
-  setUncheckedValues: (newVal: FilterGroup[] | ((val: FilterGroup[]) => FilterGroup[])) => void;
-  filterState: FilterGroup[];
-  setFilterState: (newVal: FilterGroup[] | ((val: FilterGroup[]) => FilterGroup[])) => void;
+  uncheckedValues: FilterStateGroup[];
+  setUncheckedValues: (newVal: FilterStateGroup[] | ((val: FilterStateGroup[]) => FilterStateGroup[])) => void;
+  filterState: FilterStateGroup[];
+  setFilterState: (newVal: FilterStateGroup[] | ((val: FilterStateGroup[]) => FilterStateGroup[])) => void;
 };
 
 export const FilterContext = createContext<null | IFilterContext>(null);
 
 export const FilterContextProvider = ({ children }: PropsWithChildren) => {
-  const [uncheckedValues, setUncheckedValues] = useState<FilterGroup[]>([]);
-  const [filterState, setFilterState] = useState<FilterGroup[]>([]);
+  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>([]);
+  const [filterState, setFilterState] = useState<FilterStateGroup[]>([]);
 
   return (
     <FilterContext.Provider

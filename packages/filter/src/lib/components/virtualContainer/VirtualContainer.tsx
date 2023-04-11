@@ -14,7 +14,7 @@ interface VirtualContainerProps {
 }
 
 export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
-  const groupsMatchingSearch = searchByValue(filterGroup.values, filterSearchValue);
+  const groupsMatchingSearch = searchByValue(filterGroup.filterItems, filterSearchValue);
   const rowLength = groupsMatchingSearch.length;
   const parentRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,7 +34,7 @@ export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualCont
         {rowVirtualizer.virtualItems.map((virtualRow) => {
           return (
             <FilterItemValue
-              key={groupsMatchingSearch[virtualRow.index]}
+              key={groupsMatchingSearch[virtualRow.index].value}
               virtualRowSize={virtualRow.size}
               virtualRowStart={virtualRow.start}
               filterItem={groupsMatchingSearch[virtualRow.index]}

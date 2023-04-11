@@ -35,7 +35,10 @@ export interface FilterConfiguration<T> {
 /**
  * Primitive types allowed as filter types.
  */
-export type FilterValueType = string;
+export type FilterValueType = {
+  value: string;
+  count: number;
+};
 
 /**
  * Function for formatting an object to a filter value

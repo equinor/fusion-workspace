@@ -14,20 +14,20 @@ interface FilterGroupProps {
   isOpen: boolean;
   onClick: () => void;
   group: IFilterGroup;
-  uncheckedValues: FilterValueType[];
+  uncheckedValues: string[];
 }
 export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { clearGroup, filterItemLabelClick, toggleItem, setGroupsUnchecked } = useFilterGroup(group);
 
-  const { values } = group;
+  const { filterItems } = group;
   const isAllChecked = uncheckedValues.length === 0;
-  const checkedValues = group.values.filter((s) => !values.includes(s));
+  const checkedValues = group.filterItems.filter((s) => !filterItems.includes(s));
 
-  const customRender = (v: FilterValueType) => <>{v}</>;
+  const customRender = (v: FilterValueType) => <>{v.value}</>;
 
-  if (values.length === 0) return <></>;
+  if (filterItems.length === 0) return <></>;
   return (
     <div>
       <StyledFilterGroupWrapper ref={ref} onClick={onClick}>
@@ -39,11 +39,11 @@ export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: F
           setUncheckedValues={setGroupsUnchecked}
           handleFilterItemLabelClick={filterItemLabelClick}
           handleFilterItemClick={toggleItem}
-          isChecked={(value) => uncheckedValues.includes(value)}
+          isChecked={(filterItem) => uncheckedValues.includes(filterItem.value)}
           markAllValuesActive={clearGroup}
           closePopover={onClick}
           anchorEl={ref.current}
-          values={values}
+          values={filterItems}
           CustomRender={customRender}
         />
       )}

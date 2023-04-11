@@ -1,16 +1,15 @@
 import { useFilterContext } from '../context/filterContext';
-import { FilterGroup } from '../types';
+import { FilterGroup, FilterStateGroup, FilterValueType } from '../types';
 
 export function useFilterGroup(group: FilterGroup) {
   const { setUncheckedValues, uncheckedValues } = useFilterContext();
 
-  const setGroupsUnchecked = (value: string[]) => {
+  const setGroupsUnchecked = (value: FilterValueType[]) => {
     const target = uncheckedValues.findIndex((uncheckedGroup) => uncheckedGroup.name === group.name);
 
-    const newValue: FilterGroup = {
-      isQuickFilter: false,
+    const newValue: FilterStateGroup = {
       name: group.name,
-      values: value,
+      values: value.map((s) => s.value),
     };
 
     if (target !== -1) {
@@ -24,7 +23,8 @@ export function useFilterGroup(group: FilterGroup) {
     }
   };
 
-  const toggleItem = (value: string) => {
+  const toggleItem = (filterItem: FilterValueType) => {
+    const { value } = filterItem;
     const isUnchecked = uncheckedValues
       .find((uncheckedGroup) => uncheckedGroup.name === group.name)
       ?.values.includes(value);
@@ -61,25 +61,32 @@ export function useFilterGroup(group: FilterGroup) {
       ...filterGroup.slice(0, target),
       {
         name: group.name,
-        values: [...filterGroup[target].values.filter((filterItem) => filterItem !== value)],
+        values: [...filterGroup[target].values.filter((val) => val !== value)],
         isQuickFilter: false,
       },
       ...filterGroup.slice(target + 1),
     ]);
   };
 
-  const filterItemLabelClick = (value: string) => {
+  const filterItemLabelClick = (filterItem: FilterValueType) => {
     const target = uncheckedValues.findIndex((uncheckedGroup) => uncheckedGroup.name === group.name);
     if (target === -1) {
       setUncheckedValues((filtergroup) => [
         ...filtergroup,
-        { isQuickFilter: false, name: group.name, values: group.values.filter((filterItem) => filterItem !== value) },
+        {
+          name: group.name,
+          values: group.filterItems.map((s) => s.value).filter((a) => a !== filterItem.value),
+        },
       ]);
       return;
     }
     setUncheckedValues((filterGroup) => [
       ...filterGroup.slice(0, target),
-      { name: group.name, values: group.values.filter((val) => val !== value), isQuickFilter: false },
+      {
+        name: group.name,
+        values: group.filterItems.map((s) => s.value).filter((val) => val !== filterItem.value),
+        isQuickFilter: false,
+      },
       ...filterGroup.slice(target + 1),
     ]);
   };

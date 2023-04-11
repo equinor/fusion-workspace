@@ -82,13 +82,13 @@ export const FilterGroupPopoverMenu = ({
         <StyledList>
           {getValuesMatchingSearchText().map((value) => (
             <FilterItemCheckbox
-              key={value}
+              key={value.value}
               ValueRender={() => CustomRender(value)}
               filterValue={value}
               handleFilterItemClick={() => handleFilterItemClick(value)}
               handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
               isChecked={isChecked(value)}
-              count={0}
+              count={value.count}
             />
           ))}
         </StyledList>

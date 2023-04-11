@@ -23,9 +23,8 @@ export const ExpandedFilterItem = ({
     filterItemLabelClick(filterItem);
   }
 
-  const isUnChecked = inactiveGroupValues.includes(filterItem);
-  //TODO: backend
-  const count = 0;
+  const isUnChecked = inactiveGroupValues.includes(filterItem.value);
+
   return (
     <StyledFilterItemWrap
       title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
@@ -39,8 +38,8 @@ export const ExpandedFilterItem = ({
       }}
     >
       <Checkbox checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
-      <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem}</StyledFilterItemName>
-      {!isUnChecked && <StyledCount>({count})</StyledCount>}
+      <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
+      {!isUnChecked && <StyledCount>({filterItem.count})</StyledCount>}
     </StyledFilterItemWrap>
   );
 };

@@ -1,7 +1,7 @@
 import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useMemo, useState } from 'react';
 import { FilterClearIcon } from '../../icons';
-import { FilterGroup } from '../../types';
+import { FilterGroup, FilterValueType } from '../../types';
 
 import { Case, Switch } from '../../utils/Switch';
 import { StyledSearchButton, StyledFilterHeaderGroup, StyledTitle, StyledWrapper } from './expandedFilterGroup.styles';
@@ -30,18 +30,18 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
     setSearchActive((isActive) => !isActive);
   }
 
-  const isSearchable = filterGroup.values.length > 10;
+  const isSearchable = filterGroup.filterItems.length > 10;
   const hasAnyActiveFilters = Boolean(inactiveGroupValues.length);
 
   const groupsMatchingSearch = useMemo(
-    () => searchByValue(filterGroup.values, filterSearchValue),
-    [filterGroup.values, filterSearchValue]
+    () => searchByValue(filterGroup.filterItems, filterSearchValue),
+    [filterGroup.filterItems, filterSearchValue]
   );
 
   /** If user presses enter, the filter item matches the search will be applied and the popover closes */
   function handleOnKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      const newVals = filterGroup.values.filter((s) => !groupsMatchingSearch.includes(s));
+      const newVals = filterGroup.filterItems.filter((s) => !groupsMatchingSearch.includes(s));
 
       //TODO: verify
       setGroupsUnchecked(newVals);
@@ -92,8 +92,8 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
   );
 };
 
-export function searchByValue(items: string[], value: string) {
-  return items.filter((item) => item.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+export function searchByValue(items: FilterValueType[], value: string) {
+  return items.filter((item) => item.value.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
 }
 
 const StyledFilterGroupName = styled.div`
