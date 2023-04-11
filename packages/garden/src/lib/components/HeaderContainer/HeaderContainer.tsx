@@ -33,7 +33,14 @@ export const HeaderContainer = <TContext,>({
 }: HeaderContainerProps<TContext>): JSX.Element => {
   const blocks = makeBlocks({ blockSqrt, columnCount, rowCount: 1 });
   const blocksInView = getBlocksInView(columnStart, columnEnd, 0, 0, blockSqrt);
-  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getHeader, context, ['header']);
+  const blockCache = useBlockCache({
+    blocks: blocks,
+    blocksInView: blocksInView,
+    blockSqrt: blockSqrt,
+    context: context,
+    hash: ['header'],
+    getBlockAsync: getHeader,
+  });
 
   const controller = useGardenContext();
   const {

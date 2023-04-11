@@ -11,6 +11,7 @@ import { Expanded, ExpandedWithRange, GardenBlock } from '../VirtualGarden';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { ErrorPackage } from '../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../virtualPackages/LoadingPackage';
+import { SubGroupItem } from '../defaultComponents/item/SubGroupItem';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
@@ -81,11 +82,13 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
   const keys = useGroupingKeys();
 
-  const queries = useBlockCache<TData[], TContext>(
-    createSubgroupBlockCache({ length: subGroupCount, virtualColumnIndex: virtualColumn.index }),
-    getOpenSubGroups(expandedIndexes, virtualColumn.index),
-    1,
-    async (args, context, signal) => {
+  const queries = useBlockCache<TData[], TContext>({
+    blocks: createSubgroupBlockCache({ length: subGroupCount, virtualColumnIndex: virtualColumn.index }),
+    blocksInView: getOpenSubGroups(expandedIndexes, virtualColumn.index),
+    blockSqrt: 1,
+    context: context,
+    hash: ['groupName'],
+    getBlockAsync: async (args, context, signal) => {
       const { rowStart } = args;
 
       //Match index and find record in expandedIndexes
@@ -106,9 +109,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
         signal
       ) as any;
     },
-    context,
-    ['groupName']
-  );
+  });
 
   const [colorAssistMode, setColorAssistMode] = useState<boolean>(colorAssistMode$.value);
 
@@ -298,90 +299,6 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
         );
       })}
     </>
-  );
-};
-
-type SubGroupItemProps = {
-  query: UseQueryResult<any[]>;
-  virtualRow: any;
-  virtualColumn: any;
-  rowHeight: number;
-  itemWidth: number;
-  PackageChild: React.MemoExoticComponent<(args: CustomItemView<any, any>) => JSX.Element>;
-  itemIndex: number;
-  parentRef: MutableRefObject<HTMLDivElement | null>;
-};
-
-const SubGroupItem = ({
-  query,
-  virtualColumn,
-  virtualRow,
-  itemWidth,
-  rowHeight,
-  PackageChild,
-  itemIndex,
-  parentRef,
-}: SubGroupItemProps) => {
-  const { isLoading, error, data, refetch } = query;
-  const controller = useGardenContext<any, any>();
-  const { colorAssistMode$, getIdentifier } = controller;
-
-  if (isLoading) {
-    /** Skeleton loading state */
-    return (
-      <LoadingPackageSkeleton
-        itemWidth={itemWidth ?? 50}
-        rowHeight={rowHeight}
-        virtualColumn={virtualColumn}
-        virtualRow={virtualRow}
-      />
-    );
-  }
-
-  if (!data || error) {
-    /** Error state */
-    return (
-      <ErrorPackage
-        itemWidth={itemWidth}
-        refetch={refetch}
-        rowHeight={rowHeight}
-        virtualColumn={virtualColumn}
-        virtualRow={virtualRow}
-      />
-    );
-  }
-
-  const item = data[itemIndex];
-
-  return (
-    <StyledPackageRoot
-      key={virtualRow.index}
-      style={{
-        translate: `${virtualColumn.start}px ${virtualRow.start}px`,
-        width: `${virtualColumn.size}px`,
-        height: `${virtualRow.size}px`,
-        cursor: 'pointer',
-      }}
-    >
-      <PackageChild
-        colorAssistMode={false}
-        //TODO: fix
-        columnExpanded={false}
-        // TODO: fix
-        controller={controller}
-        data={item}
-        isSelected={false}
-        // isSelected={selectedIds.includes(getIdentifier(item))}
-        onClick={() => {
-          controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
-        }}
-        width={itemWidth}
-        depth={0}
-        rowStart={virtualRow.start}
-        columnStart={virtualColumn.start}
-        parentRef={parentRef}
-      />
-    </StyledPackageRoot>
   );
 };
 

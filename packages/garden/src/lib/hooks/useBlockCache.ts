@@ -3,14 +3,23 @@ import { useGroupingKeys } from './useGroupingKeys';
 import { useQueries } from '@tanstack/react-query';
 import { GetBlockRequestArgs } from '../types';
 
-export function useBlockCache<T, TContext = undefined>(
-  blocks: GardenBlock[],
-  blocksInView: GardenBlock[],
-  blockSqrt: number,
-  getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<T[]>,
-  context: TContext,
-  hash: string[]
-) {
+type UseBlockCacheArgs<T, TContext = undefined> = {
+  blocks: GardenBlock[];
+  blocksInView: GardenBlock[];
+  blockSqrt: number;
+  getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<T[]>;
+  context: TContext;
+  hash: string[];
+};
+
+export function useBlockCache<T, TContext = undefined>({
+  blockSqrt,
+  blocks,
+  blocksInView,
+  context,
+  getBlockAsync,
+  hash,
+}: UseBlockCacheArgs<T, TContext>) {
   const keys = useGroupingKeys();
 
   const blockCache = useQueries({

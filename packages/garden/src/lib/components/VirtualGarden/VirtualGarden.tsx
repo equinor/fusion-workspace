@@ -21,7 +21,6 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
 import { useScrollToColumnStart } from '../../hooks/useScrollToColumnStart';
-import { zip } from 'rxjs/operators';
 import { ReactiveValue } from '../../classes/reactiveValue';
 
 const makeHeights = (rowCount: number, columnCount: number) => new Array(columnCount).fill(0).map(() => rowCount);
@@ -186,7 +185,14 @@ export const VirtualGarden = <
   );
 
   const blocksInView = getBlocksInView(xStart, xEnd, yStart, yEnd, blockSqrt);
-  const blockCache = useBlockCache(blocks, blocksInView, blockSqrt, getBlockAsync, context, ['groups']);
+  const blockCache = useBlockCache({
+    blocks,
+    blocksInView,
+    blockSqrt,
+    context,
+    getBlockAsync,
+    hash: ['groups'],
+  });
 
   return (
     <>
