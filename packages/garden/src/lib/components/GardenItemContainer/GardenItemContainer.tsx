@@ -192,6 +192,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
           const query = queries[calculateActualIndex(expandedIndexes, flatIndex.parent.index).actualIndex];
           return (
             <SubGroupItem
+              groupingKeys={{ horizontalGroupingAccessor: keys.gardenKey, verticalGroupingKeys: keys.groupByKeys }}
               isExpanded={isColumnExpanded}
               key={virtualRow.key}
               PackageChild={PackageChild}
@@ -280,6 +281,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
               />
             ) : (
               <PackageChild
+                groupingKeys={{ horizontalGroupingAccessor: keys.gardenKey, verticalGroupingKeys: keys.groupByKeys }}
                 displayName={controller.getDisplayName(item)}
                 description={controller.visuals?.getDescription?.(item)}
                 colorAssistMode={colorAssistMode}

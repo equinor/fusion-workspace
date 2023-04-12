@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { MutableRefObject } from 'react';
 import { useGardenContext, useSelected } from '../../../hooks';
-import { CustomItemView } from '../../../types';
+import { CustomItemView, GroupingKeys } from '../../../types';
 import { StyledPackageRoot } from '../../GardenItemContainer/gardenItemContainer.styles';
 import { ErrorPackage } from '../../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../../virtualPackages/LoadingPackage';
@@ -14,6 +14,7 @@ type SubGroupItemProps = {
   virtualColumn: VirtualItem;
   isExpanded: boolean;
   rowHeight: number;
+  groupingKeys: GroupingKeys<any>;
   itemWidth: number;
   PackageChild: React.MemoExoticComponent<(args: CustomItemView<any>) => JSX.Element>;
   itemIndex: number;
@@ -27,6 +28,7 @@ export const SubGroupItem = ({
   virtualRow,
   itemWidth,
   rowHeight,
+  groupingKeys,
   PackageChild,
   isExpanded,
   onClick,
@@ -78,6 +80,7 @@ export const SubGroupItem = ({
       }}
     >
       <PackageChild
+        groupingKeys={groupingKeys}
         colorAssistMode={false}
         columnExpanded={isExpanded}
         displayName={controller.getDisplayName(item)}

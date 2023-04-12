@@ -3,10 +3,10 @@
  * namespace: @equinor/workspace-fusion/filter
  */
 
-import { FilterDataSource } from '@equinor/workspace-filter';
+import { FilterDataSource, FilterStateGroup } from '@equinor/workspace-filter';
 
 /**Garden types */
-export type { FilterConfig };
+export type { FilterConfig, FilterStateGroup };
 
 /** Override remove config types that is handled internally */
 type FilterConfig = {

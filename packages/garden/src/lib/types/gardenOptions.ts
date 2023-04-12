@@ -1,11 +1,12 @@
 import { MemoExoticComponent, MutableRefObject } from 'react';
-import { GardenGroup, GardenHeaderGroup } from '.';
+import { GardenGroup, GardenHeaderGroup, GroupingKeys } from '.';
 
 export interface CustomItemView<TData extends Record<PropertyKey, unknown>> {
   color: string;
   displayName: string;
   description?: string;
   data: TData;
+  groupingKeys: GroupingKeys<TData>;
   onClick: () => void;
   columnExpanded: boolean;
   isSelected: boolean;
