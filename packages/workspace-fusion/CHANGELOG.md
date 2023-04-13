@@ -3,9 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.4]
+
+Updates to filter, calculate hidden filters applied
+
 ## [1.0.0-alpha.3]
 
-add clickevents
+Add clickevents
 
 ## [0.20.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.20.1...@equinor/workspace-fusion@0.20.2) (2023-03-28)
 
