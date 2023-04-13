@@ -27,7 +27,7 @@ const getSubgroupItems = async (
     signal
   );
 
-  const r = await (await res).json();
+  const r = await res.json();
   return r;
 };
 

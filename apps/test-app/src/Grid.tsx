@@ -1,6 +1,7 @@
 import { IServerSideGetRowsParams, IServerSideGetRowsRequest } from '@equinor/workspace-ag-grid';
 import { FilterStateGroup } from '@equinor/workspace-filter';
 import { GridConfig } from '@equinor/workspace-fusion/grid';
+import { makeRequest } from './ignore';
 
 const getRows = async (params: IServerSideGetRowsParams<any>, filters: FilterStateGroup[]) => {
   const { success, request, fail } = params;
@@ -15,7 +16,7 @@ const getRequest = async (request: IServerSideGetRowsRequest, filters: FilterSta
     endRow: request.endRow,
     filter: filters,
   };
-  const res = {} as any;
+  const res = await makeRequest('work-orders/grid', body);
 
   return res.json();
 };
