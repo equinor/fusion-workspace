@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## Version [1.0.0-alpha.3]
+
+Keep previous data on garden meta to prevent teardown
+
 ## [0.7.7](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-garden@0.7.6...@equinor/workspace-garden@0.7.7) (2023-03-27)
 
 **Note:** Version bump only for package @equinor/workspace-garden
