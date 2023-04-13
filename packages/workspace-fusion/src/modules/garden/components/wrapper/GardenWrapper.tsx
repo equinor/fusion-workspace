@@ -1,9 +1,10 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { Garden, GardenApi } from '@equinor/workspace-garden';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
+import { FusionMediator } from '../../../../lib';
 
 type GardenWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -14,6 +15,7 @@ type GardenWrapperProps<
 > = {
   config: GardenConfig<any, TFilter>;
   getIdentifier: GetIdentifier<TData>;
+  mediator: FusionMediator<never, any, any>;
 };
 
 export const GardenWrapper = <
@@ -25,13 +27,9 @@ export const GardenWrapper = <
 >({
   config,
   getIdentifier,
+  mediator,
 }: GardenWrapperProps<TData, TError, TContext, TCustomSidesheetEvents, TFilter>) => {
   const { filterState } = useFilterContext();
-  const [gardenApi, setGardenApi] = useState<null | GardenApi>(null);
-
-  // useEffect(() => {
-  //   gardenApi?.invalidate();
-  // }, [filterState]);
 
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
@@ -43,6 +41,11 @@ export const GardenWrapper = <
         getIdentifier={getIdentifier}
         initialGrouping={config.initialGrouping.horizontalGroupingAccessor.toString()}
         getDisplayName={config.getDisplayName}
+        clickEvents={{
+          onClickItem: (i) => {
+            mediator.selectionService.selectedNodes = [{ id: getIdentifier(i), item: i as any }];
+          },
+        }}
       />
     </div>
   );

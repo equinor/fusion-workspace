@@ -7,7 +7,7 @@ import { GardenIcon } from './icons/GardenIcon';
 
 export const gardenModule: FusionWorkspaceModule = {
   name: 'garden',
-  setup: (props) => {
+  setup: (props, mediator) => {
     const gardenConfig = props.gardenOptions;
 
     if (!gardenConfig) return;
@@ -33,6 +33,7 @@ export const gardenModule: FusionWorkspaceModule = {
           <GardenWrapper<any, any, any, any, FilterStateGroup[]>
             config={gardenConfig}
             getIdentifier={props.workspaceOptions.getIdentifier}
+            mediator={mediator}
           />
         ),
         name: 'garden',

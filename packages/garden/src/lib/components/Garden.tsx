@@ -10,6 +10,7 @@ import {
   GetDisplayName,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
+  OnClickEvents,
   Visuals,
 } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
@@ -35,6 +36,7 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   initialGrouping: string;
   visuals?: Visuals<TData>;
   customViews?: CustomVirtualViews<TData>;
+  clickEvents?: OnClickEvents<TData>;
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -47,6 +49,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   initialGrouping,
   customViews,
   visuals,
+  clickEvents,
 }: GardenProps<TData, TContext>): JSX.Element | null {
   //TODO:Handle no data better in garden
   const controller = useMemo(
@@ -58,6 +61,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
         initialGrouping: { horizontalGroupingAccessor: initialGrouping, verticalGroupingKeys: [] },
         visuals: visuals,
         customViews: customViews,
+        clickEvents,
       }),
     [initialGrouping]
   );

@@ -2,7 +2,6 @@ import { createEventService } from '../utils/services/eventService';
 import { ObjectType, BaseEvent } from '../types';
 import {
   createErrorService,
-  createDataService,
   createSelectionService,
   createBookmarksService,
   createUrlService,
@@ -15,7 +14,7 @@ import {
  * [Workspace Mediator](https://equinor.github.io/fusion-workspace/packages/workspace-core/mediator)
  */
 export class WorkspaceMediator<
-  TData,
+  _TUnused extends any,
   TNode,
   TSidesheetEvents extends BaseEvent,
   TError extends ObjectType<TError> = ObjectType<unknown>,
@@ -39,13 +38,4 @@ export class WorkspaceMediator<
   errorService = createErrorService<TError>(this.#appendDestructor);
 
   contextService = createContextService<TContext>(this.#appendDestructor);
-
-  /** Call this function when mediator should be destroyed */
-  destroy = () => {
-    this.#destructors.forEach((destroy) => destroy());
-    for (const key in this) {
-      this[key] = null as unknown as this[Extract<keyof this, string>];
-      delete this[key];
-    }
-  };
 }

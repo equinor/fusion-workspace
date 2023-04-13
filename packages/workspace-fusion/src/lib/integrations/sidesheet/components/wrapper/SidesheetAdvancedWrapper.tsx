@@ -11,7 +11,7 @@ type SidesheetAdvancedWrapperProps<
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never
 > = {
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
+  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>;
   config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
 };
 

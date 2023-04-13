@@ -1,5 +1,5 @@
 import { Provider, Tab } from '@equinor/workspace-react';
-import { WorkspaceConfiguration, WorkspaceProps } from '../types';
+import { FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
 
 import { addStatusBar } from '../integrations/status-bar';
@@ -12,18 +12,21 @@ export function createConfigurationObject<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never
->(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>): WorkspaceConfiguration {
+>(
+  props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>,
+  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>
+): WorkspaceConfiguration {
   const tabs: Tab[] = [];
   const providers: Provider[] = [];
 
-  const pushTab = (e: Tab | undefined) => {
-    if (!e) return;
-    tabs.push(e);
+  const pushTab = (tab: Tab | undefined) => {
+    if (!tab) return;
+    tabs.push(tab);
   };
 
-  const pushProvider = (e: Provider | undefined) => {
-    if (!e) return;
-    providers.push(e);
+  const pushProvider = (provider: Provider | undefined) => {
+    if (!provider) return;
+    providers.push(provider);
   };
 
   pushProvider({
@@ -39,7 +42,7 @@ export function createConfigurationObject<
 
   props.modules &&
     props.modules.forEach((module) => {
-      const config = module.setup(props);
+      const config = module.setup(props, mediator);
       if (!config) return;
       pushProvider(config.provider);
       pushTab(config.tab);
@@ -47,9 +50,7 @@ export function createConfigurationObject<
 
   pushProvider(addStatusBar(props.statusBarOptions));
 
-  // pushProvider(addFilter(props.filterOptions));
-
-  const Sidesheet = addSidesheet(props.sidesheetOptions);
+  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
 
   sortFusionTabs(tabs);
 
