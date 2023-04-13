@@ -47,7 +47,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   }, [uncheckedValues]);
 
   if (!groups) {
-    throw new Error('SU');
+    throw new Error('Fix suspense');
   }
 
   const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
@@ -70,11 +70,15 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
     setUncheckedValues([]);
   };
 
-  const calculateHiddenFiltersApplied = () => 0;
-  // groups.reduce(
-  //   (acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
-  //   0
-  // );
+  const getInactiveGroupValues = (groupName: string) => {
+    return uncheckedValues.find((s) => s.name === groupName)?.values ?? [];
+  };
+
+  const calculateHiddenFiltersApplied = () =>
+    groups.reduce(
+      (acc, curr) => (!curr.isQuickFilter && getInactiveGroupValues(curr.name).length > 0 ? acc + 1 : acc),
+      0
+    );
 
   return (
     <StyledWrapper id="filter_root">
@@ -84,7 +88,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
             <FilterQuickSearch />
           </StyledLeftSection>
           <StyledRightSection>
-            {true && (
+            {!isFilterExpanded && (
               <>
                 {quickFilterGroups.map(
                   (group, i) =>
