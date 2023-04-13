@@ -5,7 +5,7 @@ import { GridIcon } from './icons/GridIcon';
 
 import { FusionMediator, FusionWorkspaceModule, GetIdentifier, WorkspaceSidesheets } from '../../lib';
 import { FilterStateGroup } from '@equinor/workspace-filter';
-import { ColDef, GridOptions } from '@equinor/workspace-ag-grid';
+import { GridOptions } from '@equinor/workspace-ag-grid';
 
 /**
  * Adds the module to the workspace
@@ -17,7 +17,8 @@ export const gridModule: FusionWorkspaceModule = {
     props.workspaceOptions.getIdentifier;
     if (!gridConfig) return;
     gridConfig.gridOptions ??= {};
-    applyClickEvents(gridConfig.gridOptions, mediator, props.workspaceOptions.getIdentifier);
+
+    setDefaultColDef(gridConfig.gridOptions, mediator, props.workspaceOptions.getIdentifier);
 
     const provider: Provider = {
       Component: ({ children }) => {
@@ -42,24 +43,6 @@ export const gridModule: FusionWorkspaceModule = {
   },
 };
 
-function applyClickEvents(
-  gridOptions: Omit<GridOptions<any>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
-  mediator: FusionMediator<never, any, WorkspaceSidesheets<any>>,
-  getIdentifier: GetIdentifier<any>
-) {
-  if (!gridOptions.defaultColDef) {
-    setDefaultColDef(gridOptions, mediator, getIdentifier);
-    return;
-  }
-
-  gridOptions.columnDefs = gridOptions.columnDefs?.map(
-    (old): ColDef<any> => ({
-      ...old,
-      onCellClicked: (a) => (mediator.selectionService.selectedNodes = [{ id: getIdentifier(a.data), item: a.data }]),
-    })
-  );
-}
-
 function setDefaultColDef(
   gridOptions: Omit<GridOptions<any>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
   mediator: FusionMediator<never, any, WorkspaceSidesheets<any>>,
@@ -67,7 +50,10 @@ function setDefaultColDef(
 ) {
   gridOptions.defaultColDef = {
     resizable: true,
-    onCellClicked: (a) => (mediator.selectionService.selectedNodes = [{ id: getIdentifier(a.data), item: a.data }]),
+    onCellClicked: (a) => {
+      const node = { id: getIdentifier(a.data), item: a.data };
+      mediator.selectionService.selectedNodes = [node];
+    },
   };
 }
 

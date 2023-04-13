@@ -39,6 +39,7 @@ export function createConfigurationObject<
   pushProvider({ name: 'Header', Component: RootHeaderContext });
 
   // tabs.concat(addCustomTabs(props.customTabs, mediator));
+  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
 
   props.modules &&
     props.modules.forEach((module) => {
@@ -49,8 +50,6 @@ export function createConfigurationObject<
     });
 
   pushProvider(addStatusBar(props.statusBarOptions));
-
-  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
 
   sortFusionTabs(tabs);
 
