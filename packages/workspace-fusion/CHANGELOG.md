@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0-alpha.8]
+
+Grid export serverside datasource types
+
 ## [1.0.0-alpha.7]
 
 Grid scrollbar fix
