@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## Version [1.0.0-alpha.4]
+
+Fix garden crashing when filters change
+
 ## Version [1.0.0-alpha.3]
 
 Keep previous data on garden meta to prevent teardown
