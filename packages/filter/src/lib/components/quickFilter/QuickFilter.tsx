@@ -31,7 +31,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const { data: groups } = useQuery(
-    ['filter-meta', JSON.stringify(uncheckedValues)],
+    ['filter-meta', JSON.stringify(filterState)],
     ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
     {
       suspense: true,
