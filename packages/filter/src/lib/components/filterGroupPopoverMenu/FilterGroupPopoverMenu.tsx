@@ -60,24 +60,22 @@ export const FilterGroupPopoverMenu = ({
       placement={'bottom-end'}
     >
       <StyledMenuWrapper>
-        {values.length > 7 && (
-          <>
-            <StyledSearchHolder className={searchClassName}>
-              <Search
-                className={searchClassName}
-                value={searchText}
-                placeholder="Search"
-                onInput={handleInput}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    setFilterStateFromSearch();
-                  }
-                }}
-              />
-            </StyledSearchHolder>
-            <StyledVerticalLine />
-          </>
-        )}
+        <>
+          <StyledSearchHolder className={searchClassName}>
+            <Search
+              className={searchClassName}
+              value={searchText}
+              placeholder="Search"
+              onInput={handleInput}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  setFilterStateFromSearch();
+                }
+              }}
+            />
+          </StyledSearchHolder>
+          <StyledVerticalLine />
+        </>
 
         <StyledList>
           {getValuesMatchingSearchText().map((value) => (

@@ -30,7 +30,6 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
     setSearchActive((isActive) => !isActive);
   }
 
-  const isSearchable = filterGroup.filterItems.length > 10;
   const hasAnyActiveFilters = Boolean(inactiveGroupValues.length);
 
   const groupsMatchingSearch = useMemo(
@@ -70,13 +69,12 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
           </Case>
           <Case when={true}>
             <StyledFilterGroupName>
-              <StyledTitle onClick={() => isSearchable && handleSearchButtonClick()}>{filterGroup.name}</StyledTitle>
+              <StyledTitle onClick={() => handleSearchButtonClick()}>{filterGroup.name}</StyledTitle>
               <div style={{ display: 'flex' }}>
-                {isSearchable && (
-                  <StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
-                    <Icon name={'search'} id={'search'} />
-                  </StyledSearchButton>
-                )}
+                <StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
+                  <Icon name={'search'} id={'search'} />
+                </StyledSearchButton>
+
                 {hasAnyActiveFilters && (
                   <Button variant="ghost_icon" onClick={clearGroup}>
                     <FilterClearIcon />
