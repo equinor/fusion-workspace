@@ -2,7 +2,7 @@
 
 ## [1.0.0-alpha.10]
 
-Updates to filter in both workspace and powerbi
+Fix garden crash when filter changes
 
 ## [1.0.0-alpha.9]
 
