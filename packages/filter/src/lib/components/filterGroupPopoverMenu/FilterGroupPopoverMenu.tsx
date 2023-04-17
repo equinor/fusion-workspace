@@ -78,17 +78,20 @@ export const FilterGroupPopoverMenu = ({
         </>
 
         <StyledList>
-          {getValuesMatchingSearchText().map((value) => (
-            <FilterItemCheckbox
-              key={value.value}
-              ValueRender={() => CustomRender(value)}
-              filterValue={value}
-              handleFilterItemClick={() => handleFilterItemClick(value)}
-              handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
-              isChecked={isChecked(value)}
-              count={value.count}
-            />
-          ))}
+          {getValuesMatchingSearchText()
+            //TODO: move to backend
+            .filter((s) => s.count > 0)
+            .map((value) => (
+              <FilterItemCheckbox
+                key={value.value}
+                ValueRender={() => CustomRender(value)}
+                filterValue={value}
+                handleFilterItemClick={() => handleFilterItemClick(value)}
+                handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
+                isChecked={isChecked(value)}
+                count={value.count}
+              />
+            ))}
         </StyledList>
         <StyledVerticalLine />
         <StyledClearButtonWrapper>

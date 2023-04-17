@@ -14,7 +14,7 @@ interface VirtualContainerProps {
 }
 
 export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
-  const groupsMatchingSearch = searchByValue(filterGroup.filterItems, filterSearchValue);
+  const groupsMatchingSearch = searchByValue(filterGroup.filterItems, filterSearchValue).filter((s) => s.count > 0);
   const rowLength = groupsMatchingSearch.length;
   const parentRef = useRef<HTMLDivElement | null>(null);
 
