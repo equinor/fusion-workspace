@@ -5,7 +5,7 @@ interface FilterExpandIconProps {
 }
 
 export const FilterExpandIcon = ({ onClick }: FilterExpandIconProps): JSX.Element => (
-  <Button title="Advanced filter" onClick={onClick} variant="ghost_icon">
+  <Button style={{ cursor: 'pointer' }} title="Advanced filter" onClick={onClick} variant="ghost_icon">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M13 5C13 4.44772 13.4477 4 14 4H19C19.5523 4 20 4.44772 20 5V10C20 10.5523 19.5523 11 19 11C18.4477 11 18 10.5523 18 10V7.41436L14.2073 11.2071C13.8167 11.5976 13.1836 11.5976 12.793 11.2071C12.4025 10.8166 12.4025 10.1834 12.793 9.79289L16.5859 6H14C13.4477 6 13 5.55228 13 5Z"
