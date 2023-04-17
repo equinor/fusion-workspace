@@ -26,7 +26,7 @@ export const VirtualContainer = <TContext,>({
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
-    keepPreviousData: true,
+    keepPreviousData: false,
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], context, signal ?? new AbortSignal()),
   });
