@@ -6,7 +6,14 @@ interface FilterClearIconProps {
 }
 
 export const FilterClearIcon = ({ isDisabled }: FilterClearIconProps): JSX.Element => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    style={{ cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       fill={isDisabled ? tokens.colors.interactive.disabled__text.hex : '#007079'}
       fillRule="evenodd"

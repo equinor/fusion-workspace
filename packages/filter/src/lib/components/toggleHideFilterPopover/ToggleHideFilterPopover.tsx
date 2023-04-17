@@ -36,7 +36,7 @@ export const ToggleHideFilterPopover = ({
     <>
       {/* TODO: FIX styling */}
       <div ref={ref}>
-        <StyledButton title="Add filters" onClick={() => setIsOpen(true)}>
+        <StyledButton style={{ cursor: 'pointer' }} title="Add filters" onClick={() => setIsOpen(true)}>
           <Icon name="playlist_add" color={tokens.colors.interactive.primary__resting.hex} />
         </StyledButton>
       </div>
