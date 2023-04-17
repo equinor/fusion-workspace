@@ -25,9 +25,9 @@ export function useFilterGroup(group: FilterGroup) {
 
   const toggleItem = (filterItem: FilterValueType) => {
     const { value } = filterItem;
-    const isUnchecked = uncheckedValues
-      .find((uncheckedGroup) => uncheckedGroup.name === group.name)
-      ?.values.includes(value);
+
+    const targetGroup = uncheckedValues.find((uncheckedGroup) => uncheckedGroup.name === group.name);
+    const isUnchecked = targetGroup?.values.includes(value);
 
     if (isUnchecked) {
       checkItem(value);
@@ -40,11 +40,23 @@ export function useFilterGroup(group: FilterGroup) {
     const target = uncheckedValues.findIndex((uncheckedGroup) => uncheckedGroup.name === group.name);
 
     if (target !== -1) {
-      setUncheckedValues((filterGroup) => [
-        ...filterGroup.slice(0, target),
-        { name: group.name, values: [...filterGroup[target].values, value], isQuickFilter: false },
-        ...filterGroup.slice(target + 1),
-      ]);
+      const resolvedGroup = uncheckedValues[target];
+
+      const isUncheckingAll = resolvedGroup.values.length + 1 === group.filterItems.length;
+
+      if (isUncheckingAll) {
+        setUncheckedValues((filterGroup) => [
+          ...filterGroup.slice(0, target),
+          { name: group.name, values: [], isQuickFilter: false },
+          ...filterGroup.slice(target + 1),
+        ]);
+      } else {
+        setUncheckedValues((filterGroup) => [
+          ...filterGroup.slice(0, target),
+          { name: group.name, values: [...filterGroup[target].values, value], isQuickFilter: false },
+          ...filterGroup.slice(target + 1),
+        ]);
+      }
     } else {
       setUncheckedValues((filterGroup) => [
         ...filterGroup,
