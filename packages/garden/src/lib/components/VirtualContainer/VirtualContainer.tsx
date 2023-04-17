@@ -22,7 +22,7 @@ export const VirtualContainer = <TContext,>({
 
   const keys = useGroupingKeys();
 
-  const { data } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys, context], {
+  const { data, isFetching } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
@@ -45,6 +45,11 @@ export const VirtualContainer = <TContext,>({
   }
 
   if (widths.length !== amountOfColumns) {
+    return null;
+  }
+
+  //TODO: temp fix, should show skeletons
+  if (isFetching) {
     return null;
   }
 
