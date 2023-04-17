@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0-alpha.3
+
+Hide filters with count of 0
+Prevent uncheck all
+Fix stale filterstate bug causing counts to be wrong
+Add cursor pointer to all icons in filter
+
 ## 1.0.0-alpha.2
 
 Calculate hidden filters applied
