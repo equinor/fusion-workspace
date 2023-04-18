@@ -14,7 +14,7 @@ type GridProps<TData> = {
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule]);
 
-export function Grid<TData>({ columnDefs, gridOptions, height }: GridProps<TData>) {
+export function Grid<TData>({ columnDefs, gridOptions, height, rowData }: GridProps<TData>) {
   const themeName = useAgStyles();
 
   return (
@@ -25,9 +25,9 @@ export function Grid<TData>({ columnDefs, gridOptions, height }: GridProps<TData
         headerHeight={32}
         className={themeName}
         gridOptions={gridOptions}
-        // gridOptions={gridOptions}
         columnDefs={columnDefs}
-        // rowSelection="multiple"
+        rowData={rowData}
+        rowSelection="single"
       />
     </StyledGridWrapper>
   );

@@ -14,12 +14,11 @@ export function ClientGrid<TData>({ gridOptions, height, colDefs, rowData }: Cli
    *  User depends on gridOptions object reference
    */
   gridOptions ??= {};
-  Object.assign(gridOptions, getClientSettings(rowData, colDefs));
+  Object.assign(gridOptions, getClientSettings(colDefs));
 
-  return <Grid height={height} gridOptions={gridOptions} />;
+  return <Grid gridOptions={gridOptions} rowData={rowData} height={height} columnDefs={colDefs} />;
 }
 
-const getClientSettings = <TData,>(rowData: TData[], colDef: ColDef[]): GridOptions<TData> => ({
-  rowData,
+const getClientSettings = <TData,>(colDef: ColDef[]): GridOptions<TData> => ({
   columnDefs: colDef,
 });
