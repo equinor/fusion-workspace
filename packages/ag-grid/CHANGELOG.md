@@ -1,7 +1,8 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [1.0.0-alpha.1]
+
+- Fix rowdata not updating
 
 ## [0.4.0](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-ag-grid@0.3.8...@equinor/workspace-ag-grid@0.4.0) (2023-03-27)
 
