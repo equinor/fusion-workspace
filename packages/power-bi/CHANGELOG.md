@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.0-alpha.2
+
+Show all filters by default in advanced filter
+
 ## 1.0.0-alpha.1
 
 Add cursor pointer to all icons in filter
