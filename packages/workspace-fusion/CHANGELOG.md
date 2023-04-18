@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.0-alpha.11]
+
+Powerbi bump
+
 ## [1.0.0-alpha.10]
 
 Fix garden crash when filter changes
