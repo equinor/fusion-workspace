@@ -48,7 +48,7 @@ function WorkspaceComponent<
       <WorkspaceView
         Sidesheet={configuration.Sidesheet}
         providers={configuration.providers}
-        defaultTab={configuration.tabs.find((s) => s.name === tryGetTabFromUrl())?.name ?? configuration.defaultTab}
+        defaultTab={configuration.defaultTab}
         tabs={configuration.tabs}
         events={
           {

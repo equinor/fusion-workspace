@@ -33,5 +33,5 @@ export type WorkspaceConfiguration = {
   Sidesheet?: () => JSX.Element;
   providers: Provider[];
   tabs: Tab[];
-  defaultTab?: string;
+  defaultTab: string;
 };

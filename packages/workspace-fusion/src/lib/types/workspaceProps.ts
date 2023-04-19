@@ -14,6 +14,7 @@ type WorkspaceBaseProps<
   TCustomSidesheetEvents extends BaseEvent = never
 > = {
   workspaceOptions: WorkspaceConfig<TData>;
+  currentBookmark?: Bookmark | null | undefined;
   customTabs?: CustomTab[];
   modules?: FusionWorkspaceModule[];
 };
@@ -29,3 +30,22 @@ export type WorkspaceProps<
   WorkspaceStatusBarProps<FilterStateGroup[]> &
   WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
   WorkspacePowerBiProps;
+
+export type Bookmark = {
+  tab: string;
+  payload: Partial<{
+    powerBi: never;
+    grid: never;
+    filter: FilterBookmark;
+    garden: GardenBookmark;
+  }>;
+};
+
+export type GardenBookmark = {
+  gardenKey: string;
+  groupByKeys: string[];
+};
+
+export type FilterBookmark = {
+  uncheckedValues: string[];
+};
