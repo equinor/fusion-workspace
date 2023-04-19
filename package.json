@@ -4,12 +4,10 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "first-time-setup": "npm i -g pnpm@8.0.0 && pnpm i && pnpm build",
-    "build": "pnpm --parallel  -r build",
-    "ci:build": "pnpm -r build",
-    "build:prod": "pnpm -r build:prod",
+    "first-time-setup": "npm i -g pnpm@8.0.0 turbo && pnpm i && pnpm build",
+    "build": "turbo run build",
     "documentation": "pnpx astro dev --root ./documentation",
-    "shipit": "pnpm ci:build && pnpm -r publish"
+    "shipit": "pnpm build && pnpm -r publish"
   },
   "private": true,
   "packageManager": "pnpm@8.0.0",
@@ -21,6 +19,7 @@
     "@typescript-eslint/eslint-plugin": "~5.24.0",
     "@typescript-eslint/parser": "~5.24.0",
     "prettier": "^2.6.2",
+    "turbo": "^1.9.3",
     "typescript": "~5.0.2",
     "typescript-plugin-styled-components": "^2.0.0"
   },
