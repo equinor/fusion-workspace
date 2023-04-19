@@ -6,7 +6,6 @@ import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
 import { BaseEvent } from '@equinor/workspace-core';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
-import { tryGetTabFromUrl } from '../classes/fusionUrlHandler';
 import { WorkspaceBoundary } from './error';
 import { useState } from 'react';
 
