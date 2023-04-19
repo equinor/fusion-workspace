@@ -30,11 +30,6 @@ export function createConfigurationObject<
     providers.push(provider);
   };
 
-  pushProvider({
-    Component: FilterContextProvider,
-    name: 'filter_context',
-  });
-
   // pushProvider(configureUrlWithHistory(mediator, history));
 
   pushProvider({ name: 'Header', Component: RootHeaderContext });

@@ -8,6 +8,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { WorkspaceBoundary } from './error';
 import { useState } from 'react';
+import { FilterContextProvider } from '@equinor/workspace-filter';
 
 const client = new QueryClient();
 
@@ -44,19 +45,25 @@ function WorkspaceComponent<
 
   return (
     <QueryClientProvider client={client}>
-      <WorkspaceView
-        Sidesheet={configuration.Sidesheet}
-        providers={configuration.providers}
-        defaultTab={configuration.defaultTab}
-        tabs={configuration.tabs}
-        events={
-          {
-            // onTabChange: (newTab) => {
-            //   updateQueryParams([['tab', newTab]], history);
-            // },
-          }
+      <FilterContextProvider
+        defaultUncheckedValues={
+          props.currentBookmark?.payload.filter?.uncheckedValues ?? props.filterOptions?.defaultUncheckedValues
         }
-      />
+      >
+        <WorkspaceView
+          Sidesheet={configuration.Sidesheet}
+          providers={configuration.providers}
+          defaultTab={configuration.defaultTab}
+          tabs={configuration.tabs}
+          events={
+            {
+              // onTabChange: (newTab) => {
+              //   updateQueryParams([['tab', newTab]], history);
+              // },
+            }
+          }
+        />
+      </FilterContextProvider>
     </QueryClientProvider>
   );
 }

@@ -11,4 +11,5 @@ export type { FilterConfig, FilterStateGroup };
 /** Override remove config types that is handled internally */
 type FilterConfig = {
   dataSource: FilterDataSource;
+  defaultUncheckedValues?: FilterStateGroup[];
 };

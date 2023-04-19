@@ -47,5 +47,5 @@ export type GardenBookmark = {
 };
 
 export type FilterBookmark = {
-  uncheckedValues: string[];
+  uncheckedValues: FilterStateGroup[];
 };

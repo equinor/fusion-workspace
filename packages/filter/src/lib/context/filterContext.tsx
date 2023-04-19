@@ -10,8 +10,15 @@ export type IFilterContext = {
 
 export const FilterContext = createContext<null | IFilterContext>(null);
 
-export const FilterContextProvider = ({ children }: PropsWithChildren) => {
-  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>([]);
+type FilterContextProviderProps = {
+  defaultUncheckedValues: FilterStateGroup[] | undefined;
+};
+
+export const FilterContextProvider = ({
+  children,
+  defaultUncheckedValues,
+}: PropsWithChildren<FilterContextProviderProps>) => {
+  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(defaultUncheckedValues ?? []);
   const [filterState, setFilterState] = useState<FilterStateGroup[]>([]);
 
   return (
