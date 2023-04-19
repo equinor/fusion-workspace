@@ -63,7 +63,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
         customViews: customViews,
         clickEvents,
       }),
-    [initialGrouping]
+    []
   );
 
   return (

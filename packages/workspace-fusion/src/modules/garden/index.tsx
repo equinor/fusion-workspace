@@ -12,11 +12,25 @@ export const gardenModule: FusionWorkspaceModule = {
 
     if (!gardenConfig) return;
 
+    const bookmarkGrouping = props.currentBookmark?.payload?.garden?.gardenKey;
+    if (bookmarkGrouping) {
+      gardenConfig.initialGrouping = {
+        horizontalGroupingAccessor: bookmarkGrouping,
+        verticalGroupingKeys: [],
+      };
+    }
+
     const gardenController = new GardenController<any, FilterGroup[]>({
       ...gardenConfig,
       getIdentifier: props.workspaceOptions.getIdentifier,
       customViews: gardenConfig.customViews,
       dataSource: {} as any,
+      initialGrouping: bookmarkGrouping
+        ? {
+            horizontalGroupingAccessor: bookmarkGrouping,
+            verticalGroupingKeys: props?.currentBookmark?.payload.garden?.groupByKeys ?? [],
+          }
+        : gardenConfig.initialGrouping,
     });
 
     const provider: Provider = {
