@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.0]
+
+- Official release v1
+
 ## [1.0.0-alpha.1]
 
 - Fix rowdata not updating

@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-ag-grid",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "type": "module",
   "private": false,
   "license": "MIT",
