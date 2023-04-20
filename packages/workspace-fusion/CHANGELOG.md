@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.0-alpha.15]
+
+Sidesheet styling changes
+
 ## [1.0.0-alpha.14]
 
 Statusbar bump
