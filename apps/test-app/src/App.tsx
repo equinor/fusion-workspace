@@ -62,12 +62,12 @@ export default App;
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
   type: 'default',
   CreateSidesheet: () => {
-    return <div style={{ width: '300px' }}>Am create sideshet</div>;
+    return <div style={{ width: '500px', background: 'red' }}>Am create sideshet</div>;
   },
   DetailsSidesheet: (props) => {
     return (
-      <div style={{ width: '300px' }}>
-        am details
+      <div style={{ width: '500px', height: '100%', background: 'red' }}>
+        am details {JSON.stringify(props)}
         <button onClick={() => props.controller.invalidate && props.controller.invalidate()}>Invalidate</button>
       </div>
     );

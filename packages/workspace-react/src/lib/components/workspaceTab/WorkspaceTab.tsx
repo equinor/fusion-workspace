@@ -38,7 +38,7 @@ export function WorkspaceTab() {
 
 const StyledWorkspaceTab = styled.div`
   position: relative;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
 `;
 
