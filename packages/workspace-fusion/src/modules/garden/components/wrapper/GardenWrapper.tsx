@@ -1,7 +1,7 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { useFilterContext } from '@equinor/workspace-filter';
-import { Garden, GardenApi } from '@equinor/workspace-garden';
-import { useState } from 'react';
+import { BookmarkRef, Garden } from '@equinor/workspace-garden';
+import { useRef } from 'react';
 import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
 import { FusionMediator } from '../../../../lib';
@@ -30,10 +30,13 @@ export const GardenWrapper = <
   mediator,
 }: GardenWrapperProps<TData, TError, TContext, TCustomSidesheetEvents, TFilter>) => {
   const { filterState } = useFilterContext();
+  const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
 
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
+      <button onClick={() => console.log(bookmarkRef)}>log stuff</button>
       <Garden<TData, TFilter>
+        bookmarkRef={bookmarkRef}
         dataSource={{ ...config }}
         context={filterState as TFilter}
         customViews={config.customViews}

@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { createContext, Suspense, useMemo } from 'react';
+import { createContext, MutableRefObject, Suspense, useEffect, useMemo } from 'react';
 import { GardenController, GetIdentifier } from '../classes';
 import {
   CustomVirtualViews,
@@ -10,6 +10,7 @@ import {
   GetDisplayName,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
+  GroupingKeys,
   OnClickEvents,
   Visuals,
 } from '../types';
@@ -20,12 +21,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SplashScreen } from './splashScreen/SplashScreen';
 import { ErrorBoundary } from 'react-error-boundary';
 import { GardenError } from './error/GardenError';
+import { useBookmarkRef } from '../hooks/useBookmarkRef';
 
 export type GardenDataSource<TContext> = {
   getGardenMeta: (keys: string[], context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
   getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal?: AbortSignal) => Promise<any[]>;
+};
+
+export type BookmarkRef<TData extends Record<PropertyKey, unknown>> = {
+  groupingKeys: GroupingKeys<TData>;
 };
 
 interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
@@ -37,6 +43,7 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   visuals?: Visuals<TData>;
   customViews?: CustomVirtualViews<TData>;
   clickEvents?: OnClickEvents<TData>;
+  bookmarkRef?: MutableRefObject<BookmarkRef<TData> | null | undefined>;
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -50,8 +57,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   customViews,
   visuals,
   clickEvents,
+  bookmarkRef,
 }: GardenProps<TData, TContext>): JSX.Element | null {
-  //TODO:Handle no data better in garden
   const controller = useMemo(
     () =>
       new GardenController<TData, TContext>({
@@ -65,6 +72,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
       }),
     []
   );
+
+  useBookmarkRef(controller, bookmarkRef);
 
   return (
     <QueryClientProvider client={client}>
