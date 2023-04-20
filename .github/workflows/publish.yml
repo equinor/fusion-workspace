@@ -7,6 +7,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -15,7 +17,7 @@ jobs:
       #... previous steps
       # Run `build` script in every projects
       - run: pnpm run build
+      # Set token
+      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
       # Publish all packages in the workspace which version still does not exist
       - run: pnpm shipit --no-git-checks
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
