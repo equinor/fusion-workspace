@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.0-alpha.13]
+
+Statusbar bump
+
 ## [1.0.0-alpha.12]
 
 Filter bump
