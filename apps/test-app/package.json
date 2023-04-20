@@ -4,8 +4,7 @@
   "version": "0.1.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b"
+    "dev": "vite"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.34.0",
