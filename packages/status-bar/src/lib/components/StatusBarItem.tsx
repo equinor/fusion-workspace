@@ -5,11 +5,13 @@ interface StatusBarItemProps {
   item: StatusItem;
 }
 export function StatusBarItem({ item }: StatusBarItemProps) {
+  const formattedValue = typeof item.value === 'number' ? item.value.toLocaleString('no') : item.value;
+
   return (
     <StatusCard title={item.description} key={item.title}>
       <Title>{item.title}</Title>
       <ValueWrapper>
-        <Value>{item.value}</Value>
+        <Value>{formattedValue}</Value>
       </ValueWrapper>
     </StatusCard>
   );
