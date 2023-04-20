@@ -5,7 +5,7 @@ interface StatusBarItemProps {
   item: StatusItem;
 }
 export function StatusBarItem({ item }: StatusBarItemProps) {
-  const formattedValue = typeof item.value === 'number' ? item.value.toLocaleString('no') : item.value;
+  const formattedValue = formatValue(item.value);
 
   return (
     <StatusCard title={item.description} key={item.title}>
@@ -16,3 +16,13 @@ export function StatusBarItem({ item }: StatusBarItemProps) {
     </StatusCard>
   );
 }
+
+const formatValue = (value: string | number) => {
+  if (typeof value === 'number') {
+    if (value === 0) {
+      return '-';
+    }
+    return value.toLocaleString('no');
+  }
+  return value;
+};

@@ -34,7 +34,6 @@ export const GardenWrapper = <
 
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
-      <button onClick={() => console.log(bookmarkRef)}>log stuff</button>
       <Garden<TData, TFilter>
         bookmarkRef={bookmarkRef}
         dataSource={{ ...config }}
