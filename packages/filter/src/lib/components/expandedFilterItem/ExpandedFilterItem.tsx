@@ -39,7 +39,7 @@ export const ExpandedFilterItem = ({
     >
       <Checkbox checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
       <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
-      {!isUnChecked && <StyledCount>({filterItem.count})</StyledCount>}
+      <StyledCount>({filterItem.count})</StyledCount>
     </StyledFilterItemWrap>
   );
 };

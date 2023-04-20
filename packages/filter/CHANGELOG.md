@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.0-alpha.4
+
+Fix count not showing for unchecked values in expanded filter
+
 ## 1.0.0-alpha.3
 
 Hide filters with count of 0
