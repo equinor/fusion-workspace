@@ -21,6 +21,10 @@ Test apps are run using code from the packages build folders. This ensures the e
 
 To run a test app go to apps/test-app and run `pnpm dev`. If you make changes to packages/ while the test app is running just run `pnpm build` in that folder while the test-app is running.
 
+## Publishing packages
+
+The repository is configured with CI/CD and automatic deployment, to trigger a release update the version in `package.json` of the package you want to release and merge into main.
+
 ## Packages cross imports
 
 Allowed cross imports
@@ -34,5 +38,5 @@ Allowed cross imports
 - `power-bi` => [`observable-proxy`, `workspace-core`]
 - `sidesheet` => [`observable-proxy`, `workspace-core`]
 - `workspace-core` => [`observable-proxy`]
-- `workspace-fusion` => ALL, except `workspace-fusion-modules`
+- `workspace-fusion` => ALL
 - `workspace-react` => [`observable-proxy`, `workspace-core`]
