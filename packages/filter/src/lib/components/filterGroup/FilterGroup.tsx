@@ -23,7 +23,7 @@ export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: F
 
   const { filterItems } = group;
   const isAllChecked = uncheckedValues.length === 0;
-  const checkedValues = group.filterItems.filter((s) => !filterItems.includes(s));
+  const checkedValues = group.filterItems.map((s) => s.value).filter((s) => !uncheckedValues.includes(s));
 
   const customRender = (v: FilterValueType) => <>{v.value}</>;
 
