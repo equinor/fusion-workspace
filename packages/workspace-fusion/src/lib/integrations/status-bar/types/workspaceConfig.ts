@@ -4,7 +4,7 @@
  */
 
 import { FilterStateGroup } from '@equinor/workspace-filter';
-import { StatusItem } from '@equinor/workspace-status-bar';
+import { StatusItem } from './statusItem';
 
 type StatusBarConfig<TFilter> = (filters: FilterStateGroup[], signal?: AbortSignal) => Promise<StatusItem[]>;
 

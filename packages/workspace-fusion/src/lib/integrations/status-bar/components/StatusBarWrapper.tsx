@@ -1,9 +1,8 @@
-import { StatusBar } from '@equinor/workspace-status-bar';
-
 import { BaseEvent } from '@equinor/workspace-core';
 import { useQuery } from '@tanstack/react-query';
 import { StatusBarConfig } from '../types/workspaceConfig';
 import { useFilterContext } from '@equinor/workspace-filter';
+import { StatusBar } from './StatusBar';
 
 type StatusBarWrapperProps<
   TData extends Record<PropertyKey, unknown>,
