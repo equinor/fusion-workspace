@@ -1,11 +1,10 @@
 import { tokens } from '@equinor/eds-tokens';
 import { StyledNormalText } from '../components/filterGroup/filterGroup.styles';
-import { FilterValueType } from '../types';
 
 export function getFilterHeaderText(
   isAllChecked: boolean,
   name: string,
-  checkedValues: FilterValueType[]
+  checkedValues: string[]
 ): string | JSX.Element {
   if (isAllChecked || checkedValues.length === 0) return <StyledNormalText>{name}</StyledNormalText>;
 
