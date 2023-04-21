@@ -2,6 +2,7 @@
   "name": "@equinor/workspace-status-bar",
   "version": "0.0.15",
   "type": "module",
+  "sideEffects": false,
   "license": "MIT",
   "scripts": {
     "build": "tsc -b",

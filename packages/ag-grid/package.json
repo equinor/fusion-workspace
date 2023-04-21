@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "private": false,
+  "sideEffects": false,
   "license": "MIT",
   "scripts": {
     "build": "tsc -b",
