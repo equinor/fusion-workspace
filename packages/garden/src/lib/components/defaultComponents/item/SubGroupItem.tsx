@@ -36,7 +36,7 @@ export const SubGroupItem = ({
   parentRef,
 }: SubGroupItemProps) => {
   const { isLoading, error, data, refetch } = query;
-  const controller = useGardenContext<any, any>();
+  const controller = useGardenContext<any>();
   const { colorAssistMode$, getIdentifier } = controller;
 
   const selectedIds = useSelected();

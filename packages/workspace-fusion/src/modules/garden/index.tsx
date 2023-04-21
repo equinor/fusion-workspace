@@ -20,7 +20,7 @@ export const gardenModule: FusionWorkspaceModule = {
       };
     }
 
-    const gardenController = new GardenController<any, FilterGroup[]>({
+    const gardenController = new GardenController<any>({
       ...gardenConfig,
       getIdentifier: props.workspaceOptions.getIdentifier,
       customViews: gardenConfig.customViews,

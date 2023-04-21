@@ -61,7 +61,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const controller = useMemo(
     () =>
-      new GardenController<TData, TContext>({
+      new GardenController<TData>({
         dataSource: dataSource,
         getDisplayName,
         getIdentifier,
@@ -78,7 +78,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   return (
     <QueryClientProvider client={client}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContext.Provider value={controller as unknown as GardenController<Record<PropertyKey, unknown>, never>}>
+        <GardenContext.Provider value={controller as unknown as GardenController<Record<PropertyKey, unknown>>}>
           <Suspense fallback={<SplashScreen />}>
             <VirtualContainer context={context as TContext} dataSource={dataSource} />
           </Suspense>
@@ -88,4 +88,4 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   );
 }
 
-export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>, never> | null>(null);
+export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>> | null>(null);

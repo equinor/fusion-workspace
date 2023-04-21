@@ -11,7 +11,7 @@ type GardenWorkspaceHeaderProps<
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext
 > = {
-  controller: GardenController<TData, TContext>;
+  controller: GardenController<TData>;
   dataSource?: FilterDataSource;
 };
 

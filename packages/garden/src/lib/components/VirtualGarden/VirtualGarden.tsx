@@ -91,7 +91,7 @@ export const VirtualGarden = <
     visuals: { rowHeight },
     customViews: { customGroupView, customItemView },
     grouping,
-  } = useGardenContext<TData, TContext>();
+  } = useGardenContext<TData>();
 
   /**
    * Reset to block x,y when grouping changes

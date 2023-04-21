@@ -62,7 +62,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
     getSubGroupItems,
   } = props;
 
-  const controller = useGardenContext<TData, TContext>();
+  const controller = useGardenContext<TData>();
   const {
     visuals: { rowHeight = 40 },
     colorAssistMode$,
