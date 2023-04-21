@@ -524,9 +524,6 @@ importers:
       '@equinor/workspace-react':
         specifier: workspace:^
         version: link:../workspace-react
-      '@equinor/workspace-sidesheet':
-        specifier: workspace:^
-        version: link:../sidesheet
       '@tanstack/react-query':
         specifier: ^4.23.0
         version: 4.23.0(react-dom@18.2.0)(react@18.2.0)
