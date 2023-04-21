@@ -1,19 +1,14 @@
 import { Checkbox } from '@equinor/eds-core-react';
 import { memo } from 'react';
-import { useFilterContext } from '../../hooks/useFilterContext';
-import { FilterGroup, FilterValueType, ValueFormatterFunction } from '../../types';
-import { DEFAULT_NULL_VALUE } from '../../utils/convertFromBlank';
+import { FilterGroup, FilterValueType } from '../../types';
 import { StyledCount, StyledFilterItemName, StyledFilterItemWrap } from '../filterItem/filterItem.styles';
-
-const sanitizeFilterItemName = (value: FilterValueType) => value?.toString() ?? DEFAULT_NULL_VALUE;
+import { useFilterGroup } from '../../hooks/useFilterGroup';
 
 type ExpandedFilterItemValueProps = {
   virtualRowStart: number;
   virtualRowSize: number;
   filterItem: FilterValueType;
   filterGroup: FilterGroup;
-  valueFormatter: ValueFormatterFunction<unknown>;
-  CustomRender?: (value: FilterValueType) => JSX.Element;
 };
 
 export const ExpandedFilterItem = ({
@@ -21,21 +16,15 @@ export const ExpandedFilterItem = ({
   virtualRowSize,
   filterItem,
   filterGroup,
-  valueFormatter,
-  CustomRender = (value) => <>{sanitizeFilterItemName(value)}</>,
 }: ExpandedFilterItemValueProps): JSX.Element => {
-  const {
-    filterStateController: { changeFilterItem, checkValueIsInactive, setFilterState, filterState },
-    getCountForFilterValue,
-  } = useFilterContext();
+  const { filterItemLabelClick, toggleItem, inactiveGroupValues } = useFilterGroup(filterGroup);
+
   function uncheckAllButThisValue() {
-    setFilterState([
-      ...filterState.filter((s) => s.name !== filterGroup.name),
-      { name: filterGroup.name, values: [...filterGroup.values.filter((s) => s !== filterItem)] },
-    ]);
+    filterItemLabelClick(filterItem);
   }
-  const isUnChecked = checkValueIsInactive(filterGroup.name, filterItem);
-  const count = getCountForFilterValue(filterGroup.name, filterItem);
+
+  const isUnChecked = inactiveGroupValues.includes(filterItem.value);
+
   return (
     <StyledFilterItemWrap
       title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
@@ -48,12 +37,9 @@ export const ExpandedFilterItem = ({
         height: `${virtualRowSize}px`,
       }}
     >
-      <Checkbox
-        checked={!isUnChecked}
-        onChange={() => changeFilterItem(isUnChecked ? 'MarkActive' : 'MarkInactive', filterGroup.name, filterItem)}
-      />
-      <StyledFilterItemName onClick={uncheckAllButThisValue}>{CustomRender(filterItem)}</StyledFilterItemName>
-      {!isUnChecked && <StyledCount>({count})</StyledCount>}
+      <Checkbox checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
+      <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
+      <StyledCount>({filterItem.count})</StyledCount>
     </StyledFilterItemWrap>
   );
 };

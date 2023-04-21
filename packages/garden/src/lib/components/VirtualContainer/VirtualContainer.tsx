@@ -1,20 +1,43 @@
-import { useMemo } from 'react';
-
-import { useGardenContext, useGardenGroups, useItemWidths } from '../../hooks';
+import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
 import { FilterSelector } from '../FilterSelector';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
+import { useQuery } from '@tanstack/react-query';
+import { GardenDataSource } from '../Garden';
 
-export const VirtualContainer = (): JSX.Element | null => {
-  const garden = useGardenGroups();
+type VirtualContainerProps<TContext = undefined> = {
+  dataSource: GardenDataSource<TContext>;
+  context: TContext;
+};
 
+export const VirtualContainer = <TContext,>({
+  dataSource,
+  context,
+}: VirtualContainerProps<TContext>): JSX.Element | null => {
   const controller = useGardenContext();
   const {
     clickEvents: { onClickItem },
   } = controller;
-  const amountOfColumns = useMemo(() => garden.length, [garden]);
-  const widths = useItemWidths();
+
+  const keys = useGroupingKeys();
+
+  const { data, isFetching } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys, context], {
+    refetchOnWindowFocus: false,
+    suspense: true,
+    useErrorBoundary: true,
+    keepPreviousData: false,
+    queryFn: ({ signal }) =>
+      dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], context, signal ?? new AbortSignal()),
+  });
+
+  if (!data) {
+    // Will never happen when suspense is true
+    throw new Error();
+  }
+
+  const amountOfColumns = data.columnCount;
+  const widths = useItemWidths(data.columnCount);
 
   //TODO: Handle widths = 0 better
   if (widths.length === 0 || amountOfColumns !== widths.length) {
@@ -25,12 +48,28 @@ export const VirtualContainer = (): JSX.Element | null => {
     return null;
   }
 
+  //TODO: temp fix, should show skeletons
+  if (isFetching) {
+    return null;
+  }
+
   return (
-    <StyledVirtualContainer id={'garden_root'}>
-      <FilterSelector />
-      <ExpandProvider initialWidths={widths}>
-        <VirtualGarden width={widths[0]} handleOnItemClick={(item) => onClickItem && onClickItem(item, controller)} />
-      </ExpandProvider>
-    </StyledVirtualContainer>
+    <>
+      {/* <ReactQueryDevtools /> */}
+      <StyledVirtualContainer id={'garden_root'}>
+        <FilterSelector allGroupingOptions={data.allGroupingOptions} validGroupingOptions={data.validGroupingOptions} />
+        <ExpandProvider initialWidths={widths}>
+          <VirtualGarden
+            context={context}
+            getSubgroupItems={dataSource.getSubgroupItems}
+            meta={data}
+            getBlockAsync={dataSource.getBlockAsync}
+            width={widths[0]}
+            handleOnItemClick={(item) => onClickItem && onClickItem(item)}
+            getHeader={dataSource.getHeader}
+          />
+        </ExpandProvider>
+      </StyledVirtualContainer>
+    </>
   );
 };

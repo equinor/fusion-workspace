@@ -26,7 +26,7 @@ export const VirtualFilterItemCheckbox = ({
         top: 0,
         left: 0,
       }}
-      key={filterValue}
+      key={filterValue.value}
     >
       <Checkbox onChange={handleFilterItemClick} size={12} checked={!isChecked} />
       <StyledFilterLabelWrapper onClick={handleFilterItemLabelClick}>

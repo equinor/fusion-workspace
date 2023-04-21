@@ -1,7 +1,23 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## 1.0.0-alpha.4
+
+Fix count not showing for unchecked values in expanded filter
+
+## 1.0.0-alpha.3
+
+Hide filters with count of 0
+Prevent uncheck all
+Fix stale filterstate bug causing counts to be wrong
+Add cursor pointer to all icons in filter
+
+## 1.0.0-alpha.2
+
+Calculate hidden filters applied
+
+## 1.0.0-alpha.1
+
+Server side filter!
 
 ## [0.0.17](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-filter@0.0.16...@equinor/workspace-filter@0.0.17) (2023-03-27)
 

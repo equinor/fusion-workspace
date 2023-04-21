@@ -19,6 +19,8 @@ dist
 # dependencies
 node_modules
 
+ignore.ts
+
 # IDEs and editors
 /.idea
 .project

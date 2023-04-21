@@ -20,7 +20,7 @@ export const FilterItemCheckbox = ({
   ValueRender,
 }: FilterItemCheckboxProps): JSX.Element => {
   return (
-    <StyledFilterItemWrap title={typeof filterValue === 'string' ? filterValue : '(Blank)'} key={filterValue}>
+    <StyledFilterItemWrap title={typeof filterValue === 'string' ? filterValue : '(Blank)'} key={filterValue.value}>
       <Checkbox onChange={handleFilterItemClick} size={12} checked={!isChecked} />
       <StyledFilterLabelWrapper onClick={handleFilterItemLabelClick}>
         <ValueRender />

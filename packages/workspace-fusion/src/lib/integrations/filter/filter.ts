@@ -3,38 +3,13 @@
  * namespace: @equinor/workspace-fusion/filter
  */
 
-import {
-  FilterConfiguration,
-  FilterController,
-  FilterGroup,
-  FilterItemCount,
-  FilterSearchActive,
-  FilterValueType,
-  ReactFilterController,
-  SearchDataSet,
-  SearchMode,
-  SearchType,
-  ValueFormatterFilter,
-  ValueFormatterFunction,
-} from '@equinor/workspace-filter';
+import { FilterDataSource, FilterStateGroup } from '@equinor/workspace-filter';
 
-/** Fusion workspace filter config */
-type FilterConfig<T extends Record<PropertyKey, unknown>> = {
-  filterGroups: FilterConfiguration<T>[];
-};
+/**Garden types */
+export type { FilterConfig, FilterStateGroup };
 
-export type {
-  FilterConfiguration,
-  FilterController,
-  FilterGroup,
-  FilterItemCount,
-  FilterConfig,
-  FilterSearchActive,
-  FilterValueType,
-  ReactFilterController,
-  SearchDataSet,
-  SearchMode,
-  SearchType,
-  ValueFormatterFilter,
-  ValueFormatterFunction,
+/** Override remove config types that is handled internally */
+type FilterConfig = {
+  dataSource: FilterDataSource;
+  defaultUncheckedValues?: FilterStateGroup[];
 };

@@ -4,16 +4,18 @@
   "version": "0.1.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b"
+    "dev": "vite"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.34.0",
+    "@azure/msal-react": "^1.5.4",
     "@equinor/eds-core-react": "^0.26.0",
     "@equinor/eds-icons": "^0.15.0",
-    "@equinor/workspace-ag-grid": "workspace:0.4.0",
-    "@equinor/workspace-fusion": "workspace:0.20.2",
-    "@equinor/workspace-fusion-modules": "workspace:0.5.3",
-    "@equinor/workspace-sidesheet": "workspace:0.1.5",
+    "@equinor/workspace-ag-grid": "workspace:^",
+    "@equinor/workspace-filter": "workspace:^",
+    "@equinor/workspace-fusion": "workspace:^",
+    "@equinor/workspace-garden": "workspace:^",
+    "@equinor/workspace-sidesheet": "workspace:^",
     "@tanstack/react-query": "^4.23.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

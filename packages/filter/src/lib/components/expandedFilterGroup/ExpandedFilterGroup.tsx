@@ -1,15 +1,14 @@
 import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useMemo, useState } from 'react';
-import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterClearIcon } from '../../icons';
-import { FilterGroup } from '../../types';
-import { DEFAULT_NULL_VALUE } from '../../utils/convertFromBlank';
-import { searchByValue } from '../../utils/searchByvalue';
+import { FilterGroup, FilterValueType } from '../../types';
+
 import { Case, Switch } from '../../utils/Switch';
 import { StyledSearchButton, StyledFilterHeaderGroup, StyledTitle, StyledWrapper } from './expandedFilterGroup.styles';
 import { VirtualContainer } from '../virtualContainer/VirtualContainer';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
+import { useFilterGroup } from '../../hooks/useFilterGroup';
 
 interface FilterGroupeComponentProps {
   filterGroup: FilterGroup;
@@ -17,9 +16,7 @@ interface FilterGroupeComponentProps {
 }
 
 export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps) => {
-  const {
-    filterStateController: { getInactiveGroupValues, filterState, markAllValuesActive, setFilterState },
-  } = useFilterContext();
+  const { clearGroup, setGroupsUnchecked, inactiveGroupValues } = useFilterGroup(filterGroup);
 
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [searchActive, setSearchActive] = useState(false);
@@ -33,28 +30,20 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
     setSearchActive((isActive) => !isActive);
   }
 
-  const isSearchable = filterGroup.values.length > 10;
-  const hasAnyActiveFilters = Boolean(getInactiveGroupValues(filterGroup.name).length);
+  const hasAnyActiveFilters = Boolean(inactiveGroupValues.length);
 
   const groupsMatchingSearch = useMemo(
-    () =>
-      searchByValue(
-        filterGroup.values.map((v) => (v !== null ? v.toString() : DEFAULT_NULL_VALUE)),
-        filterSearchValue
-      ),
-    [filterGroup.values, filterSearchValue]
+    () => searchByValue(filterGroup.filterItems, filterSearchValue),
+    [filterGroup.filterItems, filterSearchValue]
   );
 
   /** If user presses enter, the filter item matches the search will be applied and the popover closes */
   function handleOnKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      setFilterState([
-        ...filterState.filter((s) => s.name !== filterGroup.name),
-        {
-          name: filterGroup.name,
-          values: filterGroup.values.filter((s) => !groupsMatchingSearch.includes(s?.toString() ?? '(Blank)')),
-        },
-      ]);
+      const newVals = filterGroup.filterItems.filter((s) => !groupsMatchingSearch.includes(s));
+
+      //TODO: verify
+      setGroupsUnchecked(newVals);
       setFilterSearchValue('');
       setSearchActive(false);
     }
@@ -75,20 +64,19 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
               id="search-normal"
               placeholder="Search"
               onChange={handleOnChange}
-              onKeyPress={handleOnKeyPress}
+              onKeyDown={handleOnKeyPress}
             />
           </Case>
           <Case when={true}>
             <StyledFilterGroupName>
-              <StyledTitle onClick={() => isSearchable && handleSearchButtonClick()}>{filterGroup.name}</StyledTitle>
+              <StyledTitle onClick={() => handleSearchButtonClick()}>{filterGroup.name}</StyledTitle>
               <div style={{ display: 'flex' }}>
-                {isSearchable && (
-                  <StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
-                    <Icon name={'search'} id={'search'} />
-                  </StyledSearchButton>
-                )}
+                <StyledSearchButton variant="ghost_icon" onClick={handleSearchButtonClick}>
+                  <Icon name={'search'} id={'search'} />
+                </StyledSearchButton>
+
                 {hasAnyActiveFilters && (
-                  <Button variant="ghost_icon" onClick={() => markAllValuesActive(filterGroup.name)}>
+                  <Button variant="ghost_icon" onClick={clearGroup}>
                     <FilterClearIcon />
                   </Button>
                 )}
@@ -101,6 +89,10 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
     </StyledWrapper>
   );
 };
+
+export function searchByValue(items: FilterValueType[], value: string) {
+  return items.filter((item) => item.value.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+}
 
 const StyledFilterGroupName = styled.div`
   display: flex;

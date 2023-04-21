@@ -1,6 +1,6 @@
 import { BaseEvent } from '@equinor/workspace-core';
 import { ReactNode, useEffect } from 'react';
-import { WorkspaceSidesheets, FusionMediator, WorkspaceTabNames } from '../../../types';
+import { WorkspaceSidesheets, FusionMediator } from '../../../types';
 import { SidesheetConfig } from '../sidesheet';
 import { SidesheetAdvancedWrapper } from './wrapper';
 import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
@@ -12,7 +12,7 @@ export function addSidesheet<
   TCustomSidesheetEvents extends BaseEvent = never
 >(
   config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined,
-  mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>
+  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>
 ): (() => JSX.Element) | undefined {
   if (!config || Object.keys(config).length === 0) return;
 
@@ -35,7 +35,7 @@ export function addSidesheet<
 
 type Props = {
   children: ReactNode;
-  mediator: FusionMediator<any, any, any>;
+  mediator: FusionMediator<never, any, any>;
 };
 
 function Wrapper({ children, mediator }: Props) {

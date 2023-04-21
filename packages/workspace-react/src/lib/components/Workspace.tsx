@@ -7,6 +7,7 @@ import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useRe
 import { StoreApi } from 'zustand';
 import { createTabController } from '../utils/tabController';
 import { useTabContext } from '../hooks/useTab';
+import styled from 'styled-components';
 
 type WorkspaceEvents = {
   onTabChange?: (newTab: string, tabs: Tab[]) => void;
@@ -37,10 +38,13 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
         <TabsProvider.Provider value={tabs}>
           <EventHandler {...events}>
             <ContextProviders providers={providers}>
-              <WorkspaceHeader />
-              <WorkspaceBody>
+              <StyledSidesheetWrapper>
+                <div style={{ height: '100%', width: '100%' }}>
+                  <WorkspaceHeader />
+                  <WorkspaceBody children />
+                </div>
                 <Sidesheet />
-              </WorkspaceBody>
+              </StyledSidesheetWrapper>
             </ContextProviders>
           </EventHandler>
         </TabsProvider.Provider>
@@ -48,6 +52,13 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
     </WorkspaceWrapper>
   );
 }
+
+const StyledSidesheetWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr) auto; /* set two equal-width columns */
+`;
 
 const EventHandler = (props: PropsWithChildren<WorkspaceEvents>) => {
   const { activeTab, setActiveTab } = useTabContext((s) => s);

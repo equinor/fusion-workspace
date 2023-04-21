@@ -2,57 +2,32 @@ import { Icon } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useRef } from 'react';
 
-import { useFilterContext } from '../../hooks/useFilterContext';
-import { FilterValueType } from '../../types';
+import { FilterGroup as IFilterGroup, FilterValueType } from '../../types';
 import { getFilterHeaderText } from '../../utils/getFilterHeaderText';
 import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
-import { useFilterGroups } from '../../hooks';
 import styled from 'styled-components';
+import { useFilterGroup } from '../../hooks/useFilterGroup';
 
 interface FilterGroupProps {
   name: string;
   isOpen: boolean;
   onClick: () => void;
+  group: IFilterGroup;
+  uncheckedValues: string[];
 }
-export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.Element => {
+export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
-  const groups = useFilterGroups();
-  const { groups: configuration } = useFilterContext();
 
-  const {
-    filterStateController: {
-      changeFilterItem,
-      checkValueIsInactive,
-      filterState,
-      getInactiveGroupValues,
-      markAllValuesActive,
-      setFilterState,
-    },
-    getGroupValues,
-  } = useFilterContext();
+  const { clearGroup, filterItemLabelClick, toggleItem, setGroupsUnchecked } = useFilterGroup(group);
 
-  const handleFilterItemLabelClick = (val: FilterValueType) =>
-    setFilterState([
-      ...filterState.filter((s) => s.name !== name),
-      { name: name, values: getGroupValues(name).filter((s) => s !== val) },
-    ]);
+  const { filterItems } = group;
+  const isAllChecked = uncheckedValues.length === 0;
+  const checkedValues = group.filterItems.filter((s) => !filterItems.includes(s));
 
-  const values = groups.find((s) => s.name === name)?.values ?? [];
+  const customRender = (v: FilterValueType) => <>{v.value}</>;
 
-  const isChecked = (filterValue: FilterValueType) => checkValueIsInactive(name, filterValue);
-
-  const handleFilterItemClick = (filterItem: FilterValueType) =>
-    changeFilterItem(isChecked(filterItem) ? 'MarkActive' : 'MarkInactive', name, filterItem);
-
-  const isAllChecked = getInactiveGroupValues(name).length === 0;
-
-  const checkedValues = values.filter((value) => !getInactiveGroupValues(name).includes(value));
-
-  const customRender =
-    configuration.find((s) => s.name === name)?.customValueRender ?? ((v) => <>{v?.toString() ?? '(Blank)'}</>);
-
-  if (values.length === 0) return <></>;
+  if (filterItems.length === 0) return <></>;
   return (
     <div>
       <StyledFilterGroupWrapper ref={ref} onClick={onClick}>
@@ -61,15 +36,15 @@ export const FilterGroup = ({ name, isOpen, onClick }: FilterGroupProps): JSX.El
       </StyledFilterGroupWrapper>
       {isOpen && (
         <FilterGroupPopoverMenu
-          handleFilterItemLabelClick={handleFilterItemLabelClick}
-          handleFilterItemClick={handleFilterItemClick}
-          isChecked={isChecked}
-          markAllValuesActive={() => markAllValuesActive(name)}
+          setUncheckedValues={setGroupsUnchecked}
+          handleFilterItemLabelClick={filterItemLabelClick}
+          handleFilterItemClick={toggleItem}
+          isChecked={(filterItem) => uncheckedValues.includes(filterItem.value)}
+          markAllValuesActive={clearGroup}
           closePopover={onClick}
           anchorEl={ref.current}
-          values={values}
+          values={filterItems}
           CustomRender={customRender}
-          groupName={name}
         />
       )}
     </div>

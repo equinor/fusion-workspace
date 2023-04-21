@@ -1,6 +1,4 @@
-import { WorkspaceReactMediator } from '@equinor/workspace-react';
-import { BaseEvent } from '@equinor/workspace-core';
-import { FusionBookmark } from './fusionBookmark';
+import { BaseEvent, WorkspaceMediator } from '@equinor/workspace-core';
 import { IsNeverType } from './typescriptUtils/isNeverType';
 import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/sidesheet';
 
@@ -11,13 +9,12 @@ export type FusionMediator<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never
-> = WorkspaceReactMediator<
+> = WorkspaceMediator<
   TData,
   WorkspaceNode<TData>,
   IsNeverType<TCustomSidesheetEvents, WorkspaceSidesheets<TData>, TCustomSidesheetEvents | WorkspaceSidesheets<TData>>,
   FusionWorkspaceError,
-  TContext,
-  FusionBookmark<TData>
+  TContext
 >;
 
 export type WorkspaceSidesheets<TData extends Record<PropertyKey, unknown>> =
@@ -51,7 +48,6 @@ export type WorkspaceController<
    */
   setError: (error: FusionWorkspaceError) => void;
   /** Sets a custom view state for one or more components in the workspace */
-  setBookmark: (bookmark: FusionBookmark<TData>) => void;
   /**
    * Calculates a new context to supply to the workspace
    * Will be overwritten if contextOptions are supplied

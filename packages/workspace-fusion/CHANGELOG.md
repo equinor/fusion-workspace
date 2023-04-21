@@ -1,7 +1,52 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [1.0.0-alpha.15]
+
+Sidesheet styling changes
+
+## [1.0.0-alpha.14]
+
+Statusbar bump
+
+## [1.0.0-alpha.13]
+
+Statusbar bump
+
+## [1.0.0-alpha.12]
+
+Filter bump
+
+## [1.0.0-alpha.11]
+
+Powerbi bump
+
+## [1.0.0-alpha.10]
+
+Fix garden crash when filter changes
+
+## [1.0.0-alpha.9]
+
+Updates to filter in both workspace and powerbi
+
+## [1.0.0-alpha.8]
+
+Grid export serverside datasource types
+
+## [1.0.0-alpha.7]
+
+Grid scrollbar fix
+
+## [1.0.0-alpha.6]
+
+Garden improvements
+
+## [1.0.0-alpha.4]
+
+Updates to filter, calculate hidden filters applied
+
+## [1.0.0-alpha.3]
+
+Add clickevents
 
 ## [0.20.2](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-fusion@0.20.1...@equinor/workspace-fusion@0.20.2) (2023-03-28)
 

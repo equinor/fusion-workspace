@@ -39,7 +39,6 @@ type PowerBIFilterProps = {
   options?: PowerBIFilterOptions;
 };
 
-// TODO: Class
 export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Element | null => {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter[]>>({});
   const [slicerFilters, setSlicerFilters] = useState<PowerBiFilter[] | null>(null);
@@ -162,6 +161,10 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         const defaultActiveFilters = await getActiveFilterValues(filters);
         setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
         setActiveFilters(defaultActiveFilters);
+        if (!options?.defaultFilterGroupVisible) {
+          console.log(filters);
+          setFilterGroupVisible(filters.map((s) => s.type));
+        }
       };
 
       initFilters();

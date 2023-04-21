@@ -1,14 +1,9 @@
+import { FilterGroup, FilterStateGroup } from '@equinor/workspace-filter';
 import { GardenController } from '@equinor/workspace-garden';
-import { Provider, Tab } from '@equinor/workspace-react';
-import { useEffect } from 'react';
-import { FusionWorkspaceModule, WorkspaceProps } from '../../lib';
-import { DataLoader } from '../../lib/integrations/data-source/components/DataLoader';
+import { Provider } from '@equinor/workspace-react';
+import { FusionWorkspaceModule } from '../../lib';
 import { GardenWorkspaceHeader, GardenWrapper } from './components';
 import { GardenIcon } from './icons/GardenIcon';
-import { bookmarkEffect } from './utils/configureBookmarkService';
-import { configureClickEvents } from './utils/configureClickEvents';
-import { onDataChangedEffect } from './utils/configureDataChange';
-import { highlightEffect } from './utils/configureHighlight';
 
 export const gardenModule: FusionWorkspaceModule = {
   name: 'garden',
@@ -17,21 +12,29 @@ export const gardenModule: FusionWorkspaceModule = {
 
     if (!gardenConfig) return;
 
-    const gardenController = new GardenController<any, any, any, any>({
-      ...gardenConfig,
-      data: [],
-      getIdentifier: mediator.getIdentifier,
-      getContext: () => mediator.contextService.getContext(),
-    });
+    const bookmarkGrouping = props.currentBookmark?.payload?.garden?.gardenKey;
+    if (bookmarkGrouping) {
+      gardenConfig.initialGrouping = {
+        horizontalGroupingAccessor: bookmarkGrouping,
+        verticalGroupingKeys: [],
+      };
+    }
 
-    configureClickEvents(gardenController, mediator);
+    const gardenController = new GardenController<any>({
+      ...gardenConfig,
+      getIdentifier: props.workspaceOptions.getIdentifier,
+      customViews: gardenConfig.customViews,
+      dataSource: {} as any,
+      initialGrouping: bookmarkGrouping
+        ? {
+            horizontalGroupingAccessor: bookmarkGrouping,
+            verticalGroupingKeys: props?.currentBookmark?.payload.garden?.groupByKeys ?? [],
+          }
+        : gardenConfig.initialGrouping,
+    });
 
     const provider: Provider = {
       Component: ({ children }) => {
-        useEffect(onDataChangedEffect(gardenController, mediator), [mediator]);
-        useEffect(highlightEffect(gardenController, mediator), [mediator]);
-        useEffect(bookmarkEffect(gardenController, mediator), [mediator]);
-
         return <>{children}</>;
       },
       name: 'garden-sync',
@@ -41,13 +44,17 @@ export const gardenModule: FusionWorkspaceModule = {
       provider,
       tab: {
         Component: () => (
-          <DataLoader>
-            <GardenWrapper controller={gardenController} mediator={mediator} />
-          </DataLoader>
+          <GardenWrapper<any, any, any, any, FilterStateGroup[]>
+            config={gardenConfig}
+            getIdentifier={props.workspaceOptions.getIdentifier}
+            mediator={mediator}
+          />
         ),
         name: 'garden',
         TabIcon: GardenIcon,
-        CustomHeader: () => <GardenWorkspaceHeader controller={gardenController} />,
+        CustomHeader: () => (
+          <GardenWorkspaceHeader dataSource={props.filterOptions?.dataSource} controller={gardenController} />
+        ),
       },
     };
   },

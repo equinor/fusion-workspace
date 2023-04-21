@@ -1,7 +1,12 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## 1.0.0-alpha.2
+
+Show all filters by default in advanced filter
+
+## 1.0.0-alpha.1
+
+Add cursor pointer to all icons in filter
 
 ## [0.2.10](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-powerbi@0.2.9...@equinor/workspace-powerbi@0.2.10) (2023-03-27)
 

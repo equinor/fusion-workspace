@@ -1,7 +1,8 @@
 {
   "name": "@equinor/workspace-core",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "type": "module",
+  "sideEffects": false,
   "license": "MIT",
   "private": false,
   "scripts": {

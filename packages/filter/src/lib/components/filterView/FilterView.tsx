@@ -1,30 +1,20 @@
-import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterGroup } from '../../types';
 import { ExpandedFilterGroup } from '../expandedFilterGroup/ExpandedFilterGroup';
 import { StyledFilterGroups, StyledFilterGroupWrapper, StyledWrapper } from './filterView.styles';
 
 interface FilterViewProps {
-  visibleFilterGroups: string[];
+  groups: FilterGroup[];
 }
 
-export const FilterView = ({ visibleFilterGroups }: FilterViewProps): JSX.Element => {
-  const { getGroupValues } = useFilterContext();
-
+export const FilterView = ({ groups }: FilterViewProps): JSX.Element => {
   return (
     <StyledWrapper>
       <StyledFilterGroups>
-        {visibleFilterGroups
-          .map(
-            (groupName): FilterGroup => ({
-              name: groupName,
-              values: getGroupValues(groupName),
-            })
-          )
-          .map((filterGroup, index) => (
-            <StyledFilterGroupWrapper key={`col-${filterGroup.name}-${index}`}>
-              <ExpandedFilterGroup filterGroup={filterGroup} />
-            </StyledFilterGroupWrapper>
-          ))}
+        {groups.map((filterGroup, index) => (
+          <StyledFilterGroupWrapper key={`col-${filterGroup.name}-${index}`}>
+            <ExpandedFilterGroup filterGroup={filterGroup} />
+          </StyledFilterGroupWrapper>
+        ))}
       </StyledFilterGroups>
     </StyledWrapper>
   );

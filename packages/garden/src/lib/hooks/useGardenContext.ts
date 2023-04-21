@@ -2,13 +2,8 @@ import { GardenController } from '../classes';
 import { useContext } from 'react';
 import { GardenContext } from '../components';
 
-export const useGardenContext = <
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string = never,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-  TContext extends Record<PropertyKey, unknown> = never
->() => {
+export const useGardenContext = <TData extends Record<PropertyKey, unknown>>() => {
   const context = useContext(GardenContext);
   if (!context) throw new Error('Garden context invoked out of bounds');
-  return context as unknown as GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
+  return context as unknown as GardenController<TData>;
 };

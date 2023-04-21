@@ -10,11 +10,11 @@ const Count = styled.span`
   margin-left: 0.8em;
 `;
 
-const HeaderView = ({ garden, columnIndex }: CustomHeaderView<Record<PropertyKey, unknown>>) => {
+const HeaderView = ({ header }: CustomHeaderView) => {
   return (
     <>
-      {garden[columnIndex].value}
-      <Count>({garden[columnIndex].count})</Count>
+      {header.name}
+      <Count>({header.count})</Count>
     </>
   );
 };
