@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.1]
+
+Update filter ux changes
+
 ## [1.0.0-alpha.15]
 
 Sidesheet styling changes
