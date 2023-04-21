@@ -67,6 +67,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
     visuals: { rowHeight = 40 },
     colorAssistMode$,
     getIdentifier,
+    clickEvents,
   } = controller;
 
   const [subGroupCount, setSubGroupCount] = useState<number>(0);
@@ -275,8 +276,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                     );
                   }
                 }}
-                // onSelect={(item) => onClickItem && onClickItem(item, controller)}
-                // onGroupeSelect={(group) => onClickGroup && onClickGroup(group, controller)}
+                onSelect={(item) => clickEvents.onClickItem && clickEvents.onClickItem(item)}
                 groupByKeys={[keys.gardenKey, ...keys.groupByKeys]}
               />
             ) : (
