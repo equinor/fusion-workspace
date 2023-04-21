@@ -1,6 +1,6 @@
 import { StatusItem } from '../types/statusItem';
-import { StyledStatusBar } from './statusBar.styles';
 import { StatusBarItem } from './StatusBarItem';
+import { StyledStatusBar } from './statusBar.styles';
 
 interface StatusBarProps {
   items: StatusItem[];

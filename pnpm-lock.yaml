@@ -458,37 +458,6 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  packages/status-bar:
-    dependencies:
-      '@equinor/eds-tokens':
-        specifier: ^0.9.0
-        version: 0.9.0
-    devDependencies:
-      '@types/react':
-        specifier: '>= 16.8.0'
-        version: 18.0.25
-      '@types/react-dom':
-        specifier: ^18.0.8
-        version: 18.0.8
-      '@types/styled-components':
-        specifier: ^5.1.26
-        version: 5.1.26
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
-      styled-components:
-        specifier: ^5.3.6
-        version: 5.3.6(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
   packages/workspace-core:
     dependencies:
       '@equinor/workspace-observable-proxy':
@@ -558,9 +527,6 @@ importers:
       '@equinor/workspace-sidesheet':
         specifier: workspace:^
         version: link:../sidesheet
-      '@equinor/workspace-status-bar':
-        specifier: workspace:^
-        version: link:../status-bar
       '@tanstack/react-query':
         specifier: ^4.23.0
         version: 4.23.0(react-dom@18.2.0)(react@18.2.0)
@@ -1885,7 +1851,7 @@ packages:
       react-dom: '>=16.8'
       styled-components: '>=4.2'
     dependencies:
-      '@babel/runtime': 7.20.13
+      '@babel/runtime': 7.20.1
       '@equinor/eds-icons': 0.16.0
       '@equinor/eds-tokens': 0.9.0
       '@equinor/eds-utils': 0.7.0(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.6)
