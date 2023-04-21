@@ -21,11 +21,8 @@ const NullFunc = () => void 0;
 
 /**
  * @typeParam TData type of your data
- * @typeParam Object interface of custom group by keys
- * @typeParam Object interface for custom state
- * @typeParam Custom user context, store anything here
  */
-export class GardenController<TData extends Record<PropertyKey, unknown>, TContext> {
+export class GardenController<TData extends Record<PropertyKey, unknown>> {
   colorAssistMode$ = new BehaviorSubject<boolean>(false);
 
   /** The nodes that is currently selected */
@@ -52,9 +49,6 @@ export class GardenController<TData extends Record<PropertyKey, unknown>, TConte
   visuals: Visuals<TData> = {
     getItemColor: () => defaultItemColor,
   };
-
-  /** Custom group by keys */
-  // customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
 
   /** Override default view */
   customViews: CustomVirtualViews<TData> = {
