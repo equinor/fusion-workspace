@@ -16,7 +16,7 @@ export function ResizeWrapper({ children, minWidth = 20, defaultWidth = 700 }: R
     <ResizeContext.Provider value={{ isMinimized, setIsMinimized, setWidth, width }}>
       <Resizable
         size={{ width: width, height: '100%' }}
-        style={{ border: `2px solid ${tokens.colors.ui.background__medium.hex}` }}
+        style={{ border: `2px solid ${tokens.colors.ui.background__medium.hex}`, overflow: 'hidden' }}
         maxWidth={'100vw'}
         onResizeStop={(e, direction, ref, d) => {
           if (width + d.width < minWidth) {
