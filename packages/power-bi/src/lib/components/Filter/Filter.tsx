@@ -162,7 +162,6 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
         setActiveFilters(defaultActiveFilters);
         if (!options?.defaultFilterGroupVisible) {
-          console.log(filters);
           setFilterGroupVisible(filters.map((s) => s.type));
         }
       };
