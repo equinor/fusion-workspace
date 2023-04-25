@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { StatusBarConfig } from '../types/workspaceConfig';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { StatusBar } from './StatusBar';
+import { KPISkeletons } from './StyledSkeletons';
 
 type StatusBarWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -26,7 +27,7 @@ export function StatusBarWrapper<
   });
 
   if (isLoading || !data) {
-    return <div></div>;
+    return <KPISkeletons />;
   }
   return <StatusBar items={data} />;
 }
