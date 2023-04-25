@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.3]
+
+Update garden and filter deps
+
 ## [1.0.1]
 
 Update filter ux changes
