@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## Version [1.0.1]
+
+Add refetch on error
+
 ## Version [1.0.0-alpha.4]
 
 Fix garden crashing when filters change
