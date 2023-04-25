@@ -2,7 +2,7 @@ import { QuickFilter } from './quickFilter/QuickFilter';
 import { playlist_add, search, drag_handle, chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { Suspense, useContext } from 'react';
+import { Suspense, useContext, useRef } from 'react';
 import { FilterDataSource } from '../types';
 import { FilterContext } from '../context/filterContext';
 import { tokens } from '@equinor/eds-tokens';
@@ -18,8 +18,9 @@ type FilterProps = {
   dataSource: FilterDataSource;
 };
 
-const client = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 export function Filter({ dataSource }: FilterProps) {
+  const client = useRef(new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } }));
+
   const context = useContext(FilterContext);
 
   if (!context) {
@@ -30,7 +31,7 @@ export function Filter({ dataSource }: FilterProps) {
   return (
     <ErrorBoundary FallbackComponent={() => <div>Filter failed to load</div>}>
       <Suspense fallback={<FilterLoadingFallback />}>
-        <QueryClientProvider client={client}>
+        <QueryClientProvider client={client.current}>
           <QuickFilter dataSource={dataSource} />
         </QueryClientProvider>
       </Suspense>
