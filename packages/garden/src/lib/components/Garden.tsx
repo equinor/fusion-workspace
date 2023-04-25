@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { createContext, MutableRefObject, Suspense, useEffect, useMemo } from 'react';
+import { createContext, MutableRefObject, Suspense, useEffect, useMemo, useRef } from 'react';
 import { GardenController, GetIdentifier } from '../classes';
 import {
   CustomVirtualViews,
@@ -47,7 +47,7 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
 }
 
 Icon.add({ chevron_down, chevron_up });
-const client = new QueryClient();
+
 export function Garden<TData extends Record<PropertyKey, unknown>, TContext = undefined>({
   dataSource,
   getDisplayName,
@@ -59,6 +59,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   clickEvents,
   bookmarkRef,
 }: GardenProps<TData, TContext>): JSX.Element | null {
+  const client = useRef(new QueryClient());
+
   const controller = useMemo(
     () =>
       new GardenController<TData>({
@@ -76,7 +78,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   useBookmarkRef(controller, bookmarkRef);
 
   return (
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={client.current}>
       <ErrorBoundary FallbackComponent={GardenError}>
         <GardenContext.Provider value={controller as unknown as GardenController<Record<PropertyKey, unknown>>}>
           <Suspense fallback={<SplashScreen />}>
