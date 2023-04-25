@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2
+
+Fix refetch on error
+
 ## 1.0.1
 
 Fix applied filters not showing in quickfilter
