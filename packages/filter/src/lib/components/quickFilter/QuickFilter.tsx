@@ -30,7 +30,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
   const { uncheckedValues, setFilterState, setUncheckedValues, filterState } = useFilterContext();
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
-  const { data: groups } = useQuery(
+  const { data: groups, isFetching } = useQuery(
     ['filter-meta', JSON.stringify(filterState)],
     ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
     {
@@ -94,6 +94,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                   (group, i) =>
                     i < 5 && (
                       <FilterGroup
+                        isFetching={isFetching}
                         uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
                         onClick={() => handleExpandFilterGroup(group.name)}
                         group={group}
@@ -126,7 +127,9 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
           </StyledRightSection>
         </StyledSearchLine>
       </StyledCompactFilterWrapper>
-      {isFilterExpanded && <FilterView groups={groups.filter((s) => visibleFilterGroups.includes(s.name))} />}
+      {isFilterExpanded && (
+        <FilterView isFetching={isFetching} groups={groups.filter((s) => visibleFilterGroups.includes(s.name))} />
+      )}
     </StyledWrapper>
   );
 }

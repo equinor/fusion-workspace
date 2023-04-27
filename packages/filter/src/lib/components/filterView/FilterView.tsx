@@ -4,15 +4,16 @@ import { StyledFilterGroups, StyledFilterGroupWrapper, StyledWrapper } from './f
 
 interface FilterViewProps {
   groups: FilterGroup[];
+  isFetching: boolean;
 }
 
-export const FilterView = ({ groups }: FilterViewProps): JSX.Element => {
+export const FilterView = ({ groups, isFetching }: FilterViewProps): JSX.Element => {
   return (
     <StyledWrapper>
       <StyledFilterGroups>
         {groups.map((filterGroup, index) => (
           <StyledFilterGroupWrapper key={`col-${filterGroup.name}-${index}`}>
-            <ExpandedFilterGroup filterGroup={filterGroup} />
+            <ExpandedFilterGroup isFetching={isFetching} filterGroup={filterGroup} />
           </StyledFilterGroupWrapper>
         ))}
       </StyledFilterGroups>
