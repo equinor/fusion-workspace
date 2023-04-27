@@ -12,10 +12,10 @@ import { useFilterGroup } from '../../hooks/useFilterGroup';
 
 interface FilterGroupeComponentProps {
   filterGroup: FilterGroup;
-  hideTitle?: boolean;
+  isFetching: boolean;
 }
 
-export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps) => {
+export const ExpandedFilterGroup = ({ filterGroup, isFetching }: FilterGroupeComponentProps) => {
   const { clearGroup, setGroupsUnchecked, inactiveGroupValues } = useFilterGroup(filterGroup);
 
   const [filterSearchValue, setFilterSearchValue] = useState('');
@@ -85,7 +85,7 @@ export const ExpandedFilterGroup = ({ filterGroup }: FilterGroupeComponentProps)
           </Case>
         </Switch>
       </StyledFilterHeaderGroup>
-      <VirtualContainer filterGroup={filterGroup} filterSearchValue={filterSearchValue} />
+      <VirtualContainer isFetching={isFetching} filterGroup={filterGroup} filterSearchValue={filterSearchValue} />
     </StyledWrapper>
   );
 };

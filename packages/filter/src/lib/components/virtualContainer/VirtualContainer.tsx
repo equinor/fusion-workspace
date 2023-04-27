@@ -11,9 +11,14 @@ import { searchByValue } from '../expandedFilterGroup/ExpandedFilterGroup';
 interface VirtualContainerProps {
   filterGroup: FilterGroup;
   filterSearchValue: string;
+  isFetching: boolean;
 }
 
-export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualContainerProps): JSX.Element | null => {
+export const VirtualContainer = ({
+  filterGroup,
+  filterSearchValue,
+  isFetching,
+}: VirtualContainerProps): JSX.Element | null => {
   const groupsMatchingSearch = searchByValue(filterGroup.filterItems, filterSearchValue).filter((s) => s.count > 0);
   const rowLength = groupsMatchingSearch.length;
   const parentRef = useRef<HTMLDivElement | null>(null);
@@ -34,6 +39,7 @@ export const VirtualContainer = ({ filterGroup, filterSearchValue }: VirtualCont
         {rowVirtualizer.virtualItems.map((virtualRow) => {
           return (
             <FilterItemValue
+              isFetching={isFetching}
               key={groupsMatchingSearch[virtualRow.index].value}
               virtualRowSize={virtualRow.size}
               virtualRowStart={virtualRow.start}

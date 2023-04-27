@@ -8,6 +8,7 @@ import { StyledFilterGroupWrapper } from './filterGroup.styles';
 import { FilterGroupPopoverMenu } from '../filterGroupPopoverMenu';
 import styled from 'styled-components';
 import { useFilterGroup } from '../../hooks/useFilterGroup';
+import { Skeleton } from '../skeleton/Skeleton';
 
 interface FilterGroupProps {
   name: string;
@@ -15,8 +16,16 @@ interface FilterGroupProps {
   onClick: () => void;
   group: IFilterGroup;
   uncheckedValues: string[];
+  isFetching: boolean;
 }
-export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: FilterGroupProps): JSX.Element => {
+export const FilterGroup = ({
+  name,
+  isOpen,
+  onClick,
+  group,
+  uncheckedValues,
+  isFetching,
+}: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { clearGroup, filterItemLabelClick, toggleItem, setGroupsUnchecked } = useFilterGroup(group);
@@ -31,11 +40,18 @@ export const FilterGroup = ({ name, isOpen, onClick, group, uncheckedValues }: F
   return (
     <div>
       <StyledFilterGroupWrapper ref={ref} onClick={onClick}>
-        <StyledFilterText>{getFilterHeaderText(isAllChecked, name, checkedValues)}</StyledFilterText>
-        <Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
+        {isFetching ? (
+          <Skeleton height={24} width={100} />
+        ) : (
+          <>
+            <StyledFilterText>{getFilterHeaderText(isAllChecked, name, checkedValues)}</StyledFilterText>
+            <Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
+          </>
+        )}
       </StyledFilterGroupWrapper>
       {isOpen && (
         <FilterGroupPopoverMenu
+          isFetching={isFetching}
           setUncheckedValues={setGroupsUnchecked}
           handleFilterItemLabelClick={filterItemLabelClick}
           handleFilterItemClick={toggleItem}

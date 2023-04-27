@@ -3,18 +3,21 @@ import { memo } from 'react';
 import { FilterGroup, FilterValueType } from '../../types';
 import { StyledCount, StyledFilterItemName, StyledFilterItemWrap } from '../filterItem/filterItem.styles';
 import { useFilterGroup } from '../../hooks/useFilterGroup';
+import { Skeleton } from '../skeleton/Skeleton';
 
 type ExpandedFilterItemValueProps = {
   virtualRowStart: number;
   virtualRowSize: number;
   filterItem: FilterValueType;
   filterGroup: FilterGroup;
+  isFetching: boolean;
 };
 
 export const ExpandedFilterItem = ({
   virtualRowStart,
   virtualRowSize,
   filterItem,
+  isFetching,
   filterGroup,
 }: ExpandedFilterItemValueProps): JSX.Element => {
   const { filterItemLabelClick, toggleItem, inactiveGroupValues } = useFilterGroup(filterGroup);
@@ -37,9 +40,9 @@ export const ExpandedFilterItem = ({
         height: `${virtualRowSize}px`,
       }}
     >
-      <Checkbox checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
+      <Checkbox disabled={isFetching} checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
       <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
-      <StyledCount>({filterItem.count})</StyledCount>
+      {isFetching ? <Skeleton height={18} width={32} /> : <StyledCount>({filterItem.count})</StyledCount>}
     </StyledFilterItemWrap>
   );
 };

@@ -21,6 +21,7 @@ interface FilterGroupPopoverMenuProps {
   CustomRender: (value: FilterValueType) => JSX.Element;
   handleFilterItemLabelClick: (val: FilterValueType) => void;
   setUncheckedValues: (values: FilterValueType[]) => void;
+  isFetching: boolean;
 }
 export const FilterGroupPopoverMenu = ({
   handleFilterItemClick,
@@ -31,6 +32,7 @@ export const FilterGroupPopoverMenu = ({
   anchorEl,
   values,
   CustomRender,
+  isFetching,
   setUncheckedValues,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
@@ -83,6 +85,7 @@ export const FilterGroupPopoverMenu = ({
             .filter((s) => s.count > 0)
             .map((value) => (
               <FilterItemCheckbox
+                isFetching={isFetching}
                 key={value.value}
                 ValueRender={() => CustomRender(value)}
                 filterValue={value}
