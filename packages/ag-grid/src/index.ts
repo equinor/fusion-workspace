@@ -3,8 +3,23 @@ import type {
   IServerSideDatasource,
   IServerSideGetRowsParams,
   IServerSideGetRowsRequest,
+  ILoadingCellRendererParams,
+  ILoadingCellRenderer,
+  ILoadingCellRendererComp,
+  ILoadingOverlayComp,
+  ILoadingOverlayParams,
 } from 'ag-grid-community';
-export type { ColumnState, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGetRowsRequest };
+export type {
+  ColumnState,
+  IServerSideDatasource,
+  IServerSideGetRowsParams,
+  IServerSideGetRowsRequest,
+  ILoadingCellRendererParams,
+  ILoadingCellRenderer,
+  ILoadingCellRendererComp,
+  ILoadingOverlayComp,
+  ILoadingOverlayParams,
+};
 
 export type { ColDef, GridOptions, ICellRendererProps } from './lib';
 
