@@ -1,9 +1,9 @@
 import {
-  IServerSideGetRowsParams,
   GridOptions,
-  ColDef as AgGridColDef,
   IServerSideDatasource,
-} from 'ag-grid-community';
+  IServerSideGetRowsParams,
+  ColDef as AgGridColDef,
+} from '@ag-grid-community/core';
 import { Grid } from './Grid';
 
 export type ServerGridProps<TData> = {
