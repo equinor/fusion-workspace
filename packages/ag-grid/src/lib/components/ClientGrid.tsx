@@ -1,4 +1,4 @@
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions } from '@ag-grid-community/core';
 import { Grid } from './Grid';
 
 export type ClientGridProps<TData> = {

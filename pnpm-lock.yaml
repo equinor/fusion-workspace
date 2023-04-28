@@ -158,29 +158,20 @@ importers:
   packages/ag-grid:
     dependencies:
       '@ag-grid-community/client-side-row-model':
-        specifier: 29.0.0
-        version: 29.0.0
+        specifier: 28.2.1
+        version: 28.2.1
       '@ag-grid-community/core':
-        specifier: ^29.0.0
-        version: 29.0.0
-      '@ag-grid-enterprise/column-tool-panel':
-        specifier: 29.0.0
-        version: 29.0.0
+        specifier: 28.2.1
+        version: 28.2.1
+      '@ag-grid-community/react':
+        specifier: 28.2.1
+        version: 28.2.1(@ag-grid-community/core@28.2.1)(react-dom@18.2.0)(react@18.2.0)
+      '@ag-grid-enterprise/server-side-row-model':
+        specifier: 28.2.1
+        version: 28.2.1
       '@equinor/eds-tokens':
         specifier: ^0.9.0
         version: 0.9.0
-      '@equinor/workspace-observable-proxy':
-        specifier: workspace:^
-        version: link:../observable-proxy
-      ag-grid-community:
-        specifier: 28.2.1
-        version: 28.2.1
-      ag-grid-enterprise:
-        specifier: 28.2.1
-        version: 28.2.1
-      ag-grid-react:
-        specifier: ^28.2.1
-        version: 28.2.1(ag-grid-community@28.2.1)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@types/jest':
         specifier: 27.4.1
@@ -625,14 +616,37 @@ importers:
 
 packages:
 
+  /@ag-grid-community/client-side-row-model@28.2.1:
+    resolution: {integrity: sha512-JLLNVNAtSbVjg/h0+JqNxbRGzHR9xl3YHO4kVt8Bu0UO1XQLfGLT8wkzqQTcEOiq0pEfFTee7/BGT3oHOQfUQg==}
+    dependencies:
+      '@ag-grid-community/core': 28.2.1
+    dev: false
+
   /@ag-grid-community/client-side-row-model@29.0.0:
     resolution: {integrity: sha512-e+/888QYu/k+UBD74Ke6+e4Fc8/gxXmkcgF7cM4+EB941YDZ9j+gIR6ltI29B8T2n63OwTGWqNkwSooh1ed1nw==}
     dependencies:
       '@ag-grid-community/core': 29.0.0
     dev: false
 
+  /@ag-grid-community/core@28.2.1:
+    resolution: {integrity: sha512-qGhqZhY8KbPlr3cJBVkNjGKu+cOyFc8IGvPcvlm0pjNC9cdxO/ct9Sa1Dg+k3ACCEroMEt1apBvnoOgurpvewQ==}
+    dev: false
+
   /@ag-grid-community/core@29.0.0:
     resolution: {integrity: sha512-qj5H9tAZtikpjFL9f7VmJLPS8tx/PUfIjt5DPtqDA01GZ9dYt3XwPuHdLKzpA5E9Yevhwk1m+TXCCz5Al7WWSw==}
+    dev: false
+
+  /@ag-grid-community/react@28.2.1(@ag-grid-community/core@28.2.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-VWtiBMhvDKp//lIa2Ovzv+/gcQj6wnZDhngyPW5e97Sl+sIs6/UngHSTbbmhIb+wWUCIKmSRL1+R05PNnKjFTA==}
+    peerDependencies:
+      '@ag-grid-community/core': ~28.2.1
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@ag-grid-community/core': 28.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@ag-grid-enterprise/column-tool-panel@29.0.0:
@@ -642,6 +656,12 @@ packages:
       '@ag-grid-enterprise/core': 29.0.0
       '@ag-grid-enterprise/row-grouping': 29.0.0
       '@ag-grid-enterprise/side-bar': 29.0.0
+    dev: false
+
+  /@ag-grid-enterprise/core@28.2.1:
+    resolution: {integrity: sha512-VzmD03YdyokPR8YQ3BOfJCSn2AwIRpFmu0U6/Smheyjlw84cFjdqI9Ef1GXLEUcKGB9dwnQESEfq9gIckwHcug==}
+    dependencies:
+      '@ag-grid-community/core': 28.2.1
     dev: false
 
   /@ag-grid-enterprise/core@29.0.0:
@@ -655,6 +675,13 @@ packages:
     dependencies:
       '@ag-grid-community/core': 29.0.0
       '@ag-grid-enterprise/core': 29.0.0
+    dev: false
+
+  /@ag-grid-enterprise/server-side-row-model@28.2.1:
+    resolution: {integrity: sha512-n7HXNjfLSh9FVpuBm5nbuqsyQCwIaspdLSY7iggk9i5F3SZeqX2axCnzNJ28ktSpv7sZ4mmiHWR17aSzdIeD9A==}
+    dependencies:
+      '@ag-grid-community/core': 28.2.1
+      '@ag-grid-enterprise/core': 28.2.1
     dev: false
 
   /@ag-grid-enterprise/side-bar@29.0.0:
@@ -3701,33 +3728,12 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  /ag-grid-community@28.2.1:
-    resolution: {integrity: sha512-DMZh/xD/FqYP17qJ1M92PolTYe+hrKuEaf+A4h13O6qn2x/xZQrTRGW5DgnQLR/uLMe1XXZQPKR3UKgAlKo69A==}
-    dev: false
-
   /ag-grid-community@29.0.0:
     resolution: {integrity: sha512-onAQIqjhP1L93W5myAsfLBMBUyZPrWDb8FRulJuhjQKo8DEA4GSZ+oJHxwwLymm4biLu54zvZ+9GkTftha8gAg==}
     dev: false
 
-  /ag-grid-enterprise@28.2.1:
-    resolution: {integrity: sha512-FIqIiaMMO9m8eqfu64rZ7dOK8vQFqD+Dp9CTpSfjMtyUp4IoRE36c+mUpUGLX/bIix9LltpaUmr185nFM1Alrw==}
-    dev: false
-
   /ag-grid-enterprise@29.0.0:
     resolution: {integrity: sha512-WP0D73s5e44szR9bqjD0h66dlm6j5NO/IBEwCo48zMIUEob9a3WBT4cbBQefrka2TWevrfR14WqU/RKmITuXGw==}
-    dev: false
-
-  /ag-grid-react@28.2.1(ag-grid-community@28.2.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-3vbw+B77uWwAyiOJxQA5U+PQFRCCccUx7L5PIwrnA4Y7c1yAu8sB65hAZdBc9kuW26iltwv7asq0UzP7UAQUpg==}
-    peerDependencies:
-      ag-grid-community: ~28.2.1
-      react: ^16.3.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      ag-grid-community: 28.2.1
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /ag-grid-react@29.0.0(ag-grid-community@29.0.0)(react-dom@18.2.0)(react@18.2.0):

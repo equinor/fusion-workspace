@@ -1,14 +1,3 @@
-import type {
-  ColumnState,
-  IServerSideDatasource,
-  IServerSideGetRowsParams,
-  IServerSideGetRowsRequest,
-  ILoadingCellRendererParams,
-  ILoadingCellRenderer,
-  ILoadingCellRendererComp,
-  ILoadingOverlayComp,
-  ILoadingOverlayParams,
-} from 'ag-grid-community';
 export type {
   ColumnState,
   IServerSideDatasource,
@@ -19,7 +8,7 @@ export type {
   ILoadingCellRendererComp,
   ILoadingOverlayComp,
   ILoadingOverlayParams,
-};
+} from '@ag-grid-community/core';
 
 export type { ColDef, GridOptions, ICellRendererProps } from './lib';
 

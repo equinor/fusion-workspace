@@ -9,4 +9,4 @@ export type {
   GridReadyEvent,
   AgEvent,
   AgGridEvent,
-} from 'ag-grid-community';
+} from '@ag-grid-community/core';
