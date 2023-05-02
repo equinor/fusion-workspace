@@ -9,6 +9,8 @@ import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/reac
 import { WorkspaceBoundary } from './error';
 import { useState } from 'react';
 import { FilterContextProvider } from '@equinor/workspace-filter';
+import { updateQueryParams } from '../classes/fusionUrlHandler';
+import history from 'history/browser';
 
 const client = new QueryClient();
 
@@ -55,13 +57,11 @@ function WorkspaceComponent<
           providers={configuration.providers}
           defaultTab={configuration.defaultTab}
           tabs={configuration.tabs}
-          events={
-            {
-              // onTabChange: (newTab) => {
-              //   updateQueryParams([['tab', newTab]], history);
-              // },
-            }
-          }
+          events={{
+            onTabChange: (newTab) => {
+              updateQueryParams([['tab', newTab]], mediator, history);
+            },
+          }}
         />
       </FilterContextProvider>
     </QueryClientProvider>
