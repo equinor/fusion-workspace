@@ -39,7 +39,7 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
           <EventHandler {...events}>
             <ContextProviders providers={providers}>
               <StyledSidesheetWrapper>
-                <div style={{ height: '100%', width: '100%' }}>
+                <div style={{ height: '100%', width: '100%', display: 'grid', gridTemplateRows: 'auto 1fr' }}>
                   <WorkspaceHeader />
                   <WorkspaceBody children />
                 </div>

@@ -166,6 +166,9 @@ importers:
       '@ag-grid-community/react':
         specifier: 28.2.1
         version: 28.2.1(@ag-grid-community/core@28.2.1)(react-dom@18.2.0)(react@18.2.0)
+      '@ag-grid-enterprise/core':
+        specifier: 28.2.1
+        version: 28.2.1
       '@ag-grid-enterprise/server-side-row-model':
         specifier: 28.2.1
         version: 28.2.1

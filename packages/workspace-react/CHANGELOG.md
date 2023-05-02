@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## Version [1.0.1]
+
+- Fix broken scrollbars
+
 ## [0.6.6](https://github.com/equinor/fusion-workspace/compare/@equinor/workspace-react@0.6.5...@equinor/workspace-react@0.6.6) (2023-03-27)
 
 **Note:** Version bump only for package @equinor/workspace-react
