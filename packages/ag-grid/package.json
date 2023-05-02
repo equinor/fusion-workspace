@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-ag-grid",
-  "version": "1.0.2-preview",
+  "version": "1.0.2",
   "type": "module",
   "private": false,
   "sideEffects": false,
@@ -22,6 +22,7 @@
     "@ag-grid-community/client-side-row-model": "28.2.1",
     "@ag-grid-community/core": "28.2.1",
     "@ag-grid-community/react": "28.2.1",
+    "@ag-grid-enterprise/core": "28.2.1",
     "@ag-grid-enterprise/server-side-row-model": "28.2.1",
     "@equinor/eds-tokens": "^0.9.0"
   },
