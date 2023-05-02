@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.7]
+
+Bump ag grid
+
 ## [1.0.6]
 
 Fix scrollbar on bottom of screen
