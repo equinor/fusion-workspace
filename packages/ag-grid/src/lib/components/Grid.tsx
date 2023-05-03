@@ -11,6 +11,9 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import { GridController } from '../types';
 import { useAgStyles } from '../../ag-grid-styling';
+import { LicenseManager } from 'ag-grid-enterprise';
+
+LicenseManager.setLicenseKey((window as any)._config_.agGrid.licenseKey as string);
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
   controller: GridController<TData>;
