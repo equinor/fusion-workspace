@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.11]
+
+Open sidesheet from url
+
 ## [1.0.7]
 
 Bump ag grid
