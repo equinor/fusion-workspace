@@ -20,6 +20,8 @@ export type SimpleProps<T extends Record<PropertyKey, unknown> = {}> = T & { con
 
 export type SidesheetSimple<TData extends Record<PropertyKey, unknown>> = {
   type: 'default';
+  /** Prevents loading from url */
+  preventLoadFromUrl?: boolean;
   DetailsSidesheet?: (props: SimpleProps<DetailsSidesheetProps<TData>>) => JSX.Element;
   CreateSidesheet?: (props: SimpleProps) => JSX.Element;
 };
@@ -30,6 +32,8 @@ export type SidesheetAdvanced<
   TCustomSidesheetEvents extends BaseEvent
 > = {
   type: 'custom';
+  /** Prevents loading from url */
+  preventLoadFromUrl?: boolean;
   hasCreateSidesheet?: boolean;
   Sidesheet?: (props: SidesheetProps<TData, TContext, TCustomSidesheetEvents>) => JSX.Element;
 };
