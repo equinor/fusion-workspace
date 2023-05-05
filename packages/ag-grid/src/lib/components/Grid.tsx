@@ -13,7 +13,11 @@ import { GridController } from '../types';
 import { useAgStyles } from '../../ag-grid-styling';
 import { LicenseManager } from 'ag-grid-enterprise';
 
-LicenseManager.setLicenseKey((window as any)._config_.agGrid.licenseKey as string);
+if ((window as any)._config_.agGrid.licenseKey) {
+  LicenseManager.setLicenseKey((window as any)._config_.agGrid.licenseKey as string);
+} else {
+  console.warn('No ag grid license found');
+}
 
 type GridProps<TData extends Record<PropertyKey, unknown>> = {
   controller: GridController<TData>;
