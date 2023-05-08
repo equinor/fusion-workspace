@@ -47,7 +47,7 @@ function WorkspaceComponent<
   const configuration = createConfigurationObject(props, mediator);
 
   useSelectIdFromUrl(mediator, !!props?.sidesheetOptions?.preventLoadFromUrl);
-
+  useSyncOnClick(mediator);
   return (
     <QueryClientProvider client={client}>
       <FilterContextProvider
@@ -69,6 +69,16 @@ function WorkspaceComponent<
       </FilterContextProvider>
     </QueryClientProvider>
   );
+}
+
+function useSyncOnClick(mediator: FusionMediator<any, any, any>) {
+  useEffect(() => {
+    const subscription = mediator.selectionService.selectedNodes$.subscribe((s) => {
+      const id = s.length >= 1 ? s[0].id : undefined;
+      updateQueryParams([['item', id]], mediator, history);
+    });
+    return () => subscription.unsubscribe();
+  }, [mediator]);
 }
 
 /**

@@ -5,6 +5,7 @@ export const StyledReportRoot = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: auto;
   background-color: ${tokens.colors.ui.background__light.hex};
 `;
 

@@ -1,8 +1,12 @@
 # Change Log
 
+## [1.0.12]
+
+feat: open sidesheet from url
+
 ## [1.0.11]
 
-Open sidesheet from url
+Update powerbi dep
 
 ## [1.0.7]
 
