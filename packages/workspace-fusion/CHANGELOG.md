@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.11]
+
+Update powerbi dep
+
 ## [1.0.7]
 
 Bump ag grid
