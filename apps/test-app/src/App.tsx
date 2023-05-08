@@ -6,12 +6,8 @@ import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
-import { gardenConfig } from './Garden';
 
 import { gridConfig } from './Grid';
-import { makeRequest } from './ignore';
-import { filterDataSource } from './Filter';
-import { FilterStateGroup } from '@equinor/workspace-filter';
 
 type S = {
   id: string;
@@ -28,21 +24,21 @@ const options: WorkspaceConfig<S> = {
 const client = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
 function App() {
-  const getData = async (filters: FilterStateGroup[], signal?: AbortSignal): Promise<StatusItem[]> => {
-    const res = await makeRequest('work-orders/kpis', { filter: filters }, signal);
+  // const getData = async (filters: FilterStateGroup[], signal?: AbortSignal): Promise<StatusItem[]> => {
+  //   const res = await makeRequest('work-orders/kpis', { filter: filters }, signal);
 
-    return (await res.json()).map((s: any) => ({ title: s.name, value: s.value }));
-  };
+  //   return (await res.json()).map((s: any) => ({ title: s.name, value: s.value }));
+  // };
 
   return (
     <QueryClientProvider client={client}>
       <div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
         <Workspace
-          statusBarOptions={getData}
+          // statusBarOptions={getData}
           workspaceOptions={options}
           gridOptions={gridConfig}
-          gardenOptions={gardenConfig}
-          filterOptions={{ dataSource: filterDataSource }}
+          // gardenOptions={gardenConfig}
+          // filterOptions={{ dataSource: filterDataSource }}
           // filterOptions={filterOptions}
           sidesheetOptions={sidesheet}
           // powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
