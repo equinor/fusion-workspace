@@ -1,5 +1,4 @@
 import { Filter, FilterDataSource } from '@equinor/workspace-filter';
-import { GardenController } from '@equinor/workspace-garden';
 import styled from 'styled-components';
 import { StyledActionBar } from '../../../../lib/components/Header/actionBar.styles';
 import { TabNavigation } from '../../../../lib/integrations/common/components/TabNavigation';
@@ -11,7 +10,6 @@ type GardenWorkspaceHeaderProps<
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext
 > = {
-  controller: GardenController<TData>;
   dataSource?: FilterDataSource;
 };
 
@@ -20,7 +18,7 @@ export function GardenWorkspaceHeader<
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext
->({ controller, dataSource }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
+>({ dataSource }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
   return (
     <StyledGardenHeader>
       <NavigationBar />

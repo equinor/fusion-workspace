@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.0.13]
+
+fix: double fetch on init
+
 ## [1.0.12]
 
 feat: open sidesheet from url

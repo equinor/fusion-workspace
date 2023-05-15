@@ -20,19 +20,6 @@ export const gardenModule: FusionWorkspaceModule = {
       };
     }
 
-    const gardenController = new GardenController<any>({
-      ...gardenConfig,
-      getIdentifier: props.workspaceOptions.getIdentifier,
-      customViews: gardenConfig.customViews,
-      dataSource: {} as any,
-      initialGrouping: bookmarkGrouping
-        ? {
-            horizontalGroupingAccessor: bookmarkGrouping,
-            verticalGroupingKeys: props?.currentBookmark?.payload.garden?.groupByKeys ?? [],
-          }
-        : gardenConfig.initialGrouping,
-    });
-
     const provider: Provider = {
       Component: ({ children }) => {
         return <>{children}</>;
@@ -52,9 +39,7 @@ export const gardenModule: FusionWorkspaceModule = {
         ),
         name: 'garden',
         TabIcon: GardenIcon,
-        CustomHeader: () => (
-          <GardenWorkspaceHeader dataSource={props.filterOptions?.dataSource} controller={gardenController} />
-        ),
+        CustomHeader: () => <GardenWorkspaceHeader dataSource={props.filterOptions?.dataSource} />,
       },
     };
   },
