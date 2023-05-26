@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "1.0.13",
+  "version": "1.1.13",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -18,7 +18,6 @@
   "files": [
     "dist"
   ],
-  "unpkg": "dist/workspace.js",
   "typesVersions": {
     ">=4.2": {
       ".": [
@@ -42,9 +41,6 @@
       "sidesheet": [
         "dist/types/lib/integrations/sidesheet/index"
       ],
-      "data-source": [
-        "dist/types/lib/integrations/data-source/index"
-      ],
       "grid-module": [
         "dist/types/modules/grid/index"
       ],
@@ -63,7 +59,6 @@
     "./status-bar": "./dist/esm/lib/integrations/status-bar/index.js",
     "./power-bi": "./dist/esm/lib/integrations/power-bi/index.js",
     "./grid": "./dist/esm/lib/integrations/grid/index.js",
-    "./data-source": "./dist/esm/lib/integrations/data-source/index.js",
     "./sidesheet": "./dist/esm/lib/integrations/sidesheet/index.js",
     "./grid-module": "./dist/esm/modules/grid/index.js",
     "./power-bi-module": "./dist/esm/modules/power-bi/index.js",

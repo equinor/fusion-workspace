@@ -11,6 +11,7 @@ type ExpandedFilterItemValueProps = {
   filterItem: FilterValueType;
   filterGroup: FilterGroup;
   isFetching: boolean;
+  isMonospace: boolean;
 };
 
 export const ExpandedFilterItem = ({
@@ -19,6 +20,7 @@ export const ExpandedFilterItem = ({
   filterItem,
   isFetching,
   filterGroup,
+  isMonospace,
 }: ExpandedFilterItemValueProps): JSX.Element => {
   const { filterItemLabelClick, toggleItem, inactiveGroupValues } = useFilterGroup(filterGroup);
 
@@ -38,6 +40,7 @@ export const ExpandedFilterItem = ({
         width: '100%',
         transform: `translateY(${virtualRowStart}px)`,
         height: `${virtualRowSize}px`,
+        fontVariantNumeric: isMonospace ? 'tabular-nums' : 'normal',
       }}
     >
       <Checkbox disabled={isFetching} checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />

@@ -7,6 +7,7 @@ import {
 } from '../expandedFilterGroup/expandedFilterGroup.styles';
 import { FilterItemValue } from '../expandedFilterItem/ExpandedFilterItem';
 import { searchByValue } from '../expandedFilterGroup/ExpandedFilterGroup';
+import { useFilterStyles } from '../../hooks/useFilterStyles';
 
 interface VirtualContainerProps {
   filterGroup: FilterGroup;
@@ -29,6 +30,9 @@ export const VirtualContainer = ({
     estimateSize: useCallback(() => 20, []),
   });
 
+  const styles = useFilterStyles();
+  const monospaceGroups = styles?.monospaceGroups ?? [];
+
   return (
     <StyledVirtualFilterContainer ref={parentRef}>
       <StyledVirtualFilterItemWrapper
@@ -45,6 +49,9 @@ export const VirtualContainer = ({
               virtualRowStart={virtualRow.start}
               filterItem={groupsMatchingSearch[virtualRow.index]}
               filterGroup={filterGroup}
+              isMonospace={
+                !!monospaceGroups.find((value) => value.trim().toLowerCase() === filterGroup.name.trim().toLowerCase())
+              }
             />
           );
         })}

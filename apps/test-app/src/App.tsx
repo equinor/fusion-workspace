@@ -8,6 +8,7 @@ import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
 
 import { gridConfig } from './Grid';
+import { filterDataSource } from './Filter';
 
 type S = {
   id: string;
@@ -38,7 +39,7 @@ function App() {
           workspaceOptions={options}
           gridOptions={gridConfig}
           // gardenOptions={gardenConfig}
-          // filterOptions={{ dataSource: filterDataSource }}
+          filterOptions={{ dataSource: filterDataSource }}
           // filterOptions={filterOptions}
           sidesheetOptions={sidesheet}
           // powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}

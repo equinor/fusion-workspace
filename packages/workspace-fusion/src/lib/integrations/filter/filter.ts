@@ -3,7 +3,7 @@
  * namespace: @equinor/workspace-fusion/filter
  */
 
-import { FilterDataSource, FilterStateGroup } from '@equinor/workspace-filter';
+import { FilterDataSource, FilterStateGroup, FilterStyles } from '@equinor/workspace-filter';
 
 /**Garden types */
 export type { FilterConfig, FilterStateGroup };
@@ -12,4 +12,5 @@ export type { FilterConfig, FilterStateGroup };
 type FilterConfig = {
   dataSource: FilterDataSource;
   defaultUncheckedValues?: FilterStateGroup[];
+  styles?: FilterStyles;
 };

@@ -17,6 +17,7 @@ interface FilterGroupProps {
   group: IFilterGroup;
   uncheckedValues: string[];
   isFetching: boolean;
+  isMonospace: boolean;
 }
 export const FilterGroup = ({
   name,
@@ -25,6 +26,7 @@ export const FilterGroup = ({
   group,
   uncheckedValues,
   isFetching,
+  isMonospace,
 }: FilterGroupProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -61,6 +63,7 @@ export const FilterGroup = ({
           anchorEl={ref.current}
           values={filterItems}
           CustomRender={customRender}
+          isMonospace={isMonospace}
         />
       )}
     </div>

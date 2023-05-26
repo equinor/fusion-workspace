@@ -22,6 +22,7 @@ interface FilterGroupPopoverMenuProps {
   handleFilterItemLabelClick: (val: FilterValueType) => void;
   setUncheckedValues: (values: FilterValueType[]) => void;
   isFetching: boolean;
+  isMonospace: boolean;
 }
 export const FilterGroupPopoverMenu = ({
   handleFilterItemClick,
@@ -34,6 +35,7 @@ export const FilterGroupPopoverMenu = ({
   CustomRender,
   isFetching,
   setUncheckedValues,
+  isMonospace,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
 
@@ -93,6 +95,7 @@ export const FilterGroupPopoverMenu = ({
                 handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
                 isChecked={isChecked(value)}
                 count={value.count}
+                isMonospace={isMonospace}
               />
             ))}
         </StyledList>
