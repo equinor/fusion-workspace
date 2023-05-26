@@ -11,6 +11,7 @@ export interface FilterItemCheckboxProps {
   ValueRender: () => JSX.Element;
   count?: number;
   isFetching: boolean;
+  isMonospace: boolean;
 }
 
 export const FilterItemCheckbox = ({
@@ -21,11 +22,15 @@ export const FilterItemCheckbox = ({
   handleFilterItemLabelClick,
   ValueRender,
   isFetching,
+  isMonospace,
 }: FilterItemCheckboxProps): JSX.Element => {
   return (
     <StyledFilterItemWrap title={typeof filterValue === 'string' ? filterValue : '(Blank)'} key={filterValue.value}>
       <Checkbox disabled={isFetching} onChange={handleFilterItemClick} size={12} checked={!isChecked} />
-      <StyledFilterLabelWrapper onClick={handleFilterItemLabelClick}>
+      <StyledFilterLabelWrapper
+        onClick={handleFilterItemLabelClick}
+        style={{ fontVariantNumeric: isMonospace ? 'tabular-nums' : 'normal' }}
+      >
         <ValueRender />
       </StyledFilterLabelWrapper>
       {isFetching ? (
