@@ -8,7 +8,13 @@ const getRows = async (params: IServerSideGetRowsParams<any>, filters: any[]) =>
 };
 
 export const gridConfig: GridConfig<any, any[]> = {
-  columnDefinitions: [{ field: 'workOrderNumber' }, { field: 'jobStatus' }, { field: 'materialStatus' }],
+  columnDefinitions: [
+    {
+      field: 'workOrderNumber',
+    },
+    { field: 'jobStatus' },
+    { field: 'materialStatus' },
+  ],
   getRows,
   gridOptions: {
     rowHeight: 100,

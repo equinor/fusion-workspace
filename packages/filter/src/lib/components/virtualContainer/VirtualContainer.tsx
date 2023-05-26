@@ -7,6 +7,7 @@ import {
 } from '../expandedFilterGroup/expandedFilterGroup.styles';
 import { FilterItemValue } from '../expandedFilterItem/ExpandedFilterItem';
 import { searchByValue } from '../expandedFilterGroup/ExpandedFilterGroup';
+import { filterMonospaceWhitelist } from '../../utils';
 
 interface VirtualContainerProps {
   filterGroup: FilterGroup;
@@ -45,6 +46,7 @@ export const VirtualContainer = ({
               virtualRowStart={virtualRow.start}
               filterItem={groupsMatchingSearch[virtualRow.index]}
               filterGroup={filterGroup}
+              isMonospace={filterMonospaceWhitelist.includes(filterGroup.name)}
             />
           );
         })}
