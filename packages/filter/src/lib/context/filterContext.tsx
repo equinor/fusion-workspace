@@ -1,4 +1,5 @@
-import { FilterStateGroup } from '../types';
+import { FilterStylesContext } from '../components/Filter';
+import { FilterStateGroup, FilterStyles } from '../types';
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 
 export type IFilterContext = {
@@ -12,11 +13,13 @@ export const FilterContext = createContext<null | IFilterContext>(null);
 
 type FilterContextProviderProps = {
   defaultUncheckedValues: FilterStateGroup[] | undefined;
+  styles?: FilterStyles;
 };
 
 export const FilterContextProvider = ({
   children,
   defaultUncheckedValues,
+  styles,
 }: PropsWithChildren<FilterContextProviderProps>) => {
   const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(defaultUncheckedValues ?? []);
   const [filterState, setFilterState] = useState<FilterStateGroup[]>([]);
@@ -30,7 +33,7 @@ export const FilterContextProvider = ({
         uncheckedValues,
       }}
     >
-      {children}
+      <FilterStylesContext.Provider value={styles}>{children}</FilterStylesContext.Provider>
     </FilterContext.Provider>
   );
 };

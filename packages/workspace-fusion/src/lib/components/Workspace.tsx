@@ -51,6 +51,7 @@ function WorkspaceComponent<
   return (
     <QueryClientProvider client={client}>
       <FilterContextProvider
+        styles={props.filterOptions?.styles}
         defaultUncheckedValues={
           props.currentBookmark?.payload.filter?.uncheckedValues ?? props.filterOptions?.defaultUncheckedValues
         }

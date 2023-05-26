@@ -2,11 +2,12 @@ import { QuickFilter } from './quickFilter/QuickFilter';
 import { playlist_add, search, drag_handle, chevron_down, chevron_up } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { Suspense, useContext, useRef } from 'react';
+import { Suspense, createContext, useContext, useRef } from 'react';
 import { FilterDataSource } from '../types';
 import { FilterContext } from '../context/filterContext';
 import { tokens } from '@equinor/eds-tokens';
 import { ErrorBoundary } from 'react-error-boundary';
+import { FilterStyles } from '../types/filterStyles';
 
 Icon.add({ playlist_add, search, drag_handle, chevron_down, chevron_up });
 /**
@@ -42,3 +43,5 @@ export function Filter({ dataSource }: FilterProps) {
 function FilterLoadingFallback() {
   return <div style={{ height: '48px', width: '100%', background: tokens.colors.ui.background__light.hex }} />;
 }
+
+export const FilterStylesContext = createContext<undefined | FilterStyles>(undefined);

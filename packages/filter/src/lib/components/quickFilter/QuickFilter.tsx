@@ -18,8 +18,7 @@ import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover
 import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
 import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
 import { FilterView } from '../filterView/FilterView';
-import { filterMonospaceWhitelist } from '../../utils';
-import { group } from '@equinor/eds-icons';
+import { useFilterStyles } from '../../hooks/useFilterStyles';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -82,6 +81,9 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
       0
     );
 
+  const styles = useFilterStyles();
+  const monospaceGroups = styles?.monospaceGroups ?? [];
+
   return (
     <StyledWrapper id="filter_root">
       <StyledCompactFilterWrapper>
@@ -103,7 +105,11 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
                         key={group.name}
                         isOpen={filterGroupOpen === group.name}
                         name={group.name}
-                        isMonospace={filterMonospaceWhitelist.includes(group.name)}
+                        isMonospace={
+                          !!monospaceGroups.find(
+                            (value) => value.trim().toLowerCase() === group.name.trim().toLowerCase()
+                          )
+                        }
                       />
                     )
                 )}
