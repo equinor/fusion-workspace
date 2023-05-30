@@ -12,4 +12,9 @@ export interface Visuals<TData extends Record<PropertyKey, unknown>> {
   getDescription?: GetDescription<TData>;
   /** Function that returns the color of the item to be displayed */
   getItemColor?: GetItemColor<TData>;
+  popoverComponent?: (props: PopoverComponentProps<TData>) => JSX.Element;
 }
+
+export type PopoverComponentProps<TData extends Record<PropertyKey, unknown>> = {
+  item: TData;
+};

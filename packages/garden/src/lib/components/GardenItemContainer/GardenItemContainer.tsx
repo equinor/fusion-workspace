@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
 import { useExpand, useGardenContext, useGroupingKeys } from '../../hooks';
@@ -12,6 +12,7 @@ import { useBlockCache } from '../../hooks/useBlockCache';
 import { ErrorPackage } from '../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../virtualPackages/LoadingPackage';
 import { SubGroupItem } from '../defaultComponents/item/SubGroupItem';
+import { PopoverWrapper } from '../popover/PopoverWrapper';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
@@ -64,11 +65,16 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
   const controller = useGardenContext<TData>();
   const {
-    visuals: { rowHeight = 40 },
+    visuals: { rowHeight = 40, popoverComponent: PopoverComponent },
     colorAssistMode$,
     getIdentifier,
     clickEvents,
   } = controller;
+
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+
+  const [popoverItem, setPopoverItem] = useState<null | TData>(null);
+  const hoverTimeout = useRef<number | null>(null);
 
   const [subGroupCount, setSubGroupCount] = useState<number>(0);
 
@@ -233,7 +239,18 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
         return (
           <StyledPackageRoot
+            ref={popoverRef}
             key={virtualRow.key}
+            onMouseEnter={() => {
+              hoverTimeout.current && clearTimeout(hoverTimeout.current);
+              if (!isSubGroup(item)) {
+                hoverTimeout.current = setTimeout(() => setPopoverItem(item), 700);
+              }
+            }}
+            onMouseLeave={() => {
+              hoverTimeout.current && clearTimeout(hoverTimeout.current);
+              setPopoverItem(null);
+            }}
             style={{
               translate: `${virtualColumn.start}px ${virtualRow.start}px`,
               width: `${virtualColumn.size}px`,
@@ -299,6 +316,18 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                 columnStart={virtualColumn.start}
                 parentRef={parentRef}
               />
+            )}
+            {PopoverComponent && popoverItem === item && (
+              <PopoverWrapper
+                isOpen={!!popoverItem}
+                rowStart={virtualRow.start}
+                columnStart={virtualColumn.start}
+                width={itemWidth ?? 500}
+                popoverTitle={''}
+                parentRef={popoverRef}
+              >
+                <PopoverComponent item={popoverItem}></PopoverComponent>
+              </PopoverWrapper>
             )}
           </StyledPackageRoot>
         );
