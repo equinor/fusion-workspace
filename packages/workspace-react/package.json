@@ -1,45 +1,49 @@
 {
-	"name": "@equinor/workspace-react",
-	"version": "0.5.0",
-	"type": "module",
-	"license": "MIT",
-	"scripts": {
-		"build": "tsc -b",
-		"lint": "eslint --ext .ts,.tsx"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"module": "dist/esm/index.js",
-	"types": "dist/types/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"peerDependencies": {
-		"react": ">= 16.8.0",
-		"react-dom": ">= 16.8.0",
-		"react-is": ">= 16.8.0",
-		"styled-components": "^5.3.6"
-	},
-	"dependencies": {
-		"@equinor/eds-core-react": "^0.27.0",
-		"@equinor/eds-icons": "^0.17.0",
-		"@equinor/eds-tokens": "^0.9.0",
-		"@equinor/workspace-core": "workspace:^0.1.1"
-	},
-	"devDependencies": {
-		"@types/jest": "27.4.1",
-		"@types/react": ">= 16.8.0",
-		"@types/styled-components": "^5.1.26",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0",
-		"styled-components": "^5.3.6"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/equinor/fusion-workspace.git",
-		"directory": "packages/workspace-react"
-	},
-	"gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
+  "name": "@equinor/workspace-react",
+  "version": "1.0.2",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b",
+    "build:prod": "tsc -b",
+    "lint": "eslint --ext .ts,.tsx"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">= 16.8.0",
+    "react-dom": ">= 16.8.0",
+    "react-is": ">= 16.8.0",
+    "styled-components": "^5.3.6"
+  },
+  "dependencies": {
+    "@equinor/eds-core-react": "^0.28.0",
+    "@equinor/eds-icons": "^0.18.0",
+    "@equinor/eds-tokens": "^0.9.0",
+    "@equinor/workspace-core": "workspace:^",
+    "zustand": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "27.4.1",
+    "@types/react": ">= 16.8.0",
+    "@types/styled-components": "^5.1.26",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "styled-components": "^5.3.6",
+    "typescript": "^5.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equinor/fusion-workspace.git",
+    "directory": "packages/workspace-react"
+  },
+  "gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }

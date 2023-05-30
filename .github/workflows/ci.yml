@@ -1,18 +1,16 @@
 name: CI
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 jobs:
-    main:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-              with:
-                  fetch-depth: 0
-            - uses: nrwl/nx-set-shas@v2
-            - run: npm i -g pnpm
-            - run: npx pnpm i
-            - run: npx lerna run build
-            - run: npx lerna run test
+  main:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v2
+      - run: npm run first-time-setup

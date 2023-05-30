@@ -1,6 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 
+# generated types
+.astro/
+
+cc-components/
 
 *.log
 
@@ -8,13 +12,14 @@
 /dist
 /tmp
 /out-tsc
-docs/
 
 dist
 
 
 # dependencies
 node_modules
+
+ignore.ts
 
 # IDEs and editors
 /.idea

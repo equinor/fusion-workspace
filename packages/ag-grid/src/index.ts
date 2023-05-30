@@ -1,17 +1,15 @@
-import { ReactGrid } from './lib';
+export type {
+  ColumnState,
+  IServerSideDatasource,
+  IServerSideGetRowsParams,
+  IServerSideGetRowsRequest,
+  ILoadingCellRendererParams,
+  ILoadingCellRenderer,
+  ILoadingCellRendererComp,
+  ILoadingOverlayComp,
+  ILoadingOverlayParams,
+} from '@ag-grid-community/core';
 
-export {
-	Grid,
-	ReactGrid,
-	createGridController,
-	selectRowNode,
-	useColumnState,
-	useRowData,
-	useSelectionService,
-} from './lib';
+export type { ColDef, GridOptions, ICellRendererProps } from './lib';
 
-import { ColumnState } from 'ag-grid-community';
-export type { ColumnState };
-
-export type { ColDef, GetIdentifier, GridConfig, GridController, GridOptions, ICellRendererProps } from './lib';
-export default ReactGrid;
+export { ClientGrid, ServerGrid } from './lib/components';

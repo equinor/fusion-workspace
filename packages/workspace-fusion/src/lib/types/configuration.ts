@@ -1,59 +1,37 @@
-import { GridController } from '@equinor/workspace-ag-grid';
-import { FetchController } from '@equinor/workspace-data-source';
-import { FilterController } from '@equinor/workspace-filter';
-import { GardenController } from '@equinor/workspace-garden';
-import { WorkspaceViewController } from '@equinor/workspace-react';
-import { FusionWorkspaceError, FusionMediator } from './fusionController';
+import { Provider, Tab } from '@equinor/workspace-react';
 import { WorkspaceOnClick } from './event';
 import { WorkspaceTabNames } from './tabs';
-import { WorkspaceProps } from './workspaceProps';
-import { BaseEvent } from '@equinor/workspace-core';
 
 export type GetIdentifier<TData> = (item: TData) => string;
 export type CustomTabProps<TData> = {
-	data: TData[];
-	onClick: (ev: WorkspaceOnClick<TData>) => void;
+  data: TData[];
+  onClick: (ev: WorkspaceOnClick<TData>) => void;
 };
 
 export type WorkspaceConfig<TData, TabNames extends string = WorkspaceTabNames> = {
-	getIdentifier: GetIdentifier<TData>;
-	appKey: string;
-	defaultTab?: TabNames;
+  getIdentifier: GetIdentifier<TData>;
+  appKey: string;
+  defaultTab?: TabNames;
 };
 
 export type CustomTabComponent = () => JSX.Element;
 
 export type CustomTab = {
-	name: string;
-	TabIcon: () => JSX.Element;
-	Component: CustomTabComponent;
-	CustomHeader?: () => JSX.Element;
-	/**
-	 * Will add the tab if the async function returns true
-	 * e.g access checks for conditional rendering
-	 */
-	predicate?: () => Promise<boolean>;
+  name: string;
+  TabIcon: () => JSX.Element;
+  Component: CustomTabComponent;
+  CustomHeader?: () => JSX.Element;
 };
 
 export type AppConfig<TabNames extends string> = {
-	appKey: string;
-	appColor: string;
-	defaultTab: TabNames;
+  appKey: string;
+  appColor: string;
+  defaultTab: TabNames;
 };
 
-export type WorkspaceConfiguration<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown>,
-	TCustomSidesheetEvents extends BaseEvent = never,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never
-> = {
-	gardenController?: GardenController<TData, TExtendedFields, TCustomGroupByKeys, TContext>;
-	viewController: WorkspaceViewController<WorkspaceTabNames, FusionWorkspaceError>;
-	gridController?: GridController<TData>;
-	workspaceConfig: WorkspaceConfig<TData>;
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
-	filterController?: FilterController<TData>;
-	dataSourceController?: FetchController<TData>;
-	rawOptions: WorkspaceProps<TData, TContext, TCustomSidesheetEvents, TExtendedFields, TCustomGroupByKeys>;
+export type WorkspaceConfiguration = {
+  Sidesheet?: () => JSX.Element;
+  providers: Provider[];
+  tabs: Tab[];
+  defaultTab: string;
 };

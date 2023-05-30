@@ -1,172 +1,97 @@
-import Workspace, { FusionMediator, WorkspaceConfig, WorkspaceController } from '@equinor/workspace-fusion';
-import { GridConfig } from '@equinor/workspace-fusion/grid';
-import { StatusBarConfig } from '@equinor/workspace-fusion/status-bar';
-import { useCallback, useRef, useState } from 'react';
-import { GardenConfig } from '@equinor/workspace-fusion/garden';
-import { FilterConfig } from '@equinor/workspace-fusion/filter';
+import { StatusItem } from '@equinor/workspace-fusion/status-bar';
 import { SidesheetConfig } from '@equinor/workspace-fusion/sidesheet';
-import { BookmarksModule } from '@equinor/workspace-fusion-modules/bookmarks';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PowerBiConfig } from '@equinor/workspace-fusion/power-bi';
+import Workspace, { WorkspaceConfig } from '@equinor/workspace-fusion';
+import { gridModule } from '@equinor/workspace-fusion/grid-module';
+import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { powerBiModule } from '@equinor/workspace-fusion/power-bi-module';
+
+import { gridConfig } from './Grid';
+import { filterDataSource } from './Filter';
 
 type S = {
-	id: string;
-	age: number;
-	contextId: string;
+  id: string;
+  age: number;
+  contextId: string;
 };
 
 const options: WorkspaceConfig<S> = {
-	getIdentifier: (s) => s.id,
-	appKey: 'Handover',
-	defaultTab: 'grid',
+  getIdentifier: (s: any) => s.workOrderId,
+  appKey: 'Handover',
+  defaultTab: 'grid',
 };
 
-const gridOptions: GridConfig<S> = {
-	columnDefinitions: [
-		{ field: 'id', valueGetter: (s) => 's.context.length' },
-		{ field: 'contextId' },
-		{ field: 'age' },
-	],
-};
-
-const gardenOptions: GardenConfig<S> = {
-	getDisplayName: (s) => s.id,
-	initialGrouping: { horizontalGroupingAccessor: 'id', verticalGroupingKeys: [] },
-	// customViews: {
-	// 	customItemView: memo((props) => {
-	// 		const context = props.controller.useContext();
-
-	// 		return <div>hello {JSON.stringify(context)}</div>;
-	// 	}),
-	// },
-};
-
-const filterOptions: FilterConfig<S> = {
-	filterGroups: [
-		{ name: 'id', valueFormatter: (s) => s.id },
-		{ name: 'age', valueFormatter: (s) => s.age, isQuickFilter: true },
-	],
-};
-const contextOptions = (data: S[]) => ({ length: data.length });
-const statusBarOptions: StatusBarConfig<S> = (data) => [{ title: 'Count', value: data.length }];
-
-const getItems = (contextId: string) => [
-	{ age: 2, id: '123', contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-	{ age: Math.floor(Math.random() * 192), id: Math.floor(Math.random() * 192).toString(), contextId },
-];
+const client = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
 function App() {
-	const workspaceApi = useRef<WorkspaceController<S, MyTypes, { length: number }> | null>(null);
-	const [contextId, setContextId] = useState('abc');
+  // const getData = async (filters: FilterStateGroup[], signal?: AbortSignal): Promise<StatusItem[]> => {
+  //   const res = await makeRequest('work-orders/kpis', { filter: filters }, signal);
 
-	const getResponseAsync = useCallback(async () => {
-		return new Promise<Response>((res) =>
-			setTimeout(
-				() =>
-					res({
-						status: 200,
-						json: async () => getItems(contextId),
-					} as Response),
-				2000
-			)
-		);
-	}, [contextId]);
+  //   return (await res.json()).map((s: any) => ({ title: s.name, value: s.value }));
+  // };
 
-	return (
-		<div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'admin' })}>open Admin</button>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'custom2', props: { id: '123' } })}>
-				Open custom2
-			</button>
-			<button onClick={() => workspaceApi.current?.openSidesheet({ type: 'create_sidesheet' })}>
-				Open create
-			</button>
-			<Workspace
-				onWorkspaceReady={(ev) => {
-					workspaceApi.current = ev.api;
-				}}
-				contextOptions={contextOptions}
-				statusBarOptions={statusBarOptions}
-				workspaceOptions={options}
-				gridOptions={gridOptions}
-				gardenOptions={gardenOptions}
-				filterOptions={filterOptions}
-				sidesheetOptions={sidesheet}
-				dataOptions={{
-					getResponseAsync: getResponseAsync,
-				}}
-				modules={[
-					BookmarksModule({
-						getBookmark: async (id, signal) => {
-							return {
-								garden: {
-									groupingKeys: { horizontalGroupingAccessor: 'age', verticalGroupingKeys: [] },
-									selectedNodes: [],
-								},
-							};
-						},
-					}),
-				]}
-			/>
-		</div>
-	);
+  return (
+    <QueryClientProvider client={client}>
+      <div className="App" style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+        <Workspace
+          // statusBarOptions={getData}
+          workspaceOptions={options}
+          gridOptions={gridConfig}
+          // gardenOptions={gardenConfig}
+          filterOptions={{ dataSource: filterDataSource }}
+          // filterOptions={filterOptions}
+          sidesheetOptions={sidesheet}
+          // powerBiOptions={tabs.includes('powerbi') ? powerbiOptions : undefined}
+          modules={[powerBiModule, gridModule, gardenModule]}
+        />
+      </div>
+    </QueryClientProvider>
+  );
 }
+
+const Meta = () => {
+  throw new Promise((res, rej) => setTimeout(res, 5000));
+};
 
 export default App;
 
 const sidesheet: SidesheetConfig<S, { length: number }, MyTypes> = {
-	type: 'simple',
-	CreateSidesheet: () => {
-		return <div style={{ width: '300px' }}>Am create sideshet</div>;
-	},
-	DetailsSidesheet: () => {
-		return <div style={{ width: '300px' }}>am details</div>;
-	},
-
-	//type: "advanced"
-	// Sidesheet: (test) => {
-	// 	const { controller, ev } = test;
-
-	// 	switch (ev.type) {
-	// 		case 'admin':
-	// 			return (
-	// 				<div style={{ width: '200px' }}>
-	// 					Admin sidesheet {JSON.stringify(ev)}
-	// 					<button onClick={() => controller.close()}>close</button>
-	// 				</div>
-	// 			);
-	// 		case 'custom2':
-	// 			return (
-	// 				<div>
-	// 					Custom 2{JSON.stringify(ev)}
-	// 					<button onClick={() => controller.close()}>close</button>
-	// 				</div>
-	// 			);
-	// 		case 'details_sidesheet':
-	// 			return (
-	// 				<div style={{ width: '200px' }}>
-	// 					<span>Details Sidesheet</span>
-	// 					<button onClick={() => controller.close()}>close</button>
-	// 					<div>{JSON.stringify(ev)}</div>
-	// 				</div>
-	// 			);
-	// 		case 'create_sidesheet': {
-	// 			return <div>create sidesheet</div>;
-	// 		}
-	// 	}
-	// },
+  type: 'default',
+  CreateSidesheet: () => {
+    return <div style={{ width: '500px', background: 'red' }}>Am create sideshet</div>;
+  },
+  DetailsSidesheet: (props) => {
+    return (
+      <div style={{ width: '500px', height: '100%', background: 'red' }}>
+        am details {JSON.stringify(props)}
+        <button onClick={() => props.controller.invalidate && props.controller.invalidate()}>Invalidate</button>
+      </div>
+    );
+  },
 };
 
 type Admin = {
-	type: 'admin';
+  type: 'admin';
 };
 
 type Custom2 = {
-	type: 'custom2';
-	props: { id: string };
+  type: 'custom2';
+  props: { id: string };
 };
 
 type MyTypes = Admin | Custom2;
+
+const powerbiOptions: PowerBiConfig = {
+  getEmbed: async () => {
+    throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+  },
+  getErrorMessage: async () => {
+    throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+  },
+  getToken: async () => {
+    throw new Error('', { cause: new Response(undefined, { status: 403 }) });
+  },
+  reportUri: 'unknown',
+  ReportMetaData: Meta,
+};

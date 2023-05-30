@@ -1,11 +1,13 @@
-import { WorkspaceViewController } from '@equinor/workspace-react';
+import { Provider, Tab } from '@equinor/workspace-react';
+import { WorkspaceProps } from './workspaceProps';
 import { FusionMediator } from './fusionController';
 
-export type FusionWorkspaceModule<TData extends Record<PropertyKey, unknown>> = {
-	name: string;
-	setup: (
-		mediator: FusionMediator<TData, any, any>,
-		appKey: string,
-		viewController: WorkspaceViewController<any, any>
-	) => void;
+export type FusionWorkspaceModule = {
+  name: string;
+  setup: ModuleSetup;
 };
+
+export type ModuleSetup = (
+  props: WorkspaceProps<any, any, any>,
+  mediator: FusionMediator<never, any, any>
+) => { provider: Provider; tab: Tab<string> } | undefined;

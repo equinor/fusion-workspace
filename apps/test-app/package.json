@@ -1,31 +1,33 @@
 {
-	"name": "workspace-test-app",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"preview": "vite preview"
-	},
-	"dependencies": {
-		"@equinor/eds-core-react": "^0.26.0",
-		"@equinor/eds-icons": "^0.15.0",
-		"@equinor/workspace-ag-grid": "workspace:^0.3.5",
-		"@equinor/workspace-fusion": "workspace:0.11.0",
-		"@equinor/workspace-fusion-modules": "workspace:^0.1.19",
-		"@equinor/workspace-sidesheet": "workspace:^0.1.2",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-is": "^18.2.0",
-		"sortablejs": "^1.15.0"
-	},
-	"devDependencies": {
-		"@types/react": "^18.0.25",
-		"@types/react-dom": "^18.0.8",
-		"@types/sortablejs": "^1.15.0",
-		"@vitejs/plugin-react": "^2.2.0",
-		"typescript": "^4.8.4",
-		"vite": "^3.2.5"
-	}
+  "name": "workspace-test-app",
+  "private": true,
+  "version": "0.1.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^2.34.0",
+    "@azure/msal-react": "^1.5.4",
+    "@equinor/eds-core-react": "^0.26.0",
+    "@equinor/eds-icons": "^0.15.0",
+    "@equinor/workspace-ag-grid": "workspace:^",
+    "@equinor/workspace-filter": "workspace:^",
+    "@equinor/workspace-fusion": "workspace:^",
+    "@equinor/workspace-garden": "workspace:^",
+    "@equinor/workspace-sidesheet": "workspace:^",
+    "@tanstack/react-query": "^4.23.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "sortablejs": "^1.15.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "@types/sortablejs": "^1.15.0",
+    "@vitejs/plugin-react": "^2.2.0",
+    "typescript": "^5.0.2",
+    "vite": "^3.2.5"
+  }
 }

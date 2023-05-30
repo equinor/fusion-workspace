@@ -1,31 +1,22 @@
-import { useFilterContext } from '../../hooks/useFilterContext';
 import { FilterGroup } from '../../types';
 import { ExpandedFilterGroup } from '../expandedFilterGroup/ExpandedFilterGroup';
 import { StyledFilterGroups, StyledFilterGroupWrapper, StyledWrapper } from './filterView.styles';
 
 interface FilterViewProps {
-	visibleFilterGroups: string[];
+  groups: FilterGroup[];
+  isFetching: boolean;
 }
 
-export const FilterView = ({ visibleFilterGroups }: FilterViewProps): JSX.Element => {
-	const { getGroupValues } = useFilterContext();
-
-	return (
-		<StyledWrapper>
-			<StyledFilterGroups>
-				{visibleFilterGroups
-					.map(
-						(groupName): FilterGroup => ({
-							name: groupName,
-							values: getGroupValues(groupName),
-						})
-					)
-					.map((filterGroup, index) => (
-						<StyledFilterGroupWrapper key={`col-${filterGroup.name}-${index}`}>
-							<ExpandedFilterGroup filterGroup={filterGroup} />
-						</StyledFilterGroupWrapper>
-					))}
-			</StyledFilterGroups>
-		</StyledWrapper>
-	);
+export const FilterView = ({ groups, isFetching }: FilterViewProps): JSX.Element => {
+  return (
+    <StyledWrapper>
+      <StyledFilterGroups>
+        {groups.map((filterGroup, index) => (
+          <StyledFilterGroupWrapper key={`col-${filterGroup.name}-${index}`}>
+            <ExpandedFilterGroup isFetching={isFetching} filterGroup={filterGroup} />
+          </StyledFilterGroupWrapper>
+        ))}
+      </StyledFilterGroups>
+    </StyledWrapper>
+  );
 };

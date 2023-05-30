@@ -1,0 +1,72 @@
+---
+title: 'Dynamic import'
+description: 'A section about dynamically loading workspace fusion from CDN'
+---
+
+## Loading workspace from CDN
+
+Using the package `workspace-dynamic` the `workspace-fusion` bundle can be dynamically imported during runtime.
+This requires some configuration changes but overall it's pretty simple.
+
+`This feature is experimental and will never be production approved.`
+
+### Index.html
+
+The workspace bundle fetched from [unpkg](https://unpkg.com) is bundled without react.
+To make this work your bundle and the workspace bundle must use the same instance of react.
+
+```tsx
+<html>
+  <head>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" />
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" />
+  </head>
+  <body>
+    <div id="root" />
+  </body>
+</html>
+```
+
+### Vite.config.ts
+
+Your vite config must contain this [plugin](https://www.npmjs.com/package/vite-plugin-cdn-import).
+The `path` property in modules must match the script src in `index.html`
+
+```ts
+import { defineConfig } from 'vite';
+import { Plugin } from 'vite-plugin-cdn-import';
+
+export default defineConfig({
+  plugins: [
+    Plugin({
+      modules: [
+        {
+          name: 'react',
+          var: 'React',
+          path: `https://unpkg.com/react@18/umd/react.production.min.js`,
+        },
+        {
+          name: 'react-dom',
+          var: 'ReactDOM',
+          path: `https://unpkg.com/react-dom@18/umd/react-dom.production.min.js`,
+        },
+      ],
+    }),
+  ],
+});
+```
+
+### Code
+
+This will dynamically fetch the latest version from [npmjs](https://npmjs.com).
+The Workspace component has an inbuilt suspense and error boundary. To learn more check the boundaries page.
+
+```ts
+import { Workspace, WorkspaceConfig } from '@equinor/workspace-dynamic';
+
+const config: WorkspaceConfig = {...}
+
+function App() {
+	return <Workspace {...config} />;
+}
+```

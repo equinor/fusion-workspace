@@ -4,55 +4,69 @@ import { IsNeverType } from '../../../../types/typescriptUtils/isNeverType';
 import { useState, useEffect, useCallback } from 'react';
 import { SidesheetAdvanced } from '../../sidesheet';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 type SidesheetAdvancedWrapperProps<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>;
-	config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
+  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>;
+  config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
 };
 
 export const SidesheetAdvancedWrapper = <
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never
 >({
-	config,
-	mediator,
+  config,
+  mediator,
 }: SidesheetAdvancedWrapperProps<TData, TContext, TCustomSidesheetEvents>) => {
-	const [currEv, setCurrEv] = useState<IsNeverType<
-		TCustomSidesheetEvents,
-		WorkspaceSidesheets<TData>,
-		TCustomSidesheetEvents | WorkspaceSidesheets<TData>
-	> | null>(null);
+  const [currEv, setCurrEv] = useState<IsNeverType<
+    TCustomSidesheetEvents,
+    WorkspaceSidesheets<TData>,
+    TCustomSidesheetEvents | WorkspaceSidesheets<TData>
+  > | null>(null);
 
-	const handleSetter = useCallback(
-		(
-			ev: IsNeverType<
-				TCustomSidesheetEvents,
-				WorkspaceSidesheets<TData>,
-				TCustomSidesheetEvents | WorkspaceSidesheets<TData>
-			> | null
-		) => {
-			if (isSelectionEvent(currEv) && !isSelectionEvent(ev)) {
-				mediator.selectionService.selectedNodes = [];
-			}
-			setCurrEv(ev);
-		},
-		[currEv]
-	);
+  const queryClient = useQueryClient();
 
-	useEffect(() => {
-		const sub = mediator.sidesheetService.subscribeAll(handleSetter);
-		return () => sub();
-	}, [handleSetter]);
+  const handleSetter = useCallback(
+    (
+      ev: IsNeverType<
+        TCustomSidesheetEvents,
+        WorkspaceSidesheets<TData>,
+        TCustomSidesheetEvents | WorkspaceSidesheets<TData>
+      > | null
+    ) => {
+      if (isSelectionEvent(currEv) && !isSelectionEvent(ev)) {
+        mediator.selectionService.selectedNodes = [];
+      }
+      setCurrEv(ev);
+    },
+    [currEv]
+  );
 
-	if (!currEv || !config.Sidesheet) return null;
+  useEffect(() => {
+    const sub = mediator.sidesheetService.subscribeAll(handleSetter);
+    return () => sub();
+  }, [handleSetter]);
 
-	return <config.Sidesheet ev={currEv} controller={{ close: () => handleSetter(null) }} />;
+  if (!currEv || !config.Sidesheet) return null;
+
+  return (
+    <config.Sidesheet
+      ev={currEv}
+      controller={{
+        close: () => handleSetter(null),
+        invalidate: () => {
+          // queryClient.invalidateQueries({ queryKey: queryKey });
+        },
+      }}
+    />
+  );
 };
 const key: WorkspaceSidesheets<any>['type'] = 'details_sidesheet';
 
 const isSelectionEvent = <T extends WorkspaceSidesheets<any>>(obj: WorkspaceSidesheets<any> | unknown): obj is T =>
-	typeof obj === 'object' && obj?.['type'] === key;
+  typeof obj === 'object' && obj?.['type'] === key;

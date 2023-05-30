@@ -1,45 +1,31 @@
 {
-	"name": "workspace",
-	"version": "0.0.0",
-	"license": "MIT",
-	"scripts": {
-		"build": "pnpm -r build",
-		"lint": "pnpm -r lint",
-		"shipit": "pnpm build && lerna version && pnpm publish -r",
-		"lint:staged": "lint-staged"
-	},
-	"private": true,
-	"dependencies": {
-		"tslib": "^2.3.0"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^17.1.2",
-		"@commitlint/config-conventional": "^17.1.0",
-		"@typescript-eslint/eslint-plugin": "~5.24.0",
-		"@typescript-eslint/parser": "~5.24.0",
-		"conventional-changelog-conventionalcommits": "^5.0.0",
-		"eslint": "~8.15.0",
-		"eslint-config-prettier": "8.1.0",
-		"eslint-plugin-cypress": "^2.10.3",
-		"eslint-plugin-import": "2.26.0",
-		"eslint-plugin-jsx-a11y": "6.5.1",
-		"eslint-plugin-react": "7.30.0",
-		"eslint-plugin-react-hooks": "4.6.0",
-		"eslint-plugin-tsdoc": "^0.2.16",
-		"husky": "^8.0.1",
-		"jest": "27.5.1",
-		"lerna": "^6.0.0",
-		"lint-staged": "^13.0.3",
-		"prettier": "^2.6.2",
-		"typescript": "~4.7.2",
-		"typescript-plugin-styled-components": "^2.0.0"
-	},
-	"lint-staged": {
-		"./packages/**/src/**/*.{ts,tsx}": [
-			"eslint --quiet --fix"
-		]
-	},
-	"workspaces": [
-		"packages/**"
-	]
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "first-time-setup": "npm i -g pnpm@8.0.0 turbo && pnpm i && pnpm build",
+    "build": "turbo run build",
+    "documentation": "pnpx astro dev --root ./documentation",
+    "shipit": "pnpm build && pnpm -r publish",
+    "dev": "turbo run dev --filter ./apps/**"
+  },
+  "private": true,
+  "packageManager": "pnpm@8.0.0",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.1",
+    "@typescript-eslint/eslint-plugin": "~5.24.0",
+    "@typescript-eslint/parser": "~5.24.0",
+    "prettier": "^2.6.2",
+    "turbo": "^1.9.3",
+    "typescript": "~5.0.2",
+    "typescript-plugin-styled-components": "^2.0.0"
+  },
+  "workspaces": [
+    "packages/**",
+    "apps/**"
+  ]
 }

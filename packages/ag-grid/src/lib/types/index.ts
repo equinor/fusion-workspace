@@ -1,3 +1,12 @@
-export * from './gridConfig';
-export * from './gridController';
-export type { ColDef, GridOptions, ICellRendererParams as ICellRendererProps } from 'ag-grid-community';
+export type {
+  ColDef,
+  GridOptions,
+  ICellRendererParams as ICellRendererProps,
+  IServerSideDatasource,
+  GridApi,
+  RowNode,
+  ColumnApi,
+  GridReadyEvent,
+  AgEvent,
+  AgGridEvent,
+} from '@ag-grid-community/core';

@@ -1,2 +1,2 @@
-export { Grid } from './Grid';
-export { ReactGrid } from './ReactGrid';
+export { ServerGrid } from './ServerGrid';
+export { ClientGrid } from './ClientGrid';

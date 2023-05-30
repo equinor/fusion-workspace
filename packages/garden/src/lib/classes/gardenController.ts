@@ -1,21 +1,17 @@
 import { DefaultHeaderView, DefaultGardenItem, DefaultGroupView } from '../components/defaultComponents';
 import {
-	CustomVirtualViews,
-	FieldSettings,
-	FindNodeCallback,
-	GardenGroups,
-	GroupingKeys,
-	HorizontalGroupingAccessor,
-	GetDisplayName,
-	OnClickEvents,
-	Visuals,
-	GardenConfig,
-	BaseRecordObject,
-	CustomItemView,
-	CustomGroupView,
-	CustomHeaderView,
+  CustomVirtualViews,
+  GroupingKeys,
+  HorizontalGroupingAccessor,
+  GetDisplayName,
+  OnClickEvents,
+  Visuals,
+  GardenConfig,
+  CustomItemView,
+  CustomGroupView,
+  CustomHeaderView,
 } from '../types';
-import { createGarden, defaultItemColor } from '../utils';
+import { defaultItemColor } from '../utils';
 import { ReactiveValue } from './reactiveValue';
 import { BehaviorSubject } from 'rxjs';
 
@@ -25,185 +21,93 @@ const NullFunc = () => void 0;
 
 /**
  * @typeParam TData type of your data
- * @typeParam Object interface of custom group by keys
- * @typeParam Object interface for custom state
- * @typeParam Custom user context, store anything here
  */
-export class GardenController<
-	TData extends Record<PropertyKey, unknown>,
-	TExtendedFields extends string = never,
-	TCustomGroupByKeys extends Record<PropertyKey, unknown> = never,
-	TContext extends Record<PropertyKey, unknown> = never
-> {
-	colorAssistMode$ = new BehaviorSubject<boolean>(false);
+export class GardenController<TData extends Record<PropertyKey, unknown>> {
+  colorAssistMode$ = new BehaviorSubject<boolean>(false);
 
-	/** The nodes that is currently selected */
-	selectedNodes = new ReactiveValue<string[]>([]);
+  /** The nodes that is currently selected */
+  selectedNodes = new ReactiveValue<string[]>([]);
 
-	#data$ = new BehaviorSubject<TData[]>([]);
+  /** Grouping keys for garden */
+  grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
 
-	getData = () => this.#data$.getValue();
+  // fieldSettings: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys> = {};
 
-	setData = (newData: TData[]) => this.#data$.next(newData);
+  /** Function that takes in an item and returns the string to be shown on the garden package */
+  getDisplayName: GetDisplayName<TData>;
 
-	data$ = this.#data$.asObservable();
+  /** Function that returns the primary(unique) identifier for the data type */
+  getIdentifier: GetIdentifier<TData>;
 
-	/** The garden groups */
-	groups = new ReactiveValue<GardenGroups<TData>>([]);
+  /** The click events that exists in garden */
+  clickEvents: OnClickEvents<TData> = {
+    onClickGroup: NullFunc,
+    onClickItem: NullFunc,
+  };
 
-	/** Grouping keys for garden */
-	grouping = new ReactiveValue<GroupingKeys<TData>>({ horizontalGroupingAccessor: '', verticalGroupingKeys: [] });
+  /** Override visuals and components for garden */
+  visuals: Visuals<TData> = {
+    getItemColor: () => defaultItemColor,
+  };
 
-	fieldSettings: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys> = {};
+  /** Override default view */
+  customViews: CustomVirtualViews<TData> = {
+    customItemView: DefaultGardenItem as React.MemoExoticComponent<(args: CustomItemView<TData>) => JSX.Element>,
+    customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
+    customHeaderView: DefaultHeaderView as React.MemoExoticComponent<(args: CustomHeaderView) => JSX.Element>,
+  };
 
-	/** Function that takes in an item and returns the string to be shown on the garden package */
-	getDisplayName: GetDisplayName<TData>;
+  constructor({
+    getDisplayName,
+    getIdentifier,
+    initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
+    clickEvents,
+    customViews,
+    visuals,
+  }: GardenConfig<TData, any>) {
+    this.getIdentifier = getIdentifier;
+    this.getDisplayName = getDisplayName;
 
-	/** Function that returns the primary(unique) identifier for the data type */
-	getIdentifier: GetIdentifier<TData>;
+    this.clickEvents = clickEvents ?? {};
 
-	/** The click events that exists in garden */
-	clickEvents: OnClickEvents<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
-		onClickGroup: NullFunc,
-		onClickItem: NullFunc,
-	};
+    if (visuals) {
+      this.visuals = { ...this.visuals, ...visuals };
+    }
 
-	/** Override visuals and components for garden */
-	visuals: Visuals<TData, TExtendedFields, TCustomGroupByKeys> = {
-		getItemColor: () => defaultItemColor,
-		calculateItemWidth: () => 300,
-	};
+    if (customViews) {
+      this.customViews = { ...this.customViews, ...customViews };
+    }
 
-	/** Custom group by keys */
-	customGroupByKeys?: ReactiveValue<TCustomGroupByKeys>;
+    this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
+    this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
+  }
 
-	/** Override default view */
-	customViews: CustomVirtualViews<TData, TExtendedFields, TCustomGroupByKeys, TContext> = {
-		customItemView: DefaultGardenItem as React.MemoExoticComponent<
-			(args: CustomItemView<TData, TExtendedFields, TCustomGroupByKeys, TContext>) => JSX.Element
-		>,
-		customGroupView: DefaultGroupView as React.MemoExoticComponent<(args: CustomGroupView<TData>) => JSX.Element>,
-		customHeaderView: DefaultHeaderView as React.MemoExoticComponent<
-			(args: CustomHeaderView<TData>) => JSX.Element
-		>,
-	};
+  /**
+   * Array of vertical grouping keys.
+   * Grouped in the order of the array.
+   */
+  setVerticalGroupingKeys = (keys: string[]) => {
+    this.grouping.setValue({
+      horizontalGroupingAccessor: this.grouping.value.horizontalGroupingAccessor,
+      verticalGroupingKeys: keys,
+    });
+  };
 
-	/**
-	 * Property for holding calculated information based on data, this property will update every time data is updated
-	 */
-	context?: TContext;
+  /**
+   * Sets the accessor to be used for grouping horizontally.
+   */
+  setHorizontalGroupingAccessor = (key: HorizontalGroupingAccessor<TData>) => {
+    this.grouping.setValue({
+      horizontalGroupingAccessor: key,
+      verticalGroupingKeys: this.grouping.value.verticalGroupingKeys,
+    });
+  };
 
-	#getContext?: (data: TData[]) => TContext;
-
-	/** Updates the custom state if data changes */
-	private updateContext = (data: TData[]) => {
-		if (this.#getContext) {
-			this.context = this.#getContext(data);
-		}
-	};
-
-	constructor(
-		{
-			getDisplayName,
-			getIdentifier,
-			initialGrouping: { horizontalGroupingAccessor, verticalGroupingKeys },
-			data,
-			clickEvents,
-			customGroupByKeys,
-			fieldSettings,
-			getContext,
-			customViews,
-			visuals,
-			intercepters,
-		}: GardenConfig<TData, TExtendedFields, TCustomGroupByKeys, TContext>,
-		getDestructor: (destroy: () => void) => void
-	) {
-		if (intercepters?.postGroupSorting) {
-			this.postGroupSorting = intercepters.postGroupSorting;
-		}
-
-		this.getIdentifier = getIdentifier;
-		this.getDisplayName = getDisplayName;
-		this.setData(data);
-		this.fieldSettings = fieldSettings ?? {};
-		this.clickEvents = clickEvents ?? {};
-
-		this.customGroupByKeys = new ReactiveValue<TCustomGroupByKeys>(customGroupByKeys ?? ({} as TCustomGroupByKeys));
-
-		if (visuals) {
-			this.visuals = { ...this.visuals, ...visuals };
-		}
-
-		if (customViews) {
-			this.customViews = { ...this.customViews, ...customViews };
-		}
-
-		if (getContext) {
-			this.#getContext = getContext;
-			//init
-			this.updateContext(data);
-			this.data$.subscribe(this.updateContext);
-		}
-
-		this.grouping.value.horizontalGroupingAccessor = horizontalGroupingAccessor;
-		this.grouping.value.verticalGroupingKeys = verticalGroupingKeys ?? [];
-
-		this.groupData();
-		this.#data$.subscribe(this.groupData);
-		getDestructor(this.#destroy);
-	}
-
-	/**
-	 * Array of vertical grouping keys.
-	 * Grouped in the order of the array.
-	 */
-	setVerticalGroupingKeys = (keys: string[]) => {
-		this.grouping.setValue({
-			horizontalGroupingAccessor: this.grouping.value.horizontalGroupingAccessor,
-			verticalGroupingKeys: keys,
-		});
-		this.groupData();
-	};
-
-	/**
-	 * Sets the accessor to be used for grouping horizontally.
-	 */
-	setHorizontalGroupingAccessor = (key: HorizontalGroupingAccessor<TData>) => {
-		this.grouping.setValue({
-			horizontalGroupingAccessor: key,
-			verticalGroupingKeys: this.grouping.value.verticalGroupingKeys,
-		});
-		this.groupData();
-	};
-
-	/**
-	 * Function for grouping data.
-	 */
-	groupData = () => {
-		this.groups.setValue(
-			this.postGroupSorting(createGarden(this), [
-				this.grouping.value.horizontalGroupingAccessor as keyof TData,
-				...(this.grouping.value.verticalGroupingKeys as (keyof TData)[]),
-			])
-		);
-	};
-
-	/**
-	 * Return the id of the node to be selected, id must match the items objectidentifier.
-	 */
-	setHighlightedNode = (nodeIdOrCallback: (string | null) | FindNodeCallback<TData>) => {
-		const val = typeof nodeIdOrCallback === 'function' ? nodeIdOrCallback(this.getData()) : nodeIdOrCallback;
-		this.selectedNodes.setValue(val ? [val] : []);
-	};
-
-	/** Function for sorting groups after they have been grouped */
-	postGroupSorting = (groups: GardenGroups<TData>, keys: (keyof TData | TExtendedFields)[]): GardenGroups<TData> =>
-		groups;
-
-	#destroy = () => {
-		for (const key in this) {
-			this[key] = null as unknown as this[Extract<keyof this, string>];
-			delete this[key];
-		}
-	};
+  /**
+   * Return the id of the node to be selected, id must match the items objectidentifier.
+   */
+  setHighlightedNode = (nodeIdOrCallback: string | null) => {
+    const val = nodeIdOrCallback;
+    this.selectedNodes.setValue(val ? [val] : []);
+  };
 }

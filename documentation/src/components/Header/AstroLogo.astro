@@ -1,0 +1,9 @@
+---
+type Props = {
+	size: number;
+};
+const { size } = Astro.props;
+---
+
+<!-- Needed to adjust width to make the icon look normal -->
+<img width={size + 30} height={size} src="/fusion-workspace/fusion.png" />

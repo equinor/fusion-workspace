@@ -1,16 +1,4 @@
 {
-	"extends": "./tsconfig.json",
-	"include": ["src"],
-	"references": [
-		{ "path": "../garden" },
-		{ "path": "../workspace-core" },
-		{ "path": "../workspace-react" },
-		{ "path": "../sidesheet" },
-		{ "path": "../filter" },
-		{ "path": "../power-bi" },
-		{ "path": "../status-bar" },
-		{ "path": "../ag-grid" },
-		{ "path": "../data-source" },
-		{ "path": "../observable-proxy" }
-	]
+  "extends": "./tsconfig.json",
+  "include": ["src"]
 }

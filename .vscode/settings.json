@@ -4,5 +4,12 @@
 		"MD033": {
 			"allowed_elements": ["a", "p", "img"]
 		}
-	}
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#0A2C5D",
+		"titleBar.activeBackground": "#0E3E82",
+		"titleBar.activeForeground": "#F7FAFE"
+	},
+	"typescript.preferences.importModuleSpecifier": "relative"
+
 }

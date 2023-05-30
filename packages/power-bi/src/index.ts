@@ -1,3 +1,4 @@
 export * from './lib';
-import { IReportEmbedConfiguration } from 'powerbi-client';
-export type { IReportEmbedConfiguration };
+import { IReportEmbedConfiguration, models } from 'powerbi-client';
+type IBasicFilter = models.IBasicFilter;
+export type { IReportEmbedConfiguration, IBasicFilter };

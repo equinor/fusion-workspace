@@ -1,3 +1,3 @@
 export type BaseEvent = {
-	type: string;
+  type: string;
 };

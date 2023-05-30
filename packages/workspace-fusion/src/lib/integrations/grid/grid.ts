@@ -4,17 +4,26 @@
  */
 
 import {
-	ColDef,
-	ColumnState,
-	GetIdentifier,
-	GridController,
-	GridOptions,
-	ICellRendererProps,
+  ColDef,
+  ColumnState,
+  GridOptions,
+  ICellRendererProps,
+  IServerSideGetRowsParams,
+  IServerSideGetRowsRequest,
 } from '@equinor/workspace-ag-grid';
 
-export type { ColDef, ColumnState, GetIdentifier, GridConfig, GridController, GridOptions, ICellRendererProps };
+export type {
+  ColDef,
+  ColumnState,
+  GridConfig,
+  GridOptions,
+  ICellRendererProps,
+  IServerSideGetRowsParams,
+  IServerSideGetRowsRequest,
+};
 
-type GridConfig<T> = {
-	columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
-	gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
+type GridConfig<T, TFilter> = {
+  columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
+  getRows: (params: IServerSideGetRowsParams, filters: TFilter) => Promise<void>;
+  gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
 };

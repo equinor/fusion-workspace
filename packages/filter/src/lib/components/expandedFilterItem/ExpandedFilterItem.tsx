@@ -1,63 +1,53 @@
 import { Checkbox } from '@equinor/eds-core-react';
 import { memo } from 'react';
-import { useFilterContext } from '../../hooks/useFilterContext';
-import { FilterGroup, FilterValueType, ValueFormatterFunction } from '../../types';
-import { DEFAULT_NULL_VALUE } from '../../utils/convertFromBlank';
+import { FilterGroup, FilterValueType } from '../../types';
 import { StyledCount, StyledFilterItemName, StyledFilterItemWrap } from '../filterItem/filterItem.styles';
-
-const sanitizeFilterItemName = (value: FilterValueType) => value?.toString() ?? DEFAULT_NULL_VALUE;
+import { useFilterGroup } from '../../hooks/useFilterGroup';
+import { Skeleton } from '../skeleton/Skeleton';
 
 type ExpandedFilterItemValueProps = {
-	virtualRowStart: number;
-	virtualRowSize: number;
-	filterItem: FilterValueType;
-	filterGroup: FilterGroup;
-	valueFormatter: ValueFormatterFunction<unknown>;
-	CustomRender?: (value: FilterValueType) => JSX.Element;
+  virtualRowStart: number;
+  virtualRowSize: number;
+  filterItem: FilterValueType;
+  filterGroup: FilterGroup;
+  isFetching: boolean;
+  isMonospace: boolean;
 };
 
 export const ExpandedFilterItem = ({
-	virtualRowStart,
-	virtualRowSize,
-	filterItem,
-	filterGroup,
-	valueFormatter,
-	CustomRender = (value) => <>{sanitizeFilterItemName(value)}</>,
+  virtualRowStart,
+  virtualRowSize,
+  filterItem,
+  isFetching,
+  filterGroup,
+  isMonospace,
 }: ExpandedFilterItemValueProps): JSX.Element => {
-	const {
-		filterStateController: { changeFilterItem, checkValueIsInactive, setFilterState, filterState },
-		getCountForFilterValue,
-	} = useFilterContext();
-	function uncheckAllButThisValue() {
-		setFilterState([
-			...filterState.filter((s) => s.name !== filterGroup.name),
-			{ name: filterGroup.name, values: [...filterGroup.values.filter((s) => s !== filterItem)] },
-		]);
-	}
-	const isUnChecked = checkValueIsInactive(filterGroup.name, filterItem);
-	const count = getCountForFilterValue(filterGroup.name, filterItem);
-	return (
-		<StyledFilterItemWrap
-			title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
-			style={{
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				width: '100%',
-				transform: `translateY(${virtualRowStart}px)`,
-				height: `${virtualRowSize}px`,
-			}}
-		>
-			<Checkbox
-				checked={!isUnChecked}
-				onChange={() =>
-					changeFilterItem(isUnChecked ? 'MarkActive' : 'MarkInactive', filterGroup.name, filterItem)
-				}
-			/>
-			<StyledFilterItemName onClick={uncheckAllButThisValue}>{CustomRender(filterItem)}</StyledFilterItemName>
-			{!isUnChecked && <StyledCount>({count})</StyledCount>}
-		</StyledFilterItemWrap>
-	);
+  const { filterItemLabelClick, toggleItem, inactiveGroupValues } = useFilterGroup(filterGroup);
+
+  function uncheckAllButThisValue() {
+    filterItemLabelClick(filterItem);
+  }
+
+  const isUnChecked = inactiveGroupValues.includes(filterItem.value);
+
+  return (
+    <StyledFilterItemWrap
+      title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        transform: `translateY(${virtualRowStart}px)`,
+        height: `${virtualRowSize}px`,
+        fontVariantNumeric: isMonospace ? 'tabular-nums' : 'normal',
+      }}
+    >
+      <Checkbox disabled={isFetching} checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
+      <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
+      {isFetching ? <Skeleton height={18} width={32} /> : <StyledCount>({filterItem.count})</StyledCount>}
+    </StyledFilterItemWrap>
+  );
 };
 
 export const FilterItemValue = memo(ExpandedFilterItem);

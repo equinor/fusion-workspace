@@ -1,0 +1,56 @@
+---
+title: Fusion Workspace
+category: Fusion Workspace
+tags:
+  - project
+---
+
+import Diagram from '../../../../components/Diagram/Diagram';
+
+```tsx
+import iModule, { IModule } from '@equinor/fusion-IModule';
+import createWorkspaceApp { AppConfigurator } from '@equinor/fusion-workspace';
+import { WorkspaceAppComponent } from "./WorkspaceAppComponent"
+const configCallback: AppConfigurator<[IModule]> = async (appModuleConfig, frameworkApi) => {
+    await frameworkApi.modules.serviceDiscovery.configureClient('fam', appModuleConfig);
+};
+export const configurator = createApp(WorkspaceAppComponent, configCallback, [moduleAgrGrid]);
+export const App = () => {
+    const framework = useFramework();
+    const Component = configurator(framework, {});
+    return (
+        <Suspense fallback={<StarProgress text="Loading Application" />}>
+            <Component />
+        </Suspense>
+    );
+};
+export default App;
+```
+
+## App mounding Loading sequence
+
+Diagram showing the lodging sequents of a workspace app, built on the Fusion App loading sequence.
+
+<Diagram
+  client:only="react"
+  chart={`sequenceDiagram
+    participant User
+    participant Portal
+    participant Workspace
+    User->>Portal: User Opens web Portal.
+    Note over Portal: Setup Fusion Framework Modules
+    Portal ->> User: Asks user for username and password
+    User->> Portal: Login
+    Note over Portal: User Logged inn waiting for user input
+    User ->> Portal:  Click on app link
+    Portal ->> Workspace: Request Workspace App Files
+    Note over Workspace: Setup App Modules and <br> combines Framework Modules
+    Workspace ->> Portal: Mounts Workspace application
+    Note over Workspace: No Context is selected
+    Workspace->> User: Asks user to select context
+    Note over User: User selects a context <br> in det context picker
+    User->> Portal: Selects context
+    Portal ->> Workspace: Portal provides context to Workspace
+    Note over Workspace: Start Workspace setup
+    Note over Workspace: Mounts Workspace Component`}
+/>

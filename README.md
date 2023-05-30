@@ -1,6 +1,6 @@
 # Fusion Workspace
 
-<p style="text-align: left;"><img src="./documentation/src/.vuepress/public/fusion.png" width="350"></p>
+<p style="text-align: left;"><img src="./documentation/fusion.png" width="350"></p>
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
@@ -12,8 +12,8 @@ After cloning this repo there is a few steps to make sure you're ready to run th
 
 Go to the root folder and run the following commands:
 
--   `pnpm install`
--   `pnpm build`
+- `pnpm install`
+- `pnpm build`
 
 ## Running test apps
 
@@ -21,19 +21,22 @@ Test apps are run using code from the packages build folders. This ensures the e
 
 To run a test app go to apps/test-app and run `pnpm dev`. If you make changes to packages/ while the test app is running just run `pnpm build` in that folder while the test-app is running.
 
+## Publishing packages
+
+The repository is configured with CI/CD and automatic deployment, to trigger a release update the version in `package.json` of the package you want to release and merge into main.
+
 ## Packages cross imports
 
 Allowed cross imports
 
 `package => can import from`
 
--   `ag-grid` => [`observable-proxy`, `workspace-core`]
--   `data-source` => [`observable-proxy`, `workspace-core`]
--   `filter` => [`observable-proxy`, `workspace-core`]
--   `garden` => [`observable-proxy`, `workspace-core`]
--   `observable-proxy` => NONE
--   `power-bi` => [`observable-proxy`, `workspace-core`]
--   `sidesheet` => [`observable-proxy`, `workspace-core`]
--   `workspace-core` => [`observable-proxy`]
--   `workspace-fusion` => ALL, except `workspace-fusion-modules`
--   `workspace-react` => [`observable-proxy`, `workspace-core`]
+- `ag-grid` => [`observable-proxy`, `workspace-core`]
+- `filter` => [`observable-proxy`, `workspace-core`]
+- `garden` => [`observable-proxy`, `workspace-core`]
+- `observable-proxy` => NONE
+- `power-bi` => [`observable-proxy`, `workspace-core`]
+- `sidesheet` => [`observable-proxy`, `workspace-core`]
+- `workspace-core` => [`observable-proxy`]
+- `workspace-fusion` => ALL
+- `workspace-react` => [`observable-proxy`, `workspace-core`]

@@ -3,69 +3,122 @@ import { VirtualItem } from 'react-virtual';
 import { ActionType } from '../ExpandProvider';
 import { Header, HeaderRoot } from './headerContainer.styles';
 import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
-import { getGardenItems } from '../../utils/getGardenItems';
-import { GardenGroup } from '../../types';
-import { useGardenContext, useGardenGroups } from '../../hooks';
+import { GardenHeaderGroup, GetHeaderBlockRequestArgs } from '../../types';
+import { useGardenContext } from '../../hooks';
+import { useBlockCache } from '../../hooks/useBlockCache';
+import { findBlockCacheEntry, GardenBlock, getBlocksInView } from '../VirtualGarden';
+import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
+import { makeBlocks } from '../../utils/gardenBlock';
 
-type HeaderContainerProps = {
-	columnVirtualizer: { virtualItems: VirtualItem[] };
-	highlightedColumn: string | undefined;
+type HeaderContainerProps<TContext = undefined> = {
+  columnVirtualizer: { virtualItems: VirtualItem[] };
+  highlightedColumn: number | undefined;
+  blockSqrt: number;
+  columnCount: number;
+  columnStart: number;
+  context: TContext;
+  columnEnd: number;
+  getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal: AbortSignal) => Promise<GardenHeaderGroup[]>;
 };
-export const HeaderContainer = ({ columnVirtualizer, highlightedColumn }: HeaderContainerProps): JSX.Element => {
-	const garden = useGardenGroups();
+export const HeaderContainer = <TContext,>({
+  columnVirtualizer,
+  highlightedColumn,
+  blockSqrt,
+  columnCount,
+  columnEnd,
+  columnStart,
+  context,
+  getHeader,
+}: HeaderContainerProps<TContext>): JSX.Element => {
+  const blocks = makeBlocks({ blockSqrt, columnCount, rowCount: 1 });
+  const blocksInView = getBlocksInView(columnStart, columnEnd, 0, 0, blockSqrt);
+  const blockCache = useBlockCache({
+    blocks: blocks,
+    blocksInView: blocksInView,
+    blockSqrt: blockSqrt,
+    context: context,
+    hash: ['header'],
+    getBlockAsync: getHeader,
+  });
 
-	const controller = useGardenContext();
-	const {
-		visuals,
-		customViews: { customHeaderView: HeaderChild },
+  const controller = useGardenContext();
+  const {
+    visuals,
+    customViews: { customHeaderView: HeaderChild },
 
-		grouping: {
-			value: { horizontalGroupingAccessor: groupByKey },
-		},
-	} = controller;
+    grouping: {
+      value: { horizontalGroupingAccessor: groupByKey },
+    },
+  } = controller;
 
-	const expandColumn = useExpandDispatch();
-	const expanded = useExpand();
+  const expandColumn = useExpandDispatch();
+  const expanded = useExpand();
+  const handleHeaderClick = useCallback(
+    (index: number) => {
+      expandColumn({
+        type: ActionType.EXPAND_COLUMN,
+        index,
+      });
+    },
+    [expandColumn]
+  );
 
-	const handleHeaderClick = useCallback(
-		(index: number, column: GardenGroup<Record<PropertyKey, unknown>>) => {
-			expandColumn({
-				type: ActionType.EXPAND_COLUMN,
-				index,
-				key: column.value,
-				descriptionData: getGardenItems(column),
-				customDescription: visuals.getDescription,
-			});
-		},
-		[expandColumn, getGardenItems]
-	);
+  if (!HeaderChild) throw new Error('No header component registered');
+  const getBlockCache = (block: GardenBlock) => findBlockCacheEntry(block, blocks, blockCache);
+  return (
+    <HeaderRoot>
+      {columnVirtualizer.virtualItems.map((virtualColumn) => {
+        const columnExpanded = !!expanded.expandedColumns.find((s) => s === virtualColumn.index);
+        const blockXIndex = Math.floor(virtualColumn.index / blockSqrt);
+        /** Find current blocks yIndex */
 
-	if (!HeaderChild) throw new Error('No header component registered');
+        /** Get query entry for current block */
+        const { isLoading, data, error, refetch } = getBlockCache({ x: blockXIndex, y: 0 });
 
-	return (
-		<HeaderRoot>
-			{columnVirtualizer.virtualItems.map((virtualColumn) => {
-				const isHighlighted = highlightedColumn === garden[virtualColumn.index].value;
-				return (
-					<Header
-						onClick={() => handleHeaderClick(virtualColumn.index, garden[virtualColumn.index])}
-						style={{
-							width: `${virtualColumn.size}px`,
-							transform: `translateX(${virtualColumn.start}px) translateY(0px)`,
-							backgroundColor: isHighlighted ? '#007079' : '#f7f7f7',
-							color: isHighlighted ? 'white' : 'black',
-						}}
-						key={virtualColumn.index}
-					>
-						<HeaderChild
-							garden={garden}
-							columnIndex={virtualColumn.index}
-							columnIsExpanded={expanded.expandedColumns?.[garden[virtualColumn.index].value]?.isExpanded}
-							groupByKey={groupByKey as string}
-						/>
-					</Header>
-				);
-			})}
-		</HeaderRoot>
-	);
+        if (isLoading) {
+          return (
+            <Header
+              style={{
+                width: `${virtualColumn.size}px`,
+                transform: `translateX(${virtualColumn.start}px) translateY(0px)`,
+                backgroundColor: '#f7f7f7',
+              }}
+              key={virtualColumn.key}
+            >
+              <SkeletonPackage height={35} width={200} />
+            </Header>
+          );
+        }
+
+        if (error || !data) {
+          // TODO: fix
+          return <div key={virtualColumn.key}>rip</div>;
+        }
+
+        const header = data[virtualColumn.index % blockSqrt];
+
+        const isHighlighted = highlightedColumn === virtualColumn.index;
+        return (
+          <Header
+            /**TODO: fix handle expand */
+            onClick={() => handleHeaderClick(virtualColumn.index)}
+            style={{
+              width: `${virtualColumn.size}px`,
+              transform: `translateX(${virtualColumn.start}px) translateY(0px)`,
+              backgroundColor: isHighlighted ? '#007079' : '#f7f7f7',
+              color: isHighlighted ? 'white' : 'black',
+            }}
+            key={virtualColumn.key}
+          >
+            <HeaderChild
+              header={header}
+              columnIndex={virtualColumn.index}
+              columnIsExpanded={columnExpanded}
+              groupByKey={groupByKey as string}
+            />
+          </Header>
+        );
+      })}
+    </HeaderRoot>
+  );
 };

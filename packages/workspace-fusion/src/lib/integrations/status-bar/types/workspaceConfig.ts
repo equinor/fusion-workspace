@@ -3,8 +3,9 @@
  * namespace: @equinor/workspace-fusion/status-bar
  */
 
-import { StatusItem } from '@equinor/workspace-status-bar';
+import { FilterStateGroup } from '@equinor/workspace-filter';
+import { StatusItem } from './statusItem';
 
-type StatusBarConfig<TData> = (data: TData[]) => [StatusItem, ...StatusItem[]];
+type StatusBarConfig<TFilter> = (filters: FilterStateGroup[], signal?: AbortSignal) => Promise<StatusItem[]>;
 
 export type { StatusItem, StatusBarConfig };

@@ -3,14 +3,14 @@ import { BaseEvent } from '@equinor/workspace-core';
 import { FusionMediator } from './fusionController';
 
 export type OnWorkspaceReadyEvent<
-	TData extends Record<PropertyKey, unknown>,
-	TContext extends Record<PropertyKey, unknown> = never,
-	TCustomSidesheetEvents extends BaseEvent = never
+  TData extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown> = never,
+  TCustomSidesheetEvents extends BaseEvent = never
 > = {
-	api: WorkspaceController<TData, TCustomSidesheetEvents, TContext>;
+  api: WorkspaceController<TData, TCustomSidesheetEvents, TContext>;
 };
 
 //TODO: deprecate
 export interface WorkspaceOnClick<TData> {
-	item: TData;
+  item: TData;
 }
