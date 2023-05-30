@@ -74,7 +74,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
   const [popoverItem, setPopoverItem] = useState<null | TData>(null);
-  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeout = useRef<number | null>(null);
 
   const [subGroupCount, setSubGroupCount] = useState<number>(0);
 
