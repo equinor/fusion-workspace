@@ -3,6 +3,7 @@ import { FusionMediator, WorkspaceSidesheets } from '../../../../types';
 import { useState, useEffect, useCallback } from 'react';
 import { createSidesheetEventKey, detailSidesheetEventKey, SidesheetSimple } from '../../sidesheet';
 import { useQueryClient } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
 
 type SidesheetSimpleWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -63,21 +64,27 @@ export const SidesheetSimpleWrapper = <
         return null;
       }
       return (
-        <config.DetailsSidesheet
-          id={currEv.props.id}
-          item={currEv.props.item}
-          controller={{
-            close: () => handleSetter(null),
-            invalidate: () => {
-              // queryClient.invalidateQueries({ queryKey: queryKey });
-            },
-          }}
-        />
+        <ErrorBoundary FallbackComponent={UnhandledSidesheetException} onError={() => handleSetter(null)}>
+          <config.DetailsSidesheet
+            id={currEv.props.id}
+            item={currEv.props.item}
+            controller={{
+              close: () => handleSetter(null),
+              invalidate: () => {
+                // queryClient.invalidateQueries({ queryKey: queryKey });
+              },
+            }}
+          />
+        </ErrorBoundary>
       );
     }
   }
 };
 const key: WorkspaceSidesheets<any>['type'] = 'details_sidesheet';
+
+const UnhandledSidesheetException = () => {
+  return <div>An unhandled exception was caught in the sidesheet</div>;
+};
 
 const isSelectionEvent = <T extends WorkspaceSidesheets<any>>(obj: WorkspaceSidesheets<any> | unknown): obj is T =>
   typeof obj === 'object' && obj?.['type'] === key;
