@@ -6,7 +6,7 @@ import { BaseEvent } from '@equinor/workspace-core';
 
 export const fusionQueryParams = ['item', 'tab'] as const;
 /** A union type of the workspace query parameters */
-type QueryParamTopic = typeof fusionQueryParams[number];
+type QueryParamTopic = (typeof fusionQueryParams)[number];
 
 type QueryParam = [QueryParamTopic, string | undefined];
 
