@@ -41,7 +41,7 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
               <StyledSidesheetWrapper>
                 <div style={{ height: '100%', width: '100%', display: 'grid', gridTemplateRows: 'auto 1fr' }}>
                   <WorkspaceHeader />
-                  <WorkspaceBody children />
+                  <WorkspaceBody />
                 </div>
                 <Sidesheet />
               </StyledSidesheetWrapper>
