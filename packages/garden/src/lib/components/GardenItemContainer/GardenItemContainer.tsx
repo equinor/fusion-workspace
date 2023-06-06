@@ -244,7 +244,8 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
             onMouseEnter={() => {
               hoverTimeout.current && clearTimeout(hoverTimeout.current);
               if (!isSubGroup(item)) {
-                hoverTimeout.current = setTimeout(() => setPopoverItem(item), 700);
+                //??? node version differs? NodeJS.timeout vs number
+                hoverTimeout.current = setTimeout(() => setPopoverItem(item), 700) as unknown as number;
               }
             }}
             onMouseLeave={() => {
@@ -258,7 +259,6 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
               cursor: 'pointer',
             }}
           >
-            {/* HACK: Ignore subgrouping for now */}
             {isSubGroup(item) ? (
               <CustomSubGroup
                 columnExpanded={isColumnExpanded}

@@ -12,6 +12,7 @@ import { FilterContextProvider } from '@equinor/workspace-filter';
 import { updateQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 import { DetailSidesheetEvent } from '../integrations/sidesheet';
+import { skip } from 'rxjs';
 
 const client = new QueryClient();
 
@@ -74,7 +75,7 @@ function WorkspaceComponent<
 
 function useSyncOnClick(mediator: FusionMediator<any, any, any>) {
   useEffect(() => {
-    const subscription = mediator.selectionService.selectedNodes$.subscribe((s) => {
+    const subscription = mediator.selectionService.selectedNodes$.pipe(skip(1)).subscribe((s) => {
       const id = s.length >= 1 ? s[0].id : undefined;
       updateQueryParams([['item', id]], mediator, history);
     });
@@ -96,6 +97,7 @@ function useSelectIdFromUrl<
 
     if (id && id.length && !preventLoadFromUrl) {
       console.debug(`Id detected, spawning sidesheet: ${id}`);
+      updateQueryParams([['item', id]], mediator, history);
       const ev: DetailSidesheetEvent<TData> = {
         /**Item is not present since loading from url */
         props: { id, item: undefined },
