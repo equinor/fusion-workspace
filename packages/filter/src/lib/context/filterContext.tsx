@@ -5,8 +5,9 @@ import { createContext, PropsWithChildren, useContext, useState } from 'react';
 export type IFilterContext = {
   uncheckedValues: FilterStateGroup[];
   setUncheckedValues: (newVal: FilterStateGroup[] | ((val: FilterStateGroup[]) => FilterStateGroup[])) => void;
-  filterState: FilterStateGroup[];
-  setFilterState: (newVal: FilterStateGroup[] | ((val: FilterStateGroup[]) => FilterStateGroup[])) => void;
+  filterState: FilterState;
+  setFilterState: (newVal: FilterStateGroup[]) => void;
+  setSearchText: (searchText: string) => void;
 };
 
 export const FilterContext = createContext<null | IFilterContext>(null);
@@ -16,21 +17,27 @@ type FilterContextProviderProps = {
   styles?: FilterStyles;
 };
 
+export type FilterState = {
+  search: string;
+  groups: FilterStateGroup[];
+};
+
 export const FilterContextProvider = ({
   children,
   defaultUncheckedValues,
   styles,
 }: PropsWithChildren<FilterContextProviderProps>) => {
   const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(defaultUncheckedValues ?? []);
-  const [filterState, setFilterState] = useState<FilterStateGroup[]>([]);
+  const [filterState, setFilterState] = useState<FilterState>({ groups: [], search: '' });
 
   return (
     <FilterContext.Provider
       value={{
         filterState,
-        setFilterState,
+        setFilterState: (groups) => setFilterState((s) => ({ ...s, groups: groups })),
         setUncheckedValues,
         uncheckedValues,
+        setSearchText: (search) => setFilterState((v) => ({ ...v, search: search })),
       }}
     >
       <FilterStylesContext.Provider value={styles}>{children}</FilterStylesContext.Provider>

@@ -10,23 +10,7 @@ export type CustomTabProps<TData> = {
 
 export type WorkspaceConfig<TData, TabNames extends string = WorkspaceTabNames> = {
   getIdentifier: GetIdentifier<TData>;
-  appKey: string;
   defaultTab?: TabNames;
-};
-
-export type CustomTabComponent = () => JSX.Element;
-
-export type CustomTab = {
-  name: string;
-  TabIcon: () => JSX.Element;
-  Component: CustomTabComponent;
-  CustomHeader?: () => JSX.Element;
-};
-
-export type AppConfig<TabNames extends string> = {
-  appKey: string;
-  appColor: string;
-  defaultTab: TabNames;
 };
 
 export type WorkspaceConfiguration = {

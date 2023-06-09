@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -13,7 +13,6 @@
     "access": "public"
   },
   "module": "dist/esm/index.js",
-  "main": "dist/workspace.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist"

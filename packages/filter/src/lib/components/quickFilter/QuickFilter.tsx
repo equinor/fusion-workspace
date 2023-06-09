@@ -43,7 +43,7 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
 
   useEffect(() => {
     if (!groups) return;
-    if (filterState.length === 0 && uncheckedValues.length === 0) return;
+    if (filterState.groups.length === 0 && filterState.search.length === 0 && uncheckedValues.length === 0) return;
     setFilterState(getServerArgs(groups, uncheckedValues));
   }, [uncheckedValues]);
 

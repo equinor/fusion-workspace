@@ -4,6 +4,7 @@ import { WorkspaceSidesheets, FusionMediator } from '../../../types';
 import { SidesheetConfig } from '../sidesheet';
 import { SidesheetAdvancedWrapper } from './wrapper';
 import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
+import { skip } from 'rxjs';
 
 export function addSidesheet<
   TData extends Record<PropertyKey, unknown>,
@@ -40,7 +41,7 @@ type Props = {
 
 function Wrapper({ children, mediator }: Props) {
   useEffect(() => {
-    const sub = mediator.selectionService.selectedNodes$.subscribe((val) => {
+    const sub = mediator.selectionService.selectedNodes$.pipe(skip(1)).subscribe((val) => {
       const node = val[0];
       if (!node) return;
 

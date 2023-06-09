@@ -11,7 +11,7 @@ type StatusBarWrapperProps<
   TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined
 > = {
-  config: StatusBarConfig<TFilter>;
+  config: StatusBarConfig;
 };
 
 export function StatusBarWrapper<

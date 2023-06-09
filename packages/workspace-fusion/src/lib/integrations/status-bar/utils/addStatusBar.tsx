@@ -1,7 +1,6 @@
 import { Provider } from '@equinor/workspace-react';
 import { createContext } from 'react';
 import { StatusBarWrapper } from '../components/StatusBarWrapper';
-import { FusionMediator } from '../../../types';
 import { StatusBarConfig } from '../types/';
 import { BaseEvent } from '@equinor/workspace-core';
 
@@ -11,7 +10,7 @@ export function addStatusBar<
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined
->(config: StatusBarConfig<TFilter> | undefined): Provider | undefined {
+>(config: StatusBarConfig | undefined): Provider | undefined {
   if (!config) return;
   const StatusBarProvider = ({ children }) => (
     <StatusBarContext.Provider value={() => <StatusBarWrapper config={config} />}>{children}</StatusBarContext.Provider>

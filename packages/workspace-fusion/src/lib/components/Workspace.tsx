@@ -99,7 +99,7 @@ function useSelectIdFromUrl<
       console.debug(`Id detected, spawning sidesheet: ${id}`);
       updateQueryParams([['item', id]], mediator, history);
       const ev: DetailSidesheetEvent<TData> = {
-        /**Item is not present since loading from url */
+        /** Item is not present since loading from url */
         props: { id, item: undefined },
         type: 'details_sidesheet',
       };
