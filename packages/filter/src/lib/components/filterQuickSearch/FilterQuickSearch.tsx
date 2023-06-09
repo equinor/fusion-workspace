@@ -3,13 +3,16 @@ import { EdsSearch } from './filterQuickSearch.styles';
 import { useFilterContext } from '../../context/filterContext';
 
 export const FilterQuickSearch = (): JSX.Element => {
-  const [searchText, setSearchText] = useState<string | undefined>();
-  const { setSearchText: triggerSearch } = useFilterContext();
+  const { setSearchText: triggerSearch, filterState } = useFilterContext();
+  const [searchText, setSearchText] = useState<string | undefined>(filterState.search);
+
   function handleClear(e) {
+    //???
     if (!e.isTrusted) {
       setSearchText('');
     }
   }
+
   function handleInput(e) {
     const { value } = e.target;
     if (!value) {
