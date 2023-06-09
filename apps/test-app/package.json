@@ -1,0 +1,43 @@
+{
+  "name": "@equinor/workspace-test-app",
+  "version": "1.2.2",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "build:prod": "vite build && tsc -b"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@equinor/eds-core-react": "0.27.0",
+    "@equinor/eds-icons": "^0.17.0",
+    "@equinor/eds-tokens": "0.9.0",
+    "@equinor/workspace-fusion": "workspace:^",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4"
+  },
+  "peerDependencies": {
+    "react-dom": ">= 16.8.0",
+    "react-is": ">= 16.8.0",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@types/jest": "27.4.1",
+    "@types/react": "^18.0.25",
+    "@types/styled-components": "^5.1.26",
+    "@vitejs/plugin-react": "^3.1.0",
+    "rollup-plugin-inject-process-env": "^1.3.1",
+    "styled-components": "^5.3.6",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1",
+    "vite-plugin-cdn-import": "^0.3.5"
+  }
+}

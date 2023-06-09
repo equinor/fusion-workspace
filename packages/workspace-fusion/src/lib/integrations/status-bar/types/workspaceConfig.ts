@@ -3,9 +3,9 @@
  * namespace: @equinor/workspace-fusion/status-bar
  */
 
-import { FilterStateGroup } from '@equinor/workspace-filter';
+import { FilterState } from '@equinor/workspace-filter';
 import { StatusItem } from './statusItem';
 
-type StatusBarConfig<TFilter> = (filters: FilterStateGroup[], signal?: AbortSignal) => Promise<StatusItem[]>;
+type StatusBarConfig = (filters: FilterState, signal?: AbortSignal) => Promise<StatusItem[]>;
 
 export type { StatusItem, StatusBarConfig };

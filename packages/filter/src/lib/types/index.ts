@@ -1,10 +1,11 @@
+import { FilterState } from '../context/filterContext';
 import { FilterValueType } from './filter';
 
 export * from './filter';
 export * from './filterStyles';
 
 export type FilterDataSource = {
-  getFilterMeta: (state: FilterStateGroup[], signal?: AbortSignal) => Promise<FilterGroup[]>;
+  getFilterMeta: (state: FilterState, signal?: AbortSignal) => Promise<FilterGroup[]>;
 };
 
 export type FilterGroup = {
