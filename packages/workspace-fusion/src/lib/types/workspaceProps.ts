@@ -15,7 +15,7 @@ type WorkspaceBaseProps<
 > = {
   workspaceOptions: WorkspaceConfig<TData>;
   currentBookmark?: Bookmark | null | undefined;
-  modules?: FusionWorkspaceModule[];
+  modules: FusionWorkspaceModule[];
 };
 
 export type WorkspaceProps<
