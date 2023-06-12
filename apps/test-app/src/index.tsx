@@ -30,7 +30,13 @@ export function App() {
       gardenOptions={{
         getGardenMeta: async (a, b) => {
           console.log(b);
-          throw new Error('');
+          return {
+            allGroupingOptions: ['RFOC', 'RFCC'],
+            columnCount: 10,
+            columnStart: 5,
+            rowCount: 10000,
+            validGroupingOptions: ['RFOC', 'PartitionKey'],
+          };
         },
         getBlockAsync: () => {
           throw new Error('');
@@ -42,7 +48,7 @@ export function App() {
         getSubgroupItems: () => {
           throw new Error('');
         },
-        initialGrouping: { horizontalGroupingAccessor: '', verticalGroupingKeys: [] },
+        initialGrouping: { horizontalGroupingAccessor: 'RFOC', verticalGroupingKeys: [] },
       }}
       filterOptions={{
         dataSource: {

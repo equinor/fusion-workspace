@@ -1,6 +1,5 @@
 import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
-import { FilterSelector } from '../FilterSelector';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
 import { useQuery } from '@tanstack/react-query';
@@ -57,7 +56,6 @@ export const VirtualContainer = <TContext,>({
     <>
       {/* <ReactQueryDevtools /> */}
       <StyledVirtualContainer id={'garden_root'}>
-        <FilterSelector allGroupingOptions={data.allGroupingOptions} validGroupingOptions={data.validGroupingOptions} />
         <ExpandProvider initialWidths={widths}>
           <VirtualGarden
             context={context}

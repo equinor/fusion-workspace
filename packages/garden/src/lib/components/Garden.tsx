@@ -39,11 +39,11 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   context?: TContext;
   getDisplayName: GetDisplayName<TData>;
   getIdentifier: GetIdentifier<TData>;
-  initialGrouping: string;
   visuals?: Visuals<TData>;
   customViews?: CustomVirtualViews<TData>;
   clickEvents?: OnClickEvents<TData>;
   bookmarkRef?: MutableRefObject<BookmarkRef<TData> | null | undefined>;
+  groupingKeys: string[];
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -53,7 +53,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   getDisplayName,
   context,
   getIdentifier,
-  initialGrouping,
+  groupingKeys,
   customViews,
   visuals,
   clickEvents,
@@ -67,13 +67,18 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
         dataSource: dataSource,
         getDisplayName,
         getIdentifier,
-        initialGrouping: { horizontalGroupingAccessor: initialGrouping, verticalGroupingKeys: [] },
+        initialGrouping: { horizontalGroupingAccessor: groupingKeys[0], verticalGroupingKeys: groupingKeys.slice(1) },
         visuals: visuals,
         customViews: customViews,
         clickEvents,
       }),
     []
   );
+
+  useEffect(() => {
+    controller.setHorizontalGroupingAccessor(groupingKeys[0]);
+    controller.setVerticalGroupingKeys(groupingKeys.slice(1));
+  }, groupingKeys);
 
   useBookmarkRef(controller, bookmarkRef);
 
