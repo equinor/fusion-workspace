@@ -55,7 +55,7 @@ export function GroupingSelector({
   }
 
   return (
-    <StyledSelectWrapper>
+    <AutoCompleteWrapper>
       <Autocomplete
         key={groupingKeys[0]}
         options={data.allGroupingOptions}
@@ -76,16 +76,13 @@ export function GroupingSelector({
         selectedOptions={[groupingKeys.at(1)]}
         onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0], 0)}
       />
-    </StyledSelectWrapper>
+    </AutoCompleteWrapper>
   );
 }
-export const StyledSelectWrapper = styled.div`
+
+export const AutoCompleteWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 1em;
-`;
-
-export const StyledSelectOneWrapper = styled.div`
-  width: 250px;
 `;
