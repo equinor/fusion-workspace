@@ -25,19 +25,17 @@ export function GroupingSelector({
     queryFn: ({ signal }) => dataSource.getGardenMeta(groupingKeys, context, signal ?? new AbortSignal()),
   });
 
-  const setGroupKeys = (items: string[]) => {
-    setGroupingKeys([groupingKeys[0], ...items]);
-  };
-
   const setGardenKey = (key: string) => {
     setGroupingKeys([key]);
   };
 
-  const handleExistingSelectionChange = (newValue: string | null | undefined, index: number) => {
-    const newGroupByKeys = groupingKeys.slice(1);
-    newValue == null ? newGroupByKeys.splice(index, 1) : (newGroupByKeys[index] = newValue);
-
-    setGroupKeys(newGroupByKeys);
+  const handleExistingSelectionChange = (newValue: string | null | undefined) => {
+    const gardenKey = groupingKeys.at(0);
+    if (!gardenKey) {
+      throw new Error('');
+    }
+    const newKeys = newValue == null ? [gardenKey] : [gardenKey, newValue];
+    setGroupingKeys(newKeys);
   };
 
   const handleGardenKeyChange = (newValue: string | null | undefined) => {
@@ -65,7 +63,7 @@ export function GroupingSelector({
         options={data.validGroupingOptions}
         label={'Group by'}
         selectedOptions={[groupingKeys.at(1)]}
-        onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0], 0)}
+        onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0])}
       />
     </StyledAutoCompleteWrapper>
   );
