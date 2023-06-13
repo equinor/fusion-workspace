@@ -4,8 +4,8 @@ import { GardenDataSource } from '@equinor/workspace-garden';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
-type FilterSelectorProps = {
-  dataSource: GardenDataSource<any>;
+type GroupingSelectorProps = {
+  dataSource: GardenDataSource<FilterState>;
   context: FilterState;
   setGroupingKeys: (keys: string[]) => void;
   groupingKeys: string[];
@@ -16,7 +16,7 @@ export function GroupingSelector({
   context,
   setGroupingKeys,
   groupingKeys,
-}: FilterSelectorProps): JSX.Element | null {
+}: GroupingSelectorProps): JSX.Element | null {
   const { data } = useQuery(['garden', ...groupingKeys, context], {
     refetchOnWindowFocus: false,
     suspense: true,
