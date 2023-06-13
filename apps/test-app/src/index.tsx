@@ -29,20 +29,28 @@ export function App() {
       }}
       gardenOptions={{
         getGardenMeta: async (a, b) => {
-          console.log(b);
-          throw new Error('');
+          console.log('garden meta', a);
+          return {
+            allGroupingOptions: ['RFOC', 'RFCC'],
+            columnCount: 10,
+            columnStart: 5,
+            rowCount: 10000,
+            validGroupingOptions: ['RFOC', 'PartitionKey'],
+          };
         },
-        getBlockAsync: () => {
+        getBlockAsync: (a) => {
+          console.log('block', a);
           throw new Error('');
         },
         getDisplayName: () => '',
-        getHeader: () => {
+        getHeader: (a) => {
+          console.log('header', a);
           throw new Error('');
         },
         getSubgroupItems: () => {
           throw new Error('');
         },
-        initialGrouping: { horizontalGroupingAccessor: '', verticalGroupingKeys: [] },
+        initialGrouping: { horizontalGroupingAccessor: 'RFOC', verticalGroupingKeys: [] },
       }}
       filterOptions={{
         dataSource: {
