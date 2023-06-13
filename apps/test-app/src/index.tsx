@@ -29,7 +29,7 @@ export function App() {
       }}
       gardenOptions={{
         getGardenMeta: async (a, b) => {
-          console.log(b);
+          console.log('garden meta', a);
           return {
             allGroupingOptions: ['RFOC', 'RFCC'],
             columnCount: 10,
@@ -38,11 +38,13 @@ export function App() {
             validGroupingOptions: ['RFOC', 'PartitionKey'],
           };
         },
-        getBlockAsync: () => {
+        getBlockAsync: (a) => {
+          console.log('block', a);
           throw new Error('');
         },
         getDisplayName: () => '',
-        getHeader: () => {
+        getHeader: (a) => {
+          console.log('header', a);
           throw new Error('');
         },
         getSubgroupItems: () => {

@@ -6,12 +6,12 @@ import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
 import { FusionMediator, HeaderIcon, useWorkspaceHeaderComponents } from '../../../../lib';
 import { createPortal } from 'react-dom';
-import { Autocomplete, Icon, Popover } from '@equinor/eds-core-react';
+import { CircularProgress, Icon, Popover } from '@equinor/eds-core-react';
 import { more_vertical } from '@equinor/eds-icons';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
-import { BehaviorSubject, Observable, distinctUntilChanged, of } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 Icon.add({ more_vertical });
 
 type GardenWrapperProps<
@@ -44,10 +44,15 @@ export const GardenWrapper = <
     ...(config.initialGrouping.verticalGroupingKeys ?? []),
   ]);
 
-  const test$ = useRef(new BehaviorSubject(groupingKeys));
-  if (test$.current.value !== groupingKeys) {
-    test$.current.next(groupingKeys);
-  }
+  const groupingKeys$ = useRef(new BehaviorSubject(groupingKeys));
+
+  useEffect(() => {
+    /**
+     * You might not need an effect
+     * Yes you do!
+     */
+    groupingKeys$.current.next(groupingKeys);
+  }, [groupingKeys]);
 
   const { setIcons } = useWorkspaceHeaderComponents();
 
@@ -58,7 +63,7 @@ export const GardenWrapper = <
           config={config}
           filterState={filterState}
           anchor={anchor}
-          groupingKeys$={test$.current}
+          groupingKeys$={groupingKeys$.current}
           setGroupingKeys={setGroupingKeys}
         />
       ),
@@ -71,6 +76,10 @@ export const GardenWrapper = <
     return () => {
       setIcons((s) => s.filter((y) => y.name !== icon.name));
     };
+
+    /**
+     * Dep array should contain grouping keys but that would result in the popover closing everytime you change the key, have to pass as observable to prevent this behaviour
+     */
   }, []);
 
   return (
@@ -141,7 +150,7 @@ const GardenPopoverItem = ({ anchor, groupingKeys$, setGroupingKeys, config, fil
             </StyledPopoverHeaderLine>
           </Popover.Header>
           <Popover.Content>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
                 groupingKeys={groupingKeys}
                 setGroupingKeys={setGroupingKeys}
@@ -156,3 +165,21 @@ const GardenPopoverItem = ({ anchor, groupingKeys$, setGroupingKeys, config, fil
     </>
   );
 };
+
+const GroupingSelectorLoading = () => {
+  return (
+    <StyledLoadingWrapper>
+      <CircularProgress size={48} />
+    </StyledLoadingWrapper>
+  );
+};
+
+export const StyledLoadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+  width: 268px;
+  height: 300px;
+  justify-content: center;
+`;

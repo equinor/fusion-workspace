@@ -17,8 +17,6 @@ export function GroupingSelector({
   setGroupingKeys,
   groupingKeys,
 }: FilterSelectorProps): JSX.Element | null {
-  console.log('Grouping keys', groupingKeys);
-
   const { data } = useQuery(['garden', ...groupingKeys, context], {
     refetchOnWindowFocus: false,
     suspense: true,
@@ -42,27 +40,22 @@ export function GroupingSelector({
     setGroupKeys(newGroupByKeys);
   };
 
-  const addItemToGroupKeys = (newValue: string | null | undefined) =>
-    newValue && setGroupKeys([...groupingKeys.slice(1), newValue.toString()]);
-
   const handleGardenKeyChange = (newValue: string | null | undefined) => {
     const keyFromLabel = newValue;
     keyFromLabel && setGardenKey(keyFromLabel);
   };
 
   if (!data) {
-    return <div>loading stuff....</div>;
+    throw new Error('An error occurred while fetching grouping selections');
   }
 
   return (
-    <AutoCompleteWrapper>
+    <StyledAutoCompleteWrapper>
       <Autocomplete
         key={groupingKeys[0]}
         options={data.allGroupingOptions}
         label={'Column headers'}
         hideClearButton
-        //TODO: ...EDS check if fixed
-        onFocus={(e) => e.preventDefault()}
         multiple={false}
         selectedOptions={[groupingKeys[0]]}
         onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
@@ -71,16 +64,14 @@ export function GroupingSelector({
       <Autocomplete
         options={data.validGroupingOptions}
         label={'Group by'}
-        //TODO: ...EDS check if fixed
-        onFocus={(e) => e.preventDefault()}
         selectedOptions={[groupingKeys.at(1)]}
         onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0], 0)}
       />
-    </AutoCompleteWrapper>
+    </StyledAutoCompleteWrapper>
   );
 }
 
-export const AutoCompleteWrapper = styled.div`
+export const StyledAutoCompleteWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
