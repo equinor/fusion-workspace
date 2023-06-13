@@ -31,7 +31,7 @@ export function App() {
         getGardenMeta: async (a, b) => {
           console.log('garden meta', a);
           return {
-            allGroupingOptions: ['RFOC', 'RFCC'],
+            allGroupingOptions: ['RFOC', 'RFCC', 'Some very long keys'],
             columnCount: 10,
             columnStart: 5,
             rowCount: 10000,

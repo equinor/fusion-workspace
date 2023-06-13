@@ -1,5 +1,6 @@
 import { Icon, Popover, CircularProgress } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
+import { close, more_vertical } from '@equinor/eds-icons';
 import { FilterState } from '@equinor/workspace-filter';
 
 import { useState, useRef, useEffect, Suspense } from 'react';
@@ -8,6 +9,8 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
 import { GardenConfig } from '../../../../lib/integrations/garden';
+
+Icon.add({ close, more_vertical });
 
 type GardenPopoverItemProps = {
   anchor: HTMLElement;
@@ -54,7 +57,7 @@ export const GardenPopoverItem = ({
               />
             </StyledPopoverHeaderLine>
           </Popover.Header>
-          <Popover.Content>
+          <Popover.Content style={{ overflow: 'hidden' }}>
             <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
                 groupingKeys={groupingKeys}
