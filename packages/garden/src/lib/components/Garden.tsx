@@ -78,7 +78,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   useEffect(() => {
     controller.setHorizontalGroupingAccessor(groupingKeys[0]);
     controller.setVerticalGroupingKeys(groupingKeys.slice(1));
-  }, groupingKeys);
+  }, [groupingKeys]);
 
   useBookmarkRef(controller, bookmarkRef);
 

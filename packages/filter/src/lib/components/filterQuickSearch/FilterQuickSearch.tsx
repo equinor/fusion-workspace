@@ -7,9 +7,9 @@ export const FilterQuickSearch = (): JSX.Element => {
   const [searchText, setSearchText] = useState<string | undefined>(filterState.search);
 
   function handleClear(e) {
-    //???
-    if (!e.isTrusted) {
+    if (e.target.value.length === 0) {
       setSearchText('');
+      triggerSearch('');
     }
   }
 
