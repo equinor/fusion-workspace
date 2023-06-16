@@ -1,24 +1,34 @@
-import { ModuleRegistry } from '@ag-grid-community/core';
-import { StyledGridWrapper } from './grid.styles';
-import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { ServerSideRowModelModule } from '@ag-grid-enterprise/server-side-row-model';
-import { useAgStyles } from '../../ag-grid-styling';
-import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { StyledGridWrapper } from "./grid.styles";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ServerSideRowModelModule } from "@ag-grid-enterprise/server-side-row-model";
+import { useAgStyles } from "../../ag-grid-styling";
+import { AgGridReact, AgGridReactProps } from "@ag-grid-community/react";
 
 type GridProps<TData> = {
   height: number;
 } & AgGridReactProps<TData>;
 
-ModuleRegistry.registerModules([ClientSideRowModelModule, ServerSideRowModelModule]);
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  ServerSideRowModelModule,
+]);
 
-export function Grid<TData>({ columnDefs, gridOptions, height, rowData, modules }: GridProps<TData>) {
+export function Grid<TData>({
+  columnDefs,
+  gridOptions,
+  height,
+  rowData,
+  modules,
+  ...rest
+}: GridProps<TData>) {
   const themeName = useAgStyles();
 
   return (
     <StyledGridWrapper style={{ height }}>
       <AgGridReact
         rowHeight={32}
-        groupDisplayType={'multipleColumns'}
+        groupDisplayType={"multipleColumns"}
         headerHeight={32}
         className={themeName}
         gridOptions={gridOptions}
@@ -26,6 +36,7 @@ export function Grid<TData>({ columnDefs, gridOptions, height, rowData, modules 
         rowData={rowData}
         modules={modules}
         rowSelection="single"
+        {...rest}
       />
     </StyledGridWrapper>
   );
