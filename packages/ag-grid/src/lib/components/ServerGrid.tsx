@@ -4,8 +4,9 @@ import {
   IServerSideGetRowsParams,
   ColDef as AgGridColDef,
   Module,
-} from "@ag-grid-community/core";
-import { Grid } from "./Grid";
+} from '@ag-grid-community/core';
+import { Grid } from './Grid';
+import { AgGridReactProps } from '@ag-grid-community/react';
 
 export type ServerGridProps<TData> = {
   gridOptions?: GridOptions<TData>;
@@ -35,23 +36,12 @@ export function ServerGrid<TData>({
   gridOptions ??= {};
   Object.assign(gridOptions, getServerSettings({ getRows }, colDefs));
 
-  return (
-    <Grid<TData>
-      height={height}
-      context={context}
-      modules={modules}
-      gridOptions={gridOptions}
-      {...rest}
-    />
-  );
+  return <Grid<TData> height={height} context={context} modules={modules} gridOptions={gridOptions} {...rest} />;
 }
 
-const getServerSettings = <TData,>(
-  dataSource: IServerSideDatasource,
-  colDef: ColDef<TData>[]
-): GridOptions => ({
+const getServerSettings = <TData,>(dataSource: IServerSideDatasource, colDef: ColDef<TData>[]): GridOptions => ({
   serverSideDatasource: dataSource,
   serverSideInfiniteScroll: true,
-  rowModelType: "serverSide",
+  rowModelType: 'serverSide',
   columnDefs: colDef,
 });
