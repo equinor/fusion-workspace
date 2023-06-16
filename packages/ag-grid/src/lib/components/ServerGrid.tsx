@@ -6,6 +6,7 @@ import {
   Module,
 } from '@ag-grid-community/core';
 import { Grid } from './Grid';
+import { AgGridReactProps } from '@ag-grid-community/react';
 
 export type ServerGridProps<TData> = {
   gridOptions?: GridOptions<TData>;
@@ -14,12 +15,20 @@ export type ServerGridProps<TData> = {
   colDefs: ColDef<TData>[];
   context?: any;
   modules?: Module[] | undefined;
-};
+} & AgGridReactProps<TData>;
 
 /** TODO: strip group and sort and fetch from api */
 type ColDef<TData> = AgGridColDef<TData>;
 
-export function ServerGrid<TData>({ getRows, height, gridOptions, colDefs, context, modules }: ServerGridProps<TData>) {
+export function ServerGrid<TData>({
+  getRows,
+  height,
+  gridOptions,
+  colDefs,
+  context,
+  modules,
+  ...rest
+}: ServerGridProps<TData>) {
   /**
    *  Immutability does not work here
    *  User depends on gridOptions object reference
@@ -27,7 +36,7 @@ export function ServerGrid<TData>({ getRows, height, gridOptions, colDefs, conte
   gridOptions ??= {};
   Object.assign(gridOptions, getServerSettings({ getRows }, colDefs));
 
-  return <Grid<TData> height={height} context={context} modules={modules} gridOptions={gridOptions} />;
+  return <Grid<TData> height={height} context={context} modules={modules} gridOptions={gridOptions} {...rest} />;
 }
 
 const getServerSettings = <TData,>(dataSource: IServerSideDatasource, colDef: ColDef<TData>[]): GridOptions => ({
