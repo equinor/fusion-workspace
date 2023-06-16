@@ -1,5 +1,5 @@
-import { ColDef, GridOptions, Module } from "@ag-grid-community/core";
-import { Grid } from "./Grid";
+import { ColDef, GridOptions, Module } from '@ag-grid-community/core';
+import { Grid } from './Grid';
 
 export type ClientGridProps<TData> = {
   height: number;
@@ -9,14 +9,7 @@ export type ClientGridProps<TData> = {
   modules?: Module[] | undefined;
 } & AgGridReactProps<TData>;
 
-export function ClientGrid<TData>({
-  gridOptions,
-  height,
-  colDefs,
-  rowData,
-  modules,
-  ...rest
-}: ClientGridProps<TData>) {
+export function ClientGrid<TData>({ gridOptions, height, colDefs, rowData, modules, ...rest }: ClientGridProps<TData>) {
   /**
    *  Immutability does not work here
    *  User depends on gridOptions object reference
