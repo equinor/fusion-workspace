@@ -64,7 +64,10 @@ export const SidesheetSimpleWrapper = <
         return null;
       }
       return (
-        <ErrorBoundary FallbackComponent={UnhandledSidesheetException} onError={() => handleSetter(null)}>
+        <ErrorBoundary
+          FallbackComponent={UnhandledSidesheetException}
+          onError={() => console.error('An error occurred in the sidesheet')}
+        >
           <config.DetailsSidesheet
             id={currEv.props.id}
             item={currEv.props.item}
