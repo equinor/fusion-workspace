@@ -312,8 +312,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
  width: 100%;
  display: -webkit-box;
  display: flex;
- position: absolute;
- bottom: 0;
+ position: relative;
 }
 .ag-body-horizontal-scroll.ag-scrollbar-invisible {
  position: absolute;
