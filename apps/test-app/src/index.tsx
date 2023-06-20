@@ -7,24 +7,18 @@ import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 export function App() {
   return (
     <Workspace
-      workspaceOptions={{ getIdentifier: () => '123' }}
+      workspaceOptions={{ getIdentifier: (a) => a.id }}
       gridOptions={{
         columnDefinitions: [{ field: 'id' }],
         getRows: async ({ success, request }, filter) => {
           console.log(filter);
-          success({ rowData: [{ id: '123' }], rowCount: 1 });
+          success({ rowData: [{ id: '123' }, { id: '125' }, { id: '9342' }, { id: '1212' }], rowCount: 4 });
         },
       }}
       sidesheetOptions={{
         type: 'default',
         DetailsSidesheet: (a) => {
-          useEffect(() => {
-            console.log('opening sidesheet');
-            return () => {
-              console.log('Closing sidesheet');
-            };
-          });
-          return <div onClick={() => a.controller.close()}>hello am sidesheet</div>;
+          return <div onClick={() => a.close()}>hello am sidesheet</div>;
         },
       }}
       gardenOptions={{

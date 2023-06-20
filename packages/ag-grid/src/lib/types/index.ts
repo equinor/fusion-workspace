@@ -9,4 +9,12 @@ export type {
   GridReadyEvent,
   AgEvent,
   AgGridEvent,
+  ColumnState,
+  IServerSideGetRowsParams,
+  IServerSideGetRowsRequest,
+  ILoadingCellRendererParams,
+  ILoadingCellRenderer,
+  ILoadingCellRendererComp,
+  ILoadingOverlayComp,
+  ILoadingOverlayParams,
 } from '@ag-grid-community/core';

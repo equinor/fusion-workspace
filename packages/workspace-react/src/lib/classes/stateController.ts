@@ -1,4 +1,4 @@
-import { Observable, OnchangeCallback } from '@equinor/workspace-core';
+import { OnchangeCallback, Observable } from './observable';
 
 export class StateController {
   isLoading: boolean | undefined;

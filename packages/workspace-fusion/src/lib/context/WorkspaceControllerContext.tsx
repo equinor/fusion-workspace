@@ -46,7 +46,7 @@ const onSelectedChange = <T,>(selectionEvent: Selection<T> | null) => {
   } else {
     url.searchParams.delete('item');
   }
-  window.location.replace(url);
+  window.history.replaceState(undefined, '', url);
 };
 
 type WorkspaceControllerContextType<T> = {

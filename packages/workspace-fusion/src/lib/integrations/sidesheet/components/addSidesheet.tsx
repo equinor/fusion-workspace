@@ -1,44 +1,17 @@
-import { BaseEvent } from '@equinor/workspace-core';
-import { ReactNode, useEffect } from 'react';
-import { WorkspaceSidesheets, FusionMediator } from '../../../types';
-import { SidesheetConfig } from '../sidesheet';
+import { SidesheetConfig } from '../types';
 import { SidesheetAdvancedWrapper } from './wrapper';
 import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
-import { skip } from 'rxjs';
 
-export function addSidesheet<
-  TData extends Record<PropertyKey, unknown>,
-  TError,
-  TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
->(
-  config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined,
-  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>
+export function addSidesheet<TData extends Record<PropertyKey, unknown>>(
+  config: SidesheetConfig<TData> | undefined
 ): (() => JSX.Element) | undefined {
   if (!config || Object.keys(config).length === 0) return;
 
   if (config.type === 'custom') {
-    return () => (
-      <Wrapper mediator={mediator}>
-        <SidesheetAdvancedWrapper config={config} mediator={mediator} />
-      </Wrapper>
-    );
+    return () => <SidesheetAdvancedWrapper Config={config.Component} />;
   }
   if (config.type === 'default') {
-    return () => (
-      <Wrapper mediator={mediator}>
-        <SidesheetSimpleWrapper config={config} mediator={mediator} />
-      </Wrapper>
-    );
+    return () => <SidesheetSimpleWrapper DetailsSidesheet={config.DetailsSidesheet} />;
   }
   return;
-}
-
-type Props = {
-  children: ReactNode;
-  mediator: FusionMediator<never, any, any>;
-};
-
-function Wrapper({ children }: Props) {
-  return <>{children}</>;
 }

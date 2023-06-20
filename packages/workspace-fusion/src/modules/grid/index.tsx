@@ -11,7 +11,7 @@ import { FilterState } from '@equinor/workspace-filter';
  */
 export const gridModule: FusionWorkspaceModule = {
   name: 'AG-grid',
-  setup: (props, mediator) => {
+  setup: (props) => {
     const gridConfig = props.gridOptions;
     props.workspaceOptions.getIdentifier;
     if (!gridConfig) return;
@@ -32,7 +32,7 @@ export const gridModule: FusionWorkspaceModule = {
       provider,
       tab: {
         Component: () => (
-          <GridWrapper<any, any, any, FilterState>
+          <GridWrapper<any, any, FilterState>
             getIdentifier={props.workspaceOptions.getIdentifier}
             config={gridConfig}
           />
