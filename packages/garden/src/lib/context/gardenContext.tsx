@@ -21,10 +21,10 @@ type SelectionService = {
 export const GardenContext = createContext<GardenState | null>(null);
 
 export const GardenContextProvider = <T,>(
-  props: PropsWithChildren<{ getIdentifier: GetIdentifier<T>; selected: string | null }>
+  props: PropsWithChildren<{ getIdentifier: GetIdentifier<T>; selected: string | null; initialGrouping: string[] }>
 ) => {
   const selectionService = useSelectionService(props.getIdentifier, props.selected);
-  const groupingService = useGroupingService();
+  const groupingService = useGroupingService(props.initialGrouping);
 
   return (
     <GardenContext.Provider value={{ groupingService, selectionService }}>{props.children}</GardenContext.Provider>
@@ -52,9 +52,13 @@ const useSelectionService = <T,>(getIdentifier: GetIdentifier<T>, initialSelecte
   };
 };
 
-const useGroupingService = (): GroupingService => {
-  const [groupingKeys, set] = useState<string[]>([]);
+const useGroupingService = (initialGrouping: string[]): GroupingService => {
+  const [groupingKeys, set] = useState<string[]>(initialGrouping);
   const setGardenKey = useCallback((key: string) => set([key]), [set]);
+
+  useEffect(() => {
+    set(initialGrouping);
+  }, [...initialGrouping]);
 
   return {
     groupingKeys,

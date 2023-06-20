@@ -60,7 +60,16 @@ export function App() {
       }}
       filterOptions={{
         dataSource: {
-          getFilterMeta: async () => [{ filterItems: [{ count: 10, value: '1' }], isQuickFilter: true, name: 'test' }],
+          getFilterMeta: async () => [
+            {
+              filterItems: [
+                { count: 10, value: '1' },
+                { count: 9, value: '2' },
+              ],
+              isQuickFilter: true,
+              name: 'test',
+            },
+          ],
         },
       }}
       modules={[gridModule, gardenModule]}

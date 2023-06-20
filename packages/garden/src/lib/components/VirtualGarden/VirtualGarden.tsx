@@ -64,12 +64,7 @@ type VirtualGardenProps<TData extends Record<PropertyKey, unknown>, TContext> = 
   context: TContext;
 };
 
-export const VirtualGarden = <
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext
->({
+export const VirtualGarden = <TData extends Record<PropertyKey, unknown>, TContext>({
   width,
   handleOnItemClick,
   blockSize = 40_000,

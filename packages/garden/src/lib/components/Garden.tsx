@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { MutableRefObject, Suspense, useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import {
   CustomVirtualViews,
   GardenGroup,
@@ -60,7 +60,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   return (
     <QueryClientProvider client={client.current}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContextProvider getIdentifier={getIdentifier} selected={selected}>
+        <GardenContextProvider getIdentifier={getIdentifier} initialGrouping={groupingKeys} selected={selected}>
           <GardenConfigProvider
             dataSource={dataSource}
             getDisplayName={getDisplayName}
