@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Workspace } from '@equinor/workspace-fusion';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
@@ -6,7 +6,7 @@ import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 
 export function App() {
   return (
-    <Workspace
+    <Workspace<{ id: string }>
       workspaceOptions={{ getIdentifier: (a) => a.id }}
       gridOptions={{
         columnDefinitions: [{ field: 'id' }],

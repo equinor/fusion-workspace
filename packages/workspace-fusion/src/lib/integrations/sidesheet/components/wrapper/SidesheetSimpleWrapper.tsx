@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { DetailsSidesheetProps } from '../../types';
 import { useWorkspace } from '../../../../hooks';
 import { Suspense } from 'react';
-import { CircularProgress, Typography } from '@equinor/eds-core-react';
+import { CircularProgress } from '@equinor/eds-core-react';
 
 type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
   DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
