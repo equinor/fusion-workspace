@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { DetailsSidesheetProps } from '../../types';
-import { useWorkspaceController } from '../../../../hooks';
+import { useWorkspace } from '../../../../hooks';
 
 type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
   DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
@@ -9,7 +9,7 @@ type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
 export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown>>({
   DetailsSidesheet,
 }: SidesheetSimpleWrapperProps<TData>) => {
-  const { selection, clearSelection } = useWorkspaceController();
+  const { selection, clearSelection } = useWorkspace();
 
   return (
     <ErrorBoundary

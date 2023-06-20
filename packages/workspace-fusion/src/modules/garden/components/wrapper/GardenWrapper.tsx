@@ -8,7 +8,7 @@ import { Icon } from '@equinor/eds-core-react';
 import { more_vertical } from '@equinor/eds-icons';
 import { BehaviorSubject } from 'rxjs';
 import { GardenPopoverItem } from '../workspace-header/GardenViewSettings';
-import { useWorkspaceController } from '../../../../lib/hooks';
+import { useWorkspace } from '../../../../lib/hooks';
 Icon.add({ more_vertical });
 
 type GardenWrapperProps<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {
@@ -21,7 +21,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   getIdentifier,
 }: GardenWrapperProps<TData, TFilter>) => {
   const { filterState } = useFilterContext();
-  const { selectItem } = useWorkspaceController();
+  const { selectItem } = useWorkspace();
   const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
   const [groupingKeys, setGroupingKeys] = useState<string[]>([
     config.initialGrouping.horizontalGroupingAccessor.toString(),

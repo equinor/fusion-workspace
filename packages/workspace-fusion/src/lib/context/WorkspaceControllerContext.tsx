@@ -1,25 +1,18 @@
-import { createContext, type PropsWithChildren, useState, useEffect, useCallback } from 'react';
+import { createContext, useState, useCallback, type ReactNode } from 'react';
 import { type Selection } from '../types/selection';
-import { GetIdentifier } from '../types';
+import type { GetIdentifier } from '../types';
 
-export const WorkspaceControllerContext = createContext<WorkspaceControllerContextType<unknown> | null>(null);
+export const WorkspaceContext = createContext<WorkspaceContextType<unknown> | null>(null);
 
-export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren<{ getIdentifier: GetIdentifier<T> }>) {
-  const [selection, setSelected] = useState<Selection<T> | null>(getItemIdFromUrl());
+type WorkspaceContextProviderProps<TData> = {
+  getIdentifier: GetIdentifier<TData>;
+  children: ReactNode;
+};
 
-  const clearSelection = useCallback(() => setSelected(null), [setSelected]);
-  const selectById = useCallback((id: string) => setSelected({ id: id, item: null }), [setSelected]);
-  const selectItem = useCallback(
-    (item: T) => setSelected({ id: props.getIdentifier(item), item: item }),
-    [setSelected]
-  );
-
-  useEffect(() => {
-    onSelectedChange(selection);
-  }, [selection]);
-
+export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps<T>) {
+  const { clearSelection, selectById, selectItem, selection } = useSelection(props.getIdentifier);
   return (
-    <WorkspaceControllerContext.Provider
+    <WorkspaceContext.Provider
       value={{
         clearSelection,
         selectById,
@@ -28,8 +21,30 @@ export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren<{
       }}
     >
       {props.children}
-    </WorkspaceControllerContext.Provider>
+    </WorkspaceContext.Provider>
   );
+}
+
+function useSelection<T>(getIdentifier: GetIdentifier<T>) {
+  const [selection, set] = useState<Selection<T> | null>(getItemIdFromUrl());
+  /** curry setter to avoid useEffect */
+  const setSelection = useCallback(
+    (ev: Selection<T> | null) => {
+      set(ev);
+      onSelectedChange(ev);
+    },
+    [set]
+  );
+  const clearSelection = useCallback(() => setSelection(null), [setSelection]);
+  const selectById = useCallback((id: string) => setSelection({ id: id, item: null }), [setSelection]);
+  const selectItem = useCallback((item: T) => setSelection({ id: getIdentifier(item), item: item }), [setSelection]);
+
+  return {
+    selection,
+    clearSelection,
+    selectById,
+    selectItem,
+  };
 }
 
 function getItemIdFromUrl<T>(): Selection<T> | null {
@@ -39,7 +54,7 @@ function getItemIdFromUrl<T>(): Selection<T> | null {
   return { id: itemId, item: null };
 }
 
-type WorkspaceControllerContextType<T> = {
+type WorkspaceContextType<T> = {
   selection: Selection<T> | null;
   clearSelection: VoidFunction;
   selectById: (id: string) => void;

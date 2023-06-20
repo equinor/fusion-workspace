@@ -5,7 +5,7 @@ import { GridConfig } from '../../../lib/integrations/grid';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { GetIdentifier } from '../../../lib';
 import { type Selection } from '../../../lib/types';
-import { useWorkspaceController } from '../../../lib/hooks';
+import { useWorkspace } from '../../../lib/hooks';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -26,7 +26,7 @@ export const GridWrapper = <
 }: GridWrapperProps<TData, TContext, TFilter>) => {
   const ref = useRef(null);
 
-  const { selectItem, selection } = useWorkspaceController();
+  const { selectItem, selection } = useWorkspace();
   const { filterState } = useFilterContext();
   const filterStateCopy = useRef<any>(filterState);
   config.gridOptions ??= {};

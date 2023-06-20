@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/reac
 import { WorkspaceBoundary } from './error';
 import { FilterContextProvider } from '@equinor/workspace-filter';
 import { updateQueryParams } from '../classes/fusionUrlHandler';
-import { WorkspaceControllerContextProvider } from '../context/WorkspaceControllerContext';
+import { WorkspaceContextProvider } from '../context/WorkspaceControllerContext';
 
 const client = new QueryClient();
 
@@ -17,9 +17,9 @@ export function Workspace<
 >(props: WorkspaceProps<TData, TContext>) {
   return (
     <WorkspaceBoundary>
-      <WorkspaceControllerContextProvider getIdentifier={props.workspaceOptions.getIdentifier}>
+      <WorkspaceContextProvider getIdentifier={props.workspaceOptions.getIdentifier}>
         <WorkspaceComponent {...props} />
-      </WorkspaceControllerContextProvider>
+      </WorkspaceContextProvider>
     </WorkspaceBoundary>
   );
 }
