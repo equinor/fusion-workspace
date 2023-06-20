@@ -81,7 +81,7 @@ function handleSelectionEvent(selection: Selection<unknown> | null, api: GridApi
   if (selection) {
     const node = api.getRowNode(selection.id);
     if (node) {
-      api.selectNode(node);
+      node.setSelected(true);
     }
   }
 }
