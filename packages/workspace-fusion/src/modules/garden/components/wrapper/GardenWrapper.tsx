@@ -21,7 +21,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   getIdentifier,
 }: GardenWrapperProps<TData, TFilter>) => {
   const { filterState } = useFilterContext();
-  const { selected, setSelected } = useWorkspaceController();
+  const { selectItem } = useWorkspaceController();
   const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
   const [groupingKeys, setGroupingKeys] = useState<string[]>([
     config.initialGrouping.horizontalGroupingAccessor.toString(),
@@ -79,7 +79,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
         getDisplayName={config.getDisplayName}
         clickEvents={{
           onClickItem: (i) => {
-            setSelected({ id: getIdentifier(i), item: i as TData });
+            selectItem(i);
           },
         }}
       />

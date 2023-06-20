@@ -26,11 +26,11 @@ export const GridWrapper = <
 }: GridWrapperProps<TData, TContext, TFilter>) => {
   const ref = useRef(null);
 
-  const { setSelected, selected } = useWorkspaceController();
+  const { selectItem, selection } = useWorkspaceController();
   const { filterState } = useFilterContext();
   const filterStateCopy = useRef<any>(filterState);
   config.gridOptions ??= {};
-  setDefaultColDef(config.gridOptions, getIdentifier, setSelected);
+  setDefaultColDef<TData>(config.gridOptions, selectItem);
 
   useEffect(() => {
     /**
@@ -45,14 +45,14 @@ export const GridWrapper = <
 
   const [_, height] = useResizeObserver(ref);
 
-  useDeselectionEvent(selected, config.gridOptions.api);
+  useDeselectionEvent(selection, config.gridOptions.api);
 
   return (
     <div id="workspace_grid_wrapper" style={{ height: '100%', width: '100%' }} ref={ref}>
       <ServerGrid<TData>
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
-          handleSelectionEvent(selected, params.api);
+          handleSelectionEvent(selection, params.api);
         }}
         colDefs={config.columnDefinitions}
         getRowId={(params) => {
@@ -86,16 +86,15 @@ function handleSelectionEvent(selection: Selection<unknown> | null, api: GridApi
   }
 }
 
-function setDefaultColDef(
-  gridOptions: Omit<GridOptions<any>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
-  getIdentifier: GetIdentifier<any>,
-  setSelected: (selectionEvent: Selection<any> | null) => void
+function setDefaultColDef<TData>(
+  gridOptions: Omit<GridOptions<TData>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
+  setSelected: (i: TData) => void
 ) {
   gridOptions.defaultColDef = {
     resizable: true,
     onCellClicked: (a) => {
-      const node = { id: getIdentifier(a.data), item: a.data };
-      setSelected(node);
+      if (!a.data) return;
+      setSelected(a.data);
     },
   };
 }

@@ -9,15 +9,15 @@ type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
 export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown>>({
   DetailsSidesheet,
 }: SidesheetSimpleWrapperProps<TData>) => {
-  const { selected, setSelected } = useWorkspaceController();
+  const { selection, clearSelection } = useWorkspaceController();
 
   return (
     <ErrorBoundary
       FallbackComponent={UnhandledSidesheetException}
       onError={() => console.error('An error occurred in the sidesheet')}
     >
-      {selected && (
-        <DetailsSidesheet id={selected.id} item={selected?.item as TData | undefined} close={() => setSelected(null)} />
+      {selection && (
+        <DetailsSidesheet id={selection.id} item={selection?.item as TData | undefined} close={clearSelection} />
       )}
     </ErrorBoundary>
   );

@@ -1,21 +1,30 @@
-import { createContext, type PropsWithChildren, useState, useEffect, useContext } from 'react';
+import { createContext, type PropsWithChildren, useState, useEffect, useCallback } from 'react';
 import { type Selection } from '../types/selection';
+import { GetIdentifier } from '../types';
 
 export const WorkspaceControllerContext = createContext<WorkspaceControllerContextType<unknown> | null>(null);
 
-export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren) {
-  const [selected, setSelected] = useState<Selection<T> | null>(null);
+export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren<{ getIdentifier: GetIdentifier<T> }>) {
+  const [selection, setSelected] = useState<Selection<T> | null>(getItemIdFromUrl());
 
-  useGetItemIdFromUrl((id) => setSelected({ id: id, item: null }));
+  const clearSelection = useCallback(() => setSelected(null), [setSelected]);
+  const selectById = useCallback((id: string) => setSelected({ id: id, item: null }), [setSelected]);
+  const selectItem = useCallback(
+    (item: T) => setSelected({ id: props.getIdentifier(item), item: item }),
+    [setSelected]
+  );
+
+  useEffect(() => {
+    onSelectedChange(selection);
+  }, [selection]);
 
   return (
     <WorkspaceControllerContext.Provider
       value={{
-        setSelected: (selectionEvent) => {
-          setSelected(selectionEvent as Selection<T> | null);
-          onSelectedChange(selectionEvent);
-        },
-        selected: selected,
+        clearSelection,
+        selectById,
+        selectItem: selectItem as (item: unknown) => void,
+        selection,
       }}
     >
       {props.children}
@@ -23,15 +32,19 @@ export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren) 
   );
 }
 
-function useGetItemIdFromUrl(setter: (id: string) => void) {
-  useEffect(() => {
-    const url = new URL(window.location.toString());
-    const itemId = url.searchParams.get('item');
-    if (itemId) {
-      setter(itemId);
-    }
-  }, []);
+function getItemIdFromUrl<T>(): Selection<T> | null {
+  const url = new URL(window.location.toString());
+  const itemId = url.searchParams.get('item');
+  if (!itemId) return null;
+  return { id: itemId, item: null };
 }
+
+type WorkspaceControllerContextType<T> = {
+  selection: Selection<T> | null;
+  clearSelection: VoidFunction;
+  selectById: (id: string) => void;
+  selectItem: (item: T) => void;
+};
 
 /**
  * Update url when a selection event occurs
@@ -44,9 +57,4 @@ const onSelectedChange = <T,>(selectionEvent: Selection<T> | null) => {
     url.searchParams.delete('item');
   }
   window.history.replaceState(undefined, '', url);
-};
-
-type WorkspaceControllerContextType<T> = {
-  setSelected: (node: Selection<T> | null) => void;
-  selected: Selection<T> | null;
 };

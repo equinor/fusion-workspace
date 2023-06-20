@@ -17,7 +17,7 @@ export function Workspace<
 >(props: WorkspaceProps<TData, TContext>) {
   return (
     <WorkspaceBoundary>
-      <WorkspaceControllerContextProvider>
+      <WorkspaceControllerContextProvider getIdentifier={props.workspaceOptions.getIdentifier}>
         <WorkspaceComponent {...props} />
       </WorkspaceControllerContextProvider>
     </WorkspaceBoundary>
