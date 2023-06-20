@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { GridApi, GridOptions, ServerGrid } from '@equinor/workspace-ag-grid';
+import { useFilterContext } from '@equinor/workspace-filter';
+
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { GridConfig } from '../../../lib/integrations/grid';
-import { useFilterContext } from '@equinor/workspace-filter';
 import { GetIdentifier } from '../../../lib';
 import { type Selection } from '../../../lib/types';
 import { useWorkspace } from '../../../lib/hooks';
