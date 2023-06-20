@@ -13,6 +13,7 @@ import { updateQueryParams } from '../classes/fusionUrlHandler';
 import history from 'history/browser';
 import { DetailSidesheetEvent } from '../integrations/sidesheet';
 import { skip } from 'rxjs';
+import { WorkspaceControllerContextProvider } from '../context/WorkspaceControllerContext';
 
 const client = new QueryClient();
 
@@ -23,7 +24,9 @@ export function Workspace<
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>) {
   return (
     <WorkspaceBoundary>
-      <WorkspaceComponent {...props} />
+      <WorkspaceControllerContextProvider>
+        <WorkspaceComponent {...props} />
+      </WorkspaceControllerContextProvider>
     </WorkspaceBoundary>
   );
 }
@@ -47,8 +50,6 @@ function WorkspaceComponent<
 
   const configuration = createConfigurationObject(props, mediator);
 
-  useSelectIdFromUrl(mediator, !!props?.sidesheetOptions?.preventLoadFromUrl);
-  useSyncOnClick(mediator);
   return (
     <QueryClientProvider client={client}>
       <FilterContextProvider
@@ -71,39 +72,4 @@ function WorkspaceComponent<
       </FilterContextProvider>
     </QueryClientProvider>
   );
-}
-
-function useSyncOnClick(mediator: FusionMediator<any, any, any>) {
-  useEffect(() => {
-    const subscription = mediator.selectionService.selectedNodes$.pipe(skip(1)).subscribe((s) => {
-      const id = s.length >= 1 ? s[0].id : undefined;
-      updateQueryParams([['item', id]], mediator, history);
-    });
-    return () => subscription.unsubscribe();
-  }, [mediator]);
-}
-
-/**
- * Triggers sidesheet load if url contains query param item
- */
-function useSelectIdFromUrl<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = WorkspaceSidesheets<TData>
->(mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>, preventLoadFromUrl: boolean) {
-  useEffect(() => {
-    const params = new URL(window.location.toString());
-    const id = params.searchParams.get('item');
-
-    if (id && id.length && !preventLoadFromUrl) {
-      console.debug(`Id detected, spawning sidesheet: ${id}`);
-      updateQueryParams([['item', id]], mediator, history);
-      const ev: DetailSidesheetEvent<TData> = {
-        /** Item is not present since loading from url */
-        props: { id, item: undefined },
-        type: 'details_sidesheet',
-      };
-      mediator.sidesheetService.sendEvent(ev as DetailSidesheetEvent<never>);
-    }
-  }, [mediator]);
 }

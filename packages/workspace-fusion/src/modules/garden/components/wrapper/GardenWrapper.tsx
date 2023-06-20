@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { GardenPopoverItem } from '../workspace-header/GardenViewSettings';
+import { useWorkspaceController } from '../../../../lib/context/WorkspaceControllerContext';
 Icon.add({ more_vertical });
 
 type GardenWrapperProps<
@@ -39,6 +40,7 @@ export const GardenWrapper = <
   mediator,
 }: GardenWrapperProps<TData, TError, TContext, TCustomSidesheetEvents, TFilter>) => {
   const { filterState } = useFilterContext();
+  const { selected, setSelected } = useWorkspaceController();
   const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
   const [groupingKeys, setGroupingKeys] = useState<string[]>([
     config.initialGrouping.horizontalGroupingAccessor.toString(),
@@ -96,7 +98,7 @@ export const GardenWrapper = <
         getDisplayName={config.getDisplayName}
         clickEvents={{
           onClickItem: (i) => {
-            mediator.selectionService.selectedNodes = [{ id: getIdentifier(i), item: i as any }];
+            setSelected({ id: getIdentifier(i), item: i as TData });
           },
         }}
       />

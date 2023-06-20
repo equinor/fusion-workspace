@@ -24,7 +24,7 @@ export function App() {
               console.log('Closing sidesheet');
             };
           });
-          return <div>hello am sidesheet</div>;
+          return <div onClick={() => a.controller.close()}>hello am sidesheet</div>;
         },
       }}
       gardenOptions={{

@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { ServerGrid } from '@equinor/workspace-ag-grid';
+import { GridOptions, ServerGrid } from '@equinor/workspace-ag-grid';
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { BaseEvent } from '@equinor/workspace-core';
 import { GridConfig } from '../../../lib/integrations/grid';
 import { useFilterContext } from '@equinor/workspace-filter';
+import { GetIdentifier } from '../../../lib';
+import { useWorkspaceController, type Selection } from '../../../lib/context/WorkspaceControllerContext';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -12,6 +14,7 @@ export type GridWrapperProps<
   TFilter = undefined
 > = {
   config: GridConfig<TData, TFilter>;
+  getIdentifier: GetIdentifier<TData>;
 };
 
 export const GridWrapper = <
@@ -21,11 +24,15 @@ export const GridWrapper = <
   TFilter = undefined
 >({
   config,
+  getIdentifier,
 }: GridWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) => {
   const ref = useRef(null);
 
+  const { setSelected } = useWorkspaceController();
   const { filterState } = useFilterContext();
   const filterStateCopy = useRef<any>(filterState);
+  config.gridOptions ??= {};
+  setDefaultColDef(config.gridOptions, getIdentifier, setSelected);
 
   useEffect(() => {
     /**
@@ -52,3 +59,17 @@ export const GridWrapper = <
     </div>
   );
 };
+
+function setDefaultColDef(
+  gridOptions: Omit<GridOptions<any>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
+  getIdentifier: GetIdentifier<any>,
+  setSelected: (selectionEvent: Selection<any> | null) => void
+) {
+  gridOptions.defaultColDef = {
+    resizable: true,
+    onCellClicked: (a) => {
+      const node = { id: getIdentifier(a.data), item: a.data };
+      setSelected(node);
+    },
+  };
+}

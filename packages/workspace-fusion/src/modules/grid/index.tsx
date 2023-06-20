@@ -3,9 +3,8 @@ import { GridHeader } from './components/GridWorkspaceHeader';
 import { GridWrapper } from './components/GridWrapper';
 import { GridIcon } from './icons/GridIcon';
 
-import { FusionMediator, FusionWorkspaceModule, GetIdentifier, WorkspaceSidesheets } from '../../lib';
+import { FusionWorkspaceModule } from '../../lib';
 import { FilterState } from '@equinor/workspace-filter';
-import { GridOptions } from '@equinor/workspace-ag-grid';
 
 /**
  * Adds the module to the workspace
@@ -17,8 +16,6 @@ export const gridModule: FusionWorkspaceModule = {
     props.workspaceOptions.getIdentifier;
     if (!gridConfig) return;
     gridConfig.gridOptions ??= {};
-
-    setDefaultColDef(gridConfig.gridOptions, mediator, props.workspaceOptions.getIdentifier);
 
     const provider: Provider = {
       Component: ({ children }) => {
@@ -34,7 +31,12 @@ export const gridModule: FusionWorkspaceModule = {
     return {
       provider,
       tab: {
-        Component: () => <GridWrapper<any, any, any, FilterState> config={gridConfig} />,
+        Component: () => (
+          <GridWrapper<any, any, any, FilterState>
+            getIdentifier={props.workspaceOptions.getIdentifier}
+            config={gridConfig}
+          />
+        ),
         name: 'grid',
         TabIcon: GridIcon,
         CustomHeader: () => <GridHeader dataSource={props.filterOptions?.dataSource} />,
@@ -42,19 +44,5 @@ export const gridModule: FusionWorkspaceModule = {
     };
   },
 };
-
-function setDefaultColDef(
-  gridOptions: Omit<GridOptions<any>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
-  mediator: FusionMediator<never, any, WorkspaceSidesheets<any>>,
-  getIdentifier: GetIdentifier<any>
-) {
-  gridOptions.defaultColDef = {
-    resizable: true,
-    onCellClicked: (a) => {
-      const node = { id: getIdentifier(a.data), item: a.data };
-      mediator.selectionService.selectedNodes = [node];
-    },
-  };
-}
 
 export default gridModule;

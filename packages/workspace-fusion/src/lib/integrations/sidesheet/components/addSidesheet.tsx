@@ -39,20 +39,6 @@ type Props = {
   mediator: FusionMediator<never, any, any>;
 };
 
-function Wrapper({ children, mediator }: Props) {
-  useEffect(() => {
-    const sub = mediator.selectionService.selectedNodes$.pipe(skip(1)).subscribe((val) => {
-      const node = val[0];
-      if (!node) return;
-
-      const ev: WorkspaceSidesheets<any> = { type: 'details_sidesheet', props: { id: node.id, item: node.item } };
-      mediator.sidesheetService.sendEvent(ev);
-    });
-
-    return () => {
-      sub.unsubscribe();
-    };
-  }, [mediator]);
-
+function Wrapper({ children }: Props) {
   return <>{children}</>;
 }
