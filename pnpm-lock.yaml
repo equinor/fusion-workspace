@@ -309,9 +309,6 @@ importers:
       react-virtual:
         specifier: ^2.10.4
         version: 2.10.4(react@18.2.0)
-      rxjs:
-        specifier: ^7.8.0
-        version: 7.8.0
     devDependencies:
       '@types/jest':
         specifier: 27.4.1
