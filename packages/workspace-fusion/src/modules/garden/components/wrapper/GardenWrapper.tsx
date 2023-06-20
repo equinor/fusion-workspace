@@ -1,5 +1,5 @@
 import { FilterState, useFilterContext } from '@equinor/workspace-filter';
-import { BookmarkRef, Garden } from '@equinor/workspace-garden';
+import { Garden } from '@equinor/workspace-garden';
 import { useEffect, useRef, useState } from 'react';
 import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
@@ -22,11 +22,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
 }: GardenWrapperProps<TData, TFilter>) => {
   const { filterState } = useFilterContext();
   const { selectItem } = useWorkspace();
-  const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
-  const [groupingKeys, setGroupingKeys] = useState<string[]>([
-    config.initialGrouping.horizontalGroupingAccessor.toString(),
-    ...(config.initialGrouping.verticalGroupingKeys ?? []),
-  ]);
+  const [groupingKeys, setGroupingKeys] = useState<string[]>(config.initialGrouping);
 
   const groupingKeys$ = useRef(new BehaviorSubject(groupingKeys));
 
@@ -66,14 +62,16 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
      */
   }, []);
 
+  const { selection } = useWorkspace();
+
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
       <Garden<TData, TFilter>
-        bookmarkRef={bookmarkRef}
         dataSource={{ ...config }}
         context={filterState as TFilter}
         customViews={config.customViews}
         visuals={config.visuals}
+        selected={selection?.id}
         getIdentifier={getIdentifier}
         groupingKeys={groupingKeys}
         getDisplayName={config.getDisplayName}

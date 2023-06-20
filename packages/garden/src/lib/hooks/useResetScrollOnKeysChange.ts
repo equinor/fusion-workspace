@@ -1,15 +1,13 @@
-import { useLayoutEffect } from 'react';
-import { ReactiveValue } from '../classes/reactiveValue';
-import { GroupingKeys } from '../types';
+import { useLayoutEffect, useRef } from 'react';
 
 export function useResetScrollOnKeysChange<TData extends Record<PropertyKey, unknown>>(
   parentRef: React.MutableRefObject<HTMLDivElement | null>,
-  grouping: ReactiveValue<GroupingKeys<TData>>
+  grouping: string[]
 ) {
+  const initialRef = useRef(grouping);
+
   useLayoutEffect(() => {
-    const unsub = grouping.onChange(() => {
-      parentRef.current?.scrollTo({ left: 0, top: 0 });
-    });
-    return () => unsub();
-  }, [parentRef]);
+    if (grouping === initialRef.current) return;
+    parentRef.current?.scrollTo({ left: 0, top: 0 });
+  }, [grouping, parentRef]);
 }

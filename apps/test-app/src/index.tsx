@@ -26,25 +26,37 @@ export function App() {
           console.log('garden meta', a);
           return {
             allGroupingOptions: ['RFOC', 'RFCC', 'Some very long keys'],
-            columnCount: 10,
-            columnStart: 5,
+            columnCount: 2,
+            columnStart: 0,
             rowCount: 10000,
             validGroupingOptions: ['RFOC', 'PartitionKey'],
           };
         },
-        getBlockAsync: (a) => {
+        getBlockAsync: async (a) => {
           console.log('block', a);
-          throw new Error('');
+          return [
+            { columnName: 'Some name', items: [], subGroupCount: 0, subGroups: [], totalItemsCount: 0 },
+            {
+              columnName: 'some other name',
+              items: [{ id: '123' }],
+              subGroupCount: 0,
+              subGroups: [],
+              totalItemsCount: 1,
+            },
+          ];
         },
         getDisplayName: () => '',
-        getHeader: (a) => {
+        getHeader: async (a) => {
           console.log('header', a);
-          throw new Error('');
+          return [
+            { count: 0, name: 'Some name' },
+            { count: 1, name: 'some other name' },
+          ];
         },
         getSubgroupItems: () => {
           throw new Error('');
         },
-        initialGrouping: { horizontalGroupingAccessor: 'RFOC', verticalGroupingKeys: [] },
+        initialGrouping: ['RFOC'],
       }}
       filterOptions={{
         dataSource: {

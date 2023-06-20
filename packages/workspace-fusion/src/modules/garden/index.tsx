@@ -13,10 +13,7 @@ export const gardenModule: FusionWorkspaceModule = {
 
     const bookmarkGrouping = props.currentBookmark?.payload?.garden?.gardenKey;
     if (bookmarkGrouping) {
-      gardenConfig.initialGrouping = {
-        horizontalGroupingAccessor: bookmarkGrouping,
-        verticalGroupingKeys: [],
-      };
+      gardenConfig.initialGrouping = [bookmarkGrouping];
     }
 
     const provider: Provider = {
