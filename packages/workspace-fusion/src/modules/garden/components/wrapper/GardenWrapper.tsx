@@ -8,7 +8,7 @@ import { Icon } from '@equinor/eds-core-react';
 import { more_vertical } from '@equinor/eds-icons';
 import { BehaviorSubject } from 'rxjs';
 import { GardenPopoverItem } from '../workspace-header/GardenViewSettings';
-import { useWorkspaceController } from '../../../../lib/context/WorkspaceControllerContext';
+import { useWorkspaceController } from '../../../../lib/hooks';
 Icon.add({ more_vertical });
 
 type GardenWrapperProps<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {

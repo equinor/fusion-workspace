@@ -1,25 +1,12 @@
 import { createContext, type PropsWithChildren, useState, useEffect, useContext } from 'react';
 import { type Selection } from '../types/selection';
-const WorkspaceControllerContext = createContext<WorkspaceControllerContextType<unknown> | null>(null);
 
-export const useWorkspaceController = () => {
-  const context = useContext(WorkspaceControllerContext);
-  if (!context) {
-    throw new Error('Context invoked out of bounds');
-  }
-  return context;
-};
+export const WorkspaceControllerContext = createContext<WorkspaceControllerContextType<unknown> | null>(null);
 
 export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren) {
   const [selected, setSelected] = useState<Selection<T> | null>(null);
 
-  useEffect(() => {
-    const url = new URL(window.location.toString());
-    const item = url.searchParams.get('item');
-    if (item) {
-      setSelected({ id: item, item: null });
-    }
-  }, []);
+  useGetItemIdFromUrl((id) => setSelected({ id: id, item: null }));
 
   return (
     <WorkspaceControllerContext.Provider
@@ -34,6 +21,16 @@ export function WorkspaceControllerContextProvider<T>(props: PropsWithChildren) 
       {props.children}
     </WorkspaceControllerContext.Provider>
   );
+}
+
+function useGetItemIdFromUrl(setter: (id: string) => void) {
+  useEffect(() => {
+    const url = new URL(window.location.toString());
+    const itemId = url.searchParams.get('item');
+    if (itemId) {
+      setter(itemId);
+    }
+  }, []);
 }
 
 /**

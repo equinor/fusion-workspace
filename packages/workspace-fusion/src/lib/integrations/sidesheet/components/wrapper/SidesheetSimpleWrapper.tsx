@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { useWorkspaceController } from '../../../../context/WorkspaceControllerContext';
 import { DetailsSidesheetProps } from '../../types';
+import { useWorkspaceController } from '../../../../hooks';
 
 type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
   DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
