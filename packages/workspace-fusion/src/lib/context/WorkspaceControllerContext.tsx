@@ -1,5 +1,5 @@
 import { createContext, type PropsWithChildren, useState, useEffect, useContext } from 'react';
-
+import { type Selection } from '../types/selection';
 const WorkspaceControllerContext = createContext<WorkspaceControllerContextType<unknown> | null>(null);
 
 export const useWorkspaceController = () => {
@@ -52,9 +52,4 @@ const onSelectedChange = <T,>(selectionEvent: Selection<T> | null) => {
 type WorkspaceControllerContextType<T> = {
   setSelected: (node: Selection<T> | null) => void;
   selected: Selection<T> | null;
-};
-
-export type Selection<T> = {
-  id: string;
-  item: T | null;
 };

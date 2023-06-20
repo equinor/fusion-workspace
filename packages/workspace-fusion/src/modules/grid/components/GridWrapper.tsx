@@ -4,7 +4,8 @@ import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { GridConfig } from '../../../lib/integrations/grid';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { GetIdentifier } from '../../../lib';
-import { useWorkspaceController, type Selection } from '../../../lib/context/WorkspaceControllerContext';
+import { useWorkspaceController } from '../../../lib/context/WorkspaceControllerContext';
+import { type Selection } from '../../../lib/types';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
