@@ -28,5 +28,4 @@ describe('Workspace', () => {
     const el = document.getElementById(module2.name);
     expect(el).toBeTruthy();
   });
-  it('Should load grid default tab correctly', () => {});
 });
