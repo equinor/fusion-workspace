@@ -23,7 +23,7 @@ export type {
 };
 
 type GridConfig<T, TFilter> = {
-  columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
+  columnDefinitions: ColDef<T>[];
   getRows: (params: IServerSideGetRowsParams, filters: TFilter) => Promise<void>;
   gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
 };
