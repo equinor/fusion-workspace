@@ -12,7 +12,10 @@ export const getMockGardenConfig = () => {
     },
     getBlockAsync: async () => {
       fakeBlock();
-      return [{ columnName: '123', items: [], subGroupCount: 0, subGroups: [], totalItemsCount: 0 }];
+      return [
+        { columnName: '123', items: [{ id: '123' }], subGroupCount: 0, subGroups: [], totalItemsCount: 1 },
+        { columnName: '124', items: [], subGroupCount: 0, subGroups: [], totalItemsCount: 0 },
+      ];
     },
     getDisplayName: () => '',
     getGardenMeta: async () => {
@@ -27,7 +30,10 @@ export const getMockGardenConfig = () => {
     },
     getHeader: async () => {
       fakeHeaders();
-      return [{ count: 1, name: '123' }];
+      return [
+        { count: 1, name: '123' },
+        { count: 2, name: '124' },
+      ];
     },
     initialGrouping: ['finalizing'],
   };
