@@ -21,7 +21,7 @@ describe('Testing garden integration', () => {
   });
 
   it('Should render a custom garden item', async () => {
-    const { gardenModule, fakeGardenMeta, fakeHeaders, gardenConfig } = getMockGardenConfig();
+    const { gardenModule, gardenConfig } = getMockGardenConfig();
 
     const uniqueGardenItemId = 'uid-garden-item';
 
@@ -93,7 +93,6 @@ describe('Testing garden integration', () => {
           modules={[gardenModule]}
           gardenOptions={{
             ...gardenConfig,
-
             getDisplayName: () => uniqueDisplayName,
           }}
         />
