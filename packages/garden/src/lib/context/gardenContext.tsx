@@ -8,8 +8,6 @@ type GardenState = {
 
 type GroupingService = {
   groupingKeys: string[];
-  setGardenKey: (key: string) => void;
-  setGroupingKeys: (keys: string[]) => void;
 };
 
 type SelectionService = {
@@ -53,16 +51,7 @@ const useSelectionService = <T,>(getIdentifier: GetIdentifier<T>, initialSelecte
 };
 
 const useGroupingService = (initialGrouping: string[]): GroupingService => {
-  const [groupingKeys, set] = useState<string[]>(initialGrouping);
-  const setGardenKey = useCallback((key: string) => set([key]), [set]);
-
-  useEffect(() => {
-    set(initialGrouping);
-  }, [...initialGrouping]);
-
   return {
-    groupingKeys,
-    setGardenKey,
-    setGroupingKeys: set,
+    groupingKeys: initialGrouping,
   };
 };
