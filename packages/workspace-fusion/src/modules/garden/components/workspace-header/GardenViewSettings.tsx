@@ -9,6 +9,7 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
 import { GardenConfig } from '../../../../lib/integrations/garden';
+import { useOutsideClick } from './useClickOutside';
 
 Icon.add({ close, more_vertical });
 
@@ -19,42 +20,34 @@ type GardenPopoverItemProps = {
   config: GardenConfig<any, FilterState>;
   setGroupingKeys: (keys: string[]) => void;
 };
-export const GardenPopoverItem = ({
+type Props = {
+  iconRef: React.MutableRefObject<HTMLDivElement | null>;
+  anchor: HTMLElement;
+  setClose: () => void;
+  filterState: FilterState;
+  groupingKeys: string[];
+  setGroupingKeys: (keys: string[]) => void;
+  config: GardenConfig<any, FilterState>;
+};
+const PopoverItem = ({
+  iconRef: iconRef,
   anchor,
-  groupingKeys$,
+  setClose,
+  filterState,
+  groupingKeys,
   setGroupingKeys,
   config,
-  filterState,
-}: GardenPopoverItemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const pRef = useRef(null);
-  const [groupingKeys, setInternalKeys] = useState<string[]>(groupingKeys$.value);
-
-  useEffect(() => {
-    const sub = groupingKeys$.pipe(distinctUntilChanged()).subscribe((r) => {
-      setInternalKeys(r);
-    });
-    return () => sub.unsubscribe();
-  }, [groupingKeys$]);
-
+}: Props) => {
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+  useOutsideClick(popoverRef, iconRef, (e) => console.log('Clicked outside?', e, popoverRef));
   return (
     <>
-      <Icon
-        name="more_vertical"
-        color={tokens.colors.interactive.primary__resting.hex}
-        ref={pRef}
-        onClick={() => setIsOpen((s) => !s)}
-      />
       {createPortal(
-        <Popover style={{ height: '450px', width: '300px' }} open={isOpen} anchorEl={pRef.current}>
+        <Popover ref={popoverRef} style={{ height: '450px', width: '300px' }} open={true} anchorEl={iconRef.current}>
           <Popover.Header>
             <StyledPopoverHeaderLine>
               <Popover.Title>Garden settings</Popover.Title>
-              <Icon
-                name="close"
-                color={tokens.colors.interactive.primary__resting.hex}
-                onClick={() => setIsOpen(false)}
-              />
+              <Icon name="close" color={tokens.colors.interactive.primary__resting.hex} onClick={() => setClose()} />
             </StyledPopoverHeaderLine>
           </Popover.Header>
           <Popover.Content style={{ overflow: 'hidden' }}>
@@ -70,6 +63,49 @@ export const GardenPopoverItem = ({
         </Popover>,
         anchor
       )}
+    </>
+  );
+};
+export const GardenPopoverItem = ({
+  anchor,
+  groupingKeys$,
+  setGroupingKeys,
+  config,
+  filterState,
+}: GardenPopoverItemProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const iconRef = useRef<null>(null);
+
+  const [groupingKeys, setInternalKeys] = useState<string[]>(groupingKeys$.value);
+
+  useEffect(() => {
+    const sub = groupingKeys$.pipe(distinctUntilChanged()).subscribe((r) => {
+      setInternalKeys(r);
+    });
+    return () => sub.unsubscribe();
+  }, [groupingKeys$]);
+
+  return (
+    <>
+      <Icon
+        name="more_vertical"
+        color={tokens.colors.interactive.primary__resting.hex}
+        ref={iconRef}
+        onClick={() => setIsOpen((s) => !s)}
+      />
+      <div>
+        {isOpen && (
+          <PopoverItem
+            anchor={anchor}
+            config={config}
+            filterState={filterState}
+            groupingKeys={groupingKeys}
+            iconRef={iconRef}
+            setClose={() => setIsOpen(false)}
+            setGroupingKeys={setGroupingKeys}
+          />
+        )}
+      </div>
     </>
   );
 };
