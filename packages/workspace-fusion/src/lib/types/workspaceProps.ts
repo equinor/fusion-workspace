@@ -11,7 +11,7 @@ import { FilterState, FilterStateGroup } from '@equinor/workspace-filter';
 type WorkspaceBaseProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = {
   workspaceOptions: WorkspaceConfig<TData>;
   currentBookmark?: Bookmark | null | undefined;
@@ -21,7 +21,7 @@ type WorkspaceBaseProps<
 export type WorkspaceProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &
   WorkspaceGardenProps<TData, TContext, FilterState> &
   WorkspaceGridProps<TData, FilterState> &
