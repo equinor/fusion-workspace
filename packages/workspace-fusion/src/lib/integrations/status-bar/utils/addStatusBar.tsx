@@ -9,7 +9,7 @@ export function addStatusBar<
   TError,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 >(config: StatusBarConfig | undefined): Provider | undefined {
   if (!config) return;
   const StatusBarProvider = ({ children }) => (

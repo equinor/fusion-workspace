@@ -21,7 +21,7 @@ export function tryGetTabFromUrl() {
 export function updateQueryParams<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >(val: QueryParam[], mediator: FusionMediator<TData, TContext, TCustomSidesheetEvents>, history: BrowserHistory) {
   val.forEach((val) => {
     const [topic, value] = val;

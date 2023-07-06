@@ -20,7 +20,7 @@ type GardenWrapperProps<
   TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 > = {
   config: GardenConfig<any, TFilter>;
   getIdentifier: GetIdentifier<TData>;
@@ -32,7 +32,7 @@ export const GardenWrapper = <
   TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 >({
   config,
   getIdentifier,
