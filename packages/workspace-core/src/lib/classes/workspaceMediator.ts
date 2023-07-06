@@ -19,7 +19,7 @@ export class WorkspaceMediator<
   TSidesheetEvents extends BaseEvent,
   TError extends ObjectType<TError> = ObjectType<unknown>,
   TBookmarkState extends Record<PropertyKey, unknown> = ObjectType<unknown>,
-  TContext extends Record<PropertyKey, unknown> = never
+  TContext extends Record<PropertyKey, unknown> = never,
 > {
   #destructors = new Array<VoidFunction>();
 

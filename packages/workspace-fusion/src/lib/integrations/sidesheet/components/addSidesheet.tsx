@@ -10,7 +10,7 @@ export function addSidesheet<
   TData extends Record<PropertyKey, unknown>,
   TError,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >(
   config: SidesheetConfig<TData, TContext, TCustomSidesheetEvents> | undefined,
   mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>

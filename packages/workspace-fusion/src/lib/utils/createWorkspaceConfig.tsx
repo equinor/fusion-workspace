@@ -12,7 +12,7 @@ import { tryGetTabFromUrl } from '../classes/fusionUrlHandler';
 export function createConfigurationObject<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >(
   props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>,
   mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>

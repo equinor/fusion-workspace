@@ -8,7 +8,7 @@ import { CreateSidesheetEvent, DetailSidesheetEvent } from '../integrations/side
 export type FusionMediator<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = WorkspaceMediator<
   TData,
   WorkspaceNode<TData>,
@@ -36,7 +36,7 @@ export type FusionWorkspaceError = {
 export type WorkspaceController<
   TData extends Record<PropertyKey, unknown>,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TContext extends Record<PropertyKey, unknown> = never
+  TContext extends Record<PropertyKey, unknown> = never,
 > = {
   /**
    * Sets the data supplied to the workspace
