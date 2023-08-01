@@ -17,4 +17,5 @@ export type {
   ILoadingCellRendererComp,
   ILoadingOverlayComp,
   ILoadingOverlayParams,
+  Module,
 } from '@ag-grid-community/core';

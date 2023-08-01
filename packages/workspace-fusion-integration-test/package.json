@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -b",
-    "test": "vitest --silent"
+    "test": "vitest --silent --run"
   },
   "publishConfig": {
     "access": "public"
