@@ -48,6 +48,7 @@ export const GridWrapper = <
         gridOptions={config.gridOptions}
         height={height}
         context={filterState}
+        modules={config.modules}
       />
     </div>
   );
