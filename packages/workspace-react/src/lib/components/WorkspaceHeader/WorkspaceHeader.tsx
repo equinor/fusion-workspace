@@ -15,7 +15,7 @@ export function WorkspaceHeader() {
 }
 
 const StyledWorkspaceHeader = styled.div`
-  padding-top: 24px;
+  padding-top: 5px;
   overflow: hidden;
   width: 100%;
 `;
