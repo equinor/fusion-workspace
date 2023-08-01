@@ -36,10 +36,13 @@ const calculateHiddenFilters = (shownFilters: string[], activeFilters: Record<st
   }
   const activeFilterKeys = Object.keys(activeFilters);
   const filterShownFilters = activeFilterKeys.filter((key) => !shownFilters.includes(key));
-  const hiddenFilters = filterShownFilters.reduce((acc, curr) => {
-    acc[curr] = activeFilters[curr];
-    return acc;
-  }, {} as Record<string, ActiveFilter[]>);
+  const hiddenFilters = filterShownFilters.reduce(
+    (acc, curr) => {
+      acc[curr] = activeFilters[curr];
+      return acc;
+    },
+    {} as Record<string, ActiveFilter[]>
+  );
 
   return Object.values(hiddenFilters).filter((a) => a.length > 0).length;
 };
