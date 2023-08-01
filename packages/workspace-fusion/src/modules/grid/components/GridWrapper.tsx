@@ -9,7 +9,7 @@ export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 > = {
   config: GridConfig<TData, TFilter>;
 };
@@ -18,7 +18,7 @@ export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 >({
   config,
 }: GridWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) => {
