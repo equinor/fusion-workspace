@@ -1,6 +1,6 @@
 export const fusionQueryParams = ['item', 'tab'] as const;
 /** A union type of the workspace query parameters */
-type QueryParamTopic = typeof fusionQueryParams[number];
+type QueryParamTopic = (typeof fusionQueryParams)[number];
 
 type QueryParam = [QueryParamTopic, string | undefined];
 
@@ -14,7 +14,7 @@ export function tryGetTabFromUrl() {
  */
 export function updateQueryParams<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never
+  TContext extends Record<PropertyKey, unknown> = never,
 >(val: QueryParam[]) {
   const url = new URL(window.location.toString());
   val.forEach((val) => {
