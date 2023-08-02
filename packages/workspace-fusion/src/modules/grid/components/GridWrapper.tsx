@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { GridApi, GridOptions, ServerGrid } from '@equinor/workspace-ag-grid';
 import { useFilterContext } from '@equinor/workspace-filter';
+import { tokens } from '@equinor/eds-tokens';
 
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { GridConfig } from '../../../lib/integrations/grid';
@@ -49,7 +50,11 @@ export const GridWrapper = <
   useDeselectionEvent(selection, config.gridOptions.api);
 
   return (
-    <div id="workspace_grid_wrapper" style={{ height: '100%', width: '100%' }} ref={ref}>
+    <div
+      id="workspace_grid_wrapper"
+      style={{ height: '100%', width: '100%', borderTop: `2px solid ${tokens.colors.ui.background__medium.hex}` }}
+      ref={ref}
+    >
       <ServerGrid<TData>
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
