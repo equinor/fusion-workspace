@@ -3,7 +3,7 @@
 ## Mission
 
 The mission of integration testing in this lib is to ensure that the external facade of Workspace is intact between changes.
-This means that the following functionality should always work when doing changes.
+This means that the following functionality is covered by tests and should always work when doing changes.
 
 - [x] Opening sidesheet if `item` queryparam is present.
 - [x] Opening the correct tab if `tab` queryparam is present.
