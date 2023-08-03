@@ -6,7 +6,7 @@ import { fakeTimeout } from '../utils/fakeTimeout';
 import { getMockGardenConfig } from '../config/mockGardenConfig';
 import { getMockFilterConfig } from '../config/mockFilterConfig';
 
-describe('Testing garden integration', () => {
+describe('Testing filter integration', () => {
   it('Should call the getFilterMeta function on load', async () => {
     const { gardenModule, gardenConfig } = getMockGardenConfig();
     const { config, mockFilterMeta } = getMockFilterConfig();
