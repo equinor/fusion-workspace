@@ -1,6 +1,5 @@
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { useVirtual } from 'react-virtual';
-import { useGardenContext } from '../../hooks';
 
 import { useExpand } from '../../hooks/useExpand';
 import { useVirtualScrolling } from '../../hooks/useVirtualScrolling';
@@ -11,7 +10,6 @@ import {
   GetBlockRequestArgs,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
-  GroupingKeys,
 } from '../../types';
 import { GardenItemContainer } from '../GardenItemContainer/GardenItemContainer';
 import { HeaderContainer } from '../HeaderContainer/HeaderContainer';
@@ -21,9 +19,10 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { getCoordinatesInView, makeBlocks } from '../../utils/gardenBlock';
 import { useScrollToColumnStart } from '../../hooks/useScrollToColumnStart';
-import { ReactiveValue } from '../../classes/reactiveValue';
 import { useExpandedSubGroups } from '../../hooks/useExpandSubgroups';
 import { useResetScrollOnKeysChange } from '../../hooks/useResetScrollOnKeysChange';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
+import { useGarden } from '../../hooks/useGarden';
 
 const makeHeights = (rowCount: number, columnCount: number) => new Array(columnCount).fill(0).map(() => rowCount);
 
@@ -65,12 +64,7 @@ type VirtualGardenProps<TData extends Record<PropertyKey, unknown>, TContext> = 
   context: TContext;
 };
 
-export const VirtualGarden = <
-  TData extends Record<PropertyKey, unknown>,
-  TExtendedFields extends string,
-  TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext,
->({
+export const VirtualGarden = <TData extends Record<PropertyKey, unknown>, TContext>({
   width,
   handleOnItemClick,
   blockSize = 40_000,
@@ -89,16 +83,17 @@ export const VirtualGarden = <
 
   const {
     visuals: { rowHeight },
-    customViews: { customGroupView, customItemView },
-    grouping,
-  } = useGardenContext<TData>();
+    components: { customGroupView, customItemView },
+  } = useGardenConfig();
+
+  const { groupingService } = useGarden();
 
   /**
    * Reset to block x,y when grouping changes
    * Necessary for it not to crash
    * Happens before columnStart scrolling
    */
-  useResetScrollOnKeysChange(parentRef, grouping);
+  useResetScrollOnKeysChange(parentRef, groupingService.groupingKeys);
 
   const { isScrolling } = useVirtualScrolling(parentRef);
   const { widths: contextWidths } = useExpand();

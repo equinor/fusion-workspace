@@ -5,14 +5,9 @@ import { WorkspaceSidesheetProps } from '../integrations/sidesheet';
 import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { WorkspaceFilterProps } from '../integrations/filter';
 import { FusionWorkspaceModule, WorkspaceConfig } from '../types';
-import { BaseEvent } from '@equinor/workspace-core';
 import { FilterState, FilterStateGroup } from '@equinor/workspace-filter';
 
-type WorkspaceBaseProps<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent = never,
-> = {
+type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>> = {
   workspaceOptions: WorkspaceConfig<TData>;
   currentBookmark?: Bookmark | null | undefined;
   modules: FusionWorkspaceModule[];
@@ -21,13 +16,12 @@ type WorkspaceBaseProps<
 export type WorkspaceProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent = never,
-> = WorkspaceBaseProps<TData, TContext, TCustomSidesheetEvents> &
+> = WorkspaceBaseProps<TData> &
   WorkspaceGardenProps<TData, TContext, FilterState> &
   WorkspaceGridProps<TData, FilterState> &
   WorkspaceFilterProps &
   WorkspaceStatusBarProps<FilterState> &
-  WorkspaceSidesheetProps<TData, TContext, TCustomSidesheetEvents> &
+  WorkspaceSidesheetProps<TData> &
   WorkspacePowerBiProps;
 
 export type Bookmark = {

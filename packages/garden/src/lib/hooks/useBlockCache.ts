@@ -1,7 +1,7 @@
 import { GardenBlock } from '../components/VirtualGarden';
-import { useGroupingKeys } from './useGroupingKeys';
 import { useQueries } from '@tanstack/react-query';
 import { GetBlockRequestArgs } from '../types';
+import { useGarden } from './useGarden';
 
 type UseBlockCacheArgs<T, TContext = undefined> = {
   blocks: GardenBlock[];
@@ -20,12 +20,14 @@ export function useBlockCache<T, TContext = undefined>({
   getBlockAsync,
   hash,
 }: UseBlockCacheArgs<T, TContext>) {
-  const keys = useGroupingKeys();
+  const {
+    groupingService: { groupingKeys },
+  } = useGarden();
 
   const blockCache = useQueries({
     queries: blocks.map((block) => ({
       /** Unique identifier for blocks, add state here to invalidate query onChange */
-      queryKey: [keys.gardenKey, ...keys.groupByKeys, `x${block.x}`, `y${block.y}`, context, ...hash],
+      queryKey: [...groupingKeys, `x${block.x}`, `y${block.y}`, context, ...hash],
       /** Only fetch if block is in view */
       enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
       /** Annoying default in react-query */
@@ -36,11 +38,7 @@ export function useBlockCache<T, TContext = undefined>({
         //fetch block with coordinates of block x and block y
         const coordinates = getBlockIndexes(block, blockSqrt);
 
-        return getBlockAsync(
-          { ...coordinates, groupingKeys: [keys.gardenKey.toString(), ...keys.groupByKeys] },
-          context,
-          signal
-        );
+        return getBlockAsync({ ...coordinates, groupingKeys: groupingKeys }, context, signal);
       },
     })),
   });

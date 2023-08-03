@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "first-time-setup": "npm i -g pnpm@8.0.0 turbo && pnpm i && pnpm build",
+    "first-time-setup": "npm i -g pnpm@8.0.0 turbo && pnpm i && pnpm test",
     "build": "turbo run build",
+    "test": "turbo run test",
     "documentation": "pnpx astro dev --root ./documentation",
     "shipit": "pnpm build && pnpm -r publish",
     "dev": "turbo run dev --filter ./apps/**"

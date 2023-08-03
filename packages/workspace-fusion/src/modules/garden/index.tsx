@@ -6,17 +6,14 @@ import { GardenIcon } from './icons/GardenIcon';
 
 export const gardenModule: FusionWorkspaceModule = {
   name: 'garden',
-  setup: (props, mediator) => {
+  setup: (props) => {
     const gardenConfig = props.gardenOptions;
 
     if (!gardenConfig) return;
 
     const bookmarkGrouping = props.currentBookmark?.payload?.garden?.gardenKey;
     if (bookmarkGrouping) {
-      gardenConfig.initialGrouping = {
-        horizontalGroupingAccessor: bookmarkGrouping,
-        verticalGroupingKeys: [],
-      };
+      gardenConfig.initialGrouping = [bookmarkGrouping];
     }
 
     const provider: Provider = {
@@ -30,11 +27,7 @@ export const gardenModule: FusionWorkspaceModule = {
       provider,
       tab: {
         Component: () => (
-          <GardenWrapper<any, any, any, any, FilterState>
-            config={gardenConfig}
-            getIdentifier={props.workspaceOptions.getIdentifier}
-            mediator={mediator}
-          />
+          <GardenWrapper<any, FilterState> config={gardenConfig} getIdentifier={props.workspaceOptions.getIdentifier} />
         ),
         name: 'garden',
         TabIcon: GardenIcon,

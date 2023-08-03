@@ -1,7 +1,8 @@
-# workspace-fusion
+# Workspace
 
-This library was generated with [Nx](https://nx.dev).
+The actual workspace component. Boasts the following functionality
 
-## Running unit tests
-
-Run `nx test workspace-fusion` to execute the unit tests via [Jest](https://jestjs.io).
+- Grid
+- Garden
+- PowerBi
+- Filter

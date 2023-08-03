@@ -1,5 +1,5 @@
-import { Observable, OnchangeCallback } from '@equinor/workspace-core';
 import { Tab } from '../types';
+import { OnchangeCallback, Observable } from './observable';
 
 export class TabController<TabNames extends string> {
   activeTab: TabNames | undefined;

@@ -1,32 +1,38 @@
 import { useEffect, useRef } from 'react';
-import { ServerGrid } from '@equinor/workspace-ag-grid';
-import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
-import { BaseEvent } from '@equinor/workspace-core';
-import { GridConfig } from '../../../lib/integrations/grid';
+import { GridApi, GridOptions, ServerGrid } from '@equinor/workspace-ag-grid';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { tokens } from '@equinor/eds-tokens';
+
+import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
+import { GridConfig } from '../../../lib/integrations/grid';
+import { GetIdentifier } from '../../../lib';
+import { type Selection } from '../../../lib/types';
+import { useWorkspace } from '../../../lib/hooks';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined,
 > = {
   config: GridConfig<TData, TFilter>;
+  getIdentifier: GetIdentifier<TData>;
 };
 
 export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
   TFilter = undefined,
 >({
   config,
-}: GridWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) => {
+  getIdentifier,
+}: GridWrapperProps<TData, TContext, TFilter>) => {
   const ref = useRef(null);
 
+  const { selectItem, selection } = useWorkspace();
   const { filterState } = useFilterContext();
   const filterStateCopy = useRef<any>(filterState);
+  config.gridOptions ??= {};
+  setDefaultColDef<TData>(config.gridOptions, selectItem);
 
   useEffect(() => {
     /**
@@ -41,6 +47,8 @@ export const GridWrapper = <
 
   const [_, height] = useResizeObserver(ref);
 
+  useDeselectionEvent(selection, config.gridOptions.api);
+
   return (
     <div
       id="workspace_grid_wrapper"
@@ -48,8 +56,15 @@ export const GridWrapper = <
       ref={ref}
     >
       <ServerGrid<TData>
-        getRows={(params) => config.getRows(params, filterStateCopy.current as TFilter)}
+        getRows={async (params) => {
+          await config.getRows(params, filterStateCopy.current as TFilter);
+          handleSelectionEvent(selection, params.api);
+        }}
         colDefs={config.columnDefinitions}
+        getRowId={(params) => {
+          const { data } = params;
+          return getIdentifier(data);
+        }}
         gridOptions={config.gridOptions}
         height={height}
         context={filterState}
@@ -58,3 +73,35 @@ export const GridWrapper = <
     </div>
   );
 };
+
+/** Selection events are handled automatically internally in the grid */
+function useDeselectionEvent<TData>(selected: Selection<unknown> | null, api?: GridApi<TData> | null | undefined) {
+  useEffect(() => {
+    if (!api) return;
+    if (!selected) {
+      api.deselectAll();
+    }
+  }, [selected, api]);
+}
+
+function handleSelectionEvent(selection: Selection<unknown> | null, api: GridApi<any>) {
+  if (selection) {
+    const node = api.getRowNode(selection.id);
+    if (node) {
+      node.setSelected(true);
+    }
+  }
+}
+
+function setDefaultColDef<TData>(
+  gridOptions: Omit<GridOptions<TData>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>,
+  setSelected: (i: TData) => void
+) {
+  gridOptions.defaultColDef = {
+    resizable: true,
+    onCellClicked: (a) => {
+      if (!a.data) return;
+      setSelected(a.data);
+    },
+  };
+}

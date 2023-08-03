@@ -2,10 +2,11 @@ export * from './gardenGroup';
 export * from './gardenOptions';
 export * from './gardenItem';
 export * from './highlightedNode';
-export * from './keys';
 export * from './callbacks';
 export * from './events';
 export * from './visuals';
+export * from './getIdentifier';
+
 export type { GardenConfig } from './config';
 
 export type GardenMeta = {
@@ -14,11 +15,6 @@ export type GardenMeta = {
   rowCount: number;
   allGroupingOptions: string[];
   validGroupingOptions: string[];
-};
-
-export type GardenApi = {
-  /** Call this to refetch */
-  invalidate: () => void;
 };
 
 export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys'>;

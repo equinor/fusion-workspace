@@ -31,7 +31,9 @@ export const FilterQuickSearch = (): JSX.Element => {
         placeholder={'Search for id or description'}
         onInput={handleInput}
         value={searchText}
-        onKeyPress={(e) => {
+        //used in integration tests
+        id={'quick-filter-search'}
+        onKeyDown={(e) => {
           if (e.key === 'Enter') {
             /**
              * No cancellation token in ag grid
