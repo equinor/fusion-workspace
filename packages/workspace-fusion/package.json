@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "3.0.0-alpha.2.0.0",
+  "version": "3.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -93,7 +93,7 @@
     "rollup-plugin-inject-process-env": "^1.3.1",
     "styled-components": "^5.3.6",
     "typescript": "^5.0.2",
-    "vite": "^4.1.1"
+    "vite": "^4.1.5"
   },
   "repository": {
     "type": "git",
