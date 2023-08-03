@@ -303,7 +303,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                   onClickItem(item);
                 }}
                 width={itemWidth}
-                depth={0}
+                depth={flatIndex.isSubgroupItem ? 1 : 0}
                 rowStart={virtualRow.start}
                 columnStart={virtualColumn.start}
                 parentRef={parentRef}
