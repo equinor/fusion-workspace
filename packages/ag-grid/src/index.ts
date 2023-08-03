@@ -8,6 +8,7 @@ export type {
   ILoadingCellRendererComp,
   ILoadingOverlayComp,
   ILoadingOverlayParams,
+  Module,
 } from '@ag-grid-community/core';
 
 export type { ColDef, GridOptions, ICellRendererProps } from './lib';

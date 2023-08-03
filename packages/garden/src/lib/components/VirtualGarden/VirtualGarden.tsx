@@ -69,7 +69,7 @@ export const VirtualGarden = <
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext
+  TContext,
 >({
   width,
   handleOnItemClick,

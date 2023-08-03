@@ -9,7 +9,7 @@ export type Controller = {
 export type SidesheetConfig<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents> | SidesheetSimple<TData>;
 
 export const DetailsSidesheetConfigKey: keyof SidesheetSimple<any> = 'DetailsSidesheet';
@@ -29,7 +29,7 @@ export type SidesheetSimple<TData extends Record<PropertyKey, unknown>> = {
 export type SidesheetAdvanced<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent
+  TCustomSidesheetEvents extends BaseEvent,
 > = {
   type: 'custom';
   /** Prevents loading from url */
@@ -41,7 +41,7 @@ export type SidesheetAdvanced<
 export type SidesheetProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent
+  TCustomSidesheetEvents extends BaseEvent,
 > = {
   ev: Parameters<FusionMediator<TData, TContext, TCustomSidesheetEvents>['sidesheetService']['sendEvent']>[0];
   controller: Controller;

@@ -19,7 +19,7 @@ const client = new QueryClient();
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>) {
   return (
     <WorkspaceBoundary>
@@ -40,7 +40,7 @@ function useCheckParentClient(): QueryClient {
 function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = WorkspaceSidesheets<TData>
+  TCustomSidesheetEvents extends BaseEvent = WorkspaceSidesheets<TData>,
 >(props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>) {
   const client = useCheckParentClient();
   const [mediator] = useState<FusionMediator<never, TContext, TCustomSidesheetEvents>>(new WorkspaceMediator());
@@ -89,7 +89,7 @@ function useSyncOnClick(mediator: FusionMediator<any, any, any>) {
 function useSelectIdFromUrl<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = WorkspaceSidesheets<TData>
+  TCustomSidesheetEvents extends BaseEvent = WorkspaceSidesheets<TData>,
 >(mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>, preventLoadFromUrl: boolean) {
   useEffect(() => {
     const params = new URL(window.location.toString());

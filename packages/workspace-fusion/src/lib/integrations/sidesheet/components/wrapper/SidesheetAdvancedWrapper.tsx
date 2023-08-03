@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 type SidesheetAdvancedWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = {
   mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>;
   config: SidesheetAdvanced<TData, TContext, TCustomSidesheetEvents>;
@@ -18,7 +18,7 @@ type SidesheetAdvancedWrapperProps<
 export const SidesheetAdvancedWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >({
   config,
   mediator,

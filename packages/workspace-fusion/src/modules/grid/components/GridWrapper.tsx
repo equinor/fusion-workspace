@@ -4,12 +4,13 @@ import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { BaseEvent } from '@equinor/workspace-core';
 import { GridConfig } from '../../../lib/integrations/grid';
 import { useFilterContext } from '@equinor/workspace-filter';
+import { tokens } from '@equinor/eds-tokens';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 > = {
   config: GridConfig<TData, TFilter>;
 };
@@ -18,7 +19,7 @@ export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 >({
   config,
 }: GridWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) => {
@@ -41,13 +42,18 @@ export const GridWrapper = <
   const [_, height] = useResizeObserver(ref);
 
   return (
-    <div id="workspace_grid_wrapper" style={{ height: '100%', width: '100%' }} ref={ref}>
+    <div
+      id="workspace_grid_wrapper"
+      style={{ height: '100%', width: '100%', borderTop: `2px solid ${tokens.colors.ui.background__medium.hex}` }}
+      ref={ref}
+    >
       <ServerGrid<TData>
         getRows={(params) => config.getRows(params, filterStateCopy.current as TFilter)}
         colDefs={config.columnDefinitions}
         gridOptions={config.gridOptions}
         height={height}
         context={filterState}
+        modules={config.modules}
       />
     </div>
   );

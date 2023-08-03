@@ -32,7 +32,7 @@ export const ExpandedFilterItem = ({
 
   return (
     <StyledFilterItemWrap
-      title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
+      title={filterItem.value ?? '(Blank)'}
       style={{
         position: 'absolute',
         top: 0,

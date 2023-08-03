@@ -8,7 +8,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 type SidesheetSimpleWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 > = {
   mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>;
   config: SidesheetSimple<TData>;
@@ -17,7 +17,7 @@ type SidesheetSimpleWrapperProps<
 export const SidesheetSimpleWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
+  TCustomSidesheetEvents extends BaseEvent = never,
 >({
   config,
   mediator,
@@ -64,7 +64,10 @@ export const SidesheetSimpleWrapper = <
         return null;
       }
       return (
-        <ErrorBoundary FallbackComponent={UnhandledSidesheetException} onError={() => handleSetter(null)}>
+        <ErrorBoundary
+          FallbackComponent={UnhandledSidesheetException}
+          onError={() => console.error('An error occurred in the sidesheet')}
+        >
           <config.DetailsSidesheet
             id={currEv.props.id}
             item={currEv.props.item}

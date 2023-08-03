@@ -9,7 +9,7 @@ type StatusBarWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 > = {
   config: StatusBarConfig;
 };
@@ -18,7 +18,7 @@ export function StatusBarWrapper<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
   TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
+  TFilter = undefined,
 >({ config }: StatusBarWrapperProps<TData, TContext, TCustomSidesheetEvents, TFilter>) {
   const { filterState } = useFilterContext();
 
