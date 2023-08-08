@@ -23,6 +23,7 @@ interface FilterGroupPopoverMenuProps {
   setUncheckedValues: (values: FilterValueType[]) => void;
   isFetching: boolean;
   isMonospace: boolean;
+  isOpen: boolean;
 }
 export const FilterGroupPopoverMenu = ({
   handleFilterItemClick,
@@ -36,6 +37,7 @@ export const FilterGroupPopoverMenu = ({
   isFetching,
   setUncheckedValues,
   isMonospace,
+  isOpen,
 }: FilterGroupPopoverMenuProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>('');
 
@@ -58,7 +60,7 @@ export const FilterGroupPopoverMenu = ({
     <Menu
       id="menu-complex"
       aria-labelledby="anchor-complex"
-      open={true}
+      open={isOpen}
       anchorEl={anchorEl}
       onClose={closePopover}
       placement={'bottom-end'}

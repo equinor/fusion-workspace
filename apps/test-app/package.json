@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "dev": "vite dev",
     "build": "tsc -b",
     "build:prod": "vite build && tsc -b"
   },

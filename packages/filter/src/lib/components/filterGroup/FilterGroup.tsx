@@ -51,21 +51,20 @@ export const FilterGroup = ({
           </>
         )}
       </StyledFilterGroupWrapper>
-      {isOpen && (
-        <FilterGroupPopoverMenu
-          isFetching={isFetching}
-          setUncheckedValues={setGroupsUnchecked}
-          handleFilterItemLabelClick={filterItemLabelClick}
-          handleFilterItemClick={toggleItem}
-          isChecked={(filterItem) => uncheckedValues.includes(filterItem.value)}
-          markAllValuesActive={clearGroup}
-          closePopover={onClick}
-          anchorEl={ref.current}
-          values={filterItems}
-          CustomRender={customRender}
-          isMonospace={isMonospace}
-        />
-      )}
+      <FilterGroupPopoverMenu
+        isOpen={isOpen}
+        isFetching={isFetching}
+        setUncheckedValues={setGroupsUnchecked}
+        handleFilterItemLabelClick={filterItemLabelClick}
+        handleFilterItemClick={toggleItem}
+        isChecked={(filterItem) => uncheckedValues.includes(filterItem.value)}
+        markAllValuesActive={clearGroup}
+        closePopover={onClick}
+        anchorEl={ref.current}
+        values={filterItems}
+        CustomRender={customRender}
+        isMonospace={isMonospace}
+      />
     </div>
   );
 };
