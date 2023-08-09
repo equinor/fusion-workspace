@@ -2,7 +2,6 @@ import { Autocomplete, Radio } from '@equinor/eds-core-react';
 import { FilterState } from '@equinor/workspace-filter';
 import { GardenDataSource, GroupingOption } from '@equinor/workspace-garden';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 type GroupingSelectorProps = {
@@ -37,20 +36,16 @@ export function GroupingSelector({
 
   const setGardenKey = (key: string) => {
     const foundGroupingOption = data?.allGroupingOptions.find((option) => option.groupingKey === key);
-    if (foundGroupingOption) {
-      if (
-        !dimension ||
-        (dimension && foundGroupingOption.dimension && !foundGroupingOption.dimension.includes(dimension))
-      ) {
-        onChangeDimension(foundGroupingOption.dimension?.[0] || null);
-      }
+    if (!foundGroupingOption) {
+      throw new Error('Invalid grouping option');
+    }
 
-      if (!type || (type && foundGroupingOption.type && !foundGroupingOption.type.includes(type))) {
-        onChangeMode(foundGroupingOption.type?.[0] || null);
-      }
-    } else {
-      onChangeDimension(null);
-      onChangeMode(null);
+    if (!foundGroupingOption?.dimension?.includes(dimension ?? "")) {
+      onChangeDimension(foundGroupingOption.dimension?.at(0) ?? null);
+    }
+
+    if (!foundGroupingOption?.type?.includes(type ?? "")) {
+      onChangeMode(foundGroupingOption.type?.at(0) ?? null);
     }
 
     setGroupingKeys([key]);

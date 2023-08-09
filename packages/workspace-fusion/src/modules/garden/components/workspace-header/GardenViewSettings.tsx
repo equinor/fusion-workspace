@@ -9,14 +9,11 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
 import { GardenConfig } from '../../../../lib/integrations/garden';
+import { GardenMetaRequest } from '@equinor/workspace-garden';
 
 Icon.add({ close, more_vertical });
 
-type GroupState = {
-  groupingKeys: string[];
-  dimension: string | null;
-  type: string | null;
-};
+type GroupState = Required<GardenMetaRequest>;
 
 type GardenPopoverItemProps = {
   anchor: HTMLElement;
