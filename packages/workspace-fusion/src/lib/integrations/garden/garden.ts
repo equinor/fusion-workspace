@@ -29,6 +29,7 @@ import {
   GardenMeta,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
+  GardenMetaRequest,
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
@@ -56,6 +57,7 @@ export type {
   FindNodeCallback as findNodeCallback,
 };
 
+
 /** Override remove config types that is handled internally */
 type GardenConfig<TData extends Record<PropertyKey, unknown>, TFilter> = Omit<
   OriginalGardenConfig<TData, TFilter>,
@@ -65,9 +67,7 @@ type GardenConfig<TData extends Record<PropertyKey, unknown>, TFilter> = Omit<
 
 export type WorkspaceGardenDataSource<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {
   getGardenMeta: (
-    keys: string[],
-    dimension: string | null,
-    type: string | null,
+    request : GardenMetaRequest,
     filters: TFilter,
     signal?: AbortSignal
   ) => Promise<GardenMeta>;

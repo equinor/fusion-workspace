@@ -32,11 +32,10 @@ export function GroupingSelector({
     useErrorBoundary: true,
     keepPreviousData: false,
     queryFn: ({ signal }) =>
-      dataSource.getGardenMeta(groupingKeys, dimension, type, context, signal ?? new AbortSignal()),
+      dataSource.getGardenMeta({ groupingKeys, dimension, type }, context, signal ?? new AbortSignal()),
   });
 
   const setGardenKey = (key: string) => {
-    
     const foundGroupingOption = data?.allGroupingOptions.find((option) => option.groupingKey === key);
     if (foundGroupingOption) {
       if (
@@ -98,7 +97,7 @@ export function GroupingSelector({
                       label={dim}
                       value={dim}
                       name="Dimension"
-                      checked={dimension === dim}
+                      checked={dimension?.trim().toLowerCase() === dim.trim().toLowerCase()}
                       onChange={(e) => onChangeDimension(e.target.value)}
                     />
                   ))}
@@ -111,7 +110,7 @@ export function GroupingSelector({
                       label={typ}
                       value={typ}
                       name="type"
-                      checked={type === typ}
+                      checked={type?.trim().toLowerCase() === typ.trim().toLowerCase()}
                       onChange={(e) => onChangeMode(e.target.value)}
                     />
                   ))}

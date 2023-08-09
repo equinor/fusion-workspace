@@ -24,28 +24,27 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   const { selectItem } = useWorkspace();
   const [groupingKeys, setGroupingKeys] = useState<string[]>(config.initialGrouping);
 
-  const [dimension, updateDim] = useState<string | null>('Weekly');
+  const [dimension, updateDim] = useState<string | null>(config.initialDimension ?? null);
   const onChangeDimension = (dim: string | null) => {
     updateDim(dim);
   };
 
-  const [type, updateMode] = useState<string | null>('Planned');
+  const [type, updateMode] = useState<string | null>(config.initialMode ?? null);
   const onChangeMode = (mode: string | null) => {
     updateMode(mode);
   };
 
-  const groupingKeys$ = useRef(new BehaviorSubject({groupingKeys, dimension, type}));
+  const groupingKeys$ = useRef(new BehaviorSubject({ groupingKeys, dimension, type }));
 
   useEffect(() => {
     /**
      * You might not need an effect
      * Yes you do!
      */
-    groupingKeys$.current.next({groupingKeys, dimension, type});
+    groupingKeys$.current.next({ groupingKeys, dimension, type });
   }, [groupingKeys, dimension, type]);
 
   const { setIcons } = useWorkspaceHeaderComponents();
-
   useEffect(() => {
     const icon: HeaderIcon = {
       Icon: ({ anchor }) => (
@@ -86,7 +85,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
         selected={selection?.id}
         getIdentifier={getIdentifier}
         groupingKeys={groupingKeys}
-        dimension={dimension}
+        dimension={dimension} 
         type={type}
         getDisplayName={config.getDisplayName}
         clickEvents={{

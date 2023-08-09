@@ -15,7 +15,6 @@ export const gardenModule: FusionWorkspaceModule = {
     if (bookmarkGrouping) {
       gardenConfig.initialGrouping = [bookmarkGrouping];
     }
-
     const provider: Provider = {
       Component: ({ children }) => {
         return <>{children}</>;

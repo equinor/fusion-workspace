@@ -23,6 +23,7 @@ export function App() {
       }}
       gardenOptions={{
         getGardenMeta: async (a, b, c) => {
+          console.log(a)
           return {
             allGroupingOptions: [
               { groupingKey: 'RFOC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
@@ -63,6 +64,8 @@ export function App() {
           throw new Error('');
         },
         initialGrouping: ['RFOC'],
+        initialMode: 'Planned',
+        initialDimension: 'Weekly',
       }}
       filterOptions={{
         dataSource: {

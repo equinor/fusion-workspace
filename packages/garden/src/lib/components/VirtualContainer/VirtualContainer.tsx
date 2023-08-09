@@ -27,7 +27,15 @@ export const VirtualContainer = <TContext,>({
     useErrorBoundary: true,
     keepPreviousData: false,
     queryFn: ({ signal }) =>
-      dataSource.getGardenMeta(groupingKeys, dimension, type, context, signal ?? new AbortSignal()),
+      dataSource.getGardenMeta(
+        {
+          dimension,
+          type,
+          groupingKeys,
+        },
+        context,
+        signal ?? new AbortSignal()
+      ),
   });
 
   if (!data) {

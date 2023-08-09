@@ -23,11 +23,15 @@ import { GetIdentifier } from '../types/getIdentifier';
 import { GardenConfigProvider } from '../context/gardenConfig';
 import { GardenContextProvider } from '../context/gardenContext';
 
+export type GardenMetaRequest = {
+  groupingKeys: string[];
+  dimension?: string | null;
+  type?: string | null;
+};
+
 export type GardenDataSource<TContext> = {
   getGardenMeta: (
-    keys: string[],
-    dimension: string | null,
-    type: string | null,
+    request: GardenMetaRequest,
     context: TContext,
     signal?: AbortSignal
   ) => Promise<GardenMeta>;
