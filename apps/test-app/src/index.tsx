@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Workspace } from '@equinor/workspace-fusion';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { GroupingOption } from '@equinor/workspace-garden';
 
 export function App() {
   return (
@@ -11,7 +12,6 @@ export function App() {
       gridOptions={{
         columnDefinitions: [{ field: 'id' }],
         getRows: async ({ success, request }, filter) => {
-          console.log(filter);
           success({ rowData: [{ id: '123' }, { id: '125' }, { id: '9342' }, { id: '1212' }], rowCount: 4 });
         },
       }}
@@ -22,10 +22,19 @@ export function App() {
         },
       }}
       gardenOptions={{
-        getGardenMeta: async (a, b) => {
-          console.log('garden meta', a);
+        getGardenMeta: async (a, b, c) => {
+          console.log(a);
           return {
-            allGroupingOptions: ['RFOC', 'RFCC', 'Some very long keys'],
+            allGroupingOptions: [
+              { groupingKey: 'RFOC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
+              { groupingKey: 'RFCC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
+              {
+                groupingKey: 'Some very long keys',
+                dimension: ['Daily', 'Weekly'],
+                type: ['Forecast', 'Planned', 'Done'],
+              },
+              { groupingKey: 'System', dimension: null, type: null },
+            ] as GroupingOption[],
             columnCount: 2,
             columnStart: 0,
             rowCount: 10000,
@@ -33,7 +42,6 @@ export function App() {
           };
         },
         getBlockAsync: async (a) => {
-          console.log('block', a);
           return [
             { columnName: 'Some name', items: [], subGroupCount: 0, subGroups: [], totalItemsCount: 0 },
             {
@@ -47,7 +55,6 @@ export function App() {
         },
         getDisplayName: () => '',
         getHeader: async (a) => {
-          console.log('header', a);
           return [
             { count: 0, name: 'Some name' },
             { count: 1, name: 'some other name' },
@@ -57,6 +64,8 @@ export function App() {
           throw new Error('');
         },
         initialGrouping: ['RFOC'],
+        initialMode: 'Planned',
+        initialDimension: 'Weekly',
       }}
       filterOptions={{
         dataSource: {

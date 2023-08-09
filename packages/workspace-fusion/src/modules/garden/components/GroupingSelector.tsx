@@ -1,6 +1,6 @@
-import { Autocomplete } from '@equinor/eds-core-react';
+import { Autocomplete, Radio } from '@equinor/eds-core-react';
 import { FilterState } from '@equinor/workspace-filter';
-import { GardenDataSource } from '@equinor/workspace-garden';
+import { GardenDataSource, GroupingOption } from '@equinor/workspace-garden';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
@@ -9,23 +9,45 @@ type GroupingSelectorProps = {
   context: FilterState;
   setGroupingKeys: (keys: string[]) => void;
   groupingKeys: string[];
+  dimension: string | null;
+  type: string | null;
+  onChangeDimension: (dimension: string | null) => void;
+  onChangeMode: (type: string | null) => void;
 };
 
 export function GroupingSelector({
   dataSource,
   context,
+  dimension,
+  type,
   setGroupingKeys,
+  onChangeDimension,
+  onChangeMode,
   groupingKeys,
 }: GroupingSelectorProps): JSX.Element | null {
-  const { data } = useQuery(['garden', ...groupingKeys, context], {
+  const { data } = useQuery(['garden', ...groupingKeys, dimension, type, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
-    queryFn: ({ signal }) => dataSource.getGardenMeta(groupingKeys, context, signal ?? new AbortSignal()),
+    queryFn: ({ signal }) =>
+      dataSource.getGardenMeta({ groupingKeys, dimension, type }, context, signal ?? new AbortSignal()),
   });
 
   const setGardenKey = (key: string) => {
+    const foundGroupingOption = data?.allGroupingOptions.find((option) => option.groupingKey === key);
+    if (!foundGroupingOption) {
+      throw new Error('Invalid grouping option');
+    }
+
+    if (!foundGroupingOption?.dimension?.includes(dimension ?? '')) {
+      onChangeDimension(foundGroupingOption.dimension?.at(0) ?? null);
+    }
+
+    if (!foundGroupingOption?.type?.includes(type ?? '')) {
+      onChangeMode(foundGroupingOption.type?.at(0) ?? null);
+    }
+
     setGroupingKeys([key]);
   };
 
@@ -51,13 +73,46 @@ export function GroupingSelector({
     <StyledAutoCompleteWrapper>
       <Autocomplete
         key={groupingKeys[0]}
-        options={data.allGroupingOptions}
+        options={data.allGroupingOptions.map((option: GroupingOption) => option.groupingKey)}
         label={'Column headers'}
         hideClearButton
         multiple={false}
         selectedOptions={[groupingKeys[0]]}
         onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
       />
+      {data.allGroupingOptions.map(
+        (groupingOption) =>
+          groupingOption.groupingKey === groupingKeys[0] && (
+            <RadioWrapper>
+              <RadioCategoryWrapper>
+                {groupingOption.dimension &&
+                  groupingOption.dimension.map((dim) => (
+                    <Radio
+                      key={dim}
+                      label={dim}
+                      value={dim}
+                      name="Dimension"
+                      checked={dimension?.trim().toLowerCase() === dim.trim().toLowerCase()}
+                      onChange={(e) => onChangeDimension(e.target.value)}
+                    />
+                  ))}
+              </RadioCategoryWrapper>
+              <RadioCategoryWrapper>
+                {groupingOption.type &&
+                  groupingOption.type.map((typ) => (
+                    <Radio
+                      key={typ}
+                      label={typ}
+                      value={typ}
+                      name="type"
+                      checked={type?.trim().toLowerCase() === typ.trim().toLowerCase()}
+                      onChange={(e) => onChangeMode(e.target.value)}
+                    />
+                  ))}
+              </RadioCategoryWrapper>
+            </RadioWrapper>
+          )
+      )}
 
       <Autocomplete
         options={data.validGroupingOptions}
@@ -74,4 +129,18 @@ export const StyledAutoCompleteWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1em;
+`;
+
+export const RadioWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1em;
+`;
+
+export const RadioCategoryWrapper = styled.div`
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  gap: 0.1em;
 `;

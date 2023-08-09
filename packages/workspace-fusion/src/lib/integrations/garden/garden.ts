@@ -29,6 +29,7 @@ import {
   GardenMeta,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
+  GardenMetaRequest,
 } from '@equinor/workspace-garden';
 
 /**Garden utils functions */
@@ -64,7 +65,7 @@ type GardenConfig<TData extends Record<PropertyKey, unknown>, TFilter> = Omit<
   WorkspaceGardenDataSource<TData, TFilter>;
 
 export type WorkspaceGardenDataSource<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {
-  getGardenMeta: (keys: string[], filters: TFilter, signal?: AbortSignal) => Promise<GardenMeta>;
+  getGardenMeta: (request: GardenMetaRequest, filters: TFilter, signal?: AbortSignal) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenGroup<TData>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
   getSubgroupItems: (args: GetSubgroupItemsArgs, filters: TFilter, signal?: AbortSignal) => Promise<TData[]>;

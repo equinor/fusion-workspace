@@ -19,6 +19,8 @@ export type GardenConfig<TData extends Record<PropertyKey, unknown>, TContext = 
   getDisplayName: GetDisplayName<TData>;
   /** The keys used for grouping when the garden loads initially */
   initialGrouping: string[];
+  initialDimension?: string | null;
+  initialMode?: string | null;
   /** The available keys to be used for grouping */
   // fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
   /** Supply functions for handling clicks in the garden */

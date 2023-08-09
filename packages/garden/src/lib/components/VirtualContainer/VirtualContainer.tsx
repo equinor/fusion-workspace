@@ -18,15 +18,24 @@ export const VirtualContainer = <TContext,>({
 }: VirtualContainerProps<TContext>): JSX.Element | null => {
   const { onClickItem } = useGardenConfig();
   const {
-    groupingService: { groupingKeys },
+    groupingService: { groupingKeys, dimension, type },
   } = useGarden();
 
-  const { data, isFetching } = useQuery(['garden', ...groupingKeys, context], {
+  const { data, isFetching } = useQuery(['garden', ...groupingKeys, dimension, type, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
-    queryFn: ({ signal }) => dataSource.getGardenMeta(groupingKeys, context, signal ?? new AbortSignal()),
+    queryFn: ({ signal }) =>
+      dataSource.getGardenMeta(
+        {
+          dimension,
+          type,
+          groupingKeys,
+        },
+        context,
+        signal ?? new AbortSignal()
+      ),
   });
 
   if (!data) {
