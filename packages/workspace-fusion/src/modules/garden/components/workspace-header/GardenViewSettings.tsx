@@ -12,27 +12,37 @@ import { GardenConfig } from '../../../../lib/integrations/garden';
 
 Icon.add({ close, more_vertical });
 
+type GroupState = {
+  groupingKeys: string[];
+  dimension: string | null;
+  type: string | null;
+};
+
 type GardenPopoverItemProps = {
   anchor: HTMLElement;
-  groupingKeys$: BehaviorSubject<string[]>;
+  groupingKeys$: BehaviorSubject<GroupState>;
   filterState: FilterState;
   config: GardenConfig<any, FilterState>;
   setGroupingKeys: (keys: string[]) => void;
+  onChangeDimension: (dimension: string | null) => void;
+  onChangeMode: (mode: string | null) => void;
 };
 export const GardenPopoverItem = ({
   anchor,
   groupingKeys$,
+  onChangeDimension,
+  onChangeMode,
   setGroupingKeys,
   config,
   filterState,
 }: GardenPopoverItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const pRef = useRef(null);
-  const [groupingKeys, setInternalKeys] = useState<string[]>(groupingKeys$.value);
+  const [groupState, setGroupState] = useState<GroupState>(groupingKeys$.value);
 
   useEffect(() => {
     const sub = groupingKeys$.pipe(distinctUntilChanged()).subscribe((r) => {
-      setInternalKeys(r);
+      setGroupState(r);
     });
     return () => sub.unsubscribe();
   }, [groupingKeys$]);
@@ -60,8 +70,12 @@ export const GardenPopoverItem = ({
           <Popover.Content style={{ overflow: 'hidden' }}>
             <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
-                groupingKeys={groupingKeys}
+                groupingKeys={groupState.groupingKeys}
                 setGroupingKeys={setGroupingKeys}
+                dimension={groupState.dimension}
+                onChangeDimension={onChangeDimension}
+                type={groupState.type}
+                onChangeMode={onChangeMode}
                 context={filterState}
                 dataSource={config}
               />

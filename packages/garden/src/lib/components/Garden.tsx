@@ -24,7 +24,13 @@ import { GardenConfigProvider } from '../context/gardenConfig';
 import { GardenContextProvider } from '../context/gardenContext';
 
 export type GardenDataSource<TContext> = {
-  getGardenMeta: (keys: string[], context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
+  getGardenMeta: (
+    keys: string[],
+    dimension: string | null,
+    type: string | null,
+    context: TContext,
+    signal?: AbortSignal
+  ) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
   getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal?: AbortSignal) => Promise<any[]>;
@@ -39,6 +45,8 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   customViews?: CustomVirtualViews<TData>;
   clickEvents?: OnClickEvents<TData>;
   groupingKeys: string[];
+  dimension: string | null;
+  type: string | null;
   selected?: string | null;
 }
 
@@ -51,6 +59,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   getIdentifier,
   groupingKeys,
   customViews,
+  dimension,
+  type,
   visuals,
   clickEvents,
   selected = null,
@@ -60,7 +70,13 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   return (
     <QueryClientProvider client={client.current}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContextProvider getIdentifier={getIdentifier} initialGrouping={groupingKeys} selected={selected}>
+        <GardenContextProvider
+          getIdentifier={getIdentifier}
+          dimension={dimension}
+          type={type}
+          initialGrouping={groupingKeys}
+          selected={selected}
+        >
           <GardenConfigProvider
             dataSource={dataSource}
             getDisplayName={getDisplayName}

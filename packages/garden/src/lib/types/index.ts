@@ -13,11 +13,11 @@ export type GardenMeta = {
   columnStart: number | null;
   columnCount: number;
   rowCount: number;
-  allGroupingOptions: string[];
+  allGroupingOptions: GroupingOption[];
   validGroupingOptions: string[];
 };
 
-export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys'>;
+export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys' | 'dimension' | 'type'>;
 
 export type GetBlockRequestArgs = {
   /**Column start */
@@ -30,15 +30,27 @@ export type GetBlockRequestArgs = {
   rowEnd: number;
   /** Grouping key */
   groupingKeys: string[];
+
+  dimension: string | null;
+
+  type: string | null;
 };
 
 export type GetSubgroupItemsArgs = {
   groupingKeys: string[];
   columnName: string;
   subgroupName: string;
+  dimension: string | null;
+  type: string | null;
 };
 
 export type GardenHeaderGroup = {
   name: string;
   count: number;
+};
+
+export type GroupingOption = {
+  groupingKey: string;
+  dimension: string[] | null;
+  type: string[] | null;
 };

@@ -64,7 +64,13 @@ type GardenConfig<TData extends Record<PropertyKey, unknown>, TFilter> = Omit<
   WorkspaceGardenDataSource<TData, TFilter>;
 
 export type WorkspaceGardenDataSource<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {
-  getGardenMeta: (keys: string[], filters: TFilter, signal?: AbortSignal) => Promise<GardenMeta>;
+  getGardenMeta: (
+    keys: string[],
+    dimension: string | null,
+    type: string | null,
+    filters: TFilter,
+    signal?: AbortSignal
+  ) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenGroup<TData>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, filters: TFilter, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
   getSubgroupItems: (args: GetSubgroupItemsArgs, filters: TFilter, signal?: AbortSignal) => Promise<TData[]>;
