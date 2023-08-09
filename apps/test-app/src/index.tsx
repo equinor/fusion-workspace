@@ -23,7 +23,7 @@ export function App() {
       }}
       gardenOptions={{
         getGardenMeta: async (a, b, c) => {
-          console.log(a)
+          console.log(a);
           return {
             allGroupingOptions: [
               { groupingKey: 'RFOC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
