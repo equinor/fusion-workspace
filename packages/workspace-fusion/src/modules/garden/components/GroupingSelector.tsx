@@ -40,11 +40,11 @@ export function GroupingSelector({
       throw new Error('Invalid grouping option');
     }
 
-    if (!foundGroupingOption?.dimension?.includes(dimension ?? "")) {
+    if (!foundGroupingOption?.dimension?.includes(dimension ?? '')) {
       onChangeDimension(foundGroupingOption.dimension?.at(0) ?? null);
     }
 
-    if (!foundGroupingOption?.type?.includes(type ?? "")) {
+    if (!foundGroupingOption?.type?.includes(type ?? '')) {
       onChangeMode(foundGroupingOption.type?.at(0) ?? null);
     }
 
