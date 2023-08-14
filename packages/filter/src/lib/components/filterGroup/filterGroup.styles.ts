@@ -41,7 +41,12 @@ export const StyledSearchHolder = styled.div<{ className: string }>`
 
 export const StyledMenuWrapper = styled.div`
   width: 200px;
-`;
+  overflow:hidden;      
+  resize: horizontal;
+  min-width: 200px;          // Hacky way to move the resize drag button
+  direction: rtl;            // https://stackoverflow.com/a/60633726 resize is defaulted to be placed on the botton-right side of the div. 
+  > div {  direction: ltr}   // So we make the div right-to-left, so the resize is moved to the bottom left corner. 
+`;                           // Then we change inner div to left-to-right again.
 
 export const StyledFilterItemList = styled.div<{ items: number }>`
   height: ${({ items }) => (items > 10 ? '300px' : `${items * 22 + 16}px`)};
