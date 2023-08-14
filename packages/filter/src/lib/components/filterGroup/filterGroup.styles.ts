@@ -40,7 +40,8 @@ export const StyledSearchHolder = styled.div<{ className: string }>`
 `;
 
 export const StyledMenuWrapper = styled.div`
-  width: 200px;
+  width: auto;
+  max-width: 1000px; 
   overflow:hidden;      
   resize: horizontal;
   min-width: 200px;          // Hacky way to move the resize drag button

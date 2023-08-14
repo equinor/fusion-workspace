@@ -72,8 +72,11 @@ export function App() {
           getFilterMeta: async () => [
             {
               filterItems: [
-                { count: 10, value: '1' },
-                { count: 9, value: '2' },
+                { count: 10, value: 'test' },
+                {
+                  count: 9,
+                  value: 'test',
+                },
               ],
               isQuickFilter: true,
               name: 'test',
