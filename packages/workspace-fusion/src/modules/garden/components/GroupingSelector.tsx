@@ -2,7 +2,9 @@ import { Autocomplete, Radio } from '@equinor/eds-core-react';
 import { FilterState } from '@equinor/workspace-filter';
 import { GardenDataSource, GroupingOption } from '@equinor/workspace-garden';
 import { useQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
 import styled from 'styled-components';
+import { useOutsideClick } from '../../../lib/hooks/useGardenPopoverOutsideClick';
 
 type GroupingSelectorProps = {
   dataSource: GardenDataSource<FilterState>;
@@ -13,6 +15,9 @@ type GroupingSelectorProps = {
   type: string | null;
   onChangeDimension: (dimension: string | null) => void;
   onChangeMode: (type: string | null) => void;
+  popoverRef: React.MutableRefObject<HTMLDivElement | null>;
+  iconRef: React.MutableRefObject<HTMLDivElement | null>;
+  close: VoidFunction;
 };
 
 export function GroupingSelector({
@@ -24,6 +29,9 @@ export function GroupingSelector({
   onChangeDimension,
   onChangeMode,
   groupingKeys,
+  iconRef,
+  popoverRef,
+  close,
 }: GroupingSelectorProps): JSX.Element | null {
   const { data } = useQuery(['garden', ...groupingKeys, dimension, type, context], {
     refetchOnWindowFocus: false,
@@ -33,6 +41,17 @@ export function GroupingSelector({
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta({ groupingKeys, dimension, type }, context, signal ?? new AbortSignal()),
   });
+
+  const selectorRef = useRef(null);
+
+  useOutsideClick(
+    (e, a) => {
+      console.log('outside click', a);
+      close();
+    },
+    popoverRef,
+    iconRef
+  );
 
   const setGardenKey = (key: string) => {
     const foundGroupingOption = data?.allGroupingOptions.find((option) => option.groupingKey === key);
@@ -72,6 +91,7 @@ export function GroupingSelector({
   return (
     <StyledAutoCompleteWrapper>
       <Autocomplete
+        ref={selectorRef}
         key={groupingKeys[0]}
         options={data.allGroupingOptions.map((option: GroupingOption) => option.groupingKey)}
         label={'Column headers'}

@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.3]
+
+fix: outside click on garden popover grouping selector
+
 ## [1.0.13]
 
 fix: double fetch on init
