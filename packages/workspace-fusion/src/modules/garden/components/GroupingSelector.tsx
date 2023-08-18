@@ -45,8 +45,7 @@ export function GroupingSelector({
   const selectorRef = useRef(null);
 
   useOutsideClick(
-    (e, a) => {
-      console.log('outside click', a);
+    () => {
       close();
     },
     popoverRef,
