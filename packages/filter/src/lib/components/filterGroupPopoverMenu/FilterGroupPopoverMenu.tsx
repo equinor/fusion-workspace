@@ -94,7 +94,12 @@ export const FilterGroupPopoverMenu = ({
                 ValueRender={() => CustomRender(value)}
                 filterValue={value}
                 handleFilterItemClick={() => handleFilterItemClick(value)}
-                handleFilterItemLabelClick={() => handleFilterItemLabelClick(value)}
+                handleFilterItemLabelClick={() => {
+                  if (values.length === 1) {
+                    return;
+                  }
+                  handleFilterItemLabelClick(value);
+                }}
                 isChecked={isChecked(value)}
                 count={value.count}
                 isMonospace={isMonospace}

@@ -56,7 +56,7 @@ export const FilterGroup = ({
         isFetching={isFetching}
         setUncheckedValues={setGroupsUnchecked}
         handleFilterItemLabelClick={filterItemLabelClick}
-        handleFilterItemClick={toggleItem}
+        handleFilterItemClick={(e) => group.filterItems.length !== 1 && toggleItem(e)}
         isChecked={(filterItem) => uncheckedValues.includes(filterItem.value)}
         markAllValuesActive={clearGroup}
         closePopover={onClick}
