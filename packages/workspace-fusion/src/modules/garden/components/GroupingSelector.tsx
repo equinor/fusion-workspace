@@ -9,29 +9,29 @@ type GroupingSelectorProps = {
   context: FilterState;
   setGroupingKeys: (keys: string[]) => void;
   groupingKeys: string[];
-  dimension: string | null;
-  type: string | null;
-  onChangeDimension: (dimension: string | null) => void;
-  onChangeMode: (type: string | null) => void;
+  timeInterval: string | null;
+  dateVariant: string | null;
+  onChangeTimeInterval: (timeInterval: string | null) => void;
+  onChangeDateVarient: (dateVariant: string | null) => void;
 };
 
 export function GroupingSelector({
   dataSource,
   context,
-  dimension,
-  type,
+  timeInterval,
+  dateVariant,
   setGroupingKeys,
-  onChangeDimension,
-  onChangeMode,
+  onChangeTimeInterval,
+  onChangeDateVarient,
   groupingKeys,
 }: GroupingSelectorProps): JSX.Element | null {
-  const { data } = useQuery(['garden', ...groupingKeys, dimension, type, context], {
+  const { data } = useQuery(['garden', ...groupingKeys, timeInterval, dateVariant, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
     queryFn: ({ signal }) =>
-      dataSource.getGardenMeta({ groupingKeys, dimension, type }, context, signal ?? new AbortSignal()),
+      dataSource.getGardenMeta({ groupingKeys, timeInterval, dateVariant }, context, signal ?? new AbortSignal()),
   });
 
   const setGardenKey = (key: string) => {
@@ -40,12 +40,12 @@ export function GroupingSelector({
       throw new Error('Invalid grouping option');
     }
 
-    if (!foundGroupingOption?.dimension?.includes(dimension ?? '')) {
-      onChangeDimension(foundGroupingOption.dimension?.at(0) ?? null);
+    if (!foundGroupingOption?.timeInterval?.includes(timeInterval ?? '')) {
+      onChangeTimeInterval(foundGroupingOption.timeInterval?.at(0) ?? null);
     }
 
-    if (!foundGroupingOption?.type?.includes(type ?? '')) {
-      onChangeMode(foundGroupingOption.type?.at(0) ?? null);
+    if (!foundGroupingOption?.dateVariant?.includes(dateVariant ?? '')) {
+      onChangeDateVarient(foundGroupingOption.dateVariant?.at(0) ?? null);
     }
 
     setGroupingKeys([key]);
@@ -85,28 +85,28 @@ export function GroupingSelector({
           groupingOption.groupingKey === groupingKeys[0] && (
             <RadioWrapper>
               <RadioCategoryWrapper>
-                {groupingOption.dimension &&
-                  groupingOption.dimension.map((dim) => (
+                {groupingOption.timeInterval &&
+                  groupingOption.timeInterval.map((dim) => (
                     <Radio
                       key={dim}
                       label={dim}
                       value={dim}
-                      name="Dimension"
-                      checked={dimension?.trim().toLowerCase() === dim.trim().toLowerCase()}
-                      onChange={(e) => onChangeDimension(e.target.value)}
+                      name="timeInterval"
+                      checked={timeInterval?.trim().toLowerCase() === dim.trim().toLowerCase()}
+                      onChange={(e) => onChangeTimeInterval(e.target.value)}
                     />
                   ))}
               </RadioCategoryWrapper>
               <RadioCategoryWrapper>
-                {groupingOption.type &&
-                  groupingOption.type.map((typ) => (
+                {groupingOption.dateVariant &&
+                  groupingOption.dateVariant.map((typ) => (
                     <Radio
                       key={typ}
                       label={typ}
                       value={typ}
-                      name="type"
-                      checked={type?.trim().toLowerCase() === typ.trim().toLowerCase()}
-                      onChange={(e) => onChangeMode(e.target.value)}
+                      name="dateVariant"
+                      checked={dateVariant?.trim().toLowerCase() === typ.trim().toLowerCase()}
+                      onChange={(e) => onChangeDateVarient(e.target.value)}
                     />
                   ))}
               </RadioCategoryWrapper>

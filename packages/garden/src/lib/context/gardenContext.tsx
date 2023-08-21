@@ -8,8 +8,8 @@ type GardenState = {
 
 type GroupingService = {
   groupingKeys: string[];
-  dimension: string | null;
-  type: string | null;
+  timeInterval: string | null;
+  dateVariant: string | null;
 };
 
 type SelectionService = {
@@ -25,12 +25,12 @@ export const GardenContextProvider = <T,>(
     getIdentifier: GetIdentifier<T>;
     selected: string | null;
     initialGrouping: string[];
-    dimension: string | null;
-    type: string | null;
+    timeInterval: string | null;
+    dateVariant: string | null;
   }>
 ) => {
   const selectionService = useSelectionService(props.getIdentifier, props.selected);
-  const groupingService = useGroupingService(props.initialGrouping, props.dimension, props.type);
+  const groupingService = useGroupingService(props.initialGrouping, props.timeInterval, props.dateVariant);
 
   return (
     <GardenContext.Provider value={{ groupingService, selectionService }}>{props.children}</GardenContext.Provider>
@@ -60,12 +60,12 @@ const useSelectionService = <T,>(getIdentifier: GetIdentifier<T>, initialSelecte
 
 const useGroupingService = (
   initialGrouping: string[],
-  dimension: string | null,
-  type: string | null
+  timeInterval: string | null,
+  dateVariant: string | null
 ): GroupingService => {
   return {
     groupingKeys: initialGrouping,
-    dimension: dimension,
-    type: type,
+    timeInterval: timeInterval,
+    dateVariant: dateVariant,
   };
 };

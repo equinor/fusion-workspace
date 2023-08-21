@@ -19,7 +19,7 @@ export type GardenMeta = {
 
 export type GetHeaderBlockRequestArgs = Pick<
   GetBlockRequestArgs,
-  'columnStart' | 'columnEnd' | 'groupingKeys' | 'dimension' | 'type'
+  'columnStart' | 'columnEnd' | 'groupingKeys' | 'timeInterval' | 'dateVariant'
 >;
 
 export type GetBlockRequestArgs = {
@@ -34,17 +34,17 @@ export type GetBlockRequestArgs = {
   /** Grouping key */
   groupingKeys: string[];
 
-  dimension: string | null;
+  timeInterval: string | null;
 
-  type: string | null;
+  dateVariant: string | null;
 };
 
 export type GetSubgroupItemsArgs = {
   groupingKeys: string[];
   columnName: string;
   subgroupName: string;
-  dimension: string | null;
-  type: string | null;
+  timeInterval: string | null;
+  dateVariant: string | null;
 };
 
 export type GardenHeaderGroup = {
@@ -54,6 +54,6 @@ export type GardenHeaderGroup = {
 
 export type GroupingOption = {
   groupingKey: string;
-  dimension: string[] | null;
-  type: string[] | null;
+  timeInterval: string[] | null;
+  dateVariant: string[] | null;
 };

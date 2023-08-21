@@ -86,7 +86,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
   const isColumnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
 
   const {
-    groupingService: { groupingKeys, dimension, type },
+    groupingService: { groupingKeys, timeInterval, dateVariant },
   } = useGarden();
 
   const queries = useBlockCache<TData[], TContext>({
@@ -110,8 +110,8 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
         {
           columnName: group.columnName,
           groupingKeys: groupingKeys,
-          dimension: dimension,
-          type: type,
+          timeInterval: timeInterval,
+          dateVariant: dateVariant,
           subgroupName: group.name,
         },
         context,

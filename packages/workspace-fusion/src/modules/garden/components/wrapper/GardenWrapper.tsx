@@ -24,25 +24,25 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   const { selectItem } = useWorkspace();
   const [groupingKeys, setGroupingKeys] = useState<string[]>(config.initialGrouping);
 
-  const [dimension, updateDim] = useState<string | null>(config.initialDimension ?? null);
-  const onChangeDimension = (dim: string | null) => {
-    updateDim(dim);
+  const [timeInterval, updateTimeInterval] = useState<string | null>(config.initialTimeInterval ?? null);
+  const onChangetimeInterval = (timeInterval: string | null) => {
+    updateTimeInterval(timeInterval);
   };
 
-  const [type, updateMode] = useState<string | null>(config.initialMode ?? null);
-  const onChangeMode = (mode: string | null) => {
-    updateMode(mode);
+  const [dateVariant, updateDateVariant] = useState<string | null>(config.initialDateVariant ?? null);
+  const onChangeDateVariant = (dateVariant: string | null) => {
+    updateDateVariant(dateVariant);
   };
 
-  const groupingKeys$ = useRef(new BehaviorSubject({ groupingKeys, dimension, type }));
+  const groupingKeys$ = useRef(new BehaviorSubject({ groupingKeys, timeInterval, dateVariant }));
 
   useEffect(() => {
     /**
      * You might not need an effect
      * Yes you do!
      */
-    groupingKeys$.current.next({ groupingKeys, dimension, type });
-  }, [groupingKeys, dimension, type]);
+    groupingKeys$.current.next({ groupingKeys, timeInterval, dateVariant });
+  }, [groupingKeys, timeInterval, dateVariant]);
 
   const { setIcons } = useWorkspaceHeaderComponents();
   useEffect(() => {
@@ -54,8 +54,8 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
           anchor={anchor}
           groupingKeys$={groupingKeys$.current}
           setGroupingKeys={setGroupingKeys}
-          onChangeDimension={onChangeDimension}
-          onChangeMode={onChangeMode}
+          onChangeTimeInterval={onChangetimeInterval}
+          onChangeDateVariant={onChangeDateVariant}
         />
       ),
       name: 'garden-grouping',
@@ -85,8 +85,8 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
         selected={selection?.id}
         getIdentifier={getIdentifier}
         groupingKeys={groupingKeys}
-        dimension={dimension}
-        type={type}
+        timeInterval={timeInterval}
+        dateVariant={dateVariant}
         getDisplayName={config.getDisplayName}
         clickEvents={{
           onClickItem: (i) => {

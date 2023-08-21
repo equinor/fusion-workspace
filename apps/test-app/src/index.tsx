@@ -26,14 +26,14 @@ export function App() {
           console.log(a);
           return {
             allGroupingOptions: [
-              { groupingKey: 'RFOC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
-              { groupingKey: 'RFCC', dimension: ['Daily', 'Weekly', 'Monthly'], type: ['Forecast', 'Planned'] },
+              { groupingKey: 'RFOC', timeInterval: ['Daily', 'Weekly', 'Monthly'], dateVariant: ['Forecast', 'Planned'] },
+              { groupingKey: 'RFCC', timeInterval: ['Daily', 'Weekly', 'Monthly'], dateVariant: ['Forecast', 'Planned'] },
               {
                 groupingKey: 'Some very long keys',
-                dimension: ['Daily', 'Weekly'],
-                type: ['Forecast', 'Planned', 'Done'],
+                timeInterval: ['Daily', 'Weekly'],
+                dateVariantdateVariant: ['Forecast', 'Planned', 'Done'],
               },
-              { groupingKey: 'System', dimension: null, type: null },
+              { groupingKey: 'System', timeInterval: null, dateVariant: null },
             ] as GroupingOption[],
             columnCount: 2,
             columnStart: 0,

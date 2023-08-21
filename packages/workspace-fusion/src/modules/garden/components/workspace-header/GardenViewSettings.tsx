@@ -21,14 +21,14 @@ type GardenPopoverItemProps = {
   filterState: FilterState;
   config: GardenConfig<any, FilterState>;
   setGroupingKeys: (keys: string[]) => void;
-  onChangeDimension: (dimension: string | null) => void;
-  onChangeMode: (mode: string | null) => void;
+  onChangeTimeInterval: (timeInterval: string | null) => void;
+  onChangeDateVariant: (dateVariant: string | null) => void;
 };
 export const GardenPopoverItem = ({
   anchor,
   groupingKeys$,
-  onChangeDimension,
-  onChangeMode,
+  onChangeTimeInterval,
+  onChangeDateVariant,
   setGroupingKeys,
   config,
   filterState,
@@ -69,10 +69,10 @@ export const GardenPopoverItem = ({
               <GroupingSelector
                 groupingKeys={groupState.groupingKeys}
                 setGroupingKeys={setGroupingKeys}
-                dimension={groupState.dimension}
-                onChangeDimension={onChangeDimension}
-                type={groupState.type}
-                onChangeMode={onChangeMode}
+                timeInterval={groupState.timeInterval}
+                onChangeTimeInterval={onChangeTimeInterval}
+                dateVariant={groupState.dateVariant}
+                onChangeDateVarient={onChangeDateVariant}
                 context={filterState}
                 dataSource={config}
               />

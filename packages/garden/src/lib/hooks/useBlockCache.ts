@@ -21,13 +21,13 @@ export function useBlockCache<T, TContext = undefined>({
   hash,
 }: UseBlockCacheArgs<T, TContext>) {
   const {
-    groupingService: { groupingKeys, dimension, type },
+    groupingService: { groupingKeys, timeInterval, dateVariant },
   } = useGarden();
 
   const blockCache = useQueries({
     queries: blocks.map((block) => ({
       /** Unique identifier for blocks, add state here to invalidate query onChange */
-      queryKey: [...groupingKeys, dimension, type, `x${block.x}`, `y${block.y}`, context, ...hash],
+      queryKey: [...groupingKeys, timeInterval, dateVariant, `x${block.x}`, `y${block.y}`, context, ...hash],
       /** Only fetch if block is in view */
       enabled: !!blocksInView.find((s) => s.x === block.x && s.y === block.y),
       /** Annoying default in react-query */
@@ -39,7 +39,7 @@ export function useBlockCache<T, TContext = undefined>({
         const coordinates = getBlockIndexes(block, blockSqrt);
 
         return getBlockAsync(
-          { ...coordinates, groupingKeys: groupingKeys, dimension: dimension, type: type },
+          { ...coordinates, groupingKeys: groupingKeys, timeInterval: timeInterval, dateVariant: dateVariant },
           context,
           signal
         );
