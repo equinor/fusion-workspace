@@ -1,5 +1,4 @@
 {
-	"extends": "./tsconfig.json",
-	"include": ["src"],
-	"references": [{ "path": "../workspace-core" }]
+  "extends": "./tsconfig.json",
+  "include": ["src"]
 }

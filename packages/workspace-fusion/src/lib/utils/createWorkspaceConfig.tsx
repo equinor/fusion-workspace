@@ -1,22 +1,16 @@
 import { Provider, Tab } from '@equinor/workspace-react';
-import { Bookmark, FusionMediator, WorkspaceConfiguration, WorkspaceProps } from '../types';
+import { Bookmark, WorkspaceConfiguration, WorkspaceProps } from '../types';
 import { sortFusionTabs } from './fusionTabOrder';
 
 import { addStatusBar } from '../integrations/status-bar';
 import { addSidesheet } from '../integrations/sidesheet';
-import { BaseEvent } from '@equinor/workspace-core';
 import { RootHeaderContext } from '../context';
-import { FilterContextProvider } from '@equinor/workspace-filter';
 import { tryGetTabFromUrl } from '../classes/fusionUrlHandler';
 
 export function createConfigurationObject<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never
->(
-  props: WorkspaceProps<TData, TContext, TCustomSidesheetEvents>,
-  mediator: FusionMediator<never, TContext, TCustomSidesheetEvents>
-): WorkspaceConfiguration {
+>(props: WorkspaceProps<TData, TContext>): WorkspaceConfiguration {
   const tabs: Tab[] = [];
   const providers: Provider[] = [];
 
@@ -34,11 +28,11 @@ export function createConfigurationObject<
 
   pushProvider({ name: 'Header', Component: RootHeaderContext });
 
-  const Sidesheet = addSidesheet(props.sidesheetOptions, mediator);
+  const Sidesheet = addSidesheet(props.sidesheetOptions);
 
   props.modules &&
     props.modules.forEach((module) => {
-      const config = module.setup(props, mediator);
+      const config = module.setup(props);
       if (!config) return;
       pushProvider(config.provider);
       pushTab(config.tab);

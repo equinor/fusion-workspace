@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-garden",
-  "version": "2.0.1",
+  "version": "4.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -12,6 +12,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -24,8 +25,7 @@
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
     "react-error-boundary": "^3.1.4",
-    "react-virtual": "^2.10.4",
-    "rxjs": "^7.8.0"
+    "react-virtual": "^2.10.4"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",

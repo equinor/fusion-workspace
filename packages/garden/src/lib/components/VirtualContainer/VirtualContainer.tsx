@@ -1,9 +1,11 @@
-import { useGardenContext, useGroupingKeys, useItemWidths } from '../../hooks';
+import { useItemWidths } from '../../hooks';
 import { ExpandProvider } from '../ExpandProvider';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
 import { useQuery } from '@tanstack/react-query';
 import { GardenDataSource } from '../Garden';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
+import { useGarden } from '../../hooks/useGarden';
 
 type VirtualContainerProps<TContext = undefined> = {
   dataSource: GardenDataSource<TContext>;
@@ -14,20 +16,26 @@ export const VirtualContainer = <TContext,>({
   dataSource,
   context,
 }: VirtualContainerProps<TContext>): JSX.Element | null => {
-  const controller = useGardenContext();
+  const { onClickItem } = useGardenConfig();
   const {
-    clickEvents: { onClickItem },
-  } = controller;
+    groupingService: { groupingKeys, dimension, type },
+  } = useGarden();
 
-  const keys = useGroupingKeys();
-
-  const { data, isFetching } = useQuery(['garden', keys.gardenKey.toString(), ...keys.groupByKeys, context], {
+  const { data, isFetching } = useQuery(['garden', ...groupingKeys, dimension, type, context], {
     refetchOnWindowFocus: false,
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
     queryFn: ({ signal }) =>
-      dataSource.getGardenMeta([keys.gardenKey.toString(), ...keys.groupByKeys], context, signal ?? new AbortSignal()),
+      dataSource.getGardenMeta(
+        {
+          dimension,
+          type,
+          groupingKeys,
+        },
+        context,
+        signal ?? new AbortSignal()
+      ),
   });
 
   if (!data) {

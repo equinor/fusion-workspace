@@ -9,30 +9,38 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import styled from 'styled-components';
 import { GroupingSelector } from '../GroupingSelector';
 import { GardenConfig } from '../../../../lib/integrations/garden';
+import { GardenMetaRequest } from '@equinor/workspace-garden';
 
 Icon.add({ close, more_vertical });
 
+type GroupState = Required<GardenMetaRequest>;
+
 type GardenPopoverItemProps = {
   anchor: HTMLElement;
-  groupingKeys$: BehaviorSubject<string[]>;
+  groupingKeys$: BehaviorSubject<GroupState>;
   filterState: FilterState;
   config: GardenConfig<any, FilterState>;
   setGroupingKeys: (keys: string[]) => void;
+  onChangeDimension: (dimension: string | null) => void;
+  onChangeMode: (mode: string | null) => void;
 };
 export const GardenPopoverItem = ({
   anchor,
   groupingKeys$,
+  onChangeDimension,
+  onChangeMode,
   setGroupingKeys,
   config,
   filterState,
 }: GardenPopoverItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const pRef = useRef(null);
-  const [groupingKeys, setInternalKeys] = useState<string[]>(groupingKeys$.value);
+  const [groupState, setGroupState] = useState<GroupState>(groupingKeys$.value);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const sub = groupingKeys$.pipe(distinctUntilChanged()).subscribe((r) => {
-      setInternalKeys(r);
+      setGroupState(r);
     });
     return () => sub.unsubscribe();
   }, [groupingKeys$]);
@@ -46,7 +54,7 @@ export const GardenPopoverItem = ({
         onClick={() => setIsOpen((s) => !s)}
       />
       {createPortal(
-        <Popover style={{ height: '450px', width: '300px' }} open={isOpen} anchorEl={pRef.current}>
+        <Popover ref={popoverRef} style={{ height: '450px', width: '300px' }} open={isOpen} anchorEl={pRef.current}>
           <Popover.Header>
             <StyledPopoverHeaderLine>
               <Popover.Title>Garden settings</Popover.Title>
@@ -60,8 +68,15 @@ export const GardenPopoverItem = ({
           <Popover.Content style={{ overflow: 'hidden' }}>
             <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
-                groupingKeys={groupingKeys}
+                iconRef={pRef}
+                close={() => setIsOpen(false)}
+                popoverRef={popoverRef}
+                groupingKeys={groupState.groupingKeys}
                 setGroupingKeys={setGroupingKeys}
+                dimension={groupState.dimension}
+                onChangeDimension={onChangeDimension}
+                type={groupState.type}
+                onChangeMode={onChangeMode}
                 context={filterState}
                 dataSource={config}
               />

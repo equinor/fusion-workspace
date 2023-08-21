@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-ag-grid",
-  "version": "1.0.4",
+  "version": "1.2.2",
   "type": "module",
   "private": false,
   "sideEffects": false,
@@ -10,6 +10,7 @@
     "build:prod": "tsc -b",
     "lint": "eslint --ext .ts,.tsx"
   },
+  "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -18,24 +19,50 @@
   "publishConfig": {
     "access": "public"
   },
+  "typesVersions": {
+    ">=4.2": {
+      ".": [
+        "dist/types/index"
+      ],
+      "modules": [
+        "dist/types/modules/index"
+      ]
+    }
+  },
+  "exports": {
+    ".": "./dist/esm/index.js",
+    "./modules": "./dist/esm/modules/index.js"
+  },
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "28.1.1",
     "@ag-grid-community/core": "28.1.1",
     "@ag-grid-community/react": "28.1.1",
+    "@ag-grid-enterprise/column-tool-panel": "28.1.1",
+    "@ag-grid-enterprise/excel-export": "28.1.1",
+    "@ag-grid-enterprise/filter-tool-panel": "28.1.1",
+    "@ag-grid-enterprise/master-detail": "28.1.1",
+    "@ag-grid-enterprise/menu": "28.1.1",
+    "@ag-grid-enterprise/multi-filter": "28.1.1",
+    "@ag-grid-enterprise/range-selection": "28.1.1",
+    "@ag-grid-enterprise/rich-select": "28.1.1",
+    "@ag-grid-enterprise/row-grouping": "28.1.1",
     "@ag-grid-enterprise/server-side-row-model": "28.1.1",
+    "@ag-grid-enterprise/set-filter": "28.1.1",
+    "@ag-grid-enterprise/side-bar": "28.1.1",
+    "@ag-grid-enterprise/status-bar": "28.1.1",
     "@equinor/eds-tokens": "^0.9.0"
   },
   "peerDependencies": {
+    "@ag-grid-enterprise/core": "28.1.1",
     "react": ">= 16.8.0",
     "react-dom": ">= 16.8.0",
     "react-is": ">= 16.8.0",
-    "@ag-grid-enterprise/core": "28.1.1",
     "styled-components": "5.3.6"
   },
   "devDependencies": {
+    "@ag-grid-enterprise/core": "28.1.1",
     "@types/jest": "27.4.1",
     "@types/react": ">= 16.8.0",
-    "@ag-grid-enterprise/core": "28.1.1",
     "@types/react-dom": "^18.0.8",
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",

@@ -1,62 +1,50 @@
-import { BaseEvent } from '@equinor/workspace-core';
 import { FilterState, useFilterContext } from '@equinor/workspace-filter';
-import { BookmarkRef, Garden } from '@equinor/workspace-garden';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Garden } from '@equinor/workspace-garden';
+import { useEffect, useRef, useState } from 'react';
 import { GardenConfig } from '../../../../lib/integrations/garden';
 import { GetIdentifier } from '../../../../lib/types/configuration';
-import { FusionMediator, HeaderIcon, useWorkspaceHeaderComponents } from '../../../../lib';
-import { createPortal } from 'react-dom';
-import { CircularProgress, Icon, Popover } from '@equinor/eds-core-react';
+import { HeaderIcon, useWorkspaceHeaderComponents } from '../../../../lib';
+import { Icon } from '@equinor/eds-core-react';
 import { more_vertical } from '@equinor/eds-icons';
-import { tokens } from '@equinor/eds-tokens';
-import styled from 'styled-components';
-import { GroupingSelector } from '../GroupingSelector';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { GardenPopoverItem } from '../workspace-header/GardenViewSettings';
+import { useWorkspace } from '../../../../lib/hooks';
 Icon.add({ more_vertical });
 
-type GardenWrapperProps<
-  TData extends Record<PropertyKey, unknown>,
-  TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
-> = {
+type GardenWrapperProps<TData extends Record<PropertyKey, unknown>, TFilter = undefined> = {
   config: GardenConfig<any, TFilter>;
   getIdentifier: GetIdentifier<TData>;
-  mediator: FusionMediator<never, any, any>;
 };
 
-export const GardenWrapper = <
-  TData extends Record<PropertyKey, unknown>,
-  TError extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
-  TCustomSidesheetEvents extends BaseEvent = never,
-  TFilter = undefined
->({
+export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilter = undefined>({
   config,
   getIdentifier,
-  mediator,
-}: GardenWrapperProps<TData, TError, TContext, TCustomSidesheetEvents, TFilter>) => {
+}: GardenWrapperProps<TData, TFilter>) => {
   const { filterState } = useFilterContext();
-  const bookmarkRef = useRef<BookmarkRef<TData> | null>(null);
-  const [groupingKeys, setGroupingKeys] = useState<string[]>([
-    config.initialGrouping.horizontalGroupingAccessor.toString(),
-    ...(config.initialGrouping.verticalGroupingKeys ?? []),
-  ]);
+  const { selectItem } = useWorkspace();
+  const [groupingKeys, setGroupingKeys] = useState<string[]>(config.initialGrouping);
 
-  const groupingKeys$ = useRef(new BehaviorSubject(groupingKeys));
+  const [dimension, updateDim] = useState<string | null>(config.initialDimension ?? null);
+  const onChangeDimension = (dim: string | null) => {
+    updateDim(dim);
+  };
+
+  const [type, updateMode] = useState<string | null>(config.initialMode ?? null);
+  const onChangeMode = (mode: string | null) => {
+    updateMode(mode);
+  };
+
+  const groupingKeys$ = useRef(new BehaviorSubject({ groupingKeys, dimension, type }));
 
   useEffect(() => {
     /**
      * You might not need an effect
      * Yes you do!
      */
-    groupingKeys$.current.next(groupingKeys);
-  }, [groupingKeys]);
+    groupingKeys$.current.next({ groupingKeys, dimension, type });
+  }, [groupingKeys, dimension, type]);
 
   const { setIcons } = useWorkspaceHeaderComponents();
-
   useEffect(() => {
     const icon: HeaderIcon = {
       Icon: ({ anchor }) => (
@@ -66,6 +54,8 @@ export const GardenWrapper = <
           anchor={anchor}
           groupingKeys$={groupingKeys$.current}
           setGroupingKeys={setGroupingKeys}
+          onChangeDimension={onChangeDimension}
+          onChangeMode={onChangeMode}
         />
       ),
       name: 'garden-grouping',
@@ -83,20 +73,24 @@ export const GardenWrapper = <
      */
   }, []);
 
+  const { selection } = useWorkspace();
+
   return (
     <div id="workspace_garden_wrapper" style={{ height: '100%', width: '100%' }}>
       <Garden<TData, TFilter>
-        bookmarkRef={bookmarkRef}
         dataSource={{ ...config }}
         context={filterState as TFilter}
         customViews={config.customViews}
         visuals={config.visuals}
+        selected={selection?.id}
         getIdentifier={getIdentifier}
         groupingKeys={groupingKeys}
+        dimension={dimension}
+        type={type}
         getDisplayName={config.getDisplayName}
         clickEvents={{
           onClickItem: (i) => {
-            mediator.selectionService.selectedNodes = [{ id: getIdentifier(i), item: i as any }];
+            selectItem(i);
           },
         }}
       />

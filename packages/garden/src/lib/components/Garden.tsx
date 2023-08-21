@@ -1,6 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { createContext, MutableRefObject, Suspense, useEffect, useMemo, useRef } from 'react';
-import { GardenController, GetIdentifier } from '../classes';
+import { Suspense, useRef } from 'react';
 import {
   CustomVirtualViews,
   GardenGroup,
@@ -10,7 +9,6 @@ import {
   GetDisplayName,
   GetHeaderBlockRequestArgs,
   GetSubgroupItemsArgs,
-  GroupingKeys,
   OnClickEvents,
   Visuals,
 } from '../types';
@@ -21,17 +19,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SplashScreen } from './splashScreen/SplashScreen';
 import { ErrorBoundary } from 'react-error-boundary';
 import { GardenError } from './error/GardenError';
-import { useBookmarkRef } from '../hooks/useBookmarkRef';
+import { GetIdentifier } from '../types/getIdentifier';
+import { GardenConfigProvider } from '../context/gardenConfig';
+import { GardenContextProvider } from '../context/gardenContext';
+
+export type GardenMetaRequest = {
+  groupingKeys: string[];
+  dimension?: string | null;
+  type?: string | null;
+};
 
 export type GardenDataSource<TContext> = {
-  getGardenMeta: (keys: string[], context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
+  getGardenMeta: (request: GardenMetaRequest, context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
   getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
   getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
   getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal?: AbortSignal) => Promise<any[]>;
-};
-
-export type BookmarkRef<TData extends Record<PropertyKey, unknown>> = {
-  groupingKeys: GroupingKeys<TData>;
 };
 
 interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
@@ -42,8 +44,10 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   visuals?: Visuals<TData>;
   customViews?: CustomVirtualViews<TData>;
   clickEvents?: OnClickEvents<TData>;
-  bookmarkRef?: MutableRefObject<BookmarkRef<TData> | null | undefined>;
   groupingKeys: string[];
+  dimension: string | null;
+  type: string | null;
+  selected?: string | null;
 }
 
 Icon.add({ chevron_down, chevron_up });
@@ -55,44 +59,39 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   getIdentifier,
   groupingKeys,
   customViews,
+  dimension,
+  type,
   visuals,
   clickEvents,
-  bookmarkRef,
+  selected = null,
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const client = useRef(new QueryClient());
-
-  const controller = useMemo(
-    () =>
-      new GardenController<TData>({
-        dataSource: dataSource,
-        getDisplayName,
-        getIdentifier,
-        initialGrouping: { horizontalGroupingAccessor: groupingKeys[0], verticalGroupingKeys: groupingKeys.slice(1) },
-        visuals: visuals,
-        customViews: customViews,
-        clickEvents,
-      }),
-    []
-  );
-
-  useEffect(() => {
-    controller.setHorizontalGroupingAccessor(groupingKeys[0]);
-    controller.setVerticalGroupingKeys(groupingKeys.slice(1));
-  }, [groupingKeys]);
-
-  useBookmarkRef(controller, bookmarkRef);
 
   return (
     <QueryClientProvider client={client.current}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContext.Provider value={controller as unknown as GardenController<Record<PropertyKey, unknown>>}>
-          <Suspense fallback={<SplashScreen />}>
-            <VirtualContainer context={context as TContext} dataSource={dataSource} />
-          </Suspense>
-        </GardenContext.Provider>
+        <GardenContextProvider
+          getIdentifier={getIdentifier}
+          dimension={dimension}
+          type={type}
+          initialGrouping={groupingKeys}
+          selected={selected}
+        >
+          <GardenConfigProvider
+            dataSource={dataSource}
+            getDisplayName={getDisplayName}
+            getIdentifier={getIdentifier}
+            clickEvents={clickEvents}
+            context={context}
+            customViews={customViews}
+            visuals={visuals}
+          >
+            <Suspense fallback={<SplashScreen />}>
+              <VirtualContainer context={context as TContext} dataSource={dataSource} />
+            </Suspense>
+          </GardenConfigProvider>
+        </GardenContextProvider>
       </ErrorBoundary>
     </QueryClientProvider>
   );
 }
-
-export const GardenContext = createContext<GardenController<Record<PropertyKey, unknown>> | null>(null);

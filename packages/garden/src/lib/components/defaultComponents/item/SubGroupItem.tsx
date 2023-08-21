@@ -1,12 +1,13 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { MutableRefObject } from 'react';
-import { useGardenContext, useSelected } from '../../../hooks';
-import { CustomItemView, GroupingKeys } from '../../../types';
 import { StyledPackageRoot } from '../../GardenItemContainer/gardenItemContainer.styles';
 import { ErrorPackage } from '../../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../../virtualPackages/LoadingPackage';
 import { defaultItemColor } from '../../../utils';
 import { VirtualItem } from 'react-virtual';
+import { CustomItemView } from '../../../types';
+import { useGarden } from '../../../hooks/useGarden';
+import { useGardenConfig } from '../../../hooks/useGardenConfig';
 
 type SubGroupItemProps = {
   query: UseQueryResult<any[]>;
@@ -14,7 +15,7 @@ type SubGroupItemProps = {
   virtualColumn: VirtualItem;
   isExpanded: boolean;
   rowHeight: number;
-  groupingKeys: GroupingKeys<any>;
+  groupingKeys: string[];
   itemWidth: number;
   PackageChild: React.MemoExoticComponent<(args: CustomItemView<any>) => JSX.Element>;
   itemIndex: number;
@@ -36,10 +37,15 @@ export const SubGroupItem = ({
   parentRef,
 }: SubGroupItemProps) => {
   const { isLoading, error, data, refetch } = query;
-  const controller = useGardenContext<any>();
-  const { colorAssistMode$, getIdentifier } = controller;
 
-  const selectedIds = useSelected();
+  const {
+    selectionService: { selection },
+  } = useGarden();
+  const {
+    getIdentifier,
+    visuals: { itemColor = defaultItemColor, getDescription = () => '' },
+    getDisplayName,
+  } = useGardenConfig();
 
   if (isLoading) {
     /** Skeleton loading state */
@@ -67,7 +73,7 @@ export const SubGroupItem = ({
   }
 
   const item = data[itemIndex];
-  const color = controller.visuals?.getItemColor?.(item) ?? defaultItemColor;
+  const color = itemColor;
 
   return (
     <StyledPackageRoot
@@ -83,11 +89,11 @@ export const SubGroupItem = ({
         groupingKeys={groupingKeys}
         colorAssistMode={false}
         columnExpanded={isExpanded}
-        displayName={controller.getDisplayName(item)}
-        description={controller.visuals?.getDescription?.(item)}
+        displayName={getDisplayName(item)}
+        description={getDescription?.(item)}
         color={color}
         data={item}
-        isSelected={selectedIds.includes(getIdentifier(item))}
+        isSelected={selection === getIdentifier(item)}
         onClick={() => onClick(item)}
         width={itemWidth}
         depth={0}

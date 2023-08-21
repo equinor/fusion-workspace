@@ -1,11 +1,17 @@
-import { BaseEvent } from '@equinor/workspace-core';
-import { FusionMediator } from '../../../types';
-import { SidesheetConfig } from '../sidesheet';
+export type WorkspaceSidesheetProps<TData extends Record<PropertyKey, unknown>> = {
+  sidesheetOptions?: SidesheetConfig<TData>;
+};
 
-export type WorkspaceSidesheetProps<
-  TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>,
-  TCustomSidesheetEvents extends BaseEvent
-> = {
-  sidesheetOptions?: SidesheetConfig<TData, TContext, TCustomSidesheetEvents>;
+export type SidesheetConfig<TData> = {
+  type: 'default';
+  DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
+  CreateSidesheet?: () => JSX.Element;
+};
+//Future for Piping & release control, disabled for now
+// | { type: 'custom'; Component: () => JSX.Element }
+
+export type DetailsSidesheetProps<TData> = {
+  id: string;
+  item?: TData;
+  close: VoidFunction;
 };
