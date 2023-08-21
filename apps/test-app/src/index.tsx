@@ -64,8 +64,8 @@ export function App() {
           throw new Error('');
         },
         initialGrouping: ['RFOC'],
-        initialMode: 'Planned',
-        initialDimension: 'Weekly',
+        initialDateVariant: 'Planned',
+        initialTimeInterval: 'Weekly',
       }}
       filterOptions={{
         dataSource: {
