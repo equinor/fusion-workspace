@@ -75,11 +75,16 @@ export function App() {
                 { count: 10, value: 'test' },
                 {
                   count: 9,
-                  value: 'test',
+                  value: 'test2',
                 },
               ],
               isQuickFilter: true,
               name: 'test',
+            },
+            {
+              name: 'single',
+              filterItems: [{ count: 1, value: 'abc' }],
+              isQuickFilter: true,
             },
           ],
         },
