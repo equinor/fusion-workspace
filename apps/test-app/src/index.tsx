@@ -26,8 +26,16 @@ export function App() {
           console.log(a);
           return {
             allGroupingOptions: [
-              { groupingKey: 'RFOC', timeInterval: ['Daily', 'Weekly', 'Monthly'], dateVariant: ['Forecast', 'Planned'] },
-              { groupingKey: 'RFCC', timeInterval: ['Daily', 'Weekly', 'Monthly'], dateVariant: ['Forecast', 'Planned'] },
+              {
+                groupingKey: 'RFOC',
+                timeInterval: ['Daily', 'Weekly', 'Monthly'],
+                dateVariant: ['Forecast', 'Planned'],
+              },
+              {
+                groupingKey: 'RFCC',
+                timeInterval: ['Daily', 'Weekly', 'Monthly'],
+                dateVariant: ['Forecast', 'Planned'],
+              },
               {
                 groupingKey: 'Some very long keys',
                 timeInterval: ['Daily', 'Weekly'],
