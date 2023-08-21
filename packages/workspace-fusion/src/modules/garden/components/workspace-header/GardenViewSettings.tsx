@@ -36,6 +36,7 @@ export const GardenPopoverItem = ({
   const [isOpen, setIsOpen] = useState(false);
   const pRef = useRef(null);
   const [groupState, setGroupState] = useState<GroupState>(groupingKeys$.value);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const sub = groupingKeys$.pipe(distinctUntilChanged()).subscribe((r) => {
@@ -53,7 +54,7 @@ export const GardenPopoverItem = ({
         onClick={() => setIsOpen((s) => !s)}
       />
       {createPortal(
-        <Popover style={{ height: '450px', width: '300px' }} open={isOpen} anchorEl={pRef.current}>
+        <Popover ref={popoverRef} style={{ height: '450px', width: '300px' }} open={isOpen} anchorEl={pRef.current}>
           <Popover.Header>
             <StyledPopoverHeaderLine>
               <Popover.Title>Garden settings</Popover.Title>
@@ -67,6 +68,9 @@ export const GardenPopoverItem = ({
           <Popover.Content style={{ overflow: 'hidden' }}>
             <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
+                iconRef={pRef}
+                close={() => setIsOpen(false)}
+                popoverRef={popoverRef}
                 groupingKeys={groupState.groupingKeys}
                 setGroupingKeys={setGroupingKeys}
                 timeInterval={groupState.timeInterval}

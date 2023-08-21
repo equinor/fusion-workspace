@@ -25,7 +25,7 @@ export const FilterItemCheckbox = ({
   isMonospace,
 }: FilterItemCheckboxProps): JSX.Element => {
   return (
-    <StyledFilterItemWrap title={typeof filterValue === 'string' ? filterValue : '(Blank)'} key={filterValue.value}>
+    <StyledFilterItemWrap title={filterValue.value ?? '(Blank)'} key={filterValue.value}>
       <Checkbox disabled={isFetching} onChange={handleFilterItemClick} size={12} checked={!isChecked} />
       <StyledFilterLabelWrapper
         onClick={handleFilterItemLabelClick}
