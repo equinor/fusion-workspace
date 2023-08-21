@@ -39,7 +39,7 @@ export function App() {
               {
                 groupingKey: 'Some very long keys',
                 timeInterval: ['Daily', 'Weekly'],
-                dateVariantdateVariant: ['Forecast', 'Planned', 'Done'],
+                dateVariant: ['Forecast', 'Planned', 'Done'],
               },
               { groupingKey: 'System', timeInterval: null, dateVariant: null },
             ] as GroupingOption[],
