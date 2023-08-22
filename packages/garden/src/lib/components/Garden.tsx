@@ -25,8 +25,8 @@ import { GardenContextProvider } from '../context/gardenContext';
 
 export type GardenMetaRequest = {
   groupingKeys: string[];
-  dimension?: string | null;
-  type?: string | null;
+  timeInterval?: string | null;
+  dateVariant?: string | null;
 };
 
 export type GardenDataSource<TContext> = {
@@ -45,8 +45,8 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   customViews?: CustomVirtualViews<TData>;
   clickEvents?: OnClickEvents<TData>;
   groupingKeys: string[];
-  dimension: string | null;
-  type: string | null;
+  timeInterval: string | null;
+  dateVariant: string | null;
   selected?: string | null;
 }
 
@@ -59,8 +59,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   getIdentifier,
   groupingKeys,
   customViews,
-  dimension,
-  type,
+  timeInterval,
+  dateVariant,
   visuals,
   clickEvents,
   selected = null,
@@ -72,8 +72,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
       <ErrorBoundary FallbackComponent={GardenError}>
         <GardenContextProvider
           getIdentifier={getIdentifier}
-          dimension={dimension}
-          type={type}
+          timeInterval={timeInterval}
+          dateVariant={dateVariant}
           initialGrouping={groupingKeys}
           selected={selected}
         >
