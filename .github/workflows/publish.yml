@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - preview/server-side
+      - fix/powerbi-quickfilter-placement
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -20,4 +21,4 @@ jobs:
       # Set token
       - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
       # Publish all packages in the workspace which version still does not exist
-      - run: pnpm shipit --no-git-checks
+      - run: pnpm shipit --no-git-checks --tag alpha

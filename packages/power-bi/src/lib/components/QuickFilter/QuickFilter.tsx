@@ -36,13 +36,10 @@ const calculateHiddenFilters = (shownFilters: string[], activeFilters: Record<st
   }
   const activeFilterKeys = Object.keys(activeFilters);
   const filterShownFilters = activeFilterKeys.filter((key) => !shownFilters.includes(key));
-  const hiddenFilters = filterShownFilters.reduce(
-    (acc, curr) => {
-      acc[curr] = activeFilters[curr];
-      return acc;
-    },
-    {} as Record<string, ActiveFilter[]>
-  );
+  const hiddenFilters = filterShownFilters.reduce((acc, curr) => {
+    acc[curr] = activeFilters[curr];
+    return acc;
+  }, {} as Record<string, ActiveFilter[]>);
 
   return Object.values(hiddenFilters).filter((a) => a.length > 0).length;
 };
@@ -64,7 +61,7 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
       {!isFilterExpanded && (
         <StyledCompactFilterWrapper>
           <FilterBar>
-            <div style={{ display: 'flex', width: '100%', gap: '2em' }}>
+            <div style={{ display: 'flex', width: '100%', gap: '2em', flexDirection: 'row-reverse' }}>
               {slicerFilters.map((s, i) => {
                 i < 9 && shownFilters.push(s.type);
                 return (
