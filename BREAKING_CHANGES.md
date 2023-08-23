@@ -13,4 +13,4 @@ All fetch callbacks altered to accept new fields.
 ## 4.xx -> 5.xx
 
 Only affects garden config
-`type` and `dimension` renamed to `dateVariant` and `timeInterval` 
+`type` and `dimension` renamed to `dateVariant` and `timeInterval`
