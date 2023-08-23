@@ -64,7 +64,7 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
       {!isFilterExpanded && (
         <StyledCompactFilterWrapper>
           <FilterBar>
-            <div style={{ display: 'flex', width: '100%', gap: '2em' }}>
+            <div style={{ display: 'flex', width: '100%', gap: '2em', flexDirection: 'row-reverse' }}>
               {slicerFilters.map((s, i) => {
                 i < 9 && shownFilters.push(s.type);
                 return (
