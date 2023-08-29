@@ -38,7 +38,7 @@ export const FilterItems = ({
     handleOnSelectAll(
       group,
       filterValues[0],
-      searchedFilterItems.map((s) => s.value)
+      searchedFilterItems.map((s) => s?.value ?? '(Blank)')
     );
     handleOnSearchChange('');
   };
