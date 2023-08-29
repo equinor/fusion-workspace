@@ -32,7 +32,7 @@ export const FilterItems = ({
     setSearchValue(value);
   };
 
-  const filterValues = Object.values(group.value);
+  const filterValues = Object.values(group?.value ?? '(Blank)');
   const searchedFilterItems = useMemo(() => searchFilterItems(filterValues, searchValue), [filterValues, searchValue]);
   const handleEnterPress = () => {
     handleOnSelectAll(
