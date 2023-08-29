@@ -32,13 +32,13 @@ export const FilterItems = ({
     setSearchValue(value);
   };
 
-  const filterValues = Object.values(group.value);
+  const filterValues = Object.values(group?.value ?? '(Blank)');
   const searchedFilterItems = useMemo(() => searchFilterItems(filterValues, searchValue), [filterValues, searchValue]);
   const handleEnterPress = () => {
     handleOnSelectAll(
       group,
       filterValues[0],
-      searchedFilterItems.map((s) => s.value)
+      searchedFilterItems.map((s) => s?.value ?? '(Blank)')
     );
     handleOnSearchChange('');
   };

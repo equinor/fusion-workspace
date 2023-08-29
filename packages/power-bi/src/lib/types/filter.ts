@@ -25,7 +25,7 @@ export interface BuiltPowerBiFilter {
 
 export interface PowerBiFilterItem {
   type: string;
-  value: string;
+  value: string | undefined | null;
   slicerName: string;
   target: models.IFilterGeneralTarget | undefined;
 }
