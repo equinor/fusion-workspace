@@ -1,7 +1,7 @@
 # Fusion Workspace
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/ci.yml) 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/publish.yml?logo=npm&label=Deployment) 
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/ci.yml)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/publish.yml?logo=npm&label=Deployment)
 [![GitHub issues by-label](https://img.shields.io/github/issues/equinor/fusion-workspace/bug?label=%F0%9F%90%9B%20bug%20issues&color=red)](https://github.com/equinor/fusion-workspace/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 [![GitHub issues](https://img.shields.io/github/issues/equinor/fusion-workspace)](https://github.com/equinor/fusion-workspace/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/equinor/fusion-workspace)](https://github.com/equinor/fusion-workspace/pulls)
