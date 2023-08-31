@@ -1,6 +1,5 @@
 # Fusion Workspace
-
-<p style="text-align: left;"><img src="./documentation/fusion.png" width="350"></p>
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/ci.yml) ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/publish.yml?logo=npm&label=Deployment) ![GitHub issues](https://img.shields.io/github/issues/equinor/fusion-workspace)
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
