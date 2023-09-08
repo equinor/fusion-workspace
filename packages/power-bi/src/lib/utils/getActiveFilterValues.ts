@@ -8,7 +8,10 @@ export const getActiveFilterValues = async (filters: PowerBiFilter[]) => {
   const activeFilterValues = {} as Record<string, (string | number | boolean)[]>;
 
   filters.forEach(async (filter) => {
-    const { filters: slicerFilters } = await filter.slicer.getSlicerState();
+    const a = await filter.slicer.getSlicerState().catch((s) => {
+      console.debug(s);
+    });
+    const slicerFilters = a ? a.filters : [];
     activeFilterValues[filter.type] = [];
     slicerFilters.forEach((slicerFilter: SlicerFilter) => {
       activeFilterValues[filter.type] = slicerFilter?.values || [];
