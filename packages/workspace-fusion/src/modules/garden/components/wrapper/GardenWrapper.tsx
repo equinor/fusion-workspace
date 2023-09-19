@@ -45,6 +45,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   }, [groupingKeys, timeInterval, dateVariant]);
 
   const { setIcons } = useWorkspaceHeaderComponents();
+
   useEffect(() => {
     const icon: HeaderIcon = {
       Icon: ({ anchor }) => (

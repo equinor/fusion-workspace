@@ -5,14 +5,15 @@ import { tokens } from '@equinor/eds-tokens';
 
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { GridConfig } from '../../../lib/integrations/grid';
-import { GetIdentifier } from '../../../lib';
+import { GetIdentifier, HeaderIcon, useWorkspaceHeaderComponents } from '../../../lib';
 import { type Selection } from '../../../lib/types';
 import { useWorkspace } from '../../../lib/hooks';
+import { GridOptionPopover } from './GridOptionsPopover';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TFilter = undefined,
+  TFilter = undefined
 > = {
   config: GridConfig<TData, TFilter>;
   getIdentifier: GetIdentifier<TData>;
@@ -21,7 +22,7 @@ export type GridWrapperProps<
 export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TFilter = undefined,
+  TFilter = undefined
 >({
   config,
   getIdentifier,
@@ -48,6 +49,22 @@ export const GridWrapper = <
   const [_, height] = useResizeObserver(ref);
 
   useDeselectionEvent(selection, config.gridOptions.api);
+
+  const { setIcons } = useWorkspaceHeaderComponents();
+
+  useEffect(() => {
+    const icon: HeaderIcon = {
+      Icon: ({ anchor }) => <GridOptionPopover anchor={anchor} filterState={filterState} excelExport={config.excelExport} />,
+      name: 'grid-settings',
+      placement: 'right',
+      type: 'button',
+    };
+    setIcons((s) => [...s, icon]);
+
+    return () => {
+      setIcons((s) => s.filter((y) => y.name !== icon.name));
+    };
+  }, [filterState]);
 
   return (
     <div
