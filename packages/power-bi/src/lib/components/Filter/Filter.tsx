@@ -91,17 +91,17 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
          *  or clicking on a checkbox, selecting multiple ones, or deselecting.
          */
         if (singleClick) {
-          if (activeFilters[filter.type]?.includes(change)) {
+          if (activeFilters[filter.type]?.includes(change ?? '(Blank)')) {
             newConditions = activeFilters[filter.type].filter((a) => a === change);
           } else {
-            newConditions = [change];
+            newConditions = [change ?? '(Blank)'];
           }
           setActiveFilters((prev) => ({ ...prev, [filter.type]: newConditions }));
         } else {
-          if (activeFilters[filter.type]?.includes(change)) {
+          if (activeFilters[filter.type]?.includes(change ?? '(Blank)')) {
             newConditions = activeFilters[filter.type].filter((a) => a !== change);
           } else {
-            newConditions = [...activeFilters[filter.type], change];
+            newConditions = [...activeFilters[filter.type], change ?? '(Blank)'];
           }
           setActiveFilters((prev) => ({ ...prev, [filter.type]: newConditions }));
         }

@@ -36,9 +36,9 @@ export function VirtualList({ items, rowLength, checkedValues, onClickFilter }: 
               key={item.value}
               ValueRender={() => <div>{item.value}</div>}
               handleFilterItemLabelClick={() => onClickFilter(item, true)}
-              filterValue={item.value}
+              filterValue={item.value ?? '(Blank)'}
               handleFilterItemClick={() => onClickFilter(item, false)}
-              isChecked={!checkedValues.includes(item.value)}
+              isChecked={!checkedValues.includes(item.value ?? '(Blank)')}
             />
           );
         })}

@@ -7,7 +7,7 @@ export const searchFilterItems = (
   if (!searchValue) return filterItems;
 
   return filterItems.reduce((acc, curr) => {
-    if (curr.value.toLowerCase().includes(searchValue.toLowerCase())) acc.push(curr);
+    if ((curr?.value ?? '(Blank)').toLowerCase().includes(searchValue.toLowerCase())) acc.push(curr);
     return acc;
   }, [] as PowerBiFilterItem[]);
 };

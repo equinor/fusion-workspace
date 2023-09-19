@@ -32,7 +32,7 @@ export const ExpandedFilterItem = ({
 
   return (
     <StyledFilterItemWrap
-      title={typeof filterItem === 'string' ? filterItem : '(Blank)'}
+      title={filterItem.value ?? '(Blank)'}
       style={{
         position: 'absolute',
         top: 0,
@@ -43,7 +43,11 @@ export const ExpandedFilterItem = ({
         fontVariantNumeric: isMonospace ? 'tabular-nums' : 'normal',
       }}
     >
-      <Checkbox disabled={isFetching} checked={!isUnChecked} onChange={() => toggleItem(filterItem)} />
+      <Checkbox
+        disabled={isFetching}
+        checked={!isUnChecked}
+        onChange={() => filterGroup.filterItems.length !== 1 && toggleItem(filterItem)}
+      />
       <StyledFilterItemName onClick={uncheckAllButThisValue}>{filterItem.value}</StyledFilterItemName>
       {isFetching ? <Skeleton height={18} width={32} /> : <StyledCount>({filterItem.count})</StyledCount>}
     </StyledFilterItemWrap>

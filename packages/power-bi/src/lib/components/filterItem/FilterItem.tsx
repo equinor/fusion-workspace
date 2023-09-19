@@ -18,11 +18,11 @@ const convertNullToBlank = (activeFilters: ActiveFilter[]) =>
 
 const FilterItem = ({ activeFilters, filter, group, handleOnChange, virtualItemSize, virtualItemStart }: ItemProps) => {
   const isActive = useMemo(() => {
-    return convertNullToBlank(activeFilters).includes(filter.value) ? true : false;
+    return convertNullToBlank(activeFilters).includes(filter?.value ?? '(Blank)') ? true : false;
   }, [activeFilters, filter.value]);
   return (
     <StyledCheckboxItem
-      title={filter.value}
+      title={filter?.value ?? ''}
       style={{
         transform: `translateY(${virtualItemStart}px)`,
         height: `${virtualItemSize}px`,

@@ -1,6 +1,5 @@
-import { GetIdentifier } from '../classes';
 import { GardenDataSource } from '../components';
-import { GroupingKeys, OnClickEvents, GetDisplayName, CustomVirtualViews, Visuals } from './';
+import { OnClickEvents, GetDisplayName, CustomVirtualViews, Visuals, GetIdentifier } from './';
 
 export type GardenConfig<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
   dataSource: GardenDataSource<TContext>;
@@ -19,7 +18,9 @@ export type GardenConfig<TData extends Record<PropertyKey, unknown>, TContext = 
    */
   getDisplayName: GetDisplayName<TData>;
   /** The keys used for grouping when the garden loads initially */
-  initialGrouping: GroupingKeys<TData>;
+  initialGrouping: string[];
+  initialTimeInterval?: string | null;
+  initialDateVariant?: string | null;
   /** The available keys to be used for grouping */
   // fieldSettings?: FieldSettings<TData, TExtendedFields, TCustomGroupByKeys>;
   /** Supply functions for handling clicks in the garden */

@@ -1,4 +1,3 @@
-import { GardenController } from '../classes';
 import { GardenGroup } from '.';
 
 /** Function signature for clicking an item */

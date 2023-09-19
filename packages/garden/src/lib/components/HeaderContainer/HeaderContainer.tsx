@@ -4,11 +4,12 @@ import { ActionType } from '../ExpandProvider';
 import { Header, HeaderRoot } from './headerContainer.styles';
 import { useExpand, useExpandDispatch } from '../../hooks/useExpand';
 import { GardenHeaderGroup, GetHeaderBlockRequestArgs } from '../../types';
-import { useGardenContext } from '../../hooks';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { findBlockCacheEntry, GardenBlock, getBlocksInView } from '../VirtualGarden';
 import { SkeletonPackage } from '../gardenSkeleton/GardenSkeleton';
 import { makeBlocks } from '../../utils/gardenBlock';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
+import { useGarden } from '../../hooks/useGarden';
 
 type HeaderContainerProps<TContext = undefined> = {
   columnVirtualizer: { virtualItems: VirtualItem[] };
@@ -41,15 +42,15 @@ export const HeaderContainer = <TContext,>({
     getBlockAsync: getHeader,
   });
 
-  const controller = useGardenContext();
   const {
-    visuals,
-    customViews: { customHeaderView: HeaderChild },
+    components: { customHeaderView: HeaderChild },
+  } = useGardenConfig();
 
-    grouping: {
-      value: { horizontalGroupingAccessor: groupByKey },
-    },
-  } = controller;
+  const {
+    groupingService: { groupingKeys },
+  } = useGarden();
+
+  const gardenKey = groupingKeys.at(0);
 
   const expandColumn = useExpandDispatch();
   const expanded = useExpand();
@@ -114,7 +115,7 @@ export const HeaderContainer = <TContext,>({
               header={header}
               columnIndex={virtualColumn.index}
               columnIsExpanded={columnExpanded}
-              groupByKey={groupByKey as string}
+              groupByKey={gardenKey}
             />
           </Header>
         );

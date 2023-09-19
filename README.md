@@ -1,6 +1,7 @@
 # Fusion Workspace
 
-<p style="text-align: left;"><img src="./documentation/fusion.png" width="350"></p>
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/ci.yml) ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/equinor/fusion-workspace/publish.yml?logo=npm&label=Deployment) ![GitHub issues by-label](https://img.shields.io/github/issues/equinor/fusion-workspace/bug?label=%F0%9F%90%9B%20bug%20issues&color=red)
+![GitHub issues](https://img.shields.io/github/issues/equinor/fusion-workspace) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/equinor/fusion-workspace)
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
@@ -24,19 +25,3 @@ To run a test app go to apps/test-app and run `pnpm dev`. If you make changes to
 ## Publishing packages
 
 The repository is configured with CI/CD and automatic deployment, to trigger a release update the version in `package.json` of the package you want to release and merge into main.
-
-## Packages cross imports
-
-Allowed cross imports
-
-`package => can import from`
-
-- `ag-grid` => [`observable-proxy`, `workspace-core`]
-- `filter` => [`observable-proxy`, `workspace-core`]
-- `garden` => [`observable-proxy`, `workspace-core`]
-- `observable-proxy` => NONE
-- `power-bi` => [`observable-proxy`, `workspace-core`]
-- `sidesheet` => [`observable-proxy`, `workspace-core`]
-- `workspace-core` => [`observable-proxy`]
-- `workspace-fusion` => ALL
-- `workspace-react` => [`observable-proxy`, `workspace-core`]

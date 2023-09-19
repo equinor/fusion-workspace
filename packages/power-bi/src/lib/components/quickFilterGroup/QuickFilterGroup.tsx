@@ -43,7 +43,7 @@ export const PowerBiFilterGroup = ({
           checkedValues={activeFilters}
           anchorEl={anchorEl.current}
           group={group}
-          values={Object.values(group.value)}
+          values={Object.values(group?.value ?? '(Blank)')}
           onClickFilter={(filter: PowerBiFilterItem, singleClick?: boolean) => handleOnChange(filter, singleClick)}
           onCloseMenu={() => setIsOpen(false)}
         />

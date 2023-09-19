@@ -1,18 +1,18 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import { useVirtual, VirtualItem } from 'react-virtual';
 
-import { useExpand, useGardenContext, useGroupingKeys } from '../../hooks';
+import { useExpand } from '../../hooks';
 import { defaultItemColor, isSubGroup } from '../../utils';
 import { StyledPackageRoot } from './gardenItemContainer.styles';
 import { CustomGroupView, CustomItemView, GardenGroup, GetSubgroupItemsArgs } from '../../types';
-import { useSelected } from '../../hooks/useSelected';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Expanded, ExpandedWithRange, GardenBlock } from '../VirtualGarden';
 import { useBlockCache } from '../../hooks/useBlockCache';
 import { ErrorPackage } from '../virtualPackages/ErrorPackage';
 import { LoadingPackageSkeleton } from '../virtualPackages/LoadingPackage';
 import { SubGroupItem } from '../defaultComponents/item/SubGroupItem';
-import { PopoverWrapper } from '../popover/PopoverWrapper';
+import { useGarden } from '../../hooks/useGarden';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
 
 type VirtualHookReturn = Pick<ReturnType<typeof useVirtual>, 'virtualItems' | 'scrollToIndex'>;
 type PackageContainerProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> = {
@@ -47,6 +47,10 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
   props: PackageContainerProps<TData, TContext>
 ): JSX.Element => {
   const {
+    selectionService: { selection, selectNode },
+  } = useGarden();
+
+  const {
     rowVirtualizer,
     virtualColumn,
     getBlockCache,
@@ -63,13 +67,12 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
     getSubGroupItems,
   } = props;
 
-  const controller = useGardenContext<TData>();
   const {
-    visuals: { rowHeight = 40, popoverComponent: PopoverComponent },
-    colorAssistMode$,
+    visuals: { rowHeight = 40, getDescription = () => '', itemColor = defaultItemColor },
+    onClickItem,
+    getDisplayName,
     getIdentifier,
-    clickEvents,
-  } = controller;
+  } = useGardenConfig();
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
@@ -78,13 +81,13 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
   const [subGroupCount, setSubGroupCount] = useState<number>(0);
 
-  const selectedIds = useSelected();
-
   const expand = useExpand();
 
   const isColumnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
 
-  const keys = useGroupingKeys();
+  const {
+    groupingService: { groupingKeys, timeInterval, dateVariant },
+  } = useGarden();
 
   const queries = useBlockCache<TData[], TContext>({
     blocks: createSubgroupBlockCache({ length: subGroupCount, virtualColumnIndex: virtualColumn.index }),
@@ -106,7 +109,9 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
       return getSubGroupItems(
         {
           columnName: group.columnName,
-          groupingKeys: [keys.gardenKey.toString(), ...keys.groupByKeys],
+          groupingKeys: groupingKeys,
+          timeInterval: timeInterval,
+          dateVariant: dateVariant,
           subgroupName: group.name,
         },
         context,
@@ -115,13 +120,6 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
       ) as any;
     },
   });
-
-  const [colorAssistMode, setColorAssistMode] = useState<boolean>(colorAssistMode$.value);
-
-  useEffect(() => {
-    const sub = colorAssistMode$.subscribe(setColorAssistMode);
-    return () => sub.unsubscribe();
-  }, []);
 
   const CustomSubGroup = props?.customSubGroup;
 
@@ -199,16 +197,13 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
           const query = queries[calculateActualIndex(expandedIndexes, flatIndex.parent.index).actualIndex];
           return (
             <SubGroupItem
-              groupingKeys={{ horizontalGroupingAccessor: keys.gardenKey, verticalGroupingKeys: keys.groupByKeys }}
+              groupingKeys={groupingKeys}
               isExpanded={isColumnExpanded}
               key={virtualRow.key}
               PackageChild={PackageChild}
               itemIndex={flatIndex.actualIndex}
               itemWidth={itemWidth ?? 50}
-              onClick={(item) => {
-                controller.selectedNodes.setValue([getIdentifier(item)]);
-                controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
-              }}
+              onClick={onClickItem}
               parentRef={parentRef}
               query={query}
               rowHeight={rowHeight}
@@ -293,41 +288,28 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
                     );
                   }
                 }}
-                onSelect={(item) => clickEvents.onClickItem && clickEvents.onClickItem(item)}
-                groupByKeys={[keys.gardenKey, ...keys.groupByKeys]}
+                onSelect={onClickItem}
+                groupByKeys={groupingKeys}
               />
             ) : (
               <PackageChild
-                groupingKeys={{ horizontalGroupingAccessor: keys.gardenKey, verticalGroupingKeys: keys.groupByKeys }}
-                displayName={controller.getDisplayName(item)}
-                description={controller.visuals?.getDescription?.(item)}
-                colorAssistMode={colorAssistMode}
+                groupingKeys={groupingKeys}
+                displayName={getDisplayName(item)}
+                description={getDescription?.(item)}
+                colorAssistMode={false}
                 columnExpanded={isColumnExpanded}
-                color={controller.visuals?.getItemColor?.(item) ?? defaultItemColor}
+                color={itemColor}
                 data={item}
-                isSelected={selectedIds.includes(getIdentifier(item))}
+                isSelected={selection === getIdentifier(item)}
                 onClick={() => {
-                  controller.selectedNodes.setValue([getIdentifier(item)]);
-                  controller.clickEvents.onClickItem && controller.clickEvents.onClickItem(item);
+                  onClickItem(item);
                 }}
                 width={itemWidth}
-                depth={0}
+                depth={flatIndex.isSubgroupItem ? 1 : 0}
                 rowStart={virtualRow.start}
                 columnStart={virtualColumn.start}
                 parentRef={parentRef}
               />
-            )}
-            {PopoverComponent && popoverItem === item && (
-              <PopoverWrapper
-                isOpen={!!popoverItem}
-                rowStart={virtualRow.start}
-                columnStart={virtualColumn.start}
-                width={itemWidth ?? 500}
-                popoverTitle={''}
-                parentRef={popoverRef}
-              >
-                <PopoverComponent item={popoverItem}></PopoverComponent>
-              </PopoverWrapper>
             )}
           </StyledPackageRoot>
         );

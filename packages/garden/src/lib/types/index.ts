@@ -2,26 +2,25 @@ export * from './gardenGroup';
 export * from './gardenOptions';
 export * from './gardenItem';
 export * from './highlightedNode';
-export * from './keys';
 export * from './callbacks';
 export * from './events';
 export * from './visuals';
+export * from './getIdentifier';
+
 export type { GardenConfig } from './config';
 
 export type GardenMeta = {
   columnStart: number | null;
   columnCount: number;
   rowCount: number;
-  allGroupingOptions: string[];
+  allGroupingOptions: GroupingOption[];
   validGroupingOptions: string[];
 };
 
-export type GardenApi = {
-  /** Call this to refetch */
-  invalidate: () => void;
-};
-
-export type GetHeaderBlockRequestArgs = Pick<GetBlockRequestArgs, 'columnStart' | 'columnEnd' | 'groupingKeys'>;
+export type GetHeaderBlockRequestArgs = Pick<
+  GetBlockRequestArgs,
+  'columnStart' | 'columnEnd' | 'groupingKeys' | 'timeInterval' | 'dateVariant'
+>;
 
 export type GetBlockRequestArgs = {
   /**Column start */
@@ -34,15 +33,27 @@ export type GetBlockRequestArgs = {
   rowEnd: number;
   /** Grouping key */
   groupingKeys: string[];
+
+  timeInterval: string | null;
+
+  dateVariant: string | null;
 };
 
 export type GetSubgroupItemsArgs = {
   groupingKeys: string[];
   columnName: string;
   subgroupName: string;
+  timeInterval: string | null;
+  dateVariant: string | null;
 };
 
 export type GardenHeaderGroup = {
   name: string;
   count: number;
+};
+
+export type GroupingOption = {
+  groupingKey: string;
+  timeInterval: string[] | null;
+  dateVariant: string[] | null;
 };

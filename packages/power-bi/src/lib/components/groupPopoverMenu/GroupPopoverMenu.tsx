@@ -41,7 +41,7 @@ export const PowerBiGroupPopoverMenu = ({
   };
 
   const setFilterStateFromSearch = async () => {
-    const searchResults = getValuesMatchingSearchText().map((s) => s.value);
+    const searchResults = getValuesMatchingSearchText().map((s) => s.value ?? '(Blank)');
 
     await controller.handleOnSelectAll(group, values[0], searchResults);
     setSearchText('');

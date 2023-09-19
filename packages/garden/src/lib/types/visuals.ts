@@ -1,4 +1,4 @@
-import { GetDescription, GetItemColor } from './';
+import { GetDescription } from './';
 
 export interface Visuals<TData extends Record<PropertyKey, unknown>> {
   /**
@@ -11,7 +11,7 @@ export interface Visuals<TData extends Record<PropertyKey, unknown>> {
   /** Function that returns the string of text that is to be displayed when a column is expanded */
   getDescription?: GetDescription<TData>;
   /** Function that returns the color of the item to be displayed */
-  getItemColor?: GetItemColor<TData>;
+  itemColor?: string;
   popoverComponent?: (props: PopoverComponentProps<TData>) => JSX.Element;
 }
 

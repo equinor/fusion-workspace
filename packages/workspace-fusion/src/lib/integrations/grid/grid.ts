@@ -10,6 +10,7 @@ import {
   ICellRendererProps,
   IServerSideGetRowsParams,
   IServerSideGetRowsRequest,
+  Module,
 } from '@equinor/workspace-ag-grid';
 
 export type {
@@ -23,7 +24,13 @@ export type {
 };
 
 type GridConfig<T, TFilter> = {
-  columnDefinitions: [ColDef<T>, ...ColDef<T>[]];
+  columnDefinitions: ColDef<T>[];
   getRows: (params: IServerSideGetRowsParams, filters: TFilter) => Promise<void>;
   gridOptions?: Omit<GridOptions<T>, 'rowData' | 'context' | 'pagination' | 'paginationPageSize'>;
+  /**
+   * AG-grid-modules
+   * https://www.ag-grid.com/javascript-data-grid/modules/
+   */
+  modules?: Module[];
+  excelExport?: (params: TFilter) => Promise<void>;
 };
