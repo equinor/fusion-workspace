@@ -14,7 +14,13 @@ export function App() {
         getRows: async ({ success, request }, filter) => {
           success({ rowData: [{ id: '123' }, { id: '125' }, { id: '9342' }, { id: '1212' }], rowCount: 4 });
         },
-        excelExport: async (filterState) => new Promise((res, rej) => setTimeout(() => {res(); console.log("løøøøøøø")}, 2000)),
+        excelExport: async (filterState) =>
+          new Promise((res, rej) =>
+            setTimeout(() => {
+              res();
+              console.log('løøøøøøø');
+            }, 2000)
+          ),
       }}
       sidesheetOptions={{
         type: 'default',

@@ -53,8 +53,20 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
           </Popover.Header>
           <Popover.Content style={{ overflow: 'hidden' }}>
             <ButtContainer>
-              {isError && <DumpsterFireDialog  text={typeof error === 'string' ? error : 'We encountered an issue fetching the data. Please try again later.'} />}
-              <Button disabled={excelExport == undefined} style={{ width: '130px' }} onClick={!isLoading ? handleExportToExcel : undefined}>
+              {isError && (
+                <DumpsterFireDialog
+                  text={
+                    typeof error === 'string'
+                      ? error
+                      : 'We encountered an issue fetching the data. Please try again later.'
+                  }
+                />
+              )}
+              <Button
+                disabled={excelExport == undefined}
+                style={{ width: '130px' }}
+                onClick={!isLoading ? handleExportToExcel : undefined}
+              >
                 {isLoading ? <Progress.Dots color={'neutral'} /> : 'Export to Excel'}
               </Button>
             </ButtContainer>
