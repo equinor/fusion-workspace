@@ -32,4 +32,5 @@ type GridConfig<T, TFilter> = {
    * https://www.ag-grid.com/javascript-data-grid/modules/
    */
   modules?: Module[];
+  excelExport?: (params: TFilter) => Promise<void>;
 };

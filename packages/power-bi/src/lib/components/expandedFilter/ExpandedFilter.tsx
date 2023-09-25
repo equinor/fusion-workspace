@@ -25,16 +25,18 @@ export function ExpandedFilter({ controller }: ExpandedFilterProps): JSX.Element
   return (
     <StyledExpandedFilterWrapper>
       <StyledFilterItemsWrapper>
-        {visibleFilters.map((groupName) => (
-          <FilterItems
-            controller={controller}
-            handleOnChange={handleOnChange}
-            handleOnSelectAll={controller.handleOnSelectAll}
-            activeFilters={activeFilters}
-            group={slicerFilters.find((s) => s.type === groupName) as PowerBiFilter}
-            key={groupName}
-          />
-        ))}
+        {slicerFilters
+          .filter((s) => visibleFilters.includes(s.type))
+          .map((group) => (
+            <FilterItems
+              controller={controller}
+              handleOnChange={handleOnChange}
+              handleOnSelectAll={controller.handleOnSelectAll}
+              activeFilters={activeFilters}
+              group={group}
+              key={group.type}
+            />
+          ))}
       </StyledFilterItemsWrapper>
       <StyledSidebar>
         <div onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
