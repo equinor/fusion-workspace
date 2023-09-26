@@ -1,9 +1,10 @@
-import { Dialog, Typography } from '@equinor/eds-core-react';
+import { Button, Dialog, Typography } from '@equinor/eds-core-react';
+import { useState } from 'react';
 
 interface DumpsterFireDialogProps {
   title?: string;
   text: string;
-  buttons: React.ReactElement[];
+  buttons?: React.ReactElement[];
 }
 
 export function DumpsterFireDialog({
@@ -11,8 +12,9 @@ export function DumpsterFireDialog({
   title = 'Ooops, this is embarassing..',
   buttons,
 }: DumpsterFireDialogProps): JSX.Element {
+  const [isOpen, setIsOpen] = useState(true);
   return (
-    <Dialog style={{ width: '600px' }} open={true}>
+    <Dialog style={{ width: '600px' }} open={isOpen} isDismissable={true}>
       <Dialog.Header>
         <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
@@ -21,11 +23,12 @@ export function DumpsterFireDialog({
       </Dialog.CustomContent>
       <Dialog.Actions>
         <>
-          {buttons.map((comp, i) => {
+          {buttons?.map((comp, i) => {
             const Component = () => comp;
             return <Component key={i} />;
           })}
         </>
+        <Button onClick={() => setIsOpen(false)}>OK</Button>
       </Dialog.Actions>
     </Dialog>
   );
