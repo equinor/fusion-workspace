@@ -1,9 +1,9 @@
+import { Workspace } from '@equinor/workspace-fusion';
+import { gardenModule } from '@equinor/workspace-fusion/garden-module';
+import { gridModule } from '@equinor/workspace-fusion/grid-module';
+import { GroupingOption } from '@equinor/workspace-garden';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Workspace } from '@equinor/workspace-fusion';
-import { gridModule } from '@equinor/workspace-fusion/grid-module';
-import { gardenModule } from '@equinor/workspace-fusion/garden-module';
-import { GroupingOption } from '@equinor/workspace-garden';
 
 export function App() {
   return (
@@ -14,6 +14,13 @@ export function App() {
         getRows: async ({ success, request }, filter) => {
           success({ rowData: [{ id: '123' }, { id: '125' }, { id: '9342' }, { id: '1212' }], rowCount: 4 });
         },
+        excelExport: async (filterState) =>
+          new Promise((res, rej) =>
+            setTimeout(() => {
+              res();
+              console.log('løøøøøøø');
+            }, 2000)
+          ),
       }}
       sidesheetOptions={{
         type: 'default',
