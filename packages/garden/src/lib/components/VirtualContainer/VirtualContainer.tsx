@@ -44,7 +44,8 @@ export const VirtualContainer = <TContext,>({
   }
 
   const amountOfColumns = data.columnCount;
-  const widths = useItemWidths(data.columnCount);
+  const columnWidth = data.columnWidth || 300;
+  const widths = useItemWidths(data.columnCount, columnWidth);
 
   //TODO: Handle widths = 0 better
   if (widths.length === 0 || amountOfColumns !== widths.length) {
@@ -64,7 +65,7 @@ export const VirtualContainer = <TContext,>({
     <>
       {/* <ReactQueryDevtools /> */}
       <StyledVirtualContainer id={'garden_root'}>
-        <ExpandProvider initialWidths={widths}>
+        <ExpandProvider initialWidths={widths} defaultColumnWidth={columnWidth}>
           <VirtualGarden
             context={context}
             getSubgroupItems={dataSource.getSubgroupItems}

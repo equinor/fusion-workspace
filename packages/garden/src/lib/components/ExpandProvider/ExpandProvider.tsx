@@ -1,5 +1,4 @@
 import { createContext, PropsWithChildren, useReducer } from 'react';
-import { defaultGardenPackageWidth } from '../../hooks';
 
 type State = {
   expandedColumns: number[];
@@ -15,30 +14,32 @@ type ExpandColumn = {
 };
 
 type Action = ExpandColumn;
-const expandReducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case ActionType.EXPAND_COLUMN: {
-      if (state.expandedColumns.findIndex((s) => s === action.index) !== -1) {
-        const newWidths = [...state.widths];
-        newWidths[action.index] = defaultGardenPackageWidth;
-        return {
-          expandedColumns: state.expandedColumns.filter((s) => s !== action.index),
-          widths: newWidths,
-        };
-      } else {
-        const newWidths = [...state.widths];
-        newWidths[action.index] = 500;
-        return {
-          expandedColumns: [...state.expandedColumns, action.index],
-          widths: newWidths,
-        };
+const expandReducer =
+  (defaultColumnWidth: number) =>
+  (state: State, action: Action): State => {
+    switch (action.type) {
+      case ActionType.EXPAND_COLUMN: {
+        if (state.expandedColumns.findIndex((s) => s === action.index) !== -1) {
+          const newWidths = [...state.widths];
+          newWidths[action.index] = defaultColumnWidth;
+          return {
+            expandedColumns: state.expandedColumns.filter((s) => s !== action.index),
+            widths: newWidths,
+          };
+        } else {
+          const newWidths = [...state.widths];
+          newWidths[action.index] = defaultColumnWidth + 200;
+          return {
+            expandedColumns: [...state.expandedColumns, action.index],
+            widths: newWidths,
+          };
+        }
       }
-    }
 
-    default:
-      return { expandedColumns: [], widths: [] };
-  }
-};
+      default:
+        return { expandedColumns: [], widths: [] };
+    }
+  };
 
 type DispatchAction = (action: Action) => void;
 const ExpandContext = createContext<State>({
@@ -53,12 +54,13 @@ const ExpandDispatchContext = createExpandDispatchContext();
 
 type ExpandProviderProps = {
   initialWidths: number[];
+  defaultColumnWidth: number;
 };
 
 const ExpandProvider = (props: PropsWithChildren<ExpandProviderProps>) => {
-  const { initialWidths, children } = props;
+  const { initialWidths, defaultColumnWidth, children } = props;
 
-  const [state, dispatch] = useReducer(expandReducer, {
+  const [state, dispatch] = useReducer(expandReducer(defaultColumnWidth), {
     expandedColumns: [],
     widths: initialWidths,
   });

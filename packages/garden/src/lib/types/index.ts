@@ -15,6 +15,7 @@ export type GardenMeta = {
   rowCount: number;
   allGroupingOptions: GroupingOption[];
   validGroupingOptions: string[];
+  columnWidth?: number;
 };
 
 export type GetHeaderBlockRequestArgs = Pick<

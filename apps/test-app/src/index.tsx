@@ -54,6 +54,7 @@ export function App() {
             columnStart: 0,
             rowCount: 10000,
             validGroupingOptions: ['RFOC', 'PartitionKey'],
+            columnWidth: 150,
           };
         },
         getBlockAsync: async (a) => {
