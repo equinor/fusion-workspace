@@ -41,7 +41,7 @@ export const LoadedReport = ({ config, onReportReady }: LoadedReportProps) => {
 };
 
 const StyledAspectRatio = styled.div<{ width: number }>`
-  height: ${({ width }) => `${defaultAspectRatio * width}px`};
+  height: ${({ width }) => `${Math.round(defaultAspectRatio * width - 20)}px`};
 `;
 
 const PowerBiWrapper = styled.div.attrs({
