@@ -56,10 +56,6 @@ export const StyledFilterGroups = styled.div`
   overflow-x: scroll;
   width: -webkit-fill-available;
   background-color: ${tokens.colors.ui.background__light.rgba};
-
-  ::-webkit-scrollbar {
-    height: 0.3rem;
-  }
 `;
 
 export const StyledFilterGroupWrapper = styled.div``;
