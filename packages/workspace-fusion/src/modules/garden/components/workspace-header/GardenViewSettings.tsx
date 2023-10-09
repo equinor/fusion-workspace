@@ -68,9 +68,6 @@ export const GardenPopoverItem = ({
           <Popover.Content style={{ overflow: 'hidden' }}>
             <Suspense fallback={<GroupingSelectorLoading />}>
               <GroupingSelector
-                iconRef={pRef}
-                close={() => setIsOpen(false)}
-                popoverRef={popoverRef}
                 groupingKeys={groupState.groupingKeys}
                 setGroupingKeys={setGroupingKeys}
                 timeInterval={groupState.timeInterval}
