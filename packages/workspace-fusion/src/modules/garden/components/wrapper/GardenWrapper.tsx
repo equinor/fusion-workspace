@@ -2,8 +2,7 @@ import { Button, Icon } from '@equinor/eds-core-react';
 import { arrow_back_ios, arrow_forward_ios } from '@equinor/eds-icons';
 import { FilterState, useFilterContext } from '@equinor/workspace-filter';
 import { Garden } from '@equinor/workspace-garden';
-import { useEffect, useRef, useState } from 'react';
-import { BehaviorSubject } from 'rxjs';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useWorkspace } from '../../../../lib/hooks';
 import { GardenConfig } from '../../../../lib/integrations/garden';
@@ -34,12 +33,6 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   const onChangeDateVariant = (dateVariant: string | null) => {
     updateDateVariant(dateVariant);
   };
-
-  const groupingKeys$ = useRef(new BehaviorSubject({ groupingKeys, timeInterval, dateVariant }));
-
-  useEffect(() => {
-    groupingKeys$.current.next({ groupingKeys, timeInterval, dateVariant });
-  }, [groupingKeys, timeInterval, dateVariant]);
 
   const { selection } = useWorkspace();
 
