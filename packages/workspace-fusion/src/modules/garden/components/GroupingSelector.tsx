@@ -153,7 +153,7 @@ export const StyledAutoCompleteWrapper = styled.div`
 `;
 
 export const StyledGroupHeader = styled.div`
-  padding-left: 1rem;
+  font-weight: 500px;
   padding-top: 2rem;
 `;
 export const StyledSubGroupHeader = styled.div`
