@@ -1,10 +1,9 @@
-import { Autocomplete, Radio } from '@equinor/eds-core-react';
+import { Autocomplete, Divider, Radio } from '@equinor/eds-core-react';
 import { FilterState } from '@equinor/workspace-filter';
 import { GardenDataSource, GroupingOption } from '@equinor/workspace-garden';
 import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 import styled from 'styled-components';
-import { useOutsideClick } from '../../../lib/hooks/useGardenPopoverOutsideClick';
 
 type GroupingSelectorProps = {
   dataSource: GardenDataSource<FilterState>;
@@ -15,9 +14,6 @@ type GroupingSelectorProps = {
   dateVariant: string | null;
   onChangeTimeInterval: (timeInterval: string | null) => void;
   onChangeDateVarient: (dateVariant: string | null) => void;
-  popoverRef: React.MutableRefObject<HTMLDivElement | null>;
-  iconRef: React.MutableRefObject<HTMLDivElement | null>;
-  close: VoidFunction;
 };
 
 export function GroupingSelector({
@@ -29,9 +25,6 @@ export function GroupingSelector({
   onChangeTimeInterval,
   onChangeDateVarient,
   groupingKeys,
-  iconRef,
-  popoverRef,
-  close,
 }: GroupingSelectorProps): JSX.Element | null {
   const { data } = useQuery(['garden', ...groupingKeys, timeInterval, dateVariant, context], {
     refetchOnWindowFocus: false,
@@ -43,14 +36,6 @@ export function GroupingSelector({
   });
 
   const selectorRef = useRef(null);
-
-  useOutsideClick(
-    () => {
-      close();
-    },
-    popoverRef,
-    iconRef
-  );
 
   const setGardenKey = (key: string) => {
     const foundGroupingOption = data?.allGroupingOptions.find((option) => option.groupingKey === key);
@@ -88,58 +73,75 @@ export function GroupingSelector({
   }
 
   return (
-    <StyledAutoCompleteWrapper>
-      <Autocomplete
-        ref={selectorRef}
-        key={groupingKeys[0]}
-        options={data.allGroupingOptions.map((option: GroupingOption) => option.groupingKey)}
-        label={'Column headers'}
-        hideClearButton
-        multiple={false}
-        selectedOptions={[groupingKeys[0]]}
-        onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
-      />
-      {data.allGroupingOptions.map(
-        (groupingOption) =>
-          groupingOption.groupingKey === groupingKeys[0] && (
-            <RadioWrapper>
-              <RadioCategoryWrapper>
-                {groupingOption.timeInterval &&
-                  groupingOption.timeInterval.map((dim) => (
-                    <Radio
-                      key={dim}
-                      label={dim}
-                      value={dim}
-                      name="timeInterval"
-                      checked={timeInterval?.trim().toLowerCase() === dim.trim().toLowerCase()}
-                      onChange={(e) => onChangeTimeInterval(e.target.value)}
-                    />
-                  ))}
-              </RadioCategoryWrapper>
-              <RadioCategoryWrapper>
-                {groupingOption.dateVariant &&
-                  groupingOption.dateVariant.map((typ) => (
-                    <Radio
-                      key={typ}
-                      label={typ}
-                      value={typ}
-                      name="dateVariant"
-                      checked={dateVariant?.trim().toLowerCase() === typ.trim().toLowerCase()}
-                      onChange={(e) => onChangeDateVarient(e.target.value)}
-                    />
-                  ))}
-              </RadioCategoryWrapper>
-            </RadioWrapper>
-          )
-      )}
+    <>
+      <StyledGroupHeader>Groups</StyledGroupHeader>
+      <Divider />
+      <StyledAutoCompleteWrapper>
+        <Autocomplete
+          ref={selectorRef}
+          key={groupingKeys[0]}
+          options={data.allGroupingOptions.map((option: GroupingOption) => option.groupingKey)}
+          label={'Group by'}
+          hideClearButton
+          multiple={false}
+          selectedOptions={[groupingKeys[0]]}
+          onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
+        />
+        <Autocomplete
+          options={data.validGroupingOptions}
+          label={'Then Group by'}
+          selectedOptions={[groupingKeys.at(1)]}
+          onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0])}
+        />
+      </StyledAutoCompleteWrapper>
 
-      <Autocomplete
-        options={data.validGroupingOptions}
-        label={'Group by'}
-        selectedOptions={[groupingKeys.at(1)]}
-        onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0])}
-      />
-    </StyledAutoCompleteWrapper>
+      {data.allGroupingOptions.map((groupingOption) => {
+        // Check if dateVariant or timeInterval is defined
+        const hasDateVariant = !!groupingOption.dateVariant;
+        const hasTimeInterval = !!groupingOption.timeInterval;
+
+        if (!hasDateVariant && !hasTimeInterval) return null;
+
+        return (
+          groupingOption.groupingKey === groupingKeys[0] && (
+            <>
+              <StyledGroupHeader>Views</StyledGroupHeader>
+              <Divider />
+              <RadioWrapper>
+                <StyledSubGroupHeader>Date Fields:</StyledSubGroupHeader>
+                <RadioCategoryWrapper>
+                  {hasDateVariant &&
+                    groupingOption.dateVariant?.map((typ) => (
+                      <Radio
+                        key={typ}
+                        label={typ}
+                        value={typ}
+                        name="dateVariant"
+                        checked={dateVariant?.trim().toLowerCase() === typ.trim().toLowerCase()}
+                        onChange={(e) => onChangeDateVarient(e.target.value)}
+                      />
+                    ))}
+                </RadioCategoryWrapper>
+                <StyledSubGroupHeader>Time Intervals:</StyledSubGroupHeader>
+                <RadioCategoryWrapper>
+                  {hasTimeInterval &&
+                    groupingOption.timeInterval?.map((dim) => (
+                      <Radio
+                        key={dim}
+                        label={dim}
+                        value={dim}
+                        name="timeInterval"
+                        checked={timeInterval?.trim().toLowerCase() === dim.trim().toLowerCase()}
+                        onChange={(e) => onChangeTimeInterval(e.target.value)}
+                      />
+                    ))}
+                </RadioCategoryWrapper>
+              </RadioWrapper>
+            </>
+          )
+        );
+      })}
+    </>
   );
 }
 
@@ -150,10 +152,18 @@ export const StyledAutoCompleteWrapper = styled.div`
   gap: 1em;
 `;
 
+export const StyledGroupHeader = styled.div`
+  font-weight: 500px;
+  padding-top: 2rem;
+`;
+export const StyledSubGroupHeader = styled.div`
+  padding-left: 1rem;
+  padding-top: 1rem;
+`;
 export const RadioWrapper = styled.div`
   display: flex;
-  align-items: center;
-  flex-direction: row;
+  align-items: start;
+  flex-direction: column;
   gap: 1em;
 `;
 

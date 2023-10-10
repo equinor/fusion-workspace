@@ -4,7 +4,15 @@ import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { GroupingOption } from '@equinor/workspace-garden';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { createGlobalStyle } from 'styled-components';
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Equinor;
+  }
+`;
 export function App() {
   return (
     <Workspace<{ id: string }>
@@ -182,4 +190,10 @@ export function App() {
 
 const container = document.getElementById('root')!;
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<App />);
+
+root.render(
+  <>
+    <GlobalStyle />
+    <App />
+  </>
+);
