@@ -66,7 +66,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
         {toggle ? (
           <>
             <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Button variant="ghost_icon" onClick={() => setToggle(!toggle)}>
+              <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
                 <Icon data={arrow_forward_ios}></Icon>
               </Button>
               <p style={{ marginRight: '8px', fontSize: '16px', fontWeight: '500' }}>View Settings</p>
@@ -84,7 +84,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
           </>
         ) : (
           <>
-            <Button variant="ghost_icon" onClick={() => setToggle(!toggle)}>
+            <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
               <Icon data={arrow_back_ios}></Icon>
             </Button>
             <VerticalText>View Settings</VerticalText>
