@@ -1,10 +1,11 @@
 import { Button, Icon } from '@equinor/eds-core-react';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { arrow_back_ios, arrow_forward_ios, chevron_down, chevron_up } from '@equinor/eds-icons';
 import { GardenDataSource } from '../Garden';
 import { GroupingSelector } from '../GroupingSelector/GroupingSelector';
 import { StyledViewSettings, VerticalText } from './viewSettings.styles';
+
+const LOCAL_STORAGE_KEY = 'FusionWorkspaceViewSettingsToggled';
 
 interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
   dataSource: GardenDataSource<TContext>;
@@ -29,7 +30,14 @@ export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContex
   onChangeDateVariant,
   setGroupingKeys,
 }: ViewSettingsProps<TData, TContext>): JSX.Element | null {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(() => {
+    const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(toggle));
+  }, [toggle]);
 
   return (
     <StyledViewSettings expanded={toggle}>
