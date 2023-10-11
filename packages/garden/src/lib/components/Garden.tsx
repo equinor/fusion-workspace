@@ -1,8 +1,7 @@
-import { Button, Icon } from '@equinor/eds-core-react';
+import { Icon } from '@equinor/eds-core-react';
 import { Suspense, useRef, useState } from 'react';
 import {
   CustomVirtualViews,
-  GardenConfig,
   GardenGroup,
   GardenHeaderGroup,
   GardenMeta,
@@ -15,18 +14,15 @@ import {
 } from '../types';
 import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
-import { arrow_back_ios, arrow_forward_ios, chevron_down, chevron_up } from '@equinor/eds-icons';
+import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SplashScreen } from './splashScreen/SplashScreen';
 import { ErrorBoundary } from 'react-error-boundary';
-import { GardenError } from './error/GardenError';
-import { GetIdentifier } from '../types/getIdentifier';
 import { GardenConfigProvider } from '../context/gardenConfig';
 import { GardenContextProvider } from '../context/gardenContext';
-import styled from 'styled-components';
-import { GroupingSelector } from './GroupingSelector/GroupingSelector';
-import { StyledViewSettings } from './ViewSettings/viewSettings.styles';
+import { GetIdentifier } from '../types/getIdentifier';
 import { ViewSettings } from './ViewSettings/ViewSettings';
+import { GardenError } from './error/GardenError';
+import { SplashScreen } from './splashScreen/SplashScreen';
 
 export type GardenMetaRequest = {
   groupingKeys: string[];
