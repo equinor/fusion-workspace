@@ -24,7 +24,9 @@ import { GetIdentifier } from '../types/getIdentifier';
 import { GardenConfigProvider } from '../context/gardenConfig';
 import { GardenContextProvider } from '../context/gardenContext';
 import styled from 'styled-components';
-import { GroupingSelector } from './GroupingSelector';
+import { GroupingSelector } from './GroupingSelector/GroupingSelector';
+import { StyledViewSettings } from './ViewSettings/viewSettings.styles';
+import { ViewSettings } from './ViewSettings/ViewSettings';
 
 export type GardenMetaRequest = {
   groupingKeys: string[];
@@ -70,7 +72,6 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const client = useRef(new QueryClient());
   const [groupingKeys, setGroupingKeys] = useState<string[]>(initialGrouping);
-  const [toggle, setToggle] = useState(false);
 
   const [timeInterval, updateTimeInterval] = useState<string | null>(initialTimeInterval ?? null);
   const onChangetimeInterval = (timeInterval: string | null) => {
@@ -103,62 +104,19 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
             >
               <VirtualContainer context={context as TContext} dataSource={dataSource} />
             </GardenConfigProvider>
-            <StyledAnimatedDiv expanded={toggle}>
-              {toggle ? (
-                <>
-                  <div
-                    style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}
-                  >
-                    <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
-                      <Icon data={arrow_forward_ios}></Icon>
-                    </Button>
-                    <p style={{ marginRight: '8px', fontSize: '16px', fontWeight: '500' }}>View Settings</p>
-                  </div>
-                  <GroupingSelector
-                    groupingKeys={groupingKeys}
-                    setGroupingKeys={setGroupingKeys}
-                    timeInterval={timeInterval}
-                    onChangeTimeInterval={onChangetimeInterval}
-                    dateVariant={dateVariant}
-                    onChangeDateVarient={onChangeDateVariant}
-                    context={context as any}
-                    dataSource={dataSource}
-                  />
-                </>
-              ) : (
-                <>
-                  <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
-                    <Icon data={arrow_back_ios}></Icon>
-                  </Button>
-                  <VerticalText>View Settings</VerticalText>
-                </>
-              )}
-            </StyledAnimatedDiv>
+            <ViewSettings
+              dataSource={dataSource}
+              dateVariant={dateVariant}
+              groupingKeys={groupingKeys}
+              timeInterval={timeInterval}
+              context={context}
+              onChangeDateVariant={onChangeDateVariant}
+              onChangeTimeInterval={onChangetimeInterval}
+              setGroupingKeys={setGroupingKeys}
+            />
           </GardenContextProvider>
         </Suspense>
       </ErrorBoundary>
     </QueryClientProvider>
   );
 }
-
-type StyledAnimatedDivProps = {
-  expanded: boolean;
-};
-
-const StyledAnimatedDiv = styled.div<StyledAnimatedDivProps>`
-  width: ${(props) => (props.expanded ? '300px' : '45px')};
-  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.1);
-  margin-left: 10px;
-  padding: 10px;
-  transition: width 0.1s ease;
-  overflow: hidden;
-`;
-const VerticalText = styled.div`
-  transform: rotate(90deg);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  margin-top: 3rem;
-  justify-content: center;
-  font-size: 16px;
-`;

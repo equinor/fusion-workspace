@@ -1,9 +1,15 @@
 import { Autocomplete, Divider, Radio } from '@equinor/eds-core-react';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment, useRef } from 'react';
-import styled from 'styled-components';
-import { GardenDataSource } from './Garden';
-import { GroupingOption } from '../types';
+import { GroupingOption } from '../../types';
+import { GardenDataSource } from '../Garden';
+import {
+  RadioCategoryWrapper,
+  RadioWrapper,
+  StyledAutoCompleteWrapper,
+  StyledGroupHeader,
+  StyledSubGroupHeader,
+} from './groupingSelector.styles';
 
 type GroupingSelectorProps<TContext> = {
   dataSource: GardenDataSource<TContext>;
@@ -144,32 +150,3 @@ export function GroupingSelector<TContext>({
     </>
   );
 }
-
-export const StyledAutoCompleteWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1em;
-`;
-
-export const StyledGroupHeader = styled.div`
-  font-weight: 500px;
-  padding-top: 2rem;
-`;
-export const StyledSubGroupHeader = styled.div`
-  padding-left: 1rem;
-  padding-top: 1rem;
-`;
-export const RadioWrapper = styled.div`
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  gap: 1em;
-`;
-
-export const RadioCategoryWrapper = styled.div`
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  gap: 0.1em;
-`;
