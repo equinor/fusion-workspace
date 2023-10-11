@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import {
   CustomVirtualViews,
   GardenGroup,
@@ -16,12 +16,13 @@ import { VirtualContainer } from './VirtualContainer/VirtualContainer';
 
 import { chevron_down, chevron_up } from '@equinor/eds-icons';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SplashScreen } from './splashScreen/SplashScreen';
 import { ErrorBoundary } from 'react-error-boundary';
-import { GardenError } from './error/GardenError';
-import { GetIdentifier } from '../types/getIdentifier';
 import { GardenConfigProvider } from '../context/gardenConfig';
 import { GardenContextProvider } from '../context/gardenContext';
+import { GetIdentifier } from '../types/getIdentifier';
+import { ViewSettings } from './ViewSettings/ViewSettings';
+import { GardenError } from './error/GardenError';
+import { SplashScreen } from './splashScreen/SplashScreen';
 
 export type GardenMetaRequest = {
   groupingKeys: string[];
@@ -57,40 +58,60 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   getDisplayName,
   context,
   getIdentifier,
-  groupingKeys,
+  groupingKeys: initialGrouping,
   customViews,
-  timeInterval,
-  dateVariant,
+  timeInterval: initialTimeInterval,
+  dateVariant: initialDateVariant,
   visuals,
   clickEvents,
   selected = null,
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const client = useRef(new QueryClient());
+  const [groupingKeys, setGroupingKeys] = useState<string[]>(initialGrouping);
+
+  const [timeInterval, updateTimeInterval] = useState<string | null>(initialTimeInterval ?? null);
+  const onChangetimeInterval = (timeInterval: string | null) => {
+    updateTimeInterval(timeInterval);
+  };
+  const [dateVariant, updateDateVariant] = useState<string | null>(initialDateVariant ?? null);
+  const onChangeDateVariant = (dateVariant: string | null) => {
+    updateDateVariant(dateVariant);
+  };
 
   return (
     <QueryClientProvider client={client.current}>
       <ErrorBoundary FallbackComponent={GardenError}>
-        <GardenContextProvider
-          getIdentifier={getIdentifier}
-          timeInterval={timeInterval}
-          dateVariant={dateVariant}
-          initialGrouping={groupingKeys}
-          selected={selected}
-        >
-          <GardenConfigProvider
-            dataSource={dataSource}
-            getDisplayName={getDisplayName}
+        <Suspense fallback={<SplashScreen />}>
+          <GardenContextProvider
             getIdentifier={getIdentifier}
-            clickEvents={clickEvents}
-            context={context}
-            customViews={customViews}
-            visuals={visuals}
+            timeInterval={timeInterval}
+            dateVariant={dateVariant}
+            initialGrouping={groupingKeys}
+            selected={selected}
           >
-            <Suspense fallback={<SplashScreen />}>
+            <GardenConfigProvider
+              dataSource={dataSource}
+              getDisplayName={getDisplayName}
+              getIdentifier={getIdentifier}
+              clickEvents={clickEvents}
+              context={context}
+              customViews={customViews}
+              visuals={visuals}
+            >
               <VirtualContainer context={context as TContext} dataSource={dataSource} />
-            </Suspense>
-          </GardenConfigProvider>
-        </GardenContextProvider>
+            </GardenConfigProvider>
+            <ViewSettings
+              dataSource={dataSource}
+              dateVariant={dateVariant}
+              groupingKeys={groupingKeys}
+              timeInterval={timeInterval}
+              context={context}
+              onChangeDateVariant={onChangeDateVariant}
+              onChangeTimeInterval={onChangetimeInterval}
+              setGroupingKeys={setGroupingKeys}
+            />
+          </GardenContextProvider>
+        </Suspense>
       </ErrorBoundary>
     </QueryClientProvider>
   );
