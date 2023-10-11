@@ -8,10 +8,14 @@ type Virtualizer = ReturnType<typeof useVirtual>;
  * @param columnStart - Where to scroll to
  * @param columnVirtualizer - The garden virtualizer
  */
-export function useScrollToColumnStart(columnStart: number | null, columnVirtualizer: Virtualizer) {
+export function useScrollToColumnStart(
+  columnStart: number | null,
+  columnVirtualizer: Virtualizer,
+  groupingKeys: string[]
+) {
   useLayoutEffect(() => {
     if (columnStart) {
       columnVirtualizer.scrollToIndex(columnStart, { align: 'center' });
     }
-  }, [columnStart]);
+  }, [columnStart, groupingKeys]);
 }

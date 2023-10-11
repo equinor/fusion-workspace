@@ -125,7 +125,7 @@ export const VirtualGarden = <TData extends Record<PropertyKey, unknown>, TConte
 
   const { collapseColumn, expandColumn, expanded } = useExpandedSubGroups(columnCount);
 
-  useScrollToColumnStart(columnStart, columnVirtualizer);
+  useScrollToColumnStart(columnStart, columnVirtualizer, groupingService.groupingKeys);
 
   const packageChild = customItemView ?? undefined;
 
