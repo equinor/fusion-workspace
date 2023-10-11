@@ -26,6 +26,8 @@ export const VirtualContainer = <TContext,>({
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
+    cacheTime: Infinity,
+    staleTime: Infinity,
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta(
         {

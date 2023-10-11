@@ -37,6 +37,8 @@ export function GroupingSelector<TContext>({
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
+    cacheTime: Infinity,
+    staleTime: Infinity,
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta({ groupingKeys, timeInterval, dateVariant }, context, signal ?? new AbortSignal()),
   });
