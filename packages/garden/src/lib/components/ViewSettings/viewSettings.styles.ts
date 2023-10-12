@@ -12,6 +12,5 @@ export const StyledViewSettings = styled.div<StyledViewSettingsProps>`
   padding: 10px;
   transition: width 0.1s ease;
   overflow: hidden;
-  background-color: ${(props) =>
-    props.expanded ? tokens.colors.ui.background__light.rgba : tokens.colors.ui.background__light.rgba};
+  background-color: ${tokens.colors.ui.background__light.rgba};
 `;
