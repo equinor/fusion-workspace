@@ -1,11 +1,11 @@
 import { Button, Icon } from '@equinor/eds-core-react';
-import { useState, useEffect } from 'react';
-import { arrow_back_ios, arrow_forward_ios, chevron_down, chevron_up } from '@equinor/eds-icons';
+import { expand, collapse } from '@equinor/eds-icons';
+import { useState } from 'react';
 import { GardenDataSource } from '../Garden';
 import { GroupingSelector } from '../GroupingSelector/GroupingSelector';
-import { StyledViewSettings, VerticalText } from './viewSettings.styles';
+import { StyledViewSettings } from './viewSettings.styles';
 
-const LOCAL_STORAGE_KEY = 'FusionWorkspaceViewSettingsToggled';
+const LOCAL_STORAGE_KEY = 'toggleState';
 
 interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
   dataSource: GardenDataSource<TContext>;
@@ -18,7 +18,7 @@ interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext
   setGroupingKeys: (keys: string[]) => void;
 }
 
-Icon.add({ chevron_down, chevron_up });
+Icon.add({ expand, collapse });
 
 export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContext = undefined>({
   dataSource,
@@ -35,19 +35,20 @@ export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContex
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(toggle));
-  }, [toggle]);
+  const onChangeToggle = (state: boolean) => {
+    setToggle(state);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+  };
 
   return (
     <StyledViewSettings expanded={toggle}>
       {toggle ? (
         <>
           <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
-              <Icon data={arrow_forward_ios}></Icon>
+            <Button variant="ghost_icon" onClick={() => onChangeToggle(!toggle)}>
+              <Icon data={expand}></Icon>
             </Button>
-            <p style={{ marginRight: '8px', fontSize: '16px', fontWeight: '500' }}>View Settings</p>
+            <p style={{ marginRight: '10px', fontSize: '16px', fontWeight: '500' }}>View Settings</p>
           </div>
           <GroupingSelector
             groupingKeys={groupingKeys}
@@ -62,10 +63,9 @@ export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContex
         </>
       ) : (
         <>
-          <Button variant="ghost_icon" onClick={() => setToggle((state) => !state)}>
-            <Icon data={arrow_back_ios}></Icon>
+          <Button variant="ghost_icon" onClick={() => onChangeToggle(!toggle)} style={{ paddingLeft: '0' }}>
+            <Icon data={collapse}></Icon>
           </Button>
-          <VerticalText>View Settings</VerticalText>
         </>
       )}
     </StyledViewSettings>
