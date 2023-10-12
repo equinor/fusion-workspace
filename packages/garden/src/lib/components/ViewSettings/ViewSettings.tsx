@@ -5,7 +5,7 @@ import { GardenDataSource } from '../Garden';
 import { GroupingSelector } from '../GroupingSelector/GroupingSelector';
 import { StyledViewSettings } from './viewSettings.styles';
 
-const LOCAL_STORAGE_KEY = 'toggleState';
+const LOCAL_STORAGE_KEY = 'WorkspaceSidebarToggleState';
 
 interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
   dataSource: GardenDataSource<TContext>;
@@ -32,7 +32,7 @@ export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContex
 }: ViewSettingsProps<TData, TContext>): JSX.Element | null {
   const [toggle, setToggle] = useState<boolean>(() => {
     const savedState = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return savedState !== null ? JSON.parse(savedState) : true;
+    return savedState !== null ? !!JSON.parse(savedState) : true;
   });
 
   const onChangeToggle = (state: boolean) => {

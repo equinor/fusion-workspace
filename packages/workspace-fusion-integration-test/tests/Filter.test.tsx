@@ -1,6 +1,6 @@
 import React from 'react';
 import { Workspace } from '@equinor/workspace-fusion';
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import { workspaceOptions } from '../config/workspaceOptions';
 import { fakeTimeout } from '../utils/fakeTimeout';
 import { getMockGardenConfig } from '../config/mockGardenConfig';
@@ -38,13 +38,13 @@ describe('Testing filter integration', () => {
       );
     });
 
-    //Have to make an artificial timeout to ensure suspense has settled.
-    await fakeTimeout();
-    const el = getSearchInputEl();
-    //ensure search element is present
-    expect(el).toBeTruthy();
-    triggerSearchInput('abc');
+    await waitFor(() => {
+      const el = getSearchInputEl();
+      //ensure search element is present
+      expect(el).toBeTruthy();
+      triggerSearchInput('abc');
 
-    expect(mockFilterMeta).toBeCalledTimes(2);
+      expect(mockFilterMeta).toBeCalledTimes(2);
+    });
   });
 });
