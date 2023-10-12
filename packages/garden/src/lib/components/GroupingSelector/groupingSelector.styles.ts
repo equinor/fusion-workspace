@@ -14,7 +14,6 @@ export const StyledGroupHeader = styled.div`
 `;
 export const StyledSubGroupHeader = styled.div`
   font-weight: 500;
-  padding-left: 1rem;
   padding-top: 1rem;
 `;
 export const RadioWrapper = styled.div`
@@ -23,6 +22,7 @@ export const RadioWrapper = styled.div`
   flex-direction: column;
   gap: 1em;
   font-size: 14;
+  padding-left: 0.625rem;
 `;
 
 export const RadioCategoryWrapper = styled.div`
