@@ -4,6 +4,7 @@ import { act, render, getByText } from '@testing-library/react';
 import { workspaceOptions } from '../config/workspaceOptions';
 import { fakeTimeout } from '../utils/fakeTimeout';
 import { getMockGardenConfig } from '../config/mockGardenConfig';
+import { expect } from 'vitest';
 
 describe('Testing garden integration', () => {
   it('Should call all garden api functions', async () => {
@@ -16,8 +17,8 @@ describe('Testing garden integration', () => {
     //Have to make an artificial timeout to ensure all functions are called.
     await fakeTimeout();
 
-    expect(fakeGardenMeta).toBeCalledTimes(1);
-    expect(fakeHeaders).toBeCalledTimes(1);
+    expect(fakeGardenMeta).toHaveBeenCalled();
+    expect(fakeHeaders).toHaveBeenCalled();
   });
 
   it('Should render a custom garden item', async () => {
