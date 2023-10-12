@@ -100,16 +100,22 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
             >
               <VirtualContainer context={context as TContext} dataSource={dataSource} />
             </GardenConfigProvider>
-            <ViewSettings
-              dataSource={dataSource}
-              dateVariant={dateVariant}
-              groupingKeys={groupingKeys}
-              timeInterval={timeInterval}
-              context={context}
-              onChangeDateVariant={onChangeDateVariant}
-              onChangeTimeInterval={onChangetimeInterval}
-              setGroupingKeys={setGroupingKeys}
-            />
+
+            {
+              // Hides ViewSettings sidebar when sidesheet is open
+              selected ? null : (
+                <ViewSettings
+                  dataSource={dataSource}
+                  dateVariant={dateVariant}
+                  groupingKeys={groupingKeys}
+                  timeInterval={timeInterval}
+                  context={context}
+                  onChangeDateVariant={onChangeDateVariant}
+                  onChangeTimeInterval={onChangetimeInterval}
+                  setGroupingKeys={setGroupingKeys}
+                />
+              )
+            }
           </GardenContextProvider>
         </Suspense>
       </ErrorBoundary>
