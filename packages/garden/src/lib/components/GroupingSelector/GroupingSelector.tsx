@@ -1,11 +1,13 @@
-import { Autocomplete, Divider, Radio } from '@equinor/eds-core-react';
+import { Autocomplete, Divider, Label, Radio } from '@equinor/eds-core-react';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment, useRef } from 'react';
 import { GroupingOption } from '../../types';
 import { GardenDataSource } from '../Garden';
 import {
+  RadioButtonWrapper,
   RadioCategoryWrapper,
   RadioWrapper,
+  SelectorBody,
   StyledAutoCompleteWrapper,
   StyledGroupHeader,
   StyledSubGroupHeader,
@@ -81,7 +83,7 @@ export function GroupingSelector<TContext>({
   }
 
   return (
-    <>
+    <SelectorBody>
       <StyledGroupHeader>Groups</StyledGroupHeader>
       <Divider />
       <StyledAutoCompleteWrapper>
@@ -120,28 +122,33 @@ export function GroupingSelector<TContext>({
                 <RadioCategoryWrapper>
                   {hasDateVariant &&
                     groupingOption.dateVariant?.map((typ) => (
-                      <Radio
-                        key={typ}
-                        label={typ}
-                        value={typ}
-                        name="dateVariant"
-                        checked={dateVariant?.trim().toLowerCase() === typ.trim().toLowerCase()}
-                        onChange={(e) => onChangeDateVarient(e.target.value)}
-                      />
+                      <RadioButtonWrapper key={typ}>
+                        <Radio
+                          id={typ}
+                          key={typ}
+                          value={typ}
+                          name="dateVariant"
+                          checked={dateVariant?.trim().toLowerCase() === typ.trim().toLowerCase()}
+                          onChange={(e) => onChangeDateVarient(e.target.value)}
+                        />
+                        <Label htmlFor={typ} label={typ} style={{ fontSize: '14' }} />
+                      </RadioButtonWrapper>
                     ))}
                 </RadioCategoryWrapper>
                 <StyledSubGroupHeader>Time Intervals:</StyledSubGroupHeader>
                 <RadioCategoryWrapper>
                   {hasTimeInterval &&
                     groupingOption.timeInterval?.map((dim) => (
-                      <Radio
-                        key={dim}
-                        label={dim}
-                        value={dim}
-                        name="timeInterval"
-                        checked={timeInterval?.trim().toLowerCase() === dim.trim().toLowerCase()}
-                        onChange={(e) => onChangeTimeInterval(e.target.value)}
-                      />
+                      <RadioButtonWrapper key={dim}>
+                        <Radio
+                          key={dim}
+                          value={dim}
+                          name="timeInterval"
+                          checked={timeInterval?.trim().toLowerCase() === dim.trim().toLowerCase()}
+                          onChange={(e) => onChangeTimeInterval(e.target.value)}
+                        />
+                        <Label htmlFor={dim} label={dim} style={{ fontSize: '14' }} />
+                      </RadioButtonWrapper>
                     ))}
                 </RadioCategoryWrapper>
               </RadioWrapper>
@@ -149,6 +156,6 @@ export function GroupingSelector<TContext>({
           )
         );
       })}
-    </>
+    </SelectorBody>
   );
 }

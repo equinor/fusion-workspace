@@ -8,10 +8,12 @@ export const StyledAutoCompleteWrapper = styled.div`
 `;
 
 export const StyledGroupHeader = styled.div`
-  font-weight: 500px;
+  font-weight: 500;
   padding-top: 2rem;
+  font-size: 14;
 `;
 export const StyledSubGroupHeader = styled.div`
+  font-weight: 500;
   padding-left: 1rem;
   padding-top: 1rem;
 `;
@@ -20,6 +22,7 @@ export const RadioWrapper = styled.div`
   align-items: start;
   flex-direction: column;
   gap: 1em;
+  font-size: 14;
 `;
 
 export const RadioCategoryWrapper = styled.div`
@@ -27,4 +30,15 @@ export const RadioCategoryWrapper = styled.div`
   align-items: start;
   flex-direction: column;
   gap: 0.1em;
+  font-size: 14;
+`;
+export const RadioButtonWrapper = styled.div`
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export const SelectorBody = styled.div`
+  padding: 0px 10px;
 `;
