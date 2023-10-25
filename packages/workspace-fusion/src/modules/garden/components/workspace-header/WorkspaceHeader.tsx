@@ -8,7 +8,7 @@ type GardenWorkspaceHeaderProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext,
+  TContext
 > = {
   dataSource?: FilterDataSource;
 };
@@ -17,12 +17,12 @@ export function GardenWorkspaceHeader<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext,
+  TContext
 >({ dataSource }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
   return (
     <StyledGardenHeader>
       <NavigationBar />
-      {dataSource && <Filter dataSource={dataSource} />}
+      {dataSource && <Filter />}
     </StyledGardenHeader>
   );
 }

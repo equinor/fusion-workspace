@@ -15,7 +15,7 @@ type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>> = {
 
 export type WorkspaceProps<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 > = WorkspaceBaseProps<TData> &
   WorkspaceGardenProps<TData, TContext, FilterState> &
   WorkspaceGridProps<TData, FilterState> &
@@ -40,5 +40,5 @@ export type GardenBookmark = {
 };
 
 export type FilterBookmark = {
-  uncheckedValues: FilterStateGroup[];
+  state: FilterState;
 };

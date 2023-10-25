@@ -147,8 +147,15 @@ export function App() {
       }}
       filterOptions={{
         dataSource: {
-          getFilterMeta: async () => getFilterMetaData(FILTER_SIZE),
+          getFilterMeta: async (props) => {
+            console.log(props);
+            return getFilterMetaData(FILTER_SIZE);
+          },
         },
+      }}
+      currentBookmark={{
+        tab: 'garden',
+        payload: { filter: { state: { search: '123', groups: [{ name: 'Filter A', values: ['A-314'] }] } } },
       }}
       modules={[gridModule, gardenModule]}
     />

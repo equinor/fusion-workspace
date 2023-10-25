@@ -13,7 +13,7 @@ const client = new QueryClient();
 
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   return (
     <WorkspaceBoundary>
@@ -35,7 +35,7 @@ function useCheckParentClient(): QueryClient {
 
 function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   const client = useCheckParentClient();
 
@@ -44,10 +44,9 @@ function WorkspaceComponent<
   return (
     <QueryClientProvider client={client}>
       <FilterContextProvider
+        dataSource={props.filterOptions?.dataSource}
         styles={props.filterOptions?.styles}
-        defaultUncheckedValues={
-          props.currentBookmark?.payload.filter?.uncheckedValues ?? props.filterOptions?.defaultUncheckedValues
-        }
+        initialState={props.currentBookmark?.payload.filter?.state}
       >
         <WorkspaceView
           Sidesheet={configuration.Sidesheet}

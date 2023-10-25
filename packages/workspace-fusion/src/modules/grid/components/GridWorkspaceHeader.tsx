@@ -1,4 +1,4 @@
-import { Filter, FilterDataSource, useFilterContext } from '@equinor/workspace-filter';
+import { Filter, FilterDataSource } from '@equinor/workspace-filter';
 import styled from 'styled-components';
 import { useStatusBar } from '../../../lib/integrations/status-bar/hooks/useStatusBar';
 import { StyledActionBar } from '../../../lib/components/Header/actionBar.styles';
@@ -12,7 +12,7 @@ export function GridHeader<TData extends Record<PropertyKey, unknown>>({ dataSou
   return (
     <StyledGridHeader>
       <NavigationBar />
-      {dataSource && <Filter dataSource={dataSource} />}
+      {dataSource && <Filter />}
     </StyledGridHeader>
   );
 }
@@ -29,7 +29,6 @@ const NavigationBar = () => {
   return (
     <StyledActionBar>
       <div>{StatusBar && <StatusBar />}</div>
-
       <TabNavigation />
     </StyledActionBar>
   );
