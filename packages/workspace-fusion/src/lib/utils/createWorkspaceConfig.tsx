@@ -9,7 +9,7 @@ import { tryGetTabFromUrl } from '../classes/fusionUrlHandler';
 
 export function createConfigurationObject<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>): WorkspaceConfiguration {
   const tabs: Tab[] = [];
   const providers: Provider[] = [];

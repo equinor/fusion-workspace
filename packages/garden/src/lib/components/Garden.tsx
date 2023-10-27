@@ -1,5 +1,5 @@
 import { Icon } from '@equinor/eds-core-react';
-import { Suspense, useRef, useState } from 'react';
+import { MutableRefObject, Suspense, useRef, useState } from 'react';
 import {
   CustomVirtualViews,
   GardenGroup,
@@ -49,7 +49,14 @@ interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = und
   timeInterval: string | null;
   dateVariant: string | null;
   selected?: string | null;
+  refState?: MutableRefObject<null | undefined | RefState> | ((state: RefState) => void);
 }
+
+export type RefState = {
+  groupingKeys: string[];
+  timeInterval: string | null;
+  dateVariant: string | null;
+};
 
 Icon.add({ chevron_down, chevron_up });
 
@@ -65,6 +72,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   visuals,
   clickEvents,
   selected = null,
+  refState,
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const client = useRef(new QueryClient());
   const [groupingKeys, setGroupingKeys] = useState<string[]>(initialGrouping);
@@ -77,6 +85,14 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
   const onChangeDateVariant = (dateVariant: string | null) => {
     updateDateVariant(dateVariant);
   };
+
+  if (refState) {
+    if (typeof refState == 'function') {
+      refState({ dateVariant, groupingKeys, timeInterval });
+    } else {
+      refState.current = { dateVariant, timeInterval, groupingKeys };
+    }
+  }
 
   return (
     <QueryClientProvider client={client.current}>

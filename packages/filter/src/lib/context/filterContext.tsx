@@ -18,6 +18,7 @@ type FilterContextProviderProps = {
   initialState?: FilterState;
   styles?: FilterStyles;
   dataSource?: FilterDataSource;
+  onChange?: (state: FilterState) => void;
 };
 
 export type FilterState = {
@@ -30,6 +31,7 @@ export const FilterContextProvider = ({
   styles,
   initialState,
   dataSource,
+  onChange,
 }: PropsWithChildren<FilterContextProviderProps>) => {
   const client = useRef(new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } }));
 
@@ -38,7 +40,7 @@ export const FilterContextProvider = ({
   }
   return (
     <QueryClientProvider client={client.current}>
-      <FilterContextWrapper dataSource={dataSource} initialState={initialState} styles={styles}>
+      <FilterContextWrapper dataSource={dataSource} initialState={initialState} styles={styles} onChange={onChange}>
         {children}
       </FilterContextWrapper>
     </QueryClientProvider>
@@ -49,10 +51,17 @@ type FilterContextWrapperProps = {
   initialState?: FilterState;
   styles?: FilterStyles;
   dataSource: FilterDataSource;
+  onChange?: (state: FilterState) => void;
   children: ReactNode;
 };
 
-export const FilterContextWrapper = ({ dataSource, initialState, styles, children }: FilterContextWrapperProps) => {
+export const FilterContextWrapper = ({
+  dataSource,
+  initialState,
+  styles,
+  children,
+  onChange,
+}: FilterContextWrapperProps) => {
   const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>([]);
   const [filterState, setFilterState] = useState<FilterState>(initialState ?? { groups: [], search: '' });
 
@@ -66,7 +75,13 @@ export const FilterContextWrapper = ({ dataSource, initialState, styles, childre
     }
   );
 
-  const setFilterStateHandler = (groups: FilterStateGroup[]) => setFilterState((s) => ({ ...s, groups: groups }));
+  const setFilterStateHandler = (groups: FilterStateGroup[]) =>
+    setFilterState((s) => {
+      const newVal = { ...s, groups: groups };
+      onChange && onChange(newVal);
+      //onchange
+      return newVal;
+    });
 
   useEffect(() => {
     if (!query.data) return;

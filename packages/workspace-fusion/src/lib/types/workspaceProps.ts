@@ -6,16 +6,18 @@ import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { WorkspaceFilterProps } from '../integrations/filter';
 import { FusionWorkspaceModule, WorkspaceConfig } from '../types';
 import { FilterState, FilterStateGroup } from '@equinor/workspace-filter';
+import { MutableRefObject } from 'react';
 
 type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>> = {
   workspaceOptions: WorkspaceConfig<TData>;
   currentBookmark?: Bookmark | null | undefined;
+  onBookmarkChange?: (bookmark: Partial<Bookmark>) => void;
   modules: FusionWorkspaceModule[];
 };
 
 export type WorkspaceProps<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 > = WorkspaceBaseProps<TData> &
   WorkspaceGardenProps<TData, TContext, FilterState> &
   WorkspaceGridProps<TData, FilterState> &
@@ -26,17 +28,28 @@ export type WorkspaceProps<
 
 export type Bookmark = {
   tab: string;
-  payload: Partial<{
-    powerBi: never;
-    grid: never;
-    filter: FilterBookmark;
-    garden: GardenBookmark;
-  }>;
+  payload: Payload;
+};
+
+export type Payload = Partial<{
+  powerBi: PowerBiBookmark;
+  grid: never;
+  filter: FilterBookmark;
+  garden: GardenBookmark;
+}>;
+
+export type PowerBiBookmark = {
+  bookmarkState: string;
+  name: string;
+  displayName: string;
+  mainPage: string;
+  mainPageDisplayName: string;
 };
 
 export type GardenBookmark = {
-  gardenKey: string;
-  groupByKeys: string[];
+  groupingKeys: string[];
+  dateVariant: string | null;
+  timeInterval: string | null;
 };
 
 export type FilterBookmark = {

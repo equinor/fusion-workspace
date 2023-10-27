@@ -6,6 +6,7 @@ import { FilterConfig, PowerBiConfig, ReportMetaDataProps } from '../../lib/inte
 import { PowerBiHeader } from './components';
 import { PowerBiPopover } from './components/PowerBiPopover';
 import { PowerBiIcon } from './icons/PowerBiIcon';
+import { useWorkspace } from '../../lib/hooks';
 
 export const powerBiModule: FusionWorkspaceModule = {
   name: 'power-bi',
@@ -14,6 +15,14 @@ export const powerBiModule: FusionWorkspaceModule = {
     if (!powerBiConfig) return;
 
     const controller = new PowerBiController();
+    console.log('hello');
+    if (props.currentBookmark?.payload.powerBi) {
+      const bookmark = props.currentBookmark.payload.powerBi;
+      const unsub = controller.onReportReady((s) => {
+        s.bookmarksManager.applyState(bookmark.bookmarkState);
+        unsub();
+      });
+    }
     return {
       tab: {
         Component: () => <PowerBiWrapper {...powerBiConfig} controller={controller} />,
@@ -39,6 +48,7 @@ function createBasicFilter(filters: FilterConfig | undefined): undefined | IBasi
 
 const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiController }) => {
   const { setIcons } = useWorkspaceHeaderComponents();
+  const { updatePayload } = useWorkspace();
 
   const { data } = useQuery(
     [powerBiConfig.reportUri, 'classification'],
@@ -50,6 +60,32 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
     },
     { enabled: !!powerBiConfig.getClassification }
   );
+
+  useEffect(() => {
+    const unsub = powerBiConfig.controller.onReportReady((s) => {
+      s.bookmarksManager.capture().then((r) =>
+        updatePayload((old) => {
+          if (!r.state) {
+            return false;
+          }
+          return {
+            ...old,
+            powerBi: {
+              bookmarkState: r.state,
+              displayName: r.displayName,
+              mainPage: powerBiConfig.controller.activePage?.name ?? '',
+              mainPageDisplayName: '',
+              name: '',
+            },
+          };
+        })
+      );
+    });
+
+    return () => {
+      unsub();
+    };
+  }, [powerBiConfig.controller]);
 
   useEffect(() => {
     const classification: HeaderIcon = classificationIcon(data ?? '');

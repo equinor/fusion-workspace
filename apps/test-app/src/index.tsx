@@ -2,7 +2,7 @@ import { Workspace } from '@equinor/workspace-fusion';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { GroupingOption } from '@equinor/workspace-garden';
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 
@@ -105,6 +105,9 @@ export function App() {
   return (
     <Workspace<{ id: string }>
       workspaceOptions={{ getIdentifier: (a) => a.id }}
+      onBookmarkChange={(ref) => {
+        console.log('Listener updated ', ref);
+      }}
       gridOptions={{
         columnDefinitions: [{ field: 'id' }],
         getRows: async ({ success, request }, filter) => {
@@ -155,7 +158,14 @@ export function App() {
       }}
       currentBookmark={{
         tab: 'garden',
-        payload: { filter: { state: { search: '123', groups: [{ name: 'Filter A', values: ['A-314'] }] } } },
+        payload: {
+          garden: {
+            groupingKeys: ['RFOC'],
+            dateVariant: 'Forecast',
+            timeInterval: 'Weekly',
+          },
+          filter: { state: { search: '123', groups: [{ name: 'Filter A', values: ['A-314'] }] } },
+        },
       }}
       modules={[gridModule, gardenModule]}
     />
