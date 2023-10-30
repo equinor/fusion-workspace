@@ -1,5 +1,5 @@
 import { Workspace as WorkspaceView } from '@equinor/workspace-react';
-import { WorkspaceProps } from '../types';
+import { Bookmark, WorkspaceProps } from '../types';
 
 import { createConfigurationObject } from '../utils/createWorkspaceConfig';
 
@@ -9,6 +9,7 @@ import { FilterContextProvider } from '@equinor/workspace-filter';
 import { updateQueryParams } from '../classes/fusionUrlHandler';
 import { WorkspaceContextProvider } from '../context/WorkspaceControllerContext';
 import { useWorkspace } from '../hooks';
+import { useRef } from 'react';
 
 const client = new QueryClient();
 
@@ -42,10 +43,11 @@ function WorkspaceComponent<
   TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   const client = useCheckParentClient();
+  const bookmarkRef = useRef<Bookmark | null | undefined>(props.currentBookmark);
 
   const { handleTabChange, updatePayload } = useWorkspace();
 
-  const configuration = createConfigurationObject(props);
+  const configuration = createConfigurationObject(bookmarkRef.current ? props : { ...props, currentBookmark: null });
 
   const filterDataSource = props.filterOptions?.dataSource;
 
@@ -72,6 +74,7 @@ function WorkspaceComponent<
           tabs={configuration.tabs}
           events={{
             onTabChange: (newTab) => {
+              bookmarkRef.current = null;
               updateQueryParams([['tab', newTab]]);
               handleTabChange(newTab);
             },
