@@ -1,11 +1,15 @@
+import { useQuery } from '@tanstack/react-query';
 import { useItemWidths } from '../../hooks';
+import { useGarden } from '../../hooks/useGarden';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
 import { ExpandProvider } from '../ExpandProvider';
+import { GardenDataSource } from '../Garden';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
-import { useQuery } from '@tanstack/react-query';
-import { GardenDataSource } from '../Garden';
-import { useGardenConfig } from '../../hooks/useGardenConfig';
-import { useGarden } from '../../hooks/useGarden';
+import { info_circle } from '@equinor/eds-icons';
+import { Icon } from '@equinor/eds-core-react';
+import styled from 'styled-components';
+Icon.add({ info_circle });
 
 type VirtualContainerProps<TContext = undefined> = {
   dataSource: GardenDataSource<TContext>;
@@ -26,6 +30,8 @@ export const VirtualContainer = <TContext,>({
     suspense: true,
     useErrorBoundary: true,
     keepPreviousData: false,
+    cacheTime: Infinity,
+    staleTime: Infinity,
     queryFn: ({ signal }) =>
       dataSource.getGardenMeta(
         {
@@ -47,6 +53,17 @@ export const VirtualContainer = <TContext,>({
   const columnWidth = data.columnWidth || 300;
   const widths = useItemWidths(data.columnCount, columnWidth);
 
+  if (!amountOfColumns) {
+    return (
+      <InfoMessage>
+        <Icon name="info_circle" size={32} />
+        <p>
+          Sorry, we couldn't find any results based on your search and filter criteria. Please try using different
+          keywords or adjusting the filters
+        </p>
+      </InfoMessage>
+    );
+  }
   //TODO: Handle widths = 0 better
   if (widths.length === 0 || amountOfColumns !== widths.length) {
     return null;
@@ -80,3 +97,12 @@ export const VirtualContainer = <TContext,>({
     </>
   );
 };
+
+const InfoMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 18;
+`;
