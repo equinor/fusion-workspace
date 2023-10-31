@@ -10,12 +10,13 @@ import { updateQueryParams } from '../classes/fusionUrlHandler';
 import { WorkspaceContextProvider } from '../context/WorkspaceControllerContext';
 import { useWorkspace } from '../hooks';
 import { useRef } from 'react';
+import { update } from '@equinor/eds-icons';
 
 const client = new QueryClient();
 
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   return (
     <WorkspaceBoundary>
@@ -40,7 +41,7 @@ function useCheckParentClient(): QueryClient {
 
 function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   const client = useCheckParentClient();
   const bookmarkRef = useRef<Bookmark | null | undefined>(props.currentBookmark);
@@ -51,21 +52,15 @@ function WorkspaceComponent<
 
   const filterDataSource = props.filterOptions?.dataSource;
 
-  const overloadedFilterDataSource = filterDataSource
-    ? {
-        getFilterMeta: (state, signal) => {
-          updatePayload((p) => ({ ...p, filter: { state: state } }));
-          return filterDataSource.getFilterMeta(state, signal);
-        },
-      }
-    : undefined;
-
   return (
     <QueryClientProvider client={client}>
       <FilterContextProvider
-        dataSource={overloadedFilterDataSource}
+        dataSource={filterDataSource}
         styles={props.filterOptions?.styles}
-        initialState={props.currentBookmark?.payload.filter?.state}
+        initialState={props.currentBookmark?.payload.filter}
+        onChange={(val) => {
+          updatePayload((p) => ({ ...p, filter: val }));
+        }}
       >
         <WorkspaceView
           Sidesheet={configuration.Sidesheet}

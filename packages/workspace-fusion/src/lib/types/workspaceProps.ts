@@ -6,7 +6,6 @@ import { WorkspacePowerBiProps } from '../integrations/power-bi';
 import { WorkspaceFilterProps } from '../integrations/filter';
 import { FusionWorkspaceModule, WorkspaceConfig } from '../types';
 import { FilterState, FilterStateGroup } from '@equinor/workspace-filter';
-import { MutableRefObject } from 'react';
 
 type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>> = {
   workspaceOptions: WorkspaceConfig<TData>;
@@ -17,7 +16,7 @@ type WorkspaceBaseProps<TData extends Record<PropertyKey, unknown>> = {
 
 export type WorkspaceProps<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>
 > = WorkspaceBaseProps<TData> &
   WorkspaceGardenProps<TData, TContext, FilterState> &
   WorkspaceGridProps<TData, FilterState> &
@@ -53,5 +52,6 @@ export type GardenBookmark = {
 };
 
 export type FilterBookmark = {
-  state: FilterState;
+  filterState: FilterState;
+  uncheckedValues: FilterStateGroup[];
 };

@@ -14,11 +14,16 @@ export type IFilterContext = {
 
 export const FilterContext = createContext<null | IFilterContext>(null);
 
+type InitialState = {
+  filterState: FilterState;
+  uncheckedValues: FilterStateGroup[];
+};
+
 type FilterContextProviderProps = {
-  initialState?: FilterState;
+  initialState?: InitialState;
   styles?: FilterStyles;
   dataSource?: FilterDataSource;
-  onChange?: (state: FilterState) => void;
+  onChange?: (state: InitialState) => void;
 };
 
 export type FilterState = {
@@ -48,10 +53,10 @@ export const FilterContextProvider = ({
 };
 
 type FilterContextWrapperProps = {
-  initialState?: FilterState;
+  initialState?: InitialState;
   styles?: FilterStyles;
   dataSource: FilterDataSource;
-  onChange?: (state: FilterState) => void;
+  onChange?: (state: InitialState) => void;
   children: ReactNode;
 };
 
@@ -62,8 +67,8 @@ export const FilterContextWrapper = ({
   children,
   onChange,
 }: FilterContextWrapperProps) => {
-  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>([]);
-  const [filterState, setFilterState] = useState<FilterState>(initialState ?? { groups: [], search: '' });
+  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(initialState?.uncheckedValues ?? []);
+  const [filterState, setFilterState] = useState<FilterState>(initialState?.filterState ?? { groups: [], search: '' });
 
   const query = useQuery(
     ['filter-meta', JSON.stringify(filterState)],
@@ -78,8 +83,7 @@ export const FilterContextWrapper = ({
   const setFilterStateHandler = (groups: FilterStateGroup[]) =>
     setFilterState((s) => {
       const newVal = { ...s, groups: groups };
-      onChange && onChange(newVal);
-      //onchange
+      onChange && onChange({ filterState: newVal, uncheckedValues: uncheckedValues });
       return newVal;
     });
 
