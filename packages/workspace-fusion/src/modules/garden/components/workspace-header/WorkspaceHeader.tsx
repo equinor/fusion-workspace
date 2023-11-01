@@ -10,7 +10,7 @@ type GardenWorkspaceHeaderProps<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext
+  TContext,
 > = {
   dataSource?: FilterDataSource;
   sidesheetConfig?: SidesheetConfig<TData>;
@@ -20,7 +20,7 @@ export function GardenWorkspaceHeader<
   TData extends Record<PropertyKey, unknown>,
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
-  TContext
+  TContext,
 >({ dataSource, sidesheetConfig }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
   useCreateButton(sidesheetConfig);
   return (
