@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { StyledActionBar } from '../../../../lib/components/Header/actionBar.styles';
 import { TabNavigation } from '../../../../lib/integrations/common/components/TabNavigation';
 import { useStatusBar } from '../../../../lib/integrations/status-bar';
+import { useCreateButton } from '../../../../lib/hooks/useCreateButton';
+import { SidesheetConfig } from '../../../../lib/integrations/sidesheet';
 
 type GardenWorkspaceHeaderProps<
   TData extends Record<PropertyKey, unknown>,
@@ -11,6 +13,7 @@ type GardenWorkspaceHeaderProps<
   TContext,
 > = {
   dataSource?: FilterDataSource;
+  sidesheetConfig?: SidesheetConfig<TData>;
 };
 
 export function GardenWorkspaceHeader<
@@ -18,7 +21,8 @@ export function GardenWorkspaceHeader<
   TExtendedFields extends string,
   TCustomGroupByKeys extends Record<PropertyKey, unknown>,
   TContext,
->({ dataSource }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
+>({ dataSource, sidesheetConfig }: GardenWorkspaceHeaderProps<TData, TExtendedFields, TCustomGroupByKeys, TContext>) {
+  useCreateButton(sidesheetConfig);
   return (
     <StyledGardenHeader>
       <NavigationBar />
