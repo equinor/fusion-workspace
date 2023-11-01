@@ -39,7 +39,9 @@ export const gridModule: FusionWorkspaceModule = {
         ),
         name: 'grid',
         TabIcon: GridIcon,
-        CustomHeader: () => <GridHeader dataSource={props.filterOptions?.dataSource} />,
+        CustomHeader: () => (
+          <GridHeader dataSource={props.filterOptions?.dataSource} sidesheetConfig={props.sidesheetOptions} />
+        ),
       },
     };
   },

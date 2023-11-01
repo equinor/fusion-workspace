@@ -11,9 +11,13 @@ type WorkspaceContextProviderProps<TData> = {
 
 export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps<T>) {
   const { clearSelection, selectById, selectItem, selection } = useSelection(props.getIdentifier);
+  const [isCreateSidesheetOpen, setCreateSidesheetOpen] = useState<boolean>(false);
   return (
     <WorkspaceContext.Provider
       value={{
+        isCreateSidesheetOpen,
+        openCreateSidesheet: () => setCreateSidesheetOpen(true),
+        closeCreateSidesheet: () => setCreateSidesheetOpen(false),
         clearSelection,
         selectById,
         selectItem: selectItem as (item: unknown) => void,
@@ -59,6 +63,9 @@ type WorkspaceContextType<T> = {
   clearSelection: VoidFunction;
   selectById: (id: string) => void;
   selectItem: (item: T) => void;
+  openCreateSidesheet: VoidFunction;
+  closeCreateSidesheet: VoidFunction;
+  isCreateSidesheetOpen: boolean;
 };
 
 /**
