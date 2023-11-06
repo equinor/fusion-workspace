@@ -173,7 +173,7 @@ ag-grid, ag-grid-angular, ag-grid-ng2, ag-grid-polymer, ag-grid-aurelia {
          flex-direction: column;
 }
 .ag-root.ag-layout-normal, .ag-root.ag-layout-auto-height {
- overflow: hidden;
+ overflow: auto;
  -webkit-box-flex: 1;
          flex: 1 1 auto;
  width: 0;
