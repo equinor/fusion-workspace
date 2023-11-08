@@ -32,7 +32,12 @@ export const gardenModule: FusionWorkspaceModule = {
         ),
         name: 'garden',
         TabIcon: GardenIcon,
-        CustomHeader: () => <GardenWorkspaceHeader dataSource={props.filterOptions?.dataSource} />,
+        CustomHeader: () => (
+          <GardenWorkspaceHeader
+            dataSource={props.filterOptions?.dataSource}
+            sidesheetConfig={props.sidesheetOptions}
+          />
+        ),
       },
     };
   },

@@ -125,6 +125,7 @@ export function App() {
         DetailsSidesheet: (a) => {
           return <div onClick={() => a.close()}>hello am sidesheet</div>;
         },
+        CreateSidesheet: (props) => <div onClick={() => props.close()}>hello test</div>,
       }}
       gardenOptions={{
         getGardenMeta: async (a, b, c) => {

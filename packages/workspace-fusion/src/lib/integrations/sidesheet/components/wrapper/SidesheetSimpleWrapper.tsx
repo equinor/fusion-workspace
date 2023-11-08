@@ -1,17 +1,19 @@
 import { ErrorBoundary } from 'react-error-boundary';
-import { DetailsSidesheetProps } from '../../types';
+import { CreateSidesheetProps, DetailsSidesheetProps } from '../../types';
 import { useWorkspace } from '../../../../hooks';
 import { Suspense } from 'react';
 import { CircularProgress } from '@equinor/eds-core-react';
 
 type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
   DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
+  CreateSidesheet?: (props: CreateSidesheetProps<TData>) => JSX.Element;
 };
 
 export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown>>({
   DetailsSidesheet,
+  CreateSidesheet,
 }: SidesheetSimpleWrapperProps<TData>) => {
-  const { selection, clearSelection } = useWorkspace();
+  const { selection, clearSelection, isCreateSidesheetOpen, closeCreateSidesheet } = useWorkspace();
 
   return (
     <ErrorBoundary
@@ -19,8 +21,12 @@ export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown
       onError={() => console.error('An error occurred in the sidesheet')}
     >
       <Suspense fallback={<SidesheetFallback />}>
-        {selection && (
+        {selection ? (
           <DetailsSidesheet id={selection.id} item={selection?.item as TData | undefined} close={clearSelection} />
+        ) : isCreateSidesheetOpen ? (
+          <>{CreateSidesheet && <CreateSidesheet close={closeCreateSidesheet} />}</>
+        ) : (
+          <></>
         )}
       </Suspense>
     </ErrorBoundary>
