@@ -123,7 +123,12 @@ export function App() {
       sidesheetOptions={{
         type: 'default',
         DetailsSidesheet: (a) => {
-          return <div onClick={() => a.close()}>hello am sidesheet</div>;
+          return (
+            <div onClick={() => a.close()}>
+              <div>hello am sidesheet</div>
+              <pre>{JSON.stringify(a, null, 4)}</pre>
+            </div>
+          );
         },
         CreateSidesheet: (props) => <div onClick={() => props.close()}>hello test</div>,
       }}

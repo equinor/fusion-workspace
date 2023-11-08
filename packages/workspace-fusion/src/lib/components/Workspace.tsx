@@ -9,14 +9,14 @@ import { FilterContextProvider } from '@equinor/workspace-filter';
 import { updateQueryParams } from '../classes/fusionUrlHandler';
 import { WorkspaceContextProvider } from '../context/WorkspaceControllerContext';
 import { useWorkspace } from '../hooks';
-import { useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { update } from '@equinor/eds-icons';
 
 const client = new QueryClient();
 
 export function Workspace<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   return (
     <WorkspaceBoundary>
@@ -41,27 +41,22 @@ function useCheckParentClient(): QueryClient {
 
 function WorkspaceComponent<
   TData extends Record<PropertyKey, unknown>,
-  TContext extends Record<PropertyKey, unknown> = never,
+  TContext extends Record<PropertyKey, unknown> = never
 >(props: WorkspaceProps<TData, TContext>) {
   const client = useCheckParentClient();
   const bookmarkRef = useRef<Bookmark | null | undefined>(props.currentBookmark);
 
   const { handleTabChange, updatePayload } = useWorkspace();
 
-  const configuration = createConfigurationObject(bookmarkRef.current ? props : { ...props, currentBookmark: null });
+  const configuration = useMemo(
+    () => createConfigurationObject(bookmarkRef.current ? props : { ...props, currentBookmark: null }),
+    []
+  );
 
-  const filterDataSource = props.filterOptions?.dataSource;
-
-  return (
-    <QueryClientProvider client={client}>
-      <FilterContextProvider
-        dataSource={filterDataSource}
-        styles={props.filterOptions?.styles}
-        initialState={props.currentBookmark?.payload.filter}
-        onChange={(val) => {
-          updatePayload((p) => ({ ...p, filter: val }));
-        }}
-      >
+  //TODO: Refactor this!
+  const currentView = useMemo(() => {
+    return (
+      <>
         <WorkspaceView
           Sidesheet={configuration.Sidesheet}
           providers={configuration.providers}
@@ -75,6 +70,23 @@ function WorkspaceComponent<
             },
           }}
         />
+      </>
+    );
+  }, [configuration]);
+
+  const filterDataSource = props.filterOptions?.dataSource;
+
+  return (
+    <QueryClientProvider client={client}>
+      <FilterContextProvider
+        dataSource={filterDataSource}
+        styles={props.filterOptions?.styles}
+        initialState={props.currentBookmark?.payload.filter}
+        onChange={(val) => {
+          updatePayload((p) => ({ ...p, filter: val }));
+        }}
+      >
+        {currentView}
       </FilterContextProvider>
     </QueryClientProvider>
   );
