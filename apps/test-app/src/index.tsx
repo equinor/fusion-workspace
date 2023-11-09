@@ -72,7 +72,13 @@ function getGardenHeaderData(gardenData: any[] | null = null): any[] {
 
 function getGridRowData(num_rows: number = 4): any[] {
   return Array.from({ length: num_rows }, () => {
-    return { id: `${getRandomInt(100, 9999)}` };
+    return {
+      id: `${getRandomInt(1000, 99999)}`,
+      ids: `${getRandomInt(100, 99999)}`,
+      idss: `${getRandomInt(100, 99999)}`,
+      idsss: `${getRandomInt(100, 99999)}`,
+      idssss: `${getRandomInt(100, 99999)}`,
+    };
   });
 }
 
@@ -103,10 +109,16 @@ const GardenBlockData = getGardenBlockData(GARDEN_SIZE);
 
 export function App() {
   return (
-    <Workspace<{ id: string }>
+    <Workspace<{ id: string; ids: string; idss: string; idsss: string; idssss: string }>
       workspaceOptions={{ getIdentifier: (a) => a.id }}
       gridOptions={{
-        columnDefinitions: [{ field: 'id' }],
+        columnDefinitions: [
+          { field: 'id' },
+          { field: 'ids' },
+          { field: 'idss' },
+          { field: 'idsss' },
+          { field: 'idssss', width: 700 },
+        ],
         getRows: async ({ success, request }, filter) => {
           success({ rowData: getGridRowData(GRID_SIZE), rowCount: GRID_SIZE });
         },
