@@ -8,7 +8,11 @@ export const useAgStyles = () => {
   useEffect(() => {
     const el = document.getElementsByClassName('ag-body-horizontal-scroll').item(0);
     if (el) {
-      el.remove();
+      try {
+        el.remove();
+      } catch (e) {
+        console.log('Failed to remove element');
+      }
     }
   }, []);
 
