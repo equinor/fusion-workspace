@@ -28,7 +28,7 @@ const expandReducer =
           };
         } else {
           const newWidths = [...state.widths];
-          newWidths[action.index] = defaultColumnWidth + 200;
+          newWidths[action.index] = defaultColumnWidth + 500;
           return {
             expandedColumns: [...state.expandedColumns, action.index],
             widths: newWidths,
