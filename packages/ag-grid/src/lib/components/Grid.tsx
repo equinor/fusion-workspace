@@ -4,7 +4,7 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ServerSideRowModelModule } from '@ag-grid-enterprise/server-side-row-model';
 import useStyles from '@equinor/fusion-react-ag-grid-styles';
 import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
-import { ThemeProvider } from '@equinor/fusion-react-styles';
+import { ThemeProvider, theme } from '@equinor/fusion-react-styles';
 
 type GridProps<TData> = {
   height: number;
@@ -14,7 +14,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, ServerSideRowModelModu
 
 export function Grid<TData>(props: GridProps<TData>) {
   return (
-    <ThemeProvider theme={{}}>
+    <ThemeProvider theme={theme}>
       <InnerGrid {...props} />
     </ThemeProvider>
   );
