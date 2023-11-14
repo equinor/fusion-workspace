@@ -20,7 +20,6 @@ export function Grid<TData>({ columnDefs, gridOptions, height, rowData, modules,
         rowHeight={32}
         groupDisplayType={'multipleColumns'}
         headerHeight={32}
-        // className={themeName}
         gridOptions={gridOptions}
         columnDefs={columnDefs}
         rowData={rowData}
