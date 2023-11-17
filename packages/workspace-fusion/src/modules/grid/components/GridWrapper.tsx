@@ -88,6 +88,8 @@ export const GridWrapper = <
         height={height}
         context={filterState}
         modules={config.modules}
+        enableCellTextSelection
+        ensureDomOrder
       />
     </div>
   );
@@ -118,6 +120,7 @@ function setDefaultColDef<TData>(
 ) {
   gridOptions.defaultColDef = {
     resizable: true,
+
     onCellClicked: (a) => {
       if (!a.data) return;
       setSelected(a.data);
