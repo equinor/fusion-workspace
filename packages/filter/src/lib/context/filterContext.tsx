@@ -1,6 +1,7 @@
+import { QueryClient, QueryClientProvider, UseQueryResult, useQuery } from '@tanstack/react-query';
 import { FilterStylesContext } from '../components/Filter';
-import { FilterStateGroup, FilterStyles } from '../types';
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import { FilterDataSource, FilterGroup, FilterStateGroup, FilterStyles } from '../types';
+import { createContext, PropsWithChildren, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
 export type IFilterContext = {
   uncheckedValues: FilterStateGroup[];
@@ -8,13 +9,21 @@ export type IFilterContext = {
   filterState: FilterState;
   setFilterState: (newVal: FilterStateGroup[]) => void;
   setSearchText: (searchText: string) => void;
+  query: UseQueryResult<FilterGroup[], unknown>;
 };
 
 export const FilterContext = createContext<null | IFilterContext>(null);
 
+type InitialState = {
+  filterState: FilterState;
+  uncheckedValues: FilterStateGroup[];
+};
+
 type FilterContextProviderProps = {
-  defaultUncheckedValues: FilterStateGroup[] | undefined;
+  initialState?: InitialState;
   styles?: FilterStyles;
+  dataSource?: FilterDataSource;
+  onChange?: (state: InitialState) => void;
 };
 
 export type FilterState = {
@@ -24,20 +33,75 @@ export type FilterState = {
 
 export const FilterContextProvider = ({
   children,
-  defaultUncheckedValues,
   styles,
+  initialState,
+  dataSource,
+  onChange,
 }: PropsWithChildren<FilterContextProviderProps>) => {
-  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(defaultUncheckedValues ?? []);
-  const [filterState, setFilterState] = useState<FilterState>({ groups: [], search: '' });
+  const client = useRef(new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } }));
+
+  if (!dataSource) {
+    return <>{children}</>;
+  }
+  return (
+    <QueryClientProvider client={client.current}>
+      <FilterContextWrapper dataSource={dataSource} initialState={initialState} styles={styles} onChange={onChange}>
+        {children}
+      </FilterContextWrapper>
+    </QueryClientProvider>
+  );
+};
+
+type FilterContextWrapperProps = {
+  initialState?: InitialState;
+  styles?: FilterStyles;
+  dataSource: FilterDataSource;
+  onChange?: (state: InitialState) => void;
+  children: ReactNode;
+};
+
+export const FilterContextWrapper = ({
+  dataSource,
+  initialState,
+  styles,
+  children,
+  onChange,
+}: FilterContextWrapperProps) => {
+  const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(initialState?.uncheckedValues ?? []);
+  const [filterState, setFilterState] = useState<FilterState>(initialState?.filterState ?? { groups: [], search: '' });
+
+  const query = useQuery(
+    ['filter-meta', JSON.stringify(filterState)],
+    ({ signal }): Promise<FilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
+    {
+      suspense: false,
+      useErrorBoundary: false,
+      keepPreviousData: true,
+    }
+  );
+
+  const setFilterStateHandler = (groups: FilterStateGroup[]) =>
+    setFilterState((s) => {
+      const newVal = { ...s, groups: groups };
+      onChange && onChange({ filterState: newVal, uncheckedValues: uncheckedValues });
+      return newVal;
+    });
+
+  useEffect(() => {
+    if (!query.data) return;
+    if (filterState.groups.length === 0 && filterState.search.length === 0 && uncheckedValues.length === 0) return;
+    setFilterStateHandler(getServerArgs(query.data, uncheckedValues));
+  }, [uncheckedValues, initialState]);
 
   return (
     <FilterContext.Provider
       value={{
         filterState,
-        setFilterState: (groups) => setFilterState((s) => ({ ...s, groups: groups })),
+        setFilterState: setFilterStateHandler,
         setUncheckedValues,
         uncheckedValues,
         setSearchText: (search) => setFilterState((v) => ({ ...v, search: search })),
+        query,
       }}
     >
       <FilterStylesContext.Provider value={styles}>{children}</FilterStylesContext.Provider>
@@ -46,9 +110,19 @@ export const FilterContextProvider = ({
 };
 
 export const useFilterContext = () => {
-  const s = useContext(FilterContext);
-  if (!s) {
+  const filterContext = useContext(FilterContext);
+  if (!filterContext) {
     throw new Error('Filter context used out of bounds');
   }
-  return s;
+  return filterContext;
 };
+
+const getServerArgs = (groups: FilterGroup[], filterState: FilterStateGroup[]) =>
+  groups.map(
+    (group): FilterStateGroup => ({
+      name: group.name,
+      values: group.filterItems
+        .map((s) => s.value)
+        .filter((value) => !filterState.find((x) => x.name === group.name)?.values.includes(value)),
+    })
+  );

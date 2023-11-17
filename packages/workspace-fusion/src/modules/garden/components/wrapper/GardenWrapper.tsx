@@ -17,9 +17,8 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
   getIdentifier,
 }: GardenWrapperProps<TData, TFilter>) => {
   const { filterState } = useFilterContext();
-  const { selectItem } = useWorkspace();
 
-  const { selection } = useWorkspace();
+  const { selectItem, selection, updatePayload } = useWorkspace();
 
   return (
     <div id="workspace_garden_wrapper" style={{ display: 'flex', height: '100%', width: '100%' }}>
@@ -34,6 +33,11 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
         selected={selection?.id}
         getIdentifier={getIdentifier}
         getDisplayName={config.getDisplayName}
+        refState={(ref) => {
+          updatePayload((p) => {
+            return { ...p, garden: ref };
+          });
+        }}
         clickEvents={{
           onClickItem: (i) => {
             selectItem(i);

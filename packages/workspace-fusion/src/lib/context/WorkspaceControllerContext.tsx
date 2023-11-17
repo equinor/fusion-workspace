@@ -1,20 +1,25 @@
-import { createContext, useState, useCallback, type ReactNode } from 'react';
+import { createContext, useState, useCallback, type ReactNode, useRef } from 'react';
 import { type Selection } from '../types/selection';
-import type { GetIdentifier } from '../types';
+import type { Bookmark, GetIdentifier, Payload } from '../types';
 
 export const WorkspaceContext = createContext<WorkspaceContextType<unknown> | null>(null);
 
 type WorkspaceContextProviderProps<TData> = {
   getIdentifier: GetIdentifier<TData>;
   children: ReactNode;
+  onBookmarkChange?: (bookmark: Partial<Bookmark>) => void;
 };
 
 export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps<T>) {
   const { clearSelection, selectById, selectItem, selection } = useSelection(props.getIdentifier);
+  const { bookmarkRef, handleTabChange, updatePayload } = useBookmarkRef(props.onBookmarkChange);
   const [isCreateSidesheetOpen, setCreateSidesheetOpen] = useState<boolean>(false);
   return (
     <WorkspaceContext.Provider
       value={{
+        bookmarkRef,
+        handleTabChange,
+        updatePayload,
         isCreateSidesheetOpen,
         openCreateSidesheet: () => setCreateSidesheetOpen(true),
         closeCreateSidesheet: () => setCreateSidesheetOpen(false),
@@ -27,6 +32,32 @@ export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps
       {props.children}
     </WorkspaceContext.Provider>
   );
+}
+
+type BookmarkRefHandler = ReturnType<typeof useBookmarkRef>;
+
+function useBookmarkRef(notifier?: (state: Partial<Bookmark>) => void) {
+  const bookmarkRef = useRef<Partial<Bookmark>>({ payload: {}, tab: undefined });
+
+  const updateBookmarkRefTab = (tab: string) => {
+    bookmarkRef.current = { tab: tab, payload: {} };
+    notifier && notifier(bookmarkRef.current);
+  };
+
+  const updatePayload = (updater: (ref: Payload) => Payload | false) => {
+    const newPayload = updater(bookmarkRef.current.payload ?? {});
+    if (!newPayload) {
+      return;
+    }
+    bookmarkRef.current.payload = newPayload;
+    notifier && notifier(bookmarkRef.current);
+  };
+
+  return {
+    bookmarkRef,
+    updatePayload,
+    handleTabChange: updateBookmarkRefTab,
+  };
 }
 
 function useSelection<T>(getIdentifier: GetIdentifier<T>) {
@@ -66,7 +97,7 @@ type WorkspaceContextType<T> = {
   openCreateSidesheet: VoidFunction;
   closeCreateSidesheet: VoidFunction;
   isCreateSidesheetOpen: boolean;
-};
+} & BookmarkRefHandler;
 
 /**
  * Update url when a selection event occurs

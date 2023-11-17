@@ -2,7 +2,7 @@ import { Workspace } from '@equinor/workspace-fusion';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
 import { GroupingOption } from '@equinor/workspace-garden';
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 
@@ -105,6 +105,9 @@ export function App() {
   return (
     <Workspace<{ id: string }>
       workspaceOptions={{ getIdentifier: (a) => a.id }}
+      onBookmarkChange={(ref) => {
+        console.log('Listener updated ', ref);
+      }}
       gridOptions={{
         columnDefinitions: [{ field: 'id' }],
         getRows: async ({ success, request }, filter) => {
@@ -120,7 +123,12 @@ export function App() {
       sidesheetOptions={{
         type: 'default',
         DetailsSidesheet: (a) => {
-          return <div onClick={() => a.close()}>hello am sidesheet</div>;
+          return (
+            <div onClick={() => a.close()}>
+              <div>hello am sidesheet</div>
+              <pre>{JSON.stringify(a, null, 4)}</pre>
+            </div>
+          );
         },
         CreateSidesheet: (props) => <div onClick={() => props.close()}>hello test</div>,
       }}
@@ -148,7 +156,21 @@ export function App() {
       }}
       filterOptions={{
         dataSource: {
-          getFilterMeta: async () => getFilterMetaData(FILTER_SIZE),
+          getFilterMeta: async (props) => {
+            console.log(props);
+            return getFilterMetaData(FILTER_SIZE);
+          },
+        },
+      }}
+      currentBookmark={{
+        tab: 'garden',
+        payload: {
+          garden: {
+            groupingKeys: ['RFOC'],
+            dateVariant: 'Forecast',
+            timeInterval: 'Weekly',
+          },
+          filter: { state: { search: '123', groups: [{ name: 'Filter A', values: ['A-314'] }] } },
         },
       }}
       modules={[gridModule, gardenModule]}

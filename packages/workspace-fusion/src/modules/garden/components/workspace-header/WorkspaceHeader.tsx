@@ -26,7 +26,7 @@ export function GardenWorkspaceHeader<
   return (
     <StyledGardenHeader>
       <NavigationBar />
-      {dataSource && <Filter dataSource={dataSource} />}
+      {dataSource && <Filter />}
     </StyledGardenHeader>
   );
 }

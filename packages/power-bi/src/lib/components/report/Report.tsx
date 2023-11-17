@@ -6,7 +6,7 @@ import { IReportEmbedConfiguration } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
 
-export function Report({ getEmbedInfo, getToken, reportUri, controller, filters }: PowerBiProps) {
+export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
   const { data: token, isLoading: tokenLoading } = useQuery({
     queryKey: [reportUri, 'token'],
     queryFn: ({ signal }) => getToken(reportUri, signal),
@@ -35,7 +35,9 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters 
     <LoadedReport
       config={embed}
       onReportReady={(rep) => {
-        if (filters) {
+        if (bookmark) {
+          rep.bookmarksManager.applyState(bookmark);
+        } else if (filters) {
           rep.setFilters([filters]);
         }
         controller.reportReady(rep);

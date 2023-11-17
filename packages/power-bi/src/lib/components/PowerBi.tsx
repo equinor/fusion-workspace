@@ -18,6 +18,7 @@ export interface PowerBiProps {
   getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
   getErrorMessage: (reportUri: string) => Promise<string>;
   filters?: IBasicFilter;
+  bookmark?: string;
   controller: PowerBiController;
 }
 
