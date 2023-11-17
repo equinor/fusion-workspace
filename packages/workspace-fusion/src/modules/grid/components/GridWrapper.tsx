@@ -13,7 +13,7 @@ import { GridOptionPopover } from './GridOptionsPopover';
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TFilter = undefined
+  TFilter = undefined,
 > = {
   config: GridConfig<TData, TFilter>;
   getIdentifier: GetIdentifier<TData>;
@@ -22,7 +22,7 @@ export type GridWrapperProps<
 export const GridWrapper = <
   TData extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown> = never,
-  TFilter = undefined
+  TFilter = undefined,
 >({
   config,
   getIdentifier,
