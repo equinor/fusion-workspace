@@ -47,7 +47,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
   props: PackageContainerProps<TData, TContext>
 ): JSX.Element => {
   const {
-    selectionService: { selection, selectNode },
+    selectionService: { selection },
   } = useGarden();
 
   const {
@@ -193,7 +193,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
         const flatIndex = calculatedIndex;
 
-        if (flatIndex.isSubgroupItem) {
+        if (flatIndex.isSubgroupItem && groupingKeys.length > 1) {
           const query = queries[calculateActualIndex(expandedIndexes, flatIndex.parent.index).actualIndex];
           return (
             <SubGroupItem

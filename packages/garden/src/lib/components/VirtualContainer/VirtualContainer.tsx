@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { useItemWidths } from '../../hooks';
 import { useGarden } from '../../hooks/useGarden';
 import { useGardenConfig } from '../../hooks/useGardenConfig';
@@ -9,6 +8,7 @@ import { StyledVirtualContainer } from './virtualContainer.styles';
 import { info_circle } from '@equinor/eds-icons';
 import { Icon } from '@equinor/eds-core-react';
 import styled from 'styled-components';
+import { SplashScreen } from '../splashScreen/SplashScreen';
 Icon.add({ info_circle });
 
 type VirtualContainerProps<TContext = undefined> = {
@@ -21,33 +21,17 @@ export const VirtualContainer = <TContext,>({
   context,
 }: VirtualContainerProps<TContext>): JSX.Element | null => {
   const { onClickItem } = useGardenConfig();
-  const {
-    groupingService: { groupingKeys, timeInterval, dateVariant },
-  } = useGarden();
+  const { gardenMetaQuery } = useGarden();
 
-  const { data, isFetching } = useQuery(['garden', ...groupingKeys, timeInterval, dateVariant, context], {
-    refetchOnWindowFocus: false,
-    suspense: true,
-    useErrorBoundary: true,
-    keepPreviousData: false,
-    cacheTime: Infinity,
-    staleTime: Infinity,
-    queryFn: ({ signal }) =>
-      dataSource.getGardenMeta(
-        {
-          timeInterval,
-          dateVariant,
-          groupingKeys,
-        },
-        context,
-        signal ?? new AbortSignal()
-      ),
-  });
+  if (gardenMetaQuery.isLoading) {
+    return <SplashScreen />;
+  }
 
-  if (!data) {
+  if (!gardenMetaQuery.data) {
     // Will never happen when suspense is true
     throw new Error();
   }
+  const { data } = gardenMetaQuery;
 
   const amountOfColumns = data.columnCount;
   const columnWidth = data.columnWidth || 300;
@@ -73,14 +57,8 @@ export const VirtualContainer = <TContext,>({
     return null;
   }
 
-  //TODO: temp fix, should show skeletons
-  if (isFetching) {
-    return null;
-  }
-
   return (
     <>
-      {/* <ReactQueryDevtools /> */}
       <StyledVirtualContainer id={'garden_root'}>
         <ExpandProvider initialWidths={widths} defaultColumnWidth={columnWidth}>
           <VirtualGarden
