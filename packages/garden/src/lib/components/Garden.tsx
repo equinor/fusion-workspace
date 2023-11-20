@@ -30,11 +30,15 @@ export type GardenMetaRequest = {
   dateVariant?: string | null;
 };
 
-export type GardenDataSource<TContext> = {
-  getGardenMeta: (request: GardenMetaRequest, context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
-  getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
-  getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
-  getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal?: AbortSignal) => Promise<any[]>;
+export type GardenDataSource<TContext = undefined> = {
+  getGardenMeta: (request: GardenMetaRequest, context?: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
+  getBlockAsync: (args: GetBlockRequestArgs, context?: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
+  getHeader: (
+    args: GetHeaderBlockRequestArgs,
+    context?: TContext,
+    signal?: AbortSignal
+  ) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, context?: TContext, signal?: AbortSignal) => Promise<any[]>;
 };
 
 interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
@@ -96,11 +100,13 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
 
   return (
     <QueryClientProvider client={client.current}>
-      <ErrorBoundary FallbackComponent={GardenError}>
+      <ErrorBoundary FallbackComponent={() => <GardenError />}>
         <Suspense fallback={<SplashScreen />}>
           <GardenContextProvider
             getIdentifier={getIdentifier}
             timeInterval={timeInterval}
+            context={context}
+            dataSource={dataSource}
             dateVariant={dateVariant}
             initialGrouping={groupingKeys}
             selected={selected}
@@ -121,11 +127,9 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
               // Hides ViewSettings sidebar when sidesheet is open
               selected ? null : (
                 <ViewSettings
-                  dataSource={dataSource}
                   dateVariant={dateVariant}
                   groupingKeys={groupingKeys}
                   timeInterval={timeInterval}
-                  context={context}
                   onChangeDateVariant={onChangeDateVariant}
                   onChangeTimeInterval={onChangetimeInterval}
                   setGroupingKeys={setGroupingKeys}

@@ -1,15 +1,12 @@
 import { Button, Icon } from '@equinor/eds-core-react';
 import { expand, collapse } from '@equinor/eds-icons';
 import { useState } from 'react';
-import { GardenDataSource } from '../Garden';
 import { GroupingSelector } from '../GroupingSelector/GroupingSelector';
 import { StyledViewSettings } from './viewSettings.styles';
 
 const LOCAL_STORAGE_KEY = 'WorkspaceSidebarToggleState';
 
 interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
-  dataSource: GardenDataSource<TContext>;
-  context?: TContext;
   groupingKeys: string[];
   timeInterval: string | null;
   dateVariant: string | null;
@@ -21,8 +18,6 @@ interface ViewSettingsProps<TData extends Record<PropertyKey, unknown>, TContext
 Icon.add({ expand, collapse });
 
 export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContext = undefined>({
-  dataSource,
-  context,
   groupingKeys,
   timeInterval,
   dateVariant,
@@ -57,8 +52,6 @@ export function ViewSettings<TData extends Record<PropertyKey, unknown>, TContex
             onChangeTimeInterval={onChangeTimeInterval}
             dateVariant={dateVariant}
             onChangeDateVarient={onChangeDateVariant}
-            context={context as any}
-            dataSource={dataSource}
           />
         </>
       ) : (
