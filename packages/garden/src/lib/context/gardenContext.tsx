@@ -46,7 +46,7 @@ export const GardenContextProvider = <T, TContext = undefined>(
       queryFn: ({ signal }) =>
         props.dataSource.getGardenMeta(
           { groupingKeys: props.initialGrouping, timeInterval: props.timeInterval, dateVariant: props.dateVariant },
-          props.context,
+          props.context as TContext,
           signal ?? new AbortSignal()
         ),
     }

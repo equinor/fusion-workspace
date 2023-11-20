@@ -5,7 +5,7 @@
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b ",
     "build:prod": "vite build && tsc -b",
     "lint": "eslint --ext .ts,.tsx"
   },

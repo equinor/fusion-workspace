@@ -30,15 +30,11 @@ export type GardenMetaRequest = {
   dateVariant?: string | null;
 };
 
-export type GardenDataSource<TContext = undefined> = {
-  getGardenMeta: (request: GardenMetaRequest, context?: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
-  getBlockAsync: (args: GetBlockRequestArgs, context?: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
-  getHeader: (
-    args: GetHeaderBlockRequestArgs,
-    context?: TContext,
-    signal?: AbortSignal
-  ) => Promise<GardenHeaderGroup[]>;
-  getSubgroupItems: (args: GetSubgroupItemsArgs, context?: TContext, signal?: AbortSignal) => Promise<any[]>;
+export type GardenDataSource<TContext> = {
+  getGardenMeta: (request: GardenMetaRequest, context: TContext, signal?: AbortSignal) => Promise<GardenMeta>;
+  getBlockAsync: (args: GetBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenGroup<any>[]>;
+  getHeader: (args: GetHeaderBlockRequestArgs, context: TContext, signal?: AbortSignal) => Promise<GardenHeaderGroup[]>;
+  getSubgroupItems: (args: GetSubgroupItemsArgs, context: TContext, signal?: AbortSignal) => Promise<any[]>;
 };
 
 interface GardenProps<TData extends Record<PropertyKey, unknown>, TContext = undefined> {
