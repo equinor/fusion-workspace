@@ -20,7 +20,7 @@ export const TabNavigation = () => {
       {!!leftIcons.length && (
         <>
           {leftIcons.map(({ Icon, name, type }) => (
-            <>
+            <Fragment key={name}>
               {pRef.current && (
                 <Fragment key={name}>
                   {type === 'button' ? (
@@ -34,7 +34,7 @@ export const TabNavigation = () => {
                   )}
                 </Fragment>
               )}
-            </>
+            </Fragment>
           ))}
           {(!!analyticsTabs.length || !!viewTabs.length || !!rightIcons.length) && <TabButtonDivider />}
         </>
@@ -73,7 +73,7 @@ export const TabNavigation = () => {
       {!!rightIcons.length && (
         <>
           {rightIcons.map(({ Icon, name, type }) => (
-            <>
+            <Fragment key={name}>
               {pRef.current && (
                 <Fragment key={name}>
                   {type === 'button' ? (
@@ -87,7 +87,7 @@ export const TabNavigation = () => {
                   )}
                 </Fragment>
               )}
-            </>
+            </Fragment>
           ))}
         </>
       )}

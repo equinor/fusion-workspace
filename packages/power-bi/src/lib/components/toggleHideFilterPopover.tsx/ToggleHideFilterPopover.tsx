@@ -4,6 +4,9 @@ import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import styled from 'styled-components';
 
+const joinListWithPreservedOrder = (list1: string[], list2: string[]) =>
+  list1.concat(list2).filter((v, i, a) => a.indexOf(v) === i);
+
 interface ShowHideFilterButtonProps {
   allFilters: string[];
   visibleFilters: string[];
@@ -22,7 +25,9 @@ export const ToggleHideFilterPopover = ({
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const [list, setList] = useState<SortObject<string>[]>(allFilters.map((s) => ({ id: s, item: s })));
+  const listRef = useRef<SortObject<string>[]>(
+    joinListWithPreservedOrder(visibleFilters, allFilters).map((s) => ({ id: s, item: s }))
+  );
 
   const handleChange = (val: string) => {
     if (visibleFilters.includes(val)) {
@@ -33,7 +38,8 @@ export const ToggleHideFilterPopover = ({
   };
   const DraggableHandleSelector = 'globalDraggableHandle';
 
-  const updateList = () => setVisibleFilters(list.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
+  const updateList = () =>
+    setVisibleFilters(listRef.current.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
 
   return (
     <>
@@ -53,11 +59,13 @@ export const ToggleHideFilterPopover = ({
               <ReactSortable
                 animation={200}
                 handle={`.${DraggableHandleSelector}`}
-                list={list}
-                setList={setList}
+                list={listRef.current}
+                setList={(e) => {
+                  listRef.current = e;
+                }}
                 onEnd={updateList}
               >
-                {list.map(({ item }) => (
+                {listRef.current.map(({ item }) => (
                   <ItemWrapper className={DraggableHandleSelector} key={item}>
                     <Checkbox
                       size={2}
