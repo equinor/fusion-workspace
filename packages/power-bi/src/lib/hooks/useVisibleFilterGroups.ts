@@ -5,9 +5,13 @@ import { Report } from 'powerbi-client';
 export const getVisibleFiltersFromLocalStorage = (reportId: string) => {
   const value = localStorage.getItem(`${reportId}-filters`);
   if (!value) return null;
-  const parsedValue = JSON.parse(value);
-  if (Array.isArray(parsedValue) && parsedValue.every((s) => typeof s === 'string')) {
-    return parsedValue as string[];
+  try {
+    const parsedValue = JSON.parse(value);
+    if (Array.isArray(parsedValue) && parsedValue.every((s) => typeof s === 'string')) {
+      return parsedValue as string[];
+    }
+  } catch (e) {
+    return null;
   }
   return null;
 };
