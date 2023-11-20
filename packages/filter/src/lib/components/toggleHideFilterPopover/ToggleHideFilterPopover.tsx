@@ -2,7 +2,6 @@ import { Icon, Checkbox, Popover } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { SortObject } from '../../types/sortObject';
 import { StyledButton, StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
 
 interface ShowHideFilterButtonProps {
@@ -19,18 +18,19 @@ export const ToggleHideFilterPopover = ({
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const [list, setList] = useState<SortObject<string>[]>(allFilters.map((s) => ({ id: s, item: s })));
+  const listRef = useRef(allFilters.map((s) => ({ id: s, item: s })));
 
   const handleChange = (val: string) => {
     if (visibleFilters.includes(val)) {
-      setVisibleFilters(visibleFilters.filter((s) => s !== val));
+      setVisibleFilters([...visibleFilters.filter((s) => s !== val)]);
     } else {
       setVisibleFilters([...visibleFilters, val]);
     }
   };
   const DraggableHandleSelector = 'globalDraggableHandle';
 
-  const updateList = () => setVisibleFilters(list.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
+  const updateList = () =>
+    setVisibleFilters(listRef.current.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
 
   return (
     <>
@@ -51,11 +51,13 @@ export const ToggleHideFilterPopover = ({
               <ReactSortable
                 animation={200}
                 handle={`.${DraggableHandleSelector}`}
-                list={list}
-                setList={setList}
+                list={listRef.current}
+                setList={(e) => {
+                  listRef.current = e;
+                }}
                 onEnd={updateList}
               >
-                {list.map(({ item }) => (
+                {listRef.current.map(({ item }) => (
                   <StyledItemWrapper className={DraggableHandleSelector} key={item}>
                     <Checkbox
                       size={2}

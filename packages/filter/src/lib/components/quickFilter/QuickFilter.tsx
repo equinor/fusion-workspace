@@ -129,7 +129,10 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
         </StyledSearchLine>
       </StyledCompactFilterWrapper>
       {isFilterExpanded && (
-        <FilterView isFetching={query.isFetching} groups={groups.filter((s) => visibleFilterGroups.includes(s.name))} />
+        <FilterView
+          isFetching={query.isFetching}
+          groups={visibleFilterGroups.map((x) => groups.find((s) => s.name === x)).filter(Boolean) as IFilterGroup[]}
+        />
       )}
     </StyledWrapper>
   );
