@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ExpandedWithRange, Expanded } from '../components/VirtualGarden';
+import { useGarden } from './useGarden';
 
 export const useExpandedSubGroups = (columnCount: number) => {
+  const {
+    groupingService: { groupingKeys, dateVariant, timeInterval },
+  } = useGarden();
+
   const [expanded, setExpanded] = useState<ExpandedWithRange[][]>(new Array(columnCount).fill(0).map(() => []));
+  useEffect(() => {
+    setExpanded(new Array(columnCount).fill(0).map(() => []));
+  }, [groupingKeys.toString(), dateVariant, timeInterval, columnCount]);
 
   const expandColumn = (columnIndex: number, item: Expanded) => {
     const expandedIndexes = expanded[columnIndex];

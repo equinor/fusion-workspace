@@ -36,8 +36,6 @@ export const SubGroupItem = ({
   itemIndex,
   parentRef,
 }: SubGroupItemProps) => {
-  const { isLoading, error, data, refetch } = query;
-
   const {
     selectionService: { selection },
   } = useGarden();
@@ -46,6 +44,8 @@ export const SubGroupItem = ({
     visuals: { itemColor = defaultItemColor, getDescription = () => '' },
     getDisplayName,
   } = useGardenConfig();
+
+  const { isLoading, error, data, refetch } = query;
 
   if (isLoading) {
     /** Skeleton loading state */
