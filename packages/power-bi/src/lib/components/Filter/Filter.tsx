@@ -10,6 +10,7 @@ import { PowerBIQuickFilter } from '../QuickFilter/QuickFilter';
 import { search, playlist_add, drag_handle } from '@equinor/eds-icons';
 import { tokens } from '@equinor/eds-tokens';
 import { Skeleton } from '../skeleton/Skeleton';
+import { getVisibleFiltersFromLocalStorage, useVisibleFilters } from '../../hooks/useVisibleFilterGroups';
 
 Icon.add({ search, playlist_add, drag_handle });
 
@@ -32,7 +33,7 @@ export interface FilterController {
   setVisibleFilters: (visibleGroups: string[]) => void;
 }
 
-interface PowerBIFilterOptions {
+export interface PowerBIFilterOptions {
   defaultFilterGroupVisible?: string[];
 }
 
@@ -41,22 +42,11 @@ type PowerBIFilterProps = {
   options?: PowerBIFilterOptions;
 };
 
-const getVisibleFiltersFromLocalStorage = (reportId: string) => {
-  const value = localStorage.getItem(`${reportId}-filters`);
-  if (!value) return null;
-  const parsedValue = JSON.parse(value);
-  if (Array.isArray(parsedValue)) {
-    return parsedValue as string[];
-  }
-  return null;
-};
-
 export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Element | null => {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter[]>>({});
   const [slicerFilters, setSlicerFilters] = useState<PowerBiFilter[] | null>(null);
-  const [filterGroupVisible, setFilterGroupVisible] = useState<string[]>(
-    getVisibleFiltersFromLocalStorage(report.getId()) ?? options?.defaultFilterGroupVisible ?? []
-  );
+  const [filterGroupVisible, setFilterGroupVisible] = useVisibleFilters(report, options);
+
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const handleChangeGroup = async (filter: PowerBiFilter) => {
