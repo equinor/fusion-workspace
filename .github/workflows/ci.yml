@@ -25,3 +25,5 @@ jobs:
           cache: 'pnpm'
 
       - run: npm run first-time-setup
+
+      - run: pnpm build
