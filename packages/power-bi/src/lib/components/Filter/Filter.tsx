@@ -8,6 +8,8 @@ import { getActiveFilterValues } from '../../utils/getActiveFilterValues';
 import { getFiltersAsync } from '../../utils/getFiltersAsync';
 import { PowerBIQuickFilter } from '../QuickFilter/QuickFilter';
 import { search, playlist_add, drag_handle } from '@equinor/eds-icons';
+import { tokens } from '@equinor/eds-tokens';
+import { Skeleton } from '../skeleton/Skeleton';
 
 Icon.add({ search, playlist_add, drag_handle });
 
@@ -39,10 +41,22 @@ type PowerBIFilterProps = {
   options?: PowerBIFilterOptions;
 };
 
+const getVisibleFiltersFromLocalStorage = (reportId: string) => {
+  const value = localStorage.getItem(`${reportId}-filters`);
+  if (!value) return null;
+  const parsedValue = JSON.parse(value);
+  if (Array.isArray(parsedValue)) {
+    return parsedValue as string[];
+  }
+  return null;
+};
+
 export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Element | null => {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter[]>>({});
   const [slicerFilters, setSlicerFilters] = useState<PowerBiFilter[] | null>(null);
-  const [filterGroupVisible, setFilterGroupVisible] = useState<string[]>(options?.defaultFilterGroupVisible || []);
+  const [filterGroupVisible, setFilterGroupVisible] = useState<string[]>(
+    getVisibleFiltersFromLocalStorage(report.getId()) ?? options?.defaultFilterGroupVisible ?? []
+  );
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const handleChangeGroup = async (filter: PowerBiFilter) => {
@@ -161,7 +175,10 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         const defaultActiveFilters = await getActiveFilterValues(filters);
         setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
         setActiveFilters(defaultActiveFilters);
-        if (!options?.defaultFilterGroupVisible) {
+        const state = getVisibleFiltersFromLocalStorage(report.getId());
+        if (state) {
+          setFilterGroupVisible(state);
+        } else {
           setFilterGroupVisible(filters.map((s) => s.type));
         }
       };
@@ -183,13 +200,21 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
 
         const filterGroupNames = getActiveFilterGroupArray(activeFilters);
-        setFilterGroupVisible((s) => [...s, ...filterGroupNames].filter((v, i, a) => a.indexOf(v) === i));
+
+        const reportId = report.getId();
+
+        const state = getVisibleFiltersFromLocalStorage(reportId);
+        if (state) {
+          setFilterGroupVisible(state);
+        } else {
+          setFilterGroupVisible((s) => [...s, ...filterGroupNames].filter((v, i, a) => a.indexOf(v) === i));
+        }
       };
       reCreateFilters();
     }
   }, [activeFilters, Object.keys(activeFilters).length]);
 
-  if (!slicerFilters || Object.keys(activeFilters).length === 0) return null;
+  if (!slicerFilters || Object.keys(activeFilters).length === 0) return <QuickFilterLoading />;
 
   const controller: FilterController = {
     handleChangeGroup,
@@ -203,8 +228,37 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
     slicerFilters,
     activeFilters,
     visibleFilters: filterGroupVisible,
-    setVisibleFilters: setFilterGroupVisible,
+    setVisibleFilters: (e) => {
+      const reportId = report.getId();
+      if (reportId) {
+        localStorage.setItem(`${reportId}-filters`, JSON.stringify(e));
+      }
+      setFilterGroupVisible(e);
+    },
   };
 
   return <PowerBIQuickFilter controller={controller} />;
 };
+
+function QuickFilterLoading() {
+  return (
+    <div
+      style={{
+        height: '48px',
+        width: '100%',
+        display: 'flex',
+        background: tokens.colors.ui.background__light.hex,
+        alignItems: 'center',
+        gap: '1em',
+        paddingLeft: '1em',
+      }}
+    >
+      <Skeleton height={24} width={160} />
+      <Skeleton height={24} width={160} />
+      <Skeleton height={24} width={160} />
+      <Skeleton height={24} width={160} />
+      <Skeleton height={24} width={160} />
+      <Skeleton height={24} width={160} />
+    </div>
+  );
+}
