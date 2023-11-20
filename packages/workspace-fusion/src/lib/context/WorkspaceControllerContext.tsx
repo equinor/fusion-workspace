@@ -21,7 +21,10 @@ export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps
         handleTabChange,
         updatePayload,
         isCreateSidesheetOpen,
-        openCreateSidesheet: () => setCreateSidesheetOpen(true),
+        openCreateSidesheet: () => {
+          clearSelection();
+          setCreateSidesheetOpen(true);
+        },
         closeCreateSidesheet: () => setCreateSidesheetOpen(false),
         clearSelection,
         selectById,
