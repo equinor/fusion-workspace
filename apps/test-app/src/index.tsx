@@ -1,8 +1,10 @@
 import { Workspace } from '@equinor/workspace-fusion';
+import { FilterState } from '@equinor/workspace-fusion/filter';
 import { gardenModule } from '@equinor/workspace-fusion/garden-module';
 import { gridModule } from '@equinor/workspace-fusion/grid-module';
+import { StatusItem } from '@equinor/workspace-fusion/status-bar';
 import { GroupingOption } from '@equinor/workspace-garden';
-import React, { useState } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 
@@ -96,9 +98,26 @@ function getFilterMetaData(num_filters: number = 2): any[] {
   return filterData;
 }
 
+function getKPIData(num_kpis = 5) {
+  const kpiData = [];
+
+  for (let i = 0; i < num_kpis; i++) {
+    const kpiNameLen = getRandomInt(1, 15);
+    const kpiName = `KPI TITLE ${String.fromCharCode(65 + i).repeat(kpiNameLen)}`;
+    const kpiValue = getRandomInt(1, 100000);
+    kpiData.push({
+      title: kpiName,
+      value: kpiValue,
+    });
+  }
+
+  return kpiData;
+}
+
 let GARDEN_SIZE = 30;
 let GRID_SIZE = 150;
 let FILTER_SIZE = 5;
+let KPI_SIZE = 10;
 const GardenBlockData = getGardenBlockData(GARDEN_SIZE);
 
 export function App() {
@@ -172,6 +191,9 @@ export function App() {
           },
           filter: { state: { search: '123', groups: [{ name: 'Filter A', values: ['A-314'] }] } },
         },
+      }}
+      statusBarOptions={async (filters: FilterState, signal?: AbortSignal | undefined): Promise<StatusItem[]> => {
+        return getKPIData(KPI_SIZE);
       }}
       modules={[gridModule, gardenModule]}
     />
