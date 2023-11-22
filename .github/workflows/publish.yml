@@ -7,6 +7,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: npm
     env:
       NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     steps:
