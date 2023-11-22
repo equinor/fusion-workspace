@@ -39,11 +39,13 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
           <EventHandler {...events}>
             <ContextProviders providers={providers}>
               <StyledSidesheetWrapper>
-                <div style={{ height: '100%', width: '100%', display: 'grid', gridTemplateRows: 'auto 1fr' }}>
+                <StyledLayoutWrapper>
                   <WorkspaceHeader />
                   <WorkspaceBody />
-                </div>
-                <Sidesheet />
+                  <StyledSurroundingSidesheet id="sidesheet-workspace-wrapper">
+                    <Sidesheet />
+                  </StyledSurroundingSidesheet>
+                </StyledLayoutWrapper>
               </StyledSidesheetWrapper>
             </ContextProviders>
           </EventHandler>
@@ -52,6 +54,20 @@ export function Workspace({ tabs, defaultTab, Sidesheet = () => <></>, providers
     </WorkspaceWrapper>
   );
 }
+
+const StyledSurroundingSidesheet = styled.div`
+  grid-area: 1 / 2 / span 2;
+  background: white;
+  z-index: 2;
+`;
+
+const StyledLayoutWrapper = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr auto;
+  height: 100%;
+  width: 100%;
+`;
 
 const StyledSidesheetWrapper = styled.div`
   height: 100%;
