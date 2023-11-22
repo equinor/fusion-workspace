@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const StyledCompactFilterWrapper = styled.div<{ isExpanded: boolean }>`
   display: grid;
-  grid-template-columns: ${(e) => (e.isExpanded ? 'minmax(200px, 500px) 1fr' : 'minmax(200px, 500px) 1fr auto')};
+  grid-template-columns: ${(e) => (e.isExpanded ? 'minmax(200px, 350px) 1fr' : 'minmax(200px, 350px) 1fr auto')};
   grid-template-rows: 1fr;
   gap: 2em;
   align-items: center;
