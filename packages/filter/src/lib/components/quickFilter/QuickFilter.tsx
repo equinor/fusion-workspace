@@ -83,7 +83,7 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
         {!isFilterExpanded && (
           <>
             <StyledQuickFilterGroupsLayout>
-              {quickFilterGroups.map((group, i) => (
+              {quickFilterGroups.reverse().map((group, i) => (
                 <FilterGroup
                   isFetching={query.isFetching}
                   uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
