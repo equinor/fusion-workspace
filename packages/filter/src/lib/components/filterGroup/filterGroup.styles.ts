@@ -7,6 +7,7 @@ export const StyledFilterGroupWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  justify-content: center;
 
   overflow: hidden;
   text-overflow: ellipsis;
