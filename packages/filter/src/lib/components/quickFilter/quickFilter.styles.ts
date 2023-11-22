@@ -20,6 +20,18 @@ export const StyledRightSection = styled.div`
   gap: 2em;
   align-items: center;
   padding-right: 0.5rem;
+  width: 100%;
+`;
+
+export const QuickFilterGroupsLayout = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 100px));
+  grid-template-rows: 1fr;
+  height: 48px;
+  direction: rtl;
+  gap: 20px;
+  align-items: center;
 `;
 
 export const StyledSearchLine = styled.div`
