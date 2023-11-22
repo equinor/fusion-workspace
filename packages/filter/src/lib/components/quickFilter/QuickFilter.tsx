@@ -1,12 +1,10 @@
 import { useState } from 'react';
 
 import {
-  QuickFilterGroupsLayout,
+  StyledQuickFilterGroupsLayout,
   StyledCompactFilterWrapper,
-  StyledLeftSection,
-  StyledRightSection,
-  StyledSearchLine,
   StyledWrapper,
+  StyledButtonWrapper,
 } from './quickFilter.styles';
 import { FilterGroup } from '../filterGroup';
 import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
@@ -79,54 +77,47 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
 
   return (
     <StyledWrapper id="filter_root">
-      <StyledCompactFilterWrapper>
-        <StyledSearchLine>
-          <StyledLeftSection>
-            <FilterQuickSearch />
-          </StyledLeftSection>
-          <StyledRightSection>
-            {!isFilterExpanded && (
-              <>
-                <QuickFilterGroupsLayout>
-                  {quickFilterGroups.map((group, i) => (
-                    <FilterGroup
-                      isFetching={query.isFetching}
-                      uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
-                      onClick={() => handleExpandFilterGroup(group.name)}
-                      group={group}
-                      key={group.name}
-                      isOpen={filterGroupOpen === group.name}
-                      name={group.name}
-                      isMonospace={
-                        !!monospaceGroups.find(
-                          (value) => value.trim().toLowerCase() === group.name.trim().toLowerCase()
-                        )
-                      }
-                    />
-                  ))}
-                </QuickFilterGroupsLayout>
-                <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
-              </>
-            )}
-            <div style={{ display: 'flex' }}>
-              {isFilterExpanded && (
-                <ToggleHideFilterPopover
-                  allFilters={filterGroups}
-                  setVisibleFilters={setVisibleFilterGroups}
-                  visibleFilters={visibleFilterGroups}
+      <StyledCompactFilterWrapper isExpanded={isFilterExpanded}>
+        <FilterQuickSearch />
+
+        {!isFilterExpanded && (
+          <>
+            <StyledQuickFilterGroupsLayout>
+              {quickFilterGroups.map((group, i) => (
+                <FilterGroup
+                  isFetching={query.isFetching}
+                  uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
+                  onClick={() => handleExpandFilterGroup(group.name)}
+                  group={group}
+                  key={group.name}
+                  isOpen={filterGroupOpen === group.name}
+                  name={group.name}
+                  isMonospace={
+                    !!monospaceGroups.find((value) => value.trim().toLowerCase() === group.name.trim().toLowerCase())
+                  }
                 />
-              )}
+              ))}
+            </StyledQuickFilterGroupsLayout>
+            <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
+          </>
+        )}
+        <StyledButtonWrapper>
+          {isFilterExpanded && (
+            <ToggleHideFilterPopover
+              allFilters={filterGroups}
+              setVisibleFilters={setVisibleFilterGroups}
+              visibleFilters={visibleFilterGroups}
+            />
+          )}
 
-              <StyledButton onClick={() => clearActiveFilters()}>
-                <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
-              </StyledButton>
+          <StyledButton onClick={() => clearActiveFilters()}>
+            <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
+          </StyledButton>
 
-              <StyledButton onClick={toggleFilterIsExpanded}>
-                {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-              </StyledButton>
-            </div>
-          </StyledRightSection>
-        </StyledSearchLine>
+          <StyledButton onClick={toggleFilterIsExpanded}>
+            {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
+          </StyledButton>
+        </StyledButtonWrapper>
       </StyledCompactFilterWrapper>
       {isFilterExpanded && (
         <FilterView
