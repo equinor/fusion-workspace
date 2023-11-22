@@ -18,7 +18,7 @@ export const StyledQuickFilterGroupsLayout = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(max-content, 100px));
   grid-template-rows: 48px;
   height: 48px;
-  direction: rtl;
+  justify-content: flex-end;
   gap: 20px;
   align-items: center;
 `;
