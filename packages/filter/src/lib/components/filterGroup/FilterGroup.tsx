@@ -40,7 +40,7 @@ export const FilterGroup = ({
 
   if (filterItems.length === 0) return <></>;
   return (
-    <div>
+    <div style={{ width: 'fit-content' }}>
       <StyledFilterGroupWrapper ref={ref} onClick={onClick}>
         {isFetching ? (
           <Skeleton height={24} width={100} />

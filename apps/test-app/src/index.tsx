@@ -91,7 +91,7 @@ function getFilterMetaData(num_filters: number = 2): any[] {
     filterData.push({
       filterItems: items,
       isQuickFilter: true,
-      name: `Filter ${filterName}`,
+      name: `system 2 Filter ${filterName}`,
     });
   }
 
@@ -116,7 +116,7 @@ function getKPIData(num_kpis = 5) {
 
 let GARDEN_SIZE = 30;
 let GRID_SIZE = 150;
-let FILTER_SIZE = 5;
+let FILTER_SIZE = 10;
 let KPI_SIZE = 10;
 const GardenBlockData = getGardenBlockData(GARDEN_SIZE);
 

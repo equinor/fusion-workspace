@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import {
+  QuickFilterGroupsLayout,
   StyledCompactFilterWrapper,
   StyledLeftSection,
   StyledRightSection,
@@ -86,25 +87,24 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
           <StyledRightSection>
             {!isFilterExpanded && (
               <>
-                {quickFilterGroups.map(
-                  (group, i) =>
-                    i < 5 && (
-                      <FilterGroup
-                        isFetching={query.isFetching}
-                        uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
-                        onClick={() => handleExpandFilterGroup(group.name)}
-                        group={group}
-                        key={group.name}
-                        isOpen={filterGroupOpen === group.name}
-                        name={group.name}
-                        isMonospace={
-                          !!monospaceGroups.find(
-                            (value) => value.trim().toLowerCase() === group.name.trim().toLowerCase()
-                          )
-                        }
-                      />
-                    )
-                )}
+                <QuickFilterGroupsLayout>
+                  {quickFilterGroups.map((group, i) => (
+                    <FilterGroup
+                      isFetching={query.isFetching}
+                      uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
+                      onClick={() => handleExpandFilterGroup(group.name)}
+                      group={group}
+                      key={group.name}
+                      isOpen={filterGroupOpen === group.name}
+                      name={group.name}
+                      isMonospace={
+                        !!monospaceGroups.find(
+                          (value) => value.trim().toLowerCase() === group.name.trim().toLowerCase()
+                        )
+                      }
+                    />
+                  ))}
+                </QuickFilterGroupsLayout>
                 <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
               </>
             )}
