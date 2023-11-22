@@ -18,4 +18,6 @@ const StyledWorkspaceHeader = styled.div`
   padding-top: 5px;
   overflow: hidden;
   width: 100%;
+  grid-row: 1;
+  grid-column: 1 / span 2;
 `;

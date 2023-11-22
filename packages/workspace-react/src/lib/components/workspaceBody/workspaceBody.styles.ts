@@ -6,4 +6,6 @@ export const StyledWorkspaceBody = styled.div`
   flex-direction: row;
   justify-content: space-between;
   overflow: hidden;
+  grid-row: 2;
+  grid-column: 1;
 `;
