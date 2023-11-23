@@ -25,9 +25,6 @@ export const ResizeProvider = ({ children, defaultWidth, minWidth }: ResizeProvi
         size={{ width: width, height: '100%' }}
         style={{ border: `2px solid ${tokens.colors.ui.background__medium.hex}`, overflow: 'hidden' }}
         maxWidth={'100vw'}
-        onResize={(prop) => {
-          console.log(`resizing`);
-        }}
         boundsByDirection
         minHeight={'100%'}
         onResizeStop={(e, direction, ref, d) => {
