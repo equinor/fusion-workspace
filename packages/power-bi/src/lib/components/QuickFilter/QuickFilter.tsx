@@ -63,25 +63,25 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
     <FilterWrapper>
       {!isFilterExpanded && (
         <StyledCompactFilterWrapper>
-          <FilterBar>
-            <div style={{ display: 'flex', width: '100%', gap: '2em', flexDirection: 'row-reverse' }}>
-              {slicerFilters.map((s, i) => {
-                i < 9 && shownFilters.push(s.type);
-                return (
-                  i < 9 && (
-                    <PowerBiFilterGroup
-                      activeFilters={activeFilters[s.type]}
-                      controller={controller}
-                      handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
-                        handleOnChange(s, filter, singleClick)
-                      }
-                      group={s}
-                      key={s.type + i}
-                    />
-                  )
-                );
-              })}
-            </div>
+          <StyledQuickFilterWrapper>
+            {slicerFilters.map((s, i) => {
+              i < 9 && shownFilters.push(s.type);
+              return (
+                i < 9 && (
+                  <PowerBiFilterGroup
+                    activeFilters={activeFilters[s.type]}
+                    controller={controller}
+                    handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
+                      handleOnChange(s, filter, singleClick)
+                    }
+                    group={s}
+                    key={s.type + i}
+                  />
+                )
+              );
+            })}
+          </StyledQuickFilterWrapper>
+          <StyledFilterButtons>
             <OtherFiltersAppliedInfo activeFilters={calculateHiddenFilters(shownFilters, activeFilters)} />
             <FilterButtonContainer>
               <FilterClearIcon isDisabled={!isAnyFiltersActive()} onClick={async () => await resetFilter()} />
@@ -90,13 +90,26 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
                 {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
               </div>
             </FilterButtonContainer>
-          </FilterBar>
+          </StyledFilterButtons>
         </StyledCompactFilterWrapper>
       )}
       {isFilterExpanded && <ExpandedFilter controller={controller} />}
     </FilterWrapper>
   );
 };
+
+const StyledFilterButtons = styled.div`
+  background: ${tokens.colors.ui.background__light.hex};
+`;
+
+const StyledQuickFilterWrapper = styled.div`
+  display: grid;
+  width: 100%;
+  justify-content: flex-end;
+  grid-template-columns: repeat(auto-fit, minmax(60px, max-content));
+  gap: 2em;
+  grid-template-rows: 1fr;
+`;
 
 const FilterButtonContainer = styled.div`
   display: flex;
