@@ -1,3 +1,0 @@
-# Sidesheet
-
-Sidesheet widget integration
