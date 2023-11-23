@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "6.1.0",
+  "version": "6.1.0-rc.1",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
