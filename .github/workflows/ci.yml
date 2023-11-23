@@ -24,6 +24,8 @@ jobs:
         with:
           cache: 'pnpm'
 
+      - run: pnpm config set auto-install-peers true
+
       - run: npm run first-time-setup
 
       - run: pnpm build
