@@ -25,16 +25,17 @@ export function ExpandedFilter({ controller }: ExpandedFilterProps): JSX.Element
   return (
     <StyledExpandedFilterWrapper>
       <StyledFilterItemsWrapper>
-        {slicerFilters
-          .filter((s) => visibleFilters.includes(s.type))
+        {visibleFilters
+          .map((s) => slicerFilters.find((x) => x.type === s))
+          .filter(Boolean)
           .map((group) => (
             <FilterItems
               controller={controller}
               handleOnChange={handleOnChange}
               handleOnSelectAll={controller.handleOnSelectAll}
               activeFilters={activeFilters}
-              group={group}
-              key={group.type}
+              group={group!}
+              key={group!.type}
             />
           ))}
       </StyledFilterItemsWrapper>

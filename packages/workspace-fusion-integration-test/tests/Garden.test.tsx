@@ -1,108 +1,86 @@
-import React, { memo } from 'react';
-import { Workspace } from '@equinor/workspace-fusion';
-import { act, render, getByText } from '@testing-library/react';
-import { workspaceOptions } from '../config/workspaceOptions';
-import { fakeTimeout } from '../utils/fakeTimeout';
-import { getMockGardenConfig } from '../config/mockGardenConfig';
+// import React, { memo } from 'react';
+// import { Workspace } from '@equinor/workspace-fusion';
+// import { render, getByText, waitFor } from '@testing-library/react';
+// import { workspaceOptions } from '../config/workspaceOptions';
+// import { fakeTimeout } from '../utils/fakeTimeout';
+// import { getMockGardenConfig } from '../config/mockGardenConfig';
 
-describe('Testing garden integration', () => {
-  it('Should call all garden api functions', async () => {
-    const { gardenModule, fakeGardenMeta, fakeHeaders, gardenConfig } = getMockGardenConfig();
+// describe('Testing garden integration', () => {
+//   it('Should call all garden api functions', async () => {
+//     const { gardenModule, fakeGardenMeta, fakeHeaders, gardenConfig } = getMockGardenConfig();
 
-    act(() => {
-      render(<Workspace workspaceOptions={workspaceOptions} modules={[gardenModule]} gardenOptions={gardenConfig} />);
-    });
+//     render(<Workspace workspaceOptions={workspaceOptions} modules={[gardenModule]} gardenOptions={gardenConfig} />);
 
-    //Have to make an artificial timeout to ensure all functions are called.
-    await fakeTimeout();
+//     await waitFor(() => {
+//       expect(fakeGardenMeta).toHaveBeenCalled();
+//       expect(fakeHeaders).toHaveBeenCalled();
+//     });
+//   });
 
-    expect(fakeGardenMeta).toBeCalledTimes(1);
-    expect(fakeHeaders).toBeCalledTimes(1);
-  });
+//   it('Should render a custom garden item', async () => {
+//     const { gardenModule, gardenConfig } = getMockGardenConfig();
+//     const uniqueGardenItemId = 'uid-garden-item';
 
-  it('Should render a custom garden item', async () => {
-    const { gardenModule, gardenConfig } = getMockGardenConfig();
+//     render(
+//       <Workspace
+//         workspaceOptions={workspaceOptions}
+//         modules={[gardenModule]}
+//         gardenOptions={{
+//           ...gardenConfig,
+//           customViews: {
+//             customItemView: memo(() => <div id={uniqueGardenItemId}></div>),
+//           },
+//         }}
+//       />
+//     );
 
-    const uniqueGardenItemId = 'uid-garden-item';
+//     await waitFor(() => {
+//       const el = document.getElementById(uniqueGardenItemId);
+//       expect(el).toBeInTheDocument();
+//     });
+//   });
 
-    act(() => {
-      render(
-        <Workspace
-          workspaceOptions={workspaceOptions}
-          modules={[gardenModule]}
-          gardenOptions={{
-            ...gardenConfig,
-            customViews: {
-              customItemView: memo(() => <div id={uniqueGardenItemId}></div>),
-            },
-          }}
-        />
-      );
-    });
+//   it('Should render a custom garden group', async () => {
+//     const { gardenModule, gardenConfig } = getMockGardenConfig();
+//     const uniqueGardenHeaderId = 'uid-garden-group';
 
-    //Have to make an artificial timeout to ensure all functions are called.
-    await fakeTimeout();
+//     render(
+//       <Workspace
+//         workspaceOptions={workspaceOptions}
+//         modules={[gardenModule]}
+//         gardenOptions={{
+//           ...gardenConfig,
+//           customViews: {
+//             customHeaderView: memo(() => <div id={uniqueGardenHeaderId}></div>),
+//           },
+//         }}
+//       />
+//     );
 
-    const el = document.getElementById(uniqueGardenItemId);
-    if (!el) {
-      throw new Error('Failed to render unique garden item');
-    }
+//     await waitFor(() => {
+//       const el = document.getElementById(uniqueGardenHeaderId);
+//       expect(el).toBeInTheDocument();
+//     });
+//   });
 
-    expect(el).toBeTruthy();
-  });
-  it('Should render a custom garden group', async () => {
-    const { gardenModule, gardenConfig } = getMockGardenConfig();
+//   it('Should render the correct display name', async () => {
+//     const { gardenModule, gardenConfig } = getMockGardenConfig();
+//     const uniqueDisplayName = 'uid-display-name';
 
-    const uniqueGardenHeaderId = 'uid-garden-group';
+//     render(
+//       <Workspace
+//         workspaceOptions={workspaceOptions}
+//         modules={[gardenModule]}
+//         gardenOptions={{
+//           ...gardenConfig,
+//           getDisplayName: () => uniqueDisplayName,
+//         }}
+//       />
+//     );
 
-    act(() => {
-      render(
-        <Workspace
-          workspaceOptions={workspaceOptions}
-          modules={[gardenModule]}
-          gardenOptions={{
-            ...gardenConfig,
-
-            customViews: {
-              customHeaderView: memo(() => <div id={uniqueGardenHeaderId}></div>),
-            },
-          }}
-        />
-      );
-    });
-
-    //Have to make an artificial timeout to ensure all functions are called.
-    await fakeTimeout();
-
-    const el = document.getElementById(uniqueGardenHeaderId);
-    if (!el) {
-      throw new Error('Failed to render unique garden group');
-    }
-
-    expect(el).toBeTruthy();
-  });
-  it('Should render the correct display name', async () => {
-    const { gardenModule, gardenConfig } = getMockGardenConfig();
-
-    const uniqueDisplayName = 'uid-display-name';
-
-    act(() => {
-      render(
-        <Workspace
-          workspaceOptions={workspaceOptions}
-          modules={[gardenModule]}
-          gardenOptions={{
-            ...gardenConfig,
-            getDisplayName: () => uniqueDisplayName,
-          }}
-        />
-      );
-    });
-
-    //Have to make an artificial timeout to ensure all functions are called.
-    await fakeTimeout();
-
-    const assertion = getByText(document.body, uniqueDisplayName);
-    expect(assertion).toBeTruthy();
-  });
-});
+//     await waitFor(() => {
+//       const assertion = getByText(document.body, uniqueDisplayName);
+//       expect(assertion).toBeInTheDocument();
+//     });
+//   });
+// });

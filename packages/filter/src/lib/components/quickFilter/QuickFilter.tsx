@@ -1,67 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
+  StyledQuickFilterGroupsLayout,
   StyledCompactFilterWrapper,
-  StyledLeftSection,
-  StyledRightSection,
-  StyledSearchLine,
   StyledWrapper,
+  StyledButtonWrapper,
 } from './quickFilter.styles';
 import { FilterGroup } from '../filterGroup';
 import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
 
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
-import { useQuery } from '@tanstack/react-query';
-import { FilterDataSource, FilterStateGroup, FilterGroup as IFilterGroup } from '../../types';
+import { FilterGroup as IFilterGroup } from '../../types';
 import { useFilterContext } from '../../context/filterContext';
 import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
 import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
 import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
 import { FilterView } from '../filterView/FilterView';
 import { useFilterStyles } from '../../hooks/useFilterStyles';
+import { FilterLoadingFallback } from '../Filter';
 
 /**
  * How to separate controller and visual logic in this component?
  */
-interface QuickFilterProps {
-  dataSource: FilterDataSource;
-}
 
-export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
-  const { uncheckedValues, setFilterState, setUncheckedValues, filterState } = useFilterContext();
-  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+export function QuickFilter(): JSX.Element {
+  const { query } = useFilterContext();
 
-  const { data: groups, isFetching } = useQuery(
-    ['filter-meta', JSON.stringify(filterState)],
-    ({ signal }): Promise<IFilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
-    {
-      suspense: true,
-      keepPreviousData: true,
-      useErrorBoundary: true,
-    }
-  );
+  const { data: groups, isLoading } = query;
 
-  useEffect(() => {
-    if (!groups) return;
-    if (filterState.groups.length === 0 && filterState.search.length === 0 && uncheckedValues.length === 0) return;
-    setFilterState(getServerArgs(groups, uncheckedValues));
-  }, [uncheckedValues]);
-
-  if (!groups) {
-    throw new Error('Fix suspense');
+  if (isLoading) {
+    return <FilterLoadingFallback />;
   }
 
-  const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
+  if (!groups) {
+    throw new Error('Filter failed to load');
+  }
+  //TODO: new component here to wrap with loading
+  return <QuickFilterReady groups={groups} />;
+}
 
+type QuickFilterReadyProps = {
+  groups: IFilterGroup[];
+};
+const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
+  const { query, setUncheckedValues, uncheckedValues } = useFilterContext();
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
+  const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
   const handleExpandFilterGroup = (groupName: string) =>
     filterGroupOpen === groupName ? setFilterGroupOpen(null) : setFilterGroupOpen(groupName);
 
   const quickFilterGroups = groups?.filter(({ isQuickFilter }) => isQuickFilter);
 
-  const filterGroups = groups.map((s) => s.name);
-
-  const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
-
+  const filterGroups = groups?.map((s) => s.name);
   const toggleFilterIsExpanded = () => {
     setIsFilterExpanded(!isFilterExpanded);
     setFilterGroupOpen(null);
@@ -86,68 +77,54 @@ export function QuickFilter({ dataSource }: QuickFilterProps): JSX.Element {
 
   return (
     <StyledWrapper id="filter_root">
-      <StyledCompactFilterWrapper>
-        <StyledSearchLine>
-          <StyledLeftSection>
-            <FilterQuickSearch />
-          </StyledLeftSection>
-          <StyledRightSection>
-            {!isFilterExpanded && (
-              <>
-                {quickFilterGroups.map(
-                  (group, i) =>
-                    i < 5 && (
-                      <FilterGroup
-                        isFetching={isFetching}
-                        uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
-                        onClick={() => handleExpandFilterGroup(group.name)}
-                        group={group}
-                        key={group.name}
-                        isOpen={filterGroupOpen === group.name}
-                        name={group.name}
-                        isMonospace={
-                          !!monospaceGroups.find(
-                            (value) => value.trim().toLowerCase() === group.name.trim().toLowerCase()
-                          )
-                        }
-                      />
-                    )
-                )}
-                <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
-              </>
-            )}
-            <div style={{ display: 'flex' }}>
-              {isFilterExpanded && (
-                <ToggleHideFilterPopover
-                  allFilters={filterGroups}
-                  setVisibleFilters={setVisibleFilterGroups}
-                  visibleFilters={visibleFilterGroups}
+      <StyledCompactFilterWrapper isExpanded={isFilterExpanded}>
+        <FilterQuickSearch />
+
+        {!isFilterExpanded && (
+          <>
+            <StyledQuickFilterGroupsLayout>
+              {quickFilterGroups.map((group, i) => (
+                <FilterGroup
+                  isFetching={query.isFetching}
+                  uncheckedValues={uncheckedValues.find((s) => s.name === group.name)?.values ?? []}
+                  onClick={() => handleExpandFilterGroup(group.name)}
+                  group={group}
+                  key={group.name}
+                  isOpen={filterGroupOpen === group.name}
+                  name={group.name}
+                  isMonospace={
+                    !!monospaceGroups.find((value) => value.trim().toLowerCase() === group.name.trim().toLowerCase())
+                  }
                 />
-              )}
+              ))}
+            </StyledQuickFilterGroupsLayout>
+            <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
+          </>
+        )}
+        <StyledButtonWrapper>
+          {isFilterExpanded && (
+            <ToggleHideFilterPopover
+              allFilters={filterGroups}
+              setVisibleFilters={setVisibleFilterGroups}
+              visibleFilters={visibleFilterGroups}
+            />
+          )}
 
-              <StyledButton onClick={() => clearActiveFilters()}>
-                <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
-              </StyledButton>
+          <StyledButton onClick={() => clearActiveFilters()}>
+            <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
+          </StyledButton>
 
-              <StyledButton onClick={toggleFilterIsExpanded}>
-                {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-              </StyledButton>
-            </div>
-          </StyledRightSection>
-        </StyledSearchLine>
+          <StyledButton onClick={toggleFilterIsExpanded}>
+            {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
+          </StyledButton>
+        </StyledButtonWrapper>
       </StyledCompactFilterWrapper>
       {isFilterExpanded && (
-        <FilterView isFetching={isFetching} groups={groups.filter((s) => visibleFilterGroups.includes(s.name))} />
+        <FilterView
+          isFetching={query.isFetching}
+          groups={visibleFilterGroups.map((x) => groups.find((s) => s.name === x)).filter(Boolean) as IFilterGroup[]}
+        />
       )}
     </StyledWrapper>
   );
-}
-const getServerArgs = (groups: IFilterGroup[], filterState: FilterStateGroup[]) =>
-  groups.map(
-    (group): FilterStateGroup => ({
-      name: group.name,
-      values: group.filterItems
-        .map((s) => s.value)
-        .filter((value) => !filterState.find((x) => x.name === group.name)?.values.includes(value)),
-    })
-  );
+};

@@ -40,7 +40,7 @@ export const FilterGroup = ({
 
   if (filterItems.length === 0) return <></>;
   return (
-    <div>
+    <>
       <StyledFilterGroupWrapper ref={ref} onClick={onClick}>
         {isFetching ? (
           <Skeleton height={24} width={100} />
@@ -65,7 +65,7 @@ export const FilterGroup = ({
         CustomRender={customRender}
         isMonospace={isMonospace}
       />
-    </div>
+    </>
   );
 };
 const StyledFilterText = styled.div`

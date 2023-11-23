@@ -11,9 +11,11 @@ export const gardenModule: FusionWorkspaceModule = {
 
     if (!gardenConfig) return;
 
-    const bookmarkGrouping = props.currentBookmark?.payload?.garden?.gardenKey;
+    const bookmarkGrouping = props.currentBookmark?.payload?.garden?.groupingKeys;
     if (bookmarkGrouping) {
-      gardenConfig.initialGrouping = [bookmarkGrouping];
+      gardenConfig.initialGrouping = bookmarkGrouping;
+      (gardenConfig.initialDateVariant = props.currentBookmark?.payload.garden?.dateVariant),
+        (gardenConfig.initialTimeInterval = props.currentBookmark?.payload.garden?.timeInterval);
     }
     const provider: Provider = {
       Component: ({ children }) => {
@@ -30,7 +32,12 @@ export const gardenModule: FusionWorkspaceModule = {
         ),
         name: 'garden',
         TabIcon: GardenIcon,
-        CustomHeader: () => <GardenWorkspaceHeader dataSource={props.filterOptions?.dataSource} />,
+        CustomHeader: () => (
+          <GardenWorkspaceHeader
+            dataSource={props.filterOptions?.dataSource}
+            sidesheetConfig={props.sidesheetOptions}
+          />
+        ),
       },
     };
   },

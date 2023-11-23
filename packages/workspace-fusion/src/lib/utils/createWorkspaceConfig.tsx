@@ -24,8 +24,6 @@ export function createConfigurationObject<
     providers.push(provider);
   };
 
-  // pushProvider(configureUrlWithHistory(mediator, history));
-
   pushProvider({ name: 'Header', Component: RootHeaderContext });
 
   const Sidesheet = addSidesheet(props.sidesheetOptions);

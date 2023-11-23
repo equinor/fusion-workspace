@@ -1,11 +1,15 @@
 import { useItemWidths } from '../../hooks';
+import { useGarden } from '../../hooks/useGarden';
+import { useGardenConfig } from '../../hooks/useGardenConfig';
 import { ExpandProvider } from '../ExpandProvider';
+import { GardenDataSource } from '../Garden';
 import { VirtualGarden } from '../VirtualGarden';
 import { StyledVirtualContainer } from './virtualContainer.styles';
-import { useQuery } from '@tanstack/react-query';
-import { GardenDataSource } from '../Garden';
-import { useGardenConfig } from '../../hooks/useGardenConfig';
-import { useGarden } from '../../hooks/useGarden';
+import { info_circle } from '@equinor/eds-icons';
+import { Icon } from '@equinor/eds-core-react';
+import styled from 'styled-components';
+import { SplashScreen } from '../splashScreen/SplashScreen';
+Icon.add({ info_circle });
 
 type VirtualContainerProps<TContext = undefined> = {
   dataSource: GardenDataSource<TContext>;
@@ -17,35 +21,33 @@ export const VirtualContainer = <TContext,>({
   context,
 }: VirtualContainerProps<TContext>): JSX.Element | null => {
   const { onClickItem } = useGardenConfig();
-  const {
-    groupingService: { groupingKeys, timeInterval, dateVariant },
-  } = useGarden();
+  const { gardenMetaQuery } = useGarden();
 
-  const { data, isFetching } = useQuery(['garden', ...groupingKeys, timeInterval, dateVariant, context], {
-    refetchOnWindowFocus: false,
-    suspense: true,
-    useErrorBoundary: true,
-    keepPreviousData: false,
-    queryFn: ({ signal }) =>
-      dataSource.getGardenMeta(
-        {
-          timeInterval,
-          dateVariant,
-          groupingKeys,
-        },
-        context,
-        signal ?? new AbortSignal()
-      ),
-  });
+  if (gardenMetaQuery.isLoading) {
+    return <SplashScreen />;
+  }
 
-  if (!data) {
+  if (!gardenMetaQuery.data) {
     // Will never happen when suspense is true
     throw new Error();
   }
+  const { data } = gardenMetaQuery;
 
   const amountOfColumns = data.columnCount;
-  const widths = useItemWidths(data.columnCount);
+  const columnWidth = data.columnWidth || 300;
+  const widths = useItemWidths(data.columnCount, columnWidth);
 
+  if (!amountOfColumns) {
+    return (
+      <InfoMessage>
+        <Icon name="info_circle" size={32} />
+        <p>
+          Sorry, we couldn't find any results based on your search and filter criteria. Please try using different
+          keywords or adjusting the filters
+        </p>
+      </InfoMessage>
+    );
+  }
   //TODO: Handle widths = 0 better
   if (widths.length === 0 || amountOfColumns !== widths.length) {
     return null;
@@ -55,16 +57,10 @@ export const VirtualContainer = <TContext,>({
     return null;
   }
 
-  //TODO: temp fix, should show skeletons
-  if (isFetching) {
-    return null;
-  }
-
   return (
     <>
-      {/* <ReactQueryDevtools /> */}
       <StyledVirtualContainer id={'garden_root'}>
-        <ExpandProvider initialWidths={widths}>
+        <ExpandProvider initialWidths={widths} defaultColumnWidth={columnWidth}>
           <VirtualGarden
             context={context}
             getSubgroupItems={dataSource.getSubgroupItems}
@@ -79,3 +75,12 @@ export const VirtualContainer = <TContext,>({
     </>
   );
 };
+
+const InfoMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 18;
+`;

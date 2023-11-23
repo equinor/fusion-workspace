@@ -6,6 +6,7 @@ export const StyledReportRoot = styled.div`
   height: 100%;
   width: 100%;
   overflow: auto;
+  scrollbar-gutter: stable;
   background-color: ${tokens.colors.ui.background__light.hex};
 `;
 

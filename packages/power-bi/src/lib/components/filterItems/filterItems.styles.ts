@@ -5,7 +5,6 @@ export const StyledFilterGroupContainer = styled.div`
   flex-direction: column;
   margin: 0rem 0.5rem;
   height: -webkit-fill-available;
-  min-width: 150px;
 `;
 
 export const StyledCheckboxWrap = styled.span`

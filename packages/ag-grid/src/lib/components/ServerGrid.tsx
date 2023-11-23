@@ -41,7 +41,6 @@ export function ServerGrid<TData>({
 
 const getServerSettings = <TData,>(dataSource: IServerSideDatasource, colDef: ColDef<TData>[]): GridOptions => ({
   serverSideDatasource: dataSource,
-  serverSideInfiniteScroll: true,
   rowModelType: 'serverSide',
   columnDefs: colDef,
 });

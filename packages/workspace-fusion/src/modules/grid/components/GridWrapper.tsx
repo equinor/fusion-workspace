@@ -5,9 +5,10 @@ import { tokens } from '@equinor/eds-tokens';
 
 import { useResizeObserver } from '../../../lib/hooks/useResizeObserver';
 import { GridConfig } from '../../../lib/integrations/grid';
-import { GetIdentifier } from '../../../lib';
+import { GetIdentifier, HeaderIcon, useWorkspaceHeaderComponents } from '../../../lib';
 import { type Selection } from '../../../lib/types';
 import { useWorkspace } from '../../../lib/hooks';
+import { GridOptionPopover } from './GridOptionsPopover';
 
 export type GridWrapperProps<
   TData extends Record<PropertyKey, unknown>,
@@ -49,6 +50,24 @@ export const GridWrapper = <
 
   useDeselectionEvent(selection, config.gridOptions.api);
 
+  const { setIcons } = useWorkspaceHeaderComponents();
+
+  useEffect(() => {
+    const icon: HeaderIcon = {
+      Icon: ({ anchor }) => (
+        <GridOptionPopover anchor={anchor} filterState={filterState} excelExport={config.excelExport} />
+      ),
+      name: 'grid-settings',
+      placement: 'right',
+      type: 'button',
+    };
+    setIcons((s) => [...s, icon]);
+
+    return () => {
+      setIcons((s) => s.filter((y) => y.name !== icon.name));
+    };
+  }, [filterState]);
+
   return (
     <div
       id="workspace_grid_wrapper"
@@ -69,6 +88,8 @@ export const GridWrapper = <
         height={height}
         context={filterState}
         modules={config.modules}
+        enableCellTextSelection
+        ensureDomOrder
       />
     </div>
   );
@@ -99,6 +120,7 @@ function setDefaultColDef<TData>(
 ) {
   gridOptions.defaultColDef = {
     resizable: true,
+
     onCellClicked: (a) => {
       if (!a.data) return;
       setSelected(a.data);

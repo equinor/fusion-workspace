@@ -53,13 +53,9 @@ export const StyledFilterGroups = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
-  overflow-x: scroll;
+  overflow-x: auto;
   width: -webkit-fill-available;
   background-color: ${tokens.colors.ui.background__light.rgba};
-
-  ::-webkit-scrollbar {
-    height: 0.3rem;
-  }
 `;
 
 export const StyledFilterGroupWrapper = styled.div``;
