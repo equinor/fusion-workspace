@@ -11,6 +11,7 @@ import { search, playlist_add, drag_handle } from '@equinor/eds-icons';
 import { tokens } from '@equinor/eds-tokens';
 import { Skeleton } from '../skeleton/Skeleton';
 import { getVisibleFiltersFromLocalStorage, useVisibleFilters } from '../../hooks/useVisibleFilterGroups';
+import styled from 'styled-components';
 
 Icon.add({ search, playlist_add, drag_handle });
 
@@ -232,23 +233,22 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
 
 function QuickFilterLoading() {
   return (
-    <div
-      style={{
-        height: '48px',
-        width: '100%',
-        display: 'flex',
-        background: tokens.colors.ui.background__light.hex,
-        alignItems: 'center',
-        gap: '1em',
-        paddingLeft: '1em',
-      }}
-    >
-      <Skeleton height={24} width={160} />
-      <Skeleton height={24} width={160} />
-      <Skeleton height={24} width={160} />
-      <Skeleton height={24} width={160} />
-      <Skeleton height={24} width={160} />
-      <Skeleton height={24} width={160} />
-    </div>
+    <StyledQuickFilterLoading>
+      {new Array(20).fill(null).map(() => (
+        <Skeleton style={{ gridRow: 1 }} height={24} width={160} />
+      ))}
+    </StyledQuickFilterLoading>
   );
 }
+
+const StyledQuickFilterLoading = styled.div`
+  height: 48px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, min-content));
+  grid-template-rows: 1fr;
+  background-color: ${tokens.colors.ui.background__light.hex};
+  align-items: center;
+  gap: 1em;
+  padding-left: 1em;
+`;
