@@ -1,3 +1,4 @@
+import { SidesheetWrapper } from '../../../../sidesheet/SidesheetWrapper';
 import { SidesheetConfig } from '../types';
 import { SidesheetSimpleWrapper } from './wrapper/SidesheetSimpleWrapper';
 
