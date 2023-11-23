@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "6.0.15",
+  "version": "6.1.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -73,7 +73,7 @@
     "@equinor/workspace-powerbi": "workspace:^",
     "@equinor/workspace-react": "workspace:^",
     "@tanstack/react-query": "^4.23.0",
-    "@types/react-dom": "^18.0.8",
+    "re-resizable": "^6.9.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
@@ -85,6 +85,7 @@
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@types/react-dom": "^18.0.8",
     "@types/jest": "27.4.1",
     "@types/react": "^18.0.25",
     "@types/styled-components": "^5.1.26",

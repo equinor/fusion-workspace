@@ -3,6 +3,8 @@ import { CreateSidesheetProps, DetailsSidesheetProps } from '../../types';
 import { useWorkspace } from '../../../../hooks';
 import { Suspense } from 'react';
 import { CircularProgress } from '@equinor/eds-core-react';
+import { SidesheetWrapper } from '../../../../../sidesheet/SidesheetWrapper';
+import styled from 'styled-components';
 
 type SidesheetSimpleWrapperProps<TData extends Record<PropertyKey, unknown>> = {
   DetailsSidesheet: (props: DetailsSidesheetProps<TData>) => JSX.Element;
@@ -22,9 +24,17 @@ export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown
     >
       <Suspense fallback={<SidesheetFallback />}>
         {selection ? (
-          <DetailsSidesheet id={selection.id} item={selection?.item as TData | undefined} close={clearSelection} />
+          <SidesheetWrapper>
+            <DetailsSidesheet id={selection.id} item={selection?.item as TData | undefined} close={clearSelection} />
+          </SidesheetWrapper>
         ) : isCreateSidesheetOpen ? (
-          <>{CreateSidesheet && <CreateSidesheet close={closeCreateSidesheet} />}</>
+          <>
+            {CreateSidesheet && (
+              <SidesheetWrapper>
+                <CreateSidesheet close={closeCreateSidesheet} />
+              </SidesheetWrapper>
+            )}
+          </>
         ) : (
           <></>
         )}
@@ -34,19 +44,19 @@ export const SidesheetSimpleWrapper = <TData extends Record<PropertyKey, unknown
 };
 
 const SidesheetFallback = () => (
-  <div
-    style={{
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-    }}
-  >
+  <StyledSidesheetFallback>
     <CircularProgress size={48} />
-  </div>
+  </StyledSidesheetFallback>
 );
+
+const StyledSidesheetFallback = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
 
 const UnhandledSidesheetException = () => {
   return <div>An unhandled exception was caught in the sidesheet</div>;

@@ -9,8 +9,7 @@ import { FilterContextProvider } from '@equinor/workspace-filter';
 import { updateQueryParams } from '../classes/fusionUrlHandler';
 import { WorkspaceContextProvider } from '../context/WorkspaceControllerContext';
 import { useWorkspace } from '../hooks';
-import { useCallback, useMemo, useRef } from 'react';
-import { update } from '@equinor/eds-icons';
+import { useMemo, useRef } from 'react';
 
 const client = new QueryClient();
 
