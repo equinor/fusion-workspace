@@ -29,7 +29,6 @@ export const ResizeProvider = ({ children, defaultWidth, minWidth }: ResizeProvi
         minHeight={'100%'}
         onResizeStop={(e, direction, ref, d) => {
           if (width + d.width < minWidth) {
-            //setWidth(defaultWidth);
             setIsMinimized(true);
           } else {
             setWidth(width + d.width);
