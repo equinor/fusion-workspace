@@ -5,16 +5,22 @@
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
-    "build": "tsc -b",
-    "build:prod": "tsc -b",
-    "lint": "eslint --ext .ts,.tsx"
+    "build": "tsup ./src/index.ts --format cjs,esm --dts --clean",
+    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean"
   },
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/esm/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
