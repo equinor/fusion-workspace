@@ -1,67 +1,73 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
-    "build": "tsc -b ",
-    "build:prod": "vite build && tsc -b",
-    "lint": "eslint --ext .ts,.tsx"
+    "build": "tsup",
+    "build:prod": "tsup"
   },
   "publishConfig": {
     "access": "public"
   },
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "typesVersions": {
-    ">=4.2": {
-      ".": [
-        "dist/types/index"
-      ],
-      "garden": [
-        "dist/types/lib/integrations/garden/index"
-      ],
-      "grid": [
-        "dist/types/lib/integrations/grid/index"
-      ],
-      "power-bi": [
-        "dist/types/lib/integrations/power-bi/index"
-      ],
-      "filter": [
-        "dist/types/lib/integrations/filter/index"
-      ],
-      "status-bar": [
-        "dist/types/lib/integrations/status-bar/index"
-      ],
-      "sidesheet": [
-        "dist/types/lib/integrations/sidesheet/index"
-      ],
-      "grid-module": [
-        "dist/types/modules/grid/index"
-      ],
-      "power-bi-module": [
-        "dist/types/modules/power-bi/index"
-      ],
-      "garden-module": [
-        "dist/types/modules/garden/index"
-      ]
-    }
-  },
   "exports": {
-    ".": "./dist/esm/index.js",
-    "./garden": "./dist/esm/lib/integrations/garden/index.js",
-    "./filter": "./dist/esm/lib/integrations/filter/index.js",
-    "./status-bar": "./dist/esm/lib/integrations/status-bar/index.js",
-    "./power-bi": "./dist/esm/lib/integrations/power-bi/index.js",
-    "./grid": "./dist/esm/lib/integrations/grid/index.js",
-    "./sidesheet": "./dist/esm/lib/integrations/sidesheet/index.js",
-    "./grid-module": "./dist/esm/modules/grid/index.js",
-    "./power-bi-module": "./dist/esm/modules/power-bi/index.js",
-    "./garden-module": "./dist/esm/modules/garden/index.js"
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./garden": {
+      "require": "./dist/lib/integrations/garden/index.cjs",
+      "import": "./dist/lib/integrations/garden/index.js",
+      "types": "./dist/lib/integrations/garden/index.d.ts"
+    },
+    "./filter": {
+      "require": "./dist/lib/integrations/filter/index.cjs",
+      "import": "./dist/lib/integrations/filter/index.js",
+      "types": "./dist/lib/integrations/filter/index.d.ts"
+    },
+    "./status-bar": {
+      "require": "./dist/lib/integrations/status-bar/index.cjs",
+      "import": "./dist/lib/integrations/status-bar/index.js",
+      "types": "./dist/lib/integrations/status-bar/index.d.ts"
+    },
+    "./power-bi": {
+      "require": "./dist/lib/integrations/power-bi/index.cjs",
+      "import": "./dist/lib/integrations/power-bi/index.js",
+      "types": "./dist/lib/integrations/power-bi/index.d.ts"
+    },
+    "./grid": {
+      "require": "./dist/lib/integrations/grid/index.cjs",
+      "import": "./dist/lib/integrations/grid/index.js",
+      "types": "./dist/lib/integrations/grid/index.d.ts"
+    },
+    "./sidesheet": {
+      "require": "./dist/lib/integrations/sidesheet/index.cjs",
+      "import": "./dist/lib/integrations/sidesheet/index.js",
+      "types": "./dist/lib/integrations/sidesheet/index.d.ts"
+    },
+    "./power-bi-module": {
+      "require": "./dist/modules/power-bi/index.cjs",
+      "import": "./dist/modules/power-bi/index.js",
+      "types": "./dist/modules/power-bi/index.d.ts"
+    },
+    "./grid-module": {
+      "require": "./dist/modules/grid/index.cjs",
+      "import": "./dist/modules/grid/index.js",
+      "types": "./dist/modules/grid/index.d.ts"
+    },
+    "./garden-module": {
+      "require": "./dist/modules/garden/index.cjs",
+      "import": "./dist/modules/garden/index.js",
+      "types": "./dist/modules/garden/index.d.ts"
+    }
   },
   "dependencies": {
     "@equinor/eds-core-react": "0.27.0",
