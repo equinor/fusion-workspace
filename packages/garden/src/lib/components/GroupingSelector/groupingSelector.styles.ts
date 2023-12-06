@@ -40,5 +40,5 @@ export const RadioButtonWrapper = styled.div`
 `;
 
 export const SelectorBody = styled.div`
-  padding: 0px 10px;
+  padding-top: 0px 10px;
 `;
