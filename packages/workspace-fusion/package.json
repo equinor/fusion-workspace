@@ -17,6 +17,40 @@
   "files": [
     "dist"
   ],
+  "typesVersions": {
+    ">=4.2": {
+      ".": [
+        "dist/types/index"
+      ],
+      "garden": [
+        "dist/types/lib/integrations/garden/index"
+      ],
+      "grid": [
+        "dist/types/lib/integrations/grid/index"
+      ],
+      "power-bi": [
+        "dist/types/lib/integrations/power-bi/index"
+      ],
+      "filter": [
+        "dist/types/lib/integrations/filter/index"
+      ],
+      "status-bar": [
+        "dist/types/lib/integrations/status-bar/index"
+      ],
+      "sidesheet": [
+        "dist/types/lib/integrations/sidesheet/index"
+      ],
+      "grid-module": [
+        "dist/types/modules/grid/index"
+      ],
+      "power-bi-module": [
+        "dist/types/modules/power-bi/index"
+      ],
+      "garden-module": [
+        "dist/types/modules/garden/index"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
