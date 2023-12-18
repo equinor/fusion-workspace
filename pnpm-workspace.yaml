@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - 'documentation'
   - 'apps/*'
+  - '.github/helpers'

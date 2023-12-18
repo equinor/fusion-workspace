@@ -9,7 +9,8 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "documentation": "pnpx astro dev --root ./documentation",
-    "shipit": "pnpm build && pnpm -r publish",
+    "shipit": "turbo run build && pnpm -r publish",
+    "pr-shipit": "turbo run build && pnpm --filter ...[origin/main] pr-release",
     "dev": "turbo run dev --filter ./apps/**"
   },
   "private": true,
@@ -23,6 +24,7 @@
     "@typescript-eslint/parser": "~5.24.0",
     "prettier": "^2.6.2",
     "tsup": "^8.0.1",
+    "tsx": "^4.6.2",
     "turbo": "^1.9.3",
     "typescript": "~5.0.2",
     "typescript-plugin-styled-components": "^2.0.0"
