@@ -25,5 +25,7 @@ jobs:
       - name: Build monorepo
         run: pnpm build
 
+      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+
       - name: Publish PR version
         run: pnpm pr-shipit
