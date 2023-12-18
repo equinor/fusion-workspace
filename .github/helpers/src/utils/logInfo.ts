@@ -1,13 +1,5 @@
 const ColorReset = '\x1b[0m';
-type TextColor =
-  | 'Red'
-  | 'Green'
-  | 'Black'
-  | 'Yellow'
-  | 'Blue'
-  | 'Magenta'
-  | 'Cyan'
-  | 'White';
+type TextColor = 'Red' | 'Green' | 'Black' | 'Yellow' | 'Blue' | 'Magenta' | 'Cyan' | 'White';
 
 const textColor = {
   Red: '\x1b[31m',
@@ -21,6 +13,5 @@ const textColor = {
 } satisfies Record<TextColor, string>;
 
 export function logInfo(message: string, color: TextColor): void {
-    console.log(`${textColor[color]}${message}${ColorReset}`);
-  }
-  
+  console.log(`${textColor[color]}${message}${ColorReset}`);
+}
