@@ -32,4 +32,4 @@ jobs:
         run: pnpm pr-shipit
 
       - name: Comment PR
-        run: tsx .\.github\helpers\src\publish-comment.ts comment --token ${{github.token}}
+        run: pnpm tsx .\.github\helpers\src\publish-comment.ts comment --token ${{github.token}}
