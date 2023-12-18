@@ -9,6 +9,7 @@ import { execSync } from 'child_process';
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { parsePackageJson } from './utils/parse-package-json.js';
 import { logInfo } from './utils/logInfo.js';
+import { RELEASE_FILE_NAME } from './constants.js';
 
 const program = new Command();
 
@@ -52,7 +53,7 @@ type ReleaseSchema = {
 };
 
 function appendReleaseLog(npmRelease: NpmRelease) {
-  const fileName = '../../release.json';
+  const fileName = `../../${RELEASE_FILE_NAME}`;
   if (!existsSync(fileName)) {
     writeFileSync(fileName, JSON.stringify(defaultReleaseSchema, null, 2));
   }
