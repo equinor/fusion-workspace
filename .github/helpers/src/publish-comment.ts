@@ -39,14 +39,17 @@ const program = new Command();
 
 program.name('PR');
 
-program.command('comment').action(async (args) => {
-  if (!args.token) {
-    throw new Error('Missing github token');
-  }
-  const client = getOctokit(args.token);
-  const pr = await getPullRequestFromBranch(args.token);
-  commentPullRequest(client, pr.number);
-});
+program
+  .command('comment')
+  .option('-T, --token <token>', 'github token')
+  .action(async (args) => {
+    if (!args.token) {
+      throw new Error('Missing github token');
+    }
+    const client = getOctokit(args.token);
+    const pr = await getPullRequestFromBranch(args.token);
+    commentPullRequest(client, pr.number);
+  });
 
 await program.parseAsync();
 
