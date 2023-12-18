@@ -6,7 +6,6 @@ const defaultReleaseSchema: ReleaseSchema = {
 
 import { Command } from 'commander';
 import { execSync } from 'child_process';
-import { setSecret } from '@actions/core';
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { parsePackageJson } from './utils/parse-package-json.js';
 import { logInfo } from './utils/logInfo.js';
