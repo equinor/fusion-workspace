@@ -2,12 +2,20 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
-import { readFileSync } from 'fs';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
 
 program.name('PR');
+
+const noLinkedIssueMessage = `⚠👮‍♀️🚔🚨
+Looks like you forgot to link an issue!
+
+If you have never linked an issue to a pull request or you just forgot how to. [Read this](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
+
+
+Next time this violation occurs your teamlead will be notified🔪🩸
+`;
 
 program
   .command('issue')
@@ -45,5 +53,14 @@ async function checkIssues(client: Octo, pr: number) {
       .trim()
   );
 
-  console.log((pullRequests as any).repository.pullRequest.closingIssuesReferences);
+  const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
+
+  if (linkedIssues === 0) {
+    const comment = await client.rest.issues.createComment({
+      issue_number: pr,
+      body: noLinkedIssueMessage,
+      owner: context.issue.owner,
+      repo: context.issue.repo,
+    });
+  }
 }
