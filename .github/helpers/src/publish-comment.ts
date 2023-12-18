@@ -62,7 +62,7 @@ function parseReleaseJson() {
 
   const workspaceWarning = isWorkspaceRelease
     ? ''
-    : '@equinor/workspace-fusion was not published😕❓. Did you forget to bump the package📦?';
+    : `Well, I reckon the @equinor/workspace-fusion ain't joinin' the rodeo just yet. Seems like it's taken a rain check on the publication hoedown. Did you happen to forget to give that package a little nudge, like spurrin' a stubborn steer❓`;
 
   const packageLines = packages
     .map(
@@ -72,11 +72,17 @@ pnpm i ${npmPackage}
     )
     .join('\n');
 
-  const prBody = `Packages published🚀
-${packageLines}
+  const prBody = `Howdy, partner,
 
-${workspaceWarning}
+  Looks like you've got yourself a proper roundup with a posse of packages📦. If you're fixin' to bring 'em into your code corral, just hitch 'em up one by one with a trusty command like a cowboy tamin' a wild mustang.
+  
+  ${packageLines}
+  
+  These here commands will have your packages saddled up and ready to hit the open range of your project. Keep those dependencies roped and ride on into the sunset of seamless coding.
+  
+  ${workspaceWarning}
 
+  Happy trailblazin'
 `;
   return prBody;
 }
