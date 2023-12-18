@@ -9,7 +9,7 @@ type Octo = ReturnType<typeof getOctokit>;
 program.name('PR');
 
 const noLinkedIssueMessage = `
-Howdy, wanderer,
+Howdy, wanderer🌵🤠🐴,
 
 Seems you've sauntered into our GitHub saloon with a pull request, but it appears you've forgotten to tie your horse to the hitching post. Now, in this town, we don't take kindly to stray requests, and the GitHub corral is no place for them.
 
