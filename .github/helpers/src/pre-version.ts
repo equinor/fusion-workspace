@@ -17,13 +17,13 @@ program.name('PR');
 
 program
   .command('publish')
-  .option('-T, --token <token>', 'NPM auth token')
+  // .option('-T, --token <token>', 'NPM auth token')
   .action(async (args) => {
-    if (!args.token) {
-      throw new Error('Missing npm token');
-    }
-    setSecret(args.token);
-    execSync(`pnpm config set '//registry.npmjs.org/:_authToken' "${args.token}"`, { stdio: 'inherit' });
+    // if (!args.token) {
+    //   throw new Error('Missing npm token');
+    // }
+    // setSecret(args.token);
+    // execSync(`pnpm config set '//registry.npmjs.org/:_authToken' "${args.token}"`, { stdio: 'inherit' });
     createFusionApp();
   });
 
