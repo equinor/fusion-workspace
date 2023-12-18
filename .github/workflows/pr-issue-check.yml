@@ -1,4 +1,4 @@
-name: Check linked issue
+name: Verify linked issue
 
 # This action works with pull requests and pushes
 on:
@@ -17,4 +17,4 @@ jobs:
 
       - run: npm run first-time-setup
 
-      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{github.token}}
+      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ github.token }}
