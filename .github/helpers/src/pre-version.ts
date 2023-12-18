@@ -40,7 +40,7 @@ export async function createFusionApp() {
 }
 
 function publishPrPackage() {
-  const releaseMessage = execSync('pnpm publish --tag pr --json --dry-run --no-git-checks');
+  const releaseMessage = execSync('pnpm publish --tag pr --json --no-git-checks');
 
   const npmRelease: NpmRelease = JSON.parse(releaseMessage.toString('utf-8'));
   logInfo(npmRelease.id, 'Green');

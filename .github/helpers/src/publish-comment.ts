@@ -64,12 +64,17 @@ function parseReleaseJson() {
     ? ''
     : '@equinor/workspace-fusion was not published😕❓. Did you forget to bump the package📦?';
 
-  const packageLines = packages.map((s) => s).join('\n');
+  const packageLines = packages
+    .map(
+      (npmPackage) => `\`\`\`
+pnpm i ${npmPackage}
+\`\`\``
+    )
+    .join('\n');
 
-  const prBody = `Packages published🚀:
-\`\`\`
+  const prBody = `Packages published🚀
 ${packageLines}
-\`\`\`
+
 ${workspaceWarning}
 
 `;
