@@ -45,5 +45,5 @@ async function checkIssues(client: Octo, pr: number) {
       .trim()
   );
 
-  console.log(pullRequests);
+  console.log((pullRequests as any).repository.pullRequest.closingIssuesReferences);
 }
