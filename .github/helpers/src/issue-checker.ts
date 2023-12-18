@@ -12,13 +12,18 @@ program.name('PR');
 program
   .command('issue')
   .option('-T, --token <token>', 'github token')
+  .option('-P, --pr <pr>', 'Pull request number')
   .action(async (args) => {
     if (!args.token) {
       throw new Error('Missing github token');
     }
 
+    if (!args.pr) {
+      throw new Error('Missing pr number');
+    }
+
     const client = getOctokit(args.token);
-    checkIssues(client, context.issue.number);
+    checkIssues(client, args.pr);
   });
 
 await program.parseAsync();
