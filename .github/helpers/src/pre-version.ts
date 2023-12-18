@@ -14,11 +14,9 @@ const program = new Command();
 
 program.name('PR');
 
-program
-  .command('publish')
-  .action(async () => {
-    createFusionApp();
-  });
+program.command('publish').action(async () => {
+  createFusionApp();
+});
 
 await program.parseAsync();
 
