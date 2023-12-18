@@ -1,0 +1,31 @@
+name: Publish PR build
+on:
+  workflow_dispatch:
+permissions:
+  actions: read
+  checks: write
+  contents: read
+  deployments: write
+  id-token: write
+  statuses: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: PNPM setup
+        uses: ./.github/actions/pnpm-setup
+
+      - name: Build monorepo
+        run: pnpm build
+
+      - name: Publish PR version
+        run: |
+          pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          pnpm preship --no-git-checks
