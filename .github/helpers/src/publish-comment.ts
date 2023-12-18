@@ -9,7 +9,7 @@ import { RELEASE_FILE_NAME } from './constants.js';
 type Octo = ReturnType<typeof getOctokit>;
 
 async function getPullRequestFromBranch(client: Octo) {
-  const branch = context.ref;
+  const branch = context.ref.replace('refs/heads/', '');
 
   const pullRequests = await client.rest.pulls.list({ owner: context.issue.owner, repo: context.issue.repo });
   const pullRequest = pullRequests.data.find((s) => s.head.ref === branch);
