@@ -14,17 +14,9 @@ const program = new Command();
 
 program.name('PR');
 
-program
-  .command('publish')
-  // .option('-T, --token <token>', 'NPM auth token')
-  .action(async (args) => {
-    // if (!args.token) {
-    //   throw new Error('Missing npm token');
-    // }
-    // setSecret(args.token);
-    // execSync(`pnpm config set '//registry.npmjs.org/:_authToken' "${args.token}"`, { stdio: 'inherit' });
-    createFusionApp();
-  });
+program.command('publish').action(async () => {
+  createFusionApp();
+});
 
 await program.parseAsync();
 
@@ -48,7 +40,7 @@ export async function createFusionApp() {
 }
 
 function publishPrPackage() {
-  const releaseMessage = execSync('pnpm publish --tag pr --json --no-git-checks');
+  const releaseMessage = execSync('pnpm publish --tag pr --json --dry-run --no-git-checks');
 
   const npmRelease: NpmRelease = JSON.parse(releaseMessage.toString('utf-8'));
   logInfo(npmRelease.id, 'Green');
