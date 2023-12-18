@@ -11,7 +11,11 @@ type Octo = ReturnType<typeof getOctokit>;
 async function getPullRequestFromBranch(client: Octo) {
   const branch = context.ref;
 
-  const pullRequests = await client.rest.pulls.list({ owner: context.issue.owner, repo: context.issue.repo });
+  const pullRequests = await client.request<[{ id: number; head: { ref: string }; number: number }]>({
+    url: `https://api.github.com/repos/${context.repo.owner}/${context.repo.repo}/pulls`,
+    method: 'GET',
+  });
+
   const pullRequest = pullRequests.data.find((s) => s.head.ref === branch);
 
   if (!pullRequest) {
@@ -24,6 +28,7 @@ async function getPullRequestFromBranch(client: Octo) {
 
 async function commentPullRequest(client: Octo, issueNumber: number) {
   const body = parseReleaseJson();
+
   const comment = await client.rest.issues.createComment({
     issue_number: issueNumber,
     body: body,
@@ -46,6 +51,7 @@ program
     if (!args.token) {
       throw new Error('Missing github token');
     }
+
     const client = getOctokit(args.token);
     const pr = await getPullRequestFromBranch(args.token);
     commentPullRequest(client, pr.number);
