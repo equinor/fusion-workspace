@@ -26,7 +26,7 @@ await program.parseAsync();
  */
 function packageJsonNextPatch() {
   const packageJson = parsePackageJson();
-  let version = packageJson.version.split('-')[0];
+  const version = packageJson.version.split('-')[0];
 
   const splitVersion = version.split('.');
 
