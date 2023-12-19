@@ -43,7 +43,6 @@ program
 await program.parseAsync();
 
 async function checkIssues(client: Octo, pr: number) {
-  console.log(`querying pr: ${pr}`);
   const pullRequests = await client.graphql(
     `query {
     repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
