@@ -7,7 +7,9 @@ permissions:
   contents: read
   deployments: write
   id-token: write
+  issues: write
   statuses: write
+  pull-requests: write
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -25,7 +27,10 @@ jobs:
       - name: Build monorepo
         run: pnpm build
 
+      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+
       - name: Publish PR version
-        run: |
-          pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          pnpm preship --no-git-checks
+        run: pnpm pr-shipit
+
+      - name: Comment PR
+        run: pnpm tsx ./.github/helpers/src/publish-comment.ts comment --token ${{github.token}}
