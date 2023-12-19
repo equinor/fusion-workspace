@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup ./src/index.ts --format cjs,esm --dts --clean",
-    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean"
+    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean",
+    "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
   },
   "publishConfig": {
     "access": "public"

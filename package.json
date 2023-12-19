@@ -9,7 +9,8 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "documentation": "pnpx astro dev --root ./documentation",
-    "shipit": "pnpm build && pnpm -r publish",
+    "shipit": "turbo run build && pnpm -r publish",
+    "pr-shipit": "turbo run build && pnpm --filter ...[origin/main] pr-release",
     "dev": "turbo run dev --filter ./apps/**"
   },
   "private": true,
