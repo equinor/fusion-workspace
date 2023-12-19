@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
-    "build:prod": "tsup"
+    "build:prod": "tsup",
+    "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
   },
   "publishConfig": {
     "access": "public"

@@ -13,19 +13,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: nrwl/nx-set-shas@v4
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-
-      - run: pnpm config set auto-install-peers true
-
-      - run: npm run first-time-setup
+      - name: PNPM setup
+        uses: ./.github/actions/pnpm-setup
 
       - run: pnpm build

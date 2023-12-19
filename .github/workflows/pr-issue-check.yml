@@ -1,0 +1,20 @@
+name: Verify linked issue
+
+# This action works with pull requests and pushes
+on:
+  pull_request:
+
+jobs:
+  issue-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+
+      - run: npm run first-time-setup
+
+      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ github.token }} -P ${{github.event.number}}
