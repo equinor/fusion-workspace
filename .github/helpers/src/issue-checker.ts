@@ -37,7 +37,7 @@ program
     }
 
     const client = getOctokit(args.token);
-    checkIssues(client, args.pr);
+    checkIssues(client, parseInt(args.pr));
   });
 
 await program.parseAsync();
