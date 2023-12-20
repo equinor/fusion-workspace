@@ -60,6 +60,8 @@ async function checkIssues(client: Octo, pr: number) {
 
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
 
+  console.log(JSON.stringify(pullRequests));
+
   if (linkedIssues === 0) {
     const comment = await client.rest.issues.createComment({
       issue_number: pr,
