@@ -54,9 +54,9 @@ async function checkIssues(client: Octo, pr: number) {
    }
   }
   `,
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    pr: pr,
+    owner: 'equinor' ?? context.repo.owner,
+    name: 'fusion-workspace' ?? context.repo.repo,
+    number: pr,
   });
 
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
