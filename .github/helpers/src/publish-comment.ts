@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
-import { setSecret } from "@actions/core";
+import { setSecret } from '@actions/core';
 import { logInfo } from './utils/logInfo.js';
 import { readFileSync } from 'fs';
 import { RELEASE_FILE_NAME } from './constants.js';
