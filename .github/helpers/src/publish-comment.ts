@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
+import { setSecret } from "@actions/core";
 import { logInfo } from './utils/logInfo.js';
 import { readFileSync } from 'fs';
 import { RELEASE_FILE_NAME } from './constants.js';
@@ -48,6 +49,7 @@ program
       throw new Error('Missing github token');
     }
 
+    setSecret(args.token);
     const client = getOctokit(args.token);
     const pr = await getPullRequestFromBranch(client);
     commentPullRequest(client, pr.number);
