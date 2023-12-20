@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
+import { setSecret } from '@actions/core';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
@@ -36,13 +37,15 @@ program
       throw new Error('Missing pr number');
     }
 
+    setSecret(args.token);
+
     const client = getOctokit(args.token);
-    checkIssues(client, parseInt(args.pr));
+    checkIssues(client, parseInt(args.pr), args.token);
   });
 
 await program.parseAsync();
 
-async function checkIssues(client: Octo, pr: number) {
+async function checkIssues(client: Octo, pr: number, token: string) {
   const pullRequests = await client.graphql({
     query: `query($owner: String!, $name: String!, $number: Int!) {
       repository (owner: $owner, name: $name){
@@ -57,6 +60,9 @@ async function checkIssues(client: Octo, pr: number) {
     owner: context.repo.owner,
     name: context.repo.repo,
     number: pr,
+    headers: {
+      authorization: token,
+    },
   });
 
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
