@@ -1,6 +1,6 @@
 name: Verify linked issue
 
-permissions: write-all
+# This action works with pull requests and pushes
 on:
   workflow_dispatch:
 
