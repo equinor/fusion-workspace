@@ -43,31 +43,21 @@ program
 await program.parseAsync();
 
 async function checkIssues(client: Octo, pr: number) {
-  console.log('pr number ', pr);
-  console.log(`query {
-    repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
-   pullRequest (number: ${pr}) {
-     closingIssuesReferences (first: 1){
-       totalCount
+  const pullRequests = await client.graphql({
+    query: `query {
+      repository ($owner: String!, $name: String!){
+     pullRequest ($pr: Int!) {
+       closingIssuesReferences (first: 1){
+         totalCount
+       }
      }
    }
- }
-}
-`);
-  const pullRequests = await client.graphql(
-    `query {
-    repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
-   pullRequest (number: ${pr}) {
-     closingIssuesReferences (first: 1){
-       totalCount
-     }
-   }
- }
-}
-`
-      .replaceAll('\n', '')
-      .trim()
-  );
+  }
+  `,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pr: pr,
+  });
 
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
 
