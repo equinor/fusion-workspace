@@ -45,8 +45,8 @@ await program.parseAsync();
 async function checkIssues(client: Octo, pr: number) {
   const pullRequests = await client.graphql({
     query: `query {
-      repository (owner: $owner, repo: $repo){
-     pullRequest (pr: $pr) {
+      repository (owner: $owner, name: $repo){
+     pullRequest (number: $pr) {
        closingIssuesReferences (first: 1){
          totalCount
        }
