@@ -44,9 +44,6 @@ importers:
       '@actions/github':
         specifier: ^6.0.0
         version: 6.0.0
-      '@octokit/graphql':
-        specifier: ^7.0.2
-        version: 7.0.2
       commander:
         specifier: ^11.1.0
         version: 11.1.0
