@@ -44,9 +44,9 @@ await program.parseAsync();
 
 async function checkIssues(client: Octo, pr: number) {
   const pullRequests = await client.graphql({
-    query: `query {
-      repository ($owner: String!, $name: String!){
-     pullRequest ($number: Int!) {
+    query: `query($owner: String!, $name: String!, $number: Int!) {
+      repository (owner: $owner, name: $name){
+     pullRequest (number: $number) {
        closingIssuesReferences (first: 1){
          totalCount
        }
@@ -54,8 +54,8 @@ async function checkIssues(client: Octo, pr: number) {
    }
   }
   `,
-    owner: 'equinor' ?? context.repo.owner,
-    name: 'fusion-workspace' ?? context.repo.repo,
+    owner: context.repo.owner,
+    name: context.repo.repo,
     number: pr,
   });
 
