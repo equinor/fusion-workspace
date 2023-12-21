@@ -44,28 +44,62 @@ await program.parseAsync();
 
 async function checkIssues(client: Octo, pr: number) {
   const pullRequests = await client.graphql(
-    `query {
-    repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
-   pullRequest (number: ${pr}) {
-     closingIssuesReferences (first: 1){
-       totalCount
-     }
-   }
- }
-}
-`
-      .replaceAll('\n', '')
-      .trim()
+    `
+    query {
+      repository(owner: "equinor", name: "fusion-workspace") {
+        pullRequest(number: ${pr}) {
+          id
+          number
+          title
+          timelineItems(first: 1, itemTypes: [CROSS_REFERENCED_EVENT]) {
+            __typename
+            ... on  PullRequestTimelineItemsConnection{
+              totalCount
+              nodes {
+                __typename
+                ... on ConnectedEvent {
+                  source {
+                    __typename
+                    ... on PullRequest {
+                      number
+                    }
+                  }
+                  subject {
+                    __typename
+                    ... on PullRequest {
+                      number
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`
+
+    //     ``query {
+    //     repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
+    //    pullRequest (number: ${pr}) {
+    //      closingIssuesReferences (first: 1){
+    //        totalCount
+    //      }
+    //    }
+    //  }
+    // }
+    // `
   );
 
-  const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
+  console.log(JSON.stringify(pullRequests));
 
-  if (linkedIssues === 0) {
-    const comment = await client.rest.issues.createComment({
-      issue_number: pr,
-      body: noLinkedIssueMessage,
-      owner: context.issue.owner,
-      repo: context.issue.repo,
-    });
-  }
+  // const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
+
+  // if (linkedIssues === 0) {
+  //   const comment = await client.rest.issues.createComment({
+  //     issue_number: pr,
+  //     body: noLinkedIssueMessage,
+  //     owner: context.issue.owner,
+  //     repo: context.issue.repo,
+  //   });
+  // }
 }
