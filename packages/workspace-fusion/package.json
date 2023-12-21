@@ -1,12 +1,13 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "6.1.1",
+  "version": "7.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
     "build": "tsup",
-    "build:prod": "tsup"
+    "build:prod": "tsup",
+    "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
   },
   "publishConfig": {
     "access": "public"
@@ -17,6 +18,40 @@
   "files": [
     "dist"
   ],
+  "typesVersions": {
+    ">=4.2": {
+      ".": [
+        "dist/types/index"
+      ],
+      "garden": [
+        "dist/types/lib/integrations/garden/index"
+      ],
+      "grid": [
+        "dist/types/lib/integrations/grid/index"
+      ],
+      "power-bi": [
+        "dist/types/lib/integrations/power-bi/index"
+      ],
+      "filter": [
+        "dist/types/lib/integrations/filter/index"
+      ],
+      "status-bar": [
+        "dist/types/lib/integrations/status-bar/index"
+      ],
+      "sidesheet": [
+        "dist/types/lib/integrations/sidesheet/index"
+      ],
+      "grid-module": [
+        "dist/types/modules/grid/index"
+      ],
+      "power-bi-module": [
+        "dist/types/modules/power-bi/index"
+      ],
+      "garden-module": [
+        "dist/types/modules/garden/index"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
@@ -105,6 +140,5 @@
     "type": "git",
     "url": "git+https://github.com/equinor/fusion-workspace.git",
     "directory": "packages/workspace-fusion"
-  },
-  "gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
+  }
 }

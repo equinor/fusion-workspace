@@ -65,19 +65,17 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
         <StyledCompactFilterWrapper>
           <StyledQuickFilterWrapper>
             {slicerFilters.map((s, i) => {
-              i < 9 && shownFilters.push(s.type);
+              shownFilters.push(s.type);
               return (
-                i < 9 && (
-                  <PowerBiFilterGroup
-                    activeFilters={activeFilters[s.type]}
-                    controller={controller}
-                    handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
-                      handleOnChange(s, filter, singleClick)
-                    }
-                    group={s}
-                    key={s.type + i}
-                  />
-                )
+                <PowerBiFilterGroup
+                  activeFilters={activeFilters[s.type]}
+                  controller={controller}
+                  handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
+                    handleOnChange(s, filter, singleClick)
+                  }
+                  group={s}
+                  key={s.type + i}
+                />
               );
             })}
           </StyledQuickFilterWrapper>

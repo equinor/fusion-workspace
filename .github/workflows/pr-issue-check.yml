@@ -1,0 +1,37 @@
+name: 👮Verify linked issue
+
+# This action works with pull requests and pushes
+permissions:
+  {
+    contents: read,
+    actions: read,
+    checks: read,
+    deployments: read,
+    discussions: read,
+    id-token: write,
+    issues: write,
+    packages: read,
+    pages: read,
+    pull-requests: write,
+    repository-projects: read,
+    security-events: read,
+    statuses: read,
+  }
+on:
+  pull_request:
+
+jobs:
+  issue-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+
+      - name: pnpm setup
+        run: npm run first-time-setup
+
+      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ github.token }} -P ${{github.event.number}}
