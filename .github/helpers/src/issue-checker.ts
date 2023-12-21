@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
+import { info } from '@actions/core';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
@@ -37,35 +38,60 @@ program
     }
 
     const client = getOctokit(args.token);
-    checkIssues(client, args.pr);
+    checkIssues(client, parseInt(args.pr));
   });
 
 await program.parseAsync();
 
 async function checkIssues(client: Octo, pr: number) {
   const pullRequests = await client.graphql(
-    `query {
-    repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
-   pullRequest (number: ${pr}) {
-     closingIssuesReferences (first: 1){
-       totalCount
-     }
-   }
- }
-}
-`
-      .replaceAll('\n', '')
-      .trim()
+    `
+    query($owner: String!, $name: String!, $pr: Int!) {
+      repository(owner: $owner, name: $name) {
+        pullRequest(number: $pr) {
+          id
+          number
+          title
+          timelineItems(first: 100, itemTypes: [CONNECTED_EVENT]) {
+            __typename
+            ... on  PullRequestTimelineItemsConnection{
+              totalCount
+              nodes {
+                __typename
+                ... on ConnectedEvent {
+                  source {
+                    __typename
+                    ... on PullRequest {
+                      number
+                    }
+                  }
+                  subject {
+                    __typename
+                    ... on PullRequest {
+                      number
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }`,
+    { owner: context.repo.owner, name: context.repo.repo, pr: pr }
   );
 
-  const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
+  const linkedIssues: number = (pullRequests as any).repository.pullRequest.timelineItems.totalCount;
 
   if (linkedIssues === 0) {
+    info(`No linked issues adding comment to pr ${pr}`);
     const comment = await client.rest.issues.createComment({
       issue_number: pr,
       body: noLinkedIssueMessage,
       owner: context.issue.owner,
       repo: context.issue.repo,
     });
+    return;
   }
+  info(`Linked issues: ${linkedIssues}`);
 }
