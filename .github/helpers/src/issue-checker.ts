@@ -51,7 +51,7 @@ async function checkIssues(client: Octo, pr: number) {
           id
           number
           title
-          timelineItems(first: 100) {
+          timelineItems(first: 100, itemTypes: [CONNECTED_EVENT]) {
             __typename
             ... on  PullRequestTimelineItemsConnection{
               totalCount
