@@ -2,6 +2,7 @@
 
 import { Command } from 'commander';
 import { getOctokit, context } from '@actions/github';
+import { info } from '@actions/core';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
@@ -83,11 +84,14 @@ async function checkIssues(client: Octo, pr: number) {
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.timelineItems.totalCount;
 
   if (linkedIssues === 0) {
+    info(`No linked issues adding comment to pr ${pr}`);
     const comment = await client.rest.issues.createComment({
       issue_number: pr,
       body: noLinkedIssueMessage,
       owner: context.issue.owner,
       repo: context.issue.repo,
     });
+    return;
   }
+  info(`Linked issues: ${linkedIssues}`);
 }
