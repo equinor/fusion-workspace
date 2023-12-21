@@ -3,19 +3,19 @@ name: Verify linked issue
 # This action works with pull requests and pushes
 permissions:
   {
-    contents: write,
-    actions: write,
-    checks: write,
-    deployments: write,
-    discussions: write,
+    contents: read,
+    actions: read,
+    checks: read,
+    deployments: read,
+    discussions: read,
     id-token: write,
     issues: write,
-    packages: write,
-    pages: write,
+    packages: read,
+    pages: read,
     pull-requests: write,
-    repository-projects: write,
-    security-events: write,
-    statuses: write,
+    repository-projects: read,
+    security-events: read,
+    statuses: read,
   }
 on:
   pull_request:
