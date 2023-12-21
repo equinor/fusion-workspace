@@ -31,6 +31,7 @@ jobs:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
-      - run: npm run first-time-setup
+      - name: pnpm setup
+        run: npm run first-time-setup
 
       - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ secrets.PAT_GH }} -P ${{github.event.number}}
