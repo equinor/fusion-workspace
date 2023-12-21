@@ -1,6 +1,7 @@
 name: Verify linked issue
 
 # This action works with pull requests and pushes
+permissions: write-all
 on:
   pull_request:
 
