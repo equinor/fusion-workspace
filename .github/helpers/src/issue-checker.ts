@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { getOctokit } from '@actions/github';
+import { getOctokit, context } from '@actions/github';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
@@ -45,9 +45,9 @@ await program.parseAsync();
 async function checkIssues(client: Octo, pr: number) {
   const pullRequests = await client.graphql(
     `
-    query {
-      repository(owner: "equinor", name: "fusion-workspace") {
-        pullRequest(number: ${pr}) {
+    query($owner: String!, $name: String!, $pr: Int!) {
+      repository(owner: $owner, name: $name) {
+        pullRequest(number: $pr) {
           id
           number
           title
@@ -76,30 +76,18 @@ async function checkIssues(client: Octo, pr: number) {
           }
         }
       }
-    }`
-
-    //     ``query {
-    //     repository (owner: "${context.repo.owner}", name: "${context.repo.repo}"){
-    //    pullRequest (number: ${pr}) {
-    //      closingIssuesReferences (first: 1){
-    //        totalCount
-    //      }
-    //    }
-    //  }
-    // }
-    // `
+    }`,
+    { owner: context.repo.owner, name: context.repo.repo, pr: pr }
   );
 
-  console.log(JSON.stringify(pullRequests));
+  const linkedIssues: number = (pullRequests as any).repository.pullRequest.timelineItems.totalCount;
 
-  // const linkedIssues: number = (pullRequests as any).repository.pullRequest.closingIssuesReferences.totalCount;
-
-  // if (linkedIssues === 0) {
-  //   const comment = await client.rest.issues.createComment({
-  //     issue_number: pr,
-  //     body: noLinkedIssueMessage,
-  //     owner: context.issue.owner,
-  //     repo: context.issue.repo,
-  //   });
-  // }
+  if (linkedIssues === 0) {
+    const comment = await client.rest.issues.createComment({
+      issue_number: pr,
+      body: noLinkedIssueMessage,
+      owner: context.issue.owner,
+      repo: context.issue.repo,
+    });
+  }
 }
