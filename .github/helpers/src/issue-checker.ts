@@ -52,7 +52,7 @@ async function checkIssues(client: Octo, pr: number) {
           id
           number
           title
-          timelineItems(first: 100, itemTypes: [CONNECTED_EVENT]) {
+          timelineItems(first: 100) {
             __typename
             ... on  PullRequestTimelineItemsConnection{
               totalCount
@@ -80,6 +80,8 @@ async function checkIssues(client: Octo, pr: number) {
     }`,
     { owner: context.repo.owner, name: context.repo.repo, pr: pr }
   );
+
+  console.log(JSON.stringify(pullRequests));
 
   const linkedIssues: number = (pullRequests as any).repository.pullRequest.timelineItems.totalCount;
 
