@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-garden",
-  "version": "6.0.3",
+  "version": "7.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",

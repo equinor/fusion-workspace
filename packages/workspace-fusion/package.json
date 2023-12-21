@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-fusion",
-  "version": "6.1.1",
+  "version": "7.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -140,6 +140,5 @@
     "type": "git",
     "url": "git+https://github.com/equinor/fusion-workspace.git",
     "directory": "packages/workspace-fusion"
-  },
-  "gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
+  }
 }
