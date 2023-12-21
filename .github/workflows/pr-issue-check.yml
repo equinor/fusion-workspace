@@ -33,4 +33,4 @@ jobs:
 
       - run: npm run first-time-setup
 
-      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ github.token }} -P ${{github.event.number}}
+      - run: pnpm tsx ./.github/helpers/src/issue-checker.ts issue -T ${{ secrets.PAT_GH }} -P ${{github.event.number}}
