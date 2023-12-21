@@ -1,7 +1,22 @@
 name: Verify linked issue
 
 # This action works with pull requests and pushes
-permissions: write-all
+permissions:
+  {
+    contents: write,
+    actions: write,
+    checks: write,
+    deployments: write,
+    discussions: write,
+    id-token: write,
+    issues: write,
+    packages: write,
+    pages: write,
+    pull-requests: write,
+    repository-projects: write,
+    security-events: write,
+    statuses: write,
+  }
 on:
   pull_request:
 
