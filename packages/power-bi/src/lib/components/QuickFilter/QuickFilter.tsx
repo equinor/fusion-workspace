@@ -36,13 +36,10 @@ const calculateHiddenFilters = (shownFilters: string[], activeFilters: Record<st
   }
   const activeFilterKeys = Object.keys(activeFilters);
   const filterShownFilters = activeFilterKeys.filter((key) => !shownFilters.includes(key));
-  const hiddenFilters = filterShownFilters.reduce(
-    (acc, curr) => {
-      acc[curr] = activeFilters[curr];
-      return acc;
-    },
-    {} as Record<string, ActiveFilter[]>
-  );
+  const hiddenFilters = filterShownFilters.reduce((acc, curr) => {
+    acc[curr] = activeFilters[curr];
+    return acc;
+  }, {} as Record<string, ActiveFilter[]>);
 
   return Object.values(hiddenFilters).filter((a) => a.length > 0).length;
 };
@@ -65,19 +62,17 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
         <StyledCompactFilterWrapper>
           <StyledQuickFilterWrapper>
             {slicerFilters.map((s, i) => {
-              i < 9 && shownFilters.push(s.type);
+              shownFilters.push(s.type);
               return (
-                i < 9 && (
-                  <PowerBiFilterGroup
-                    activeFilters={activeFilters[s.type]}
-                    controller={controller}
-                    handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
-                      handleOnChange(s, filter, singleClick)
-                    }
-                    group={s}
-                    key={s.type + i}
-                  />
-                )
+                <PowerBiFilterGroup
+                  activeFilters={activeFilters[s.type]}
+                  controller={controller}
+                  handleOnChange={(filter: PowerBiFilterItem, singleClick?: boolean) =>
+                    handleOnChange(s, filter, singleClick)
+                  }
+                  group={s}
+                  key={s.type + i}
+                />
               );
             })}
           </StyledQuickFilterWrapper>
