@@ -52,7 +52,7 @@ async function checkIssues(client: Octo, pr: number) {
           id
           number
           title
-          timelineItems(first: 100, itemTypes: [CONNECTED_EVENT]) {
+          timelineItems(first: 100, itemTypes: [CONNECTED_EVENT, CROSS_REFERENCED_EVENT]) {
             __typename
             ... on  PullRequestTimelineItemsConnection{
               totalCount

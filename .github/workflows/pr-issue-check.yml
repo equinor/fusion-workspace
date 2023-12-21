@@ -1,4 +1,4 @@
-name: Verify linked issue
+name: 👮Verify linked issue
 
 # This action works with pull requests and pushes
 permissions:
@@ -18,7 +18,7 @@ permissions:
     statuses: read,
   }
 on:
-  workflow_dispatch:
+  pull_request:
 
 jobs:
   issue-check:
