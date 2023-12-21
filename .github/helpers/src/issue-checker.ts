@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { getOctokit, context } from '@actions/github';
+import { getOctokit } from '@actions/github';
 
 const program = new Command();
 type Octo = ReturnType<typeof getOctokit>;
