@@ -486,9 +486,6 @@ importers:
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.46
-      '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
       '@types/styled-components':
         specifier: ^5.1.26
         version: 5.1.26
