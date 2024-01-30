@@ -45,6 +45,7 @@ type QuickFilterReadyProps = {
 const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
   const { query, setUncheckedValues, uncheckedValues } = useFilterContext();
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [allFilterGroups, setFilterOrder] = useState<string[]>(groups.map((s) => s.name));
   const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
   const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
   const handleExpandFilterGroup = (groupName: string) =>
@@ -52,7 +53,6 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
 
   const quickFilterGroups = groups?.filter(({ isQuickFilter }) => isQuickFilter);
 
-  const filterGroups = groups?.map((s) => s.name);
   const toggleFilterIsExpanded = () => {
     setIsFilterExpanded(!isFilterExpanded);
     setFilterGroupOpen(null);
@@ -104,7 +104,8 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
           <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
           {isFilterExpanded && (
             <ToggleHideFilterPopover
-              allFilters={filterGroups}
+              allFilters={allFilterGroups}
+              setFilterOrder={setFilterOrder}
               setVisibleFilters={setVisibleFilterGroups}
               visibleFilters={visibleFilterGroups}
             />

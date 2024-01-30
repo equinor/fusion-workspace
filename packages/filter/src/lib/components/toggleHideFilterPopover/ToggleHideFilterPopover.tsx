@@ -7,11 +7,13 @@ import { StyledButton, StyledItemWrapper, StyledPopoverList } from './toggleHide
 interface ShowHideFilterButtonProps {
   allFilters: string[];
   visibleFilters: string[];
+  setFilterOrder: (val: string[]) => void;
   setVisibleFilters: (val: string[]) => void;
 }
 
 export const ToggleHideFilterPopover = ({
   setVisibleFilters,
+  setFilterOrder,
   visibleFilters,
   allFilters,
 }: ShowHideFilterButtonProps): JSX.Element => {
@@ -29,8 +31,10 @@ export const ToggleHideFilterPopover = ({
   };
   const DraggableHandleSelector = 'globalDraggableHandle';
 
-  const updateList = () =>
+  const updateList = () => {
     setVisibleFilters(listRef.current.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
+    setFilterOrder(listRef.current.map((s) => s.item));
+  };
 
   return (
     <>
