@@ -12,6 +12,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
     queryFn: ({ signal }) => getToken(reportUri, signal),
     refetchInterval: generateRefetchInterval,
     suspense: true,
+    retry: false,
     useErrorBoundary: true,
     refetchOnWindowFocus: true,
   });
