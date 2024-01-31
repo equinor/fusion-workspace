@@ -42,11 +42,18 @@ export function QuickFilter(): JSX.Element {
 type QuickFilterReadyProps = {
   groups: IFilterGroup[];
 };
+
+type FilterGroups = {
+  groupName: string;
+  isVisible: boolean;
+};
+
 const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
   const { query, setUncheckedValues, uncheckedValues } = useFilterContext();
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
-  const [allFilterGroups, setFilterOrder] = useState<string[]>(groups.map((s) => s.name));
-  const [visibleFilterGroups, setVisibleFilterGroups] = useState<string[]>(groups.map((s) => s.name));
+  const [allFilterGroups, setFilterOrder] = useState<FilterGroups[]>(
+    groups.map((s) => ({ groupName: s.name, isVisible: true }))
+  );
   const [filterGroupOpen, setFilterGroupOpen] = useState<string | null>(null);
   const handleExpandFilterGroup = (groupName: string) =>
     filterGroupOpen === groupName ? setFilterGroupOpen(null) : setFilterGroupOpen(groupName);
@@ -102,14 +109,7 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
         )}
         <StyledButtonWrapper>
           <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
-          {isFilterExpanded && (
-            <ToggleHideFilterPopover
-              allFilters={allFilterGroups}
-              setFilterOrder={setFilterOrder}
-              setVisibleFilters={setVisibleFilterGroups}
-              visibleFilters={visibleFilterGroups}
-            />
-          )}
+          {isFilterExpanded && <ToggleHideFilterPopover allFilters={allFilterGroups} setFilterOrder={setFilterOrder} />}
 
           <StyledButton onClick={() => clearActiveFilters()}>
             <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
@@ -123,7 +123,11 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
       {isFilterExpanded && (
         <FilterView
           isFetching={query.isFetching}
-          groups={visibleFilterGroups.map((x) => groups.find((s) => s.name === x)).filter(Boolean) as IFilterGroup[]}
+          groups={
+            allFilterGroups
+              .map((x) => groups.find((s) => s.name === x.groupName && x.isVisible === true))
+              .filter(Boolean) as IFilterGroup[]
+          }
         />
       )}
     </StyledWrapper>
