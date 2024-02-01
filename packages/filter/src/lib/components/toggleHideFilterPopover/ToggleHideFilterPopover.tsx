@@ -5,32 +5,47 @@ import { ReactSortable } from 'react-sortablejs';
 import { StyledButton, StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
 
 interface ShowHideFilterButtonProps {
-  allFilters: string[];
-  visibleFilters: string[];
-  setVisibleFilters: (val: string[]) => void;
+  allFilters: FilterType[];
+  setFilterOrder: (val: FilterType[]) => void;
 }
 
-export const ToggleHideFilterPopover = ({
-  setVisibleFilters,
-  visibleFilters,
-  allFilters,
-}: ShowHideFilterButtonProps): JSX.Element => {
+type FilterType = {
+  groupName: string;
+  isVisible: boolean;
+};
+
+export const ToggleHideFilterPopover = ({ allFilters, setFilterOrder }: ShowHideFilterButtonProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  const listRef = useRef(allFilters.map((s) => ({ id: s, item: s })));
-
-  const handleChange = (val: string) => {
-    if (visibleFilters.includes(val)) {
-      setVisibleFilters([...visibleFilters.filter((s) => s !== val)]);
-    } else {
-      setVisibleFilters([...visibleFilters, val]);
-    }
-  };
   const DraggableHandleSelector = 'globalDraggableHandle';
 
-  const updateList = () =>
-    setVisibleFilters(listRef.current.map((s) => s.item).filter((s) => visibleFilters.includes(s)));
+  const listRef = useRef(allFilters.map((s) => ({ id: s.groupName, item: s.groupName })));
+
+  const updateListOrder = () => {
+    const updatedFilterOrder = listRef.current
+      .filter((refItem) => allFilters.some((filter) => filter.groupName === refItem.item))
+      .map((refItem) => {
+        const correspondingFilter = allFilters.find((filter) => filter.groupName === refItem.item);
+        return {
+          groupName: refItem.item,
+          isVisible: correspondingFilter ? correspondingFilter.isVisible : true,
+        } as FilterType;
+      });
+
+    setFilterOrder(updatedFilterOrder);
+  };
+
+  const handleCheckboxClick = (val: string) => {
+    const updatedFilters = allFilters.map((filter) => {
+      if (filter.groupName === val) {
+        return { ...filter, isVisible: !filter.isVisible };
+      }
+
+      return filter;
+    });
+
+    setFilterOrder(updatedFilters);
+  };
 
   return (
     <>
@@ -55,15 +70,15 @@ export const ToggleHideFilterPopover = ({
                 setList={(e) => {
                   listRef.current = e;
                 }}
-                onEnd={updateList}
+                onEnd={updateListOrder}
               >
                 {listRef.current.map(({ item }) => (
                   <StyledItemWrapper className={DraggableHandleSelector} key={item}>
                     <Checkbox
                       size={2}
-                      checked={visibleFilters.includes(item)}
+                      checked={allFilters.some((filter) => filter.groupName === item && filter.isVisible === true)}
                       onChange={() => {
-                        handleChange(item);
+                        handleCheckboxClick(item);
                       }}
                     />
                     <div style={{ textTransform: 'capitalize' }}>{item}</div>
