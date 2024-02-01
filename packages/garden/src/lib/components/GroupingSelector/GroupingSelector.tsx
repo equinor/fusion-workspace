@@ -1,6 +1,5 @@
 import { Autocomplete, CircularProgress, Divider, EdsProvider, Label, Radio } from '@equinor/eds-core-react';
 import { Fragment, startTransition, useRef } from 'react';
-import { GroupingOption } from '../../types';
 import {
   RadioButtonWrapper,
   RadioCategoryWrapper,
@@ -83,18 +82,22 @@ export function GroupingSelector<TContext>({
           <Autocomplete
             ref={selectorRef}
             key={groupingKeys[0]}
-            options={gardenMetaQuery.data.allGroupingOptions.map((option: GroupingOption) => option.groupingKey)}
+            options={gardenMetaQuery.data.allGroupingOptions}
             label={'Group by'}
+            optionLabel={(s) => s?.displayName ?? s?.groupingKey ?? ''}
             hideClearButton
             multiple={false}
-            selectedOptions={[groupingKeys[0]]}
-            onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0])}
+            selectedOptions={[gardenMetaQuery.data.allGroupingOptions.find((s) => s.groupingKey == groupingKeys[0])]}
+            onOptionsChange={(changes) => handleGardenKeyChange(changes.selectedItems[0]?.groupingKey)}
           />
           <Autocomplete
             options={gardenMetaQuery.data.validGroupingOptions}
             label={'Then Group by'}
-            selectedOptions={[groupingKeys.at(1)]}
-            onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0])}
+            selectedOptions={[
+              gardenMetaQuery.data.allGroupingOptions.find((s) => s.groupingKey === groupingKeys.at(1)),
+            ]}
+            optionLabel={(s) => s?.displayName ?? s?.groupingKey ?? ''}
+            onOptionsChange={(changes) => handleExistingSelectionChange(changes.selectedItems[0]?.groupingKey)}
           />
         </StyledAutoCompleteWrapper>
 

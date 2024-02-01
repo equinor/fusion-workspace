@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - preview/server-side
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -14,11 +13,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - run: npm run first-time-setup
-      #... previous steps
-      # Run `build` script in every projects
-      - run: pnpm run build
-      # Set token
-      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-      # Publish all packages in the workspace which version still does not exist
-      - run: pnpm shipit --no-git-checks
+
+      - name: PNPM setup
+        uses: ./.github/actions/pnpm-setup
+
+      - name: Build monorepo
+        run: pnpm build
+
+      - name: Publish NPM
+        run: |
+          pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          pnpm shipit --no-git-checks

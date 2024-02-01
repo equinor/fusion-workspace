@@ -1,12 +1,13 @@
 {
   "name": "@equinor/workspace-garden",
-  "version": "6.0.4",
+  "version": "7.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
   "scripts": {
     "build": "tsup ./src/index.ts --format cjs,esm --dts --clean",
-    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean"
+    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean",
+    "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
   },
   "publishConfig": {
     "access": "public"

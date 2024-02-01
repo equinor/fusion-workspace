@@ -98,10 +98,10 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
                 />
               ))}
             </StyledQuickFilterGroupsLayout>
-            <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
           </>
         )}
         <StyledButtonWrapper>
+          <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
           {isFilterExpanded && (
             <ToggleHideFilterPopover
               allFilters={filterGroups}

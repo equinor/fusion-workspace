@@ -14,7 +14,7 @@ export type GardenMeta = {
   columnCount: number;
   rowCount: number;
   allGroupingOptions: GroupingOption[];
-  validGroupingOptions: string[];
+  validGroupingOptions: GroupingOption[];
   columnWidth?: number;
 };
 
@@ -55,6 +55,7 @@ export type GardenHeaderGroup = {
 
 export type GroupingOption = {
   groupingKey: string;
+  displayName: string;
   timeInterval: string[] | null;
   dateVariant: string[] | null;
 };
