@@ -1,24 +1,27 @@
+import { Icon } from '@equinor/eds-core-react';
+import { info_circle } from '@equinor/eds-icons';
+import { useEffect } from 'react';
+import styled from 'styled-components';
 import { useItemWidths } from '../../hooks';
 import { useGarden } from '../../hooks/useGarden';
 import { useGardenConfig } from '../../hooks/useGardenConfig';
 import { ExpandProvider } from '../ExpandProvider';
 import { GardenDataSource } from '../Garden';
 import { VirtualGarden } from '../VirtualGarden';
-import { StyledVirtualContainer } from './virtualContainer.styles';
-import { info_circle } from '@equinor/eds-icons';
-import { Icon } from '@equinor/eds-core-react';
-import styled from 'styled-components';
 import { SplashScreen } from '../splashScreen/SplashScreen';
+import { StyledVirtualContainer } from './virtualContainer.styles';
 Icon.add({ info_circle });
 
 type VirtualContainerProps<TContext = undefined> = {
   dataSource: GardenDataSource<TContext>;
   context: TContext;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
 export const VirtualContainer = <TContext,>({
   dataSource,
   context,
+  setIsLoading,
 }: VirtualContainerProps<TContext>): JSX.Element | null => {
   const { onClickItem } = useGardenConfig();
   const { gardenMetaQuery } = useGarden();
@@ -26,6 +29,10 @@ export const VirtualContainer = <TContext,>({
   if (gardenMetaQuery.isLoading) {
     return <SplashScreen />;
   }
+
+  useEffect(() => {
+    if (!gardenMetaQuery.isLoading) setIsLoading(false);
+  }, [gardenMetaQuery.isLoading]);
 
   if (!gardenMetaQuery.data) {
     // Will never happen when suspense is true

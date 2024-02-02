@@ -76,7 +76,7 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
 }: GardenProps<TData, TContext>): JSX.Element | null {
   const client = useRef(new QueryClient());
   const [groupingKeys, setGroupingKeys] = useState<string[]>(initialGrouping);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [timeInterval, updateTimeInterval] = useState<string | null>(initialTimeInterval ?? null);
   const onChangetimeInterval = (timeInterval: string | null) => {
     updateTimeInterval(timeInterval);
@@ -116,12 +116,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
               customViews={customViews}
               visuals={visuals}
             >
-              <VirtualContainer context={context as TContext} dataSource={dataSource} />
-            </GardenConfigProvider>
-
-            {
-              // Hides ViewSettings sidebar when sidesheet is open
-              selected ? null : (
+              <VirtualContainer context={context as TContext} dataSource={dataSource} setIsLoading={setIsLoading} />
+              {selected || isLoading ? null : (
                 <ViewSettings
                   dateVariant={dateVariant}
                   groupingKeys={groupingKeys}
@@ -130,8 +126,8 @@ export function Garden<TData extends Record<PropertyKey, unknown>, TContext = un
                   onChangeTimeInterval={onChangetimeInterval}
                   setGroupingKeys={setGroupingKeys}
                 />
-              )
-            }
+              )}
+            </GardenConfigProvider>
           </GardenContextProvider>
         </Suspense>
       </ErrorBoundary>
