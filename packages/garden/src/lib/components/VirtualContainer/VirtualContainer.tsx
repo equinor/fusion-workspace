@@ -30,6 +30,8 @@ export const VirtualContainer = <TContext,>({
     return <SplashScreen />;
   }
 
+  // TODO: Refactor this, lift useQuery and remove setstate
+  //https://react.dev/learn/you-might-not-need-an-effect
   useEffect(() => {
     if (!gardenMetaQuery.isLoading) setIsLoading(false);
   }, [gardenMetaQuery.isLoading]);
