@@ -29,6 +29,7 @@
     "@equinor/eds-core-react": "^0.28.0",
     "@equinor/eds-icons": "^0.18.0",
     "@equinor/eds-tokens": "^0.9.0",
+    "@equinor/fusion-react-person": "^0.7.0",
     "@tanstack/react-query": "^4.24.4",
     "markdown-to-jsx": "^7.1.9",
     "powerbi-client": "^2.22.2",

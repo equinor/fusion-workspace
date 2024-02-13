@@ -1,42 +1,35 @@
-import { Accordion, AccordionProps, Card, CardProps } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
-import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 export const StyledHeading = styled.h1`
-  color: ${tokens.colors.text.static_icons__tertiary.rgba};
-  margin-bottom: 0;
+  color: ${tokens.colors.interactive.warning__resting.rgba};
+`;
+
+export const StyledErrorContent = styled.div`
+  width: 50vw;
+  min-width: 650px;
+  max-width: 950px;
 `;
 
 export const StyledErrorWrapper = styled.div`
-  padding-top: 3rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  justify-content: center;
+  grid-row-gap: 10px;
   height: 100%;
   width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-  overflow: auto;
 `;
 
-export const StyledHeadingWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+export const StyledReportDetailsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 5fr 3fr;
 `;
 
-export const StyledAccordionWrapper: (props: PropsWithChildren<AccordionProps>) => JSX.Element = styled(Accordion)`
-  margin: 1rem;
-  width: 40%;
+export const StyledReportDescriptionWrapper = styled.div`
+  grid-row: 1;
+  grid-column: 1;
 `;
 
-export const StyledRequirementsWrapper = styled.div`
-  max-height: 500px;
-  overflow: auto;
-`;
-
-export const StyledErrorCard: (props: CardProps) => JSX.Element = styled(Card)`
-  margin-top: 2rem;
-  width: 40%;
+export const StyledReportOwnerWrapper = styled.div`
+  grid-row: 1;
+  grid-column: 2;
 `;

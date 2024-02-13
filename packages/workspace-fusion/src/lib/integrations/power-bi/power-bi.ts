@@ -22,6 +22,7 @@ import {
   PowerBiFilterItem,
   SlicerData,
   SlicerFilter,
+  ReportAccessInfo,
 } from '@equinor/workspace-powerbi';
 
 export type {
@@ -45,6 +46,7 @@ export type {
   PowerBiConfig,
   FilterConfig,
   EmbedConfiguration,
+  ReportAccessInfo,
 };
 
 type FilterConfig = Pick<IBasicFilter, 'target' | 'values'>;
@@ -68,6 +70,7 @@ type PowerBiConfig = {
    * }
    * ```
    */
+  getAccessInfo: (reportUri: string, signal?: AbortSignal) => Promise<ReportAccessInfo>;
   getErrorMessage: (reportUri: string, signal?: AbortSignal) => Promise<string>;
   filters?: FilterConfig;
   ReportMetaData?: (props: ReportMetaDataProps) => JSX.Element;
@@ -79,3 +82,4 @@ export type ReportMetaDataProps = {
   anchor: HTMLElement;
   close: VoidFunction;
 };
+
