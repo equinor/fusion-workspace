@@ -82,4 +82,3 @@ export type ReportMetaDataProps = {
   anchor: HTMLElement;
   close: VoidFunction;
 };
-
