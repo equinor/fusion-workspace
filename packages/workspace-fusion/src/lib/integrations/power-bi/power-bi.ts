@@ -23,7 +23,6 @@ import {
   PowerBiFilterItem,
   SlicerData,
   SlicerFilter,
-  ReportAccessInfo,
 } from '@equinor/workspace-powerbi';
 
 export type {
@@ -47,7 +46,6 @@ export type {
   PowerBiConfig,
   FilterConfig,
   EmbedConfiguration,
-  ReportAccessInfo,
 };
 
 type FilterConfig = Pick<IBasicFilter, 'target' | 'values'>;
