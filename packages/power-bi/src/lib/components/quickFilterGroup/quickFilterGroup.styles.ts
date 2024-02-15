@@ -2,12 +2,12 @@ import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
 export const StyledFilterGroupWrapper = styled.div`
-  height: auto;
-  width: auto;
+  height: 50px;
+  width: min-content;
   display: flex;
   align-items: center;
   cursor: pointer;
-
+  justify-content: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

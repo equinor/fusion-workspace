@@ -24,8 +24,9 @@ export const PowerBiFilterGroup = ({
 
   if (!activeFilters) return null;
   const isAllChecked = activeFilters.length === 0 || activeFilters.length === group.filterVals.length;
+
   return (
-    <div style={{ height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <>
       <StyledFilterGroupWrapper onClick={() => setIsOpen((s) => !s)} ref={anchorEl}>
         <div>
           {getFilterHeaderText(
@@ -48,6 +49,6 @@ export const PowerBiFilterGroup = ({
           onCloseMenu={() => setIsOpen(false)}
         />
       )}
-    </div>
+    </>
   );
 };
