@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-powerbi",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
