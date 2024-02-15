@@ -5,7 +5,7 @@ import { ActiveFilter, PowerBiFilter, PowerBiFilterItem } from '../../types';
 import { getFilterHeaderText } from '../../utils/getFilterHeader';
 import { FilterController } from '../Filter/Filter';
 import { PowerBiGroupPopoverMenu } from '../groupPopoverMenu/GroupPopoverMenu';
-import { StyledFilterGroupWrapper } from './quickFilterGroup.styles';
+import { StyledFilterGroupContent, StyledFilterGroupWrapper } from './quickFilterGroup.styles';
 
 interface PowerBiFilterGroupProps {
   controller: FilterController;
@@ -24,18 +24,21 @@ export const PowerBiFilterGroup = ({
 
   if (!activeFilters) return null;
   const isAllChecked = activeFilters.length === 0 || activeFilters.length === group.filterVals.length;
-  return (
-    <div style={{ height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <StyledFilterGroupWrapper onClick={() => setIsOpen((s) => !s)} ref={anchorEl}>
-        <div>
-          {getFilterHeaderText(
-            isAllChecked,
-            group.type,
-            activeFilters.map((s) => s?.toString() ?? '(Blank)')
-          )}
-        </div>
 
-        <Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
+  return (
+    <>
+      <StyledFilterGroupWrapper onClick={() => setIsOpen((s) => !s)} ref={anchorEl}>
+        <StyledFilterGroupContent>
+          <div>
+            {getFilterHeaderText(
+              isAllChecked,
+              group.type,
+              activeFilters.map((s) => s?.toString() ?? '(Blank)')
+            )}
+          </div>
+
+          <Icon color={tokens.colors.text.static_icons__tertiary.hex} name="chevron_down" />
+        </StyledFilterGroupContent>
       </StyledFilterGroupWrapper>
       {isOpen && (
         <PowerBiGroupPopoverMenu
@@ -48,6 +51,6 @@ export const PowerBiFilterGroup = ({
           onCloseMenu={() => setIsOpen(false)}
         />
       )}
-    </div>
+    </>
   );
 };
