@@ -6,6 +6,13 @@ export const StyledFilterGroupWrapper = styled.div`
   width: min-content;
   display: flex;
   align-items: center;
+`;
+
+export const StyledFilterGroupContent = styled.div`
+  height: auto;
+  width: min-content;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   justify-content: center;
   overflow: hidden;
