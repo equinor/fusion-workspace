@@ -169,12 +169,12 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
 
   return (
     <PowerBI
-      getErrorMessage={powerBiConfig.getErrorMessage}
       controller={powerBiConfig.controller}
       getToken={powerBiConfig.getToken}
       getEmbedInfo={powerBiConfig.getEmbed}
       reportUri={powerBiConfig.reportUri}
       filters={createBasicFilter(powerBiConfig.filters)}
+      ErrorComponent={powerBiConfig.ErrorComponent}
     />
   );
 };
