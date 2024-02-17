@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "@equinor/eds-core-react": "0.27.0",
-    "@equinor/eds-icons": "^0.17.0",
+    "@equinor/eds-icons": "^0.21.0",
     "@equinor/eds-tokens": "0.9.0",
     "@equinor/workspace-fusion": "workspace:^",
     "react": "^18.2.0",
