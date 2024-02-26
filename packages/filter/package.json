@@ -29,11 +29,11 @@
     "@equinor/eds-core-react": "^0.28.0",
     "@equinor/eds-icons": "^0.18.0",
     "@equinor/eds-tokens": "^0.9.0",
-    "@tanstack/react-query": "^4.28.0",
-    "react-error-boundary": "^3.1.4",
+    "@tanstack/react-query": "^5.24.1",
+    "react-error-boundary": "^4.0.12",
     "react-sortablejs": "^6.1.4",
     "react-virtual": "^2.10.4",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.2"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",

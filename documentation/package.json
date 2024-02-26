@@ -11,21 +11,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@algolia/client-search": "^4.13.1",
-    "@astrojs/mdx": "^0.16.0",
-    "@astrojs/preact": "^2.0.2",
-    "@astrojs/react": "^2.0.2",
-    "@docsearch/css": "^3.3.3",
-    "@docsearch/react": "^3.3.3",
-    "@equinor/workspace-fusion": "0.15.0",
-    "@types/node": "^18.0.0",
-    "astro": "^2.0.8",
-    "preact": "^10.12.0",
+    "@algolia/client-search": "^4.22.1",
+    "@astrojs/mdx": "^2.1.1",
+    "@astrojs/preact": "^3.1.1",
+    "@astrojs/react": "^3.0.10",
+    "@docsearch/css": "^3.5.2",
+    "@docsearch/react": "^3.5.2",
+    "@equinor/workspace-fusion": "workspace:*",
+    "@types/node": "^20.11.20",
+    "astro": "^4.4.4",
+    "preact": "^10.19.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "react-mermaid3": "^1.0.1",
-    "styled-components": "^5.3.6"
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
