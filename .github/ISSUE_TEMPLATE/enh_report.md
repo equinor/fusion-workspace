@@ -7,11 +7,14 @@ assignees: ''
 ---
 
 ## Expected outcome
+
 <!-- Short description -->
 
 ## Business Value / Developer Experience
+
 <!-- Should give motivation for prioritization.
  Outcome measurement of delivered value. -->
 
 ## Acceptance Criteria
+
 <!-- How to test -->
