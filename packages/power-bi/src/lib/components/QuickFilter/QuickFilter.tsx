@@ -103,10 +103,14 @@ const StyledFilterButtons = styled.div`
 const StyledQuickFilterWrapper = styled.div`
   display: grid;
   width: 100%;
-  justify-content: flex-end;
-  grid-template-columns: repeat(auto-fit, minmax(60px, max-content));
-  gap: 2em;
+  justify-content: flex-start;
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 50px));
   grid-template-rows: 1fr;
+  gap: 10px;
+  align-items: center;
+  overflow-x: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 const FilterButtonContainer = styled.div`
