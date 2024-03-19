@@ -7,13 +7,10 @@ assignees: ''
 ---
 
 ## Description
-
 <!-- Short description -->
 
 ## Reproduce
-
 <!-- Steps to reproduce - Add relevant screenshots -->
 
 ## Expected behavior
-
 <!-- Avoid ambiguity -->
