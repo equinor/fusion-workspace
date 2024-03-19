@@ -2,6 +2,7 @@
  * Integrations folder for exporting types from the integration
  * namespace: @equinor/workspace-fusion/power-bi
  */
+import { FallbackProps } from 'react-error-boundary';
 
 import {
   ActiveFilter,
@@ -54,6 +55,10 @@ type EmbedConfiguration = {
   reportId: string;
 };
 
+export type ErrorComponentProps = {
+  reportUri: string;
+} & FallbackProps;
+
 type PowerBiConfig = {
   reportUri: string;
   getEmbed: (reportUri: string, token: string, signal?: AbortSignal) => Promise<EmbedConfiguration>;
@@ -68,7 +73,7 @@ type PowerBiConfig = {
    * }
    * ```
    */
-  getErrorMessage: (reportUri: string, signal?: AbortSignal) => Promise<string>;
+  ErrorComponent: React.ComponentType<ErrorComponentProps>;
   filters?: FilterConfig;
   ReportMetaData?: (props: ReportMetaDataProps) => JSX.Element;
   getClassification?: (reportUri: string, signal?: AbortSignal) => Promise<string>;
