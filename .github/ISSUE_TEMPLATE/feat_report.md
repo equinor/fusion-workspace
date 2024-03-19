@@ -1,7 +1,7 @@
 ---
 name: ✨ Feature report
 about: Create a report to help us improve
-title: '✨: <app> - <title>'
+title: '✨: <app>: <title>'
 labels: feature
 assignees: ''
 ---
