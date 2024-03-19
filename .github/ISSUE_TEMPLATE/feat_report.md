@@ -1,7 +1,7 @@
 ---
-name: ✨: Feature report
+name: ✨ Feature report
 about: Create a report to help us improve
-title: "✨: <title>"
+title: '✨: <app>: <title>'
 labels: feature
 assignees: ''
 ---
@@ -18,7 +18,3 @@ assignees: ''
 ## Acceptance Criteria
 
 <!--> How to test -->
-
-- [ ] list
-- [ ] items which covers
-- [ ] the expected outcome
