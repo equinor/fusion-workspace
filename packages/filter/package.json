@@ -26,7 +26,7 @@
     "dist"
   ],
   "dependencies": {
-    "@equinor/eds-core-react": "^0.28.0",
+    "@equinor/eds-core-react": "^0.36.0",
     "@equinor/eds-icons": "^0.18.0",
     "@equinor/eds-tokens": "^0.9.0",
     "@tanstack/react-query": "^4.28.0",
