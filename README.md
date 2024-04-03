@@ -28,3 +28,7 @@ To run a test app go to apps/test-app and run `pnpm dev`. If you make changes to
 ## Publishing packages
 
 The repository is configured with CI/CD and automatic deployment, to trigger a release update the version in `package.json` of the package you want to release and merge into main.
+
+## Updating package dependencies
+
+To update all package dependencies, use the command `pnpm run bump-deps` to open the interactive pnpm package update propt in the terminal. Use `pnpm run compile` to compile all packages/apps in the repo.
