@@ -207,7 +207,7 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
     }
   }, [activeFilters, Object.keys(activeFilters).length]);
 
-  if (isFiltersLoading) return <QuickFilterLoading />;
+  if (isFiltersLoading || !activeFilters || !slicerFilters) return <QuickFilterLoading />;
 
   const controller: FilterController = {
     handleChangeGroup,
