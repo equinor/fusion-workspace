@@ -1,10 +1,10 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { IBasicFilter } from 'index';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { FusionPowerBiToken, FusionEmbedConfig } from '../../types';
 
 import { IReportEmbedConfiguration } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
+import { IBasicFilter } from '../../..';
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
   const { data: token } = useSuspenseQuery<FusionPowerBiToken>({

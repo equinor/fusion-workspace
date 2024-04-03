@@ -25,21 +25,21 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
       <Garden<TData, TFilter>
         dataSource={{ ...config }}
         context={filterState as TFilter}
-        customViews={config.customViews}
-        visuals={config.visuals}
-        dateVariant={config.initialDateVariant ?? null}
-        groupingKeys={config.initialGrouping}
-        timeInterval={config.initialTimeInterval ?? null}
+        customViews={config['customViews']}
+        visuals={config['visuals']}
+        dateVariant={config['initialDateVariant'] ?? null}
+        groupingKeys={config['initialGrouping']}
+        timeInterval={config['initialTimeInterval'] ?? null}
         selected={selection?.id}
         getIdentifier={getIdentifier}
-        getDisplayName={config.getDisplayName}
-        refState={(ref) => {
+        getDisplayName={config['getDisplayName']}
+        refState={(ref: any) => {
           updatePayload((p) => {
             return { ...p, garden: ref };
           });
         }}
         clickEvents={{
-          onClickItem: (i) => {
+          onClickItem: (i: any) => {
             selectItem(i);
           },
         }}

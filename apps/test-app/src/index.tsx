@@ -99,7 +99,7 @@ function getFilterMetaData(num_filters: number = 2): any[] {
 }
 
 function getKPIData(num_kpis = 5) {
-  const kpiData = [];
+  const kpiData: { title: string; value: number }[] = [];
 
   for (let i = 0; i < num_kpis; i++) {
     const kpiNameLen = getRandomInt(1, 15);
@@ -135,7 +135,7 @@ export function App() {
         excelExport: async (filterState) =>
           new Promise((res, rej) =>
             setTimeout(() => {
-              res();
+              res(undefined);
             }, 2000)
           ),
       }}

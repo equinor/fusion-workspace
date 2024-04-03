@@ -7,8 +7,8 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { FusionEmbedConfig, FusionPowerBiToken } from '../types';
 
 import { PowerBiController } from '../classes';
-import { IBasicFilter } from 'index';
 import { Report } from './report/Report';
+import { IBasicFilter } from '../..';
 import React from 'react';
 
 Icon.add({ chevron_down, chevron_up });
