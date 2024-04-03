@@ -70,15 +70,11 @@ export const FilterContextWrapper = ({
   const [uncheckedValues, setUncheckedValues] = useState<FilterStateGroup[]>(initialState?.uncheckedValues ?? []);
   const [filterState, setFilterState] = useState<FilterState>(initialState?.filterState ?? { groups: [], search: '' });
 
-  const query = useQuery(
-    ['filter-meta', JSON.stringify(filterState)],
-    ({ signal }): Promise<FilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
-    {
-      suspense: false,
-      useErrorBoundary: false,
-      keepPreviousData: true,
-    }
-  );
+  const query = useQuery({
+    queryKey: ['filter-meta', JSON.stringify(filterState)],
+    queryFn: ({ signal }): Promise<FilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
+    throwOnError: false,
+  });
 
   const setFilterStateHandler = (groups: FilterStateGroup[]) =>
     setFilterState((s) => {

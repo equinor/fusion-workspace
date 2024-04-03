@@ -11,8 +11,10 @@ type StatusBarWrapperProps = {
 export function StatusBarWrapper({ config }: StatusBarWrapperProps) {
   const { filterState } = useFilterContext();
 
-  const { data, isLoading } = useQuery(['kpis', filterState], (a) => config(filterState, a.signal), {
-    keepPreviousData: true,
+  const { data, isLoading } = useQuery({
+    queryKey: ['kpis', filterState],
+    queryFn: (a) => config(filterState, a.signal),
+    placeholderData: (prev) => prev,
   });
 
   if (isLoading || !data) {

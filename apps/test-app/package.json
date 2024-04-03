@@ -23,7 +23,7 @@
     "@equinor/workspace-fusion": "workspace:^",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^3.1.4"
+    "react-error-boundary": "^4.0.13"
   },
   "peerDependencies": {
     "react-dom": ">= 16.8.0",

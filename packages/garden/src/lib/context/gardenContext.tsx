@@ -1,12 +1,12 @@
 import { PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
 import { GardenMeta, GetIdentifier } from '../types';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { UseSuspenseQueryResult, useSuspenseQuery } from '@tanstack/react-query';
 import { GardenDataSource } from '../components';
 
 type GardenState = {
   selectionService: SelectionService;
   groupingService: GroupingService;
-  gardenMetaQuery: UseQueryResult<GardenMeta, unknown>;
+  gardenMetaQuery: UseSuspenseQueryResult<GardenMeta, unknown>;
 };
 
 type GroupingService = {
@@ -34,23 +34,19 @@ export const GardenContextProvider = <T, TContext = undefined>(
     context: TContext | undefined;
   }>
 ) => {
-  const gardenMetaQuery = useQuery(
-    ['garden', ...props.initialGrouping, props.timeInterval, props.dateVariant, props.context],
-    {
-      refetchOnWindowFocus: false,
-      suspense: true,
-      useErrorBoundary: true,
-      keepPreviousData: false,
-      cacheTime: Infinity,
-      staleTime: Infinity,
-      queryFn: ({ signal }) =>
-        props.dataSource.getGardenMeta(
-          { groupingKeys: props.initialGrouping, timeInterval: props.timeInterval, dateVariant: props.dateVariant },
-          props.context as TContext,
-          signal ?? new AbortSignal()
-        ),
-    }
-  );
+  const gardenMetaQuery = useSuspenseQuery({
+    queryKey: ['garden', ...props.initialGrouping, props.timeInterval, props.dateVariant, props.context],
+    queryFn: ({ signal }) => {
+      return props.dataSource.getGardenMeta(
+        { groupingKeys: props.initialGrouping, timeInterval: props.timeInterval, dateVariant: props.dateVariant },
+        props.context as TContext,
+        signal ?? new AbortSignal()
+      );
+    },
+    refetchOnWindowFocus: false,
+    gcTime: Infinity,
+    staleTime: Infinity,
+  });
 
   const selectionService = useSelectionService(props.getIdentifier, props.selected);
   const groupingService = useGroupingService(props.initialGrouping, props.timeInterval, props.dateVariant);
