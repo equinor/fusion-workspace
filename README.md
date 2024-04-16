@@ -5,6 +5,8 @@
 [![GitHub issues by-label](https://img.shields.io/github/issues/equinor/fusion-workspace/bug?label=%F0%9F%90%9B%20bug%20issues&color=red)](https://github.com/equinor/fusion-workspace/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 [![GitHub issues](https://img.shields.io/github/issues/equinor/fusion-workspace)](https://github.com/equinor/fusion-workspace/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/equinor/fusion-workspace)](https://github.com/equinor/fusion-workspace/pulls)
+![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/fusion-workspace/badge)
+![Known Vulnerabilities](https://snyk.io/test/github/equinor/fusion-workspace/badge.svg)
 
 > Fusion Workspace is a library built with a controller-based structure in mind. Core functionality tab navigation, data handling, and allowing you to register controllers that react around page change / config change and data changes.
 
