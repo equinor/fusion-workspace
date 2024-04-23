@@ -1,7 +1,6 @@
 import { Icon } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
-import { useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useState, useRef } from 'react';
 import { ActiveFilter, PowerBiFilter, PowerBiFilterItem } from '../../types';
 import { getFilterHeaderText } from '../../utils/getFilterHeader';
 import { FilterController } from '../Filter/Filter';
@@ -28,7 +27,6 @@ export const PowerBiFilterGroup = ({
 
   return (
     <>
-      {isOpen && <StyledOverlay onClick={() => setIsOpen(false)} />}
       <StyledFilterGroupWrapper onClick={() => setIsOpen((s) => !s)} ref={anchorEl}>
         <StyledFilterGroupContent>
           <div>
@@ -56,13 +54,3 @@ export const PowerBiFilterGroup = ({
     </>
   );
 };
-
-// Overlay to close the popover when clicking outside it
-const StyledOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-`;

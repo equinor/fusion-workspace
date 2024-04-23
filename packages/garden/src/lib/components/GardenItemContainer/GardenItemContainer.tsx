@@ -83,7 +83,7 @@ export const GardenItemContainer = <TData extends Record<PropertyKey, unknown>, 
 
   const expand = useExpand();
 
-  const isColumnExpanded = !!expand.expandedColumns.find((s) => s === virtualColumn.index);
+  const isColumnExpanded = expand.expandedColumns.includes(virtualColumn.index);
 
   const {
     groupingService: { groupingKeys, timeInterval, dateVariant },
