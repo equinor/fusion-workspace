@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "first-time-setup": "npm i -g pnpm@8.0.0 turbo && pnpm i",
+    "first-time-setup": "npm i -g pnpm@9.0.5 turbo && pnpm i",
     "build": "turbo run build",
     "test": "turbo run test",
     "documentation": "pnpx astro dev --root ./documentation",
