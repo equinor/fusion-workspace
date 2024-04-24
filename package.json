@@ -14,7 +14,7 @@
     "dev": "turbo run dev --filter ./apps/**"
   },
   "private": true,
-  "packageManager": "pnpm@8.0.0",
+  "packageManager": "pnpm@9.0.5",
   "dependencies": {
     "tslib": "^2.3.0"
   },
@@ -28,5 +28,8 @@
     "turbo": "^1.9.3",
     "typescript": "~5.0.2",
     "typescript-plugin-styled-components": "^2.0.0"
+  },
+  "engines": {
+    "node": "20"
   }
 }
