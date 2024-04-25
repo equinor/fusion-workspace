@@ -46,6 +46,7 @@ type PowerBIFilterProps = {
 export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Element | null => {
   const [activeFilters, setActiveFilters] = useState<Record<string, ActiveFilter[]>>({});
   const [slicerFilters, setSlicerFilters] = useState<PowerBiFilter[] | null>(null);
+  const [isFiltersLoading, setisFiltersLoading] = useState(true);
   const [filterGroupVisible, setFilterGroupVisible] = useVisibleFilters(report, options);
 
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
@@ -172,6 +173,7 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         } else {
           setFilterGroupVisible(filters.map((s) => s.type));
         }
+        setisFiltersLoading(false);
       };
 
       initFilters();
@@ -205,7 +207,7 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
     }
   }, [activeFilters, Object.keys(activeFilters).length]);
 
-  if (!slicerFilters || Object.keys(activeFilters).length === 0) return <QuickFilterLoading />;
+  if (isFiltersLoading || !activeFilters || !slicerFilters) return <QuickFilterLoading />;
 
   const controller: FilterController = {
     handleChangeGroup,

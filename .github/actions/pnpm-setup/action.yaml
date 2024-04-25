@@ -6,12 +6,12 @@ runs:
   steps:
     - uses: pnpm/action-setup@v2.2.4
       with:
-        version: 8.0.0
+        version: 9.0.5
 
     - name: Setup Node.js environment
       uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
         cache: 'pnpm'
 
     - name: Install dependencies
