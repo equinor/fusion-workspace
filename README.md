@@ -34,11 +34,3 @@ The repository is configured with CI/CD and automatic deployment, to trigger a r
 ## Updating package dependencies
 
 To update all package dependencies, use the command `pnpm run bump-deps` to open the interactive pnpm package update propt in the terminal.
-
-## Local development and testing
-
-To develop or test packages and components
-
-"@equinor/workspace-ag-grid"
-
-"@equinor/workspace-fusion": "file: ../fusio
