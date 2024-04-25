@@ -12,8 +12,7 @@
     "shipit": "turbo run build && pnpm -r publish",
     "pr-shipit": "turbo run build && pnpm --filter ...[origin/main] pr-release",
     "dev": "turbo run dev --filter ./apps/**",
-    "bump-deps": "pnpm up --latest --prod --recursive --interactive",
-    "compile": "tsc -p tsconfig.base.json --noEmit"
+    "bump-deps": "pnpm up --latest --prod --recursive --interactive"
   },
   "private": true,
   "packageManager": "pnpm@8.0.0",

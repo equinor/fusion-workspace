@@ -3,10 +3,10 @@ import { GardenMeta, GetIdentifier } from '../types';
 import { UseSuspenseQueryResult, useSuspenseQuery } from '@tanstack/react-query';
 import { GardenDataSource } from '../components';
 
-type GardenState = {
+export type GardenState = {
   selectionService: SelectionService;
   groupingService: GroupingService;
-  gardenMetaQuery: UseSuspenseQueryResult<GardenMeta, unknown>;
+  gardenMetaQuery: ThisType<UseSuspenseQueryResult<GardenMeta, unknown>>;
 };
 
 type GroupingService = {
