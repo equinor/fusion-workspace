@@ -33,4 +33,4 @@ The repository is configured with CI/CD and automatic deployment, to trigger a r
 
 ## Updating package dependencies
 
-To update all package dependencies, use the command `pnpm run bump-deps` to open the interactive pnpm package update propt in the terminal.
+To update all package dependencies, use the command `pnpm run bump-deps` to open the interactive pnpm package update prompt in the terminal.

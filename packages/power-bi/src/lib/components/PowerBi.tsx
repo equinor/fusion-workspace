@@ -8,8 +8,9 @@ import { FusionEmbedConfig, FusionPowerBiToken } from '../types';
 
 import { PowerBiController } from '../classes';
 import { Report } from './report/Report';
-import { IBasicFilter } from '../..';
+
 import React from 'react';
+import { models } from 'powerbi-client';
 
 Icon.add({ chevron_down, chevron_up });
 
@@ -22,7 +23,7 @@ export interface PowerBiProps {
   getToken: (reportUri: string, signal?: AbortSignal) => Promise<FusionPowerBiToken>;
   getEmbedInfo: (reportUri: string, token: string, signal?: AbortSignal) => Promise<FusionEmbedConfig>;
   ErrorComponent: React.ComponentType<ErrorComponentProps>;
-  filters?: IBasicFilter;
+  filters?: models.IBasicFilter;
   bookmark?: string;
   controller: PowerBiController;
 }
