@@ -11,12 +11,13 @@
     "documentation": "pnpx astro dev --root ./documentation",
     "shipit": "turbo run build && pnpm -r publish",
     "pr-shipit": "turbo run build && pnpm --filter ...[origin/main] pr-release",
-    "dev": "turbo run dev --filter ./apps/**"
+    "dev": "turbo run dev --filter ./apps/**",
+    "bump-deps": "pnpm up --latest --prod --recursive --interactive"
   },
   "private": true,
   "packageManager": "pnpm@9.0.5",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",

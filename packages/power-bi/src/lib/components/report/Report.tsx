@@ -1,31 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
-import { IBasicFilter } from 'index';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { FusionPowerBiToken, FusionEmbedConfig } from '../../types';
 
-import { IReportEmbedConfiguration } from 'powerbi-client';
+import { IReportEmbedConfiguration, models } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
-  const { data: token, isLoading: tokenLoading } = useQuery({
+  const { data: token } = useSuspenseQuery<FusionPowerBiToken>({
     queryKey: [reportUri, 'token'],
     queryFn: ({ signal }) => getToken(reportUri, signal),
-    refetchInterval: generateRefetchInterval,
-    suspense: true,
+    refetchInterval: (query) => generateRefetchInterval(query.state.data),
     retry: false,
-    useErrorBoundary: true,
     refetchOnWindowFocus: true,
   });
 
-  const { data: embed } = useQuery({
+  const { data: embed } = useSuspenseQuery({
     queryKey: [reportUri, 'embed'],
     queryFn: async ({ signal }) => {
       const { embedUrl, reportId } = await getEmbedInfo(reportUri, token!.token, signal);
       return generateEmbedConfig({ embedUrl, reportId }, token!.token, filters);
     },
-    enabled: !tokenLoading,
-    suspense: true,
-    useErrorBoundary: true,
   });
 
   if (!embed) {
@@ -49,13 +43,13 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
 
 const minutesToMs = (minutes: number) => minutes * 60 * 1000;
 
-const generateRefetchInterval = (data: FusionPowerBiToken | undefined) =>
+const generateRefetchInterval = (data: FusionPowerBiToken | undefined): number =>
   data ? new Date(data.expirationUtc).getTime() - new Date().getTime() : minutesToMs(2);
 
 const generateEmbedConfig = (
   embedConfig: FusionEmbedConfig,
   token: string,
-  filters?: IBasicFilter
+  filters?: models.IBasicFilter
 ): IReportEmbedConfiguration => ({
   ...defaultEmbedConfiguration,
   accessToken: token,
