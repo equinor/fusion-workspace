@@ -2,6 +2,7 @@ import type { MarkdownHeading } from 'astro';
 import type { FunctionalComponent } from 'preact';
 import { unescape } from 'html-escaper';
 import { useState, useEffect, useRef } from 'preact/hooks';
+import type { MouseEventHandler } from 'react';
 
 type ItemOffsets = {
   id: string;
@@ -9,7 +10,7 @@ type ItemOffsets = {
 };
 
 const TableOfContents: FunctionalComponent<{ headings: MarkdownHeading[] }> = ({ headings = [] }) => {
-  const toc = useRef<HTMLUListElement>();
+  const toc = useRef<HTMLUListElement>(null);
   const onThisPageID = 'on-this-page-heading';
   const itemOffsets = useRef<ItemOffsets[]>([]);
   const [currentID, setCurrentID] = useState('overview');
@@ -60,8 +61,10 @@ const TableOfContents: FunctionalComponent<{ headings: MarkdownHeading[] }> = ({
     return () => headingsObserver.disconnect();
   }, [toc.current]);
 
-  const onLinkClick = (e) => {
-    setCurrentID(e.target.getAttribute('href').replace('#', ''));
+  const onLinkClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const element = e.target as HTMLAnchorElement;
+    const href = element.getAttribute('href')?.replace('#', '');
+    if (href) setCurrentID(href);
   };
 
   return (

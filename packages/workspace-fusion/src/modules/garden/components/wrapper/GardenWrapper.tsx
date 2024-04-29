@@ -39,7 +39,7 @@ export const GardenWrapper = <TData extends Record<PropertyKey, unknown>, TFilte
           });
         }}
         clickEvents={{
-          onClickItem: (i) => {
+          onClickItem: (i: any) => {
             selectItem(i);
           },
         }}

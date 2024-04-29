@@ -82,16 +82,16 @@ const PowerBiWrapper = (powerBiConfig: PowerBiConfig & { controller: PowerBiCont
   const { updatePayload } = useWorkspace();
   const { state, updateState } = usePowerBiState();
 
-  const { data } = useQuery(
-    [powerBiConfig.reportUri, 'classification'],
-    ({ signal }) => {
+  const { data } = useQuery({
+    queryKey: [powerBiConfig.reportUri, 'classification'],
+    queryFn: ({ signal }) => {
       if (powerBiConfig.getClassification) {
         return powerBiConfig.getClassification(powerBiConfig.reportUri, signal);
       }
       return null;
     },
-    { enabled: !!powerBiConfig.getClassification }
-  );
+    enabled: !!powerBiConfig.getClassification,
+  });
 
   useEffect(() => {
     const unsub = powerBiConfig.controller.onReportReady(async (s) => {

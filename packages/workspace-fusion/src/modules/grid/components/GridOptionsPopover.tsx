@@ -19,12 +19,15 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
   const pRef = useRef(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
-  const { error, isLoading, isError, mutateAsync } = useMutation(['exportData'], async () => {
-    if (!excelExport) {
-      console.warn('No Excel export function found');
-      return;
-    }
-    return await excelExport(filterState);
+  const { error, isPending, isError, mutateAsync } = useMutation({
+    mutationKey: ['exportData'],
+    mutationFn: async () => {
+      if (!excelExport) {
+        console.warn('No Excel export function found');
+        return;
+      }
+      return await excelExport(filterState);
+    },
   });
 
   const handleExportToExcel = () => {
@@ -65,9 +68,9 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
               <Button
                 disabled={excelExport == undefined}
                 style={{ width: '130px' }}
-                onClick={!isLoading ? handleExportToExcel : undefined}
+                onClick={!isPending ? handleExportToExcel : undefined}
               >
-                {isLoading ? <Progress.Dots color={'neutral'} /> : 'Export to Excel'}
+                {isPending ? <Progress.Dots color={'neutral'} /> : 'Export to Excel'}
               </Button>
             </ButtContainer>
           </Popover.Content>
