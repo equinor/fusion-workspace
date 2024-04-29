@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-react",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -39,11 +39,11 @@
   },
   "devDependencies": {
     "@types/jest": "29.5.12",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.2.0",
     "@types/styled-components": "^5.1.34",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-is": "^18.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
     "styled-components": "^6.1.8",
     "typescript": "^5.4.5"
   },
