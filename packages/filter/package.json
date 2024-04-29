@@ -42,15 +42,15 @@
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
-    "@types/jest": "27.4.1",
-    "@types/react": ">= 16.8.0",
-    "@types/sortablejs": "^1.15.0",
-    "@types/styled-components": "^5.1.26",
+    "@types/jest": "29.5.12",
+    "@types/react": "^18.3.1",
+    "@types/sortablejs": "^1.15.8",
+    "@types/styled-components": "^5.1.34",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "styled-components": "^5.3.6",
-    "typescript": "^5.0.2"
+    "styled-components": "^6.1.8",
+    "typescript": "^5.4.5"
   },
   "repository": {
     "type": "git",
