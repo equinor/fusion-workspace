@@ -21,15 +21,15 @@
     "@types/node": "^20.12.7",
     "astro": "^4.7.0",
     "preact": "^10.20.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-is": "^18.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
     "react-mermaid3": "^1.0.1",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/html-escaper": "^3.0.2",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.2.0",
     "@types/react-dom": "^18.3.0",
     "html-escaper": "^3.0.3",
     "typescript": "^5.4.5"
