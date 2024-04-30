@@ -11,7 +11,7 @@ export const StyledItemWrapper = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
 
-  align-items: center;
+  align-items: normal;
   width: 100%;
   height: 32px;
   min-width: 200px;

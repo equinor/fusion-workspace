@@ -3,6 +3,7 @@ import { tokens } from '@equinor/eds-tokens';
 import { useState, useRef } from 'react';
 import { ReactSortable } from 'react-sortablejs';
 import { StyledButton, StyledItemWrapper, StyledPopoverList } from './toggleHideFilterPopover.styles';
+import styled from 'styled-components';
 
 interface ShowHideFilterButtonProps {
   allFilters: FilterType[];
@@ -61,7 +62,7 @@ export const ToggleHideFilterPopover = ({ allFilters, setFilterOrder }: ShowHide
           <Popover.Header>
             <Popover.Title>Filter types</Popover.Title>
           </Popover.Header>
-          <Popover.Content style={{ maxHeight: '60vh', overflowY: 'auto', overflowX: 'hidden' }}>
+          <R style={{ maxHeight: '60vh', overflowY: 'auto', overflowX: 'hidden' }}>
             <StyledPopoverList>
               <ReactSortable
                 animation={200}
@@ -87,9 +88,18 @@ export const ToggleHideFilterPopover = ({ allFilters, setFilterOrder }: ShowHide
                 ))}
               </ReactSortable>
             </StyledPopoverList>
-          </Popover.Content>
+          </R>
         </Popover>
       )}
     </>
   );
 };
+
+const R = styled(Popover.Content)`
+& *:first-child {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+padding: 0px;
+
+`

@@ -44,7 +44,6 @@ export const GridWrapper = <
      *  There is no real consequence to doing it this way
      */
     filterStateCopy.current = filterState;
-    debugger;
     gridApi?.onFilterChanged()
   }, [filterState]);
 
@@ -78,7 +77,6 @@ export const GridWrapper = <
     >
       <ServerGrid<TData>
         onGridReady={(event) => {
-          debugger;
           setGridApi(event.api)
         }}
         getRows={async (params) => {

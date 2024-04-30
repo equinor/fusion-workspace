@@ -55,7 +55,7 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
             </StyledPopoverHeaderLine>
           </Popover.Header>
           <Popover.Content style={{ overflow: 'hidden' }}>
-            <ButtContainer>
+            <ButtonContainer>
               {isError && (
                 <DumpsterFireDialog
                   text={
@@ -65,14 +65,14 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
                   }
                 />
               )}
-              <Button
+              <ButtonButton
                 disabled={excelExport == undefined}
-                style={{ width: '130px' }}
+                style={{ width: '130px', padding: "0px" }}
                 onClick={!isPending ? handleExportToExcel : undefined}
               >
                 {isPending ? <Progress.Dots color={'neutral'} /> : 'Export to Excel'}
-              </Button>
-            </ButtContainer>
+              </ButtonButton>
+            </ButtonContainer>
           </Popover.Content>
         </Popover>,
         anchor
@@ -81,6 +81,7 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
   );
 };
 
+
 const StyledPopoverHeaderLine = styled.div`
   display: flex;
   width: 268px;
@@ -88,7 +89,14 @@ const StyledPopoverHeaderLine = styled.div`
   align-items: center;
 `;
 
-const ButtContainer = styled.div`
+const ButtonButton = styled(Button)`
+  & *:first-child {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  padding: 0px;
+`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
