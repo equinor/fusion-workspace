@@ -77,12 +77,7 @@ export const GridWrapper = <
     >
       <ServerGrid<TData>
         onGridReady={(event) => {
-<<<<<<< HEAD
           setGridApi(event.api)
-=======
-          debugger;
-          setGridApi(event.api);
->>>>>>> ed97b2dd10b86e31e2e631e968b253bcdc068a42
         }}
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
