@@ -96,10 +96,9 @@ export const ToggleHideFilterPopover = ({ allFilters, setFilterOrder }: ShowHide
 };
 
 const R = styled(Popover.Content)`
-& *:first-child {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-padding: 0px;
-
-`
+  & *:first-child {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  padding: 0px;
+`;

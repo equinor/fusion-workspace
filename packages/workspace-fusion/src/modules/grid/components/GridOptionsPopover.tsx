@@ -67,7 +67,7 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
               )}
               <ButtonButton
                 disabled={excelExport == undefined}
-                style={{ width: '130px', padding: "0px" }}
+                style={{ width: '130px', padding: '0px' }}
                 onClick={!isPending ? handleExportToExcel : undefined}
               >
                 {isPending ? <Progress.Dots color={'neutral'} /> : 'Export to Excel'}
@@ -80,7 +80,6 @@ export const GridOptionPopover = ({ anchor, excelExport, filterState }: GridOpti
     </>
   );
 };
-
 
 const StyledPopoverHeaderLine = styled.div`
   display: flex;
@@ -95,7 +94,7 @@ const ButtonButton = styled(Button)`
     padding-bottom: 0px;
   }
   padding: 0px;
-`
+`;
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;

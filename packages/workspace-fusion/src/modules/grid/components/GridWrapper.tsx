@@ -44,7 +44,7 @@ export const GridWrapper = <
      *  There is no real consequence to doing it this way
      */
     filterStateCopy.current = filterState;
-    gridApi?.onFilterChanged()
+    gridApi?.onFilterChanged();
   }, [filterState]);
 
   const [_, height] = useResizeObserver(ref);
@@ -77,7 +77,7 @@ export const GridWrapper = <
     >
       <ServerGrid<TData>
         onGridReady={(event) => {
-          setGridApi(event.api)
+          setGridApi(event.api);
         }}
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
