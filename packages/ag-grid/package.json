@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "react": ">= 18",
-    "react-dom": ">= 18"
+    "react-dom": ">= 18",
     "@ag-grid-community/client-side-row-model": "31.2.1",
     "@ag-grid-community/core": "31.2.1",
     "@ag-grid-community/react": "31.2.1",
