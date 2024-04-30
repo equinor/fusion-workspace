@@ -44,7 +44,7 @@ export const FilterGroupPopoverMenu = ({
   const handleInput = (e) => setSearchText(e.target.value.toString().toLowerCase());
 
   const getValuesMatchingSearchText = () =>
-    values.filter((s) => !searchText || s.value?.toString().toLowerCase().startsWith(searchText));
+    values.filter((s) => !searchText || s.value?.toString().toLowerCase().includes(searchText));
 
   /**
    * Sets the filter state to the values matching search and closes popover
