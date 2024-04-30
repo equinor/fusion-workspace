@@ -28,7 +28,7 @@ export const GridWrapper = <
   getIdentifier,
 }: GridWrapperProps<TData, TContext, TFilter>) => {
   const ref = useRef(null);
-  const [gridApi, setGridApi] = useState<GridApi | null>(null)
+  const [gridApi, setGridApi] = useState<GridApi | null>(null);
 
   const { selectItem, selection } = useWorkspace();
   const { filterState } = useFilterContext();
@@ -45,7 +45,7 @@ export const GridWrapper = <
      */
     filterStateCopy.current = filterState;
     debugger;
-    gridApi?.onFilterChanged()
+    gridApi?.onFilterChanged();
   }, [filterState]);
 
   const [_, height] = useResizeObserver(ref);
@@ -79,7 +79,7 @@ export const GridWrapper = <
       <ServerGrid<TData>
         onGridReady={(event) => {
           debugger;
-          setGridApi(event.api)
+          setGridApi(event.api);
         }}
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
