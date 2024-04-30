@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider, UseQueryResult, useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, UseQueryResult, useQuery, keepPreviousData } from '@tanstack/react-query';
 import { FilterStylesContext } from '../components/Filter';
 import { FilterDataSource, FilterGroup, FilterStateGroup, FilterStyles } from '../types';
 import { createContext, PropsWithChildren, ReactNode, useContext, useEffect, useRef, useState } from 'react';
@@ -74,6 +74,7 @@ export const FilterContextWrapper = ({
     queryKey: ['filter-meta', JSON.stringify(filterState)],
     queryFn: ({ signal }): Promise<FilterGroup[]> => dataSource.getFilterMeta(filterState, signal),
     throwOnError: false,
+    placeholderData: keepPreviousData,
   });
 
   const setFilterStateHandler = (groups: FilterStateGroup[]) =>

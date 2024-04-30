@@ -14,7 +14,7 @@ type Props = {
 	<SkipToContent />
 	<nav class="nav-wrapper" title="Top Navigation">
 		<div class="menu-toggle">
-			<SidebarToggle client:idle />
+			<SidebarToggle client:idle client:only="preact" />
 		</div>
 		<div class="logo flex">
 			<a href="/fusion-workspace">
