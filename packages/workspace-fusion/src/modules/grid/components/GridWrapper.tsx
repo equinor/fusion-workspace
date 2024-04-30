@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GridApi, GridOptions, ServerGrid } from '@equinor/workspace-ag-grid';
 import { useFilterContext } from '@equinor/workspace-filter';
 import { tokens } from '@equinor/eds-tokens';
@@ -28,6 +28,7 @@ export const GridWrapper = <
   getIdentifier,
 }: GridWrapperProps<TData, TContext, TFilter>) => {
   const ref = useRef(null);
+  const [gridApi, setGridApi] = useState<GridApi | null>(null)
 
   const { selectItem, selection } = useWorkspace();
   const { filterState } = useFilterContext();
@@ -43,7 +44,7 @@ export const GridWrapper = <
      *  There is no real consequence to doing it this way
      */
     filterStateCopy.current = filterState;
-    config.gridOptions && config.gridOptions.api?.onFilterChanged();
+    gridApi?.onFilterChanged()
   }, [filterState]);
 
   const [_, height] = useResizeObserver(ref);
@@ -75,6 +76,9 @@ export const GridWrapper = <
       ref={ref}
     >
       <ServerGrid<TData>
+        onGridReady={(event) => {
+          setGridApi(event.api)
+        }}
         getRows={async (params) => {
           await config.getRows(params, filterStateCopy.current as TFilter);
           handleSelectionEvent(selection, params.api);
