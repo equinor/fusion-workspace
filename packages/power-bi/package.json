@@ -44,6 +44,8 @@
   },
   "devDependencies": {
     "@types/sortablejs": "^1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "typescript": "^5"
   },
   "repository": {
