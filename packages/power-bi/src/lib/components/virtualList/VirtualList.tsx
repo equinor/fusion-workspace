@@ -57,7 +57,7 @@ const FilterItemValue = memo(VirtualFilterItemCheckbox);
 
 const Parent = styled.div`
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   ::-webkit-scrollbar-thumb {
     background: ${tokens.colors.ui.background__medium.hex};

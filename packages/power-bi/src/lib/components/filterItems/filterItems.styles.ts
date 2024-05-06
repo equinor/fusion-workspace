@@ -10,7 +10,7 @@ export const StyledFilterGroupContainer = styled.div`
 export const StyledCheckboxWrap = styled.span`
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
   span {
     padding: 2px;

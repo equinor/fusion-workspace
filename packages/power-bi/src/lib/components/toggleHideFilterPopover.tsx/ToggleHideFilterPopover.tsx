@@ -54,7 +54,7 @@ export const ToggleHideFilterPopover = ({
           <Popover.Header>
             <Popover.Title>Filter types</Popover.Title>
           </Popover.Header>
-          <Popover.Content style={{ maxHeight: '60vh', overflowY: 'scroll', overflowX: 'hidden' }}>
+          <Popover.Content style={{ maxHeight: '60vh', overflowY: 'auto', overflowX: 'hidden' }}>
             <PopoverList>
               <ReactSortable
                 animation={200}
