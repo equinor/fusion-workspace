@@ -33,7 +33,7 @@ export const StyledFilterItemWrap = styled.div`
       padding-right: 2px;
     }
   }
-  :hover {
+  &:hover {
     background-color: ${tokens.colors.interactive.primary__selected_hover.rgba};
   }
 `;

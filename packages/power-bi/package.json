@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-powerbi",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
@@ -26,34 +26,27 @@
     "dist"
   ],
   "dependencies": {
-    "@equinor/eds-core-react": "^0.28.0",
-    "@equinor/eds-icons": "^0.18.0",
-    "@equinor/eds-tokens": "^0.9.0",
-    "@tanstack/react-query": "^5.32.0",
-    "markdown-to-jsx": "^7.4.7",
-    "powerbi-client": "^2.23.1",
-    "powerbi-client-react": "^1.4.0",
-    "react-error-boundary": "^4.0.13",
-    "react-sortablejs": "^6.1.4",
-    "react-virtual": "^2.10.4",
-    "sortablejs": "^1.15.2"
-  },
-  "peerDependencies": {
-    "react": ">= 16.8.0",
-    "react-dom": ">= 16.8.0",
-    "react-is": ">= 16.8.0",
-    "styled-components": "^5.3.5"
+    "@equinor/eds-core-react": "^0",
+    "@equinor/eds-icons": "^0",
+    "@equinor/eds-tokens": "^0",
+    "@tanstack/react-query": "^5",
+    "markdown-to-jsx": "^7",
+    "powerbi-client": "^2",
+    "powerbi-client-react": "^1",
+    "react-error-boundary": "^4",
+    "react-sortablejs": "^6",
+    "react-virtual": "^2",
+    "sortablejs": "^1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-is": "^18",
+    "styled-components": "^6"
   },
   "devDependencies": {
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
-    "@types/sortablejs": "^1.15.8",
-    "@types/styled-components": "^5.1.34",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-is": "^18.3.1",
-    "styled-components": "^6.1.8",
-    "typescript": "^5.4.5"
+    "@types/sortablejs": "^1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
   },
   "repository": {
     "type": "git",
@@ -62,3 +55,4 @@
   },
   "gitHead": "6407f12589214b96228ab87d32a211f7c1cd6ba4"
 }
+

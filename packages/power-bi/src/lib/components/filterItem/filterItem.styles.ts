@@ -15,7 +15,7 @@ export const StyledCheckboxItem = styled.div`
     white-space: nowrap;
     cursor: pointer;
   }
-  :hover {
+  &:hover {
     background-color: ${tokens.colors.interactive.primary__selected_hover.rgba};
   }
 `;
