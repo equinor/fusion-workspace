@@ -13,7 +13,7 @@ const StyledLoadingWrapper = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
   const { data: token, isLoading: isTokenLoading } = useQuery<FusionPowerBiToken>({
