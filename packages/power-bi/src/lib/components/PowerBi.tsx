@@ -13,10 +13,9 @@ import React from 'react';
 import { models, factories, service } from 'powerbi-client';
 
 new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory).preload({
-  embedUrl: "https://app.powerbi.com/reportEmbed",
-  type: "report",
-
-})
+  embedUrl: 'https://app.powerbi.com/reportEmbed',
+  type: 'report',
+});
 
 Icon.add({ chevron_down, chevron_up });
 
