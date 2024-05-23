@@ -53,7 +53,6 @@ export const PowerBi = (props: PowerBiProps) => {
   );
 };
 
-
 const StyledPowerBiBootstrap = styled.div`
   visbility: hidden;
   position: absolute;
@@ -61,7 +60,7 @@ const StyledPowerBiBootstrap = styled.div`
   right: 0;
   width: 0;
   height: 0;
-`
+`;
 
 /**
  * Initializes preloading of iframe javascript resources
