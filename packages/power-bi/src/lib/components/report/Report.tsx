@@ -5,6 +5,15 @@ import { IReportEmbedConfiguration, models } from 'powerbi-client';
 import { LoadedReport } from '../loadedReport/LoadedReport';
 import { PowerBiProps } from '../PowerBi';
 import { CircularProgress } from '@equinor/eds-core-react';
+import styled from 'styled-components';
+
+const StyledLoadingWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
   const { data: token, isLoading: isTokenLoading } = useQuery<FusionPowerBiToken>({
@@ -28,9 +37,9 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
 
   if (isTokenLoading || isEmbedLoading) {
     return (
-      <div style={{ height: '100%', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+      <StyledLoadingWrapper>
         <CircularProgress size={48} />
-      </div>
+      </StyledLoadingWrapper>
     );
   }
 
@@ -44,7 +53,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
 
   return (
     <LoadedReport
-      config={generateEmbedConfig(embed, token!.token, filters)}
+      config={generateEmbedConfig(embed, token.token, filters)}
       onReportReady={(rep) => {
         if (bookmark) {
           rep.bookmarksManager.applyState(bookmark);

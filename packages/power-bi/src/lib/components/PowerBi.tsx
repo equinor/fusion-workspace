@@ -11,6 +11,8 @@ import { Report } from './report/Report';
 
 import React from 'react';
 import { models, factories, service } from 'powerbi-client';
+import styled from 'styled-components';
+import { StyledLoadingWrapper } from './loading/loading.styles';
 
 Icon.add({ chevron_down, chevron_up });
 
@@ -51,6 +53,16 @@ export const PowerBi = (props: PowerBiProps) => {
   );
 };
 
+
+const StyledPowerBiBootstrap = styled.div`
+  visbility: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+`
+
 /**
  * Initializes preloading of iframe javascript resources
  */
@@ -58,9 +70,8 @@ function PowerBiBootstrap() {
   const isBootstrapped = useRef(false);
 
   return (
-    <div
+    <StyledPowerBiBootstrap
       id="pbi-bootstrap"
-      style={{ visibility: 'hidden', position: 'absolute', top: 0, right: 0, width: 0, height: 0 }}
       ref={(ref) => {
         if (!ref || isBootstrapped.current == true) return;
         new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory).bootstrap(ref, {
