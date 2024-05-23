@@ -16,7 +16,11 @@ const StyledLoadingWrapper = styled.div`
 `;
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
-  const { data: token, isLoading: isTokenLoading, error: tokenError } = useQuery<FusionPowerBiToken>({
+  const {
+    data: token,
+    isLoading: isTokenLoading,
+    error: tokenError,
+  } = useQuery<FusionPowerBiToken>({
     queryKey: [reportUri, 'token'],
     queryFn: ({ signal }) => getToken(reportUri, signal),
     refetchInterval: (query) => generateRefetchInterval(query.state.data),
@@ -24,7 +28,11 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
     refetchOnWindowFocus: true,
   });
 
-  const { data: embed, isLoading: isEmbedLoading, error: embedError } = useQuery({
+  const {
+    data: embed,
+    isLoading: isEmbedLoading,
+    error: embedError,
+  } = useQuery({
     queryKey: [reportUri, 'embed'],
     queryFn: async ({ signal }) => {
       const { embedUrl, reportId } = await getEmbedInfo(reportUri, '', signal);
@@ -44,7 +52,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
   }
 
   if (!embed || embedError) {
-    throw embedError ?? new Error("Failed to get embed")
+    throw embedError ?? new Error('Failed to get embed');
   }
 
   if (!token || tokenError) {
@@ -98,4 +106,3 @@ const defaultEmbedConfiguration: IReportEmbedConfiguration = {
   type: 'report',
   tokenType: 1,
 };
-;
