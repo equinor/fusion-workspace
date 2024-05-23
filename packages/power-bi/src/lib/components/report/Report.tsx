@@ -29,7 +29,7 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
   if (isTokenLoading || isEmbedLoading) {
     return (
       <div style={{ height: '100%', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-        <CircularProgress {...({} as any)} size={48} />
+        <CircularProgress size={48} />
       </div>
     );
   }
