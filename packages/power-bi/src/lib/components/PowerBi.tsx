@@ -31,31 +31,10 @@ export interface PowerBiProps {
 const client = new QueryClient();
 
 export const PowerBi = (props: PowerBiProps) => {
-  const isBootstrapped = useRef(false);
   const { reportUri, ErrorComponent } = props;
   return (
     <QueryClientProvider client={client}>
-      <div id='pbi-bootstrap' style={{ visibility: "hidden", position: "absolute", top: 0, right: 0, width: 0, height: 0 }} ref={(ref) => {
-        if (!ref || isBootstrapped.current == true) return
-        new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory).bootstrap(ref, {
-          embedUrl: "https://app.powerbi.com/reportEmbed",
-          type: "report",
-          settings: {
-            panes: {
-              filters: {
-                expanded: false,
-                visible: false,
-              },
-              pageNavigation: {
-                visible: false,
-              },
-            },
-          },
-          tokenType: 1,
-        })
-        isBootstrapped.current = true;
-
-      }} />
+      <PowerBiBootstrap />
       <Suspense fallback={<Loading />}>
         <QueryErrorResetBoundary>
           {({ reset }) => (
@@ -71,3 +50,34 @@ export const PowerBi = (props: PowerBiProps) => {
     </QueryClientProvider>
   );
 };
+
+
+/**
+  * Initializes preloading of iframe javascript resources
+  */
+function PowerBiBootstrap() {
+  const isBootstrapped = useRef(false);
+
+  return (
+    <div id='pbi-bootstrap' style={{ visibility: "hidden", position: "absolute", top: 0, right: 0, width: 0, height: 0 }} ref={(ref) => {
+      if (!ref || isBootstrapped.current == true) return
+      new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory).bootstrap(ref, {
+        embedUrl: "https://app.powerbi.com/reportEmbed",
+        type: "report",
+        settings: {
+          panes: {
+            filters: {
+              expanded: false,
+              visible: false,
+            },
+            pageNavigation: {
+              visible: false,
+            },
+          },
+        },
+        tokenType: 1,
+      })
+      isBootstrapped.current = true;
+    }} />
+  )
+}
