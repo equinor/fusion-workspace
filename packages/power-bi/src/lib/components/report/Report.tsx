@@ -7,7 +7,6 @@ import { PowerBiProps } from '../PowerBi';
 import { CircularProgress } from '@equinor/eds-core-react';
 
 export function Report({ getEmbedInfo, getToken, reportUri, controller, filters, bookmark }: PowerBiProps) {
-
   const { data: token, isLoading: isTokenLoading } = useQuery<FusionPowerBiToken>({
     queryKey: [reportUri, 'token'],
     queryFn: ({ signal }) => getToken(reportUri, signal),
@@ -16,27 +15,31 @@ export function Report({ getEmbedInfo, getToken, reportUri, controller, filters,
     refetchOnWindowFocus: true,
   });
 
-  const { data: embed, isLoading: isEmbedLoading, } = useQuery({
+  const { data: embed, isLoading: isEmbedLoading } = useQuery({
     queryKey: [reportUri, 'embed'],
     queryFn: async ({ signal }) => {
-      const { embedUrl, reportId } = await getEmbedInfo(reportUri, "", signal);
+      const { embedUrl, reportId } = await getEmbedInfo(reportUri, '', signal);
       return {
         embedUrl,
-        reportId
-      }
+        reportId,
+      };
     },
   });
 
-
   if (isTokenLoading || isEmbedLoading) {
-    return <div style={{ height: "100%", display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}><CircularProgress {...{} as any} size={48} /></div> }
+    return (
+      <div style={{ height: '100%', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <CircularProgress {...({} as any)} size={48} />
+      </div>
+    );
+  }
 
   if (!embed) {
     throw new Error('No embed');
   }
 
   if (!token) {
-    throw new Error("No token")
+    throw new Error('No token');
   }
 
   return (
