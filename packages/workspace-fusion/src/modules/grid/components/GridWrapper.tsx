@@ -62,7 +62,9 @@ export const GridWrapper = <
       placement: 'right',
       type: 'button',
     };
-    setIcons((s) => [...s, icon]);
+    if (config.excelExport) {
+      setIcons((s) => [...s, icon]);
+    }
 
     return () => {
       setIcons((s) => s.filter((y) => y.name !== icon.name));
