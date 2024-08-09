@@ -4,4 +4,5 @@ export interface StatusItem {
   /** Value to be shown in the status bar */
   value: string | number;
   description?: string;
+  group?: string;
 }
