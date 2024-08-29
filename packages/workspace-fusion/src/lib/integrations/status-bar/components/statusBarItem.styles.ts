@@ -15,6 +15,13 @@ export const ValueWrapper = styled.div`
   gap: 0.2em;
 `;
 
+export const Group = styled.div`
+  color: ${tokens.colors.text.static_icons__default.hex};
+  font-size: 20px;
+  line-height: 24px;
+  color: ${tokens.colors.text.static_icons__tertiary.hex};
+`;
+
 export const Title = styled.div`
   color: ${tokens.colors.text.static_icons__tertiary.hex};
   font-size: 12px;

@@ -39,7 +39,7 @@ export function StatusBar({ items }: StatusBarProps): JSX.Element | null {
           {i !== 0 && (
             <>
               <StyledStatusBarDivider></StyledStatusBarDivider>
-              {!groupName ? <></> : <div style={{ alignSelf: 'center' }}>{groupName}:</div>}
+              <StatusBarItem groupName={groupName} />
             </>
           )}
           {groupItems.map((item) => (
