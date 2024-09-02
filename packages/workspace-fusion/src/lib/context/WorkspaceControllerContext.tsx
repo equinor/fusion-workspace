@@ -15,6 +15,10 @@ export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps
   const { bookmarkRef, handleTabChange, updatePayload } = useBookmarkRef(props.onBookmarkChange);
   const [isCreateSidesheetOpen, setCreateSidesheetOpen] = useState<boolean>(false);
   return (
+
+
+
+
     <WorkspaceContext.Provider
       value={{
         bookmarkRef,
@@ -24,7 +28,10 @@ export function WorkspaceContextProvider<T>(props: WorkspaceContextProviderProps
         openCreateSidesheet: () => {
           clearSelection();
           setCreateSidesheetOpen(true);
-        },
+        }
+
+
+        ,
         closeCreateSidesheet: () => setCreateSidesheetOpen(false),
         clearSelection,
         selectById,
