@@ -16,7 +16,6 @@ export const ValueWrapper = styled.div`
 `;
 
 export const Group = styled.div`
-  color: ${tokens.colors.text.static_icons__default.hex};
   font-size: 20px;
   line-height: 24px;
   color: ${tokens.colors.text.static_icons__tertiary.hex};
