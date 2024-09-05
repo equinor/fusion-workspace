@@ -1,18 +1,17 @@
 import { StatusItem } from '../types';
-import { StatusCard, Title, ValueWrapper, Value } from './statusBarItem.styles';
+import { StatusCard, Title, ValueWrapper, Value, Group } from './statusBarItem.styles';
 
 interface StatusBarItemProps {
-  item: StatusItem;
+  item?: StatusItem;
+  groupName?: string;
 }
-export function StatusBarItem({ item }: StatusBarItemProps) {
-  const formattedValue = formatValue(item.value);
+export function StatusBarItem({ item, groupName }: StatusBarItemProps) {
+  const formattedValue = formatValue(item?.value ?? '');
 
   return (
-    <StatusCard title={item.description} key={item.title}>
-      <Title>{item.title}</Title>
-      <ValueWrapper>
-        <Value>{formattedValue}</Value>
-      </ValueWrapper>
+    <StatusCard title={item?.description} key={item?.title}>
+      <Title>{item?.title}</Title>
+      <ValueWrapper>{groupName ? <Group>{groupName}</Group> : <Value>{formattedValue}</Value>}</ValueWrapper>
     </StatusCard>
   );
 }
