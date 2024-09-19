@@ -27,3 +27,11 @@ export const StyledButton = styled.button`
   align-items: center;
   text-align: center;
 `;
+
+export const StyledButtonContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  white-space: nowrap;
+`;

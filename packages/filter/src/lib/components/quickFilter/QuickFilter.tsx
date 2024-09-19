@@ -12,12 +12,13 @@ import { FilterQuickSearch } from '../filterQuickSearch/FilterQuickSearch';
 import { FiltersAppliedInfo } from '../filtersAppliedInfo/FiltersAppliedInfo';
 import { FilterGroup as IFilterGroup } from '../../types';
 import { useFilterContext } from '../../context/filterContext';
-import { StyledButton } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
+import { StyledButton, StyledButtonContent } from '../toggleHideFilterPopover/toggleHideFilterPopover.styles';
 import { FilterClearIcon, FilterCollapseIcon, FilterExpandIcon } from '../../icons';
 import { ToggleHideFilterPopover } from '../toggleHideFilterPopover/ToggleHideFilterPopover';
 import { FilterView } from '../filterView/FilterView';
 import { useFilterStyles } from '../../hooks/useFilterStyles';
 import { FilterLoadingFallback } from '../Filter';
+import { Button, Tooltip } from '@equinor/eds-core-react';
 
 /**
  * How to separate controller and visual logic in this component?
@@ -111,13 +112,25 @@ const QuickFilterReady = ({ groups }: QuickFilterReadyProps) => {
           <FiltersAppliedInfo activeFilters={calculateHiddenFiltersApplied()} />
           {isFilterExpanded && <ToggleHideFilterPopover allFilters={allFilterGroups} setFilterOrder={setFilterOrder} />}
 
-          <StyledButton onClick={() => clearActiveFilters()}>
-            <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
-          </StyledButton>
+          <Tooltip title="Clear all active filters">
+            <StyledButton onClick={() => clearActiveFilters()}>
+              <FilterClearIcon isDisabled={uncheckedValues.map((s) => s.values).flat().length === 0} />
+            </StyledButton>
+          </Tooltip>
 
-          <StyledButton onClick={toggleFilterIsExpanded}>
-            {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-          </StyledButton>
+          <Tooltip title={isFilterExpanded ? 'Hide all filter options' : 'Show all filter options'}>
+            <Button variant="ghost" onClick={toggleFilterIsExpanded}>
+              {isFilterExpanded ? (
+                <StyledButtonContent>
+                  <FilterCollapseIcon /> <div>Hide all</div>
+                </StyledButtonContent>
+              ) : (
+                <StyledButtonContent>
+                  <FilterExpandIcon /> <div>Show all</div>
+                </StyledButtonContent>
+              )}
+            </Button>
+          </Tooltip>
         </StyledButtonWrapper>
       </StyledCompactFilterWrapper>
       {isFilterExpanded && (
