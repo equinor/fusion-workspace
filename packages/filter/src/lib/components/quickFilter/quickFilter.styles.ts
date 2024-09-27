@@ -11,6 +11,8 @@ export const StyledCompactFilterWrapper = styled.div<{ isExpanded: boolean }>`
   height: 48px;
   width: 100%;
   background-color: ${tokens.colors.ui.background__light.hex};
+  padding: 0 6px;
+  box-sizing: border-box;
 `;
 
 export const StyledQuickFilterGroupsLayout = styled.div`
@@ -36,4 +38,5 @@ export const StyledButtonWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   background-color: ${tokens.colors.ui.background__light.hex};
+  gap: 10px;
 `;
