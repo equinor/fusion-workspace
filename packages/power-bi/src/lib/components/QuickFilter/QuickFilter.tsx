@@ -145,7 +145,7 @@ const FilterWrapper = styled.div`
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  background-color: #f7f7f7;
+  background-color: ${tokens.colors.ui.background__light.hex};
 `;
 
 interface OtherFiltersAppliedInfoProps {
