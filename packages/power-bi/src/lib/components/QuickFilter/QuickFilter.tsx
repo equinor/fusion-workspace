@@ -1,4 +1,4 @@
-import { Chip } from '@equinor/eds-core-react';
+import { Button, Chip, Tooltip } from '@equinor/eds-core-react';
 import { tokens } from '@equinor/eds-tokens';
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ import { ExpandedFilter } from '../expandedFilter/ExpandedFilter';
 import { FilterController } from '../Filter/Filter';
 import { PowerBiFilterGroup } from '../quickFilterGroup/QuickFilterGroup';
 
-import { StyledCompactFilterWrapper } from './quickFilter.styles';
+import { StyledButtonContent, StyledCompactFilterWrapper } from './quickFilter.styles';
 
 interface PowerBIQuickFilterProps {
   controller: FilterController;
@@ -82,11 +82,31 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
           <StyledFilterButtons>
             <OtherFiltersAppliedInfo activeFilters={calculateHiddenFilters(shownFilters, activeFilters)} />
             <FilterButtonContainer>
-              <FilterClearIcon isDisabled={!isAnyFiltersActive()} onClick={async () => await resetFilter()} />
-
-              <div onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
-                {isFilterExpanded ? <FilterCollapseIcon /> : <FilterExpandIcon />}
-              </div>
+              <Button
+                style={{ height: '40px' }}
+                variant="ghost_icon"
+                disabled={!isAnyFiltersActive()}
+                onClick={async () => await resetFilter()}
+              >
+                <FilterClearIcon isDisabled={!isAnyFiltersActive()} />
+              </Button>
+              <Tooltip title={isFilterExpanded ? 'Hide all filter options' : 'Show all filter options'}>
+                <Button
+                  style={{ height: '40px' }}
+                  variant="ghost"
+                  onClick={() => setIsFilterExpanded(!isFilterExpanded)}
+                >
+                  {isFilterExpanded ? (
+                    <StyledButtonContent>
+                      <FilterCollapseIcon /> <div>Hide all</div>
+                    </StyledButtonContent>
+                  ) : (
+                    <StyledButtonContent>
+                      <FilterExpandIcon /> <div>Show all</div>
+                    </StyledButtonContent>
+                  )}
+                </Button>
+              </Tooltip>
             </FilterButtonContainer>
           </StyledFilterButtons>
         </StyledCompactFilterWrapper>
@@ -101,14 +121,13 @@ const StyledFilterButtons = styled.div`
 `;
 
 const StyledQuickFilterWrapper = styled.div`
-  display: grid;
+  display: flex;
   width: 100%;
   justify-content: flex-start;
-  grid-template-columns: repeat(auto-fit, minmax(max-content, 50px));
-  grid-template-rows: 1fr;
   gap: 10px;
   align-items: center;
-  overflow-x: hidden;
+  overflow-x: auto;
+  box-sizing: border-box;
   padding-left: 10px;
   padding-right: 10px;
 `;
@@ -117,13 +136,16 @@ const FilterButtonContainer = styled.div`
   display: flex;
   align-items: center;
   height: 48px;
-  width: 96px;
+  width: fit-content;
+  gap: 10px;
+  padding: 0 10px;
 `;
 
 const FilterWrapper = styled.div`
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  background-color: #f7f7f7;
 `;
 
 interface OtherFiltersAppliedInfoProps {
