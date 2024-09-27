@@ -16,4 +16,3 @@ export const StyledButtonContent = styled.div`
   width: 80px;
   white-space: nowrap;
 `;
-
