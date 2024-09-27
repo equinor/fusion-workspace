@@ -16,6 +16,8 @@ export const StyledExpandedFilterWrapper = styled.div`
   height: 250px;
   overflow: hidden;
   border-bottom: 1px solid ${tokens.colors.ui.background__medium.hex};
+  background-color: ${tokens.colors.ui.background__light.hex};
+  margin-bottom: 10px;
 `;
 
 export const StyledSidebar = styled.div`
