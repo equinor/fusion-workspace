@@ -18,7 +18,7 @@ export const StyledFilterGroupContent = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 2px;
+  padding-left: 5px;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
