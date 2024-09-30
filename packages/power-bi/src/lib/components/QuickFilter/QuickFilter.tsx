@@ -123,10 +123,12 @@ const StyledFilterButtons = styled.div`
 const StyledQuickFilterWrapper = styled.div`
   display: flex;
   width: 100%;
+  height: 50px;
   justify-content: flex-start;
   gap: 10px;
   align-items: center;
-  overflow-x: auto;
+  overflow: hidden;
+  flex-wrap: wrap;
   box-sizing: border-box;
   padding-left: 10px;
   padding-right: 10px;
