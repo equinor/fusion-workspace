@@ -16,14 +16,16 @@ export const StyledCompactFilterWrapper = styled.div<{ isExpanded: boolean }>`
 `;
 
 export const StyledQuickFilterGroupsLayout = styled.div`
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(max-content, 100px));
-  grid-template-rows: 48px;
   justify-content: flex-end;
   height: 48px;
   gap: 20px;
   align-items: center;
+  padding: 12px 0;
+  flex-wrap: wrap;
+  overflow-y: hidden;
+  box-sizing: border-box;
 `;
 
 export const StyledWrapper = styled.div`
