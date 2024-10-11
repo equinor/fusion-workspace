@@ -7,7 +7,7 @@ import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
 import { ThemeProvider, theme } from '@equinor/fusion-react-styles';
 
 type GridProps<TData> = {
-  height: number;
+  height?: number; // height is now optional
 } & AgGridReactProps<TData>;
 
 ModuleRegistry.registerModules([ClientSideRowModelModule, ServerSideRowModelModule]);
@@ -23,8 +23,10 @@ export function Grid<TData>(props: GridProps<TData>) {
 export function InnerGrid<TData>({ columnDefs, gridOptions, height, rowData, modules, ...rest }: GridProps<TData>) {
   const styles = useStyles() as { root: string; grid: string };
 
+  const style = height ? { height } : {};
+
   return (
-    <StyledGridWrapper style={{ height }} className={`${styles.root} ag-theme-alpine-fusion`}>
+    <StyledGridWrapper style={style} className={`${styles.root} ag-theme-alpine-fusion`}>
       <AgGridReact
         rowHeight={32}
         groupDisplayType={'multipleColumns'}
