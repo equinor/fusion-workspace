@@ -3,7 +3,7 @@ import { Grid } from './Grid';
 import { AgGridReactProps } from '@ag-grid-community/react';
 
 export type ClientGridProps<TData> = {
-  height: number;
+  height?: number;
   gridOptions?: GridOptions<TData>;
   rowData: TData[];
   colDefs: ColDef[];

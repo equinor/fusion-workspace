@@ -1,6 +1,6 @@
 {
   "name": "@equinor/workspace-ag-grid",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "type": "module",
   "private": false,
   "sideEffects": false,
