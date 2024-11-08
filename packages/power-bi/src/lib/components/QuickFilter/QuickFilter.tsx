@@ -82,14 +82,7 @@ export const PowerBIQuickFilter = ({ controller }: PowerBIQuickFilterProps): JSX
           <StyledFilterButtons>
             <OtherFiltersAppliedInfo activeFilters={calculateHiddenFilters(shownFilters, activeFilters)} />
             <FilterButtonContainer>
-              <Button
-                style={{ height: '40px' }}
-                variant="ghost_icon"
-                disabled={!isAnyFiltersActive()}
-                onClick={async () => await resetFilter()}
-              >
-                <FilterClearIcon isDisabled={!isAnyFiltersActive()} />
-              </Button>
+              <FilterClearIcon onClick={async () => await resetFilter()} isDisabled={!isAnyFiltersActive()} />
               <Tooltip title={isFilterExpanded ? 'Hide all filter options' : 'Show all filter options'}>
                 <Button
                   style={{ height: '40px' }}

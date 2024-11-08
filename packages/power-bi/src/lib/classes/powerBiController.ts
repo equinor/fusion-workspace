@@ -34,6 +34,7 @@ export class PowerBiController {
   };
 
   reportReady = (newValue: Report) => {
+    console.log('Report Ready');
     newValue.getActivePage().then(this.setActivePage);
     newValue.on('pageChanged', (page: ICustomEvent<any>) => {
       this.setActivePage(page.detail.newPage);

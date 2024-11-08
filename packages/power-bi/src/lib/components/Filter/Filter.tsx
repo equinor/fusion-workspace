@@ -155,57 +155,46 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
   }, []);
 
   /**
-   * Effect should be triggered when report has first loaded,
-   * initializing all possible filters and also checking for default active filters.
-   * Also need to handle when user changes page, so this effect has to also be triggered when
-   * page is changed.
+   * Triggers when the report is loaded
+   * It handles the initial setup of filters and active filters as well as setting up event listeners for future filter changes
    */
   useEffect(() => {
+    const updateFilters = async () => {
+      console.log('updateFilters');
+      var filters = await getFiltersAsync(report);
+      setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
+      const filterGroupNames = getActiveFilterGroupArray(activeFilters);
+      const reportId = report.getId();
+      const state = getVisibleFiltersFromLocalStorage(reportId);
+      if (state) {
+        setFilterGroupVisible(state);
+      } else {
+        setFilterGroupVisible((s) => [...s, ...filterGroupNames].filter((v, i, a) => a.indexOf(v) === i));
+      }
+      setisFiltersLoading(false);
+      console.log('updateFilters done', isFiltersLoading, activeFilters, slicerFilters);
+    };
+
+    const initFilters = async () => {
+      debugger;
+      report.off('rendered', initFilters);
+      console.log('initFilters');
+      const filters = await getFiltersAsync(report);
+      const defaultActiveFilters = await getActiveFilterValues(filters);
+      setActiveFilters(defaultActiveFilters);
+      report.on('rendered', updateFilters);
+      updateFilters();
+    };
     if (report) {
-      const initFilters = async () => {
-        const filters = await getFiltersAsync(report);
-        const defaultActiveFilters = await getActiveFilterValues(filters);
-        setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
-        setActiveFilters(defaultActiveFilters);
-        const state = getVisibleFiltersFromLocalStorage(report.getId());
-        if (state) {
-          setFilterGroupVisible(state);
-        } else {
-          setFilterGroupVisible(filters.map((s) => s.type));
-        }
-        setisFiltersLoading(false);
-      };
-
-      initFilters();
+      console.log('initFilters');
+      report.on('rendered', initFilters);
     }
-  }, [report]);
-
-  /**
-   * Effect should be triggered when activeFilters has changed.
-   * Some filters may not longer be applicable, therefore the need to get filters again.
-   * Dependency array needs to check for length because checking only object will not fire the effect.
-   */
-  useEffect(() => {
-    if (report) {
-      const reCreateFilters = async () => {
-        const filters = await getFiltersAsync(report);
-
-        setSlicerFilters(filters.sort((a, b) => a.type.localeCompare(b.type)));
-
-        const filterGroupNames = getActiveFilterGroupArray(activeFilters);
-
-        const reportId = report.getId();
-
-        const state = getVisibleFiltersFromLocalStorage(reportId);
-        if (state) {
-          setFilterGroupVisible(state);
-        } else {
-          setFilterGroupVisible((s) => [...s, ...filterGroupNames].filter((v, i, a) => a.indexOf(v) === i));
-        }
-      };
-      reCreateFilters();
-    }
-  }, [activeFilters, Object.keys(activeFilters).length]);
+    return () => {
+      report.off('rendered', initFilters);
+      report.off('rendered', updateFilters);
+      console.log('cleanup');
+    };
+  }, []);
 
   if (isFiltersLoading || !activeFilters || !slicerFilters) return <QuickFilterLoading />;
 
