@@ -2,26 +2,26 @@ import { CustomHeaderView } from '../../../types';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { tokens } from '@equinor/eds-tokens';
+import { Typography } from '@equinor/eds-core-react';
 
 const StyledHeaderContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-weight: 600;
 `;
 
-const StyledCount = styled.h2`
+const StyledCount = styled(Typography).withConfig({ displayName: 'cc-apps-' })`
   color: ${tokens.colors.text.static_icons__default.hex};
-  font-weight: 300;
-  font-size: 0.8rem;
   margin-left: 0.8em;
+  font-weight: 300;
+  color: inherit;
 `;
 
-const StyledHeaderText = styled.h2`
+const StyledHeaderText = styled(Typography).withConfig({ displayName: 'cc-apps-' })`
   white-space: pre-line;
-  font-size: 16px;
-  text-align: center;
+  font-weight: 500;
+  color: inherit;
 `;
 
 const HeaderView = (props: CustomHeaderView) => {
@@ -29,8 +29,10 @@ const HeaderView = (props: CustomHeaderView) => {
 
   return (
     <StyledHeaderContent>
-      <StyledHeaderText>{header.name}</StyledHeaderText>
-      <StyledCount>({header.count})</StyledCount>
+      <StyledHeaderText variant="h6">{header.name}</StyledHeaderText>
+      <StyledCount group="navigation" variant="label">
+        ({header.count})
+      </StyledCount>
     </StyledHeaderContent>
   );
 };
