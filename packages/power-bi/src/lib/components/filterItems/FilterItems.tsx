@@ -31,6 +31,7 @@ export const FilterItems = ({
   const handleOnSearchChange = (value: string | undefined) => {
     setSearchValue(value);
   };
+  const ref = useRef<HTMLDivElement>(null);
 
   const filterValues = Object.values(group?.value ?? '(Blank)');
   const searchedFilterItems = useMemo(() => searchFilterItems(filterValues, searchValue), [filterValues, searchValue]);
@@ -51,7 +52,7 @@ export const FilterItems = ({
   });
 
   return (
-    <StyledFilterGroupContainer>
+    <StyledFilterGroupContainer ref={ref}>
       <Header
         searchValue={searchValue}
         handleEnterPress={handleEnterPress}
@@ -61,6 +62,7 @@ export const FilterItems = ({
         deselectAllValues={() => controller.deselectAllValues(group, filterValues[0])}
         onSearch={handleOnSearchChange}
         searchEnabled={group.filterVals.length > 7}
+        container={ref}
       />
       <StyledCheckboxWrap ref={parentRef}>
         <StyledVirtualFilterItemWrapper style={{ height: `${rowVirtualizer.totalSize}px` }}>

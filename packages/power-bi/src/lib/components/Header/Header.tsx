@@ -1,6 +1,7 @@
 import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import useClickOutside from '../../hooks/useClickOutside';
 import { FilterClearIcon } from '../../icons';
 import { FilterController } from '../Filter/Filter';
 import { Case, Switch } from '../switch/Switch';
@@ -20,6 +21,7 @@ type HeaderProps = {
   deselectAllValues: () => Promise<void>;
   hasActiveFilters: boolean;
   searchValue: string | undefined;
+  container: React.RefObject<HTMLDivElement>;
 };
 
 export const Header = ({
@@ -30,8 +32,19 @@ export const Header = ({
   searchValue,
   hasActiveFilters,
   deselectAllValues,
+  container,
 }: HeaderProps): JSX.Element => {
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+
+  useClickOutside(
+    container,
+    () => {
+      setIsSearchActive(false);
+      onSearch(undefined);
+    },
+    isSearchActive
+  );
+
   return (
     <StyledContainer>
       <Switch>
@@ -44,10 +57,6 @@ export const Header = ({
             aria-label="filter group"
             onKeyPress={(e) => e.key === 'Enter' && handleEnterPress()}
             onChange={(e) => onSearch(e.target.value)}
-            onBlur={() => {
-              setIsSearchActive(false);
-              onSearch(undefined);
-            }}
           />
         </Case>
         <Case when={true}>
