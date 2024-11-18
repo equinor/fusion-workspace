@@ -1,8 +1,8 @@
 import { Button, Icon, Search } from '@equinor/eds-core-react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { FilterClearIcon } from '../../icons';
 import { FilterGroup, FilterValueType } from '../../types';
-
+import { useClickOutside } from '@equinor/workspace-core';
 import { Case, Switch } from '../../utils/Switch';
 import { StyledSearchButton, StyledFilterHeaderGroup, StyledTitle, StyledWrapper } from './expandedFilterGroup.styles';
 import { VirtualContainer } from '../virtualContainer/VirtualContainer';
@@ -20,6 +20,12 @@ export const ExpandedFilterGroup = ({ filterGroup, isFetching }: FilterGroupeCom
 
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [searchActive, setSearchActive] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+  useClickOutside(ref, () => {
+    setSearchActive(false);
+    setFilterSearchValue('');
+  });
 
   function handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
@@ -50,16 +56,12 @@ export const ExpandedFilterGroup = ({ filterGroup, isFetching }: FilterGroupeCom
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper ref={ref}>
       <StyledFilterHeaderGroup isActive={hasAnyActiveFilters}>
         <Switch>
           <Case when={searchActive}>
             <Search
               autoFocus={searchActive}
-              onBlur={() => {
-                setSearchActive(false);
-                setFilterSearchValue('');
-              }}
               aria-label="in filter group"
               id="search-normal"
               placeholder="Search"
