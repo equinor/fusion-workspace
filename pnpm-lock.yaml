@@ -302,7 +302,7 @@ importers:
     dependencies:
       '@equinor/eds-core-react':
         specifier: ^0.28.0
-        version: 0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@equinor/eds-icons':
         specifier: ^0.18.0
         version: 0.18.0
@@ -360,7 +360,7 @@ importers:
     dependencies:
       '@equinor/eds-core-react':
         specifier: 0.28.0
-        version: 0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@equinor/eds-icons':
         specifier: ^0.18.0
         version: 0.18.0
@@ -412,7 +412,7 @@ importers:
     dependencies:
       '@equinor/eds-core-react':
         specifier: ^0
-        version: 0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@equinor/eds-icons':
         specifier: ^0
         version: 0.18.0
@@ -476,7 +476,7 @@ importers:
     dependencies:
       '@equinor/eds-core-react':
         specifier: ^0
-        version: 0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@equinor/eds-icons':
         specifier: ^0
         version: 0.18.0
@@ -486,9 +486,6 @@ importers:
       '@equinor/workspace-ag-grid':
         specifier: workspace:^
         version: link:../ag-grid
-      '@equinor/workspace-core':
-        specifier: workspace:^
-        version: link:../core
       '@equinor/workspace-filter':
         specifier: workspace:^
         version: link:../filter
@@ -577,7 +574,7 @@ importers:
     dependencies:
       '@equinor/eds-core-react':
         specifier: ^0.28.0
-        version: 0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@equinor/eds-icons':
         specifier: ^0.18.0
         version: 0.18.0
@@ -6191,9 +6188,19 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
+      '@babel/helper-plugin-utils': 7.20.2
+
+  '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.20.2
 
   '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.20.12)':
@@ -6201,14 +6208,29 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
+      '@babel/helper-plugin-utils': 7.20.2
+
+  '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.20.2
 
   '@babel/plugin-syntax-jsx@7.24.1(@babel/core@7.24.5)':
@@ -6221,9 +6243,19 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
+      '@babel/helper-plugin-utils': 7.20.2
+
+  '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.20.2
 
   '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.20.12)':
@@ -6231,9 +6263,19 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
+      '@babel/helper-plugin-utils': 7.20.2
+
+  '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.20.2
 
   '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.20.12)':
@@ -6241,14 +6283,29 @@ snapshots:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
       '@babel/helper-plugin-utils': 7.20.2
 
+  '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-plugin-utils': 7.20.2
+
   '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.20.12)':
     dependencies:
       '@babel/core': 7.20.12
+      '@babel/helper-plugin-utils': 7.20.2
+
+  '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.24.5)':
+    dependencies:
+      '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.20.2
 
   '@babel/plugin-transform-react-jsx-development@7.22.5(@babel/core@7.24.5)':
@@ -6555,12 +6612,12 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@equinor/eds-core-react@0.28.0(@babel/core@7.20.12)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@equinor/eds-core-react@0.28.0(@babel/core@7.24.5)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@babel/runtime': 7.24.1
       '@equinor/eds-icons': 0.17.0
       '@equinor/eds-tokens': 0.9.0
-      '@equinor/eds-utils': 0.7.0(@babel/core@7.20.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      '@equinor/eds-utils': 0.7.0(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@floating-ui/react-dom-interactions': 0.10.3(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-virtual': 3.0.0-beta.30(react@18.3.1)
       downshift: 7.2.0(react@18.3.1)
@@ -6588,6 +6645,20 @@ snapshots:
       '@equinor/eds-tokens': 0.9.0
       '@popperjs/core': 2.11.6
       babel-jest: 29.2.2(@babel/core@7.20.12)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-popper: 2.3.0(@popperjs/core@2.11.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      styled-components: 6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
+  '@equinor/eds-utils@0.7.0(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+    dependencies:
+      '@babel/runtime': 7.24.1
+      '@equinor/eds-tokens': 0.9.0
+      '@popperjs/core': 2.11.6
+      babel-jest: 29.2.2(@babel/core@7.24.5)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-popper: 2.3.0(@popperjs/core@2.11.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7816,6 +7887,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  babel-jest@29.2.2(@babel/core@7.24.5):
+    dependencies:
+      '@babel/core': 7.24.5
+      '@jest/transform': 29.2.2
+      '@types/babel__core': 7.20.5
+      babel-plugin-istanbul: 6.1.1
+      babel-preset-jest: 29.2.0(@babel/core@7.24.5)
+      chalk: 4.1.2
+      graceful-fs: 4.2.10
+      slash: 3.0.0
+    transitivePeerDependencies:
+      - supports-color
+
   babel-plugin-istanbul@6.1.1:
     dependencies:
       '@babel/helper-plugin-utils': 7.20.2
@@ -7853,11 +7937,33 @@ snapshots:
       '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.20.12)
       '@babel/plugin-syntax-top-level-await': 7.14.5(@babel/core@7.20.12)
 
+  babel-preset-current-node-syntax@1.0.1(@babel/core@7.24.5):
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/plugin-syntax-async-generators': 7.8.4(@babel/core@7.24.5)
+      '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-class-properties': 7.12.13(@babel/core@7.24.5)
+      '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.24.5)
+      '@babel/plugin-syntax-json-strings': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-logical-assignment-operators': 7.10.4(@babel/core@7.24.5)
+      '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-numeric-separator': 7.10.4(@babel/core@7.24.5)
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-optional-catch-binding': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.24.5)
+      '@babel/plugin-syntax-top-level-await': 7.14.5(@babel/core@7.24.5)
+
   babel-preset-jest@29.2.0(@babel/core@7.20.12):
     dependencies:
       '@babel/core': 7.20.12
       babel-plugin-jest-hoist: 29.2.0
       babel-preset-current-node-syntax: 1.0.1(@babel/core@7.20.12)
+
+  babel-preset-jest@29.2.0(@babel/core@7.24.5):
+    dependencies:
+      '@babel/core': 7.24.5
+      babel-plugin-jest-hoist: 29.2.0
+      babel-preset-current-node-syntax: 1.0.1(@babel/core@7.24.5)
 
   bail@2.0.2: {}
 
