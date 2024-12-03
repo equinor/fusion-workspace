@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react';
 
-const useClickOutside = (elementRef: RefObject<Element>, callback: () => void, isActive = true) => {
+export const useClickOutside = (elementRef: RefObject<Element>, callback: () => void, isActive = true) => {
   const callbackRef = useRef(callback);
 
   const isClickInsideElement = (target: EventTarget | null): boolean => {
@@ -24,7 +24,6 @@ const useClickOutside = (elementRef: RefObject<Element>, callback: () => void, i
         document.removeEventListener('mouseup', handleClick);
       };
     }
+    return;
   }, [isActive, elementRef]);
 };
-
-export default useClickOutside;
