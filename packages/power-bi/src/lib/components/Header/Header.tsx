@@ -1,7 +1,7 @@
 import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useClickOutside } from '@equinor/workspace-core';
+import { useClickOutside } from 'core';
 import { FilterClearIcon } from '../../icons';
 import { FilterController } from '../Filter/Filter';
 import { Case, Switch } from '../switch/Switch';
