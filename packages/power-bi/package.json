@@ -33,7 +33,7 @@
     "markdown-to-jsx": "^7",
     "powerbi-client": "^2",
     "powerbi-client-react": "^1",
-    "@equinor/workspace-core": "workspace:^",
+    "core": "workspace:^",
     "react-error-boundary": "^4",
     "react-sortablejs": "^6",
     "react-virtual": "^2",
