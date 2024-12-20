@@ -17,5 +17,6 @@
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "composite": true
-  }
+  },
+  "include": ["src"]
 }
