@@ -15,6 +15,7 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": false,
     "moduleResolution": "Bundler",
-    "module": "ESNext"
+    "module": "ESNext",
+    "composite": true
   }
 }

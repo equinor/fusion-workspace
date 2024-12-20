@@ -10,19 +10,7 @@
     "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean",
     "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "module": "src/index.ts",
   "dependencies": {},
   "peerDependencies": {
     "react": ">= 16.8.0",
