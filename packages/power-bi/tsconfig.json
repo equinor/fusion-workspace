@@ -16,5 +16,6 @@
     "resolveJsonModule": false,
     "moduleResolution": "Bundler",
     "module": "ESNext"
-  }
+  },
+  "references": [{ "path": "../core" }]
 }

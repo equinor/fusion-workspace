@@ -4,13 +4,11 @@
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsup ./src/index.ts --format cjs,esm --dts --clean",
     "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean",
     "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
