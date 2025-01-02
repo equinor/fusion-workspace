@@ -17,7 +17,7 @@
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "paths": {
-      "core": ["../core/src"]
+      "workspace-core": ["../core/src"]
     }
   },
   "include": ["src"],
