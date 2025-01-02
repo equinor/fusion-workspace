@@ -15,6 +15,10 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": false,
     "moduleResolution": "Bundler",
-    "module": "ESNext"
-  }
+    "module": "ESNext",
+    "paths": {
+      "workspace-core": ["../../core/src"]
+    }
+  },
+  "references": [{ "path": "../core" }]
 }

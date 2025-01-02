@@ -2,7 +2,7 @@ import { Button, Icon, Search } from '@equinor/eds-core-react';
 import { useMemo, useRef, useState } from 'react';
 import { FilterClearIcon } from '../../icons';
 import { FilterGroup, FilterValueType } from '../../types';
-import { useClickOutside } from 'core';
+import { useClickOutside } from 'workspace-core';
 import { Case, Switch } from '../../utils/Switch';
 import { StyledSearchButton, StyledFilterHeaderGroup, StyledTitle, StyledWrapper } from './expandedFilterGroup.styles';
 import { VirtualContainer } from '../virtualContainer/VirtualContainer';

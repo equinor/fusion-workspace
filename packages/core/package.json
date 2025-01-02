@@ -1,30 +1,11 @@
 {
-  "name": "core",
+  "name": "workspace-core",
   "version": "1.0.0",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
-  "scripts": {
-    "build": "tsup ./src/index.ts --format cjs,esm --dts --clean",
-    "build:prod": "tsup ./src/index.ts --format cjs,esm --dts --clean",
-    "pr-release": "tsx ../../.github/helpers/src/pre-version.ts publish"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "private": true,
+  "module": "src/index.ts",
   "dependencies": {},
   "peerDependencies": {
     "react": ">= 16.8.0",
