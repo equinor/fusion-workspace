@@ -6,7 +6,6 @@
     "baseUrl": "src",
     "allowJs": false,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
