@@ -175,9 +175,12 @@ export const PowerBIFilter = ({ report, options }: PowerBIFilterProps): JSX.Elem
         }
         setisFiltersLoading(false);
       };
-
-      initFilters();
+      report.on('rendered', initFilters);
+      return () => {
+        report.off('rendered');
+      };
     }
+    return;
   }, [report]);
 
   /**
