@@ -6,13 +6,24 @@ export function getFilterHeaderText(
   name: string,
   checkedValues: string[]
 ): string | JSX.Element {
-  if (isAllChecked || checkedValues.length === 0) return <StyledNormalText>{name}</StyledNormalText>;
+  const selectedCount = checkedValues.length;
 
-  return (
-    <div style={{ color: tokens.colors.interactive.primary__resting.hex }}>
-      {checkedValues.length - 1 > 0
-        ? `${checkedValues[0] ?? '(Blank)'}(+${checkedValues.length - 1})`
-        : `${checkedValues[0]}`}{' '}
-    </div>
-  );
+  const hasBlank = checkedValues.includes('(Blank)');
+  const nonBlankCount = hasBlank ? selectedCount - 1 : selectedCount;
+
+  if (hasBlank && nonBlankCount > 0) {
+    return <StyledNormalText>{`${name} (Blank) (+${nonBlankCount})`}</StyledNormalText>;
+  }
+
+  if (selectedCount === 1 && hasBlank) {
+    return <StyledNormalText>{`${name} (Blank)`}</StyledNormalText>;
+  }
+
+  const displayText = selectedCount > 0 ? `${name} (+${selectedCount})` : name;
+
+  if (isAllChecked || selectedCount === 0) {
+    return <StyledNormalText>{displayText}</StyledNormalText>;
+  }
+
+  return <div style={{ color: tokens.colors.interactive.primary__resting.hex }}>{displayText}</div>;
 }
