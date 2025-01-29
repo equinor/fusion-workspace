@@ -1,18 +1,15 @@
 import { tokens } from '@equinor/eds-tokens';
 import { StyledNormalText } from '../components/filterGroup/filterGroup.styles';
 
-export function getFilterHeaderText(
-  isAllChecked: boolean,
-  name: string,
-  checkedValues: string[]
-): string | JSX.Element {
-  if (isAllChecked || checkedValues.length === 0) return <StyledNormalText>{name}</StyledNormalText>;
+export function getFilterHeaderText(isAllChecked: boolean, name: string, checkedValues: string[]): JSX.Element {
+  const selectedCount = checkedValues.length;
+  const displayText = selectedCount > 0 ? `${name} (+${selectedCount})` : name;
 
-  return (
-    <div style={{ color: tokens.colors.interactive.primary__resting.hex }}>
-      {checkedValues.length - 1 > 0
-        ? `${checkedValues[0] ?? '(Blank)'}(+${checkedValues.length - 1})`
-        : `${checkedValues[0]}`}{' '}
-    </div>
+  const textComponent = <StyledNormalText>{displayText}</StyledNormalText>;
+
+  return isAllChecked || selectedCount === 0 ? (
+    textComponent
+  ) : (
+    <div style={{ color: tokens.colors.interactive.primary__resting.hex }}>{displayText}</div>
   );
 }
